@@ -43,27 +43,6 @@ namespace JobSystem.DataAccess.NHibernate
 		}
 
 		/// <summary>
-		///     Provides access to <see cref = "INHibernateConfigurationCache" /> object.
-		/// </summary>
-		/// <exception cref = "InvalidOperationException">
-		/// Thrown on Set if the Init method has already been called and the 
-		/// NHibernateSession.Storage property is not null.
-		/// </exception>
-		public static INHibernateConfigurationCache ConfigurationCache
-		{
-			get
-			{
-				return configurationCache;
-			}
-			set
-			{
-				if (Storage != null)
-					throw new InvalidOperationException("Cannot set the ConfigurationCache property after calling Init");
-				configurationCache = value;
-			}
-		}
-
-		/// <summary>
 		///     Used to get the current NHibernate session if you're communicating with a single database.
 		///     When communicating with multiple databases, invoke <see cref = "CurrentFor" /> instead.
 		/// </summary>
@@ -98,14 +77,6 @@ namespace JobSystem.DataAccess.NHibernate
 			IPersistenceConfigurer persistenceConfigurer)
 		{
 			Configuration config;
-			var configCache = ConfigurationCache;
-			if (configCache != null)
-			{
-				config = configCache.LoadConfiguration(factoryKey, cfgFile, mappingAssemblies);
-				if (config != null)
-					return AddConfiguration(factoryKey, config.BuildSessionFactory(), config, validatorCfgFile);
-			}
-
 			config = AddConfiguration(
 				factoryKey,
 				mappingAssemblies,
@@ -113,8 +84,6 @@ namespace JobSystem.DataAccess.NHibernate
 				ConfigureNHibernate(cfgFile, cfgProperties),
 				validatorCfgFile,
 				persistenceConfigurer);
-			if (configCache != null)
-				configCache.SaveConfiguration(factoryKey, config);
 			return config;
 		}
 
@@ -334,7 +303,6 @@ namespace JobSystem.DataAccess.NHibernate
 					session.Dispose();
 			SessionFactories.Clear();
 			Storage = null;
-			ConfigurationCache = null;
 		}
 
 		private static Configuration ConfigureNHibernate(string cfgFile, IDictionary<string, string> cfgProperties)
