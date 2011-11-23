@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<PostSharpLicenseKey>
+			16490-ATMQWQQQZEQEQWKEA4JUXTTDY2JBTQQQCQ-CZQHQE7L6XN44F3FSX3JCU8MDR5A6ZJZTYYM4BRF-RWHU42ZRQT7JW78DCRRCP7RPWNQQKP
+		</PostSharpLicenseKey>
+		<PostSharpTargetProcessor>x86</PostSharpTargetProcessor>
+	</PropertyGroup>
+</Project>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Integration" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Target Name="BuildCustomTasksAssembly">
+		<!--<RemoveDir Directories="$(ProjectBuildBinDirectory)" />
+		<MakeDir Directories="$(ProjectBuildBinDirectory)" />-->
+		<MSBuild
+			Projects="$(ProjectBuildCustomTasksDirectory)\$(ProjectName).BuildTasks.sln"
+			Properties="OutputPath=$(ProjectBuildBinDirectory)"
+			Targets="Build" />
+	</Target>
+
+	<Target Name="BuildMigrations">
+		<MSBuild
+			Projects="$(ProjectSourceDirectory)\$(ProjectName).Migrations\$(ProjectName).Migrations.csproj"
+			Properties="SolutionDir=$(ProjectSourceDirectory)\;PreventMigration=true"
+			Targets="Build" />
+	</Target>
+</Project>

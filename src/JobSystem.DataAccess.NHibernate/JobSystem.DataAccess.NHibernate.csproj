@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7792D324-DF29-4F9F-9409-6E6FFFB28C6C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JobSystem.DataAccess.NHibernate</RootNamespace>
+    <AssemblyName>JobSystem.DataAccess.NHibernate</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\..\lib\fluentnhibernate-NH3.1-1.2\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\lib\fluentnhibernate-NH3.1-1.2\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\..\lib\fluentnhibernate-NH3.1-1.2\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\lib\fluentnhibernate-NH3.1-1.2\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Inflector.Net">
+      <HintPath>..\..\lib\fluentnhibernate-NH3.1-1.2\Inflector.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\lib\fluentnhibernate-NH3.1-1.2\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.Castle">
+      <HintPath>..\..\lib\fluentnhibernate-NH3.1-1.2\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Data.Linq">
+      <HintPath>..\..\lib\fluentnhibernate-NH3.1-1.2\Remotion.Data.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ContextConnectionProviderBase.cs" />
+    <Compile Include="DalConfiguration.cs" />
+    <Compile Include="ILocalStorage.cs" />
+    <Compile Include="INHibernateConfigurationCache.cs" />
+    <Compile Include="ISessionStorage.cs" />
+    <Compile Include="LocalStorage.cs" />
+    <Compile Include="Mappings\Conventions\AutoPersistanceModelGenerator.cs" />
+    <Compile Include="Mappings\Conventions\EnumConvention.cs" />
+    <Compile Include="Mappings\Conventions\PrimaryKeyConvention.cs" />
+    <Compile Include="Mappings\Conventions\SaturnAutomappingConfiguration.cs" />
+    <Compile Include="Mappings\Conventions\TableNameConvention.cs" />
+    <Compile Include="NHibernateConfigurationFileCache.cs" />
+    <Compile Include="NHibernateInitializer.cs" />
+    <Compile Include="NHibernateSession.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\RepositoryBase.cs" />
+    <Compile Include="Repositories\UserAccountRepository.cs" />
+    <Compile Include="RepositorySessionFactory.cs" />
+    <Compile Include="RepositorySessionScope.cs" />
+    <Compile Include="SimpleSessionStorage.cs" />
+    <Compile Include="Web\TransactionAttribute.cs" />
+    <Compile Include="Web\WebSessionStorage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JobSystem.DataModel\JobSystem.DataModel.csproj">
+      <Project>{4F88F47B-AAE1-4E7D-AFF1-654C67A8A61C}</Project>
+      <Name>JobSystem.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JobSystem.Framework\JobSystem.Framework.csproj">
+      <Project>{904034C0-4B56-4A2E-82BA-5D4B84195D99}</Project>
+      <Name>JobSystem.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

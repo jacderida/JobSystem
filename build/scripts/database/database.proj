@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="DoCreateDevelopmentDatabase" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="..\props\project-directory.props" />
+	<Import Project="..\database.proj" />
+	<Import Project="..\build.proj" />
+	<Import Project="$(MSBuildCommunityTasksTargetsPath)"/>
+
+	<UsingTask
+		TaskName="CreateJobSystemUser"
+		AssemblyFile="$(ProjectCustomTasksAssemblyPath)" />
+
+	<Target Name="CreateDevelopmentJobSystemDatabase" DependsOnTargets="BuildMigrations" >
+		<MSBuild
+			Projects="..\database.proj"
+			Properties="DatabaseServer=$(DevelopmentDatabaseServer);DatabaseName=$(DevelopmentDatabaseName);DatbaseUserName=$(DevelopmentDatabaseUserName);DatabasePassword=$(DevelopmentDatabasePassword);DatabaseLoginName=$(DevelopmentDatabaseLoginName);DatabaseLoginPassword=$(DevelopmentDatabaseLoginPassword);DatabaseCatalogUserName=$(DevelopmentDatabaseCatalogUserName);DatabaseUserRoles=$(DevelopmentDatabaseUserRoles)"
+			Targets="CreateJobSystemDatabase" />
+	</Target>
+
+	<Target Name="CreateDevelopmentJobSystemDatabaseWithDefaultUser" DependsOnTargets="BuildMigrations" >
+		<CallTarget Targets="BuildCustomTasksAssembly" />
+		<MSBuild
+			Projects="..\database.proj"
+			Properties="DatabaseServer=$(DevelopmentDatabaseServer);DatabaseName=$(DevelopmentDatabaseName);DatbaseUserName=$(DevelopmentDatabaseUserName);DatabasePassword=$(DevelopmentDatabasePassword);DatabaseLoginName=$(DevelopmentDatabaseLoginName);DatabaseLoginPassword=$(DevelopmentDatabaseLoginPassword);DatabaseCatalogUserName=$(DevelopmentDatabaseCatalogUserName);DatabaseUserRoles=$(DevelopmentDatabaseUserRoles)"
+			Targets="CreateJobSystemDatabase" />
+		<CreateJobSystemUser
+			DatabaseServer="$(DevelopmentDatabaseServer)"
+			DatabaseUserName="$(DevelopmentDatabaseUserName)"
+			DatabasePassword="$(DevelopmentDatabasePassword)"
+			DatabaseName="$(DevelopmentDatabaseName)"
+			EmailAddress="admin@admin.com"
+			Name="Chris O'Neil"
+			JobTitle="Development Engineer"
+			Password="p'ssw0rd" />
+	</Target>
+</Project>
