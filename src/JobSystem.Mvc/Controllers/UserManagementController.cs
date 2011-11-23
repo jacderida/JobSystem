@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
+using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.ViewModels.Users;
 
@@ -36,6 +37,7 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpPost]
+		[Transaction]
 		public ActionResult Create(UserAccountViewModel viewModel)
 		{
 			if (ModelState.IsValid)
@@ -68,6 +70,7 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpPost]
+		[Transaction]
 		public ActionResult Edit(UserAccountViewModel viewModel)
 		{
 			if (ModelState.IsValid)
