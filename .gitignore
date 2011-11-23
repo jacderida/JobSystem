@@ -1,0 +1,10 @@
+*ReSharper*
+bin
+obj
+run
+web
+*MSBuild.Community.Tasks.Targets
+*.suo
+StyleCop.Cache
+*.orig
+*.csproj.user
