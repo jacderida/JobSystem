@@ -6,7 +6,7 @@ using Autofac.Integration.Mvc;
 using Autofac.Integration.Web;
 using FluentNHibernate.Cfg.Db;
 using JobSystem.DataAccess.NHibernate;
-using JobSystem.DataAccess.NHibernate.Mappings.Conventions;
+using JobSystem.DataAccess.NHibernate.Mappings;
 using JobSystem.Mvc.IoC;
 using JobSystem.WebUI.Configuration;
 

@@ -17,9 +17,10 @@
 using System;
 using FluentNHibernate.Automapping;
 using FluentNHibernate.Conventions.Helpers;
+using JobSystem.DataAccess.NHibernate.Mappings.Conventions;
 using JobSystem.DataModel.Entities;
 
-namespace JobSystem.DataAccess.NHibernate.Mappings.Conventions
+namespace JobSystem.DataAccess.NHibernate.Mappings
 {
 	/// <summary>
 	/// Creates a FluentNHibernate AutoPersistenceModel that defines the conventions used.

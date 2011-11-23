@@ -16,9 +16,8 @@ namespace JobSystem.BusinessLogic.Services
 
 		public CustomerService(
 			IUserContext applicationContext,
-			IRepositorySessionFactory repositorySessionFactory,
 			ICustomerRepository customerRepository,
-			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, repositorySessionFactory, dispatcher)
+			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
 		{
 			_customerRepository = customerRepository;
 			_customerValidator = new CustomerValidator(customerRepository);

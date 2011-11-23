@@ -12,12 +12,8 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 	{
 		public static UserManagementService Create()
 		{
-			var sessionScopeStub = MockRepository.GenerateStub<IRepositorySessionScope>();
-			var sessionFactoryStub = MockRepository.GenerateStub<IRepositorySessionFactory>();
-			sessionFactoryStub.Stub(x => x.NewSessionScope()).Return(sessionScopeStub);
 			return new UserManagementService(
 				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager"),
-				sessionFactoryStub,
 				MockRepository.GenerateStub<IUserAccountRepository>(),
 				new CryptographicService(),
 				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
@@ -25,12 +21,8 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 
 		public static UserManagementService Create(IUserAccountRepository userAccountRepository)
 		{
-			var sessionScopeStub = MockRepository.GenerateStub<IRepositorySessionScope>();
-			var sessionFactoryStub = MockRepository.GenerateStub<IRepositorySessionFactory>();
-			sessionFactoryStub.Stub(x => x.NewSessionScope()).Return(sessionScopeStub);
 			return new UserManagementService(
 				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager"),
-				sessionFactoryStub,
 				userAccountRepository,
 				new CryptographicService(),
 				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());

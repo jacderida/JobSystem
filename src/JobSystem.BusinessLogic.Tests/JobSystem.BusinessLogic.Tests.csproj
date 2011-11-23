@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\TestAppConfig.cs" />
-    <Compile Include="Context\TestRepositorySessionScope.cs" />
     <Compile Include="Context\TestUserContext.cs" />
     <Compile Include="CustomerTests.cs" />
     <Compile Include="Helpers\CustomerServiceFactory.cs" />

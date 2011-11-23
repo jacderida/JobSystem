@@ -15,12 +15,7 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 	public abstract class RepositoryBase<T> : RepositoryBase<T, Guid>
 		where T : class
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:RepositoryBase"/> class.
-		/// </summary>
-		/// <param name="dalConfiguration">Provides access to the database session</param>
-		public RepositoryBase(DalConfiguration dalConfiguration)
-			: base(dalConfiguration)
+		public RepositoryBase()
 		{
 		}
 	}
@@ -33,25 +28,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 	public abstract class RepositoryBase<T, TId>
 		where T : class
 	{
-		/// <summary>
-		/// Provides access to the database session
-		/// </summary>
-		private readonly DalConfiguration _dalConfiguration;
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:RepositoryBase"/> class.
-		/// </summary>
-		/// <param name="dalConfiguration">Provides access to the database session</param>
-		protected RepositoryBase(DalConfiguration dalConfiguration)
-		{
-			_dalConfiguration = dalConfiguration;
-		}
-
 		protected ISession CurrentSession
 		{
 			get
 			{
-				return _dalConfiguration.GetCurrentSession();
+				return NHibernateSession.Current;
 			}
 		}
 
@@ -62,11 +43,7 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		/// <returns>True if exists, false otherwise</returns>
 		public virtual bool Exists(TId id)
 		{
-			return CurrentSession
-					.CreateCriteria<T>()
-					.Add(Restrictions.IdEq(id))
-					.SetProjection(Projections.RowCount())
-					.UniqueResult<int>() != 0;
+			return CurrentSession.CreateCriteria<T>().Add(Restrictions.IdEq(id)).SetProjection(Projections.RowCount()).UniqueResult<int>() != 0;
 		}
 
 		/// <summary>

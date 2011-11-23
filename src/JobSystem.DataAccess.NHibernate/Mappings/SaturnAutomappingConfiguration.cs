@@ -2,7 +2,7 @@
 using System.Linq;
 using FluentNHibernate.Automapping;
 
-namespace JobSystem.DataAccess.NHibernate.Mappings.Conventions
+namespace JobSystem.DataAccess.NHibernate.Mappings
 {
 	/// <summary>
 	/// The Setup method in Fluent NHibernate's AutoPersisteanceModel is obselete. 

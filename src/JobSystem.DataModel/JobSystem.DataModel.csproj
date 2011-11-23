@@ -56,8 +56,6 @@
     <Compile Include="Entities\Status.cs" />
     <Compile Include="Entities\UserAccount.cs" />
     <Compile Include="IEntityIdProvider.cs" />
-    <Compile Include="IRepositorySessionFactory.cs" />
-    <Compile Include="IRepositorySessionScope.cs" />
     <Compile Include="IUserContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\IQuery.cs" />

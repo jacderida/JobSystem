@@ -14,12 +14,7 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 	/// </summary>
 	public class UserAccountRepository : RepositoryBase<UserAccount>, IUserAccountRepository
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:UserAccountRepository"/> class.
-		/// </summary>
-		/// <param name="dalConfiguration">Provides access to the database session</param>
-		public UserAccountRepository(DalConfiguration dalConfiguration)
-			: base(dalConfiguration)
+		public UserAccountRepository()
 		{
 		}
 

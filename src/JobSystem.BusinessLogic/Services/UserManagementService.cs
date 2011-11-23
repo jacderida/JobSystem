@@ -21,10 +21,9 @@ namespace JobSystem.BusinessLogic.Services
 
 		public UserManagementService(
 			IUserContext applicationContext,
-			IRepositorySessionFactory repositorySessionFactory,
 			IUserAccountRepository userAccountRepository,
 			ICryptographicService cryptographicService,
-			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, repositorySessionFactory, dispatcher)
+			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
 		{
 			Check.NotNull(userAccountRepository, "userAccountRepository cannot be null");
 			_userAccountRepository = userAccountRepository;
@@ -66,19 +65,16 @@ namespace JobSystem.BusinessLogic.Services
 			return userAccount;
 		}
 
-		[AutoEnlistRepositorySession(AttributeExclude = true)]
 		public UserAccount GetById(Guid id)
 		{
 			return _userAccountRepository.GetById(id);
 		}
 
-		[AutoEnlistRepositorySession(AttributeExclude = true)]
 		public IList<UserAccount> GetUsers()
 		{
 			return _userAccountRepository.GetUsers().ToList();
 		}
 
-		[AutoEnlistRepositorySession(AttributeExclude = true)]
 		public bool Login(string email, string password)
 		{
 			if (String.IsNullOrEmpty(email))
