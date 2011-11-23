@@ -1,10 +1,14 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.Web;
+using FluentNHibernate.Cfg.Db;
 using JobSystem.DataAccess.NHibernate;
+using JobSystem.DataAccess.NHibernate.Mappings.Conventions;
 using JobSystem.Mvc.IoC;
+using JobSystem.WebUI.Configuration;
 
 namespace JobSystem.Mvc
 {
@@ -24,6 +28,11 @@ namespace JobSystem.Mvc
 		{
 			_webSessionStorage = new WebSessionStorage(this);
 			base.Init();
+		}
+
+		protected void Application_BeginRequest(object sender, EventArgs e)
+		{
+			NHibernateInitializer.Instance().InitializeNHibernateOnce(InitialiseNHibernateSessions);
 		}
 
 		public static void RegisterGlobalFilters(GlobalFilterCollection filters)
@@ -53,6 +62,14 @@ namespace JobSystem.Mvc
 			AreaRegistration.RegisterAllAreas();
 			RegisterGlobalFilters(GlobalFilters.Filters);
 			RegisterRoutes(RouteTable.Routes);	
+		}
+
+		private void InitialiseNHibernateSessions()
+		{
+			var dbConfigurer = MsSqlConfiguration.MsSql2008.ConnectionString(NHibernateSession.GetInitialConnectionString()).Provider<RequestContextConnectionProvider>();
+			NHibernateSession.ConfigurationCache = new NHibernateConfigurationFileCache();
+			NHibernateSession.Init(
+				_webSessionStorage, new[] { Server.MapPath("~/bin/JobSystem.DataAccess.NHibernate.dll") }, new AutoPersistenceModelGenerator().Generate(), null, null, null, dbConfigurer);
 		}
 	}
 }

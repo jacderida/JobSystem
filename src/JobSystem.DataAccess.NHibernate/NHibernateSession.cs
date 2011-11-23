@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
-using JobSystem.Framework.DesignByContract;
 using global::FluentNHibernate.Automapping;
 using global::FluentNHibernate.Cfg;
 using global::FluentNHibernate.Cfg.Db;
 using global::NHibernate;
 using global::NHibernate.Cfg;
+using JobSystem.Framework.DesignByContract;
 
 namespace JobSystem.DataAccess.NHibernate
 {
@@ -26,6 +27,20 @@ namespace JobSystem.DataAccess.NHibernate
 		/// </summary>
 		private static readonly Dictionary<string, ISessionFactory> SessionFactories = new Dictionary<string, ISessionFactory>();
 		private static INHibernateConfigurationCache configurationCache;
+
+		/// <summary>
+		/// This is just used to build the session factory - the connection string will be obtained using RequestContextConnectionProvider
+		/// in the web project.
+		/// </summary>
+		public static string GetInitialConnectionString()
+		{
+			var csb = new SqlConnectionStringBuilder();
+			csb.DataSource = System.Configuration.ConfigurationManager.AppSettings["DatabaseServer"];
+			csb.InitialCatalog = System.Configuration.ConfigurationManager.AppSettings["DatabaseCatalogName"];
+			csb.UserID = System.Configuration.ConfigurationManager.AppSettings["DatabaseUsername"];
+			csb.Password = System.Configuration.ConfigurationManager.AppSettings["DatabasePassword"];
+			return csb.ToString();
+		}
 
 		/// <summary>
 		///     Provides access to <see cref = "INHibernateConfigurationCache" /> object.

@@ -27,13 +27,13 @@ namespace JobSystem.Mvc.IoC
 			builder.RegisterType<WebUserContext>().As<IUserContext>();
 			builder.RegisterType<CryptographicService>().As<ICryptographicService>();
 			builder.RegisterModule(new ServiceModule());
-			builder.RegisterType<RepositorySessionFactory>().As<IRepositorySessionFactory>();
+			//builder.RegisterType<RepositorySessionFactory>().As<IRepositorySessionFactory>();
 			builder.RegisterAssemblyTypes(typeof(UserAccountRepository).Assembly)
 				.Where(t => t.Name.EndsWith("Repository"))
 				.AsImplementedInterfaces();
-			builder.Register(c => DalConfiguration.CreateInstance<RequestContextConnectionProvider>())
-				.As<DalConfiguration>()
-				.SingleInstance();
+			//builder.Register(c => DalConfiguration.CreateInstance<RequestContextConnectionProvider>())
+			//    .As<DalConfiguration>()
+			//    .SingleInstance();
 			builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>();
 			builder.RegisterType<LocalAppConfig>().As<IAppConfig>().InstancePerLifetimeScope();
 		}

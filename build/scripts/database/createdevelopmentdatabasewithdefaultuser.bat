@@ -1,6 +1,6 @@
 set projectdir=%~dp0..\..\..
-set DatabaseServer=(local)\SQLEXPRESS2008R2
-set DatabaseCatalogName=JobSystem
+set DatabaseServer=(local)
+set DatabaseCatalogName=JobSystemNew
 set DatabaseUsername=sa
 set DatabasePassword=p'ssw0rd
 set LoginName=jobsystem.development

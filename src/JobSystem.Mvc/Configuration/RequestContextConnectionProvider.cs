@@ -26,9 +26,7 @@ namespace JobSystem.WebUI.Configuration
 			// This assumes that we are being used within an MVC app using Autofac as the IoC container.
 			var containerProviderAccessor = HttpContext.Current.ApplicationInstance as IContainerProviderAccessor;
 			if (containerProviderAccessor == null)
-			{
 				throw new System.InvalidOperationException("Cannot get connection string from configuration, current application is not an IContainerProviderAccessor");
-			}
 
 			// Get the scoped container for the current request.
 			var lifetimeScope = containerProviderAccessor.ContainerProvider.RequestLifetime;
@@ -39,13 +37,8 @@ namespace JobSystem.WebUI.Configuration
 				lifetimeScope = containerProviderAccessor.ContainerProvider.ApplicationContainer;
 			}
 
-			// Bail out if we can't get a container.
 			if (lifetimeScope == null)
-			{
 				throw new System.InvalidOperationException("Failed to get configuration from request or application container.");
-			}
-
-			// right, resolve the configuration for the current request
 			var appConfig = lifetimeScope.Resolve<IAppConfig>();
 			return appConfig;
 		}
