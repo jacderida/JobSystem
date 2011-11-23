@@ -1,9 +1,9 @@
-﻿using System.Reflection;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.Web;
+using JobSystem.DataAccess.NHibernate;
 using JobSystem.Mvc.IoC;
 
 namespace JobSystem.Mvc
@@ -13,10 +13,17 @@ namespace JobSystem.Mvc
 
 	public class MvcApplication : System.Web.HttpApplication, IContainerProviderAccessor
 	{
+		private WebSessionStorage _webSessionStorage;
 		private static IContainerProvider _containerProvider;
 		public IContainerProvider ContainerProvider
 		{
 			get { return _containerProvider; }
+		}
+
+		public override void Init()
+		{
+			_webSessionStorage = new WebSessionStorage(this);
+			base.Init();
 		}
 
 		public static void RegisterGlobalFilters(GlobalFilterCollection filters)
