@@ -21,7 +21,7 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		public UserAccount GetByEmail(string emailAddress, bool readOnly)
 		{
 			emailAddress = emailAddress.Trim();
-			if (string.IsNullOrWhiteSpace(emailAddress))
+			if (String.IsNullOrWhiteSpace(emailAddress))
 				throw new ArgumentException("invalid email address");
 			var criteria = CurrentSession
 				.CreateCriteria<UserAccount>()

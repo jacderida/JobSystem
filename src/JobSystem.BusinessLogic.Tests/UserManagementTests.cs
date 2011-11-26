@@ -1,11 +1,11 @@
-﻿using JobSystem.BusinessLogic.Services;
+﻿using System;
+using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Tests.Helpers;
 using JobSystem.BusinessLogic.Validation.Core;
-using NUnit.Framework;
-using System;
-using Rhino.Mocks;
-using JobSystem.DataModel.Repositories;
 using JobSystem.DataModel.Entities;
+using JobSystem.DataModel.Repositories;
+using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace JobSystem.BusinessLogic.Tests
 {
