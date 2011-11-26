@@ -21,7 +21,7 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Index()
 		{
 			var users = _userManagementService.GetUsers().Select(
-				u => new UserAccountViewModel
+				u => new UserAccountIndexViewModel
 				{
 					Id = u.Id,
 					EmailAddress = u.EmailAddress,
@@ -60,7 +60,7 @@ namespace JobSystem.Mvc.Controllers
 		{
 			var user = _userManagementService.GetById(id);
 			return View(
-				new UserAccountViewModel
+				new UserAccountEditViewModel
 				{
 					Id = user.Id,
 					EmailAddress = user.EmailAddress,
@@ -71,7 +71,7 @@ namespace JobSystem.Mvc.Controllers
 
 		[HttpPost]
 		[Transaction]
-		public ActionResult Edit(UserAccountViewModel viewModel)
+		public ActionResult Edit(UserAccountEditViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{

@@ -1,9 +1,8 @@
-﻿@model IEnumerable<JobSystem.Mvc.ViewModels.Users.UserAccountViewModel>
+﻿@model IEnumerable<JobSystem.Mvc.ViewModels.Users.UserAccountIndexViewModel>
 @{
 	ViewBag.Title = "Index";
 }
-<h2>
-	Index</h2>
+<h2>Index</h2>
 <p>
 	@Html.ActionLink("Create New", "Create")
 </p>
@@ -31,14 +30,10 @@
 				@Html.DisplayFor(modelItem => item.EmailAddress)
 			</td>
 			<td>
-				@Html.DisplayFor(modelItem => item.Password)
-			</td>
-			<td>
 				@Html.DisplayFor(modelItem => item.JobTitle)
 			</td>
 			<td>
-				@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-				@Html.ActionLink("Details", "Details", new { id = item.Id }) |
+				@Html.ActionLink("Edit", "Edit", new { id = item.Id })
 			</td>
 		</tr>
  }

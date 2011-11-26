@@ -91,6 +91,8 @@
     <Compile Include="ViewModels\Account\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\Account\LogOnViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\Users\UserAccountEditViewModel.cs" />
+    <Compile Include="ViewModels\Users\UserAccountIndexViewModel.cs" />
     <Compile Include="ViewModels\Users\UserAccountViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -196,6 +198,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="NHibernate.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\UserManagement\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserManagement\Index.cshtml" />
