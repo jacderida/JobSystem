@@ -52,7 +52,9 @@
     <Compile Include="CustomerTests.cs" />
     <Compile Include="Helpers\CustomerServiceFactory.cs" />
     <Compile Include="Helpers\DomainValidationExtensions.cs" />
+    <Compile Include="Helpers\InstrumentServiceFactory.cs" />
     <Compile Include="Helpers\UserManagementServiceFactory.cs" />
+    <Compile Include="InstrumentTests.cs" />
     <Compile Include="UserManagementTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

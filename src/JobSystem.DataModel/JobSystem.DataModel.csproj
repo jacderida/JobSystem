@@ -62,6 +62,7 @@
     <Compile Include="Queries\LinqQuery.cs" />
     <Compile Include="Repositories\ICustomerRepository.cs" />
     <Compile Include="Repositories\IEntityIdLookupRepository.cs" />
+    <Compile Include="Repositories\IInstrumentRepository.cs" />
     <Compile Include="Repositories\IReadWriteRepository.cs" />
     <Compile Include="Repositories\IUserAccountRepository.cs" />
   </ItemGroup>
