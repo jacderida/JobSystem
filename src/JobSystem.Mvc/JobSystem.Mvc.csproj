@@ -90,6 +90,7 @@
     <Compile Include="IoC\DependencyRegistry.cs" />
     <Compile Include="ViewModels\Account\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\Account\LogOnViewModel.cs" />
+    <Compile Include="ViewModels\Customers\CustomerIndexViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerViewModel.cs" />
     <Compile Include="ViewModels\Users\UserAccountEditViewModel.cs" />
     <Compile Include="ViewModels\Users\UserAccountIndexViewModel.cs" />
@@ -166,7 +167,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Customer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -192,6 +192,10 @@
       <Project>{BDCF5B98-B407-4E13-974B-FBB19010C4F6}</Project>
       <Name>JobSystem.Queueing.Msmq</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JobSystem.Resources\JobSystem.Resources.csproj">
+      <Project>{1F5102EF-90BA-4300-9286-5BDE8A35C242}</Project>
+      <Name>JobSystem.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserManagement\Create.cshtml" />
@@ -204,6 +208,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserManagement\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Customer\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Customer\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Customer\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Customer\Details.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

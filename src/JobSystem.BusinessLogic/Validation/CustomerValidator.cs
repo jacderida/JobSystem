@@ -21,10 +21,10 @@ namespace JobSystem.BusinessLogic.Validation
 
 		private void CheckIfNameIsUnique(Customer obj)
 		{
-			if (_customerRepository.GetByName(obj.Name) != null)
+			var customer = _customerRepository.GetByName(obj.Name);
+			if (customer != null && customer.Id != obj.Id)
 				Result.AddError(
-					String.Format(JobSystem.Resources.Customers.Messages.DuplicateName, obj.Name),
-					"Name");
+					String.Format(JobSystem.Resources.Customers.Messages.DuplicateName, obj.Name), "Name");
 		}
 	}
 }

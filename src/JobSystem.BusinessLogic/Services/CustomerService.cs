@@ -6,6 +6,7 @@ using JobSystem.DataModel.Dto;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
+using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -23,6 +24,8 @@ namespace JobSystem.BusinessLogic.Services
 			_customerValidator = new CustomerValidator(customerRepository);
 		}
 
+		#region Public Implementation
+
 		public Customer Create(
 			Guid id, string name, Address tradingAddressDetails, ContactInfo tradingContactInfo,
 			string invoiceTitle, Address invoiceAddressDetails, ContactInfo invoiceContactInfo,
@@ -31,6 +34,7 @@ namespace JobSystem.BusinessLogic.Services
 			if (id == null || id == Guid.Empty)
 				throw new ArgumentException("An ID must be supplied for the customer", "id");
 			var customer = new Customer();
+			customer.Id = id;
 			customer.Name = name;
 			customer.InvoiceTitle = !String.IsNullOrEmpty(invoiceTitle) ? invoiceTitle : String.Empty;
 			customer.DeliveryTitle = !String.IsNullOrEmpty(deliveryTitle) ? deliveryTitle : String.Empty;
@@ -68,6 +72,22 @@ namespace JobSystem.BusinessLogic.Services
 			_customerRepository.Update(customer);
 			return customer;
 		}
+
+		public Customer GetById(Guid id)
+		{
+			var customer = _customerRepository.GetById(id);
+			if (customer == null)
+				throw new ArgumentException("No customer exists with the ID specified", "id");
+			return customer;
+		}
+
+		public IEnumerable<Customer> GetCustomers()
+		{
+			return _customerRepository.GetCustomers();
+		}
+
+		#endregion
+		#region Private Implementation
 
 		private void PopulateTradingAddressInfo(Customer customer, Address tradingAddressDetails)
 		{
@@ -122,5 +142,7 @@ namespace JobSystem.BusinessLogic.Services
 			customer.DeliveryContact1 = !String.IsNullOrEmpty(deliveryContactInfo.Contact1) ? deliveryContactInfo.Contact1 : String.Empty;
 			customer.DeliveryContact2 = !String.IsNullOrEmpty(deliveryContactInfo.Contact2) ? deliveryContactInfo.Contact2 : String.Empty;
 		}
+
+		#endregion
 	}
 }

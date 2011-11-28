@@ -1,21 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using JobSystem.BusinessLogic.Services;
+using JobSystem.BusinessLogic.Validation.Core;
+using JobSystem.DataAccess.NHibernate.Web;
+using JobSystem.DataModel.Dto;
+using JobSystem.Mvc.Core.UIValidation;
+using JobSystem.Mvc.ViewModels.Customers;
 
 namespace JobSystem.Mvc.Controllers
 {
 	public class CustomerController : Controller
 	{
+		private CustomerService _customerService;
+
+		public CustomerController(CustomerService customerService)
+		{
+			_customerService = customerService;
+		}
+
 		public ActionResult Index()
 		{
-			return View();
+			var customerList = _customerService.GetCustomers().Select(
+				c => new CustomerIndexViewModel
+				{
+					Id = c.Id,
+					Name = c.Name
+				}).ToList();
+			return View(customerList);
 		}
 
 		public ActionResult Details(Guid id)
 		{
-			return View();
+			var customer = _customerService.GetById(id);
+			return View(CustomerViewModel.GetCustomerViewModelFromCustomer(customer));
 		}
 
 		public ActionResult Create()
@@ -24,34 +42,68 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Create(FormCollection collection)
+		[Transaction(RollbackOnModelStateError = true)]
+		public ActionResult Create(CustomerViewModel viewModel)
 		{
-			try
+			if (ModelState.IsValid)
 			{
-				return RedirectToAction("Index");
+				try
+				{
+					var id = Guid.NewGuid();
+					_customerService.Create(
+						id,
+						viewModel.Name,
+						Address.GetAddressFromLineDetails(viewModel.Address1, viewModel.Address2, viewModel.Address3, viewModel.Address4, viewModel.Address5),
+						ContactInfo.GetContactInfoFromDetails(viewModel.Telephone, viewModel.Fax, viewModel.Email, viewModel.Contact1, viewModel.Contact2),
+						viewModel.InvoiceTitle,
+						Address.GetAddressFromLineDetails(viewModel.InvoiceAddress1, viewModel.InvoiceAddress2, viewModel.InvoiceAddress3, viewModel.InvoiceAddress4, viewModel.InvoiceAddress5),
+						ContactInfo.GetContactInfoFromDetails(viewModel.SalesTelephone, viewModel.SalesFax, viewModel.SalesEmail, viewModel.SalesContact1, viewModel.SalesContact2),
+						viewModel.DeliveryTitle,
+						Address.GetAddressFromLineDetails(viewModel.DeliveryAddress1, viewModel.DeliveryAddress2, viewModel.DeliveryAddress3, viewModel.DeliveryAddress4, viewModel.DeliveryAddress5),
+						ContactInfo.GetContactInfoFromDetails(viewModel.DeliveryTelephone, viewModel.DeliveryFax, viewModel.DeliveryEmail, viewModel.DeliveryContact1, viewModel.DeliveryContact2));
+					return RedirectToAction("Index");
+				}
+				catch (DomainValidationException dex)
+				{
+					ModelState.UpdateFromDomain(dex.Result);
+				}
 			}
-			catch
-			{
-				return View();
-			}
+			return View(viewModel);
 		}
 
-		public ActionResult Edit(int id)
+		public ActionResult Edit(Guid id)
 		{
-			return View();
+			var customer = _customerService.GetById(id);
+			return View(CustomerViewModel.GetCustomerViewModelFromCustomer(customer));
 		}
 
 		[HttpPost]
-		public ActionResult Edit(int id, FormCollection collection)
+		[Transaction(RollbackOnModelStateError = true)]
+		public ActionResult Edit(CustomerViewModel viewModel)
 		{
-			try
+			if (ModelState.IsValid)
 			{
-				return RedirectToAction("Index");
+				try
+				{
+					_customerService.Edit(
+						viewModel.Id,
+						viewModel.Name,
+						Address.GetAddressFromLineDetails(viewModel.Address1, viewModel.Address2, viewModel.Address3, viewModel.Address4, viewModel.Address5),
+						ContactInfo.GetContactInfoFromDetails(viewModel.Telephone, viewModel.Fax, viewModel.Email, viewModel.Contact1, viewModel.Contact2),
+						viewModel.InvoiceTitle,
+						Address.GetAddressFromLineDetails(viewModel.InvoiceAddress1, viewModel.InvoiceAddress2, viewModel.InvoiceAddress3, viewModel.InvoiceAddress4, viewModel.InvoiceAddress5),
+						ContactInfo.GetContactInfoFromDetails(viewModel.SalesTelephone, viewModel.SalesFax, viewModel.SalesEmail, viewModel.SalesContact1, viewModel.SalesContact2),
+						viewModel.DeliveryTitle,
+						Address.GetAddressFromLineDetails(viewModel.DeliveryAddress1, viewModel.DeliveryAddress2, viewModel.DeliveryAddress3, viewModel.DeliveryAddress4, viewModel.DeliveryAddress5),
+						ContactInfo.GetContactInfoFromDetails(viewModel.DeliveryTelephone, viewModel.DeliveryFax, viewModel.DeliveryEmail, viewModel.DeliveryContact1, viewModel.DeliveryContact2));
+					return RedirectToAction("Index");
+				}
+				catch (DomainValidationException dex)
+				{
+					ModelState.UpdateFromDomain(dex.Result);
+				}
 			}
-			catch
-			{
-				return View();
-			}
+			return View(viewModel);
 		}
 	}
 }

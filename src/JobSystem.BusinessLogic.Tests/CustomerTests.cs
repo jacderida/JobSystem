@@ -60,11 +60,12 @@ namespace JobSystem.BusinessLogic.Tests
 			customerRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
 			customerRepositoryMock.Stub(x => x.GetByName("Gael Ltd")).Return(null);
 			_customerService = CustomerServiceFactory.Create(customerRepositoryMock);
-			_customerService.Create(
+			var customer = _customerService.Create(
 				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			customerRepositoryMock.VerifyAllExpectations();
+			Assert.That(customer.Id != Guid.Empty);
 		}
 
 		[Test]
