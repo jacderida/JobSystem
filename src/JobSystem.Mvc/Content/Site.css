@@ -4,7 +4,7 @@ to use a different color start by replacing all instances of
 #5c87b2 with your new color.
 ----------------------------------------------------------*/
 body {
-    background-color: #5c87b2;
+    background-color: #F3F3F5 !important;
     font-size: .85em;
     font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
     margin: 0;
@@ -77,9 +77,17 @@ h5, h6 {
 /* you can specify a greater or lesser percentage for the 
 page width. Or, you can specify an exact pixel width. */
 .page {
-    width: 90%;
+    width: 1024px;
+    background-color: #fff;
     margin-left: auto;
     margin-right: auto;
+    padding: 20px;
+    -moz-border-radius-topleft: 0px;
+    -moz-border-radius-topright: 0px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-radius: 0px 0px 5px 5px;
+    border-radius: 0px 0px 5px 5px;
 }
 
 header, #header {
@@ -102,10 +110,10 @@ header h1, #header h1 {
 
 #main {
     padding: 30px 30px 15px 30px;
-    background-color: #fff;
-    border-radius: 4px 0 0 0;
-    -webkit-border-radius: 4px 0 0 0;
-    -moz-border-radius: 4px 0 0 0;
+    background-color: #eaeaea;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
 }
 
 footer, 
@@ -125,7 +133,7 @@ footer,
 /* TAB MENU   
 ----------------------------------------------------------*/
 ul#menu {
-    border-bottom: 1px #5C87B2 solid;
+    /*border-bottom: 1px #5C87B2 solid;*/
     padding: 0 0 2px;
     position: relative;
     margin: 0;
@@ -181,6 +189,13 @@ fieldset {
     margin: 0 0 1.5em 0;
 }
 
+.fieldset-no-legend 
+{
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
 legend {
     font-size: 1.2em;
     font-weight: bold;
@@ -196,7 +211,12 @@ input[type="password"] {
     padding: 2px;
     font-size: 1.2em;
     color: #444;
-    width: 200px;
+    width: 300px;
+}
+
+input[type="text"]:focus, 
+input[type="password"]:focus {
+    border: 1px solid orange;
 }
 
 select {
@@ -243,7 +263,7 @@ table th {
 
 nav, 
 #menucontainer {
-    margin-top: 40px;
+    margin-top: 35px;
 }
 
 div#title {
@@ -256,22 +276,21 @@ div#title {
     font-size: 1.1em;
     display: block;
     text-align: right;
-    margin: 10px;
-    color: White;
+    color: black;
 }
 
 #logindisplay a:link {
-    color: white;
+    color: black;
     text-decoration: underline;
 }
 
 #logindisplay a:visited {
-    color: white;
+    color: black;
     text-decoration: underline;
 }
 
 #logindisplay a:hover {
-    color: white;
+    color: black;
     text-decoration: none;
 }
 
@@ -291,7 +310,7 @@ div#title {
 }
 
 .validation-summary-errors {
-    font-weight: bold;
+    /*font-weight: bold;*/
     color: #ff0000;
 }
 
@@ -321,4 +340,56 @@ div#title {
 
 .tri-state {
     width: 6em;
+}
+
+/* Shadows */
+.box_shadow 
+{
+    -moz-box-shadow:0px 0px 15px #000000;
+    -webkit-box-shadow:0px 0px 15px #000000;
+    box-shadow:0px 0px 15px #000000;
+}
+
+/* LOGIN FORM */
+#login-page
+{
+    width: 340px;
+    margin: 0 auto 0 auto;
+}
+
+#login-form-container, #login-validation 
+{
+    width: 305px;
+    background-color: #ffffff;
+    margin: 0 auto 0 auto;
+    padding: 20px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -moz-box-shadow:0px 0px 10px 5px #e3e3e3;
+    -webkit-box-shadow:0px 0px 10px 5px #e3e3e3;
+    box-shadow:0px 0px 10px 5px #e3e3e3;
+}
+
+#login-form-container .editor-label:nth-child(1)
+{
+    margin: 0;
+}
+
+#login-form-container input[type="submit"]
+{
+    float: right;
+    margin-top: 10px;
+}
+
+#login-form-container #remember-me
+{
+    float: left;
+}
+
+#login-form-image
+{
+    width: 200px;
+    margin: 50px auto 0 auto;
+    margin-bottom: 15px;
 }

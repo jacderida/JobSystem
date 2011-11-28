@@ -5,7 +5,7 @@ namespace JobSystem.Mvc.ViewModels.Account
 	public class LogOnViewModel
 	{
 		[Required]
-		[Display(Name = "User name")]
+		[Display(Name = "Email")]
 		public string UserName { get; set; }
 
 		[Required]
@@ -13,7 +13,7 @@ namespace JobSystem.Mvc.ViewModels.Account
 		[Display(Name = "Password")]
 		public string Password { get; set; }
 
-		[Display(Name = "Remember me?")]
+		[Display(Name = "Remember me")]
 		public bool RememberMe { get; set; }
 	}
 }
