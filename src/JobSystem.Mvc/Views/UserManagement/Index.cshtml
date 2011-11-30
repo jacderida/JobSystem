@@ -1,11 +1,9 @@
 ﻿@model IEnumerable<JobSystem.Mvc.ViewModels.Users.UserAccountIndexViewModel>
 @{
-	ViewBag.Title = "Index";
+	ViewBag.Title = "User Management";
 }
-<h2>Index</h2>
-<p>
-	@Html.ActionLink("Create New", "Create")
-</p>
+<h2>Users</h2>
+@Html.ActionLink("Create User", "Create", "UserManagement", new { }, new { @class="nav-link" })
 <table>
 	<tr>
 		<th>

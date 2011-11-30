@@ -14,25 +14,26 @@
     <div class="page box_shadow">
         <div id="header">
             <div id="title">
-                <a href="/Customer"><img src="@Url.Content("~/Content/images/intertek.jpg")" /></a>
+                <img src="@Url.Content("~/Content/images/logo_intertek_sc.gif")" />
+                @*<a href="/Customer"><img src="@Url.Content("~/Content/images/intertek.jpg")" /></a>*@
              </div>
             <div id="logindisplay">
                 @Html.Partial("_LogOnPartial")
             </div>
             <div id="menucontainer">
                 <ul id="menu">
-                   @* <li>@Html.ActionLink("Home", "Index", "Home")</li>*@
-                    <li>@Html.ActionLink("Users", "Index", "UserManagement")</li>
-                    <li>@Html.ActionLink("Customers", "Index", "Customer")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                </ul>
+                    @* <li>@Html.ActionLink("Home", "Index", "Home")</li>*@
+                    <li>@Html.ActionLink("Users", "Index", "UserManagement", new {}, new { @class="nav-link"})</li>
+                    <li>@Html.ActionLink("Customers", "Index", "Customer", new { }, new { @class="nav-link" })</li>
+                    <li>@Html.ActionLink("About", "About", "Home", new { }, new { @class="nav-link" })</li>
+                </ul>  
             </div>
         </div>
         <div id="main">
             @RenderBody()
         </div>
-        <div id="footer">
-        </div>
+        @*<div id="footer">
+        </div>*@
     </div>
     }
     else
