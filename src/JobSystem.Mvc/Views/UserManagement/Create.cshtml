@@ -1,8 +1,8 @@
 ﻿@model JobSystem.Mvc.ViewModels.Users.UserAccountViewModel
 @{
-	ViewBag.Title = "Create";
+	ViewBag.Title = "Create New User";
 }
-<h2>Create User</h2>
+<h2>Create New User</h2>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <div id="create-user-container">
@@ -10,7 +10,7 @@
 {
 	@Html.ValidationSummary(true)
 	<fieldset>
-		<legend>UserAccountViewModel</legend>
+		<legend>User Details</legend>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.Name)
 		</div>
@@ -39,10 +39,8 @@
 			@Html.EditorFor(model => model.JobTitle)
 			@Html.ValidationMessageFor(model => model.JobTitle)
 		</div>
-		<p>
-			<input type="submit" value="Create" />
-		</p>
 	</fieldset>
+	<input type="submit" value="Create" class="primary-action" />
 }
 </div>
 <div>

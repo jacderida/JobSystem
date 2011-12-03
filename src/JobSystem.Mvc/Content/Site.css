@@ -46,7 +46,8 @@ section {
 ----------------------------------------------------------*/
 h1, h2, h3, h4, h5, h6 {
     font-size: 1.5em;
-    color: #000;
+    color: #081A58;
+    text-shadow: 1px 1px 2px #eaeaea;
 }
 
 h1 {
@@ -95,6 +96,7 @@ header, #header {
     position: relative;
     margin-bottom: 0px;
     color: #000;
+    background-color: #F2F2F2;
 }
 
 header h1, #header h1 {
@@ -149,9 +151,9 @@ ul#menu li a:focus, ul#menu li a:hover {
     color: white;
     text-shadow: 1px 1px 1px #4D4D4D;
     height: 35px;
-    -moz-box-shadow:0px 0px 4px #7d7d7d;
-    -webkit-box-shadow:0px 0px 4px #7d7d7d;
-    box-shadow:0px 0px 4px #7d7d7d;
+    -moz-box-shadow:0px 0px 4px #7091FF;
+    -webkit-box-shadow:0px 0px 4px #7091FF;
+    box-shadow:0px 0px 4px #7091FF;
 }
 
 ul#menu li#greeting {

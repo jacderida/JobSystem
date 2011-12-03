@@ -1,11 +1,9 @@
 ﻿@model IEnumerable<JobSystem.Mvc.ViewModels.Customers.CustomerIndexViewModel>
 @{
-	ViewBag.Title = "Index";
+	ViewBag.Title = "Customer List";
 }
-<h2>Index</h2>
-<p>
-	@Html.ActionLink("Create New", "Create")
-</p>
+<h2>Customer List</h2>
+@Html.ActionLink("Create Customer", "Create", new { }, new { @class = "primary-action" })
 <table>
 	<tr>
 		<th>Name</th>

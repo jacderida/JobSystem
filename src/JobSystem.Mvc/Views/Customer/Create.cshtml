@@ -1,15 +1,15 @@
 ﻿@model JobSystem.Mvc.ViewModels.Customers.CustomerViewModel
 @{
-	ViewBag.Title = "Create";
+	ViewBag.Title = "Create Customer";
 }
-<h2>Create</h2>
+<h2>Create Customer</h2>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 @using (Html.BeginForm())
 {
 	@Html.ValidationSummary(true)
 	<fieldset>
-		<legend>CustomerViewModel</legend>
+		<legend>Name & Address</legend>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.Name)
 		</div>
@@ -52,7 +52,10 @@
 			@Html.EditorFor(model => model.Address5)
 			@Html.ValidationMessageFor(model => model.Address5)
 		</div>
-		<div class="editor-label">
+    </fieldset>
+    <fieldset>
+        <legend>Contact Information</legend>
+        <div class="editor-label">
 			@Html.LabelFor(model => model.Telephone)
 		</div>
 		<div class="editor-field">
@@ -87,7 +90,10 @@
 			@Html.EditorFor(model => model.Contact2)
 			@Html.ValidationMessageFor(model => model.Contact2)
 		</div>
-		<div class="editor-label">
+    </fieldset>
+    <fieldset>
+        <legend>Invoice Details</legend>
+        <div class="editor-label">
 			@Html.LabelFor(model => model.InvoiceTitle)
 		</div>
 		<div class="editor-field">
@@ -95,41 +101,51 @@
 			@Html.ValidationMessageFor(model => model.InvoiceTitle)
 		</div>
 		<div class="editor-label">
-			@Html.LabelFor(model => model.InvoiceAddress1)
+			@Html.Label("Invoice Address")
 		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.InvoiceAddress1)
-			@Html.ValidationMessageFor(model => model.InvoiceAddress1)
+		<input type="checkbox" id="invoiceCheckbox" checked="checked">
+		<label for="invoiceCheckbox">Same as main address</label>
+		<div id="invoiceDetails">
+			<div class="editor-label">
+				@Html.LabelFor(model => model.InvoiceAddress1)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.InvoiceAddress1)
+				@Html.ValidationMessageFor(model => model.InvoiceAddress1)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.InvoiceAddress2)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.InvoiceAddress2)
+				@Html.ValidationMessageFor(model => model.InvoiceAddress2)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.InvoiceAddress3)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.InvoiceAddress3)
+				@Html.ValidationMessageFor(model => model.InvoiceAddress3)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.InvoiceAddress4)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.InvoiceAddress4)
+				@Html.ValidationMessageFor(model => model.InvoiceAddress4)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.InvoiceAddress5)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.InvoiceAddress5)
+				@Html.ValidationMessageFor(model => model.InvoiceAddress5)
+			</div>
 		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.InvoiceAddress2)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.InvoiceAddress2)
-			@Html.ValidationMessageFor(model => model.InvoiceAddress2)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.InvoiceAddress3)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.InvoiceAddress3)
-			@Html.ValidationMessageFor(model => model.InvoiceAddress3)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.InvoiceAddress4)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.InvoiceAddress4)
-			@Html.ValidationMessageFor(model => model.InvoiceAddress4)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.InvoiceAddress5)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.InvoiceAddress5)
-			@Html.ValidationMessageFor(model => model.InvoiceAddress5)
-		</div>
-		<div class="editor-label">
+    </fieldset>
+    <fieldset>
+        <legend>Sales Contact Information</legend>
+        <div class="editor-label">
 			@Html.LabelFor(model => model.SalesTelephone)
 		</div>
 		<div class="editor-field">
@@ -164,68 +180,15 @@
 			@Html.EditorFor(model => model.SalesContact2)
 			@Html.ValidationMessageFor(model => model.SalesContact2)
 		</div>
-		<div class="editor-label">
+    </fieldset>
+	<fieldset>
+        <legend>Delivery Information</legend>
+        <div class="editor-label">
 			@Html.LabelFor(model => model.DeliveryTitle)
 		</div>
 		<div class="editor-field">
 			@Html.EditorFor(model => model.DeliveryTitle)
 			@Html.ValidationMessageFor(model => model.DeliveryTitle)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.DeliveryAddress1)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.DeliveryAddress1)
-			@Html.ValidationMessageFor(model => model.DeliveryAddress1)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.DeliveryAddress2)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.DeliveryAddress2)
-			@Html.ValidationMessageFor(model => model.DeliveryAddress2)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.DeliveryAddress3)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.DeliveryAddress3)
-			@Html.ValidationMessageFor(model => model.DeliveryAddress3)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.DeliveryAddress4)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.DeliveryAddress4)
-			@Html.ValidationMessageFor(model => model.DeliveryAddress4)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.DeliveryAddress5)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.DeliveryAddress5)
-			@Html.ValidationMessageFor(model => model.DeliveryAddress5)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.DeliveryTelephone)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.DeliveryTelephone)
-			@Html.ValidationMessageFor(model => model.DeliveryTelephone)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.DeliveryFax)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.DeliveryFax)
-			@Html.ValidationMessageFor(model => model.DeliveryFax)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.DeliveryEmail)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.DeliveryEmail)
-			@Html.ValidationMessageFor(model => model.DeliveryEmail)
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.DeliveryContact1)
@@ -241,10 +204,71 @@
 			@Html.EditorFor(model => model.DeliveryContact2)
 			@Html.ValidationMessageFor(model => model.DeliveryContact2)
 		</div>
-		<p>
-			<input type="submit" value="Create" />
-		</p>
-	</fieldset>
+		<div class="editor-label">
+			@Html.Label("Delivery Address")
+		</div>
+		<input type="checkbox" id="deliveryCheckbox" checked="checked">
+		<label for="deliveryCheckbox">Same as main address</label>
+		<div id="deliveryDetails">
+			<div class="editor-label">
+				@Html.LabelFor(model => model.DeliveryAddress1)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.DeliveryAddress1)
+				@Html.ValidationMessageFor(model => model.DeliveryAddress1)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.DeliveryAddress2)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.DeliveryAddress2)
+				@Html.ValidationMessageFor(model => model.DeliveryAddress2)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.DeliveryAddress3)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.DeliveryAddress3)
+				@Html.ValidationMessageFor(model => model.DeliveryAddress3)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.DeliveryAddress4)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.DeliveryAddress4)
+				@Html.ValidationMessageFor(model => model.DeliveryAddress4)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.DeliveryAddress5)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.DeliveryAddress5)
+				@Html.ValidationMessageFor(model => model.DeliveryAddress5)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.DeliveryTelephone)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.DeliveryTelephone)
+				@Html.ValidationMessageFor(model => model.DeliveryTelephone)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.DeliveryFax)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.DeliveryFax)
+				@Html.ValidationMessageFor(model => model.DeliveryFax)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.DeliveryEmail)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.DeliveryEmail)
+				@Html.ValidationMessageFor(model => model.DeliveryEmail)
+			</div>
+		</div>
+    </fieldset>	
+	<input type="submit" value="Create" class="primary-action"/>
 }
 <div>
 	@Html.ActionLink("Back to List", "Index")

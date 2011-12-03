@@ -12,14 +12,19 @@ namespace JobSystem.Mvc.ViewModels.Customers
 		[StringLength(255, ErrorMessageResourceName = "NameTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public string Name { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+        [Display(Name="Address Line 1")]
 		public string Address1 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+        [Display(Name = "Address Line 2")]
 		public string Address2 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+        [Display(Name = "Town/City")]
 		public string Address3 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+        [Display(Name = "County")]
 		public string Address4 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+        [Display(Name = "Post Code")]
 		public string Address5 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public string Telephone { get; set; }
@@ -32,48 +37,70 @@ namespace JobSystem.Mvc.ViewModels.Customers
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public string Contact2 { get; set; }
 		[StringLength(255, ErrorMessageResourceName = "InvoiceTitleTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Invoice Title")]
 		public string InvoiceTitle { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+        [Display(Name = "Address Line 1")]
 		public string InvoiceAddress1 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+        [Display(Name = "Address Line 2")]
 		public string InvoiceAddress2 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+        [Display(Name = "Town/City")]
 		public string InvoiceAddress3 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+        [Display(Name = "County")]
 		public string InvoiceAddress4 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+        [Display(Name = "Post Code")]
 		public string InvoiceAddress5 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
+        [Display(Name = "Telephone")]
 		public string SalesTelephone { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
+        [Display(Name = "Fax")]
 		public string SalesFax { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Email")]
 		public string SalesEmail { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "First Contact Name")]
 		public string SalesContact1 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Second Contact Name")]
 		public string SalesContact2 { get; set; }
 		[StringLength(255, ErrorMessageResourceName = "DeliveryTitleTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Delivery Title")]
 		public string DeliveryTitle { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Address Line 1")]
 		public string DeliveryAddress1 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Address Line 2")]
 		public string DeliveryAddress2 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Town/City")]
 		public string DeliveryAddress3 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "County")]
 		public string DeliveryAddress4 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Post Code")]
 		public string DeliveryAddress5 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Telephone")]
 		public string DeliveryTelephone { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Fax")]
 		public string DeliveryFax { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Email")]
 		public string DeliveryEmail { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "First Contact Name")]
 		public string DeliveryContact1 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Second Contact Name")]
 		public string DeliveryContact2 { get; set; }
 
 		public static CustomerViewModel GetCustomerViewModelFromCustomer(Customer customer)
