@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Dto\Address.cs" />
     <Compile Include="Dto\ContactInfo.cs" />
+    <Compile Include="Entities\CompanyDetails.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\EntityIdLookup.cs" />
     <Compile Include="Entities\Instrument.cs" />

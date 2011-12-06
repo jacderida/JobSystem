@@ -78,12 +78,7 @@ namespace JobSystem.DataAccess.NHibernate
 		{
 			Configuration config;
 			config = AddConfiguration(
-				factoryKey,
-				mappingAssemblies,
-				autoPersistenceModel,
-				ConfigureNHibernate(cfgFile, cfgProperties),
-				validatorCfgFile,
-				persistenceConfigurer);
+				factoryKey, mappingAssemblies, autoPersistenceModel, ConfigureNHibernate(cfgFile, cfgProperties), validatorCfgFile, persistenceConfigurer);
 			return config;
 		}
 
@@ -107,9 +102,7 @@ namespace JobSystem.DataAccess.NHibernate
 			CheckSharpArch.Require(
 				!SessionFactories.ContainsKey(factoryKey),
 				"A session factory has already been configured with the key of " + factoryKey);
-
 			SessionFactories.Add(factoryKey, sessionFactory);
-
 			return cfg;
 		}
 
@@ -257,13 +250,7 @@ namespace JobSystem.DataAccess.NHibernate
 			try
 			{
 				return AddConfiguration(
-					DefaultFactoryKey,
-					mappingAssemblies,
-					autoPersistenceModel,
-					cfgFile,
-					cfgProperties,
-					validatorCfgFile,
-					persistenceConfigurer);
+					DefaultFactoryKey, mappingAssemblies, autoPersistenceModel, cfgFile, cfgProperties, validatorCfgFile, persistenceConfigurer);
 			}
 			catch
 			{
