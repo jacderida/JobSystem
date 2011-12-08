@@ -3,7 +3,7 @@
 		// $("input:submit, a.primary-action, button, .nav-link").button();
 		$(".primary-action").button();
 
-		//$("#create-user-container").dialog();
+		$("#create-user-container").dialog();
 
 		$("#invoiceDetails").hide();
 		$("#invoiceCheckbox").click(function () {
@@ -25,5 +25,28 @@
 			}
 		});
 
+		$('#settings').hover(function () {
+			$('#admin-menu').removeClass('hidden');
+		});
+
+		$('#settings').mouseleave(function () {
+			var nav_timeout = setTimeout(function () {
+				$('#admin-menu').addClass('hidden');
+			}, 300);
+
+			var menu_timeout;
+
+			$('#admin-menu').mouseenter(function () {
+				clearTimeout(nav_timeout);
+				clearTimeout(menu_timeout);
+				$('#admin-menu').removeClass('hidden');
+
+				$('#admin-menu').mouseleave(function () {
+					menu_timeout = setTimeout(function () {
+						$('#admin-menu').addClass('hidden');
+					}, 300);
+				});
+			});
+		});
 	});
 });
