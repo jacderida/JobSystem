@@ -43,7 +43,9 @@
   <ItemGroup>
     <Compile Include="Dto\Address.cs" />
     <Compile Include="Dto\ContactInfo.cs" />
+    <Compile Include="Entities\BankDetails.cs" />
     <Compile Include="Entities\CompanyDetails.cs" />
+    <Compile Include="Entities\Currency.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\EntityIdLookup.cs" />
     <Compile Include="Entities\Instrument.cs" />
@@ -54,13 +56,16 @@
     <Compile Include="Entities\JobItemLocation.cs" />
     <Compile Include="Entities\JobItemOperatingUnit.cs" />
     <Compile Include="Entities\JobItemWorkLocation.cs" />
+    <Compile Include="Entities\PaymentTerm.cs" />
     <Compile Include="Entities\Status.cs" />
+    <Compile Include="Entities\TaxCode.cs" />
     <Compile Include="Entities\UserAccount.cs" />
     <Compile Include="IEntityIdProvider.cs" />
     <Compile Include="IUserContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\IQuery.cs" />
     <Compile Include="Queries\LinqQuery.cs" />
+    <Compile Include="Repositories\ICompanyDetailsRepository.cs" />
     <Compile Include="Repositories\ICustomerRepository.cs" />
     <Compile Include="Repositories\IEntityIdLookupRepository.cs" />
     <Compile Include="Repositories\IInstrumentRepository.cs" />

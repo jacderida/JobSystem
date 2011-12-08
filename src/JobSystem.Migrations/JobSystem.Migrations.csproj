@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentMigrator, Version=0.9.0.42, Culture=neutral, processorArchitecture=MSIL">
-			<HintPath>..\..\build\scripts\database\migrations\FluentMigrator.dll</HintPath>
+      <HintPath>..\..\build\scripts\database\migrations\FluentMigrator.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -57,6 +57,11 @@
     <Compile Include="M20110928203503_AddJobsTable.cs" />
     <Compile Include="M20110928204549_AddJobItemsTable.cs" />
     <Compile Include="M20110928210052_AddItemHistoryTable.cs" />
+    <Compile Include="M20111206223834_AddTaxCodesTable.cs" />
+    <Compile Include="M20111206224230_AddCurrenciesTable.cs" />
+    <Compile Include="M20111206224458_AddPaymentTermsTable.cs" />
+    <Compile Include="M20111206224823_AddBankDetailsTable.cs" />
+    <Compile Include="M20111208212831_AddCompanyDetailsTable.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

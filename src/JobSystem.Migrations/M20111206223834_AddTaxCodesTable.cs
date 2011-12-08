@@ -11,7 +11,7 @@ namespace JobSystem.Migrations
 		{
 			Create.Table("TaxCodes")
 				.WithIdColumn()
-				.WithColumn("TaxCode").AsString(50).NotNullable()
+				.WithColumn("TaxCodeName").AsString(50).NotNullable()
 				.WithColumn("Description").AsString(50).NotNullable()
 				.WithColumn("Rate").AsDouble().NotNullable();
 		}

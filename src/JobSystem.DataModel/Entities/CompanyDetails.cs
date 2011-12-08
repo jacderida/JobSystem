@@ -19,9 +19,10 @@ namespace JobSystem.DataModel.Entities
 		public virtual string Email { get; set; }
 		public virtual string Www{ get; set; }
 		public virtual string TermsAndConditions { get; set; }
-		public virtual Guid DefaultCurrencyId { get; set; }
-		public virtual Guid DefaultTaxCodeId { get; set; }
-		public virtual Guid DefaultPaymentTermsId { get; set; }
-		public virtual Guid DefaultBankDetailsId { get; set; }
+		public virtual Currency DefaultCurrency { get; set; }
+		public virtual TaxCode DefaultTaxCode { get; set; }
+		public virtual PaymentTerm DefaultPaymentTerm { get; set; }
+		public virtual BankDetails DefaultBankDetails { get; set; }
+		public virtual byte[] MainLogo { get; set; }
 	}
 }
