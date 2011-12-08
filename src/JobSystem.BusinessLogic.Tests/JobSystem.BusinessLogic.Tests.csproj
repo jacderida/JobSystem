@@ -47,9 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompanyDetailsTests.cs" />
     <Compile Include="Context\TestAppConfig.cs" />
     <Compile Include="Context\TestUserContext.cs" />
     <Compile Include="CustomerTests.cs" />
+    <Compile Include="Helpers\CompanyDetailsServiceFactory.cs" />
     <Compile Include="Helpers\CustomerServiceFactory.cs" />
     <Compile Include="Helpers\DomainValidationExtensions.cs" />
     <Compile Include="Helpers\InstrumentServiceFactory.cs" />
