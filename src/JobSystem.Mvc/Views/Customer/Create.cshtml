@@ -52,9 +52,6 @@
 			@Html.EditorFor(model => model.Address5)
 			@Html.ValidationMessageFor(model => model.Address5)
 		</div>
-    </fieldset>
-    <fieldset>
-        <legend>Contact Information</legend>
         <div class="editor-label">
 			@Html.LabelFor(model => model.Telephone)
 		</div>
@@ -90,9 +87,9 @@
 			@Html.EditorFor(model => model.Contact2)
 			@Html.ValidationMessageFor(model => model.Contact2)
 		</div>
-    </fieldset>
+	</fieldset>
     <fieldset>
-        <legend>Invoice Details</legend>
+        <legend><img src=@Url.Content("../Content/images/invoice.png") /> Invoice Details</legend>
         <div class="editor-label">
 			@Html.LabelFor(model => model.InvoiceTitle)
 		</div>
@@ -182,7 +179,7 @@
 		</div>
     </fieldset>
 	<fieldset>
-        <legend>Delivery Information</legend>
+        <legend><img src=@Url.Content("../Content/images/delivery.png") /> Delivery Information</legend>
         <div class="editor-label">
 			@Html.LabelFor(model => model.DeliveryTitle)
 		</div>
