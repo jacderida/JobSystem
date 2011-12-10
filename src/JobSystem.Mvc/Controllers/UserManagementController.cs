@@ -63,7 +63,7 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Edit(Guid id)
 		{
 			var user = _userManagementService.GetById(id);
-			return PartialView("_Edit", new UserAccountViewModel
+			return PartialView("_Edit", new UserAccountEditViewModel
 				{
 					Id = user.Id,
 					EmailAddress = user.EmailAddress,
@@ -88,7 +88,7 @@ namespace JobSystem.Mvc.Controllers
 					ModelState.UpdateFromDomain(dex.Result);
 				}
 			}
-			return View(viewModel);
+			return PartialView("_Edit", viewModel);
 		}
 	}
 }

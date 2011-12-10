@@ -245,11 +245,11 @@ ul#menu li.selected a {
 }
 
 ul#menu li a.settings {
-	background: transparent url(../Content/images/settings_icon.png) no-repeat 9px center;
+	background: transparent url(../Content/images/settings_icon.png) no-repeat 9px 4px;
 }
 
 ul#menu li a.settings:focus, ul#menu li a.settings:hover {
-	background: #023467 url(../Content/images/settings_icon_focus.png) no-repeat center center;
+	background: transparent url(../Content/images/settings_icon_focus.png) no-repeat 9px center;
 }
 
 #admin-menu {
@@ -369,7 +369,7 @@ table td {
     color: Black;
     border-bottom:1px solid #e5eff8;
     border-left:1px solid #e5eff8;
-    padding:.3em 1em;
+    padding:.5em 1em;
     text-align:center;
 }
 
@@ -378,6 +378,7 @@ table th {
     text-align: center;
 	font-weight: bold;
     border-right: 1px solid #B7B7B7;
+	border-bottom: 1px solid #C7C7C7;
     background: #e8eef4 url(../Content/images/table-head-bg.png) no-repeat;
     color: #072356;
     text-shadow: 1px 1px 2px #fff;
@@ -400,7 +401,7 @@ table tr:nth-child(odd)
 
 nav, 
 #menucontainer {
-    border-bottom: 3px solid #081A58;
+    border-bottom: 2px solid #081A58;
     height: 30px;
     margin-top: 20px;
 }
@@ -549,4 +550,8 @@ div#title {
     width: 200px;
     margin: 50px auto 0 auto;
     margin-bottom: 15px;
+}
+
+.buttons-row {
+	margin: 10px 0 10px 0;
 }
