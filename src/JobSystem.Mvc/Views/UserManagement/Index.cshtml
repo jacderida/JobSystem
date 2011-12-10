@@ -1,38 +1,17 @@
-﻿@model IEnumerable<JobSystem.Mvc.ViewModels.Users.UserAccountIndexViewModel>
+﻿@model JobSystem.Mvc.ViewModels.Users.UserAccountIndexViewModel
 @{
 	ViewBag.Title = "User Management";
 }
 <h2>Users</h2>
-@Html.ActionLink("Create User", "Create", "UserManagement", new { }, new { @class="primary-action" })
-<table>
-	<tr>
-		<th>
-			Name
-		</th>
-		<th>
-			Email Address
-		</th>
-		<th>
-			Job Title
-		</th>
-		<th>
-		</th>
-	</tr>
-	@foreach (var item in Model)
- {
-		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => item.Name)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.EmailAddress)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.JobTitle)
-			</td>
-			<td>
-				@Html.ActionLink("Edit", "Edit", new { id = item.Id })
-			</td>
-		</tr>
- }
-</table>
+
+<a href="#" id="createUserButton" class="primary-action">Create User</a>
+
+@Html.Partial("_UserList", Model.Users)
+
+@Html.Partial("_Create", Model.CreateEditModel)
+
+<div id="edit-user-container">
+</div>
+
+<input type="hidden" id="editUrl" value="@Url.Action("Edit", "UserManagement")"/>
+
