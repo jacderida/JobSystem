@@ -44,6 +44,7 @@ namespace JobSystem.BusinessLogic.Services
 			PopulateSalesContactInfo(customer, invoiceContactInfo);
 			PopulateDeliveryAddressInfo(customer, deliveryAddressDetails);
 			PopulateDeliveryContactInfo(customer, deliveryContactInfo);
+			ValidateAnnotatedObjectThrowOnFailure(customer);
 			_customerValidator.ValidateThrowOnFailure(customer);
 			_customerRepository.Create(customer);
 			return customer;
@@ -68,6 +69,7 @@ namespace JobSystem.BusinessLogic.Services
 			PopulateSalesContactInfo(customer, invoiceContactInfo);
 			PopulateDeliveryAddressInfo(customer, deliveryAddressDetails);
 			PopulateDeliveryContactInfo(customer, deliveryContactInfo);
+			ValidateAnnotatedObjectThrowOnFailure(customer);
 			_customerValidator.ValidateThrowOnFailure(customer);
 			_customerRepository.Update(customer);
 			return customer;

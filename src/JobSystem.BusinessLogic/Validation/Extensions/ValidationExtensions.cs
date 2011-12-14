@@ -20,10 +20,10 @@ namespace JobSystem.BusinessLogic.Validation.Extensions
 		public static void ValidateThrowOnFailure<T>(this IValidator<T> validator, T toValidate)
 		{
 			var result = validator.Validate(toValidate);
-			if (!result.IsValid)
+			if (result.Count > 0)
 				throw new DomainValidationException(result);
 		}
-
+		
 		/// <summary>
 		/// Validates each item in <paramref name="toValidate"/> using <paramref name="validator"/>, throwing a <see cref="DomainValidationException"/>
 		/// if validation fails

@@ -1,11 +1,13 @@
-﻿using JobSystem.BusinessLogic.Validation.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
-using System;
 
 namespace JobSystem.BusinessLogic.Validation
 {
-	internal class CustomerValidator : AnnotatedObjectValidator<Customer>
+	internal class CustomerValidator : IValidator<Customer>
 	{
 		private ICustomerRepository _customerRepository;
 
@@ -14,17 +16,18 @@ namespace JobSystem.BusinessLogic.Validation
 			_customerRepository = repository;
 		}
 
-		protected override void ValidateAgainstDomain(Customer obj)
+		public List<ValidationResult> Validate(Customer obj)
 		{
-			CheckIfNameIsUnique(obj);
+			var result = new List<ValidationResult>();
+			CheckIfNameIsUnique(result, obj);
+			return result;
 		}
 
-		private void CheckIfNameIsUnique(Customer obj)
+		private void CheckIfNameIsUnique(List<ValidationResult> validationResult, Customer obj)
 		{
 			var customer = _customerRepository.GetByName(obj.Name);
 			if (customer != null && customer.Id != obj.Id)
-				Result.AddError(
-					String.Format(JobSystem.Resources.Customers.Messages.DuplicateName, obj.Name), "Name");
+				validationResult.Add(new ValidationResult(String.Format(JobSystem.Resources.Customers.Messages.DuplicateName, obj.Name), new string[] { "Name" }));
 		}
 	}
 }

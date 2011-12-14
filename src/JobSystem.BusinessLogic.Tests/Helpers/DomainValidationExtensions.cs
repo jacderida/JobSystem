@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using JobSystem.BusinessLogic.Validation.Core;
 
 namespace JobSystem.BusinessLogic.Tests.Helpers
@@ -17,14 +14,12 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 	{
 		public static bool ResultContainsMessage(this DomainValidationException dex, string expectedMessage)
 		{
-			return dex.Result.Messages[0].Message == expectedMessage;
+			return dex.Result[0].ErrorMessage == expectedMessage;
 		}
 
 		public static bool ResultPropertyContainsMessage(this DomainValidationException dex, string propertyName, string expectedMessage)
 		{
-			return
-				dex.Result.Messages[0].PropertyName == propertyName &&
-				dex.Result.Messages[0].Message == expectedMessage;
+			return dex.Result[0].MemberNames.ToArray()[0] == propertyName && dex.Result[0].ErrorMessage == expectedMessage;
 		}
 	}
 }

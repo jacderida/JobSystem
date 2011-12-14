@@ -45,6 +45,7 @@ namespace JobSystem.BusinessLogic.Services
 				JobTitle = jobTitle
 			};
 			SetPassword(userAccount, password);
+			ValidateAnnotatedObjectThrowOnFailure(userAccount);
 			_userAccountValidator.ValidateThrowOnFailure(userAccount);
 			_userAccountRepository.Create(userAccount);
 			return userAccount;
@@ -60,6 +61,7 @@ namespace JobSystem.BusinessLogic.Services
 			userAccount.Name = name;
 			userAccount.EmailAddress = emailAddress;
 			userAccount.JobTitle = jobTitle;
+			ValidateAnnotatedObjectThrowOnFailure(userAccount);
 			_userAccountValidator.ValidateThrowOnFailure(userAccount);
 			_userAccountRepository.Update(userAccount);
 			return userAccount;

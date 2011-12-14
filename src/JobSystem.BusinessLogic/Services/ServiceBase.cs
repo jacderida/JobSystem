@@ -1,7 +1,10 @@
-﻿using JobSystem.DataModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.Framework;
 using JobSystem.Framework.Messaging;
+using JobSystem.BusinessLogic.Validation.Core;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -26,6 +29,15 @@ namespace JobSystem.BusinessLogic.Services
 		public void Notify(IMessage message)
 		{
 			_dispatcher.Enqueue(message);
+		}
+
+		protected void ValidateAnnotatedObjectThrowOnFailure(object objectToValidate)
+		{
+			var result = new List<ValidationResult>();
+			var context = new ValidationContext(objectToValidate, null, null);
+			Validator.TryValidateObject(objectToValidate, context, result, true);
+			if (result.Count > 0)
+				throw new DomainValidationException(result);
 		}
 	}
 }
