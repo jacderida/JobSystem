@@ -95,6 +95,7 @@
     <Compile Include="ViewModels\Customers\CustomerViewModel.cs" />
     <Compile Include="ViewModels\Users\UserAccountEditViewModel.cs" />
     <Compile Include="ViewModels\Users\UserAccountIndexViewModel.cs" />
+    <Compile Include="ViewModels\Users\UserAccountListViewModel.cs" />
     <Compile Include="ViewModels\Users\UserAccountViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -213,13 +214,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\UserManagement\Create.cshtml" />
+    <Content Include="Views\UserManagement\_Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NHibernate.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\UserManagement\Edit.cshtml" />
+    <Content Include="Views\UserManagement\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserManagement\Index.cshtml" />
@@ -235,6 +236,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Customer\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\UserManagement\_UserList.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -253,7 +257,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50997</DevelopmentServerPort>
+          <DevelopmentServerPort>61761</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/JobSystem.Mvc</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

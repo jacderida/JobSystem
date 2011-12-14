@@ -3,7 +3,34 @@
 		// $("input:submit, a.primary-action, button, .nav-link").button();
 		$(".primary-action").button();
 
-		$("#create-user-container").dialog();
+		//Create user modal form
+		$("#create-user-container").dialog({
+			autoOpen: false,
+			modal: true,
+			width: 335,
+			title: 'Create New User'
+		});
+
+		$('#createUserButton').click(function () {
+			$("#create-user-container").dialog('open');
+		});
+
+
+		$('.editUserButton').click(function () {
+			var userId = $(this).attr('id');
+			var editUrl = $('#editUrl').val() + '/' + userId;
+			//Edit user modal form
+			$("#edit-user-container").dialog({
+				modal: true,
+				width: 335,
+				title: 'Edit User',
+				open: function (event, ui) {
+					//Load the Edit action which will return 
+					// the partial view _Edit
+					$(this).load(editUrl);
+				}
+			});
+		});
 
 		$("#invoiceDetails").hide();
 		$("#invoiceCheckbox").click(function () {

@@ -21,14 +21,18 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Index()
 		{
 			var users = _userManagementService.GetUsers().Select(
-				u => new UserAccountIndexViewModel
+				u => new UserAccountListViewModel
 				{
 					Id = u.Id,
 					EmailAddress = u.EmailAddress,
 					Name = u.Name,
 					JobTitle = u.JobTitle
 				}).ToList();
-			return View(users);
+
+			var model = new UserAccountIndexViewModel();
+			model.Users = users;
+			model.CreateEditModel = new UserAccountViewModel();
+			return View(model);
 		}
 
 		public ActionResult Create()
@@ -59,8 +63,7 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Edit(Guid id)
 		{
 			var user = _userManagementService.GetById(id);
-			return View(
-				new UserAccountEditViewModel
+			return PartialView("_Edit", new UserAccountEditViewModel
 				{
 					Id = user.Id,
 					EmailAddress = user.EmailAddress,
@@ -85,7 +88,7 @@ namespace JobSystem.Mvc.Controllers
 					ModelState.UpdateFromDomain(dex.Result);
 				}
 			}
-			return View(viewModel);
+			return PartialView("_Edit", viewModel);
 		}
 	}
 }
