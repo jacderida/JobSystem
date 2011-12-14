@@ -305,8 +305,20 @@ fieldset {
     margin: 0;
 }
 
+.fieldset-float-right
+{
+	float:right;
+	width: 40%;
+}
+
+.fieldset-float-left
+{
+	float:left;
+	width: 60%;
+}
+
 legend {
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: bold;
 }
 
@@ -553,6 +565,7 @@ div#title {
 }
 
 .buttons-row {
+	float: left;
 	margin: 10px 0 10px 0;
 }
 
@@ -567,4 +580,8 @@ div#title {
 	font-weight: bold;
 	background: #fff url(../Content/images/menu_gradient.png) repeat-x bottom;
 	text-shadow: 2px 2px 2px rgba(255, 255, 255, 1);
+}
+
+#new-job-textareas textarea {
+	width: 200px;
 }

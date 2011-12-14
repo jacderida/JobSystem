@@ -6,7 +6,7 @@
 @using (Html.BeginForm("Create", "Job", FormMethod.Post))
 {
 	@Html.ValidationSummary(true)
-	<fieldset class="fieldset-no-legend">
+	<fieldset class="fieldset-no-legend fieldset-float-left">
 		<div class="editor-label">
 			@Html.LabelFor(model => model.JobNumber)
 		</div>
@@ -50,7 +50,7 @@
 			@Html.ValidationMessageFor(model => model.Contact)
 		</div>
 		</fieldset>
-		<fieldset class="fieldset-no-legend">
+		<fieldset class="fieldset-no-legend fieldset-float-right" id="new-job-textareas">
 			<div class="editor-label">
 				@Html.LabelFor(model => model.Instructions)
 			</div>
@@ -66,6 +66,7 @@
 				@Html.ValidationMessageFor(model => model.JobNote)
 			</div>
 		</fieldset>
+		<div class="clear"></div>
 	<div class="buttons-row">
 		<input type="submit" class="primary-action" value="Create"/>
 	</div>
