@@ -555,3 +555,16 @@ div#title {
 .buttons-row {
 	margin: 10px 0 10px 0;
 }
+
+.form-section {
+	border-top: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	padding: 13px 0 0 10px;
+	font-size:1.1em;
+	display: block;
+	height: 26px;
+	font-weight: bold;
+	background: #fff url(../Content/images/menu_gradient.png) repeat-x bottom;
+	text-shadow: 2px 2px 2px rgba(255, 255, 255, 1);
+}

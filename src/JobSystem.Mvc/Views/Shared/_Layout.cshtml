@@ -21,14 +21,12 @@
                 @Html.Partial("_LogOnPartial")
             </div>
             <div id="menucontainer">
-                <ul id="menu">
-                    @* <li>@Html.ActionLink("Home", "Index", "Home")</li>*@
-					<li>@Html.ActionLink("Jobs", "About", "Home", new { }, new { @class="nav-link" })</li>
+                <ul id="menu">		
+					<li>@Html.ActionLink("Jobs", "Index", "Job", new { }, new { @class="nav-link"})</li>
 					<li>@Html.ActionLink("Orders", "About", "Home", new { }, new { @class="nav-link" })</li>
 					<li>@Html.ActionLink("Delivery", "About", "Home", new { }, new { @class="nav-link" })</li>
 					<li>@Html.ActionLink("Invoicing", "About", "Home", new { }, new { @class="nav-link" })</li>
 					<li>@Html.ActionLink("Reports", "About", "Home", new { }, new { @class="nav-link" })</li>
-                    @*<li>@Html.ActionLink("Users", "Index", "UserManagement", new {}, new { @class="nav-link"})</li>*@
                     <li>@Html.ActionLink("Customers", "Index", "Customer", new { }, new { @class="nav-link" })</li>
 					<li id="settings"><a href="@Url.Action("About", "Home")" class="nav-link settings">_</a></li>
                 </ul>  

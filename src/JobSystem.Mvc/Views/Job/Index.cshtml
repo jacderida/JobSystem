@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Job List";
+}
+
+<h2>Jobs</h2>
+
+@Html.ActionLink("Create Job", "Create", new { }, new { @class = "primary-action" })
+<table>
+	<tr>
+		<th>Job Number</th>
+		<th>Status</th>
+		<th>Created</th>
+	</tr>
+@*	@foreach (var item in Model)
+ {*@
+		<tr>
+			<td>
+				@*@Html.ActionLink(item.Name, "Details", new { id = item.Id })*@
+			</td>
+			<td>
+				@*@Html.ActionLink("Edit", "Edit", new { id = item.Id })*@
+			</td>
+		</tr>
+ @*}*@
+</table>
