@@ -4,7 +4,7 @@
 
 <h2>Jobs</h2>
 
-@Html.ActionLink("Create Job", "Create", new { }, new { @class = "primary-action" })
+<a href="#" id="createJobButton" class="primary-action">Create Job</a>
 <table>
 	<tr>
 		<th>Job Number</th>
@@ -23,3 +23,5 @@
 		</tr>
  @*}*@
 </table>
+
+@Html.Partial("_Create")

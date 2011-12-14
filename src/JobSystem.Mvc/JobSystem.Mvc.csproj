@@ -93,6 +93,7 @@
     <Compile Include="ViewModels\Account\LogOnViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerIndexViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\Jobs\JobCreateViewModel.cs" />
     <Compile Include="ViewModels\Users\UserAccountEditViewModel.cs" />
     <Compile Include="ViewModels\Users\UserAccountIndexViewModel.cs" />
     <Compile Include="ViewModels\Users\UserAccountListViewModel.cs" />
@@ -242,6 +243,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Job\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Job\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Job\_Create.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

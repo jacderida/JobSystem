@@ -3,7 +3,7 @@
 		// $("input:submit, a.primary-action, button, .nav-link").button();
 		$(".primary-action").button();
 
-		//Create user modal form
+		//Create USER modal form
 		$("#create-user-container").dialog({
 			autoOpen: false,
 			modal: true,
@@ -30,6 +30,18 @@
 					$(this).load(editUrl);
 				}
 			});
+		});
+
+		//Create JOB modal form
+		$("#create-job-container").dialog({
+			autoOpen: false,
+			modal: true,
+			width: 450,
+			title: 'Create New Job'
+		});
+
+		$('#createJobButton').click(function () {
+			$("#create-job-container").dialog('open');
 		});
 
 		$("#invoiceDetails").hide();
