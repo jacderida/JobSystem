@@ -36,7 +36,7 @@
 		$("#create-job-container").dialog({
 			autoOpen: false,
 			modal: true,
-			width: 550,
+			width: 335,
 			title: 'Create New Job'
 		});
 

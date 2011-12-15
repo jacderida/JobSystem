@@ -21,6 +21,8 @@ namespace JobSystem.Mvc.ViewModels.Jobs
 		public string JobNote {get; set;}
 		[Display(Name = "Instructions")]
 		public string Instructions {get; set;}
+		[Display(Name = "Customer")]
+		public string Customer { get; set; }
     }
 }
 

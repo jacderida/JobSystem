@@ -585,3 +585,78 @@ div#title {
 #new-job-textareas textarea {
 	width: 200px;
 }
+
+#job-details-container {
+	float: left;
+	width: 550px;
+}
+
+#job-details-top {
+	float: left;
+}
+
+#job-details-top #job-details-fields {
+	position: relative;
+	float: left;
+	width: 830px;
+	height: 340px;
+	outline: 1px solid #ddd;
+	border: 1px solid white;
+	background-color: #f2f2f2;
+}
+
+#job-details-top #job-details-fields #jobno { 
+	
+}
+
+#job-details-customer-info {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	width: 240px;
+	outline: 1px solid #ddd;
+	border: 1px solid white;
+	background-color: #f9f9f9;
+	padding: 5px;
+}
+
+#job-details-customer-info #custname {
+	font-weight: bold;
+	width: 240px;
+	text-align: center;
+	display: inline-block;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #ddd;
+}
+
+#job-details-customer-info ul {
+	border-top: 1px solid #fff;
+	margin: 0;
+}
+
+#job-nav-container {
+	width: 150px;
+	float: left;
+}
+
+#job-nav-container ul {
+	list-style-type: none;
+	margin-left: 20px;
+	margin-top: 20px;
+}
+
+#job-nav-container ul li {
+	width: 120px;
+	background-color: #eaeaea;
+	border: 1px solid #fff;
+	outline: 1px solid #ddd;
+	margin-bottom: 1px;
+	padding: 5px;
+}
+
+#job-nav-container ul li:hover, #job-nav-container ul li:focus {
+	cursor: pointer;
+	width:  140px;
+	background-color: #ddd;
+	outline: 1px solid #d2d2d2;
+}

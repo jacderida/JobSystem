@@ -7,13 +7,13 @@
 {
 	@Html.ValidationSummary(true)
 	<fieldset class="fieldset-no-legend fieldset-float-left">
-		<div class="editor-label">
+@*		<div class="editor-label">
 			@Html.LabelFor(model => model.JobNumber)
 		</div>
 		<div class="editor-field">
 			@Html.EditorFor(model => model.JobNumber)
 			@Html.ValidationMessageFor(model => model.JobNumber)
-		</div>
+		</div>*@
 @*		<div class="editor-label">
 			@Html.LabelFor(model => model.DateCreated)
 		</div>
@@ -21,12 +21,19 @@
 			@Html.EditorFor(model => model.DateCreated)
 			@Html.ValidationMessageFor(model => model.DateCreated)
 		</div>*@
-		<div class="editor-label">
+@*		<div class="editor-label">
 			@Html.LabelFor(model => model.Status)
 		</div>
 		<div class="editor-field">
 			@Html.EditorFor(model => model.Status)
 			@Html.ValidationMessageFor(model => model.Status)
+		</div>*@
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Customer)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Customer)
+			@Html.ValidationMessageFor(model => model.Customer)
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.OrderNumber)
@@ -49,22 +56,20 @@
 			@Html.EditorFor(model => model.Contact)
 			@Html.ValidationMessageFor(model => model.Contact)
 		</div>
-		</fieldset>
-		<fieldset class="fieldset-no-legend fieldset-float-right" id="new-job-textareas">
-			<div class="editor-label">
-				@Html.LabelFor(model => model.Instructions)
-			</div>
-			<div class="editor-field">
-				@Html.TextAreaFor(model => model.Instructions)
-				@Html.ValidationMessageFor(model => model.Instructions)
-			</div>
-			<div class="editor-label">
-				@Html.LabelFor(model => model.JobNote)
-			</div>
-			<div class="editor-field">
-				@Html.TextAreaFor(model => model.JobNote)
-				@Html.ValidationMessageFor(model => model.JobNote)
-			</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Instructions)
+		</div>
+		<div class="editor-field">
+			@Html.TextAreaFor(model => model.Instructions)
+			@Html.ValidationMessageFor(model => model.Instructions)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.JobNote)
+		</div>
+		<div class="editor-field">
+			@Html.TextAreaFor(model => model.JobNote)
+			@Html.ValidationMessageFor(model => model.JobNote)
+		</div>
 		</fieldset>
 		<div class="clear"></div>
 	<div class="buttons-row">
