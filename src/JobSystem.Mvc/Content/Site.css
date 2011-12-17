@@ -305,8 +305,20 @@ fieldset {
     margin: 0;
 }
 
+.fieldset-float-right
+{
+	float:right;
+	width: 40%;
+}
+
+.fieldset-float-left
+{
+	float:left;
+	width: 60%;
+}
+
 legend {
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: bold;
 }
 
@@ -553,5 +565,71 @@ div#title {
 }
 
 .buttons-row {
+	float: left;
 	margin: 10px 0 10px 0;
+}
+
+.form-section {
+	border-top: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	padding: 13px 0 0 10px;
+	font-size:1.1em;
+	display: block;
+	height: 26px;
+	font-weight: bold;
+	background: #fff url(../Content/images/menu_gradient.png) repeat-x bottom;
+	text-shadow: 2px 2px 2px rgba(255, 255, 255, 1);
+}
+
+#new-job-textareas textarea {
+	width: 200px;
+}
+
+#job-details-container {
+	float: left;
+	width: 710px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+
+#job-details-top {
+	float: left;
+}
+
+#job-details-top #job-details-fields {
+	position: relative;
+	float: left;
+	width: 830px;
+	height: 340px;
+	outline: 1px solid #ddd;
+	border: 1px solid white;
+	background-color: #f2f2f2;
+}
+
+#job-details-top #job-details-fields #jobno { 
+	
+}
+
+#job-details-customer-info {
+	float: left;
+	width: 240px;
+	outline: 1px solid #ddd;
+	border: 1px solid white;
+	background-color: #f9f9f9;
+	padding: 5px;
+}
+
+#job-details-customer-info #custname {
+	font-weight: bold;
+	width: 240px;
+	text-align: center;
+	display: inline-block;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #ddd;
+}
+
+#job-details-customer-info ul {
+	border-top: 1px solid #fff;
+	margin: 0;
 }

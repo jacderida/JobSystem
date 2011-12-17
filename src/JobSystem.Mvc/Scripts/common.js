@@ -3,7 +3,7 @@
 		// $("input:submit, a.primary-action, button, .nav-link").button();
 		$(".primary-action").button();
 
-		//Create user modal form
+		//Create USER modal form
 		$("#create-user-container").dialog({
 			autoOpen: false,
 			modal: true,
@@ -30,6 +30,40 @@
 					$(this).load(editUrl);
 				}
 			});
+		});
+
+		//Create JOB modal form
+		$("#create-job-container").dialog({
+			autoOpen: false,
+			modal: true,
+			width: 335,
+			title: 'Create New Job'
+		});
+
+		// Vertical Sliding Tabs demo
+		$('div#st_vertical').slideTabs({
+			// Options
+			contentAnim: 'slideH',
+			contentAnimTime: 200,
+			contentEasing: 'easeInOutExpo',
+			orientation: 'vertical',
+			tabsAnimTime: 100,
+			autoHeight: true
+		});
+
+		// Horizontal Sliding Tabs demo
+		$('div#st_horizontal').slideTabs({
+			// Options  			
+			contentAnim: 'slideH',
+			contentAnimTime: 200,
+			contentEasing: 'easeInOutExpo',
+			tabsAnimTime: 100,
+			autoHeight: true,
+			totalWidth: '773'
+		});		
+
+		$('#createJobButton').click(function () {
+			$("#create-job-container").dialog('open');
 		});
 
 		$("#invoiceDetails").hide();

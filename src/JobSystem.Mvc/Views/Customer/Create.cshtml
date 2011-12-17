@@ -8,8 +8,11 @@
 @using (Html.BeginForm())
 {
 	@Html.ValidationSummary(true)
+	<span class="form-section">
+		Name & Address
+	</span>
 	<fieldset>
-		<legend>Name & Address</legend>
+		@*<legend>Name & Address</legend>*@
 		<div class="editor-label">
 			@Html.LabelFor(model => model.Name)
 		</div>
@@ -88,8 +91,10 @@
 			@Html.ValidationMessageFor(model => model.Contact2)
 		</div>
 	</fieldset>
+	<span class="form-section">
+		Invoice Details
+	</span>
     <fieldset>
-        <legend><img src=@Url.Content("../Content/images/invoice.png") /> Invoice Details</legend>
         <div class="editor-label">
 			@Html.LabelFor(model => model.InvoiceTitle)
 		</div>
@@ -140,46 +145,10 @@
 			</div>
 		</div>
     </fieldset>
-    <fieldset>
-        <legend>Sales Contact Information</legend>
-        <div class="editor-label">
-			@Html.LabelFor(model => model.SalesTelephone)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.SalesTelephone)
-			@Html.ValidationMessageFor(model => model.SalesTelephone)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.SalesFax)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.SalesFax)
-			@Html.ValidationMessageFor(model => model.SalesFax)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.SalesEmail)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.SalesEmail)
-			@Html.ValidationMessageFor(model => model.SalesEmail)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.SalesContact1)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.SalesContact1)
-			@Html.ValidationMessageFor(model => model.SalesContact1)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.SalesContact2)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.SalesContact2)
-			@Html.ValidationMessageFor(model => model.SalesContact2)
-		</div>
-    </fieldset>
+	<span class="form-section">
+		Delivery Details
+	</span>
 	<fieldset>
-        <legend><img src=@Url.Content("../Content/images/delivery.png") /> Delivery Information</legend>
         <div class="editor-label">
 			@Html.LabelFor(model => model.DeliveryTitle)
 		</div>
@@ -264,9 +233,47 @@
 				@Html.ValidationMessageFor(model => model.DeliveryEmail)
 			</div>
 		</div>
-    </fieldset>	
+    </fieldset>
+	<span class="form-section">
+		Sales Contact Details
+	</span>	
+    <fieldset>
+        <div class="editor-label">
+			@Html.LabelFor(model => model.SalesTelephone)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.SalesTelephone)
+			@Html.ValidationMessageFor(model => model.SalesTelephone)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.SalesFax)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.SalesFax)
+			@Html.ValidationMessageFor(model => model.SalesFax)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.SalesEmail)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.SalesEmail)
+			@Html.ValidationMessageFor(model => model.SalesEmail)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.SalesContact1)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.SalesContact1)
+			@Html.ValidationMessageFor(model => model.SalesContact1)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.SalesContact2)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.SalesContact2)
+			@Html.ValidationMessageFor(model => model.SalesContact2)
+		</div>
+    </fieldset>
 	<input type="submit" value="Create" class="primary-action"/>
+	@Html.ActionLink("Cancel", "Index")
 }
-<div>
-	@Html.ActionLink("Back to List", "Index")
-</div>
