@@ -8,7 +8,7 @@
 
 div.st_vertical { /* The main container */
 	position:relative;
-	/*float:left;*/
+	float:left;
 	clear:both;
 	width:775px; /* Set the full width */
 	color:#616161;
@@ -97,10 +97,10 @@ div.st_vertical ul.st_tabs li { /* Tab list elements */
 
 div.st_vertical ul.st_tabs li a { /* Tab links */
 	display:block;
-	width:147px;
+	width:157px;
 	height:31px;
 	margin:0px;
-	padding:14px 0 14px 20px;
+	padding:14px 0 14px 10px;
 	font-size:11px;
 	color:#5c5c5c;
 	font-weight:bold;
@@ -128,7 +128,7 @@ div.st_vertical ul.st_tabs a:hover { /* Tabs hover state */
 div.st_vertical ul.st_tabs a.st_tab_active { /* Tab active/highlighted state */
 	position:relative;
 	z-index:10;
-	color:#1ca5ec;
+	color:#021538;
 	padding-right:1px;
 	background:#fff;
 }

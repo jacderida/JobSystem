@@ -105,6 +105,8 @@
     <Content Include="Content\images\intertek_logon.gif" />
     <Content Include="Content\images\nav_bg.png" />
     <Content Include="Content\images\white_carbon.png" />
+    <Content Include="Content\slidingtabs-horizontal.css" />
+    <Content Include="Content\slidingtabs-vertical.css" />
     <Content Include="Content\themes\aristo\Aristo.css" />
     <Content Include="Content\themes\aristo\images\bg_fallback.png" />
     <Content Include="Content\themes\aristo\images\icon_sprite.png" />
@@ -146,6 +148,10 @@
     <Content Include="Scripts\jquery-1.5.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
+    <Content Include="Scripts\jquery.cookie.min.js" />
+    <Content Include="Scripts\jquery.easing.1.3.js" />
+    <Content Include="Scripts\jquery.mousewheel.min.js" />
+    <Content Include="Scripts\jquery.slidingtabs.pack.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
