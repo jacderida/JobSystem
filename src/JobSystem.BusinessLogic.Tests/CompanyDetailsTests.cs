@@ -52,12 +52,13 @@ namespace JobSystem.BusinessLogic.Tests
 			};
 		}
 
-		private Currency GetCurrency(Guid id)
+		private ListItem GetCurrency(Guid id)
 		{
-			return new Currency
+			return new ListItem
 			{
 				Id = id,
-				Name = "GBP"
+				Name = "GBP",
+				Type = ListItemType.Currency
 			};
 		}
 
@@ -72,12 +73,13 @@ namespace JobSystem.BusinessLogic.Tests
 			};
 		}
 
-		private PaymentTerm GetPaymentTerm(Guid id)
+		private ListItem GetPaymentTerm(Guid id)
 		{
-			return new PaymentTerm
+			return new ListItem
 			{
 				Id = id,
-				Name = "30 Days"
+				Name = "30 Days",
+				Type = ListItemType.PaymentTerm
 			};
 		}
 

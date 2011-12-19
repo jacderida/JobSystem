@@ -20,9 +20,7 @@ namespace JobSystem.Migrations
 				.WithColumn("UserAccountId").AsGuid().NotNullable()
 				.WithColumn("InitialStatusId").AsGuid().NotNullable()
 				.WithColumn("StatusId").AsGuid().NotNullable()
-				.WithColumn("JobItemLocationId").AsGuid().NotNullable()
-				.WithColumn("JobItemWorkLocationId").AsGuid().NotNullable()
-				.WithColumn("JobItemOperatingUnitId").AsGuid().NotNullable()
+				.WithColumn("LocationId").AsGuid().NotNullable()
 				.WithColumn("CalPeriod").AsInt32().NotNullable()
 				.WithColumn("Instructions").AsString(255).Nullable()
 				.WithColumn("Accessories").AsString(20000).Nullable()
@@ -42,12 +40,12 @@ namespace JobSystem.Migrations
 			Create.ForeignKey("FK_JobItems_InitialStatus")
 				.FromTable("JobItems")
 				.ForeignColumn("InitialStatusId")
-				.ToTable("Status")
+				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_JobItems_Status")
 				.FromTable("JobItems")
 				.ForeignColumn("StatusId")
-				.ToTable("Status")
+				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_JobItems_Instruments")
 				.FromTable("JobItems")
@@ -56,18 +54,8 @@ namespace JobSystem.Migrations
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_JobItems_ItemLocation")
 				.FromTable("JobItems")
-				.ForeignColumn("JobItemLocationId")
-				.ToTable("JobItemLocations")
-				.PrimaryColumn("Id");
-			Create.ForeignKey("FK_JobItems_WorkLocation")
-				.FromTable("JobItems")
-				.ForeignColumn("JobItemWorkLocationId")
-				.ToTable("JobItemWorkLocations")
-				.PrimaryColumn("Id");
-			Create.ForeignKey("FK_JobItems_OperatingUnit")
-				.FromTable("JobItems")
-				.ForeignColumn("JobItemOperatingUnitId")
-				.ToTable("JobItemOperatingUnits")
+				.ForeignColumn("LocationId")
+				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 		}
 

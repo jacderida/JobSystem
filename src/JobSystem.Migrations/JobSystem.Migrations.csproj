@@ -50,17 +50,10 @@
     <Compile Include="M20110928202143_AddInstrumentsTable.cs" />
     <Compile Include="M20110928202415_AddJobItemLocationsTable.cs" />
     <Compile Include="M20110928202539_AddUserAccountsTable.cs" />
-    <Compile Include="M20110928202938_AddStatusTable.cs" />
-    <Compile Include="M20110928203114_AddJobCategoriesTable.cs" />
-    <Compile Include="M20110928203209_AddJobItemWorkLocationsTable.cs" />
-    <Compile Include="M20110928203308_AddJobItemOperatingUnitsTable.cs" />
-    <Compile Include="M20110928203401_AddJobItemWorkTypesTable.cs" />
     <Compile Include="M20110928203503_AddJobsTable.cs" />
     <Compile Include="M20110928204549_AddJobItemsTable.cs" />
     <Compile Include="M20110928210052_AddItemHistoryTable.cs" />
     <Compile Include="M20111206223834_AddTaxCodesTable.cs" />
-    <Compile Include="M20111206224230_AddCurrenciesTable.cs" />
-    <Compile Include="M20111206224458_AddPaymentTermsTable.cs" />
     <Compile Include="M20111206224823_AddBankDetailsTable.cs" />
     <Compile Include="M20111208212831_AddCompanyDetailsTable.cs" />
     <Compile Include="MigrationExtensions.cs" />

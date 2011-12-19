@@ -16,8 +16,8 @@ namespace JobSystem.Migrations
 				.WithColumn("Instructions").AsString(20000).Nullable()
 				.WithColumn("OrderNo").AsString(255).Nullable()
 				.WithColumn("AdviceNo").AsString(255).Nullable()
-				.WithColumn("StatusId").AsGuid().NotNullable()
-				.WithColumn("JobCategoryId").AsGuid().NotNullable()
+				.WithColumn("TypeId").AsGuid().NotNullable()
+				.WithColumn("DepartmentId").AsGuid().NotNullable()
 				.WithColumn("CustomerId").AsGuid().NotNullable()
 				.WithColumn("Notes").AsString(20000).Nullable()
 				.WithColumn("Contact").AsString(255).Nullable()
@@ -27,23 +27,23 @@ namespace JobSystem.Migrations
 				.ForeignColumn("CustomerId")
 				.ToTable("Customers")
 				.PrimaryColumn("Id");
-			Create.ForeignKey("FK_Jobs_Status")
+			Create.ForeignKey("FK_Jobs_TypeListItems")
 				.FromTable("Jobs")
-				.ForeignColumn("StatusId")
-				.ToTable("Status")
+				.ForeignColumn("TypeId")
+				.ToTable("ListItems")
 				.PrimaryColumn("Id");
-			Create.ForeignKey("FK_Jobs_JobCategories")
+			Create.ForeignKey("FK_Jobs_DepartmentListItems")
 				.FromTable("Jobs")
-				.ForeignColumn("JobCategoryId")
-				.ToTable("JobCategories")
+				.ForeignColumn("DeparmentId")
+				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 		}
 
 		public override void Down()
 		{
 			Delete.ForeignKey("FK_Jobs_Customers").OnTable("Jobs");
-			Delete.ForeignKey("FK_Jobs_Status").OnTable("Jobs");
-			Delete.ForeignKey("FK_Jobs_JobCategories").OnTable("Jobs");
+			Delete.ForeignKey("FK_Jobs_TypeListItems").OnTable("Jobs");
+			Delete.ForeignKey("FK_Jobs_DepartmentListItems").OnTable("Jobs");
 			Delete.Table("Jobs");
 		}
 	}

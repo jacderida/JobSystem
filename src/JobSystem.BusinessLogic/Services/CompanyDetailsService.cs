@@ -14,23 +14,20 @@ namespace JobSystem.BusinessLogic.Services
 	{
 		private readonly ICompanyDetailsRepository _companyDetailsRepository;
 		private readonly IBankDetailsRepository _bankDetailsRepository;
-		private readonly ICurrencyRepository _currencyRepository;
-		private readonly IPaymentTermsRepository _paymentTermsRepository;
+		private readonly IListItemRepository _listItemRepository;
 		private readonly ITaxCodeRepository _taxCodeRepository;
 
 		public CompanyDetailsService(
 			IUserContext applicationContext,
 			ICompanyDetailsRepository companyDetailsRepository,
 			IBankDetailsRepository bankDetailsRepository,
-			ICurrencyRepository currencyRepository,
-			IPaymentTermsRepository paymentTermsRepository,
+			IListItemRepository listItemRepository,
 			ITaxCodeRepository taxCodeRepository,
 			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
 		{
 			_companyDetailsRepository = companyDetailsRepository;
 			_bankDetailsRepository = bankDetailsRepository;
-			_currencyRepository = currencyRepository;
-			_paymentTermsRepository = paymentTermsRepository;
+			_listItemRepository = listItemRepository;
 			_taxCodeRepository = taxCodeRepository;
 		}
 
