@@ -14,11 +14,9 @@ namespace JobSystem.DataModel.Entities
 		public virtual string Instructions { get; set; }
 		public virtual string OrderNo { get; set; }
 		public virtual string AdviceNo { get; set; }
-
-		public virtual Status InitialStatus { get; set; }
-		public virtual Status Status { get; set; }
+		public virtual ListItem Type { get; set; }
+		public virtual ListItem Department { get; set; }
 		public virtual Customer Customer { get; set; }
-		public virtual JobCategory Category { get; set; }
 		public virtual List<JobItem> JobItems { get; set; }
 
 		public Job()

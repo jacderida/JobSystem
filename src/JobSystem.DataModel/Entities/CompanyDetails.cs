@@ -35,9 +35,9 @@ namespace JobSystem.DataModel.Entities
 		public virtual string Www{ get; set; }
 		[StringLength(2000, ErrorMessageResourceName = "TermsAndConditionsTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string TermsAndConditions { get; set; }
-		public virtual Currency DefaultCurrency { get; set; }
+		public virtual ListItem DefaultCurrency { get; set; }
 		public virtual TaxCode DefaultTaxCode { get; set; }
-		public virtual PaymentTerm DefaultPaymentTerm { get; set; }
+		public virtual ListItem DefaultPaymentTerm { get; set; }
 		public virtual BankDetails DefaultBankDetails { get; set; }
 		public virtual byte[] MainLogo { get; set; }
 	}

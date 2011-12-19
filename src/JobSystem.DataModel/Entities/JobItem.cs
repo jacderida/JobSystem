@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace JobSystem.DataModel.Entities
 {
+	[Serializable]
 	public class JobItem
 	{
 		public virtual Guid Id { get; set; }
@@ -13,11 +14,9 @@ namespace JobSystem.DataModel.Entities
 		public virtual string SerialNo { get; set; }
 		public virtual string AssetNo { get; set; }
 		public virtual UserAccount CreatedUser { get; set; }
-		public virtual Status InitialStatus { get; set; }
-		public virtual Status Status { get; set; }
-		public virtual JobItemLocation ItemLocation { get; set; }
-		public virtual JobItemWorkLocation WorkLocation { get; set; }
-		public virtual JobItemOperatingUnit OperatingUnit { get; set; }
+		public virtual ListItem InitialStatus { get; set; }
+		public virtual ListItem Status { get; set; }
+		public virtual ListItem Location { get; set; }
 		public virtual int CalPeriod { get; set; }
 		public virtual string Instructions { get; set; }
 		public virtual string Accessories { get; set; }
