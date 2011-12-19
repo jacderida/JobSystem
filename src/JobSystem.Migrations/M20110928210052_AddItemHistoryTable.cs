@@ -13,17 +13,17 @@ namespace JobSystem.Migrations
 				.WithIdColumn()
 				.WithColumn("JobItemId").AsGuid().NotNullable()
 				.WithColumn("DateCreated").AsDateTime().NotNullable()
-				.WithColumn("JobItemWorkTypeId").AsGuid().NotNullable()
+				.WithColumn("WorkTypeId").AsGuid().NotNullable()
 				.WithColumn("WorkTime").AsInt32().NotNullable().WithDefaultValue(0)
 				.WithColumn("OverTime").AsInt32().NotNullable().WithDefaultValue(0)
 				.WithColumn("Report").AsString(255).Nullable()
 				.WithColumn("StatusId").AsGuid().NotNullable()
-				.WithColumn("JobItemWorkLocationId").AsGuid().NotNullable()
+				.WithColumn("WorkLocationId").AsGuid().NotNullable()
 				.WithColumn("UserAccountId").AsGuid().NotNullable();
 			Create.ForeignKey("FK_ItemHistory_Status")
 				.FromTable("ItemHistory")
 				.ForeignColumn("StatusId")
-				.ToTable("Status")
+				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_ItemHistory_JobItems")
 				.FromTable("ItemHistory")
@@ -32,13 +32,13 @@ namespace JobSystem.Migrations
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_ItemHistory_WorkLocation")
 				.FromTable("ItemHistory")
-				.ForeignColumn("JobItemWorkLocationId")
-				.ToTable("JobItemWorkLocations")
+				.ForeignColumn("WorkLocationId")
+				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_ItemHistory_WorkType")
 				.FromTable("ItemHistory")
-				.ForeignColumn("JobItemWorkTypeId")
-				.ToTable("JobItemWorkTypes")
+				.ForeignColumn("WorkTypeId")
+				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_ItemHistory_UserAccounts")
 				.FromTable("ItemHistory")

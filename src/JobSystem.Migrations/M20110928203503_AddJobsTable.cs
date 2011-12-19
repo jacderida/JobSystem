@@ -34,7 +34,7 @@ namespace JobSystem.Migrations
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_Jobs_DepartmentListItems")
 				.FromTable("Jobs")
-				.ForeignColumn("DeparmentId")
+				.ForeignColumn("DepartmentId")
 				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 		}
