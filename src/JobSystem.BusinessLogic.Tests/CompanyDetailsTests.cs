@@ -98,14 +98,36 @@ namespace JobSystem.BusinessLogic.Tests
 			companyDetailsRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
 			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(
 				companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
 			var companyDetails = _companyDetailsService.Create(
-				Guid.NewGuid(), "EMIS (UK) Ltd", GetAddressDetails(),
+				id, "EMIS (UK) Ltd", GetAddressDetails(),
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId, new byte[] { 1, 2, 3, 4, 5 });
+				paymentTermId, bankDetailsId);
 			companyDetailsRepositoryMock.VerifyAllExpectations();
-			Assert.That(companyDetails.Id != Guid.Empty);
+			Assert.That(companyDetails.Id != id);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Create_NoIdSupplied_ArgumentExceptionThrown()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(
+				companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.Empty;
+			var companyDetails = _companyDetailsService.Create(
+				id, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
 		}
 
 		#endregion

@@ -36,9 +36,70 @@ namespace JobSystem.BusinessLogic.Services
 			string telephone, string fax, string email,
 			string www, string regNo, string vatRegNo,
 			string termsAndConditions, Guid defaultCurrencyId, Guid defaultTaxCodeId,
-			Guid defaultPaymentTermId, Guid defaultBankDetailsId, byte[] mainLogo)
+			Guid defaultPaymentTermId, Guid defaultBankDetailsId)
 		{
-			throw new NotImplementedException();
+			if (id == Guid.Empty)
+				throw new ArgumentException("A value must be provided for id");
+			var companyDetails = new CompanyDetails();
+			companyDetails.Name = name;
+			companyDetails.TermsAndConditions = termsAndConditions;
+			companyDetails.DefaultCurrency = GetListItem(defaultCurrencyId);
+			companyDetails.DefaultPaymentTerm = GetListItem(defaultPaymentTermId);
+			companyDetails.DefaultTaxCode = GetDefaultTaxCode(defaultTaxCodeId);
+			companyDetails.DefaultBankDetails = GetDefaultBankDetails(defaultBankDetailsId);
+			AssignAddressDetails(companyDetails, addressDetails);
+			AssignContactInfo(companyDetails, telephone, fax, email, www);
+			AssignRegNoInfo(companyDetails, regNo, vatRegNo);
+			ValidateAnnotatedObjectThrowOnFailure(companyDetails);
+			_companyDetailsRepository.Create(companyDetails);
+			return companyDetails;
+		}
+
+		private void AssignAddressDetails(CompanyDetails companyDetails, Address addressDetails)
+		{
+			companyDetails.Address1 = addressDetails.Line1;
+			companyDetails.Address2 = addressDetails.Line2;
+			companyDetails.Address3 = addressDetails.Line3;
+			companyDetails.Address4 = addressDetails.Line4;
+			companyDetails.Address5 = addressDetails.Line5;
+		}
+
+		private void AssignContactInfo(CompanyDetails companyDetails, string telephone, string fax, string email, string www)
+		{
+			companyDetails.Telephone = telephone;
+			companyDetails.Fax = fax;
+			companyDetails.Email = email;
+			companyDetails.Www = www;
+		}
+
+		private void AssignRegNoInfo(CompanyDetails companyDetails, string regNo, string vatRegNo)
+		{
+			companyDetails.RegNo = regNo;
+			companyDetails.VatRegNo = vatRegNo;
+		}
+
+		private ListItem GetListItem(Guid listItemId)
+		{
+			var listItem = _listItemRepository.GetById(listItemId);
+			if (listItem == null)
+				throw new ArgumentException(String.Format("There is no list item with ID {0}", listItemId));
+			return listItem;
+		}
+
+		private TaxCode GetDefaultTaxCode(Guid defaultTaxCodeId)
+		{
+			var taxCode = _taxCodeRepository.GetById(defaultTaxCodeId);
+			if (taxCode == null)
+				throw new ArgumentException(String.Format("There is no tax code with ID {0}", defaultTaxCodeId));
+			return taxCode;
+		}
+
+		private BankDetails GetDefaultBankDetails(Guid defaultBankDetailsId)
+		{
+			var bankDetails = _bankDetailsRepository.GetById(defaultBankDetailsId);
+			if (bankDetails == null)
+				throw new ArgumentException(String.Format("There is no tax code with ID {0}", defaultBankDetailsId));
+			return bankDetails;
 		}
 	}
 }

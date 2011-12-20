@@ -38,6 +38,9 @@ namespace JobSystem.DataAccess.NHibernate.Mappings
 		/// <returns>True if the given type matches or criteria.</returns>
 		public override bool ShouldMap(Type type)
 		{
+			/* I've got NO IDEA why I have to add the manual check here for the enum type.
+			 * I have it setup with the conventions, exactly the way it's advised on stack overflow, and exactly the way that it's
+			 * setup with Alea. No difference from what I can see, yet the automapper is insisting on trying to map that type. */
 			return EntityNamespaces.Contains(type.Namespace) && !type.IsEnum;
 		}
 

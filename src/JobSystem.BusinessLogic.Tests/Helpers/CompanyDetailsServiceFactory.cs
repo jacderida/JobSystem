@@ -34,14 +34,15 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			};
 		}
 
-		//private static Currency GetCurrency(Guid id)
-		//{
-		//    return new Currency
-		//    {
-		//        Id = id,
-		//        Name = "GBP"
-		//    };
-		//}
+		private static ListItem GetCurrency(Guid id)
+		{
+			return new ListItem
+			{
+				Id = id,
+				Name = "GBP",
+				Type = ListItemType.Currency
+			};
+		}
 
 		private static TaxCode GetTaxCode(Guid id)
 		{
@@ -54,14 +55,15 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			};
 		}
 
-		//private static PaymentTerm GetPaymentTerm(Guid id)
-		//{
-		//    return new PaymentTerm
-		//    {
-		//        Id = id,
-		//        Name = "30 Days"
-		//    };
-		//}
+		private static ListItem GetPaymentTerm(Guid id)
+		{
+			return new ListItem
+			{
+				Id = id,
+				Name = "30 Days",
+				Type = ListItemType.PaymentTerm
+			};
+		}
 
 		//public static CompanyDetailsService Create(
 		//    ICompanyDetailsRepository companyDetailsRepository,
@@ -80,19 +82,17 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			ICompanyDetailsRepository companyDetailsRepository,
 			Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermsId, Guid defaultTaxCodeId)
 		{
-			return null;
-			//var bankDetailsRepositoryStub = MockRepository.GenerateStub<IBankDetailsRepository>();
-			//bankDetailsRepositoryStub.Stub(x => x.GetById(defaultBankDetailsId)).Return(GetBankDetails(defaultBankDetailsId));
-			//var currencyRepositoryStub = MockRepository.GenerateStub<ICurrencyRepository>();
-			//currencyRepositoryStub.Stub(x => x.GetById(defaultCurrencyId)).Return(GetCurrency(defaultCurrencyId));
-			//var taxCodeRepositoryStub = MockRepository.GenerateStub<ITaxCodeRepository>();
-			//taxCodeRepositoryStub.Stub(x => x.GetById(defaultTaxCodeId)).Return(GetTaxCode(defaultTaxCodeId));
-			//var paymentTermsRepositoryStub = MockRepository.GenerateStub<IPaymentTermsRepository>();
-			//paymentTermsRepositoryStub.Stub(x => x.GetById(defaultTaxCodeId)).Return(GetPaymentTerm(defaultTaxCodeId));
-			//return new CompanyDetailsService(
-			//    TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager"),
-			//    companyDetailsRepository, bankDetailsRepositoryStub, currencyRepositoryStub,
-			//    paymentTermsRepositoryStub, taxCodeRepositoryStub, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+			var bankDetailsRepositoryStub = MockRepository.GenerateStub<IBankDetailsRepository>();
+			bankDetailsRepositoryStub.Stub(x => x.GetById(defaultBankDetailsId)).Return(GetBankDetails(defaultBankDetailsId));
+			var taxCodeRepositoryStub = MockRepository.GenerateStub<ITaxCodeRepository>();
+			taxCodeRepositoryStub.Stub(x => x.GetById(defaultTaxCodeId)).Return(GetTaxCode(defaultTaxCodeId));
+
+			var listItemsRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
+			listItemsRepositoryStub.Stub(x => x.GetById(defaultCurrencyId)).Return(GetCurrency(defaultCurrencyId));
+			listItemsRepositoryStub.Stub(x => x.GetById(defaultPaymentTermsId)).Return(GetPaymentTerm(defaultPaymentTermsId));
+			return new CompanyDetailsService(
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager"),
+				companyDetailsRepository, bankDetailsRepositoryStub, listItemsRepositoryStub, taxCodeRepositoryStub, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 	}
 }
