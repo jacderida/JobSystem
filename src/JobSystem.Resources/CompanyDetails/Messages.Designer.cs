@@ -70,11 +70,29 @@ namespace JobSystem.Resources.CompanyDetails {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An email address must be supplied for the company.
+        /// </summary>
+        public static string EmailRequired {
+            get {
+                return ResourceManager.GetString("EmailRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The company email address cannot exceed 50 characters.
         /// </summary>
         public static string EmailTooLarge {
             get {
                 return ResourceManager.GetString("EmailTooLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A fax number must be supplied for the company.
+        /// </summary>
+        public static string FaxRequired {
+            get {
+                return ResourceManager.GetString("FaxRequired", resourceCulture);
             }
         }
         
@@ -115,11 +133,29 @@ namespace JobSystem.Resources.CompanyDetails {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A telephone number must be supplied for the company.
+        /// </summary>
+        public static string TelephoneRequired {
+            get {
+                return ResourceManager.GetString("TelephoneRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The telephone cannot exceed 50 characters.
         /// </summary>
         public static string TelephoneTooLarge {
             get {
                 return ResourceManager.GetString("TelephoneTooLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms and conditions must be supplied for the company.
+        /// </summary>
+        public static string TermsAndConditionsRequired {
+            get {
+                return ResourceManager.GetString("TermsAndConditionsRequired", resourceCulture);
             }
         }
         
@@ -138,6 +174,15 @@ namespace JobSystem.Resources.CompanyDetails {
         public static string VatRegNoTooLarge {
             get {
                 return ResourceManager.GetString("VatRegNoTooLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A URL must be supplied for the company.
+        /// </summary>
+        public static string WwwRequired {
+            get {
+                return ResourceManager.GetString("WwwRequired", resourceCulture);
             }
         }
         

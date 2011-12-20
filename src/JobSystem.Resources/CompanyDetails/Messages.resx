@@ -120,8 +120,14 @@
   <data name="AddressLineTooLarge" xml:space="preserve">
     <value>An address line cannot exceed 255 characters</value>
   </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>An email address must be supplied for the company</value>
+  </data>
   <data name="EmailTooLarge" xml:space="preserve">
     <value>The company email address cannot exceed 50 characters</value>
+  </data>
+  <data name="FaxRequired" xml:space="preserve">
+    <value>A fax number must be supplied for the company</value>
   </data>
   <data name="FaxTooLarge" xml:space="preserve">
     <value>The fax cannot exceed 50 characters</value>
@@ -135,14 +141,23 @@
   <data name="RegNoTooLarge" xml:space="preserve">
     <value>The company registration number cannot exceed 50 characters</value>
   </data>
+  <data name="TelephoneRequired" xml:space="preserve">
+    <value>A telephone number must be supplied for the company</value>
+  </data>
   <data name="TelephoneTooLarge" xml:space="preserve">
     <value>The telephone cannot exceed 50 characters</value>
+  </data>
+  <data name="TermsAndConditionsRequired" xml:space="preserve">
+    <value>Terms and conditions must be supplied for the company</value>
   </data>
   <data name="TermsAndConditionsTooLarge" xml:space="preserve">
     <value>The terms and conditions cannot exceed 2000 characters</value>
   </data>
   <data name="VatRegNoTooLarge" xml:space="preserve">
     <value>The company VAT registration number cannot exceed 50 characters</value>
+  </data>
+  <data name="WwwRequired" xml:space="preserve">
+    <value>A URL must be supplied for the company</value>
   </data>
   <data name="WwwTooLarge" xml:space="preserve">
     <value>The company URL cannot exceed 50 characters</value>

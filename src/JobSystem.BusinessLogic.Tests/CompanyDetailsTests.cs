@@ -359,6 +359,46 @@ namespace JobSystem.BusinessLogic.Tests
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
 		}
 
+		[Test]
+		public void Create_TelephoneGreaterThan50Characters_CompanyDetailsCreated()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
+			CreateCompanyDetails(
+				id, "EMIS (UK) Ltd", GetAddressDetails(),
+				new string('a', 56), "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TelephoneTooLarge));
+		}
+
+		[Test]
+		public void Create_TelephoneNotSupplied_CompanyDetailsCreated()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
+			CreateCompanyDetails(
+				id, "EMIS (UK) Ltd", GetAddressDetails(),
+				String.Empty, "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TelephoneRequired));
+		}
+
 		private void CreateCompanyDetails(
 			Guid id, string name, Address addressDetails,
 			string telephone, string fax, string email,
