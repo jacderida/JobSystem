@@ -244,6 +244,14 @@ ul#menu li.selected a {
     color: #000;
 }
 
+ul#menu li a.active {
+	color: White;
+	border-left: 1px solid #979797;
+    border-right: 1px solid #979797;
+	text-shadow: 1px 1px 1px #4D4D4D;
+	background: #023467 url(../Content/images/nav_bg_active.png) repeat-x;
+}
+
 ul#menu li a.settings {
 	background: transparent url(../Content/images/settings_icon.png) no-repeat 9px 4px;
 }
@@ -264,6 +272,7 @@ ul#menu li a.settings:focus, ul#menu li a.settings:hover {
 	-moz-box-shadow:0px 0px 4px #b5b5b5;
     -webkit-box-shadow:0px 0px 4px #b5b5b5;
     box-shadow:0px 0px 4px #b5b5b5;
+	z-index: 201;
 }
 
 #admin-menu li {
