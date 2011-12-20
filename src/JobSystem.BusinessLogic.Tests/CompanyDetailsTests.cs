@@ -210,7 +210,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void Create_NameNotSupplied_CompanyDetailsCreated()
+		public void Create_NameNotSupplied_DomainValidationExceptionThrown()
 		{
 			var currencyId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
@@ -230,7 +230,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void Create_NameGreaterThan255Characters_CompanyDetailsCreated()
+		public void Create_NameGreaterThan255Characters_DomainValidationExceptionThrown()
 		{
 			var currencyId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
@@ -250,7 +250,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void Create_Address1GreaterThan255Characters_CompanyDetailsCreated()
+		public void Create_Address1GreaterThan255Characters_DomainValidationExceptionThrown()
 		{
 			var currencyId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
@@ -272,7 +272,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void Create_Address2GreaterThan255Characters_CompanyDetailsCreated()
+		public void Create_Address2GreaterThan255Characters_DomainValidationExceptionThrown()
 		{
 			var currencyId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
@@ -294,7 +294,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void Create_Address3GreaterThan255Characters_CompanyDetailsCreated()
+		public void Create_Address3GreaterThan255Characters_DomainValidationExceptionThrown()
 		{
 			var currencyId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
@@ -316,7 +316,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void Create_Address4GreaterThan255Characters_CompanyDetailsCreated()
+		public void Create_Address4GreaterThan255Characters_DomainValidationExceptionThrown()
 		{
 			var currencyId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
@@ -338,7 +338,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void Create_Address5GreaterThan255Characters_CompanyDetailsCreated()
+		public void Create_Address5GreaterThan255Characters_DomainValidationExceptionThrown()
 		{
 			var currencyId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
@@ -360,7 +360,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void Create_TelephoneGreaterThan50Characters_CompanyDetailsCreated()
+		public void Create_TelephoneGreaterThan50Characters_DomainValidationExceptionThrown()
 		{
 			var currencyId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
@@ -380,7 +380,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void Create_TelephoneNotSupplied_CompanyDetailsCreated()
+		public void Create_TelephoneNotSupplied_DomainValidationExceptionThrown()
 		{
 			var currencyId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
@@ -400,7 +400,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void Create_FaxGreaterThan50Characters_CompanyDetailsCreated()
+		public void Create_FaxGreaterThan50Characters_DomainValidationExceptionThrown()
 		{
 			var currencyId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
@@ -420,7 +420,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void Create_FaxNotSupplied_CompanyDetailsCreated()
+		public void Create_FaxNotSupplied_DomainValidationExceptionThrown()
 		{
 			var currencyId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
@@ -440,7 +440,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void Create_EmailGreaterThan50Characters_CompanyDetailsCreated()
+		public void Create_EmailGreaterThan50Characters_DomainValidationExceptionThrown()
 		{
 			var currencyId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
@@ -460,7 +460,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void Create_EmailNotSupplied_CompanyDetailsCreated()
+		public void Create_EmailNotSupplied_DomainValidationExceptionThrown()
 		{
 			var currencyId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
@@ -479,6 +479,126 @@ namespace JobSystem.BusinessLogic.Tests
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.EmailRequired));
 		}
 
+		[Test]
+		public void Create_WwwGreaterThan255Characters_DomainValidationExceptionThrown()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
+			CreateCompanyDetails(
+				id, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				new string('a', 256), "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.WwwTooLarge));
+		}
+
+		[Test]
+		public void Create_WwwNotSupplied_DomainValidationExceptionThrown()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
+			CreateCompanyDetails(
+				id, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 8949229", "info@emis-uk.com",
+				String.Empty, "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.WwwRequired));
+		}
+
+		[Test]
+		public void Create_TermsAndConditionsGreaterThan2000Characters_DomainValidationExceptionThrown()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
+			CreateCompanyDetails(
+				id, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				new string('a', 2001), currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TermsAndConditionsTooLarge));
+		}
+
+		[Test]
+		public void Create_TermsAndConditionsNotSupplied_DomainValidationExceptionThrown()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
+			CreateCompanyDetails(
+				id, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 8949229", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				String.Empty, currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TermsAndConditionsRequired));
+		}
+
+		[Test]
+		public void Create_RegNoGreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
+			CreateCompanyDetails(
+				id, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", new string('a', 51), "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.RegNoTooLarge));
+		}
+
+		[Test]
+		public void Create_VatRegNoGreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
+			CreateCompanyDetails(
+				id, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO", new string('a', 51),
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.VatRegNoTooLarge));
+		}
+
 		private void CreateCompanyDetails(
 			Guid id, string name, Address addressDetails,
 			string telephone, string fax, string email,
@@ -489,6 +609,109 @@ namespace JobSystem.BusinessLogic.Tests
 			try
 			{
 				_savedCompanyDetails = _companyDetailsService.Create(
+					id, name, addressDetails, telephone, fax, email, www, regNo, vatRegNo, termsAndConditions, defaultCurrencyId, defaultTaxCodeId, defaultPaymentTermsId, defaultBankDetailsId);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region Edit
+
+		[Test]
+		public void Edit_ValidCompanyDetails_CompanyDetailsEdited()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			companyDetailsRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			companyDetailsRepositoryMock.VerifyAllExpectations();
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_NoCompanyIdSupplied_ArgumentExceptionThrown()
+		{
+			var companyDetailsId = Guid.Empty;
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidCompanyIdSupplied_ArgumentExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			companyDetailsRepositoryMock.Stub(x => x.GetById(companyDetailsId)).Return(null);
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidBankDetailsIdSupplied_ArgumentExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.Empty;
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			CreateCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+		}
+
+		private void EditCompanyDetails(
+			Guid id, string name, Address addressDetails,
+			string telephone, string fax, string email,
+			string www, string regNo, string vatRegNo,
+			string termsAndConditions, Guid defaultCurrencyId,
+			Guid defaultTaxCodeId, Guid defaultPaymentTermsId, Guid defaultBankDetailsId)
+		{
+			try
+			{
+				_savedCompanyDetails = _companyDetailsService.Edit(
 					id, name, addressDetails, telephone, fax, email, www, regNo, vatRegNo, termsAndConditions, defaultCurrencyId, defaultTaxCodeId, defaultPaymentTermsId, defaultBankDetailsId);
 			}
 			catch (DomainValidationException dex)

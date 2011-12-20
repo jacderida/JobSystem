@@ -55,6 +55,32 @@ namespace JobSystem.BusinessLogic.Services
 			return companyDetails;
 		}
 
+		public CompanyDetails Edit(
+			Guid id, string name, Address addressDetails,
+			string telephone, string fax, string email,
+			string www, string regNo, string vatRegNo,
+			string termsAndConditions, Guid defaultCurrencyId, Guid defaultTaxCodeId,
+			Guid defaultPaymentTermId, Guid defaultBankDetailsId)
+		{
+			if (id == Guid.Empty)
+				throw new ArgumentException("A value must be provided for id");
+			var companyDetails = _companyDetailsRepository.GetById(id);
+			if (companyDetails == null)
+				throw new ArgumentException(String.Format("There is no company with ID {0}", id));
+			companyDetails.Name = name;
+			companyDetails.TermsAndConditions = termsAndConditions;
+			companyDetails.DefaultCurrency = GetListItem(defaultCurrencyId);
+			companyDetails.DefaultPaymentTerm = GetListItem(defaultPaymentTermId);
+			companyDetails.DefaultTaxCode = GetDefaultTaxCode(defaultTaxCodeId);
+			companyDetails.DefaultBankDetails = GetDefaultBankDetails(defaultBankDetailsId);
+			AssignAddressDetails(companyDetails, addressDetails);
+			AssignContactInfo(companyDetails, telephone, fax, email, www);
+			AssignRegNoInfo(companyDetails, regNo, vatRegNo);
+			ValidateAnnotatedObjectThrowOnFailure(companyDetails);
+			_companyDetailsRepository.Update(companyDetails);
+			return companyDetails;
+		}
+
 		private void AssignAddressDetails(CompanyDetails companyDetails, Address addressDetails)
 		{
 			companyDetails.Address1 = addressDetails.Line1;

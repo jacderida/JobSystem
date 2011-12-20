@@ -35,7 +35,7 @@ namespace JobSystem.DataModel.Entities
 		[StringLength(50, ErrorMessageResourceName = "EmailTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string Email { get; set; }
 		[Required(ErrorMessageResourceName = "WwwRequired", ErrorMessageResourceType = typeof(Messages))]
-		[StringLength(50, ErrorMessageResourceName = "WwwTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[StringLength(255, ErrorMessageResourceName = "WwwTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string Www{ get; set; }
 		[Required(ErrorMessageResourceName = "TermsAndConditionsRequired", ErrorMessageResourceType = typeof(Messages))]
 		[StringLength(2000, ErrorMessageResourceName = "TermsAndConditionsTooLarge", ErrorMessageResourceType = typeof(Messages))]

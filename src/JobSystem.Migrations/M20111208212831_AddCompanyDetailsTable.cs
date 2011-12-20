@@ -22,7 +22,7 @@ namespace JobSystem.Migrations
 				.WithColumn("RegNo").AsString(50).NotNullable()
 				.WithColumn("VatRegNo").AsString(50).NotNullable()
 				.WithColumn("Email").AsString(50).NotNullable()
-				.WithColumn("Www").AsString(50).NotNullable()
+				.WithColumn("Www").AsString(255).NotNullable()
 				.WithColumn("TermsAndConditions").AsString(20000).NotNullable()
 				.WithColumn("DefaultCurrencyId").AsGuid().NotNullable()
 				.WithColumn("DefaultTaxCodeId").AsGuid().NotNullable()

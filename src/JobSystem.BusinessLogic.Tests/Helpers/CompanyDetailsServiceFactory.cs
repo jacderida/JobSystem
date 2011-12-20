@@ -21,6 +21,18 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 				companyDetailsRepository, bankDetailsRepositoryStub, listItemsRepositoryStub, taxCodeRepositoryStub, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 
+		public static CompanyDetailsService CreateWithDefaultsSetupForEdit(
+			ICompanyDetailsRepository companyDetailsRepository, Guid companyDetailsId, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermsId, Guid defaultTaxCodeId)
+		{
+			companyDetailsRepository.Stub(x => x.GetById(companyDetailsId)).Return(GetCompanyDetails(companyDetailsId, defaultBankDetailsId, defaultTaxCodeId, defaultCurrencyId, defaultPaymentTermsId));
+			var bankDetailsRepositoryStub = GetBankDetailsRepository(defaultBankDetailsId);
+			var taxCodeRepositoryStub = GetTaxCodeRepository(defaultTaxCodeId);
+			var listItemsRepositoryStub = GetDefaultListItemRepository(defaultCurrencyId, defaultPaymentTermsId);
+			return new CompanyDetailsService(
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager"),
+				companyDetailsRepository, bankDetailsRepositoryStub, listItemsRepositoryStub, taxCodeRepositoryStub, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+		}
+
 		private static IListItemRepository GetDefaultListItemRepository(Guid defaultCurrencyId, Guid defaultPaymentTermsId)
 		{
 			var listItemsRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
@@ -53,6 +65,31 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			else
 				taxCodeRepositoryStub.Stub(x => x.GetById(defaultTaxCodeId)).Return(null);
 			return taxCodeRepositoryStub;
+		}
+
+		private static CompanyDetails GetCompanyDetails(Guid id, Guid defaultBankDetailsId, Guid defaultTaxCodeId, Guid defaultCurrencyId, Guid defaultPaymentTermId)
+		{
+			return new CompanyDetails
+			{
+				Id = id,
+				Name = "EMIS (UK) Ltd",
+				Address1 = "CEB",
+				Address2 = "Greenwell Road",
+				Address3 = "Aberdeen",
+				Address4 = "AB12 3AX",
+				Address5 = "UK",
+				Email = "info@emis-uk.com",
+				Www = "www.emis-uk.com",
+				Telephone = "01224 894494",
+				Fax = "01224 894929",
+				RegNo = "REGNO",
+				VatRegNo = "VatRegNo",
+				TermsAndConditions = "terms and conditions",
+				DefaultBankDetails = GetBankDetails(defaultBankDetailsId),
+				DefaultCurrency = GetCurrency(defaultCurrencyId),
+				DefaultTaxCode = GetTaxCode(defaultTaxCodeId),
+				DefaultPaymentTerm = GetPaymentTerm(defaultPaymentTermId)
+			};
 		}
 
 		private static BankDetails GetBankDetails(Guid id)
