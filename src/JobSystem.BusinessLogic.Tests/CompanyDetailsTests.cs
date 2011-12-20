@@ -694,12 +694,462 @@ namespace JobSystem.BusinessLogic.Tests
 
 			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
 			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
-			CreateCompanyDetails(
+			EditCompanyDetails(
 				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
 				paymentTermId, bankDetailsId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidCurrencyIdSupplied_ArgumentExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.Empty;
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidTaxCodeIdSupplied_ArgumentExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.Empty;
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidPaymentTermsIdSupplied_ArgumentExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.Empty;
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+		}
+
+		[Test]
+		public void Edit_NameNotSupplied_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, String.Empty, GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.NameRequired));
+		}
+
+		[Test]
+		public void Edit_NameGreaterThan255Characters_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, new string('a', 256), GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.NameTooLarge));
+		}
+
+		[Test]
+		public void Edit_Address1GreaterThan255Characters_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var addressDetails = GetAddressDetails();
+			addressDetails.Line1 = new string('a', 256);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", addressDetails,
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
+		}
+
+		[Test]
+		public void Edit_Address2GreaterThan255Characters_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var addressDetails = GetAddressDetails();
+			addressDetails.Line2 = new string('a', 256);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", addressDetails,
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
+		}
+
+		[Test]
+		public void Edit_Address3GreaterThan255Characters_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var addressDetails = GetAddressDetails();
+			addressDetails.Line3 = new string('a', 256);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", addressDetails,
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
+		}
+
+		[Test]
+		public void Edit_Address4GreaterThan255Characters_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var addressDetails = GetAddressDetails();
+			addressDetails.Line4 = new string('a', 256);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", addressDetails,
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
+		}
+
+		[Test]
+		public void Edit_Address5GreaterThan255Characters_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var addressDetails = GetAddressDetails();
+			addressDetails.Line5 = new string('a', 256);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", addressDetails,
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
+		}
+
+		[Test]
+		public void Edit_TelephoneGreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				new string('a', 56), "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TelephoneTooLarge));
+		}
+
+		[Test]
+		public void Edit_TelephoneNotSupplied_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			CreateCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				String.Empty, "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TelephoneRequired));
+		}
+
+		[Test]
+		public void Edit_FaxGreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", new string('a', 56), "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.FaxTooLarge));
+		}
+
+		[Test]
+		public void Edit_FaxNotSupplied_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", String.Empty, "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.FaxRequired));
+		}
+
+		[Test]
+		public void Edit_EmailGreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", new string('a', 56),
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.EmailTooLarge));
+		}
+
+		[Test]
+		public void Edit_EmailNotSupplied_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			CreateCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 8949229", String.Empty,
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.EmailRequired));
+		}
+
+		[Test]
+		public void Edit_WwwGreaterThan255Characters_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				new string('a', 256), "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.WwwTooLarge));
+		}
+
+		[Test]
+		public void Edit_WwwNotSupplied_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 8949229", "info@emis-uk.com",
+				String.Empty, "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.WwwRequired));
+		}
+
+		[Test]
+		public void Edit_TermsAndConditionsGreaterThan2000Characters_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				new string('a', 2001), currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TermsAndConditionsTooLarge));
+		}
+
+		[Test]
+		public void Edit_TermsAndConditionsNotSupplied_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 8949229", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				String.Empty, currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TermsAndConditionsRequired));
+		}
+
+		[Test]
+		public void Edit_RegNoGreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			CreateCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", new string('a', 51), "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.RegNoTooLarge));
+		}
+
+		[Test]
+		public void Edit_VatRegNoGreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var companyDetailsId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, companyDetailsId, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			EditCompanyDetails(
+				companyDetailsId, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO", new string('a', 51),
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.VatRegNoTooLarge));
 		}
 
 		private void EditCompanyDetails(
