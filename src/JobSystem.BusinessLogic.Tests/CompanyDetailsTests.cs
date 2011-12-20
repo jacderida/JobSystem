@@ -15,6 +15,7 @@ namespace JobSystem.BusinessLogic.Tests
 	{
 		private CompanyDetailsService _companyDetailsService;
 		private DomainValidationException _domainValidationException;
+		private CompanyDetails _savedCompanyDetails;
 
 		#region Setup and Utils
 
@@ -96,22 +97,21 @@ namespace JobSystem.BusinessLogic.Tests
 
 			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
 			companyDetailsRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
-			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(
-				companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
 			var id = Guid.NewGuid();
-			var companyDetails = _companyDetailsService.Create(
+			CreateCompanyDetails(
 				id, "EMIS (UK) Ltd", GetAddressDetails(),
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
 				paymentTermId, bankDetailsId);
 			companyDetailsRepositoryMock.VerifyAllExpectations();
-			Assert.That(companyDetails.Id != id);
+			Assert.That(_savedCompanyDetails.Id != id);
 		}
 
 		[Test]
 		[ExpectedException(typeof(ArgumentException))]
-		public void Create_NoIdSupplied_ArgumentExceptionThrown()
+		public void Create_NoCompanyIdSupplied_ArgumentExceptionThrown()
 		{
 			var currencyId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
@@ -119,15 +119,152 @@ namespace JobSystem.BusinessLogic.Tests
 			var paymentTermId = Guid.NewGuid();
 
 			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
-			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(
-				companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
 			var id = Guid.Empty;
-			var companyDetails = _companyDetailsService.Create(
+			CreateCompanyDetails(
 				id, "EMIS (UK) Ltd", GetAddressDetails(),
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
 				paymentTermId, bankDetailsId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Create_NoBankDetailsIdSupplied_ArgumentExceptionThrown()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.Empty;
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
+			CreateCompanyDetails(
+				id, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Create_NoTaxCodeIdSupplied_ArgumentExceptionThrown()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.Empty;
+			var paymentTermId = Guid.NewGuid();
+			
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
+			CreateCompanyDetails(
+				id, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Create_NoCurrencyIdSupplied_ArgumentExceptionThrown()
+		{
+			var currencyId = Guid.Empty;
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
+			CreateCompanyDetails(
+				id, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Create_NoPaymentTermIdSupplied_ArgumentExceptionThrown()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.Empty;
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
+			CreateCompanyDetails(
+				id, "EMIS (UK) Ltd", GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+		}
+
+		[Test]
+		public void Create_NameNotSupplied_CompanyDetailsCreated()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
+			CreateCompanyDetails(
+				id, String.Empty, GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.NameRequired));
+		}
+
+		[Test]
+		public void Create_NameGreaterThan255Characters_CompanyDetailsCreated()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
+			var id = Guid.NewGuid();
+			CreateCompanyDetails(
+				id, new string('a', 256), GetAddressDetails(),
+				"01224 894494", "01224 894929", "info@emis-uk.com",
+				"www.emis-uk.com", "REGNO123456", "VATNO123456",
+				"terms and conditions", currencyId, taxCodeId,
+				paymentTermId, bankDetailsId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.NameTooLarge));
+		}
+
+		private void CreateCompanyDetails(
+			Guid id, string name, Address addressDetails,
+			string telephone, string fax, string email,
+			string www, string regNo, string vatRegNo,
+			string termsAndConditions, Guid defaultCurrencyId,
+			Guid defaultTaxCodeId, Guid defaultPaymentTermsId, Guid defaultBankDetailsId)
+		{
+			try
+			{
+				_savedCompanyDetails = _companyDetailsService.Create(
+					id, name, addressDetails, telephone, fax, email, www, regNo, vatRegNo, termsAndConditions, defaultCurrencyId, defaultTaxCodeId, defaultPaymentTermsId, defaultBankDetailsId);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
 		}
 
 		#endregion
