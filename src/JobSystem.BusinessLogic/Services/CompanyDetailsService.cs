@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using JobSystem.DataModel;
-using JobSystem.Framework.Messaging;
-using JobSystem.DataModel.Repositories;
-using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Dto;
+using JobSystem.DataModel.Entities;
+using JobSystem.DataModel.Repositories;
+using JobSystem.Framework.Messaging;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -30,6 +27,8 @@ namespace JobSystem.BusinessLogic.Services
 			_listItemRepository = listItemRepository;
 			_taxCodeRepository = taxCodeRepository;
 		}
+
+		#region Public Interface
 
 		public CompanyDetails Create(
 			Guid id, string name, Address addressDetails,
@@ -81,6 +80,14 @@ namespace JobSystem.BusinessLogic.Services
 			return companyDetails;
 		}
 
+		public CompanyDetails GetCompany()
+		{
+			return _companyDetailsRepository.GetCompany();
+		}
+
+		#endregion
+		#region Private Implementation
+
 		private void AssignAddressDetails(CompanyDetails companyDetails, Address addressDetails)
 		{
 			companyDetails.Address1 = addressDetails.Line1;
@@ -127,5 +134,7 @@ namespace JobSystem.BusinessLogic.Services
 				throw new ArgumentException(String.Format("There is no tax code with ID {0}", defaultBankDetailsId));
 			return bankDetails;
 		}
+
+		#endregion
 	}
 }

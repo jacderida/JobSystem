@@ -49,6 +49,7 @@
     <Compile Include="Services\CompanyDetailsService.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\InstrumentService.cs" />
+    <Compile Include="Services\ListItemService.cs" />
     <Compile Include="Services\ServiceBase.cs" />
     <Compile Include="Services\UserManagementService.cs" />
     <Compile Include="Validation\Core\DomainValidationException.cs" />

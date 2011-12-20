@@ -79,12 +79,14 @@
     <Compile Include="Configuration\HostRequestConfigDomainProvider.cs" />
     <Compile Include="Configuration\RequestContextConnectionProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Core\UIValidation\DomainValidationMap.cs" />
     <Compile Include="Core\UIValidation\ModelStateDomainValidation.cs" />
+    <Compile Include="Core\Utilities\ListExtensions.cs" />
     <Compile Include="Core\WebUserContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -92,6 +94,7 @@
     <Compile Include="IoC\DependencyRegistry.cs" />
     <Compile Include="ViewModels\Account\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\Account\LogOnViewModel.cs" />
+    <Compile Include="ViewModels\Admin\CompanyDetailsViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerIndexViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerViewModel.cs" />
     <Compile Include="ViewModels\Jobs\JobCreateViewModel.cs" />
