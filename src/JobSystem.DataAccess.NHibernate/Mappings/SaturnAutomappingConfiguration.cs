@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FluentNHibernate.Automapping;
+using System.Collections;
 
 namespace JobSystem.DataAccess.NHibernate.Mappings
 {
@@ -37,7 +38,7 @@ namespace JobSystem.DataAccess.NHibernate.Mappings
 		/// <returns>True if the given type matches or criteria.</returns>
 		public override bool ShouldMap(Type type)
 		{
-			return EntityNamespaces.Contains(type.Namespace);
+			return EntityNamespaces.Contains(type.Namespace) && !type.IsEnum;
 		}
 
 		/// <summary>

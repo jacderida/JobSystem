@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace JobSystem.DataModel.Entities
 {
+	[Serializable]
 	public enum ListItemType
 	{
 		[Description("Job Type")]

@@ -10,14 +10,13 @@ namespace JobSystem.Migrations
 			Create.Table("ListItems")
 				.WithIdColumn()
 				.WithColumn("Name").AsString(255).NotNullable()
-				.WithColumn("ItemType").AsInt32().NotNullable()
-				.WithArchiveColumn();
+				.WithColumn("Type").AsInt32().NotNullable();
 			Execute.Sql(
 				@"ALTER TABLE dbo.ListItems ADD CONSTRAINT
 					IX_ListItems UNIQUE NONCLUSTERED 
 					(
 					Name,
-					ItemType
+					Type
 					)"
 				);
 		}
