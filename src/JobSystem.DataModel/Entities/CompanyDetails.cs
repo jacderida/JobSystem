@@ -21,18 +21,23 @@ namespace JobSystem.DataModel.Entities
 		public virtual string Address4 { get; set; }
 		[StringLength(255, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string Address5 { get; set; }
+		[Required]
 		[StringLength(50, ErrorMessageResourceName = "TelephoneTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string Telephone { get; set; }
+		[Required]
 		[StringLength(50, ErrorMessageResourceName = "FaxTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string Fax { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "RegNoTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string RegNo { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "VatRegNoTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string VatRegNo { get; set; }
+		[Required]
 		[StringLength(50, ErrorMessageResourceName = "EmailTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string Email { get; set; }
+		[Required]
 		[StringLength(50, ErrorMessageResourceName = "WwwlTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string Www{ get; set; }
+		[Required]
 		[StringLength(2000, ErrorMessageResourceName = "TermsAndConditionsTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string TermsAndConditions { get; set; }
 		public virtual ListItem DefaultCurrency { get; set; }
