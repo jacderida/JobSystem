@@ -48,7 +48,8 @@
 			contentEasing: 'easeInOutExpo',
 			orientation: 'vertical',
 			tabsAnimTime: 100,
-			autoHeight: true
+			autoHeight: true,
+			totalWidth: '168'
 		});
 
 		// Horizontal Sliding Tabs demo
@@ -58,6 +59,7 @@
 			contentAnimTime: 200,
 			contentEasing: 'easeInOutExpo',
 			tabsAnimTime: 100,
+			tabsScroll: false,
 			autoHeight: true,
 			totalWidth: '773'
 		});		

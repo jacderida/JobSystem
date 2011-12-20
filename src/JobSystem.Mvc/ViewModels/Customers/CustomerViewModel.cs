@@ -33,8 +33,10 @@ namespace JobSystem.Mvc.ViewModels.Customers
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public string Email { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "First Contact Name")]
 		public string Contact1 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Second Contact Name")]
 		public string Contact2 { get; set; }
 		[StringLength(255, ErrorMessageResourceName = "InvoiceTitleTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		[Display(Name = "Invoice Title")]

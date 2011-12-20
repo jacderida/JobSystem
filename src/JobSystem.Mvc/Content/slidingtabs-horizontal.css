@@ -131,7 +131,7 @@ div.st_horizontal ul.st_tabs li a.st_first_tab {
 } 
 
 div.st_horizontal ul.st_tabs a.st_tab_active { /* Tab active/highlighted state */
-	color:#1ca5ec;
+	color:#021538;
 	border-bottom-color:#fff;
 	background:#fff;
 }
