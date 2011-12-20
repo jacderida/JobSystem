@@ -61,7 +61,7 @@
 			tabsAnimTime: 100,
 			tabsScroll: false,
 			autoHeight: true,
-			totalWidth: '773'
+			totalWidth: '774'
 		});		
 
 		$('#createJobButton').click(function () {
