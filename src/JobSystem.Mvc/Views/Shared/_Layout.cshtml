@@ -15,7 +15,7 @@
 </head>
 <body>
     @if (Request.IsAuthenticated)
-    {
+	{
     <div class="page box_shadow">
         <div id="header">
             <div id="title">
@@ -27,19 +27,19 @@
             </div>
             <div id="menucontainer">
                 <ul id="menu">		
-					<li>@Html.ActionLink("Jobs", "Index", "Job", new { }, new { @class="nav-link"})</li>
-					<li>@Html.ActionLink("Orders", "About", "Home", new { }, new { @class="nav-link" })</li>
-					<li>@Html.ActionLink("Delivery", "About", "Home", new { }, new { @class="nav-link" })</li>
-					<li>@Html.ActionLink("Invoicing", "About", "Home", new { }, new { @class="nav-link" })</li>
-					<li>@Html.ActionLink("Reports", "About", "Home", new { }, new { @class="nav-link" })</li>
-                    <li>@Html.ActionLink("Customers", "Index", "Customer", new { }, new { @class="nav-link" })</li>
+					<li>@Html.MenuLink("Jobs", "Index", "Job", "nav-link")</li>
+					<li>@Html.MenuLink("Orders", "About", "Home", "nav-link")</li>
+					<li>@Html.MenuLink("Delivery", "About", "Home", "nav-link")</li>
+					<li>@Html.MenuLink("Invoicing", "About", "Home", "nav-link")</li>
+					<li>@Html.MenuLink("Reports", "About", "Home", "nav-link")</li>
+                    <li>@Html.MenuLink("Customers", "Index", "Customer", "nav-link")</li>
 					<li id="settings"><a href="@Url.Action("About", "Home")" class="nav-link settings">_</a></li>
                 </ul>  
             </div>
 
 				<ul id="admin-menu" class="hidden">
 					<li><a href="#">Company Details</a></li>
-					<li>@Html.ActionLink("User Management", "Index", "UserManagement", new {}, new { @class="nav-link"})</li>
+					<li>@Html.ActionLink("User Management", "Index", "UserManagement", new { }, new { @class = "nav-link" })</li>
 					<li><a href="#">Instruments</a></li>
 					<li><a href="#">Certificate Register</a></li>
 					<li><a href="#">Safety Standards</a></li>
@@ -52,10 +52,10 @@
         @*<div id="footer">
         </div>*@
     </div>
-    }
-    else
-    { 
+	}
+	else
+	{ 
        @RenderBody()  
-    }
+	}
 </body>
 </html>
