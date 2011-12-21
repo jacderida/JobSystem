@@ -13,6 +13,8 @@ namespace JobSystem.DataAccess.NHibernate.Web
 		/// </summary>
 		private readonly string _factoryKey;
 
+		private bool _rollbackOnModelStateError = true;
+
 		/// <summary>
 		///     When used, assumes the <see cref = "_factoryKey" /> to be NHibernateSession.DefaultFactoryKey
 		/// </summary>
@@ -28,7 +30,11 @@ namespace JobSystem.DataAccess.NHibernate.Web
 			_factoryKey = factoryKey;
 		}
 
-		public bool RollbackOnModelStateError { get; set; }
+		public bool RollbackOnModelStateError
+		{
+			get { return _rollbackOnModelStateError; }
+			set { _rollbackOnModelStateError = value; }
+		}
 
 		public override void OnActionExecuted(ActionExecutedContext filterContext)
 		{

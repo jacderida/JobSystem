@@ -2,6 +2,7 @@
 using System.Linq;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
+using NHibernate;
 using NHibernate.Linq;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
@@ -15,7 +16,12 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 
 		public CompanyDetails GetCompany()
 		{
-			return CurrentSession.Query<CompanyDetails>().Single();
+			var companyDetails = CurrentSession.Query<CompanyDetails>().Single();
+			NHibernateUtil.Initialize(companyDetails.DefaultBankDetails);
+			NHibernateUtil.Initialize(companyDetails.DefaultCurrency);
+			NHibernateUtil.Initialize(companyDetails.DefaultPaymentTerm);
+			NHibernateUtil.Initialize(companyDetails.DefaultTaxCode);
+			return companyDetails;
 		}
 	}
 }

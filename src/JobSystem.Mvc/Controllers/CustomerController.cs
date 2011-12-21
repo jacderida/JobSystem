@@ -42,7 +42,7 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpPost]
-		[Transaction(RollbackOnModelStateError = true)]
+		[Transaction]
 		public ActionResult Create(CustomerViewModel viewModel)
 		{
 			if (ModelState.IsValid)
@@ -78,7 +78,7 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpPost]
-		[Transaction(RollbackOnModelStateError = true)]
+		[Transaction]
 		public ActionResult Edit(CustomerViewModel viewModel)
 		{
 			if (ModelState.IsValid)
