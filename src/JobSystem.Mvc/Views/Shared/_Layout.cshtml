@@ -19,7 +19,7 @@
     <div class="page box_shadow">
         <div id="header">
             <div id="title">
-                <img src="@Url.Content("~/Content/images/intertek.png")" />
+             @*   <img src="@Url.Content("~/Content/images/intertek.png")" />*@
                 @*<a href="/Customer"><img src="@Url.Content("~/Content/images/intertek.jpg")" /></a>*@
              </div>
             <div id="logindisplay">
@@ -38,7 +38,7 @@
             </div>
 
 				<ul id="admin-menu" class="hidden">
-					<li><a href="#">Company Details</a></li>
+					<li>@Html.MenuLink("Company Details", "Index", "Home", "nav-link")</li>
 					<li>@Html.ActionLink("User Management", "Index", "UserManagement", new { }, new { @class = "nav-link" })</li>
 					<li><a href="#">Instruments</a></li>
 					<li><a href="#">Certificate Register</a></li>

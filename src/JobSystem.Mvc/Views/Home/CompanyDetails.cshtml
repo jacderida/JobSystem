@@ -1,0 +1,152 @@
+﻿@model JobSystem.Mvc.ViewModels.Admin.CompanyDetailsViewModel
+
+@{
+    ViewBag.Title = "CompanyDetails";
+}
+
+<h2>Company Details</h2>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+@using (Html.BeginForm())
+{
+	@Html.ValidationSummary(true)
+	<span class="form-section">
+		Name & Address
+	</span>
+	<fieldset>
+		@Html.HiddenFor(model => model.Id)
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Name)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Name)
+			@Html.ValidationMessageFor(model => model.Name)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Address1)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Address1)
+			@Html.ValidationMessageFor(model => model.Address1)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Address2)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Address2)
+			@Html.ValidationMessageFor(model => model.Address2)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Address3)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Address3)
+			@Html.ValidationMessageFor(model => model.Address3)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Address4)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Address4)
+			@Html.ValidationMessageFor(model => model.Address4)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Address5)
+		</div>
+		<div class="editor-field">
+			@Html.TextBoxFor(model => model.Address5, new { @class = "short-text" })
+			@Html.ValidationMessageFor(model => model.Address5)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Telephone)
+		</div>
+		<div class="editor-field">
+			@Html.TextBoxFor(model => model.Telephone, new { @class = "short-text"})
+			@Html.ValidationMessageFor(model => model.Telephone)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Fax)
+		</div>
+		<div class="editor-field">
+			@Html.TextBoxFor(model => model.Fax, new { @class = "short-text" })
+			@Html.ValidationMessageFor(model => model.Fax)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Email)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Email)
+			@Html.ValidationMessageFor(model => model.Email)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Www)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Www)
+			@Html.ValidationMessageFor(model => model.Www)
+		</div>
+	</fieldset>
+	<span class="form-section">
+		Bank Details
+	</span>
+	<fieldset>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.BankDetails)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.BankDetails)
+			@Html.ValidationMessageFor(model => model.BankDetails)
+		</div>
+	</fieldset>
+	<span class="form-section">
+		Invoice/Order Details
+	</span>
+	<fieldset>
+		<span class="fieldset-description">
+			This information will be used by default on Invoices and Orders but you'll be able to change it on a particular Invoice or Order should the need arise.
+		</span>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Currencies)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Currencies, Model.Currencies)
+			@Html.ValidationMessageFor(model => model.Currencies)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.TaxCodes)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.TaxCodes)
+			@Html.ValidationMessageFor(model => model.TaxCodes)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.RegNo)
+		</div>
+		<div class="editor-field">
+			@Html.TextBoxFor(model => model.RegNo, new { @class = "short-text" })
+			@Html.ValidationMessageFor(model => model.RegNo)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.VatRegNo)
+		</div>
+		<div class="editor-field">
+			@Html.TextBoxFor(model => model.VatRegNo, new { @class = "short-text" })
+			@Html.ValidationMessageFor(model => model.VatRegNo)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.PaymentTerms)
+		</div>
+		<div class="editor-field">
+			@Html.TextAreaFor(model => model.PaymentTerms)
+			@Html.ValidationMessageFor(model => model.PaymentTerms)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.TermsAndConditions)
+		</div>
+		<div class="editor-field">
+			@Html.TextAreaFor(model => model.TermsAndConditions)
+			@Html.ValidationMessageFor(model => model.TermsAndConditions)
+		</div>
+	</fieldset>
+	<input type="submit" value="Save" class="primary-action"/>
+}

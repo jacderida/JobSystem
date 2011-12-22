@@ -12,7 +12,6 @@
 		Name & Address
 	</span>
 	<fieldset>
-		@*<legend>Name & Address</legend>*@
 		<div class="editor-label">
 			@Html.LabelFor(model => model.Name)
 		</div>
@@ -52,21 +51,21 @@
 			@Html.LabelFor(model => model.Address5)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.Address5)
+			@Html.TextBoxFor(model => model.Address5, new { @class = "short-text" })
 			@Html.ValidationMessageFor(model => model.Address5)
 		</div>
         <div class="editor-label">
 			@Html.LabelFor(model => model.Telephone)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.Telephone)
+			@Html.TextBoxFor(model => model.Telephone, new { @class = "short-text"})
 			@Html.ValidationMessageFor(model => model.Telephone)
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.Fax)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.Fax)
+			@Html.TextBoxFor(model => model.Fax, new { @class = "short-text" })
 			@Html.ValidationMessageFor(model => model.Fax)
 		</div>
 		<div class="editor-label">
@@ -140,7 +139,7 @@
 				@Html.LabelFor(model => model.InvoiceAddress5)
 			</div>
 			<div class="editor-field">
-				@Html.EditorFor(model => model.InvoiceAddress5)
+				@Html.TextBoxFor(model => model.InvoiceAddress5, new { @class = "short-text" })
 				@Html.ValidationMessageFor(model => model.InvoiceAddress5)
 			</div>
 		</div>
@@ -208,21 +207,21 @@
 				@Html.LabelFor(model => model.DeliveryAddress5)
 			</div>
 			<div class="editor-field">
-				@Html.EditorFor(model => model.DeliveryAddress5)
+				@Html.TextBoxFor(model => model.DeliveryAddress5, new { @class = "short-text" })
 				@Html.ValidationMessageFor(model => model.DeliveryAddress5)
 			</div>
 			<div class="editor-label">
 				@Html.LabelFor(model => model.DeliveryTelephone)
 			</div>
 			<div class="editor-field">
-				@Html.EditorFor(model => model.DeliveryTelephone)
+				@Html.TextBoxFor(model => model.DeliveryTelephone, new { @class = "short-text" })
 				@Html.ValidationMessageFor(model => model.DeliveryTelephone)
 			</div>
 			<div class="editor-label">
 				@Html.LabelFor(model => model.DeliveryFax)
 			</div>
 			<div class="editor-field">
-				@Html.EditorFor(model => model.DeliveryFax)
+				@Html.TextBoxFor(model => model.DeliveryFax, new { @class = "short-text" })
 				@Html.ValidationMessageFor(model => model.DeliveryFax)
 			</div>
 			<div class="editor-label">
@@ -242,14 +241,14 @@
 			@Html.LabelFor(model => model.SalesTelephone)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.SalesTelephone)
+			@Html.TextBoxFor(model => model.SalesTelephone, new { @class = "short-text" })
 			@Html.ValidationMessageFor(model => model.SalesTelephone)
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.SalesFax)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.SalesFax)
+			@Html.TextBoxFor(model => model.SalesFax, new { @class = "short-text" })
 			@Html.ValidationMessageFor(model => model.SalesFax)
 		</div>
 		<div class="editor-label">
