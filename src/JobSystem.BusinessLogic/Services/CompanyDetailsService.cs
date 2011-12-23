@@ -4,6 +4,7 @@ using JobSystem.DataModel.Dto;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
+using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -83,6 +84,16 @@ namespace JobSystem.BusinessLogic.Services
 		public CompanyDetails GetCompany()
 		{
 			return _companyDetailsRepository.GetCompany();
+		}
+
+		public IEnumerable<TaxCode> GetTaxCodes()
+		{
+			return _taxCodeRepository.GetTaxCodes();
+		}
+
+		public IEnumerable<BankDetails> GetBankDetails()
+		{
+			return _bankDetailsRepository.GetBankDetails();
 		}
 
 		#endregion

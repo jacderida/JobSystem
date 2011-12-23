@@ -18,16 +18,6 @@ namespace JobSystem.BusinessLogic.Services
 			_listItemRepository = listItemRepository;
 		}
 
-		public IEnumerable<TaxCode> GetTaxCodes()
-		{
-			return _listItemRepository.GetTaxCodes();
-		}
-
-		public IEnumerable<BankDetails> GetBankDetails()
-		{
-			return _listItemRepository.GetBankDetails();
-		}
-
 		public IEnumerable<ListItem> GetAllByType(ListItemType type)
 		{
 			return _listItemRepository.GetAllByType(type);

@@ -8,8 +8,8 @@ namespace JobSystem.DataModel.Entities
 	{
 		[Description("Job Type")]
 		JobType = 1,
-		[Description("Job Department")]
-		JobDepartment = 2,
+		[Description("Field")]
+		JobItemField = 2,
 		[Description("Initial Status")]
 		JobItemInitialStatus = 3,
 		[Description("Status")]

@@ -17,6 +17,7 @@ namespace JobSystem.DataModel.Entities
 		public virtual ListItem InitialStatus { get; set; }
 		public virtual ListItem Status { get; set; }
 		public virtual ListItem Location { get; set; }
+		public virtual ListItem Field { get; set; }
 		public virtual int CalPeriod { get; set; }
 		public virtual string Instructions { get; set; }
 		public virtual string Accessories { get; set; }

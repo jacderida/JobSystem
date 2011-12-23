@@ -49,8 +49,8 @@ namespace JobSystem.Mvc.Controllers
 				TaxCodeId = company.DefaultTaxCode.Id,
 				Currencies = _listItemService.GetAllByType(ListItemType.Currency).ToSelectList(),
 				PaymentTerms = _listItemService.GetAllByType(ListItemType.PaymentTerm).ToSelectList(),
-				TaxCodes = _listItemService.GetTaxCodes().Select(t => new { Id = t.Id, Name = t.TaxCodeName}).ToSelectList(),
-				BankDetails = _listItemService.GetBankDetails().Select(t => new { Id = t.Id, Name = t.ShortName }).ToSelectList()
+				TaxCodes = _companyDetailsService.GetTaxCodes().Select(t => new { Id = t.Id, Name = t.TaxCodeName }).ToSelectList(),
+				BankDetails = _companyDetailsService.GetBankDetails().Select(t => new { Id = t.Id, Name = t.ShortName }).ToSelectList()
 			};
 			return View(companyDetailsViewModel);
 		}

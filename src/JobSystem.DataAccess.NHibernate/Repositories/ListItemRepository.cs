@@ -13,15 +13,5 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		{
 			return CurrentSession.Query<ListItem>().Where(li => li.Type == type);
 		}
-
-		public IEnumerable<TaxCode> GetTaxCodes()
-		{
-			return CurrentSession.Query<TaxCode>();
-		}
-
-		public IEnumerable<BankDetails> GetBankDetails()
-		{
-			return CurrentSession.Query<BankDetails>();
-		}
 	}
 }

@@ -21,6 +21,7 @@ namespace JobSystem.Migrations
 				.WithColumn("InitialStatusId").AsGuid().NotNullable()
 				.WithColumn("StatusId").AsGuid().NotNullable()
 				.WithColumn("LocationId").AsGuid().NotNullable()
+				.WithColumn("FieldId").AsGuid().NotNullable()
 				.WithColumn("CalPeriod").AsInt32().NotNullable()
 				.WithColumn("Instructions").AsString(255).Nullable()
 				.WithColumn("Accessories").AsString(20000).Nullable()
@@ -45,6 +46,11 @@ namespace JobSystem.Migrations
 			Create.ForeignKey("FK_JobItems_Status")
 				.FromTable("JobItems")
 				.ForeignColumn("StatusId")
+				.ToTable("ListItems")
+				.PrimaryColumn("Id");
+			Create.ForeignKey("FK_JobItems_Fields")
+				.FromTable("JobItems")
+				.ForeignColumn("FieldId")
 				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_JobItems_Instruments")

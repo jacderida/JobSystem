@@ -48,7 +48,6 @@
     <Compile Include="M20110928201038_AddListItemsTable.cs" />
     <Compile Include="M20110928201039_AddCustomerTable.cs" />
     <Compile Include="M20110928202143_AddInstrumentsTable.cs" />
-    <Compile Include="M20110928202415_AddJobItemLocationsTable.cs" />
     <Compile Include="M20110928202539_AddUserAccountsTable.cs" />
     <Compile Include="M20110928203503_AddJobsTable.cs" />
     <Compile Include="M20110928204549_AddJobItemsTable.cs" />

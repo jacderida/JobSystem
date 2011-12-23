@@ -26,7 +26,7 @@ namespace JobSystem.Migrations
 				.WithColumn("TermsAndConditions").AsString(20000).NotNullable()
 				.WithColumn("DefaultCurrencyId").AsGuid().NotNullable()
 				.WithColumn("DefaultTaxCodeId").AsGuid().NotNullable()
-				.WithColumn("DefaultPaymentTermsId").AsGuid().NotNullable()
+				.WithColumn("DefaultPaymentTermId").AsGuid().NotNullable()
 				.WithColumn("DefaultBankDetailsId").AsGuid().NotNullable()
 				.WithColumn("MainLogo").AsBinary(20000).NotNullable();
 			Create.ForeignKey("FK_CompanyDetails_Currencies")
@@ -41,7 +41,7 @@ namespace JobSystem.Migrations
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_CompanyDetails_PaymentTerms")
 				.FromTable("CompanyDetails")
-				.ForeignColumn("DefaultPaymentTermsId")
+				.ForeignColumn("DefaultPaymentTermId")
 				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_CompanyDetails_BankDetails")
