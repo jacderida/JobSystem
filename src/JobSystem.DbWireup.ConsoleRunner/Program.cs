@@ -36,7 +36,7 @@ namespace JobSystem.DbWireup.ConsoleRunner
 			{
 				databaseService.BeginHibernateTransaction();
 				databaseService.InsertDefaultData(defaultData);
-				databaseService.InsertCompanyDetails(GetCompanyDetails(databaseService, defaultBankDetailsId, defaultCurrencyId, defaultPaymentTermId, defaultTaxCodeId);
+				databaseService.InsertCompanyDetails(GetCompanyDetails(databaseService, defaultBankDetailsId, defaultCurrencyId, defaultPaymentTermId, defaultTaxCodeId));
 				databaseService.CommitHibernateTransaction();
 			}
 			catch (Exception)
