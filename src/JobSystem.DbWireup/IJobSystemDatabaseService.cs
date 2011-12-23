@@ -12,5 +12,10 @@ namespace JobSystem.DbWireup
 		void CreateJobSystemSchemaFromMigrations(string migrationsDllPath);
 		void InsertDefaultData(JobSystemDefaultData defaultData);
 		void InsertCompanyDetails(CompanyDetails companyDetails);
+
+		BankDetails GetBankDetails(Guid id);
+		TaxCode GetTaxCode(Guid id);
+		ListItem GetCurrency(Guid id);
+		ListItem GetPaymentTerm(Guid id);
 	}
 }

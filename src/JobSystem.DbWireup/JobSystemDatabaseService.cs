@@ -132,6 +132,26 @@ namespace JobSystem.DbWireup
 			session.Save(companyDetails);
 		}
 
+		public BankDetails GetBankDetails(Guid id)
+		{
+			return NHibernateSession.Current.Get<BankDetails>(id);
+		}
+
+		public TaxCode GetTaxCode(Guid id)
+		{
+			return NHibernateSession.Current.Get<TaxCode>(id);
+		}
+
+		public ListItem GetCurrency(Guid id)
+		{
+			return NHibernateSession.Current.Get<ListItem>(id);
+		}
+
+		public ListItem GetPaymentTerm(Guid id)
+		{
+			return NHibernateSession.Current.Get<ListItem>(id);
+		}
+
 		private SqlConnection GetConnection()
 		{
 			return new SqlConnection(ConfigurationManager.ConnectionStrings["JobSystemDatabase"].ConnectionString);

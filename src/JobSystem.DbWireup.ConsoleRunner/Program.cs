@@ -36,6 +36,28 @@ namespace JobSystem.DbWireup.ConsoleRunner
 			{
 				databaseService.BeginHibernateTransaction();
 				databaseService.InsertDefaultData(defaultData);
+				databaseService.InsertCompanyDetails(
+					new CompanyDetails
+					{
+						Id = Guid.NewGuid(),
+						Name = "Intertek EMIS",
+						Address1 = "Units 19 & 20 D Wellheads Industrial Centre",
+						Address2 = "Wellheads Crescent",
+						Address3 = "Dyce",
+						Address4 = "Aberdeen",
+						Address5 = "AB21 7GA",
+						Telephone = "123456",
+						Fax = "123456",
+						Email = "info@emis-uk.com",
+						RegNo = "123456 RegNo",
+						VatRegNo = "123456 VatRegNo",
+						TermsAndConditions = "placeholder terms and conditions",
+						Www = "www.intertek.com",
+						DefaultBankDetails = databaseService.GetBankDetails(defaultBankDetailsId),
+						DefaultCurrency = databaseService.GetCurrency(defaultCurrencyId),
+						DefaultPaymentTerm = databaseService.GetPaymentTerm(defaultPaymentTermId),
+						DefaultTaxCode = databaseService.GetTaxCode(defaultTaxCodeId)
+					});
 				databaseService.CommitHibernateTransaction();
 			}
 			catch (Exception)
