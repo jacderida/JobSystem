@@ -58,7 +58,7 @@ namespace JobSystem.Mvc.Controllers
 				TaxCodes = _companyDetailsService.GetTaxCodes().Select(t => new { Id = t.Id, Name = t.TaxCodeName }).ToSelectList(),
 				BankDetails = _companyDetailsService.GetBankDetails().Select(t => new { Id = t.Id, Name = t.ShortName }).ToSelectList()
 			};
-			return View("CompanyDetails", companyDetailsViewModel);
+			return View("EditCompanyDetails", companyDetailsViewModel);
 		}
 
 		[HttpPost]
