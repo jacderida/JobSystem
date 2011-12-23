@@ -20,6 +20,5 @@ namespace JobSystem.Mvc.Controllers
 		{
 			return View();
 		}
-
     }
 }

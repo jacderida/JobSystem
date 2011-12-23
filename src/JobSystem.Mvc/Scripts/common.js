@@ -62,7 +62,7 @@
 			tabsScroll: false,
 			autoHeight: true,
 			totalWidth: '774'
-		});		
+		});
 
 		$('#createJobButton').click(function () {
 			$("#create-job-container").dialog('open');
@@ -110,6 +110,58 @@
 					}, 300);
 				});
 			});
+		});
+
+		//Populate customer delivery/invoice address with main address details
+		function populateAddressFields(fieldsToPopulate, selected) {
+			var addressLine1 = $('#Address1').val();
+			var addressLine2 = $('#Address2').val();
+			var addressLine3 = $('#Address3').val();
+			var townCity = $('#Address4').val();
+			var postcode = $('#Address5').val();
+
+			switch (fieldsToPopulate) {
+				case 'invoice':
+					if (selected) {
+						$('#InvoiceAddress1').val(addressLine1);
+						$('#InvoiceAddress2').val(addressLine2);
+						$('#InvoiceAddress3').val(addressLine3);
+						$('#InvoiceAddress4').val(townCity);
+						$('#InvoiceAddress5').val(postcode);
+					}
+					else {
+						$('#InvoiceAddress1').val("");
+						$('#InvoiceAddress2').val("");
+						$('#InvoiceAddress3').val("");
+						$('#InvoiceAddress4').val("");
+						$('#InvoiceAddress5').val("");
+					}
+					break;
+				case 'delivery':
+					if (selected) {
+						$('#DeliveryAddress1').val(addressLine1);
+						$('#DeliveryAddress2').val(addressLine2);
+						$('#DeliveryAddress3').val(addressLine3);
+						$('#DeliveryAddress4').val(townCity);
+						$('#DeliveryAddress5').val(postcode);
+					}
+					else {
+						$('#DeliveryAddress1').val("");
+						$('#DeliveryAddress2').val("");
+						$('#DeliveryAddress3').val("");
+						$('#DeliveryAddress4').val("");
+						$('#DeliveryAddress5').val("");
+					}
+					break;
+			}
+		}
+
+		$('#deliveryCheckbox').click(function () {
+			populateAddressFields('delivery', $(this).is(':checked'));
+		});
+
+		$('#invoiceCheckbox').click(function () {
+			populateAddressFields('invoice', $(this).is(':checked'));
 		});
 	});
 });

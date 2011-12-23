@@ -25,7 +25,9 @@ namespace JobSystem.Mvc.Controllers
 				c => new CustomerIndexViewModel
 				{
 					Id = c.Id,
-					Name = c.Name
+					Name = c.Name,
+					Email = c.Email,
+					Contact1 = c.Contact1
 				}).ToList();
 			return View(customerList);
 		}

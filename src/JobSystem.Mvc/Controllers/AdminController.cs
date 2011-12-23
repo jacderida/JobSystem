@@ -23,6 +23,12 @@ namespace JobSystem.Mvc.Controllers
 			_listItemService = listItemService;
 		}
 
+		public ActionResult Index()
+		{
+			var model = new CompanyDetailsViewModel();
+			return View("CompanyDetails", model);
+		}
+
 		[HttpGet]
 		public ActionResult EditCompanyDetails()
 		{
@@ -52,7 +58,7 @@ namespace JobSystem.Mvc.Controllers
 				TaxCodes = _companyDetailsService.GetTaxCodes().Select(t => new { Id = t.Id, Name = t.TaxCodeName }).ToSelectList(),
 				BankDetails = _companyDetailsService.GetBankDetails().Select(t => new { Id = t.Id, Name = t.ShortName }).ToSelectList()
 			};
-			return View(companyDetailsViewModel);
+			return View("CompanyDetails", companyDetailsViewModel);
 		}
 
 		[HttpPost]
