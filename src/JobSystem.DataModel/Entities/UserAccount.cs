@@ -39,7 +39,7 @@ namespace JobSystem.DataModel.Entities
 		[Required(ErrorMessageResourceName = "JobTitleRequired", ErrorMessageResourceType = (typeof(Messages)))]
 		public virtual string JobTitle { get; set; }
 
-		public UserRole Roles { get; set; }
+		public virtual UserRole Roles { get; set; }
 		public virtual string PasswordSalt { get; set; }
 		public virtual string PasswordHash { get; set; }
 

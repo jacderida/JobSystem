@@ -9,16 +9,17 @@ using FluentNHibernate.Cfg.Db;
 using JobSystem.DataAccess.NHibernate;
 using JobSystem.DataAccess.NHibernate.Mappings;
 using JobSystem.DataModel.Entities;
+using JobSystem.Framework.Security;
 using NHibernate.Linq;
 
 namespace JobSystem.DbWireup
 {
-	public class JobSystemDatabaseService : IJobSystemDatabaseService
+	public class JobSystemDatabaseCreationService : IJobSystemDatabaseCreationService
 	{
 		private const string DatabaseExistsQuery = "USE master; SELECT COUNT(*) FROM sysdatabases WHERE name='{0}'";
 		private readonly string _databaseName;
 
-		public JobSystemDatabaseService(string databaseName)
+		public JobSystemDatabaseCreationService(string databaseName)
 		{
 			_databaseName = String.Format("JobSystem.{0}", databaseName);
 		}
@@ -132,6 +133,25 @@ namespace JobSystem.DbWireup
 			session.Save(companyDetails);
 		}
 
+		public void InsertAdminUser(string emailAddress, string name, string jobTitle, string password)
+		{
+			if (!NHibernateSession.Current.Transaction.IsActive)
+				throw new InvalidOperationException("A transaction must be in progress before default data can be inserted");
+			var cryptographyService = new CryptographicService();
+			var passwordSalt = cryptographyService.GenerateSalt();
+			var adminUser = new UserAccount
+			{
+				Id = Guid.NewGuid(),
+				Name = name,
+				EmailAddress = emailAddress,
+				PasswordSalt = passwordSalt,
+				PasswordHash = cryptographyService.ComputeHash(password, passwordSalt),
+				Roles = UserRole.Admin | UserRole.JobApprover | UserRole.OrderApprover | UserRole.Member,
+				JobTitle = jobTitle,
+			};
+			NHibernateSession.Current.Save(adminUser);
+		}
+
 		public BankDetails GetBankDetails(Guid id)
 		{
 			return NHibernateSession.Current.Get<BankDetails>(id);
@@ -150,6 +170,13 @@ namespace JobSystem.DbWireup
 		public ListItem GetPaymentTerm(Guid id)
 		{
 			return NHibernateSession.Current.Get<ListItem>(id);
+		}
+
+		private string GetHashedPassword(string password)
+		{
+			var cryptographyService = new CryptographicService();
+
+			return null;
 		}
 
 		private SqlConnection GetConnection()

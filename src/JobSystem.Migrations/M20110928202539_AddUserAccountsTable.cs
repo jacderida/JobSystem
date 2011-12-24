@@ -15,7 +15,8 @@ namespace JobSystem.Migrations
 				.WithColumn("Name").AsString(255).NotNullable()
 				.WithColumn("JobTitle").AsString(255).NotNullable()
 				.WithColumn("PasswordHash").AsString(255).NotNullable()
-				.WithColumn("PasswordSalt").AsString(255).NotNullable();
+				.WithColumn("PasswordSalt").AsString(255).NotNullable()
+				.WithColumn("Roles").AsInt32().NotNullable();
 		}
 
 		public override void Down()

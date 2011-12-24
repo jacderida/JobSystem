@@ -7,7 +7,7 @@ namespace JobSystem.DbWireup.ConsoleRunner
 	{
 		static void Main(string[] args)
 		{
-			var databaseService = new JobSystemDatabaseService("Development");
+			var databaseService = new JobSystemDatabaseCreationService("Development");
 			databaseService.CreateDatabase(true);
 			databaseService.CreateJobSystemSchemaFromMigrations("JobSystem.Migrations.dll");
 			databaseService.InitHibernate();
@@ -37,6 +37,7 @@ namespace JobSystem.DbWireup.ConsoleRunner
 				databaseService.BeginHibernateTransaction();
 				databaseService.InsertDefaultData(defaultData);
 				databaseService.InsertCompanyDetails(GetCompanyDetails(databaseService, defaultBankDetailsId, defaultCurrencyId, defaultPaymentTermId, defaultTaxCodeId));
+				databaseService.InsertAdminUser("admin@intertek.com", "Graham Robertson", "Laboratory Manager", "p'ssw0rd");
 				databaseService.CommitHibernateTransaction();
 			}
 			catch (Exception)
@@ -46,7 +47,7 @@ namespace JobSystem.DbWireup.ConsoleRunner
 		}
 
 		static CompanyDetails GetCompanyDetails(
-			JobSystemDatabaseService databaseService, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermId, Guid defaultTaxCodeId)
+			JobSystemDatabaseCreationService databaseService, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermId, Guid defaultTaxCodeId)
 		{
 			return new CompanyDetails
 			{

@@ -54,8 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CrossDomainMigrationRunner.cs" />
-    <Compile Include="IJobSystemDatabaseService.cs" />
-    <Compile Include="JobSystemDatabaseService.cs" />
+    <Compile Include="IJobSystemDatabaseCreationService.cs" />
+    <Compile Include="JobSystemDatabaseCreationService.cs" />
     <Compile Include="JobSystemDefaultData.cs" />
     <Compile Include="JobSystemDefaultDataBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

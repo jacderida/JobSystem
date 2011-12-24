@@ -6,7 +6,7 @@ using JobSystem.DataModel.Entities;
 
 namespace JobSystem.DbWireup
 {
-	public interface IJobSystemDatabaseService
+	public interface IJobSystemDatabaseCreationService
 	{
 		void CreateDatabase(bool dropExisting = false);
 		void CreateJobSystemSchemaFromMigrations(string migrationsDllPath);
