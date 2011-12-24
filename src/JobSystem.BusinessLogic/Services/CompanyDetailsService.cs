@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Dto;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
-using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -40,6 +41,8 @@ namespace JobSystem.BusinessLogic.Services
 		{
 			if (id == Guid.Empty)
 				throw new ArgumentException("A value must be provided for id");
+			if (!CurrentUser.HasRole(UserRole.Admin))
+				throw new DomainValidationException("Only an admin user can edit the company details", "CurrentUser");
 			var companyDetails = new CompanyDetails();
 			companyDetails.Name = name;
 			companyDetails.TermsAndConditions = termsAndConditions;
@@ -67,6 +70,8 @@ namespace JobSystem.BusinessLogic.Services
 			var companyDetails = _companyDetailsRepository.GetById(id);
 			if (companyDetails == null)
 				throw new ArgumentException(String.Format("There is no company with ID {0}", id));
+			if (!CurrentUser.HasRole(UserRole.Admin))
+				throw new DomainValidationException("Only an admin user can edit the company details", "CurrentUser");
 			companyDetails.Name = name;
 			companyDetails.TermsAndConditions = termsAndConditions;
 			companyDetails.DefaultCurrency = GetListItem(defaultCurrencyId);

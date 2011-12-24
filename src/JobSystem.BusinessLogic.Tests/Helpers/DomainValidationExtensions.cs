@@ -14,7 +14,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 	{
 		public static bool ResultContainsMessage(this DomainValidationException dex, string expectedMessage)
 		{
-			return dex.Result[0].ErrorMessage == expectedMessage;
+			return dex.Result.Any(r => r.ErrorMessage == expectedMessage);
 		}
 
 		public static bool ResultPropertyContainsMessage(this DomainValidationException dex, string propertyName, string expectedMessage)

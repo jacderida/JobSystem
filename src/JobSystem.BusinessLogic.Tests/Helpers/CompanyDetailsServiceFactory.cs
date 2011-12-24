@@ -1,24 +1,27 @@
 ﻿using System;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Tests.Context;
+using JobSystem.DataModel;
+using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
 using Rhino.Mocks;
-using JobSystem.DataModel.Entities;
 
 namespace JobSystem.BusinessLogic.Tests.Helpers
 {
 	public class CompanyDetailsServiceFactory
 	{
 		public static CompanyDetailsService CreateWithDefaultsSetup(
+			ICompanyDetailsRepository companyDetailsRepository, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermsId, Guid defaultTaxCodeId, IUserContext userContext)
+		{
+			return DoCreateWithDefaultsSetupForEdit(companyDetailsRepository, defaultBankDetailsId, defaultCurrencyId, defaultPaymentTermsId, defaultTaxCodeId, userContext);
+		}
+
+		public static CompanyDetailsService CreateWithDefaultsSetup(
 			ICompanyDetailsRepository companyDetailsRepository, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermsId, Guid defaultTaxCodeId)
 		{
-			var bankDetailsRepositoryStub = GetBankDetailsRepository(defaultBankDetailsId);
-			var taxCodeRepositoryStub = GetTaxCodeRepository(defaultTaxCodeId);
-			var listItemsRepositoryStub = GetDefaultListItemRepository(defaultCurrencyId, defaultPaymentTermsId);
-			return new CompanyDetailsService(
-				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager"),
-				companyDetailsRepository, bankDetailsRepositoryStub, listItemsRepositoryStub, taxCodeRepositoryStub, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+			return DoCreateWithDefaultsSetupForEdit(companyDetailsRepository, defaultBankDetailsId, defaultCurrencyId, defaultPaymentTermsId, defaultTaxCodeId,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin));
 		}
 
 		public static CompanyDetailsService CreateWithDefaultsSetupForEdit(
@@ -29,7 +32,18 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			var taxCodeRepositoryStub = GetTaxCodeRepository(defaultTaxCodeId);
 			var listItemsRepositoryStub = GetDefaultListItemRepository(defaultCurrencyId, defaultPaymentTermsId);
 			return new CompanyDetailsService(
-				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager"),
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin),
+				companyDetailsRepository, bankDetailsRepositoryStub, listItemsRepositoryStub, taxCodeRepositoryStub, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+		}
+
+		private static CompanyDetailsService DoCreateWithDefaultsSetupForEdit(
+			ICompanyDetailsRepository companyDetailsRepository, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermsId, Guid defaultTaxCodeId, IUserContext userContext)
+		{
+			var bankDetailsRepositoryStub = GetBankDetailsRepository(defaultBankDetailsId);
+			var taxCodeRepositoryStub = GetTaxCodeRepository(defaultTaxCodeId);
+			var listItemsRepositoryStub = GetDefaultListItemRepository(defaultCurrencyId, defaultPaymentTermsId);
+			return new CompanyDetailsService(
+				userContext,
 				companyDetailsRepository, bankDetailsRepositoryStub, listItemsRepositoryStub, taxCodeRepositoryStub, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 

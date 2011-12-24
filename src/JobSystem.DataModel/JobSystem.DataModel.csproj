@@ -55,6 +55,7 @@
     <Compile Include="Entities\ListItemType.cs" />
     <Compile Include="Entities\TaxCode.cs" />
     <Compile Include="Entities\UserAccount.cs" />
+    <Compile Include="Entities\UserRole.cs" />
     <Compile Include="IEntityIdProvider.cs" />
     <Compile Include="IUserContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

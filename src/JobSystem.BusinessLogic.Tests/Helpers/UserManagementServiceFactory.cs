@@ -1,10 +1,10 @@
 ﻿using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Tests.Context;
-using JobSystem.DataModel;
+using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
-using Rhino.Mocks;
 using JobSystem.Framework.Messaging;
 using JobSystem.Framework.Security;
+using Rhino.Mocks;
 
 namespace JobSystem.BusinessLogic.Tests.Helpers
 {
@@ -13,7 +13,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 		public static UserManagementService Create()
 		{
 			return new UserManagementService(
-				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager"),
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin),
 				MockRepository.GenerateStub<IUserAccountRepository>(),
 				new CryptographicService(),
 				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
@@ -22,7 +22,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 		public static UserManagementService Create(IUserAccountRepository userAccountRepository)
 		{
 			return new UserManagementService(
-				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager"),
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin),
 				userAccountRepository,
 				new CryptographicService(),
 				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());

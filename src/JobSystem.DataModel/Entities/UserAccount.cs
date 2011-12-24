@@ -29,7 +29,7 @@ namespace JobSystem.DataModel.Entities
 		public virtual string Name { get; set; }
 
 		[ReadableName("Email Address")]
-		[StringLength(256, MinimumLength = 3, ErrorMessageResourceName = "EmailTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[StringLength(256, ErrorMessageResourceName = "EmailTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		[Required(ErrorMessageResourceName = "EmailRequired", ErrorMessageResourceType = (typeof(Messages)))]
 		[EmailAddress(ErrorMessageResourceName = "EmailInvalid", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string EmailAddress { get; set; }
@@ -39,34 +39,20 @@ namespace JobSystem.DataModel.Entities
 		[Required(ErrorMessageResourceName = "JobTitleRequired", ErrorMessageResourceType = (typeof(Messages)))]
 		public virtual string JobTitle { get; set; }
 
+		public UserRole Roles { get; set; }
 		public virtual string PasswordSalt { get; set; }
 		public virtual string PasswordHash { get; set; }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="UserAccount"/> class.
-		/// </summary>
-		public UserAccount()
+		public virtual bool HasRole(UserRole roles)
 		{
+			return (Roles & roles) != UserRole.None;
 		}
 
-		/// <summary>
-		/// Returns a <see cref="string"/> that represents this instance.
-		/// </summary>
-		/// <returns>
-		/// A <see cref="string"/> that represents this instance.
-		/// </returns>
 		public override string ToString()
 		{
 			return EmailAddress;
 		}
 
-		/// <summary>
-		/// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
-		/// </summary>
-		/// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
-		/// <returns>
-		/// 	<c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.
-		/// </returns>
 		public override bool Equals(object obj)
 		{
 			var user = obj as UserAccount;
@@ -75,12 +61,6 @@ namespace JobSystem.DataModel.Entities
 			return Id.Equals(user.Id) && EmailAddress.Equals(user.EmailAddress, StringComparison.CurrentCultureIgnoreCase);
 		}
 
-		/// <summary>
-		/// Returns a hash code for this instance.
-		/// </summary>
-		/// <returns>
-		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
-		/// </returns>
 		public override int GetHashCode()
 		{
 			if (Id.Equals(Guid.Empty))

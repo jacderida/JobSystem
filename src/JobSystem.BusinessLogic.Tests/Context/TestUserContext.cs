@@ -25,20 +25,21 @@ namespace JobSystem.BusinessLogic.Tests.Context
 			_userAccount = userAccount;
 		}
 
-		public TestUserContext(Guid userId, string emailAddress, string userName, string jobTitle)
+		public TestUserContext(Guid userId, string emailAddress, string userName, string jobTitle, UserRole roles)
 			: this(new UserAccount()
 							{
 								Id = userId,
 								Name = userName,
 								JobTitle = jobTitle,
-								EmailAddress = emailAddress
+								EmailAddress = emailAddress,
+								Roles = roles
 							})
 		{
 		}
 
-		public static IUserContext Create(string emailAddress, string userName, string jobTitle)
+		public static IUserContext Create(string emailAddress, string userName, string jobTitle, UserRole roles)
 		{
-			return new TestUserContext(Guid.Empty, emailAddress, userName, jobTitle);
+			return new TestUserContext(Guid.Empty, emailAddress, userName, jobTitle, roles);
 		}
 
 		#region IUserContext Members

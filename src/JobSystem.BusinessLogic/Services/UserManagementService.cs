@@ -31,18 +31,21 @@ namespace JobSystem.BusinessLogic.Services
 			_userAccountValidator = new UserAccountValidator(_userAccountRepository);
 		}
 
-		public UserAccount Create(Guid id, string name, string email, string password, string jobTitle)
+		public UserAccount Create(Guid id, string name, string email, string password, string jobTitle, UserRole roles)
 		{
 			if (id == null || id == Guid.Empty)
 				throw new ArgumentException("An ID must be supplied to create a user");
 			if (String.IsNullOrEmpty(password))
 				throw new ArgumentException("A password must be supplied to create a user");
+			if (!CurrentUser.HasRole(UserRole.Admin))
+				throw new DomainValidationException("Only an admin user can create other users", "CurrentUser");
 			var userAccount = new UserAccount
 			{
 				Id = id,
 				EmailAddress = email,
 				Name = name,
-				JobTitle = jobTitle
+				JobTitle = jobTitle,
+				Roles = roles
 			};
 			SetPassword(userAccount, password);
 			ValidateAnnotatedObjectThrowOnFailure(userAccount);

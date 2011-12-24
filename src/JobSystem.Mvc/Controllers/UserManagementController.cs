@@ -6,6 +6,7 @@ using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.ViewModels.Users;
+using JobSystem.DataModel.Entities;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -49,7 +50,7 @@ namespace JobSystem.Mvc.Controllers
 				try
 				{
 					var id = Guid.NewGuid();
-					_userManagementService.Create(id, viewModel.Name, viewModel.EmailAddress, viewModel.Password, viewModel.JobTitle);
+					_userManagementService.Create(id, viewModel.Name, viewModel.EmailAddress, viewModel.Password, viewModel.JobTitle, UserRole.Member);
 					return RedirectToAction("Index");
 				}
 				catch (DomainValidationException dex)
