@@ -7,6 +7,7 @@ using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using NUnit.Framework;
 using Rhino.Mocks;
+using JobSystem.BusinessLogic.Tests.Context;
 
 namespace JobSystem.BusinessLogic.Tests
 {
@@ -1244,6 +1245,41 @@ namespace JobSystem.BusinessLogic.Tests
 				Id = Guid.NewGuid(),
 				Name = "Gael Ltd"
 			};
+		}
+
+		#endregion
+		#region Get
+
+		[Test]
+		public void GetById_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var customerRepositoryStub = MockRepository.GenerateMock<ICustomerRepository>();
+			_customerService = CustomerServiceFactory.Create(customerRepositoryStub, TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Public));
+			try
+			{
+				_customerService.GetById(Guid.NewGuid());
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}			
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ViewCustomerInsufficientSecurityClearance));
+		}
+
+		[Test]
+		public void GetCustomers_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var customerRepositoryStub = MockRepository.GenerateMock<ICustomerRepository>();
+			_customerService = CustomerServiceFactory.Create(customerRepositoryStub, TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Public));
+			try
+			{
+				_customerService.GetCustomers();
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ViewCustomerListInsufficientSecurityClearance));
 		}
 
 		#endregion
