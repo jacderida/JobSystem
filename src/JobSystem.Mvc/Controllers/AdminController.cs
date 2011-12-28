@@ -58,7 +58,7 @@ namespace JobSystem.Mvc.Controllers
 				TaxCodes = _companyDetailsService.GetTaxCodes().Select(t => new { Id = t.Id, Name = t.TaxCodeName }).ToSelectList(),
 				BankDetails = _companyDetailsService.GetBankDetails().Select(t => new { Id = t.Id, Name = t.ShortName }).ToSelectList()
 			};
-			return View("EditCompanyDetails", companyDetailsViewModel);
+			return View("CompanyDetails", companyDetailsViewModel);
 		}
 
 		[HttpPost]
@@ -83,7 +83,7 @@ namespace JobSystem.Mvc.Controllers
 					ModelState.UpdateFromDomain(dex.Result);
 				}
 			}
-			return View(viewModel);
+			return View("CompanyDetails", viewModel);
 		}
 	}
 }

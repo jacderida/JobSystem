@@ -697,6 +697,11 @@ div#title {
 }
 
 /* START OF TOGGLE STYLES */
+#toggle-container {
+	width: 250px;
+	margin: 0 auto 20px auto;
+}
+
 .toggle {
 	background: transparent url('../Content/images/toggle_bg.png') repeat-x;
 	font-weight: bold;
@@ -748,6 +753,14 @@ div#title {
 
 .toggle-active:focus, .toggle-active:hover {
 	background: transparent url('../Content/images/toggle_bg_active.png') repeat-x;
+}
+
+.toggle a {
+	text-decoration: none;
+	color: inherit;
+	width: 120px;
+	height: 25px;
+	display: inline-block;
 }
 
 /* END OF TOGGLE STYLES */

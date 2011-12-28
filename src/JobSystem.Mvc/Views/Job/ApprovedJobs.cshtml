@@ -3,16 +3,18 @@
 }
 
 <h2>Jobs</h2>
-
+<div id="toggle-container">
+	<span class="toggle toggle-left"><a href="@Url.Action("PendingJobs")">Pending</a></span>
+	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedJobs")">Approved</a></span>
+</div>
 <a href="#" id="createJobButton" class="primary-action">Create Job</a>
-<span class="toggle toggle-active toggle-left">Pending</span>
-<span class="toggle toggle-right">Approved</span>
 <table>
 	<tr>
 		<th>Job Number</th>
 		<th>Order Number</th>
-		<th>Created</th>
 		<th>Booked By</th>
+		<th>Created</th>
+		<th>Approved</th>
 	</tr>
 @*	@foreach (var item in Model)
  {*@
@@ -26,10 +28,13 @@
 				@*@Html.ActionLink("Edit", "Edit", new { id = item.Id })*@
 			</td>
 			<td>
+				Chris O'Neil
+			</td>
+			<td>
 				25/11/2011
 			</td>
 			<td>
-				Chris O'Neil
+				27/11/2011
 			</td>
 		</tr>
  @*}*@

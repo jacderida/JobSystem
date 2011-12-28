@@ -1,7 +1,7 @@
 ﻿@model JobSystem.Mvc.ViewModels.Admin.CompanyDetailsViewModel
 
 @{
-    ViewBag.Title = "CompanyDetails";
+    ViewBag.Title = "Company Details";
 }
 
 <h2>Company Details</h2>
@@ -137,7 +137,7 @@
 			@Html.LabelFor(model => model.PaymentTerms)
 		</div>
 		<div class="editor-field">
-			@Html.TextAreaFor(model => model.PaymentTerms)
+			@Html.EditorFor(model => model.PaymentTerms)
 			@Html.ValidationMessageFor(model => model.PaymentTerms)
 		</div>
 		<div class="editor-label">
