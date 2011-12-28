@@ -132,6 +132,9 @@
   <data name="FaxTooLarge" xml:space="preserve">
     <value>The fax cannot exceed 50 characters</value>
   </data>
+  <data name="InsufficientSecurityClearance" xml:space="preserve">
+    <value>You must be an admin to edit the company details</value>
+  </data>
   <data name="NameRequired" xml:space="preserve">
     <value>The name is required for the company</value>
   </data>

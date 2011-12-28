@@ -106,6 +106,15 @@ namespace JobSystem.Resources.CompanyDetails {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must be an admin to edit the company details.
+        /// </summary>
+        public static string InsufficientSecurityClearance {
+            get {
+                return ResourceManager.GetString("InsufficientSecurityClearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The name is required for the company.
         /// </summary>
         public static string NameRequired {

@@ -70,7 +70,7 @@ namespace JobSystem.Mvc.Controllers
 				try
 				{
 					_companyDetailsService.Edit(
-						viewModel.Id, viewModel.Name,
+						viewModel.Name,
 						Address.GetAddressFromLineDetails(viewModel.Address1, viewModel.Address2, viewModel.Address3, viewModel.Address4, viewModel.Address5),
 						viewModel.Telephone, viewModel.Fax, viewModel.Email,
 						viewModel.Www, viewModel.RegNo, viewModel.VatRegNo,
