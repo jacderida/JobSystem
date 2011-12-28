@@ -1,5 +1,6 @@
 ﻿using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Tests.Context;
+using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
@@ -12,17 +13,18 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 	{
 		public static UserManagementService Create()
 		{
-			return new UserManagementService(
-				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin),
-				MockRepository.GenerateStub<IUserAccountRepository>(),
-				new CryptographicService(),
-				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+			return Create(MockRepository.GenerateStub<IUserAccountRepository>());
 		}
 
 		public static UserManagementService Create(IUserAccountRepository userAccountRepository)
 		{
+			return Create(userAccountRepository, TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin));
+		}
+
+		public static UserManagementService Create(IUserAccountRepository userAccountRepository, IUserContext userContext)
+		{
 			return new UserManagementService(
-				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin),
+				userContext,
 				userAccountRepository,
 				new CryptographicService(),
 				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
