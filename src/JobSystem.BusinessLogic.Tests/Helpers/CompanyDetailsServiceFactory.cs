@@ -15,7 +15,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			ICompanyDetailsRepository companyDetailsRepository, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermsId, Guid defaultTaxCodeId)
 		{
 			return CreateWithDefaultsSetup(companyDetailsRepository, defaultBankDetailsId, defaultCurrencyId, defaultPaymentTermsId, defaultTaxCodeId,
-				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin));
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin | UserRole.JobApprover | UserRole.OrderApprover | UserRole.Member));
 		}
 
 		public static CompanyDetailsService CreateWithDefaultsSetup(
@@ -33,7 +33,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			ICompanyDetailsRepository companyDetailsRepository, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermsId, Guid defaultTaxCodeId)
 		{
 			return CreateWithDefaultsSetupForEdit(companyDetailsRepository,  defaultBankDetailsId, defaultCurrencyId, defaultPaymentTermsId, defaultTaxCodeId,
-				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin));
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin | UserRole.JobApprover | UserRole.OrderApprover | UserRole.Member));
 		}
 
 		public static CompanyDetailsService CreateWithDefaultsSetupForEdit(

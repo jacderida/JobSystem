@@ -159,6 +159,15 @@
   <data name="VatRegNoTooLarge" xml:space="preserve">
     <value>The company VAT registration number cannot exceed 50 characters</value>
   </data>
+  <data name="ViewBankDetailsInsufficientSecurityClearance" xml:space="preserve">
+    <value>You need to be an internal member to view the bank details list</value>
+  </data>
+  <data name="ViewCompanyInsufficientSecurityClearance" xml:space="preserve">
+    <value>You need to be an internal member to view the company details</value>
+  </data>
+  <data name="ViewTaxCodeDetailsInsufficientSecurityClearance" xml:space="preserve">
+    <value>You need to be an internal member to view the tax code list</value>
+  </data>
   <data name="WwwRequired" xml:space="preserve">
     <value>A URL must be supplied for the company</value>
   </data>

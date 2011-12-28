@@ -1149,5 +1149,74 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		#endregion
+		#region Get
+
+		[Test]
+		public void GetCompany_PublicUserWithInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Public));
+			try
+			{
+				_companyDetailsService.GetCompany();
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.ViewCompanyInsufficientSecurityClearance));
+		}
+
+		[Test]
+		public void GetBankDetails_PublicUserWithInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Public));
+			try
+			{
+				_companyDetailsService.GetBankDetails();
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.ViewBankDetailsInsufficientSecurityClearance));
+		}
+
+		[Test]
+		public void GetTaxCodes_PublicUserWithInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var currencyId = Guid.NewGuid();
+			var bankDetailsId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+
+			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
+			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetup(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Public));
+			try
+			{
+				_companyDetailsService.GetTaxCodes();
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.ViewTaxCodeDetailsInsufficientSecurityClearance));
+		}
+
+		#endregion
 	}
 }

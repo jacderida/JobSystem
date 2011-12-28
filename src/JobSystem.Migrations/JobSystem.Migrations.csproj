@@ -55,6 +55,7 @@
     <Compile Include="M20111206223834_AddTaxCodesTable.cs" />
     <Compile Include="M20111206224823_AddBankDetailsTable.cs" />
     <Compile Include="M20111208212831_AddCompanyDetailsTable.cs" />
+    <Compile Include="M20111228143737_AddIsPendingColumnToJobsTable.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

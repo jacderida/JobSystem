@@ -6,6 +6,7 @@ using JobSystem.DataModel.Dto;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
+using JobSystem.Resources.CompanyDetails;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -84,16 +85,22 @@ namespace JobSystem.BusinessLogic.Services
 
 		public CompanyDetails GetCompany()
 		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.ViewCompanyInsufficientSecurityClearance);
 			return _companyDetailsRepository.GetCompany();
 		}
 
 		public IEnumerable<TaxCode> GetTaxCodes()
 		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.ViewTaxCodeDetailsInsufficientSecurityClearance);
 			return _taxCodeRepository.GetTaxCodes();
 		}
 
 		public IEnumerable<BankDetails> GetBankDetails()
 		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.ViewBankDetailsInsufficientSecurityClearance);
 			return _bankDetailsRepository.GetBankDetails();
 		}
 

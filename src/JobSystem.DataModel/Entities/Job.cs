@@ -18,6 +18,7 @@ namespace JobSystem.DataModel.Entities
 		public virtual ListItem Department { get; set; }
 		public virtual Customer Customer { get; set; }
 		public virtual List<JobItem> JobItems { get; set; }
+		public virtual bool IsPending { get; set; }
 
 		public Job()
 		{

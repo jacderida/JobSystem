@@ -187,6 +187,33 @@ namespace JobSystem.Resources.CompanyDetails {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You need to be an internal member to view the bank details list.
+        /// </summary>
+        public static string ViewBankDetailsInsufficientSecurityClearance {
+            get {
+                return ResourceManager.GetString("ViewBankDetailsInsufficientSecurityClearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You need to be an internal member to view the company details.
+        /// </summary>
+        public static string ViewCompanyInsufficientSecurityClearance {
+            get {
+                return ResourceManager.GetString("ViewCompanyInsufficientSecurityClearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You need to be an internal member to view the tax code list.
+        /// </summary>
+        public static string ViewTaxCodeDetailsInsufficientSecurityClearance {
+            get {
+                return ResourceManager.GetString("ViewTaxCodeDetailsInsufficientSecurityClearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A URL must be supplied for the company.
         /// </summary>
         public static string WwwRequired {
