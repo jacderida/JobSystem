@@ -12,18 +12,17 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 	{
 		public static CustomerService Create()
 		{
-			return new CustomerService(
-				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member),
-				MockRepository.GenerateStub<ICustomerRepository>(),
-				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+			return Create(MockRepository.GenerateStub<ICustomerRepository>());
 		}
 
 		public static CustomerService Create(ICustomerRepository repository)
 		{
-			return new CustomerService(
-				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member),
-				repository,
-				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+			return Create(repository, TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
+		}
+
+		public static CustomerService Create(ICustomerRepository repository, IUserContext userContext)
+		{
+			return new CustomerService(userContext, repository, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 	}
 }

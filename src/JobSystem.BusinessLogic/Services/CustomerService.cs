@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using JobSystem.BusinessLogic.Validation;
+using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.BusinessLogic.Validation.Extensions;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Dto;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
-using System.Collections.Generic;
+using JobSystem.Resources.Customers;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -77,6 +79,8 @@ namespace JobSystem.BusinessLogic.Services
 
 		public Customer GetById(Guid id)
 		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.ViewCustomerInsufficientSecurityClearance);
 			var customer = _customerRepository.GetById(id);
 			if (customer == null)
 				throw new ArgumentException("No customer exists with the ID specified", "id");
@@ -85,6 +89,8 @@ namespace JobSystem.BusinessLogic.Services
 
 		public IEnumerable<Customer> GetCustomers()
 		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.ViewCustomerListInsufficientSecurityClearance);
 			return _customerRepository.GetCustomers();
 		}
 

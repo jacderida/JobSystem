@@ -42,7 +42,7 @@ namespace JobSystem.BusinessLogic.Services
 			if (id == Guid.Empty)
 				throw new ArgumentException("A value must be provided for id");
 			if (!CurrentUser.HasRole(UserRole.Admin))
-				throw new DomainValidationException("Only an admin user can edit the company details", "CurrentUser");
+				throw new DomainValidationException(JobSystem.Resources.CompanyDetails.Messages.InsufficientSecurityClearance, "CurrentUser");
 			var companyDetails = new CompanyDetails();
 			companyDetails.Name = name;
 			companyDetails.TermsAndConditions = termsAndConditions;
@@ -59,19 +59,15 @@ namespace JobSystem.BusinessLogic.Services
 		}
 
 		public CompanyDetails Edit(
-			Guid id, string name, Address addressDetails,
+			string name, Address addressDetails,
 			string telephone, string fax, string email,
 			string www, string regNo, string vatRegNo,
 			string termsAndConditions, Guid defaultCurrencyId, Guid defaultTaxCodeId,
 			Guid defaultPaymentTermId, Guid defaultBankDetailsId)
 		{
-			if (id == Guid.Empty)
-				throw new ArgumentException("A value must be provided for id");
-			var companyDetails = _companyDetailsRepository.GetById(id);
-			if (companyDetails == null)
-				throw new ArgumentException(String.Format("There is no company with ID {0}", id));
+			var companyDetails = GetCompany();
 			if (!CurrentUser.HasRole(UserRole.Admin))
-				throw new DomainValidationException("Only an admin user can edit the company details", "CurrentUser");
+				throw new DomainValidationException(JobSystem.Resources.CompanyDetails.Messages.InsufficientSecurityClearance, "CurrentUser");
 			companyDetails.Name = name;
 			companyDetails.TermsAndConditions = termsAndConditions;
 			companyDetails.DefaultCurrency = GetListItem(defaultCurrencyId);

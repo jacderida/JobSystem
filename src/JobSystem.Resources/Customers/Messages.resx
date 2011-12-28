@@ -138,4 +138,10 @@
   <data name="NameTooLarge" xml:space="preserve">
     <value>The customer name cannot exceed 255 characters</value>
   </data>
+  <data name="ViewCustomerInsufficientSecurityClearance" xml:space="preserve">
+    <value>You must be at least an internal member to view a customer</value>
+  </data>
+  <data name="ViewCustomerListInsufficientSecurityClearance" xml:space="preserve">
+    <value>You must be at least an internal member to view the customer list</value>
+  </data>
 </root>

@@ -6,6 +6,7 @@ using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using NUnit.Framework;
 using Rhino.Mocks;
+using JobSystem.BusinessLogic.Tests.Context;
 
 namespace JobSystem.BusinessLogic.Tests
 {
@@ -91,6 +92,15 @@ namespace JobSystem.BusinessLogic.Tests
 		public void Create_PasswordNotSupplied_ArgumentExceptionThrown()
 		{
 			_userManagementService.Create(Guid.NewGuid(), "Name", "test@test.com", String.Empty, "Job Title", UserRole.Member);
+		}
+
+		[Test]
+		public void Create_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var userAccountRepositoryStub = MockRepository.GenerateStub<IUserAccountRepository>();
+			_userManagementService = UserManagementServiceFactory.Create(userAccountRepositoryStub, TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
+			CreateUser(Guid.NewGuid(), "Name", "duplicate@testuser.com", "password", "Job Title", UserRole.Member);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.UserAccounts.Messages.InsufficientSecurityClearance));
 		}
 
 		private void CreateUser(
@@ -243,6 +253,32 @@ namespace JobSystem.BusinessLogic.Tests
 			_userManagementService.Edit(id, "Chris - edited", "chris2@testuser.com", "Job Title - edited");
 			userAccountRepositoryMock.VerifyAllExpectations();
 		}
+
+		[Test]
+		public void Edit_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var user = _userManagementService.Create(id, "Chris", "chris@testuser.com", "p'ssw0rd", "Job Title", UserRole.Member);
+			var userAccountRepositoryStub = MockRepository.GenerateStub<IUserAccountRepository>();
+			userAccountRepositoryStub.Stub(x => x.GetById(id)).Return(user);
+			_userManagementService = UserManagementServiceFactory.Create(userAccountRepositoryStub, TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
+			EditUser(id, "Name", "duplicate@testuser.com", "password", "Job Title", UserRole.Member);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.UserAccounts.Messages.InsufficientSecurityClearanceEdit));
+		}
+
+		private void EditUser(
+			Guid id, string name, string email, string password, string jobTitle, UserRole roles)
+		{
+			try
+			{
+				_userManagementService.Edit(id, name, email, jobTitle);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
 
 		#endregion
 		#region Login

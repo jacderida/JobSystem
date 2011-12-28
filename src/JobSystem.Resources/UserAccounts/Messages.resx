@@ -162,6 +162,12 @@
   <data name="EmailTooLarge" xml:space="preserve">
     <value>The email address entered is too large. It must be less than 256 characters.</value>
   </data>
+  <data name="InsufficientSecurityClearance" xml:space="preserve">
+    <value>Only an admin user can create another user</value>
+  </data>
+  <data name="InsufficientSecurityClearanceEdit" xml:space="preserve">
+    <value>Only an admin user can edit another user</value>
+  </data>
   <data name="InvalidCaptchaEntered" xml:space="preserve">
     <value>The characters entered do not match those in the picture</value>
   </data>

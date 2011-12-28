@@ -12,33 +12,34 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 	public class CompanyDetailsServiceFactory
 	{
 		public static CompanyDetailsService CreateWithDefaultsSetup(
-			ICompanyDetailsRepository companyDetailsRepository, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermsId, Guid defaultTaxCodeId, IUserContext userContext)
-		{
-			return DoCreateWithDefaultsSetupForEdit(companyDetailsRepository, defaultBankDetailsId, defaultCurrencyId, defaultPaymentTermsId, defaultTaxCodeId, userContext);
-		}
-
-		public static CompanyDetailsService CreateWithDefaultsSetup(
 			ICompanyDetailsRepository companyDetailsRepository, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermsId, Guid defaultTaxCodeId)
 		{
-			return DoCreateWithDefaultsSetupForEdit(companyDetailsRepository, defaultBankDetailsId, defaultCurrencyId, defaultPaymentTermsId, defaultTaxCodeId,
+			return CreateWithDefaultsSetup(companyDetailsRepository, defaultBankDetailsId, defaultCurrencyId, defaultPaymentTermsId, defaultTaxCodeId,
 				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin));
 		}
 
-		public static CompanyDetailsService CreateWithDefaultsSetupForEdit(
-			ICompanyDetailsRepository companyDetailsRepository, Guid companyDetailsId, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermsId, Guid defaultTaxCodeId)
+		public static CompanyDetailsService CreateWithDefaultsSetup(
+			ICompanyDetailsRepository companyDetailsRepository, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermsId, Guid defaultTaxCodeId, IUserContext userContext)
 		{
-			companyDetailsRepository.Stub(x => x.GetById(companyDetailsId)).Return(GetCompanyDetails(companyDetailsId, defaultBankDetailsId, defaultTaxCodeId, defaultCurrencyId, defaultPaymentTermsId));
 			var bankDetailsRepositoryStub = GetBankDetailsRepository(defaultBankDetailsId);
 			var taxCodeRepositoryStub = GetTaxCodeRepository(defaultTaxCodeId);
 			var listItemsRepositoryStub = GetDefaultListItemRepository(defaultCurrencyId, defaultPaymentTermsId);
 			return new CompanyDetailsService(
-				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin),
+				userContext,
 				companyDetailsRepository, bankDetailsRepositoryStub, listItemsRepositoryStub, taxCodeRepositoryStub, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 
-		private static CompanyDetailsService DoCreateWithDefaultsSetupForEdit(
+		public static CompanyDetailsService CreateWithDefaultsSetupForEdit(
+			ICompanyDetailsRepository companyDetailsRepository, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermsId, Guid defaultTaxCodeId)
+		{
+			return CreateWithDefaultsSetupForEdit(companyDetailsRepository,  defaultBankDetailsId, defaultCurrencyId, defaultPaymentTermsId, defaultTaxCodeId,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin));
+		}
+
+		public static CompanyDetailsService CreateWithDefaultsSetupForEdit(
 			ICompanyDetailsRepository companyDetailsRepository, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermsId, Guid defaultTaxCodeId, IUserContext userContext)
 		{
+			companyDetailsRepository.Stub(x => x.GetCompany()).Return(GetCompanyDetails(defaultBankDetailsId, defaultTaxCodeId, defaultCurrencyId, defaultPaymentTermsId));
 			var bankDetailsRepositoryStub = GetBankDetailsRepository(defaultBankDetailsId);
 			var taxCodeRepositoryStub = GetTaxCodeRepository(defaultTaxCodeId);
 			var listItemsRepositoryStub = GetDefaultListItemRepository(defaultCurrencyId, defaultPaymentTermsId);
@@ -81,11 +82,11 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			return taxCodeRepositoryStub;
 		}
 
-		private static CompanyDetails GetCompanyDetails(Guid id, Guid defaultBankDetailsId, Guid defaultTaxCodeId, Guid defaultCurrencyId, Guid defaultPaymentTermId)
+		private static CompanyDetails GetCompanyDetails(Guid defaultBankDetailsId, Guid defaultTaxCodeId, Guid defaultCurrencyId, Guid defaultPaymentTermId)
 		{
 			return new CompanyDetails
 			{
-				Id = id,
+				Id = Guid.NewGuid(),
 				Name = "EMIS (UK) Ltd",
 				Address1 = "CEB",
 				Address2 = "Greenwell Road",

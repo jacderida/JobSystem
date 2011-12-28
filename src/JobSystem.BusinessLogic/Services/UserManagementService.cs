@@ -10,6 +10,7 @@ using JobSystem.DataModel.Repositories;
 using JobSystem.Framework;
 using JobSystem.Framework.Messaging;
 using JobSystem.Framework.Security;
+using JobSystem.Resources.UserAccounts;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -33,12 +34,12 @@ namespace JobSystem.BusinessLogic.Services
 
 		public UserAccount Create(Guid id, string name, string email, string password, string jobTitle, UserRole roles)
 		{
-			if (id == null || id == Guid.Empty)
+			if (id == Guid.Empty)
 				throw new ArgumentException("An ID must be supplied to create a user");
 			if (String.IsNullOrEmpty(password))
 				throw new ArgumentException("A password must be supplied to create a user");
 			if (!CurrentUser.HasRole(UserRole.Admin))
-				throw new DomainValidationException("Only an admin user can create other users", "CurrentUser");
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
 			var userAccount = new UserAccount
 			{
 				Id = id,
@@ -56,11 +57,13 @@ namespace JobSystem.BusinessLogic.Services
 
 		public UserAccount Edit(Guid id, string name, string emailAddress, string jobTitle)
 		{
-			if (id == null || id == Guid.Empty)
+			if (id == Guid.Empty)
 				throw new ArgumentException("An invalid ID was supplied for the user", "id");
 			var userAccount = _userAccountRepository.GetById(id);
 			if (userAccount == null)
 				throw new ArgumentException("The user with specified ID does not exist", "id");
+			if (!CurrentUser.HasRole(UserRole.Admin))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearanceEdit, "CurrentUser");
 			userAccount.Name = name;
 			userAccount.EmailAddress = emailAddress;
 			userAccount.JobTitle = jobTitle;
