@@ -7,7 +7,7 @@ namespace JobSystem.DataModel.Entities
 	public class Job
 	{
 		public virtual Guid Id { get; set; }
-		public virtual int JobNo { get; set; }
+		public virtual string JobNo { get; set; }
 		public virtual DateTime DateCreated { get; set; }
 		public virtual string Notes { get; set; }
 		public virtual string Contact { get; set; }
@@ -15,7 +15,6 @@ namespace JobSystem.DataModel.Entities
 		public virtual string OrderNo { get; set; }
 		public virtual string AdviceNo { get; set; }
 		public virtual ListItem Type { get; set; }
-		public virtual ListItem Department { get; set; }
 		public virtual Customer Customer { get; set; }
 		public virtual List<JobItem> JobItems { get; set; }
 		public virtual bool IsPending { get; set; }

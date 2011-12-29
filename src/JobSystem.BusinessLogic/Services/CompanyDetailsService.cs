@@ -45,6 +45,7 @@ namespace JobSystem.BusinessLogic.Services
 			if (!CurrentUser.HasRole(UserRole.Admin))
 				throw new DomainValidationException(JobSystem.Resources.CompanyDetails.Messages.InsufficientSecurityClearance, "CurrentUser");
 			var companyDetails = new CompanyDetails();
+			companyDetails.Id = id;
 			companyDetails.Name = name;
 			companyDetails.TermsAndConditions = termsAndConditions;
 			companyDetails.DefaultCurrency = GetListItem(defaultCurrencyId);

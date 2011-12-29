@@ -17,11 +17,9 @@ namespace JobSystem.Migrations
 				.WithColumn("OrderNo").AsString(255).Nullable()
 				.WithColumn("AdviceNo").AsString(255).Nullable()
 				.WithColumn("TypeId").AsGuid().NotNullable()
-				.WithColumn("DepartmentId").AsGuid().NotNullable()
 				.WithColumn("CustomerId").AsGuid().NotNullable()
 				.WithColumn("Notes").AsString(20000).Nullable()
-				.WithColumn("Contact").AsString(255).Nullable()
-				.WithColumn("IsExternal").AsBoolean().WithDefaultValue(false);
+				.WithColumn("Contact").AsString(255).Nullable();
 			Create.ForeignKey("FK_Jobs_Customers")
 				.FromTable("Jobs")
 				.ForeignColumn("CustomerId")
@@ -30,11 +28,6 @@ namespace JobSystem.Migrations
 			Create.ForeignKey("FK_Jobs_TypeListItems")
 				.FromTable("Jobs")
 				.ForeignColumn("TypeId")
-				.ToTable("ListItems")
-				.PrimaryColumn("Id");
-			Create.ForeignKey("FK_Jobs_DepartmentListItems")
-				.FromTable("Jobs")
-				.ForeignColumn("DepartmentId")
 				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 		}

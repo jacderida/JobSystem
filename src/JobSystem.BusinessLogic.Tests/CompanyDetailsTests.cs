@@ -107,7 +107,7 @@ namespace JobSystem.BusinessLogic.Tests
 				"terms and conditions", currencyId, taxCodeId,
 				paymentTermId, bankDetailsId);
 			companyDetailsRepositoryMock.VerifyAllExpectations();
-			Assert.That(_savedCompanyDetails.Id != id);
+			Assert.That(_savedCompanyDetails.Id == id);
 		}
 
 		[Test]
