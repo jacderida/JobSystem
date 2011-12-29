@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppDateTime.cs" />
     <Compile Include="AppSecurity.cs" />
     <Compile Include="Check.cs" />
     <Compile Include="Configuration\IAppConfig.cs" />

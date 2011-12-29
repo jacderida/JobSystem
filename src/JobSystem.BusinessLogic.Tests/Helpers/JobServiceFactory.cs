@@ -25,7 +25,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 
 		public static JobService Create(IJobRepository jobRepository, Guid typeId, Guid customerId, IUserContext userContext)
 		{
-			return new JobService(userContext, jobRepository, GetListItemRepository(typeId), GetCustomerRepository(customerId), MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+			return new JobService(userContext, jobRepository, GetListItemRepository(typeId), GetCustomerRepository(customerId), GetEntityIdProvider(), MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 
 		private static IListItemRepository GetListItemRepository(Guid typeId)
@@ -46,6 +46,13 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			else
 				customerRepositoryStub.Stub(x => x.GetById(customerId)).Return(null);
 			return customerRepositoryStub;
+		}
+
+		private static IEntityIdProvider GetEntityIdProvider()
+		{
+			var entityIdRepositoryStub = MockRepository.GenerateStub<IEntityIdProvider>();
+			entityIdRepositoryStub.Stub(x => x.GetIdFor<Job>()).Return("2000JR");
+			return entityIdRepositoryStub;
 		}
 
 		private static ListItem GetJobType(Guid typeId)

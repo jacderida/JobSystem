@@ -6,6 +6,7 @@ using JobSystem.DataModel.Repositories;
 using NUnit.Framework;
 using Rhino.Mocks;
 using JobSystem.BusinessLogic.Tests.Helpers;
+using JobSystem.Framework;
 
 namespace JobSystem.BusinessLogic.Tests
 {
@@ -15,11 +16,13 @@ namespace JobSystem.BusinessLogic.Tests
 		private JobService _jobService;
 		private DomainValidationException _domainValidationException;
 		private Job _savedJob;
+		private DateTime _dateCreated = new DateTime(2011, 12, 29);
 
 		[SetUp]
 		public void Setup()
 		{
 			_domainValidationException = null;
+			AppDateTime.GetUtcNow = () =>_dateCreated;
 		}
 
 		[Test]
@@ -36,6 +39,8 @@ namespace JobSystem.BusinessLogic.Tests
 			jobRepositoryMock.VerifyAllExpectations();
 			Assert.That(_savedJob.Id == id);
 			Assert.That(!String.IsNullOrEmpty(_savedJob.JobNo) && _savedJob.JobNo.EndsWith("JR"));
+			Assert.IsTrue(_savedJob.IsPending);
+			Assert.AreEqual(_savedJob.DateCreated, _dateCreated);
 		}
 
 		[Test]
@@ -75,7 +80,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		[ExpectedException(typeof(ArgumentException), ExpectedMessage = "")]
+		[ExpectedException(typeof(ArgumentException), ExpectedMessage = "An invalid type ID was supplied")]
 		public void Create_InvalidTypeIdSupplied_ArgumentExceptionThrown()
 		{
 			var id = Guid.NewGuid();
@@ -87,7 +92,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		[ExpectedException(typeof(ArgumentException), ExpectedMessage = "")]
+		[ExpectedException(typeof(ArgumentException), ExpectedMessage = "An invalid customer ID was supplied")]
 		public void Create_InvalidCustomerIdSupplied_ArgumentExceptionThrown()
 		{
 			var id = Guid.NewGuid();
