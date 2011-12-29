@@ -11,6 +11,12 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 {
 	public class JobServiceFactory
 	{
+		public static JobService Create(Guid typeId, Guid customerId)
+		{
+			return Create(MockRepository.GenerateStub<IJobRepository>(), typeId, customerId,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
+		}
+
 		public static JobService Create(IJobRepository jobRepository, Guid typeId, Guid customerId)
 		{
 			return Create(jobRepository, typeId, customerId,
