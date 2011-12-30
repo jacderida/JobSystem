@@ -1,15 +1,11 @@
 ﻿using Autofac;
 using JobSystem.BusinessLogic.Services;
+using JobSystem.DataModel;
 
 namespace JobSystem.BusinessLogic.IoC
 {
-	/// <summary>
-	/// Module containing the registrations for the Service implemenations
-	/// </summary>
 	public class ServiceModule : Module
 	{
-		#region Methods
-
 		protected override void Load(ContainerBuilder builder)
 		{
 			base.Load(builder);
@@ -17,8 +13,7 @@ namespace JobSystem.BusinessLogic.IoC
 				.Where(t => t.BaseType == typeof(ServiceBase))
 				.AsSelf()
 				.InstancePerLifetimeScope();
+			builder.RegisterType<EntityIdProviderFromWebService>().As<IEntityIdProvider>();
 		}
-
-		#endregion Methods
 	}
 }

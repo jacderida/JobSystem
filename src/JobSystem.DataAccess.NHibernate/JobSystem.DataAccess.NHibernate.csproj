@@ -82,6 +82,8 @@
     <Compile Include="Repositories\BankDetailsRepository.cs" />
     <Compile Include="Repositories\CompanyDetailsRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
+    <Compile Include="Repositories\EntityIdLookupRepository.cs" />
+    <Compile Include="Repositories\JobRepository.cs" />
     <Compile Include="Repositories\ListItemRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\TaxCodeRepository.cs" />

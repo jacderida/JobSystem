@@ -41,6 +41,7 @@ namespace JobSystem.BusinessLogic.Tests
 			Assert.That(!String.IsNullOrEmpty(_savedJob.JobNo) && _savedJob.JobNo.EndsWith("JR"));
 			Assert.IsTrue(_savedJob.IsPending);
 			Assert.AreEqual(_savedJob.DateCreated, _dateCreated);
+			Assert.AreEqual("test@usercontext.com", _savedJob.CreatedBy.EmailAddress);
 		}
 
 		[Test]

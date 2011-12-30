@@ -33,6 +33,7 @@ namespace JobSystem.BusinessLogic.Services
 		{
 			var job = new Job();
 			job.Id = id;
+			job.CreatedBy = CurrentUser;
 			job.DateCreated = AppDateTime.GetUtcNow();
 			job.Instructions = instructions;
 			job.OrderNo = orderNo;
