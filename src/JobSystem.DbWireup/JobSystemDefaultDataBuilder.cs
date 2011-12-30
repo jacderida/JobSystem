@@ -21,6 +21,7 @@ namespace JobSystem.DbWireup
 		private List<TaxCode> _taxCodes;
 		private List<ListItem> _currencies;
 		private List<BankDetails> _bankDetails;
+		private List<EntityIdLookup> _entityIdLookups;
 
 		public JobSystemDefaultDataBuilder()
 		{
@@ -35,6 +36,7 @@ namespace JobSystem.DbWireup
 			_taxCodes = new List<TaxCode>();
 			_currencies = new List<ListItem>();
 			_bankDetails = new List<BankDetails>();
+			_entityIdLookups = new List<EntityIdLookup>();
 		}
 
 		public JobSystemDefaultData Build()
@@ -62,6 +64,8 @@ namespace JobSystem.DbWireup
 				defaultData.Currencies.Add(currency);
 			foreach (var bankDetails in _bankDetails)
 				defaultData.BankDetails.Add(bankDetails);
+			foreach (var entityLookup in _entityIdLookups)
+				defaultData.EntityIdLookups.Add(entityLookup);
 			return defaultData;
 		}
 
@@ -139,6 +143,22 @@ namespace JobSystem.DbWireup
 		{
 			foreach (var bankDetails in bankDetailsList)
 				_bankDetails.Add(bankDetails);
+			return this;
+		}
+
+		public JobSystemDefaultDataBuilder WithEntitySeeds(params Tuple<Type, int, string>[] seeds)
+		{
+			foreach (var seed in seeds)
+			{
+				_entityIdLookups.Add(
+					new EntityIdLookup
+					{
+						Id = Guid.NewGuid(),
+						EntityTypeName = seed.Item1.FullName,
+						NextId = seed.Item2,
+						Prefix = seed.Item3
+					});
+			}
 			return this;
 		}
 	}

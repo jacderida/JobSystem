@@ -15,9 +15,9 @@ namespace JobSystem.Mvc.Controllers
 
 		[HttpGet]
 		[Transaction]
-		public string GetId(string type)
+		public string GetId(string id)
 		{
-			return _entityIdProviderService.GetIdFor(type);
+			return _entityIdProviderService.GetIdFor(id);
 		}
 	}
 }

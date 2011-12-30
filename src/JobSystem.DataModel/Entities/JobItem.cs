@@ -29,7 +29,7 @@ namespace JobSystem.DataModel.Entities
 		public virtual bool IsInvoiced { get; set; }
 		public virtual DateTime ProjectedDeliveryDate { get; set; }
 		public virtual bool IsMarkedForMonthlyInvoicing { get; set; }
-		public virtual List<ItemHistory> HistoryItems { get; set; }
+		public virtual IList<ItemHistory> HistoryItems { get; set; }
 
 		public JobItem()
 		{

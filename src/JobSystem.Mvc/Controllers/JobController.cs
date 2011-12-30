@@ -41,6 +41,8 @@ namespace JobSystem.Mvc.Controllers
 				try
 				{
 					var id = Guid.NewGuid();
+					viewModel.CustomerId = Guid.Parse("036B42CD-030B-4875-9759-3D9E790889A6");
+					viewModel.TypeId = Guid.Parse("3A8A156C-035F-4253-917A-96C2A04C2940");
 					_jobService.CreateJob(id, viewModel.Instructions, viewModel.OrderNumber, viewModel.AdviceNumber, viewModel.TypeId, viewModel.CustomerId, viewModel.JobNote, viewModel.Contact);
 					return RedirectToAction("placeholder");
 				}

@@ -18,6 +18,7 @@ namespace JobSystem.DbWireup
 		public List<TaxCode> TaxCodes { get; set; }
 		public List<ListItem> Currencies { get; set; }
 		public List<BankDetails> BankDetails { get; set; }
+		public List<EntityIdLookup> EntityIdLookups { get; set; }
 
 		public JobSystemDefaultData()
 		{
@@ -32,6 +33,7 @@ namespace JobSystem.DbWireup
 			TaxCodes = new List<TaxCode>();
 			Currencies = new List<ListItem>();
 			BankDetails = new List<BankDetails>();
+			EntityIdLookups = new List<EntityIdLookup>();
 		}
 	}
 }

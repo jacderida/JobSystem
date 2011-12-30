@@ -31,7 +31,9 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 						EntityTypeName = typeName,
 						NextId = 1
 					};
-				result = String.Format("{0}{1}", lookup.NextId, lookup.Suffix);
+				result = lookup.NextId.ToString();
+				if (!String.IsNullOrEmpty(lookup.Prefix))
+					result = String.Format("{0}{1}", lookup.Prefix, result);
 				lookup.NextId++;
 				CurrentSession.SaveOrUpdate(lookup);
 			}

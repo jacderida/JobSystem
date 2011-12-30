@@ -30,7 +30,8 @@ namespace JobSystem.DbWireup.ConsoleRunner
 				.WithCurrencies(Tuple.Create<Guid, string>(defaultCurrencyId, "GBP"), Tuple.Create<Guid, string>(Guid.NewGuid(), "Euros"), Tuple.Create<Guid, string>(Guid.NewGuid(), "Dollars"))
 				.WithTaxCodes(
 					new TaxCode { Id = Guid.NewGuid(), TaxCodeName = "T0", Rate = 0, Description = "No VAT" },
-					new TaxCode { Id = defaultTaxCodeId, TaxCodeName = "T1", Rate = 0.20, Description = "VAT at 20%"});
+					new TaxCode { Id = defaultTaxCodeId, TaxCodeName = "T1", Rate = 0.20, Description = "VAT at 20%"})
+				.WithEntitySeeds(Tuple.Create<Type, int, string>(typeof(Job), 2000, "JR"));
 			var defaultData = builder.Build();
 			try
 			{

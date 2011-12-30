@@ -17,7 +17,7 @@ namespace JobSystem.Migrations
 				.WithColumn("InstrumentId").AsGuid().NotNullable()
 				.WithColumn("SerialNo").AsString(255).NotNullable()
 				.WithColumn("AssetNo").AsString(255).Nullable()
-				.WithColumn("UserAccountId").AsGuid().NotNullable()
+				.WithColumn("CreatedUserId").AsGuid().NotNullable()
 				.WithColumn("InitialStatusId").AsGuid().NotNullable()
 				.WithColumn("StatusId").AsGuid().NotNullable()
 				.WithColumn("LocationId").AsGuid().NotNullable()
@@ -63,14 +63,19 @@ namespace JobSystem.Migrations
 				.ForeignColumn("LocationId")
 				.ToTable("ListItems")
 				.PrimaryColumn("Id");
+			Create.ForeignKey("FK_JobItems_UserAccounts")
+				.FromTable("JobItems")
+				.ForeignColumn("CreatedUserId")
+				.ToTable("UserAccounts")
+				.PrimaryColumn("Id");
 		}
 
 		public override void Down()
 		{
-			Delete.ForeignKey("FK_JobItems_OperatingUnit").OnTable("JobItems");
-			Delete.ForeignKey("FK_JobItems_WorkLocation").OnTable("JobItems");
+			Delete.ForeignKey("FK_JobItems_UserAccounts").OnTable("JobItems");
 			Delete.ForeignKey("FK_JobItems_ItemLocation").OnTable("JobItems");
 			Delete.ForeignKey("FK_JobItems_Instruments").OnTable("JobItems");
+			Delete.ForeignKey("FK_JobItems_Fields").OnTable("JobItems");
 			Delete.ForeignKey("FK_JobItems_Status").OnTable("JobItems");
 			Delete.ForeignKey("FK_JobItems_InitialStatus").OnTable("JobItems");
 			Delete.ForeignKey("FK_JobItems_Jobs").OnTable("JobItems");

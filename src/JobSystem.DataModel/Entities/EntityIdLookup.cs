@@ -2,9 +2,6 @@
 
 namespace JobSystem.DataModel.Entities
 {
-	/// <summary>
-	/// Object for holding information regarding the current Id for each type of entity.
-	/// </summary>
 	public class EntityIdLookup
 	{
 		public virtual Guid Id { get; set; }

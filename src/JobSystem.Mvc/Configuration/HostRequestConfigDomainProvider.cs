@@ -1,16 +1,14 @@
-﻿namespace JobSystem.Mvc.Configuration
-{
-	using System.Web;
-	using JobSystem.Framework.Configuration;
+﻿using System.Web;
+using JobSystem.Framework.Configuration;
 
+namespace JobSystem.Mvc.Configuration
+{
 	/// <summary>
 	/// <see cref="IConfigDomainProvider"/> implementation that uses the host header of the current HTTP request
 	/// as the configuration domain.
 	/// </summary>
 	public class HostRequestConfigDomainProvider : IConfigDomainProvider
 	{
-		#region Methods
-
 		/// <summary>
 		/// Gets the configuration domain.
 		/// </summary>
@@ -23,7 +21,5 @@
 			var hostHeader = currentRequest.Headers["Host"];
 			return hostHeader;
 		}
-
-		#endregion Methods
 	}
 }

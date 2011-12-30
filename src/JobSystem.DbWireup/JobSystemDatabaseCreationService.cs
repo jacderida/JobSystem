@@ -120,6 +120,8 @@ namespace JobSystem.DbWireup
 				session.Save(currency);
 			foreach (var bankDetails in defaultData.BankDetails)
 				session.Save(bankDetails);
+			foreach (var entityIdLookup in defaultData.EntityIdLookups)
+				session.Save(entityIdLookup);
 		}
 
 		public void InsertCompanyDetails(CompanyDetails companyDetails)

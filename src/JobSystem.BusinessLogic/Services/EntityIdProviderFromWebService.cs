@@ -3,17 +3,13 @@ using System.IO;
 using System.Net;
 using JobSystem.DataModel;
 using JobSystem.Framework.Configuration;
+using System;
 
 namespace JobSystem.BusinessLogic.Services
 {
 	public class EntityIdProviderFromWebService : IEntityIdProvider
 	{
 		private IConfigDomainProvider _configDomainProvider;
-		private static readonly List<string> _localDomains = new List<string>()
-		{
-			"localhost",
-			"8ry8v4j"
-		};
 
 		public EntityIdProviderFromWebService(IConfigDomainProvider configDomainProvider)
 		{
@@ -43,8 +39,10 @@ namespace JobSystem.BusinessLogic.Services
 		protected virtual string GetUrlForDomain(string domain)
 		{
 			var lower = domain.ToLowerInvariant();
-			if (_localDomains.Contains(lower))
-				return "http://" + lower + "/JobSystemMvc/";
+			if (lower.Contains("localhost:"))
+				return String.Format("http://{0}/", lower);
+			else if (lower == "localhost")
+				return String.Format("http://{0}/JobSystemMvc/", lower);
 			return "https://" + lower + "/";
 		}
 	}

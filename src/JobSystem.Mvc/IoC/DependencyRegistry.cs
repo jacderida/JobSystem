@@ -7,6 +7,7 @@ using JobSystem.DataModel;
 using JobSystem.Framework.Configuration;
 using JobSystem.Framework.Messaging;
 using JobSystem.Framework.Security;
+using JobSystem.Mvc.Configuration;
 using JobSystem.Mvc.Core;
 using JobSystem.Queueing.Msmq;
 
@@ -30,6 +31,7 @@ namespace JobSystem.Mvc.IoC
 				.AsImplementedInterfaces();
 			builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>();
 			builder.RegisterType<LocalAppConfig>().As<IAppConfig>().InstancePerLifetimeScope();
+			builder.RegisterType<HostRequestConfigDomainProvider>().As<IConfigDomainProvider>();
 		}
 	}
 }

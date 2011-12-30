@@ -24,7 +24,7 @@ namespace JobSystem.DataModel.Entities
 		public virtual string AdviceNo { get; set; }
 		public virtual ListItem Type { get; set; }
 		public virtual Customer Customer { get; set; }
-		public virtual List<JobItem> JobItems { get; set; }
+		public virtual IList<JobItem> JobItems { get; set; }
 		public virtual bool IsPending { get; set; }
 
 		public Job()
