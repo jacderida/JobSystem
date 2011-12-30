@@ -70,6 +70,15 @@ namespace JobSystem.Resources.Instruments {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An internal member role is required for this view.
+        /// </summary>
+        public static string InsufficientSecurityClearance {
+            get {
+                return ResourceManager.GetString("InsufficientSecurityClearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A manufacturer is required for the instrument.
         /// </summary>
         public static string ManufacturerRequired {
@@ -84,6 +93,15 @@ namespace JobSystem.Resources.Instruments {
         public static string ManufacturerTooLong {
             get {
                 return ResourceManager.GetString("ManufacturerTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The model number is required for the instrument.
+        /// </summary>
+        public static string ModelNoRequired {
+            get {
+                return ResourceManager.GetString("ModelNoRequired", resourceCulture);
             }
         }
         

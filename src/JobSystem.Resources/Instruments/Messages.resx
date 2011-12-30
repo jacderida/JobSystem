@@ -120,11 +120,17 @@
   <data name="DescriptionTooLong" xml:space="preserve">
     <value>The description can contain a maximum of 50 characters</value>
   </data>
+  <data name="InsufficientSecurityClearance" xml:space="preserve">
+    <value>An internal member role is required for this view</value>
+  </data>
   <data name="ManufacturerRequired" xml:space="preserve">
     <value>A manufacturer is required for the instrument</value>
   </data>
   <data name="ManufacturerTooLong" xml:space="preserve">
     <value>The manufacturer can contain a maximum of 50 characters</value>
+  </data>
+  <data name="ModelNoRequired" xml:space="preserve">
+    <value>The model number is required for the instrument</value>
   </data>
   <data name="ModelNoTooLong" xml:space="preserve">
     <value>The model number can contain a maximum of 50 characters</value>
