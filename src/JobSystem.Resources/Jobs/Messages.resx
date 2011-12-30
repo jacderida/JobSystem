@@ -135,6 +135,12 @@
   <data name="InvalidTypeId" xml:space="preserve">
     <value>An invalid type ID was supplied</value>
   </data>
+  <data name="NoApprovedJobs" xml:space="preserve">
+    <value>There are currently no approved jobs</value>
+  </data>
+  <data name="NoPendingJobs" xml:space="preserve">
+    <value>There are currently no pending jobs</value>
+  </data>
   <data name="NotesTooLarge" xml:space="preserve">
     <value>The notes cannot exceed 2000 characters</value>
   </data>
