@@ -87,18 +87,6 @@
 		</div>
 	</fieldset>
 	<span class="form-section">
-		Bank Details
-	</span>
-	<fieldset>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.BankDetails)
-		</div>
-		<div class="editor-field">
-			@Html.DropDownListFor(model => model.BankDetails, Model.BankDetails, new { @class = "long-dropdown" })
-			@Html.ValidationMessageFor(model => model.BankDetails)
-		</div>
-	</fieldset>
-	<span class="form-section">
 		Invoice/Order Details
 	</span>
 	<fieldset>
@@ -106,17 +94,24 @@
 			This information will be used by default on Invoices and Orders but you'll be able to change it on a particular Invoice or Order should the need arise.
 		</span>
 		<div class="editor-label">
+			@Html.LabelFor(model => model.BankDetails)
+		</div>
+		<div class="editor-field">
+			@Html.DropDownListFor(model => model.BankDetailsId, Model.BankDetails, new { @class = "long-dropdown" })
+			@Html.ValidationMessageFor(model => model.BankDetails)
+		</div>
+		<div class="editor-label">
 			@Html.LabelFor(model => model.Currencies)
 		</div>
 		<div class="editor-field">
-			@Html.DropDownListFor(model => model.Currencies, Model.Currencies, new { @class = "long-dropdown" })
+			@Html.DropDownListFor(model => model.CurrencyId, Model.Currencies, new { @class = "long-dropdown" })
 			@Html.ValidationMessageFor(model => model.Currencies)
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.TaxCodes)
 		</div>
 		<div class="editor-field">
-			@Html.DropDownListFor(model => model.TaxCodes, Model.TaxCodes, new { @class = "long-dropdown" })
+			@Html.DropDownListFor(model => model.TaxCodeId, Model.TaxCodes, new { @class = "long-dropdown" })
 			@Html.ValidationMessageFor(model => model.TaxCodes)
 		</div>
 		<div class="editor-label">
@@ -137,7 +132,7 @@
 			@Html.LabelFor(model => model.PaymentTerms)
 		</div>
 		<div class="editor-field">
-			@Html.DropDownListFor(model => model.PaymentTerms, Model.PaymentTerms, new { @class = "long-dropdown" })
+			@Html.DropDownListFor(model => model.PaymentTermId, Model.PaymentTerms, new { @class = "long-dropdown" })
 			@Html.ValidationMessageFor(model => model.PaymentTerms)
 		</div>
 		<div class="editor-label">

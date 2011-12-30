@@ -7,33 +7,19 @@
 {
 	@Html.ValidationSummary(true)
 	<fieldset class="fieldset-no-legend fieldset-float-left">
-@*		<div class="editor-label">
-			@Html.LabelFor(model => model.JobNumber)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.JobNumber)
-			@Html.ValidationMessageFor(model => model.JobNumber)
-		</div>*@
-@*		<div class="editor-label">
-			@Html.LabelFor(model => model.DateCreated)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.DateCreated)
-			@Html.ValidationMessageFor(model => model.DateCreated)
-		</div>*@
-@*		<div class="editor-label">
-			@Html.LabelFor(model => model.Status)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Status)
-			@Html.ValidationMessageFor(model => model.Status)
-		</div>*@
 		<div class="editor-label">
-			@Html.LabelFor(model => model.Customer)
+			@Html.LabelFor(model => model.JobTypes)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.Customer)
-			@Html.ValidationMessageFor(model => model.Customer)
+			@Html.DropDownListFor(model => model.TypeId, Model.JobTypes, new { @class ="long-dropdown" })
+			@Html.ValidationMessageFor(model => model.JobTypes)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Customers)
+		</div>
+		<div class="editor-field">
+			@Html.DropDownListFor(model => model.CustomerId, Model.Customers, new { @class = "long-dropdown" })
+			@Html.ValidationMessageFor(model => model.Customers)
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.OrderNumber)

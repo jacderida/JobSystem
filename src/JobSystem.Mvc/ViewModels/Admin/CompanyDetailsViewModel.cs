@@ -64,6 +64,7 @@ namespace JobSystem.Mvc.ViewModels.Admin
 		public IEnumerable<SelectListItem> TaxCodes { get; set; }
 		[Display(Name = "Payment Terms")]
 		public IEnumerable<SelectListItem> PaymentTerms { get; set; }
+		[Display(Name = "Bank Details")]
 		public IEnumerable<SelectListItem> BankDetails { get; set; }
 	}
 }

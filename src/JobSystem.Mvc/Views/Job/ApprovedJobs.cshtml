@@ -1,4 +1,5 @@
-﻿@{
+﻿@model JobSystem.Mvc.ViewModels.Jobs.JobListViewModel
+@{
     ViewBag.Title = "Job List";
 }
 
@@ -40,4 +41,4 @@
  @*}*@
 </table>
 
-@Html.Partial("_Create")
+@Html.Partial("_Create", Model.CreateViewModel)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
@@ -14,11 +15,13 @@ namespace JobSystem.Mvc.Controllers
 	{
 		private readonly JobService _jobService;
 		private readonly ListItemService _listItemService;
+		private readonly CustomerService _customerServive;
 
-		public JobController(JobService jobService, ListItemService listItemService)
+		public JobController(JobService jobService, ListItemService listItemService, CustomerService customerService)
 		{
 			_jobService = jobService;
 			_listItemService = listItemService;
+			_customerServive = customerService;
 		}
 
 		[HttpGet]
@@ -41,10 +44,10 @@ namespace JobSystem.Mvc.Controllers
 				try
 				{
 					var id = Guid.NewGuid();
-					viewModel.CustomerId = Guid.Parse("036B42CD-030B-4875-9759-3D9E790889A6");
-					viewModel.TypeId = Guid.Parse("3A8A156C-035F-4253-917A-96C2A04C2940");
+					//viewModel.CustomerId = Guid.Parse("036B42CD-030B-4875-9759-3D9E790889A6");
+					//viewModel.TypeId = Guid.Parse("3A8A156C-035F-4253-917A-96C2A04C2940");
 					_jobService.CreateJob(id, viewModel.Instructions, viewModel.OrderNumber, viewModel.AdviceNumber, viewModel.TypeId, viewModel.CustomerId, viewModel.JobNote, viewModel.Contact);
-					return RedirectToAction("placeholder");
+					return RedirectToAction("PendingJobs");
 				}
 				catch (DomainValidationException dex)
 				{
@@ -65,12 +68,48 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult PendingJobs()
 		{
-			return View();
+			var jobs = _jobService.GetPendingJobs().Select(
+				j => new JobIndexViewModel
+				{
+					CreatedBy = j.CreatedBy.ToString(),
+					DateCreated = j.DateCreated.ToString(),
+					JobNumber = j.JobNo,
+					OrderNumber = j.OrderNo,
+					Id = j.Id.ToString()
+				}).ToList();
+
+			var jobList = new JobListViewModel()
+			{
+				CreateViewModel = new JobCreateViewModel(),
+				Jobs = jobs
+			};
+			jobList.CreateViewModel.JobTypes = _listItemService.GetAllByType(ListItemType.JobType).ToSelectList();
+			jobList.CreateViewModel.Customers = _customerServive.GetCustomers().ToSelectList();
+
+			return View(jobList);
 		}
 
 		public ActionResult ApprovedJobs()
 		{
-			return View();
+			var jobs = _jobService.GetApprovedJobs().Select(
+				j => new JobIndexViewModel
+				{
+					CreatedBy = j.CreatedBy.ToString(),
+					DateCreated = j.DateCreated.ToString(),
+					JobNumber = j.JobNo,
+					OrderNumber = j.OrderNo,
+					Id = j.Id.ToString()
+				}).ToList();
+
+			var jobList = new JobListViewModel()
+			{
+				CreateViewModel = new JobCreateViewModel(),
+				Jobs = jobs
+			};
+			jobList.CreateViewModel.JobTypes = _listItemService.GetAllByType(ListItemType.JobType).ToSelectList();
+			jobList.CreateViewModel.Customers = _customerServive.GetCustomers().ToSelectList();
+
+			return View(jobList);
 		}
 
 		public ActionResult Details()
