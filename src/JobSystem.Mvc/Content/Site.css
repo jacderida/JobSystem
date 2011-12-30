@@ -669,6 +669,21 @@ div#title {
 	margin-bottom: 20px;
 }
 
+#job-details-instruction {
+	float: right;
+	width: 200px;
+}
+
+#job-details-notes {
+	float: left;
+	width: 200px;
+}
+
+#job-details-fields {
+	float: left;
+	width: 250px;
+}
+
 #job-details-top {
 	float: left;
 }

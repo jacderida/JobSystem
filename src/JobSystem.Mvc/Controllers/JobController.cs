@@ -110,9 +110,30 @@ namespace JobSystem.Mvc.Controllers
 			return View(jobList);
 		}
 
-		public ActionResult Details()
+		public ActionResult Details(Guid id)
 		{
-			return View();
+			var job = _jobService.GetJob(id);
+			var viewModel = new JobDetailsViewModel()
+			{
+				Id = job.Id.ToString(),
+				CreatedBy = job.CreatedBy.ToString(),
+				DateCreated = job.DateCreated.ToString(),
+				JobNumber = job.JobNo,
+				OrderNumber = job.OrderNo,
+				AdviceNumber = job.AdviceNo,
+				Instruction = job.Instructions,
+				Note = job.Notes,
+				Contact = job.Contact,
+				CustomerName = job.Customer.Name,
+				CustomerAddress1 = job.Customer.Address1,
+				CustomerAddress2 = job.Customer.Address2,
+				CustomerAddress3 = job.Customer.Address3,
+				CustomerAddress4 = job.Customer.Address4,
+				CustomerAddress5 = job.Customer.Address5,
+				CustomerEmail = job.Customer.Email,
+				CustomerTelephone = job.Customer.Telephone
+			};
+			return View(viewModel);
 		}
 	}
 }

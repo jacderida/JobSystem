@@ -1,28 +1,32 @@
-﻿@{
+﻿@model JobSystem.Mvc.ViewModels.Jobs.JobDetailsViewModel
+@{
     ViewBag.Title = "Job Details";
 }
 <div id="job-top-section">
 	<div id="pending-banner"></div>
-	<h2>Job 102</h2>
+	<h2>Job @Model.JobNumber</h2>
 	<div id="job-details-container">
-		<p>Created 22/11/2011</p>
-		<p>Order No. - 12392</p>
-		<p>Advice No. - 1322802 / Cons Note: 11211</p>
-		<p>Contact - James Masters</p>
-		<p>01224 275200</p>
+		<div id="job-details-fields">
+			<p>Created @Model.DateCreated</p>
+			<p>Order No. - @Model.OrderNumber</p>
+			<p>Advice No. - @Model.AdviceNumber</p>
+			<p>Contact - @Model.Contact</p>
+		</div>
+		<div id="job-details-instruction">@Model.Instruction</div>
+		<div id="job-details-notes">@Model.Note</div>
 	</div>
 
 	<div id="job-details-customer-info">
 		<span id="custname">Customer</span>
 		<ul>
-			<li>ID - 282</li>
-			<li>Wood Group Engineering (NS) Ltd</li>
-			<li>Operations</li>
-			<li>Comorant Alpha</li>
-			<li>Aberdeen</li>
-			<li>AB12 5LQ</li>
-			<li>01224 275200</li>
-			<li><a href="mailto:contact@woodgroup.com">contact@woodgroup.com</a></li>
+			<li>@Model.CustomerName</li>
+			<li>@Model.CustomerAddress1</li>
+			<li>@Model.CustomerAddress2</li>
+			<li>@Model.CustomerAddress3</li>
+			<li>@Model.CustomerAddress4</li>
+			<li>@Model.CustomerAddress5</li>
+			<li>@Model.CustomerTelephone</li>
+			<li><a href="mailto:@Model.CustomerEmail">@Model.CustomerEmail</a></li>
 		</ul>
 	</div>
 </div>
@@ -37,7 +41,8 @@
             <div class="st_slide_container">
             
                 <ul class="st_tabs">
-                    <li><a href="#stv_content_1" rel="v_tab_1" class="st_tab st_tab_active">Item 1<span>Booked in by: Iain Johnson</span></a></li>
+                     <li><a href="" class="st_tab">Add a new Job Item</a></li>
+					<li><a href="#stv_content_1" rel="v_tab_1" class="st_tab st_tab_active">Item 1<span>Booked in by: Iain Johnson</span></a></li>
                     <li><a href="#stv_content_2" rel="v_tab_2" class="st_tab">Item 2<span>Booked in by: David Coburn</span></a></li>                                    
                     <li><a href="#stv_content_3" rel="v_tab_3" class="st_tab">Item 3<span>Booked in by: Chris O'Neil</span></a></li>
                     <li><a href="#stv_content_4" rel="v_tab_4" class="st_tab">Item 4<span>Booked in by: Iain Johnson</span></a></li>

@@ -40,6 +40,22 @@
 			title: 'Create New Job'
 		});
 
+		$('#createJobButton').click(function () {
+			$("#create-job-container").dialog('open');
+		});
+
+		//Create INSTRUMENT modal form
+		$("#create-instrument-container").dialog({
+			autoOpen: false,
+			modal: true,
+			width: 335,
+			title: 'Create New Instrument'
+		});
+
+		$('#createInstrumentButton').click(function () {
+			$("#create-instrument-container").dialog('open');
+		});
+
 		// Vertical Sliding Tabs demo
 		$('div#st_vertical').slideTabs({
 			// Options
@@ -62,10 +78,6 @@
 			tabsScroll: false,
 			autoHeight: true,
 			totalWidth: '774'
-		});
-
-		$('#createJobButton').click(function () {
-			$("#create-job-container").dialog('open');
 		});
 
 		$("#invoiceDetails").hide();

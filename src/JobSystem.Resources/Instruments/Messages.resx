@@ -135,6 +135,9 @@
   <data name="ModelNoTooLong" xml:space="preserve">
     <value>The model number can contain a maximum of 50 characters</value>
   </data>
+  <data name="NoInstruments" xml:space="preserve">
+    <value>There are currently no instruments</value>
+  </data>
   <data name="RangeTooLong" xml:space="preserve">
     <value>The range can contain a maximum of 50 characters</value>
   </data>

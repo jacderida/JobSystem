@@ -115,6 +115,15 @@ namespace JobSystem.Resources.Instruments {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are currently no instruments.
+        /// </summary>
+        public static string NoInstruments {
+            get {
+                return ResourceManager.GetString("NoInstruments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The range can contain a maximum of 50 characters.
         /// </summary>
         public static string RangeTooLong {

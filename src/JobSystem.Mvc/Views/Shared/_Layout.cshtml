@@ -40,7 +40,7 @@
 				<ul id="admin-menu" class="hidden">
 					<li>@Html.MenuLink("Company Details", "EditCompanyDetails", "Admin", "nav-link")</li>
 					<li>@Html.ActionLink("User Management", "Index", "UserManagement", new { }, new { @class = "nav-link" })</li>
-					<li><a href="#">Instruments</a></li>
+					<li>@Html.MenuLink("Instruments", "Index", "Instrument", "nav-link")</li>
 					<li><a href="#">Certificate Register</a></li>
 					<li><a href="#">Safety Standards</a></li>
 				</ul>

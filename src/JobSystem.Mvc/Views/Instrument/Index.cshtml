@@ -1,0 +1,38 @@
+﻿@model JobSystem.Mvc.ViewModels.Instruments.InstrumentListViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Instruments</h2>
+<a href="#" id="createInstrumentButton" class="primary-action">Create Instrument</a>
+@if (Model.Instruments.Any()) {
+	<table>
+		<tr>
+			<th>Model Number</th>
+			<th>Manufacturer</th>
+			<th>Range</th>
+			<th>Description</th>
+		</tr>
+	@foreach (var item in Model.Instruments)
+	 {
+			<tr>
+				<td>
+					@Html.ActionLink(item.ModelNo, "Details", new { id = item.Id })
+				</td>
+				<td>
+					@item.Manufacturer
+				</td>
+				<td>
+					@item.Range
+				</td>
+				<td>
+					@item.Description
+				</td>
+			</tr>
+	 }
+	</table>
+}else{
+	<div id="empty-list">@JobSystem.Resources.Instruments.Messages.NoInstruments</div>
+}
+
+@Html.Partial("_Create", Model.CreateViewModel)
