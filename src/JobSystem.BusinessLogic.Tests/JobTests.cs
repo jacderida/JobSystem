@@ -1,12 +1,13 @@
 ﻿using System;
 using JobSystem.BusinessLogic.Services;
+using JobSystem.BusinessLogic.Tests.Context;
+using JobSystem.BusinessLogic.Tests.Helpers;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
+using JobSystem.Framework;
 using NUnit.Framework;
 using Rhino.Mocks;
-using JobSystem.BusinessLogic.Tests.Helpers;
-using JobSystem.Framework;
 
 namespace JobSystem.BusinessLogic.Tests
 {
@@ -24,6 +25,8 @@ namespace JobSystem.BusinessLogic.Tests
 			_domainValidationException = null;
 			AppDateTime.GetUtcNow = () =>_dateCreated;
 		}
+
+		#region Create
 
 		[Test]
 		public void Create_ValidJobDetails_SuccessfullyCreateJob()
@@ -140,5 +143,67 @@ namespace JobSystem.BusinessLogic.Tests
 				_domainValidationException = dex;
 			}
 		}
+
+		#endregion
+		#region Get
+
+		[Test]
+		public void GetJob_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			try
+			{
+				var customerId = Guid.NewGuid();
+				var typeId = Guid.NewGuid();
+				var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
+				_jobService = JobServiceFactory.Create(
+					jobRepositoryMock, typeId, customerId, TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Public));
+				_jobService.GetJob(Guid.NewGuid());
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.InsufficientSecurityClearance));
+		}
+
+		[Test]
+		public void GetApprovedJobs_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			try
+			{
+				var customerId = Guid.NewGuid();
+				var typeId = Guid.NewGuid();
+				var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
+				_jobService = JobServiceFactory.Create(
+					jobRepositoryMock, typeId, customerId, TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Public));
+				_jobService.GetApprovedJobs();
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.InsufficientSecurityClearance));
+		}
+
+		[Test]
+		public void GetPendingJobs_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			try
+			{
+				var customerId = Guid.NewGuid();
+				var typeId = Guid.NewGuid();
+				var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
+				_jobService = JobServiceFactory.Create(
+					jobRepositoryMock, typeId, customerId, TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Public));
+				_jobService.GetPendingJobs();
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.InsufficientSecurityClearance));
+		}
+
+		#endregion
 	}
 }

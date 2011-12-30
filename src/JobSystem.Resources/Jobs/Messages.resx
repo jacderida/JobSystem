@@ -126,6 +126,9 @@
   <data name="InstructionsTooLarge" xml:space="preserve">
     <value>The instructions cannot exceed 2000 characters</value>
   </data>
+  <data name="InsufficientSecurityClearance" xml:space="preserve">
+    <value>An internal member role is required for this view</value>
+  </data>
   <data name="InvalidCustomerId" xml:space="preserve">
     <value>An invalid customer ID was supplied</value>
   </data>
