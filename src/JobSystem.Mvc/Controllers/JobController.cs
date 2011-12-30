@@ -56,6 +56,20 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult Index()
 		{
+			//Placeholder admin role check to see whether user should be shown pending or approved jobs by default
+			var isAdmin = true;
+			if (isAdmin)
+				return RedirectToAction("PendingJobs");
+			return RedirectToAction("ApprovedJobs");
+		}
+
+		public ActionResult PendingJobs()
+		{
+			return View();
+		}
+
+		public ActionResult ApprovedJobs()
+		{
 			return View();
 		}
 

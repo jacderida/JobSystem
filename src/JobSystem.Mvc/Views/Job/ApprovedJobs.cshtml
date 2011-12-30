@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Job List";
+}
+
+<h2>Jobs</h2>
+<div id="toggle-container">
+	<span class="toggle toggle-left"><a href="@Url.Action("PendingJobs")">Pending</a></span>
+	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedJobs")">Approved</a></span>
+</div>
+<a href="#" id="createJobButton" class="primary-action">Create Job</a>
+<table>
+	<tr>
+		<th>Job Number</th>
+		<th>Order Number</th>
+		<th>Booked By</th>
+		<th>Created</th>
+		<th>Approved</th>
+	</tr>
+@*	@foreach (var item in Model)
+ {*@
+		<tr>
+			<td>
+				<a href="@Url.Action("Details")">102</a>
+				@*@Html.ActionLink(item.Name, "Details", new { id = item.Id })*@
+			</td>
+			<td>
+				10234
+				@*@Html.ActionLink("Edit", "Edit", new { id = item.Id })*@
+			</td>
+			<td>
+				Chris O'Neil
+			</td>
+			<td>
+				25/11/2011
+			</td>
+			<td>
+				27/11/2011
+			</td>
+		</tr>
+ @*}*@
+</table>
+
+@Html.Partial("_Create")

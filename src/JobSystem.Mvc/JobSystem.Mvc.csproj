@@ -254,19 +254,22 @@
     <Content Include="Views\UserManagement\_UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Job\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Job\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Job\_Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\CompanyDetails.cshtml" />
+    <Content Include="Views\Admin\CompanyDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\EditCompanyDetails.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Job\PendingJobs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Job\ApprovedJobs.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -285,7 +288,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>61761</DevelopmentServerPort>
+          <DevelopmentServerPort>58756</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/JobSystem.Mvc</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

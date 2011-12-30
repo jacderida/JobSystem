@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using JobSystem.Mvc.ViewModels.Admin;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -12,8 +11,7 @@ namespace JobSystem.Mvc.Controllers
 		[Authorize]
 		public ActionResult Index()
 		{
-			var model = new CompanyDetailsViewModel();
-			return View("CompanyDetails", model);
+		return View();
 		}
 
 		[Authorize]
