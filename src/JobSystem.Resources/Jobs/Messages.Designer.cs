@@ -115,6 +115,24 @@ namespace JobSystem.Resources.Jobs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are currently no approved jobs.
+        /// </summary>
+        public static string NoApprovedJobs {
+            get {
+                return ResourceManager.GetString("NoApprovedJobs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are currently no pending jobs.
+        /// </summary>
+        public static string NoPendingJobs {
+            get {
+                return ResourceManager.GetString("NoPendingJobs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The notes cannot exceed 2000 characters.
         /// </summary>
         public static string NotesTooLarge {

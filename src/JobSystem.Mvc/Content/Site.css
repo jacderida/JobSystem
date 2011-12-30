@@ -632,6 +632,17 @@ div#title {
 
 }
 
+#empty-list {
+	margin-top: 1em;
+	font-weight: bold;
+	text-shadow: 1px 1px #fff;
+	text-align: center;
+	padding: 20px 0 20px 0;
+	outline: 1px solid #DDD;
+	border: 1px solid white;
+	background-color: #eaeaea;
+}
+
 #job-top-section {
 	position: relative;
 	float: left;
