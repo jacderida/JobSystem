@@ -379,7 +379,7 @@ input[type="password"]:focus {
     border: 1px solid orange;
 }
 
-input[type="text"].short-text {
+input[type="text"].short-text, .short-text {
 	width: 125px;
 }
 
@@ -393,6 +393,10 @@ select {
 input[type="submit"] {
     font-size: 1.2em;
     padding: 5px;
+}
+
+.long-dropdown {
+	width: 308px;
 }
 
 /* TABLE

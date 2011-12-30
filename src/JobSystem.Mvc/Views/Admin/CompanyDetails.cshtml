@@ -94,7 +94,7 @@
 			@Html.LabelFor(model => model.BankDetails)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.BankDetails)
+			@Html.DropDownListFor(model => model.BankDetails, Model.BankDetails, new { @class = "long-dropdown" })
 			@Html.ValidationMessageFor(model => model.BankDetails)
 		</div>
 	</fieldset>
@@ -109,14 +109,14 @@
 			@Html.LabelFor(model => model.Currencies)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.Currencies, Model.Currencies)
+			@Html.DropDownListFor(model => model.Currencies, Model.Currencies, new { @class = "long-dropdown" })
 			@Html.ValidationMessageFor(model => model.Currencies)
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.TaxCodes)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.TaxCodes)
+			@Html.DropDownListFor(model => model.TaxCodes, Model.TaxCodes, new { @class = "long-dropdown" })
 			@Html.ValidationMessageFor(model => model.TaxCodes)
 		</div>
 		<div class="editor-label">
@@ -137,7 +137,7 @@
 			@Html.LabelFor(model => model.PaymentTerms)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.PaymentTerms)
+			@Html.DropDownListFor(model => model.PaymentTerms, Model.PaymentTerms, new { @class = "long-dropdown" })
 			@Html.ValidationMessageFor(model => model.PaymentTerms)
 		</div>
 		<div class="editor-label">

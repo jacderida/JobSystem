@@ -263,9 +263,6 @@
     <Content Include="Views\Admin\CompanyDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Admin\EditCompanyDetails.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Job\PendingJobs.cshtml" />
   </ItemGroup>
   <ItemGroup>
