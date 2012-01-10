@@ -794,3 +794,14 @@ div#title {
 }
 
 /* END OF TOGGLE STYLES */
+
+#search {
+	display: inline-block;
+	float: right;
+}
+
+#search #search-button {
+	width: 32px;
+	height: 32px;
+	background-image: transparent url('../Content/images/search-icon.png') no-repeat;
+}

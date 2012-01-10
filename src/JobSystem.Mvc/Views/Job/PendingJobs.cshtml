@@ -9,6 +9,10 @@
 	<span class="toggle toggle-right"><a href="@Url.Action("ApprovedJobs")">Approved</a></span>
 </div>
 <a href="#" id="createJobButton" class="primary-action">Create Job</a>
+<div id="search">
+	<input type="text" class="short-text"/>
+	<input type="submit" value="" id="search-button" class="primary-action"/>
+</div>
 @if (Model.Jobs.Any()) {
 	<table>
 		<tr>

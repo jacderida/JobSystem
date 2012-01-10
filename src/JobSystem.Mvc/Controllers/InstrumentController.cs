@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
+using JobSystem.BusinessLogic.Validation.Core;
+using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.ViewModels.Instruments;
 
 namespace JobSystem.Mvc.Controllers
@@ -30,6 +33,25 @@ namespace JobSystem.Mvc.Controllers
 			viewModel.CreateViewModel = new InstrumentViewModel();
 			return View(viewModel);
         }
+
+		[HttpPost]
+		public ActionResult Create(InstrumentViewModel viewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					var id = Guid.NewGuid();
+					_instrumentService.Create(id, viewModel.Manufacturer, viewModel.ModelNo, viewModel.Range, viewModel.Description);
+					return RedirectToAction("Index");
+				}
+				catch (DomainValidationException dex)
+				{
+					ModelState.UpdateFromDomain(dex.Result);
+				}
+			}
+			return View(viewModel);
+		}
 
     }
 }
