@@ -75,7 +75,6 @@ namespace JobSystem.BusinessLogic.Services
 		}
 
 		#endregion
-
 		#region Private Implementation
 
 		private Customer GetCustomer(Guid customerId)

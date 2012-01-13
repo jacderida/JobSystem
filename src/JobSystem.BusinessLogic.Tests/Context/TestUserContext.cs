@@ -42,6 +42,19 @@ namespace JobSystem.BusinessLogic.Tests.Context
 			return new TestUserContext(Guid.Empty, emailAddress, userName, jobTitle, roles);
 		}
 
+		public static UserAccount CreateAdminUser()
+		{
+			return new UserAccount
+			{
+				Id = Guid.NewGuid(),
+				EmailAddress = "admin@intertek.com",
+				Name = "Graham Robertson",
+				JobTitle = "Laboratory Manager",
+				PasswordHash = "hash",
+				PasswordSalt = "salt"
+			};
+		}
+
 		#region IUserContext Members
 
 		/// <summary>

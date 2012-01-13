@@ -20,7 +20,7 @@ namespace JobSystem.DbWireup.ConsoleRunner
 			builder.WithJobTypes("Lab Service", "Field Service")
 				.WithJobItemFields("T - Temperature", "E - Electrical", "D - Density", "M - Mechanical", "S - SubContract", "H - Hire", "R - Resale")
 				.WithJobItemInitialStatusItems("UKAS Calibration", "House Calibration", "Sub Contract", "Repair")
-				.WithJobItemWorkStatusItems("Calibrated", "Repaired", "Failed", "Investigated", "Returned", "Completed", "Reviewed")
+				.WithJobItemWorkStatusItems("Calibrated", "Repaired", "Failed", "Investigated", "Returned", "Completed", "Reviewed", "Booked In")
 				.WithJobItemStatusItems("Quote Prepared", "Quote Accepted", "Quote Rejected", "Consigned", "Order Reviewed", "Ordered", "Delivery Note Produced")
 				.WithJobItemWorkTypes("Calibrated", "Repair", "Investigate", "Administration")
 				.WithJobItemLocations("Completed", "Calibrated", "Repair", "Sub Contract", "Quote", "Investigated")

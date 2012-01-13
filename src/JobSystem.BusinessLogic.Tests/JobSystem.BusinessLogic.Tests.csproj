@@ -55,9 +55,11 @@
     <Compile Include="Helpers\CustomerServiceFactory.cs" />
     <Compile Include="Helpers\DomainValidationExtensions.cs" />
     <Compile Include="Helpers\InstrumentServiceFactory.cs" />
+    <Compile Include="Helpers\JobItemServiceFactory.cs" />
     <Compile Include="Helpers\JobServiceFactory.cs" />
     <Compile Include="Helpers\UserManagementServiceFactory.cs" />
     <Compile Include="InstrumentTests.cs" />
+    <Compile Include="JobItemTests.cs" />
     <Compile Include="JobTests.cs" />
     <Compile Include="UserManagementTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
