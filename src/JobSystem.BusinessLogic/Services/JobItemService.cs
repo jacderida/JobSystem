@@ -14,17 +14,21 @@ namespace JobSystem.BusinessLogic.Services
 		private IJobRepository _jobRepository;
 		private IInstrumentRepository _instrumentRepository;
 		private IListItemRepository _listItemRepository;
+		private IJobItemRepository _jobItemRepository;
 
 		public JobItemService(
 			IUserContext applicationContext,
 			IJobRepository jobRepository,
+			IJobItemRepository jobItemRepository,
 			IInstrumentRepository instrumentRepository,
 			IListItemRepository listItemRepository,
-			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
+			IQueueDispatcher<IMessage> dispatcher)
+			: base(applicationContext, dispatcher)
 		{
 			_jobRepository = jobRepository;
 			_instrumentRepository = instrumentRepository;
 			_listItemRepository = listItemRepository;
+			_jobItemRepository = jobItemRepository;
 		}
 
 		public JobItem CreateJobItem(
@@ -51,12 +55,13 @@ namespace JobSystem.BusinessLogic.Services
 				Accessories = accessories,
 				IsReturned = isReturned,
 				ReturnReason = returnReason,
-				Comments = comments
+				Comments = comments,
+				ProjectedDeliveryDate = AppDateTime.GetUtcNow().AddDays(30)
 			};
 			ValidateAnnotatedObjectThrowOnFailure(jobItem);
 			var job = GetJob(jobId);
-			job.JobItems.Add(jobItem);
-			_jobRepository.Update(job);
+			jobItem.Job = job;
+			_jobItemRepository.Create(jobItem);
 			return jobItem;
 		}
 

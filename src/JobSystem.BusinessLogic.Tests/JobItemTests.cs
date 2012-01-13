@@ -36,13 +36,12 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
 			_jobItemService = JobItemServiceFactory.Create(
-				jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId, TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member));
+				jobItemRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId, 0, TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member));
 			CreateJobItem(jobId, jobItemId, instrumentId, "SER12345", "AS123", initialStatusId, locationId, fieldId, 12, "job item instructions", "job item accessories", false, "job item returned", "job item comments");
-			jobRepositoryMock.VerifyAllExpectations();
+			jobItemRepositoryMock.VerifyAllExpectations();
 			Assert.That(_savedJobItem.Id != Guid.Empty);
 			Assert.AreEqual(1, _savedJobItem.ItemNo);
 			Assert.AreEqual(_dateCreated, _savedJobItem.Created);
@@ -60,13 +59,12 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(1);
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
 			_jobItemService = JobItemServiceFactory.Create(
-				jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId, TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member));
+				jobItemRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId, 1, TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member));
 			CreateJobItem(jobId, jobItemId, instrumentId, "SER12345", "AS123", initialStatusId, locationId, fieldId, 12, "job item instructions", "job item accessories", false, "job item returned", "job item comments");
-			jobRepositoryMock.VerifyAllExpectations();
+			jobItemRepositoryMock.VerifyAllExpectations();
 			Assert.That(_savedJobItem.Id != Guid.Empty);
 			Assert.AreEqual(2, _savedJobItem.ItemNo);
 			Assert.AreEqual(_dateCreated, _savedJobItem.Created);
@@ -85,9 +83,7 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
-			_jobItemService = JobItemServiceFactory.Create(jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId);
+			_jobItemService = JobItemServiceFactory.Create(jobId, instrumentId, initialStatusId, locationId, fieldId, 0);
 			CreateJobItem(jobId, jobItemId, instrumentId, "SER12345", "AS123", initialStatusId, locationId, fieldId, 12, "job item instructions", "job item accessories", false, "job item returned", "job item comments");
 		}
 
@@ -102,9 +98,7 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
-			_jobItemService = JobItemServiceFactory.Create(jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId);
+			_jobItemService = JobItemServiceFactory.Create(jobId, instrumentId, initialStatusId, locationId, fieldId, 0);
 			CreateJobItem(jobId, jobItemId, instrumentId, "SER12345", "AS123", initialStatusId, locationId, fieldId, 12, "job item instructions", "job item accessories", false, "job item returned", "job item comments");
 		}
 
@@ -119,9 +113,7 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
-			_jobItemService = JobItemServiceFactory.Create(jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId);
+			_jobItemService = JobItemServiceFactory.Create(jobId, instrumentId, initialStatusId, locationId, fieldId, 0);
 			CreateJobItem(jobId, jobItemId, instrumentId, "SER12345", "AS123", initialStatusId, locationId, fieldId, 12, "job item instructions", "job item accessories", false, "job item returned", "job item comments");
 		}
 
@@ -136,9 +128,7 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
-			_jobItemService = JobItemServiceFactory.Create(jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId);
+			_jobItemService = JobItemServiceFactory.Create(jobId, instrumentId, initialStatusId, locationId, fieldId, 0);
 			CreateJobItem(jobId, jobItemId, instrumentId, "SER12345", "AS123", initialStatusId, locationId, fieldId, 12, "job item instructions", "job item accessories", false, "job item returned", "job item comments");
 		}
 
@@ -153,9 +143,7 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.Empty;
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
-			_jobItemService = JobItemServiceFactory.Create(jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId);
+			_jobItemService = JobItemServiceFactory.Create(jobId, instrumentId, initialStatusId, locationId, fieldId, 0);
 			CreateJobItem(jobId, jobItemId, instrumentId, "SER12345", "AS123", initialStatusId, locationId, fieldId, 12, "job item instructions", "job item accessories", false, "job item returned", "job item comments");
 		}
 
@@ -170,9 +158,7 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.Empty;
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
-			_jobItemService = JobItemServiceFactory.Create(jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId);
+			_jobItemService = JobItemServiceFactory.Create(jobId, instrumentId, initialStatusId, locationId, fieldId, 0);
 			CreateJobItem(jobId, jobItemId, instrumentId, "SER12345", "AS123", initialStatusId, locationId, fieldId, 12, "job item instructions", "job item accessories", false, "job item returned", "job item comments");
 		}
 
@@ -186,9 +172,7 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
-			_jobItemService = JobItemServiceFactory.Create(jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId);
+			_jobItemService = JobItemServiceFactory.Create(jobId, instrumentId, initialStatusId, locationId, fieldId, 0);
 			CreateJobItem(jobId, jobItemId, instrumentId, "SER12345", "AS123", initialStatusId, locationId, fieldId, 0, "job item instructions", "job item accessories", false, "job item returned", "job item comments");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.InvalidCalPeriod));
 		}
@@ -203,9 +187,7 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
-			_jobItemService = JobItemServiceFactory.Create(jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId);
+			_jobItemService = JobItemServiceFactory.Create(jobId, instrumentId, initialStatusId, locationId, fieldId, 0);
 			CreateJobItem(jobId, jobItemId, instrumentId, String.Empty, "AS123", initialStatusId, locationId, fieldId, 12, "job item instructions", "job item accessories", false, "job item returned", "job item comments");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.SerialNoRequired));
 		}
@@ -220,9 +202,7 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
-			_jobItemService = JobItemServiceFactory.Create(jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId);
+			_jobItemService = JobItemServiceFactory.Create(jobId, instrumentId, initialStatusId, locationId, fieldId, 0);
 			CreateJobItem(jobId, jobItemId, instrumentId, new string('a', 51), "AS123", initialStatusId, locationId, fieldId, 12, "job item instructions", "job item accessories", false, "job item returned", "job item comments");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.SerialNoTooLarge));
 		}
@@ -237,9 +217,7 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
-			_jobItemService = JobItemServiceFactory.Create(jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId);
+			_jobItemService = JobItemServiceFactory.Create(jobId, instrumentId, initialStatusId, locationId, fieldId, 0);
 			CreateJobItem(jobId, jobItemId, instrumentId, "SER123", new string('a', 51), initialStatusId, locationId, fieldId, 12, "job item instructions", "job item accessories", false, "job item returned", "job item comments");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.AssetNoTooLarge));
 		}
@@ -254,9 +232,7 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
-			_jobItemService = JobItemServiceFactory.Create(jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId);
+			_jobItemService = JobItemServiceFactory.Create(jobId, instrumentId, initialStatusId, locationId, fieldId, 0);
 			CreateJobItem(jobId, jobItemId, instrumentId, "SER123", "AS123", initialStatusId, locationId, fieldId, 12, new string('a', 256), "job item accessories", false, "job item returned", "job item comments");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.InstructionsTooLarge));
 		}
@@ -271,9 +247,7 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
-			_jobItemService = JobItemServiceFactory.Create(jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId);
+			_jobItemService = JobItemServiceFactory.Create(jobId, instrumentId, initialStatusId, locationId, fieldId, 0);
 			CreateJobItem(jobId, jobItemId, instrumentId, "SER123", "AS123", initialStatusId, locationId, fieldId, 12, "job item instructions", new string('a', 256), false, "job item returned", "job item comments");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.AccessoriesTooLarge));
 		}
@@ -288,9 +262,7 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
-			_jobItemService = JobItemServiceFactory.Create(jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId);
+			_jobItemService = JobItemServiceFactory.Create(jobId, instrumentId, initialStatusId, locationId, fieldId, 0);
 			CreateJobItem(jobId, jobItemId, instrumentId, "SER123", "AS123", initialStatusId, locationId, fieldId, 12, "job item instructions", "job item accessories", false, new string('a', 256), "job item comments");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.ReturnReasonTooLarge));
 		}
@@ -305,9 +277,7 @@ namespace JobSystem.BusinessLogic.Tests
 			var locationId = Guid.NewGuid();
 			var fieldId = Guid.NewGuid();
 
-			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryMock.Stub(x => x.GetJobItemCount(jobId)).Return(0);
-			_jobItemService = JobItemServiceFactory.Create(jobRepositoryMock, jobId, instrumentId, initialStatusId, locationId, fieldId);
+			_jobItemService = JobItemServiceFactory.Create(jobId, instrumentId, initialStatusId, locationId, fieldId, 0);
 			CreateJobItem(jobId, jobItemId, instrumentId, "SER123", "AS123", initialStatusId, locationId, fieldId, 12, "job item instructions", "job item accessories", false, "job item accessories", new string('a', 256));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.CommentsTooLarge));
 		}

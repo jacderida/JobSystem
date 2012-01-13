@@ -12,40 +12,41 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 	public class JobItemServiceFactory
 	{
 		public static JobItemService Create(
-			IJobRepository jobRepository, Guid jobId, Guid instrumentId, Guid initialStatusId, Guid locationId, Guid fieldId)
+			Guid jobId, Guid instrumentId, Guid initialStatusId, Guid locationId, Guid fieldId, int jobItemCount)
 		{
 			return Create(
-				jobRepository, jobId, instrumentId, initialStatusId, locationId, fieldId,
+				MockRepository.GenerateMock<IJobItemRepository>(), jobId, instrumentId, initialStatusId, locationId, fieldId, jobItemCount,
 				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
 		}
 
 		public static JobItemService Create(
-			IJobRepository jobRepository, Guid jobId, Guid instrumentId, Guid initialStatusId, Guid locationId, Guid fieldId, IUserContext userContext)
+			IJobItemRepository jobItemRepository, Guid jobId, Guid instrumentId, Guid initialStatusId, Guid locationId, Guid fieldId, int jobItemCount)
 		{
-			UpdateJobRepository(jobRepository, jobId);
+			return Create(
+				jobItemRepository, jobId, instrumentId, initialStatusId, locationId, fieldId, jobItemCount,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
+		}
+
+		public static JobItemService Create(
+			IJobItemRepository jobItemRepository, Guid jobId, Guid instrumentId, Guid initialStatusId, Guid locationId, Guid fieldId, int jobItemCount, IUserContext userContext)
+		{
 			return new JobItemService(
 				userContext,
-				jobRepository,
+				GetJobRepository(jobId, jobItemCount),
+				jobItemRepository,
 				GetInstrumentRepository(instrumentId),
 				GetListItemRepository(initialStatusId, locationId, fieldId),
 				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 
-		private static void UpdateJobRepository(IJobRepository jobRepository, Guid jobId)
-		{
-			if (jobId != Guid.Empty)
-				jobRepository.Stub(x => x.GetById(jobId)).Return(GetJob(jobId));
-			else
-				jobRepository.Stub(x => x.GetById(jobId)).Return(null);
-		}
-
-		private static IJobRepository GetJobRepository(Guid jobId)
+		private static IJobRepository GetJobRepository(Guid jobId, int jobItemCount)
 		{
 			var jobRepository = MockRepository.GenerateStub<IJobRepository>();
 			if (jobId != Guid.Empty)
 				jobRepository.Stub(x => x.GetById(jobId)).Return(GetJob(jobId));
 			else
 				jobRepository.Stub(x => x.GetById(jobId)).Return(null);
+			jobRepository.Stub(x => x.GetJobItemCount(jobId)).Return(jobItemCount);
 			return jobRepository;
 		}
 
