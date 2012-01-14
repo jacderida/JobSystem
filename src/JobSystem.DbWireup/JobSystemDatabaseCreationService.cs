@@ -11,6 +11,7 @@ using JobSystem.DataAccess.NHibernate.Mappings;
 using JobSystem.DataModel.Entities;
 using JobSystem.Framework.Security;
 using NHibernate.Linq;
+using JobSystem.Framework;
 
 namespace JobSystem.DbWireup
 {
@@ -53,21 +54,7 @@ namespace JobSystem.DbWireup
 
 		public void CreateJobSystemSchemaFromMigrations(string migrationsAssemblyPath)
 		{
-			var executingAssembly = Assembly.GetExecutingAssembly();
-			var executingAssemblyPath = new Uri(executingAssembly.CodeBase).LocalPath;
-			var binPath = Path.GetDirectoryName(executingAssemblyPath);
-			var setup = new AppDomainSetup()
-			{
-				ApplicationBase = binPath,
-				PrivateBinPath = binPath
-			};
-			AppDomain otherDomain = AppDomain.CreateDomain("migrations_runner_app_domain", null, setup);
-			var runner = (CrossDomainMigrationRunner)otherDomain.CreateInstanceAndUnwrap(
-				executingAssembly.FullName,
-				typeof(CrossDomainMigrationRunner).FullName);
-			runner.Run(migrationsAssemblyPath, GetConnectionStringForCatalog(_databaseName));
-			runner = null;
-			AppDomain.Unload(otherDomain);
+			MigrationsSchemaBuilder.CreateSchemaFromMigrations(migrationsAssemblyPath, GetConnectionStringForCatalog(_databaseName), "sqlserver");
 		}
 
 		public void InitHibernate()

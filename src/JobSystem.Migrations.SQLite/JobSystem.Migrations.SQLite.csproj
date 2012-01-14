@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DF20A53E-E26C-409C-B5CA-39200146AC30}</ProjectGuid>
+    <ProjectGuid>{5629A849-655F-4684-9ABE-368DEE5C41A1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JobSystem.DbWireup</RootNamespace>
-    <AssemblyName>JobSystem.DbWireup</AssemblyName>
+    <RootNamespace>JobSystem.Migrations.SQLite</RootNamespace>
+    <AssemblyName>JobSystem.Migrations.SQLite</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,25 +30,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>bin\x64\Release\</OutputPath>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentNHibernate, Version=1.2.0.712, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
+    <Reference Include="FluentMigrator, Version=0.9.0.42, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\fluentnhibernate-NH3.1-1.2\FluentNHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate, Version=3.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\fluentnhibernate-NH3.1-1.2\NHibernate.dll</HintPath>
+      <HintPath>..\..\lib\fluentmigrator-x64\FluentMigrator.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -57,28 +44,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IJobSystemDatabaseCreationService.cs" />
-    <Compile Include="JobSystemDatabaseCreationService.cs" />
-    <Compile Include="JobSystemDefaultData.cs" />
-    <Compile Include="JobSystemDefaultDataBuilder.cs" />
+    <Compile Include="M20110928201038_AddListItemsTable.cs" />
+    <Compile Include="M20110928201039_AddCustomerTable.cs" />
+    <Compile Include="M20110928202143_AddInstrumentsTable.cs" />
+    <Compile Include="M20110928202539_AddUserAccountsTable.cs" />
+    <Compile Include="M20110928203503_AddJobsTable.cs" />
+    <Compile Include="M20110928204549_AddJobItemsTable.cs" />
+    <Compile Include="M20110928210052_AddItemHistoryTable.cs" />
+    <Compile Include="M20111206223834_AddTaxCodesTable.cs" />
+    <Compile Include="M20111206224823_AddBankDetailsTable.cs" />
+    <Compile Include="M20111208212831_AddCompanyDetailsTable.cs" />
+    <Compile Include="M20111228143737_AddIsPendingColumnToJobsTable.cs" />
+    <Compile Include="M20111229064937_AddCreatedByIdColumnToJobsTable.cs" />
+    <Compile Include="M20111230053929_AddEntityIdLookupsTable.cs" />
+    <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleConnectionProvider.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\JobSystem.DataAccess.NHibernate\JobSystem.DataAccess.NHibernate.csproj">
-      <Project>{7792D324-DF29-4F9F-9409-6E6FFFB28C6C}</Project>
-      <Name>JobSystem.DataAccess.NHibernate</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\JobSystem.DataModel\JobSystem.DataModel.csproj">
-      <Project>{4F88F47B-AAE1-4E7D-AFF1-654C67A8A61C}</Project>
-      <Name>JobSystem.DataModel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\JobSystem.Framework\JobSystem.Framework.csproj">
-      <Project>{904034C0-4B56-4A2E-82BA-5D4B84195D99}</Project>
-      <Name>JobSystem.Framework</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>XCopy "$(TargetDir)*.dll" "$(SolutionDir)run" /Y /C /D /I
+XCopy "$(TargetDir)*.pdb" "$(SolutionDir)run" /Y /C /D /I
+XCopy "$(TargetDir)*.config" "$(SolutionDir)run" /Y /C /D /I</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
