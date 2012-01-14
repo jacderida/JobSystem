@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace JobSystem.Mvc.ViewModels.Instruments
 {
     public class InstrumentViewModel
 	{
-		public string Id { get; set; }
+		public Guid Id { get; set; }
 		public string Manufacturer { get; set; }
 		[Display(Name="Model Number")]
 		public string ModelNo { get; set; }

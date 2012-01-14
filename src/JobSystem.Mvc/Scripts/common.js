@@ -15,10 +15,9 @@
 			$("#create-user-container").dialog('open');
 		});
 
-
 		$('.editUserButton').click(function () {
-			var userId = $(this).attr('id');
-			var editUrl = $('#editUrl').val() + '/' + userId;
+			var elemId = $(this).attr('id');
+			var editUrl = $('#editUrl').val() + '/' + elemId;
 			//Edit user modal form
 			$("#edit-user-container").dialog({
 				modal: true,
@@ -54,6 +53,22 @@
 
 		$('#createInstrumentButton').click(function () {
 			$("#create-instrument-container").dialog('open');
+		});
+
+		$('.editInstrumentButton').click(function () {
+			var elemId = $(this).attr('id');
+			var editUrl = $('#editUrl').val() + '/' + elemId;
+			//Edit user modal form
+			$("#edit-instrument-container").dialog({
+				modal: true,
+				width: 335,
+				title: 'Edit User',
+				open: function (event, ui) {
+					//Load the Edit action which will return 
+					// the partial view _Edit
+					$(this).load(editUrl);
+				}
+			});
 		});
 
 		// Vertical Sliding Tabs demo

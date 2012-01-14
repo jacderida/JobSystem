@@ -23,7 +23,7 @@ namespace JobSystem.Mvc.Controllers
 			var instruments = _instrumentService.GetInstruments().Select(
 				 i => new InstrumentViewModel
 				 {
-					 Id = i.Id.ToString(),
+					 Id = i.Id,
 					 Description = i.Description,
 					 Manufacturer = i.Manufacturer,
 					 ModelNo = i.ModelNo,
@@ -45,6 +45,38 @@ namespace JobSystem.Mvc.Controllers
 				{
 					var id = Guid.NewGuid();
 					_instrumentService.Create(id, viewModel.Manufacturer, viewModel.ModelNo, viewModel.Range, viewModel.Description);
+					return RedirectToAction("Index");
+				}
+				catch (DomainValidationException dex)
+				{
+					ModelState.UpdateFromDomain(dex.Result);
+				}
+			}
+			return View(viewModel);
+		}
+
+		public ActionResult Edit(Guid id)
+		{
+			var instrument = _instrumentService.GetById(id);
+			return PartialView("_Edit", new InstrumentViewModel
+				{
+					Id = id,
+					Description = instrument.Description,
+					Manufacturer = instrument.Manufacturer,
+					ModelNo = instrument.ModelNo,
+					Range = instrument.Range
+				});
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult Edit(InstrumentViewModel viewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					_instrumentService.Edit(viewModel.Id, viewModel.Manufacturer, viewModel.ModelNo, viewModel.Range, viewModel.Description);
 					return RedirectToAction("Index");
 				}
 				catch (DomainValidationException dex)
