@@ -43,6 +43,18 @@
 			$("#create-job-container").dialog('open');
 		});
 
+		//Create JOB ITEM modal form
+		$("#create-job-item-container").dialog({
+			autoOpen: false,
+			modal: true,
+			width: 335,
+			title: 'Create New User'
+		});
+
+		$('#createJobItemButton').click(function () {
+			$("#create-job-item-container").dialog('open');
+		});
+
 		//Create INSTRUMENT modal form
 		$("#create-instrument-container").dialog({
 			autoOpen: false,

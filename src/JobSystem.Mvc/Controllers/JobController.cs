@@ -7,6 +7,7 @@ using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.DataModel.Entities;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
+using JobSystem.Mvc.ViewModels.JobItems;
 using JobSystem.Mvc.ViewModels.Jobs;
 
 namespace JobSystem.Mvc.Controllers
@@ -131,7 +132,8 @@ namespace JobSystem.Mvc.Controllers
 				CustomerAddress4 = job.Customer.Address4,
 				CustomerAddress5 = job.Customer.Address5,
 				CustomerEmail = job.Customer.Email,
-				CustomerTelephone = job.Customer.Telephone
+				CustomerTelephone = job.Customer.Telephone,
+				JobItemCreateModel = new JobItemViewModel()
 			};
 			return View(viewModel);
 		}

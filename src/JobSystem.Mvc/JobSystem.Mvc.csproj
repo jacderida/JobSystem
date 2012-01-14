@@ -85,6 +85,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstrumentController.cs" />
     <Compile Include="Controllers\JobController.cs" />
+    <Compile Include="Controllers\JobItemController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Core\Utilities\MenuItemHelper.cs" />
     <Compile Include="Core\UIValidation\DomainValidationMap.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="ViewModels\Customers\CustomerViewModel.cs" />
     <Compile Include="ViewModels\Instruments\InstrumentViewModel.cs" />
     <Compile Include="ViewModels\Instruments\InstrumentListViewModel.cs" />
+    <Compile Include="ViewModels\JobItems\JobItemViewModel.cs" />
     <Compile Include="ViewModels\Jobs\JobCreateViewModel.cs" />
     <Compile Include="ViewModels\Jobs\JobDetailsViewModel.cs" />
     <Compile Include="ViewModels\Jobs\JobIndexViewModel.cs" />
@@ -282,6 +284,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Instrument\_Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\JobItem\_Create.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

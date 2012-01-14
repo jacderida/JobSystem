@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using JobSystem.Mvc.ViewModels.Customers;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using JobSystem.Mvc.ViewModels.JobItems;
 
 namespace JobSystem.Mvc.ViewModels.Jobs
 {
@@ -28,5 +29,7 @@ namespace JobSystem.Mvc.ViewModels.Jobs
 		public string CustomerAddress5 { get; set; }
 		public string CustomerEmail { get; set; }
 		public string CustomerTelephone { get; set; }
+		public IEnumerable<JobItemViewModel> JobItems { get; set; }
+		public JobItemViewModel JobItemCreateModel { get; set; }
 	}
 }
