@@ -44,15 +44,20 @@
 		});
 
 		//Create JOB ITEM modal form
-		$("#create-job-item-container").dialog({
-			autoOpen: false,
-			modal: true,
-			width: 335,
-			title: 'Create New User'
-		});
-
 		$('#createJobItemButton').click(function () {
-			$("#create-job-item-container").dialog('open');
+			var elemId = $(this).attr('id');
+			var editUrl = $('#editUrl').val() + '/' + elemId;
+			//Edit user modal form
+			$("#create-job-item-container").dialog({
+				modal: true,
+				width: 335,
+				title: 'Create New Job Item',
+				open: function (event, ui) {
+					//Load the Edit action which will return 
+					// the partial view _Edit
+					$(this).load(editUrl);
+				}
+			});
 		});
 
 		//Create INSTRUMENT modal form
@@ -74,7 +79,7 @@
 			$("#edit-instrument-container").dialog({
 				modal: true,
 				width: 335,
-				title: 'Edit User',
+				title: 'Edit Instrument',
 				open: function (event, ui) {
 					//Load the Edit action which will return 
 					// the partial view _Edit

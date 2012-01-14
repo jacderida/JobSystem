@@ -36,18 +36,18 @@
 			@Html.ValidationMessageFor(model => model.Comments)
 		</div>
 		<div class="editor-label">
-			@Html.LabelFor(model => model.FieldId)
+			@Html.LabelFor(model => model.Fields)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.FieldId)
-			@Html.ValidationMessageFor(model => model.FieldId)
+			@Html.DropDownListFor(model => model.FieldId, Model.Fields)
+			@Html.ValidationMessageFor(model => model.Fields)
 		</div>
 		<div class="editor-label">
-			@Html.LabelFor(model => model.InitialStatusId)
+			@Html.LabelFor(model => model.Status)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.InitialStatusId)
-			@Html.ValidationMessageFor(model => model.InitialStatusId)
+			@Html.DropDownListFor(model => model.InitialStatusId, Model.Status)
+			@Html.ValidationMessageFor(model => model.Status)
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.Instructions)
@@ -56,13 +56,13 @@
 			@Html.TextAreaFor(model => model.Instructions)
 			@Html.ValidationMessageFor(model => model.Instructions)
 		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.InstrumentId)
+@*		<div class="editor-label">
+			@Html.LabelFor(model => model.Instruments)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.InstrumentId)
-			@Html.ValidationMessageFor(model => model.InstrumentId)
-		</div>
+			@Html.EditorFor(model => model.Instruments)
+			@Html.ValidationMessageFor(model => model.Instruments)
+		</div>*@
 		<div class="editor-label">
 			@Html.LabelFor(model => model.IsReturned)
 		</div>
@@ -78,11 +78,11 @@
 			@Html.ValidationMessageFor(model => model.ReturnReason)
 		</div>
 		<div class="editor-label">
-			@Html.LabelFor(model => model.LocationId)
+			@Html.LabelFor(model => model.Locations)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.LocationId)
-			@Html.ValidationMessageFor(model => model.LocationId)
+			@Html.DropDownListFor(model => model.LocationId, Model.Locations)
+			@Html.ValidationMessageFor(model => model.Locations)
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.SerialNo)
@@ -92,7 +92,6 @@
 			@Html.ValidationMessageFor(model => model.SerialNo)
 		</div>
 			@Html.HiddenFor(model => model.JobId)
-			@Html.HiddenFor(model => model.Id)
 		</fieldset>
 		<div class="clear"></div>
 	<div class="buttons-row">

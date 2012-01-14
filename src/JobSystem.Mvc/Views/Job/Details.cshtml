@@ -3,7 +3,10 @@
     ViewBag.Title = "Job Details";
 }
 
-@Html.Partial("~/Views/JobItem/_Create.cshtml", Model.JobItemCreateModel)
+@*@Html.Partial("~/Views/JobItem/_Create.cshtml", Model.JobItemCreateModel)*@
+<input type="hidden" id="editUrl" value="@Url.Action("Create", "JobItem")"/>
+<div id="create-job-item-container">
+</div>
 
 <div id="job-top-section">
 	<div id="pending-banner"></div>
