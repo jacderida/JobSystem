@@ -1,6 +1,6 @@
-﻿using System;
-using JobSystem.BusinessLogic.Services;
+﻿using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Tests.Context;
+using JobSystem.DataAccess.NHibernate.Repositories;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
@@ -27,6 +27,14 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 		{
 			return new InstrumentService(
 				userContext,
+				repository,
+				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+		}
+
+		public static InstrumentService CreateForSearch(IInstrumentRepository repository)
+		{
+			return new InstrumentService(
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member),
 				repository,
 				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}

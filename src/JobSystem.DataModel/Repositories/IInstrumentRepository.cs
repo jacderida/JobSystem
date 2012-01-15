@@ -7,5 +7,6 @@ namespace JobSystem.DataModel.Repositories
 	public interface IInstrumentRepository : IReadWriteRepository<Instrument, Guid>
 	{
 		IEnumerable<Instrument> GetInstruments();
+		IEnumerable<Instrument> SearchByKeyword(string keyword);
 	}
 }

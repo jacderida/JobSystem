@@ -63,5 +63,12 @@ namespace JobSystem.BusinessLogic.Services
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			return _instrumentRepository.GetInstruments();
 		}
+
+		public IEnumerable<Instrument> SearchByKeyword(string keyword)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _instrumentRepository.SearchByKeyword(keyword);
+		}
 	}
 }
