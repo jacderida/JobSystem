@@ -24,14 +24,15 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Create()
+		public ActionResult Create(Guid id)
 		{
 			var viewmodel = new JobItemViewModel()
 			{
 				Fields = _listItemService.GetAllByType(ListItemType.JobItemField).ToSelectList(),
 				Instruments = _instrumentService.GetInstruments().ToSelectList(),
 				Locations =  _listItemService.GetAllByType(ListItemType.JobItemLocation).ToSelectList(),
-				Status = _listItemService.GetAllByType(ListItemType.JobItemInitialStatus).ToSelectList()
+				Status = _listItemService.GetAllByType(ListItemType.JobItemInitialStatus).ToSelectList(),
+				JobId = id
 			};
 
 			return PartialView("_Create", viewmodel);

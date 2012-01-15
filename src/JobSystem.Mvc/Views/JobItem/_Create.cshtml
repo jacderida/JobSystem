@@ -82,7 +82,6 @@
 			@Html.EditorFor(model => model.SerialNo)
 			@Html.ValidationMessageFor(model => model.SerialNo)
 		</div>
-			@Html.HiddenFor(model => model.JobId)
 	</fieldset>
 	<fieldset class="fieldset-no-legend fieldset-float-right">
 		<div class="editor-label">
@@ -99,8 +98,8 @@
 			@Html.TextAreaFor(model => model.Comments)
 			@Html.ValidationMessageFor(model => model.Comments)
 		</div>
-
 	</fieldset>
+	@Html.HiddenFor(model => model.JobId)
 	<div class="buttons-row">
 		<input type="submit" class="primary-action" value="Create"/>
 	</div>

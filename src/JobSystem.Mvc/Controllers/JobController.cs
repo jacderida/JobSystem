@@ -135,6 +135,7 @@ namespace JobSystem.Mvc.Controllers
 				CustomerTelephone = job.Customer.Telephone,
 				JobItemCreateModel = new JobItemViewModel()
 			};
+			viewModel.JobItemCreateModel.JobId = id;
 
 			return View(viewModel);
 		}
