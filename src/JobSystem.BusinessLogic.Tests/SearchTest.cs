@@ -8,7 +8,6 @@ using JobSystem.DataAccess.NHibernate;
 
 namespace JobSystem.BusinessLogic.Tests
 {
-	[TestFixture]
 	public class SearchTest
 	{
 		[TestFixtureSetUp]
@@ -31,10 +30,6 @@ namespace JobSystem.BusinessLogic.Tests
 			get
 			{
 				return "Data Source=JobSystem.Development.db3";
-				//var csb = new SQLiteConnectionStringBuilder();
-				//csb.
-				//csb.InitialCatalog = CatalogName;
-				//return csb.ToString();
 			}
 		}
 	}
