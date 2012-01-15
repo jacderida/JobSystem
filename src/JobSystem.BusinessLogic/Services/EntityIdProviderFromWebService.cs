@@ -42,7 +42,7 @@ namespace JobSystem.BusinessLogic.Services
 			if (lower.Contains("localhost:"))
 				return String.Format("http://{0}/", lower);
 			else if (lower == "localhost")
-				return String.Format("http://{0}/JobSystemMvc/", lower);
+				return String.Format("http://{0}/JobSystem.Mvc/", lower);
 			return "https://" + lower + "/";
 		}
 	}
