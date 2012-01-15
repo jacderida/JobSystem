@@ -6,7 +6,7 @@
 @using (Html.BeginForm("Edit", "Instrument", FormMethod.Post))
 {
 	@Html.ValidationSummary(true)
-	<fieldset class="fieldset-no-legend fieldset-float-left">
+	<fieldset class="fieldset-no-legend">
 		<div class="editor-label">
 			@Html.LabelFor(model => model.ModelNo)
 		</div>

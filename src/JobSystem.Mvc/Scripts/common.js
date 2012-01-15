@@ -44,13 +44,13 @@
 		});
 
 		//Create JOB ITEM modal form
-		$('#createJobItemButton').click(function () {
+		$('.createJobItemButton').click(function () {
 			var elemId = $(this).attr('id');
 			var editUrl = $('#editUrl').val() + '/' + elemId;
 			//Edit user modal form
 			$("#create-job-item-container").dialog({
 				modal: true,
-				width: 335,
+				width: 700,
 				title: 'Create New Job Item',
 				open: function (event, ui) {
 					//Load the Edit action which will return 
@@ -87,6 +87,31 @@
 				}
 			});
 		});
+
+		var instrumentId = null;
+		$("#instrument-autocomplete").autocomplete({
+			source: function (request, response) {
+				// define a function to call your Action (assuming UserController)
+				$.ajax({
+					url: '/Instrument/SearchInstruments', type: "POST", dataType: "json",
+
+					// query will be the param used by your action method
+					data: { query: request.term },
+					success: function (data) {
+						response($.map(data, function (item) {
+							instrumentId = item.Id;
+							return item.Manufacturer;
+						}))
+					}
+				})
+			},
+			select: function (e, ui) {
+				$("#InstrumentId").val(instrumentId);
+			},
+			minLength: 1, // require at least one character from the user
+			dataType: 'json'
+		});
+
 
 		// Vertical Sliding Tabs demo
 		$('div#st_vertical').slideTabs({

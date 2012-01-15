@@ -805,3 +805,7 @@ div#title {
 	height: 32px;
 	background-image: transparent url('../Content/images/search-icon.png') no-repeat;
 }
+
+#create-job-item-container .fieldset-float-left {
+	width: 50%;
+}

@@ -6,6 +6,9 @@ using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.ViewModels.Instruments;
 using JobSystem.DataAccess.NHibernate.Web;
+using System.Collections.Generic;
+using JobSystem.DataModel.Entities;
+using System.Text;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -84,7 +87,15 @@ namespace JobSystem.Mvc.Controllers
 					ModelState.UpdateFromDomain(dex.Result);
 				}
 			}
-			return View(viewModel);
+			return PartialView("_Edit", viewModel);
+		}
+
+		[HttpPost]
+		public ActionResult SearchInstruments(string query)
+		{
+			IEnumerable<Instrument> instruments = _instrumentService.SearchByKeyword(query);
+			
+			return Json(instruments); 
 		}
 	}
 }

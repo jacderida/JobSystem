@@ -6,6 +6,7 @@ using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.JobItems;
 using JobSystem.DataModel.Entities;
+using System;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -44,7 +45,7 @@ namespace JobSystem.Mvc.Controllers
 			{
 				try
 				{
-					var id = new System.Guid();
+					var id = Guid.NewGuid();
 					_jobItemService.CreateJobItem(
 						viewmodel.JobId,
 						id,
@@ -67,7 +68,7 @@ namespace JobSystem.Mvc.Controllers
 					ModelState.UpdateFromDomain(dex.Result);
 				}
 			}
-			return View(viewmodel);
+			return PartialView("_Create", viewmodel);
         }
 
     }
