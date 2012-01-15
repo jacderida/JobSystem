@@ -26,7 +26,7 @@ namespace JobSystem.Migrations
 				.WithColumn("Instructions").AsString(255).Nullable()
 				.WithColumn("Accessories").AsString(20000).Nullable()
 				.WithColumn("IsReturned").AsBoolean().NotNullable().WithDefaultValue(false)
-				.WithColumn("ReturnReason").AsString(255).NotNullable()
+				.WithColumn("ReturnReason").AsString(255).Nullable()
 				.WithColumn("IsCertProduced").AsBoolean().NotNullable().WithDefaultValue(false)
 				.WithColumn("IsMarkedForInvoicing").AsBoolean().NotNullable().WithDefaultValue(false)
 				.WithColumn("Comments").AsString(255).Nullable()
