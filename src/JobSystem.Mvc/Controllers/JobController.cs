@@ -9,18 +9,21 @@ using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.JobItems;
 using JobSystem.Mvc.ViewModels.Jobs;
+using System.Collections.Generic;
 
 namespace JobSystem.Mvc.Controllers
 {
 	public class JobController : Controller
 	{
 		private readonly JobService _jobService;
+		private readonly JobItemService _jobItemService;
 		private readonly ListItemService _listItemService;
 		private readonly CustomerService _customerServive;
 
-		public JobController(JobService jobService, ListItemService listItemService, CustomerService customerService)
+		public JobController(JobService jobService, JobItemService jobItemService, ListItemService listItemService, CustomerService customerService)
 		{
 			_jobService = jobService;
+			_jobItemService = jobItemService;
 			_listItemService = listItemService;
 			_customerServive = customerService;
 		}
@@ -114,6 +117,7 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Details(Guid id)
 		{
 			var job = _jobService.GetJob(id);
+			var jobItems = _jobItemService.GetJobItems(id);
 			var viewModel = new JobDetailsViewModel()
 			{
 				Id = job.Id.ToString(),
@@ -133,7 +137,11 @@ namespace JobSystem.Mvc.Controllers
 				CustomerAddress5 = job.Customer.Address5,
 				CustomerEmail = job.Customer.Email,
 				CustomerTelephone = job.Customer.Telephone,
-				JobItemCreateModel = new JobItemViewModel()
+				JobItemCreateModel = new JobItemViewModel(),
+				JobItems = jobItems.Select(ji => new JobItemViewModel
+					{
+						Id = ji.Id
+					}).ToList()
 			};
 			viewModel.JobItemCreateModel.JobId = id;
 

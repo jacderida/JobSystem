@@ -95,6 +95,10 @@
       <Project>{DF20A53E-E26C-409C-B5CA-39200146AC30}</Project>
       <Name>JobSystem.DbWireup</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JobSystem.Migrations\JobSystem.Migrations.csproj">
+      <Project>{D9ABEB4E-A164-4DA4-AE77-BEC40A240BD5}</Project>
+      <Name>JobSystem.Migrations</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
