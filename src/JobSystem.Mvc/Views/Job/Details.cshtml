@@ -48,14 +48,10 @@
             
                 <ul class="st_tabs">
                     <li><a href="#" id="@Model.Id" class="createJobItemButton">Add a new Job Item</a></li>
-					<li><a href="#stv_content_1" rel="v_tab_1" class="st_tab st_tab_active">Item 1<span>Booked in by: Iain Johnson</span></a></li>
-                    <li><a href="#stv_content_2" rel="v_tab_2" class="st_tab">Item 2<span>Booked in by: David Coburn</span></a></li>                                    
-                    <li><a href="#stv_content_3" rel="v_tab_3" class="st_tab">Item 3<span>Booked in by: Chris O'Neil</span></a></li>
-                    <li><a href="#stv_content_4" rel="v_tab_4" class="st_tab">Item 4<span>Booked in by: Iain Johnson</span></a></li>
-                    <li><a href="#stv_content_5" rel="v_tab_5" class="st_tab">Item 5<span>Booked in by: David Coburn</span></a></li>
-                    <li><a href="#stv_content_6" rel="v_tab_6" class="st_tab">Item 6<span>Booked in by: David Coburn</span></a></li>
-                    <li><a href="#stv_content_7" rel="v_tab_7" class="st_tab">Item 7<span>Booked in by: David Coburn</span></a></li>
-                    <li><a href="#stv_content_8" rel="v_tab_8" class="st_tab">Item 8<span>Booked in by: David Coburn</span></a></li>                                                          
+					@foreach (var jobItem in Model.JobItems)
+					{
+						<li><a href="#stv_content_1" rel="v_tab_1" class="st_tab st_tab_active">@jobItem.AssetNo<span>Booked in by: @jobItem.Accessories</span></a></li>
+					}                                                          
                 </ul>
                 
             </div> <!-- /.st_slide_container -->

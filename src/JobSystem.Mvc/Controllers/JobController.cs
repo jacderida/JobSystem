@@ -9,6 +9,7 @@ using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.JobItems;
 using JobSystem.Mvc.ViewModels.Jobs;
+using System.Collections.Generic;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -17,12 +18,14 @@ namespace JobSystem.Mvc.Controllers
 		private readonly JobService _jobService;
 		private readonly ListItemService _listItemService;
 		private readonly CustomerService _customerServive;
+		private readonly JobItemService _jobItemService;
 
-		public JobController(JobService jobService, ListItemService listItemService, CustomerService customerService)
+		public JobController(JobService jobService, ListItemService listItemService, CustomerService customerService, JobItemService jobItemService)
 		{
 			_jobService = jobService;
 			_listItemService = listItemService;
 			_customerServive = customerService;
+			_jobItemService = jobItemService;
 		}
 
 		[HttpGet]
