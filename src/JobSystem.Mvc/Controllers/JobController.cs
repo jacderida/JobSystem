@@ -117,6 +117,7 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Details(Guid id)
 		{
 			var job = _jobService.GetJob(id);
+			var jobItems = _jobItemService.GetJobItems(id);
 			var viewModel = new JobDetailsViewModel()
 			{
 				Id = job.Id.ToString(),
@@ -136,7 +137,11 @@ namespace JobSystem.Mvc.Controllers
 				CustomerAddress5 = job.Customer.Address5,
 				CustomerEmail = job.Customer.Email,
 				CustomerTelephone = job.Customer.Telephone,
-				JobItemCreateModel = new JobItemViewModel()
+				JobItemCreateModel = new JobItemViewModel(),
+				JobItems = jobItems.Select(ji => new JobItemViewModel
+					{
+						Id = ji.Id
+					}).ToList()
 			};
 			viewModel.JobItemCreateModel.JobId = id;
 

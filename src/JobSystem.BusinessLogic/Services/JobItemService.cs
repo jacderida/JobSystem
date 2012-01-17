@@ -6,6 +6,7 @@ using JobSystem.Framework.Messaging;
 using JobSystem.Framework;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.Resources.JobItems;
+using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -65,8 +66,17 @@ namespace JobSystem.BusinessLogic.Services
 			return jobItem;
 		}
 
+		public IEnumerable<JobItem> GetJobItems(Guid jobId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException("A member role is required for this operation");
+			return _jobItemRepository.GetJobItems(jobId);
+		}
+
 		private Job GetJob(Guid jobId)
 		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException("A member role is required for this operation");
 			var job = _jobRepository.GetById(jobId);
 			if (job == null)
 				throw new ArgumentException("A valid ID must be supplied for the job ID");
