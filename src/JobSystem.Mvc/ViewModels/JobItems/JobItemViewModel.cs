@@ -20,6 +20,7 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 		public bool IsReturned { get; set; }
 		public string ReturnReason { get; set; }
 		public string Comments { get; set; }
+		public string InstrumentDetails { get; set; }
 		[Display(Name = "Instrument")]
 		public IEnumerable<SelectListItem> Instruments { get; set; }
 		[Display(Name = "Status")]

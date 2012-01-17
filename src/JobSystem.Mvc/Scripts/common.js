@@ -125,6 +125,14 @@
 			totalWidth: '168'
 		});
 
+		//Get Job Item Details
+		$('.getJobItem').click(function () {
+			$.get("../../JobItem/Details/" + $(this).attr('id'),
+			   function (data) {
+			   		$('#st_horizontal').html(data);
+				});
+		});
+
 		// Horizontal Sliding Tabs demo
 		$('div#st_horizontal').slideTabs({
 			// Options  			

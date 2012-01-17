@@ -140,7 +140,9 @@ namespace JobSystem.Mvc.Controllers
 				JobItemCreateModel = new JobItemViewModel(),
 				JobItems = jobItems.Select(ji => new JobItemViewModel
 					{
-						Id = ji.Id
+						Id = ji.Id,
+						AssetNo = ji.AssetNo,
+						InstrumentDetails = String.Format("{0} - {1} : {2}", ji.Instrument.ModelNo, ji.Instrument.Manufacturer.ToString(), ji.Instrument.Description)
 					}).ToList()
 			};
 			viewModel.JobItemCreateModel.JobId = id;

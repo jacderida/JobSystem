@@ -72,5 +72,23 @@ namespace JobSystem.Mvc.Controllers
 			return PartialView("_Create", viewmodel);
         }
 
+		[HttpGet]
+		public ActionResult Details(Guid Id)
+		{
+			var job = _jobItemService.GetById(Id);
+			var viewmodel = new JobItemViewModel()
+			{
+				Accessories = job.Accessories,
+				AssetNo = job.AssetNo,
+				CalPeriod = job.CalPeriod,
+				Comments = job.Comments,
+				Instructions = job.Instructions,
+				IsReturned = job.IsReturned,
+				ReturnReason = job.ReturnReason
+			};
+			viewmodel.InstrumentDetails = String.Format("{0} - {1} : {2}", job.Instrument.ModelNo, job.Instrument.Manufacturer.ToString(), job.Instrument.Description);
+			return PartialView("_Details", viewmodel);
+		}
+
     }
 }
