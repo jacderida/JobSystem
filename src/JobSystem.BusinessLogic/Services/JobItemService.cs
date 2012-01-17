@@ -66,6 +66,13 @@ namespace JobSystem.BusinessLogic.Services
 			return jobItem;
 		}
 
+		public JobItem GetById(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException("A member role is required for this operation");
+			return _jobItemRepository.GetById(id);
+		}
+
 		public IEnumerable<JobItem> GetJobItems(Guid jobId)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
