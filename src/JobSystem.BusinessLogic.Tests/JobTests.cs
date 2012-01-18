@@ -145,6 +145,52 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		#endregion
+		#region Approve
+
+		[Test]
+		public void Approve_UserHasSufficientSecurityClearance_JobSuccessfullyApproved()
+		{
+			var id = Guid.NewGuid();
+			var customerId = Guid.NewGuid();
+			var typeId = Guid.NewGuid();
+
+			var jobRepository = MockRepository.GenerateMock<IJobRepository>();
+			jobRepository.Expect(x => x.Update(null)).IgnoreArguments();
+			_jobService = JobServiceFactory.CreateForApproval(jobRepository, id, typeId, customerId,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.JobApprover));
+			ApproveJob(id);
+			jobRepository.VerifyAllExpectations();
+			Assert.That(!_savedJob.IsPending);
+		}
+
+		[Test]
+		public void Approve_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var customerId = Guid.NewGuid();
+			var typeId = Guid.NewGuid();
+
+			var jobRepository = MockRepository.GenerateMock<IJobRepository>();
+			jobRepository.Expect(x => x.Update(null)).IgnoreArguments();
+			_jobService = JobServiceFactory.CreateForApproval(jobRepository, id, typeId, customerId,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
+			ApproveJob(id);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.AdviceNoTooLarge));
+		}
+
+		private void ApproveJob(Guid id)
+		{
+			try
+			{
+				_savedJob = _jobService.ApproveJob(id);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
 		#region Get
 
 		[Test]

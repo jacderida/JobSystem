@@ -56,61 +56,44 @@ namespace JobSystem.Framework.Configuration
 		#region Implementation of IAppConfig
 		#region AppSettings
 
-		/// <summary>
-		/// Gets the Amazon public key
-		/// </summary>
 		public string AmazonKey
 		{
 			get { return GetConfigValue<string>("AWSK"); }
 		}
 
-		/// <summary>
-		/// Gets the Amazon private key
-		/// </summary>
 		public string AmazonPrivateKey
 		{
 			get { return GetConfigValue<string>("AWSPK"); }
 		}
 
-		/// <summary>
-		/// Gets name of the bucket that contains the serialised view models.
-		/// </summary>
-		/// <value>The view model bucket.</value>
 		public string ViewModelBucket
 		{
 			get { return GetConfigValue<string>("ViewModelBucket"); }
 		}
 
-		/// <summary>
-		/// Gets the database catalog name
-		/// </summary>
 		public string DatabaseCatalogName
 		{
 			get { return GetConfigValue<string>("DatabaseCatalogName"); }
 		}
 
-		/// <summary>
-		/// Gets the database password for <see cref="IAppConfig.DatabaseUsername"/>
-		/// </summary>
 		public string DatabasePassword
 		{
 			get { return GetConfigValue<string>("DatabasePassword"); }
 		}
 
-		/// <summary>
-		/// Gets the database server name
-		/// </summary>
 		public string DatabaseServer
 		{
 			get { return GetConfigValue<string>("DatabaseServer"); }
 		}
 
-		/// <summary>
-		/// Gets the Risk database username
-		/// </summary>
 		public string DatabaseUsername
 		{
 			get { return GetConfigValue<string>("DatabaseUsername"); }
+		}
+
+		public bool UseHttps
+		{
+			get { return bool.Parse(GetConfigValue<string>("UseHttps")); }
 		}
 
 		#endregion

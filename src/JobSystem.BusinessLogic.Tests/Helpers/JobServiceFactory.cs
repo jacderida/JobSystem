@@ -28,6 +28,12 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			return new JobService(userContext, jobRepository, GetListItemRepository(typeId), GetCustomerRepository(customerId), GetEntityIdProvider(), MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 
+		public static JobService CreateForApproval(IJobRepository jobRepository, Guid jobId, Guid typeId, Guid customerId, IUserContext userContext)
+		{
+			jobRepository.Stub(x => x.GetById(jobId)).Return(GetJob(jobId, customerId, typeId));
+			return new JobService(userContext, jobRepository, GetListItemRepository(typeId), GetCustomerRepository(customerId), GetEntityIdProvider(), MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+		}
+
 		private static IListItemRepository GetListItemRepository(Guid typeId)
 		{
 			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
@@ -62,6 +68,25 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 				Id = typeId,
 				Name = "Lab Services",
 				Type = ListItemType.JobType
+			};
+		}
+
+		private static Job GetJob(Guid jobId, Guid customerId, Guid typeId)
+		{
+			return new Job
+			{
+				Id = jobId,
+				JobNo = "JR2000",
+				OrderNo = "ORDER12345",
+				AdviceNo = "ADVICE12345",
+				Contact = "Graham Robertson",
+				CreatedBy = new UserAccount { Id = Guid.NewGuid(), EmailAddress = "graham.robertson@intertek.com", Name = "Graham Robertson", JobTitle = "Laboratory Manager" },
+				Customer = GetCustomer(customerId),
+				DateCreated = DateTime.Now,
+				Type = GetJobType(typeId),
+				IsPending = true,
+				Instructions = "Job instructions",
+				Notes = "job notes"
 			};
 		}
 

@@ -29,61 +29,44 @@ namespace JobSystem.Framework.Configuration
 	{
 		#region AppSettings
 
-		/// <summary>
-		/// Gets the Amazon public key
-		/// </summary>
 		public string AmazonKey
 		{
 			get { return GetSetting("AWSK", "", true); }
 		}
 
-		/// <summary>
-		/// Gets the Amazon private key
-		/// </summary>
 		public string AmazonPrivateKey
 		{
 			get { return GetSetting("AWSPK", "", true); }
 		}
 
-		/// <summary>
-		/// Gets name of the bucket that contains the serialised view models.
-		/// </summary>
-		/// <value>The view model bucket.</value>
 		public string ViewModelBucket
 		{
 			get { return GetSetting("ViewModelBucket", "", true); }
 		}
 
-		/// <summary>
-		/// Gets the Risk database catalog name
-		/// </summary>
 		public string DatabaseCatalogName
 		{
 			get { return GetSetting("DatabaseCatalogName", "", true); }
 		}
 
-		/// <summary>
-		/// Gets the Risk database password for <see cref="DatabaseUsername"/>
-		/// </summary>
 		public string DatabasePassword
 		{
 			get { return GetSetting("DatabasePassword", "", true); }
 		}
 
-		/// <summary>
-		/// Gets the Risk database server name
-		/// </summary>
 		public string DatabaseServer
 		{
 			get { return GetSetting("DatabaseServer", "", true); }
 		}
 
-		/// <summary>
-		/// Gets the Risk database username
-		/// </summary>
 		public string DatabaseUsername
 		{
 			get { return GetSetting("DatabaseUsername", "", true); }
+		}
+
+		public bool UseHttps
+		{
+			get { return bool.Parse(GetSetting("UseHttps", "", true)); }
 		}
 
 		#endregion
@@ -95,7 +78,6 @@ namespace JobSystem.Framework.Configuration
 		}
 
 		#endregion
-
 		#region Methods
 
 		/// <summary>

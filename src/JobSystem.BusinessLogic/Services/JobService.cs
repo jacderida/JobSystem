@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
@@ -53,6 +54,18 @@ namespace JobSystem.BusinessLogic.Services
 			return job;
 		}
 
+		public Job ApproveJob(Guid jobId)
+		{
+			if (!CurrentUser.HasRole(UserRole.JobApprover))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			var job = _jobRepository.GetById(jobId);
+			if (job == null)
+				throw new ArgumentException("A valid ID must be supplied by for job.");
+			job.IsPending = false;
+			_jobRepository.Update(job);
+			return job;
+		}
+
 		public Job GetJob(Guid id)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
@@ -64,14 +77,14 @@ namespace JobSystem.BusinessLogic.Services
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
-			return _jobRepository.GetApprovedJobs();
+			return _jobRepository.GetApprovedJobs().OrderBy(j => j.JobNo);
 		}
 
 		public IEnumerable<Job> GetPendingJobs()
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
-			return _jobRepository.GetPendingJobs();
+			return _jobRepository.GetPendingJobs().OrderBy(j => j.JobNo);
 		}
 
 		#endregion

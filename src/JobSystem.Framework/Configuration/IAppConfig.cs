@@ -15,43 +15,14 @@
 // </summary>
 namespace JobSystem.Framework.Configuration
 {
-	/// <summary>
-	/// A strongly typed interface for retrieving application configuration information.
-	/// </summary>
 	public interface IAppConfig
 	{
-		#region AppSettings
-
-		/// <summary>
-		/// Gets the Amazon public key
-		/// </summary>
 		string AmazonKey { get; }
-
-		/// <summary>
-		/// Gets the Amazon private key
-		/// </summary>
 		string AmazonPrivateKey { get; }
-
-		/// <summary>
-		/// Gets the database catalog name
-		/// </summary>
 		string DatabaseCatalogName { get; }
-
-		/// <summary>
-		/// Gets the database password for <see cref="DatabaseUsername"/>
-		/// </summary>
 		string DatabasePassword { get; }
-
-		/// <summary>
-		/// Gets the database server name
-		/// </summary>
 		string DatabaseServer { get; }
-
-		/// <summary>
-		/// Gets the database username
-		/// </summary>
 		string DatabaseUsername { get; }
-
-		#endregion
+		bool UseHttps { get; }
 	}
 }
