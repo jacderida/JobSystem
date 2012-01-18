@@ -62,7 +62,7 @@
 			//Edit user modal form
 			$("#create-job-item-container").dialog({
 				modal: true,
-				width: 750,
+				width: 380,
 				title: 'Create New Job Item',
 				open: function (event, ui) {
 					//Load the Edit action which will return 
