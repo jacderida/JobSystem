@@ -46,7 +46,7 @@ namespace JobSystem.BusinessLogic.Services
 			if (lower.Contains("localhost:"))
 				return String.Format("{0}{1}/", protocol, lower);
 			else if (lower == "localhost")
-				return String.Format("{0}{1}/JobSystem.Mvc/", lower);
+				return String.Format("{0}{1}/JobSystem.Mvc/", protocol, lower);
 			return String.Format("{0}{1}/JobSystem.Mvc/", protocol, lower);		// TODO: REMOVE THIS!
 		}
 	}
