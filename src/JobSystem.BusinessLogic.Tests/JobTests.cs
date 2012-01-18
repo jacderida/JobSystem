@@ -171,11 +171,24 @@ namespace JobSystem.BusinessLogic.Tests
 			var typeId = Guid.NewGuid();
 
 			var jobRepository = MockRepository.GenerateMock<IJobRepository>();
-			jobRepository.Expect(x => x.Update(null)).IgnoreArguments();
 			_jobService = JobServiceFactory.CreateForApproval(jobRepository, id, typeId, customerId,
 				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
 			ApproveJob(id);
-			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.AdviceNoTooLarge));
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.InsufficientSecurityClearance));
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Approve_JobIdNotSupplied_ArgumentExceptionThrown()
+		{
+			var id = Guid.Empty;
+			var customerId = Guid.NewGuid();
+			var typeId = Guid.NewGuid();
+
+			var jobRepository = MockRepository.GenerateMock<IJobRepository>();
+			_jobService = JobServiceFactory.CreateForApproval(jobRepository, id, typeId, customerId,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.JobApprover));
+			ApproveJob(id);
 		}
 
 		private void ApproveJob(Guid id)

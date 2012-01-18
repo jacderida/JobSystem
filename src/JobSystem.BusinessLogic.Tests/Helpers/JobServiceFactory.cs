@@ -30,7 +30,10 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 
 		public static JobService CreateForApproval(IJobRepository jobRepository, Guid jobId, Guid typeId, Guid customerId, IUserContext userContext)
 		{
-			jobRepository.Stub(x => x.GetById(jobId)).Return(GetJob(jobId, customerId, typeId));
+			if (jobId != Guid.Empty)
+				jobRepository.Stub(x => x.GetById(jobId)).Return(GetJob(jobId, customerId, typeId));
+			else
+				jobRepository.Stub(x => x.GetById(jobId)).Return(null);
 			return new JobService(userContext, jobRepository, GetListItemRepository(typeId), GetCustomerRepository(customerId), GetEntityIdProvider(), MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 
