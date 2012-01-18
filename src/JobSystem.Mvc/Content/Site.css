@@ -818,13 +818,13 @@ div#title {
 	position: relative;
 }
 
-#create-job-item-container .fieldset-float-left {
+/*#create-job-item-container .fieldset-float-left {
 	width: 310px;
 }
 
 #create-job-item-container .fieldset-float-right {
 	width: 310px;
-}
+}*/
 
 .job-item-create-textarea {
 	height: 60px;
