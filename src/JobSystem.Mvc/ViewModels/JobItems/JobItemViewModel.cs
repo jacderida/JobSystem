@@ -10,14 +10,18 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 		public Guid Id { get; set; }
 		public Guid JobId { get; set; }
 		[Display(Name = "Serial Number")]
+		[Required]
 		public string SerialNo { get; set; }
 		[Display(Name = "Asset Number")]
 		public string AssetNo { get; set; }
 		[Display(Name = "Calibration Period")]
+		[Required]
 		public int CalPeriod { get; set; }
 		public string Instructions { get; set; }
 		public string Accessories { get; set; }
+		[Display(Name = "Returned")]
 		public bool IsReturned { get; set; }
+		[Display(Name = "Return Reason")]
 		public string ReturnReason { get; set; }
 		public string Comments { get; set; }
 		public string InstrumentDetails { get; set; }

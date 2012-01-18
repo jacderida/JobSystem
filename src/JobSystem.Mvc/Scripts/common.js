@@ -1,4 +1,16 @@
 ﻿$(document).ready(function () {
+	//Show/hide returned reason box on job item create
+	//Initial hide
+	$('#return-reason-group').hide();
+	$('#IsReturned').click(function () {
+		if ($(this).is(':checked')) {
+			$('#return-reason-group').slideDown();
+		} else {
+			$('#return-reason-group').slideUp();
+			$('#ReturnReason').val('');
+		}
+	});
+
 	$(function () {
 		// $("input:submit, a.primary-action, button, .nav-link").button();
 		$(".primary-action").button();
@@ -50,7 +62,7 @@
 			//Edit user modal form
 			$("#create-job-item-container").dialog({
 				modal: true,
-				width: 700,
+				width: 750,
 				title: 'Create New Job Item',
 				open: function (event, ui) {
 					//Load the Edit action which will return 
@@ -100,7 +112,7 @@
 					success: function (data) {
 						response($.map(data, function (item) {
 							instrumentId = item.Id;
-							return item.Manufacturer;
+							return item.Manufacturer + " - " + item.ModelNo + " - " + item.Range;
 						}))
 					}
 				})
@@ -129,20 +141,8 @@
 		$('.getJobItem').click(function () {
 			$.get("../../JobItem/Details/" + $(this).attr('id'),
 			   function (data) {
-			   		$('#st_horizontal').html(data);
-				});
-		});
-
-		// Horizontal Sliding Tabs demo
-		$('div#st_horizontal').slideTabs({
-			// Options  			
-			contentAnim: 'slideH',
-			contentAnimTime: 200,
-			contentEasing: 'easeInOutExpo',
-			tabsAnimTime: 100,
-			tabsScroll: false,
-			autoHeight: true,
-			totalWidth: '774'
+			   	$('#st_horizontal').html(data);
+			   });
 		});
 
 		$("#invoiceDetails").hide();
@@ -187,6 +187,18 @@
 					}, 300);
 				});
 			});
+		});
+
+		// Horizontal Sliding Tabs demo
+		$('div#st_horizontal').slideTabs({
+			// Options  			
+			contentAnim: 'slideH',
+			contentAnimTime: 200,
+			contentEasing: 'easeInOutExpo',
+			tabsAnimTime: 100,
+			tabsScroll: false,
+			autoHeight: true,
+			totalWidth: '774'
 		});
 
 		//Populate customer delivery/invoice address with main address details

@@ -9,26 +9,79 @@
 @using (Html.BeginForm("Create", "JobItem", FormMethod.Post))
 {
 	@Html.ValidationSummary(true)
-	<fieldset class="fieldset-no-legend fieldset-float-left">
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Accessories)
+	<div id="job-item-create-topfields">
+		<fieldset class="fieldset-float-left">
+			<div class="editor-label">
+				@Html.LabelFor(model => model.Instruments)
+			</div>
+			<div class="editor-field">
+				@Html.TextBox("InstrumentAutocomplete", "", new { id = "instrument-autocomplete" })
+				@Html.HiddenFor(model => model.InstrumentId, new { id = "InstrumentId" })
+				@*@Html.TextBoxFor(model => model.Instruments, new { id = "instrument-autocomplete" })*@
+				@*@Html.ValidationMessageFor(model => model.Instruments)*@
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.SerialNo)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.SerialNo)
+				@Html.ValidationMessageFor(model => model.SerialNo)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.AssetNo)
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(model => model.AssetNo)
+				@Html.ValidationMessageFor(model => model.AssetNo)
+			</div>
+		</fieldset>
+		<div class="clear-right"></div>
+		<fieldset class="fieldset-float-right" id="job-item-create-rightfields">
+			<div class="editor-label">
+				@Html.LabelFor(model => model.Accessories)
+			</div>
+			<div class="editor-field">
+				@Html.TextAreaFor(model => model.Accessories, new { @class ="job-item-create-textarea" })
+				@Html.ValidationMessageFor(model => model.Accessories)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.Comments)
+			</div>
+			<div class="editor-field">
+				@Html.TextAreaFor(model => model.Comments, new { @class = "job-item-create-textarea" })
+				@Html.ValidationMessageFor(model => model.Comments)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.Instructions)
+			</div>
+			<div class="editor-field">
+				@Html.TextAreaFor(model => model.Instructions, new { @class = "job-item-create-textarea" })
+				@Html.ValidationMessageFor(model => model.Instructions)
+			</div>
+			<div class="editor-label">
+			@Html.LabelFor(model => model.IsReturned)
 		</div>
 		<div class="editor-field">
-			@Html.TextBoxFor(model => model.Accessories)
-			@Html.ValidationMessageFor(model => model.Accessories)
+			@Html.CheckBoxFor(model => model.IsReturned)
+			@Html.ValidationMessageFor(model => model.IsReturned)
 		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.AssetNo)
+		<div id="return-reason-group">
+			<div class="editor-label">
+				@Html.LabelFor(model => model.ReturnReason)
+			</div>
+			<div class="editor-field">
+				@Html.TextAreaFor(model => model.ReturnReason, new { @class = "job-item-create-textarea" })
+				@Html.ValidationMessageFor(model => model.ReturnReason)
+			</div>
 		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.AssetNo, new { @class = "short-text"})
-			@Html.ValidationMessageFor(model => model.AssetNo)
-		</div>
+		</fieldset>
+	</div>
+	<fieldset class="fieldset-float-left">
 		<div class="editor-label">
 			@Html.LabelFor(model => model.CalPeriod)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.CalPeriod)
+			@Html.TextBoxFor(model => model.CalPeriod, new { @Value = "12" })
 			@Html.ValidationMessageFor(model => model.CalPeriod)
 		</div>
 		<div class="editor-label">
@@ -46,60 +99,15 @@
 			@Html.ValidationMessageFor(model => model.Status)
 		</div>
 		<div class="editor-label">
-			@Html.LabelFor(model => model.Instruments)
-		</div>
-		<div class="editor-field">
-			@Html.TextBox("InstrumentAutocomplete", "", new { id = "instrument-autocomplete" })
-			@Html.HiddenFor(model => model.InstrumentId, new { id = "InstrumentId" })
-			@*@Html.TextBoxFor(model => model.Instruments, new { id = "instrument-autocomplete" })*@
-			@*@Html.ValidationMessageFor(model => model.Instruments)*@
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.IsReturned)
-		</div>
-		<div class="editor-field">
-			@Html.CheckBoxFor(model => model.IsReturned)
-			@Html.ValidationMessageFor(model => model.IsReturned)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.ReturnReason)
-		</div>
-		<div class="editor-field">
-			@Html.TextAreaFor(model => model.ReturnReason)
-			@Html.ValidationMessageFor(model => model.ReturnReason)
-		</div>
-		<div class="editor-label">
 			@Html.LabelFor(model => model.Locations)
 		</div>
 		<div class="editor-field">
 			@Html.DropDownListFor(model => model.LocationId, Model.Locations)
 			@Html.ValidationMessageFor(model => model.Locations)
 		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.SerialNo)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.SerialNo)
-			@Html.ValidationMessageFor(model => model.SerialNo)
-		</div>
-	</fieldset>
-	<fieldset class="fieldset-no-legend fieldset-float-right">
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Instructions)
-		</div>
-		<div class="editor-field">
-			@Html.TextAreaFor(model => model.Instructions)
-			@Html.ValidationMessageFor(model => model.Instructions)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Comments)
-		</div>
-		<div class="editor-field">
-			@Html.TextAreaFor(model => model.Comments)
-			@Html.ValidationMessageFor(model => model.Comments)
-		</div>
 	</fieldset>
 	@Html.HiddenFor(model => model.JobId)
+	<div class="clear"></div>
 	<div class="buttons-row">
 		<input type="submit" class="primary-action" value="Create"/>
 	</div>
