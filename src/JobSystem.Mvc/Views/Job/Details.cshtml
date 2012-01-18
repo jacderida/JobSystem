@@ -1,6 +1,7 @@
 ﻿@model JobSystem.Mvc.ViewModels.Jobs.JobDetailsViewModel
 @{
-    ViewBag.Title = "Job Details";
+    
+	ViewBag.Title = String.Format("Job {0}", @Model.JobNumber);
 }
 
 @*@Html.Partial("~/Views/JobItem/_Create.cshtml", Model.JobItemCreateModel)*@
@@ -47,7 +48,7 @@
             <div class="st_slide_container">
             
                 <ul class="st_tabs">
-                    <li><a href="#" id="@Model.Id" class="createJobItemButton">Add a new Job Item</a></li>
+                    <li><a href="#stv_content_1" rel="v_tab_0" id="@Model.Id" class="st_tab createJobItemButton">Add a new Job Item</a></li>
 					@foreach (var jobItem in Model.JobItems)
 					{
 						<li><a href="#stv_content_1" rel="v_tab_0" class="st_tab getJobItem" id="@jobItem.Id">@jobItem.AssetNo<span>@jobItem.InstrumentDetails</span></a></li>
@@ -61,7 +62,12 @@
 	<!-- Start HTML - Horizontal tabs -->
 		<div id="st_horizontal" class="st_horizontal">
 			<!-- This partial is replaced by ajax -->
-			@Html.Partial("~/Views/JobItem/_Details.cshtml", Model.JobItems.First())
+			@if (@Model.JobItems.Any())
+			{
+				@Html.Partial("~/Views/JobItem/_Details.cshtml", Model.JobItems.First())
+			} else {
+				<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoJobItems</div>
+			}
 		</div>
 	<!-- /#st_horizontal -->
 	<!-- End HTML - Horizontal tabs -->           

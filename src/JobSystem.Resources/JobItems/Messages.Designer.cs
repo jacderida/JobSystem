@@ -106,6 +106,15 @@ namespace JobSystem.Resources.JobItems {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are currently no job items..
+        /// </summary>
+        public static string NoJobItems {
+            get {
+                return ResourceManager.GetString("NoJobItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The return reason cannot exceed 255 characters.
         /// </summary>
         public static string ReturnReasonTooLarge {

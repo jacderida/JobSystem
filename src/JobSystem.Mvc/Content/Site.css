@@ -346,7 +346,7 @@ legend {
 }
 
 textarea {
-    min-height: 75px;
+    min-height: 50px;
 	min-width: 300px;
 	border: 1px solid #ccc;
 }
@@ -438,6 +438,14 @@ table tr:nth-child(odd)
 ----------------------------------------------------------*/
 .clear {
     clear: both;
+}
+
+.clear-left {
+	clear: left;
+}
+
+.clear-right {
+	clear: right;
 }
 
 .error {
@@ -806,6 +814,18 @@ div#title {
 	background-image: transparent url('../Content/images/search-icon.png') no-repeat;
 }
 
+#create-job-item-container {
+	position: relative;
+}
+
 #create-job-item-container .fieldset-float-left {
-	width: 50%;
+	width: 310px;
+}
+
+#create-job-item-container .fieldset-float-right {
+	width: 310px;
+}
+
+.job-item-create-textarea {
+	height: 60px;
 }

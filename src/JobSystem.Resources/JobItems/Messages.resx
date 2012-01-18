@@ -132,6 +132,9 @@
   <data name="InvalidCalPeriod" xml:space="preserve">
     <value>The cal period must be greater than 0</value>
   </data>
+  <data name="NoJobItems" xml:space="preserve">
+    <value>There are currently no job items.</value>
+  </data>
   <data name="ReturnReasonTooLarge" xml:space="preserve">
     <value>The return reason cannot exceed 255 characters</value>
   </data>
