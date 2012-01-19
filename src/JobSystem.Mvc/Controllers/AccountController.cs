@@ -35,7 +35,7 @@ namespace JobSystem.Mvc.Controllers
 					if (_userManagementService.Login(model.UserName, model.Password))
 					{
 						_formsAuthenticationService.SignIn(model.UserName, model.RememberMe);
-						return RedirectToAction("Index", "Home");
+						return RedirectToAction("Index", "Job");
 					}
 				}
 				catch (DomainValidationException dex)
