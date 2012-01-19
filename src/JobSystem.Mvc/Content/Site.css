@@ -674,22 +674,55 @@ div#title {
 	float: left;
 	width: 670px;
 	margin-right: 20px;
-	margin-bottom: 20px;
+}
+
+#job-details-container .field {
+	margin-bottom: 10px;
+}
+
+#job-details-container .field-label {
+	font-weight: bold;
+	margin-bottom: 4px;
+}
+
+#job-details-container .field-label, .field {
+	display: block;
+	margin-left: 5px;
 }
 
 #job-details-instruction {
-	float: right;
-	width: 200px;
+	float: left;
+	width: 215px;
+	margin-right: 10px;
 }
 
 #job-details-notes {
 	float: left;
-	width: 200px;
+	width: 215px;
 }
 
 #job-details-fields {
 	float: left;
-	width: 250px;
+	width: 215px;
+	min-height: 120px;
+	margin-right: 10px;
+}
+
+#job-details-fields .details-header {
+	width: 210px;
+}
+
+.details-header {
+	outline: 1px solid #ddd;
+	border: 1px solid white;
+	background-color: #f9f9f9;
+	display: block;
+	font-size: 1.1em;
+	height: 20px;
+	vertical-align: middle;
+	padding: 4px 0 0 5px;
+	margin-bottom: 5px;
+	text-shadow: 1px 1px #fff;
 }
 
 #job-details-top {
@@ -720,13 +753,13 @@ div#title {
 }
 
 #job-details-customer-info #custname {
-	font-weight: bold;
 	width: 240px;
 	text-align: center;
 	display: inline-block;
 	padding-bottom: 5px;
 	border-bottom: 1px solid #ddd;
 	text-shadow: 1px 1px #fff;
+	font-size: 1.1em;
 }
 
 #job-details-customer-info ul {
@@ -828,4 +861,21 @@ div#title {
 
 .job-item-create-textarea {
 	height: 60px;
+}
+
+#job-created-by {
+	font-size: 0.8em;
+}
+
+#job-title-container {
+	float: left;
+	width: 73%;
+}
+
+#job-title-container h2 {
+	margin-bottom: 10px;
+}
+
+#job-item-assetno {
+	color: #081A58;
 }

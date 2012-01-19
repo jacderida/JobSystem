@@ -11,16 +11,28 @@
 
 <div id="job-top-section">
 	<div id="pending-banner"></div>
-	<h2>Job @Model.JobNumber</h2>
-	<div id="job-details-container">
-		<div id="job-details-fields">
-			<p>Created @Model.DateCreated</p>
-			<p>Order No. - @Model.OrderNumber</p>
-			<p>Advice No. - @Model.AdviceNumber</p>
-			<p>Contact - @Model.Contact</p>
+	<div id="job-title-container">
+		<h2>Job @Model.JobNumber</h2>
+		<p id="job-created-by">Created on @Model.DateCreated by <a href="mailto:@Model.CreatedBy">@Model.CreatedBy</a></p>
+		<div id="job-details-container">
+			<div id="job-details-fields">
+				<span class="details-header">Details</span>
+				<span class="field-label">Order No</span>
+				<span class="field">@Model.OrderNumber</span>
+				<span class="field-label">Advice No</span>
+				<span class="field">@Model.AdviceNumber</span>
+				<span class="field-label">Contact</span>
+				<span class="field">@Model.Contact</span>
+			</div>
+			<div id="job-details-instruction">
+				<span class="details-header">Instructions</span>
+				<span class="field">@Model.Instruction</span>
+			</div>
+			<div id="job-details-notes">
+				<span class="details-header">Notes</span>
+				<span class="field">@Model.Note</span>
+			</div>
 		</div>
-		<div id="job-details-instruction">@Model.Instruction</div>
-		<div id="job-details-notes">@Model.Note</div>
 	</div>
 
 	<div id="job-details-customer-info">
