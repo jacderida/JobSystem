@@ -32,22 +32,23 @@
 				<span class="details-header">Notes</span>
 				<span class="field">@Model.Note</span>
 			</div>
+			<div id="job-details-customer-info">
+				<span id="custname">Customer</span>
+				<ul>
+					<li>@Model.CustomerName</li>
+					<li>@Model.CustomerAddress1</li>
+					<li>@Model.CustomerAddress2</li>
+					<li>@Model.CustomerAddress3</li>
+					<li>@Model.CustomerAddress4</li>
+					<li>@Model.CustomerAddress5</li>
+					<li>@Model.CustomerTelephone</li>
+					<li><a href="mailto:@Model.CustomerEmail">@Model.CustomerEmail</a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 
-	<div id="job-details-customer-info">
-		<span id="custname">Customer</span>
-		<ul>
-			<li>@Model.CustomerName</li>
-			<li>@Model.CustomerAddress1</li>
-			<li>@Model.CustomerAddress2</li>
-			<li>@Model.CustomerAddress3</li>
-			<li>@Model.CustomerAddress4</li>
-			<li>@Model.CustomerAddress5</li>
-			<li>@Model.CustomerTelephone</li>
-			<li><a href="mailto:@Model.CustomerEmail">@Model.CustomerEmail</a></li>
-		</ul>
-	</div>
+	
 </div>
  <!-- Start HTML - Vertical tabs -->
     <div id="st_vertical" class="st_vertical">
@@ -60,7 +61,7 @@
             <div class="st_slide_container">
             
                 <ul class="st_tabs">
-                    <li><a href="#" id="@Model.Id" class="st_tab createJobItemButton">Add a new Job Item</a></li>
+                    <li><a href="@Url.Action("Create", "JobItem", new { id = @Model.Id })" id="@Model.Id" class="create-item-button st_tab">Add a new Job Item</a></li>
 					@for (int i=0; i < Model.JobItems.Count(); i++ )
 					{
 						var jobItem = Model.JobItems[i];

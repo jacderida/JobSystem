@@ -294,7 +294,7 @@
     <Content Include="Views\Instrument\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\JobItem\_Create.cshtml" />
+    <Content Include="Views\JobItem\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\JobItem\_Details.cshtml" />

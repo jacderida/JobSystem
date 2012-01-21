@@ -35,7 +35,7 @@ namespace JobSystem.Mvc.Controllers
 				JobId = id
 			};
 
-			return PartialView("_Create", viewmodel);
+			return View(viewmodel);
 		}
 
 		[HttpPost]
@@ -69,7 +69,7 @@ namespace JobSystem.Mvc.Controllers
 					ModelState.UpdateFromDomain(dex.Result);
 				}
 			}
-			return PartialView("_Create", viewmodel);
+			return View(viewmodel);
         }
 
 		[HttpGet]

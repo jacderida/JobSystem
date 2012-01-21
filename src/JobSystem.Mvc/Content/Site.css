@@ -659,6 +659,7 @@ div#title {
 	border-right: 1px solid #d4d4d4;
 	/*background: #fff url(../Content/images/job_top_section_bg.png) repeat-x bottom;*/
 	padding: 20px;
+	width: 942px;
 }
 
 #job-top-section #pending-banner {
@@ -672,8 +673,8 @@ div#title {
 
 #job-details-container {
 	float: left;
-	width: 670px;
-	margin-right: 20px;
+	/*width: 670px;*/
+	/*margin-right: 20px;*/
 }
 
 #job-details-container .field {
@@ -693,19 +694,20 @@ div#title {
 #job-details-instruction {
 	float: left;
 	width: 215px;
-	margin-right: 10px;
+	margin-right: 15px;
 }
 
 #job-details-notes {
 	float: left;
 	width: 215px;
+	margin-right: 15px;
 }
 
 #job-details-fields {
 	float: left;
 	width: 215px;
 	min-height: 120px;
-	margin-right: 10px;
+	margin-right: 15px;
 }
 
 #job-details-fields .details-header {
@@ -720,9 +722,10 @@ div#title {
 	font-size: 1.1em;
 	height: 20px;
 	vertical-align: middle;
-	padding: 4px 0 0 5px;
+	padding: 6px 0 0 5px;
 	margin-bottom: 5px;
-	text-shadow: 1px 1px #fff;
+	color: #081A58;
+    text-shadow: 1px 1px 2px #eaeaea;
 }
 
 #job-details-top {
@@ -754,12 +757,14 @@ div#title {
 
 #job-details-customer-info #custname {
 	width: 240px;
-	text-align: center;
 	display: inline-block;
 	padding-bottom: 5px;
 	border-bottom: 1px solid #ddd;
 	text-shadow: 1px 1px #fff;
 	font-size: 1.1em;
+	color: #081A58;
+    text-shadow: 1px 1px 2px #eaeaea;
+	
 }
 
 #job-details-customer-info ul {
@@ -839,25 +844,35 @@ div#title {
 #search {
 	display: inline-block;
 	float: right;
+	position: relative;
+}
+
+#search input[type="text"] {
+	height: 25px;
+	float: left;
 }
 
 #search #search-button {
 	width: 32px;
 	height: 32px;
-	background-image: transparent url('../Content/images/search-icon.png') no-repeat;
+	background-image: url('../Content/images/search-icon.png');
+	background-repeat : no-repeat;
+	float: left;
 }
 
 #create-job-item-container {
 	position: relative;
 }
 
-/*#create-job-item-container .fieldset-float-left {
-	width: 310px;
+.st_slide_container ul.st_tabs li a.create-item-button {
+	color: #021538;
+	background: #023467 url(../Content/images/action_button_bg.png) repeat-x;
 }
 
-#create-job-item-container .fieldset-float-right {
-	width: 310px;
-}*/
+.st_slide_container ul.st_tabs li a.create-item-button:hover {
+	color: #fff;
+	background: #023467 url(../Content/images/action_button_bg_hover.png) repeat-x;
+}
 
 .job-item-create-textarea {
 	height: 60px;
@@ -869,7 +884,6 @@ div#title {
 
 #job-title-container {
 	float: left;
-	width: 73%;
 }
 
 #job-title-container h2 {

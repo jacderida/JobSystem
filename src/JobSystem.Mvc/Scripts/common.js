@@ -55,23 +55,6 @@
 			$("#create-job-container").dialog('open');
 		});
 
-		//Create JOB ITEM modal form
-		$('.createJobItemButton').click(function () {
-			var elemId = $(this).attr('id');
-			var editUrl = $('#editUrl').val() + '/' + elemId;
-			//Edit user modal form
-			$("#create-job-item-container").dialog({
-				modal: true,
-				width: 380,
-				title: 'Create New Job Item',
-				open: function (event, ui) {
-					//Load the Edit action which will return 
-					// the partial view _Edit
-					$(this).load(editUrl);
-				}
-			});
-		});
-
 		//Create INSTRUMENT modal form
 		$("#create-instrument-container").dialog({
 			autoOpen: false,

@@ -137,7 +137,6 @@ namespace JobSystem.Mvc.Controllers
 				CustomerAddress5 = job.Customer.Address5,
 				CustomerEmail = job.Customer.Email,
 				CustomerTelephone = job.Customer.Telephone,
-				JobItemCreateModel = new JobItemViewModel(),
 				JobItems = jobItems.Select(ji => new JobItemViewModel
 					{
 						Id = ji.Id,
@@ -145,7 +144,6 @@ namespace JobSystem.Mvc.Controllers
 						InstrumentDetails = String.Format("{0} - {1} : {2}", ji.Instrument.ModelNo, ji.Instrument.Manufacturer.ToString(), ji.Instrument.Description)
 					}).ToList()
 			};
-			viewModel.JobItemCreateModel.JobId = id;
 
 			return View(viewModel);
 		}
