@@ -8,7 +8,7 @@
 	
 	<Target Name="DeployApplicationToTestSite" DependsOnTargets="BuildCustomTasksAssembly">
 	  <PropertyGroup>
-			<ApplicationHostMachineName>https://ec2-46-137-36-91.eu-west-1.compute.amazonaws.com:8172/MsDeploy.axd</ApplicationHostMachineName>
+			<ApplicationHostMachineName>https://ec2-46-137-36-91.eu-west-1.compute.amazonaws.com:8172/msdeploy.axd</ApplicationHostMachineName>
     </PropertyGroup>
     <Message Text="Deploying to test site"/>
     
