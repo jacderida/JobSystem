@@ -8,8 +8,8 @@
     <ProjectBuildCustomTasksDirectory>$(ProjectBuildDirectory)\buildtasks</ProjectBuildCustomTasksDirectory>
     <ProjectBuildBinDirectory>$(ProjectBuildDirectory)\bin</ProjectBuildBinDirectory>
     <ProjectCustomTasksAssemblyPath>$(ProjectBuildBinDirectory)\$(ProjectName).BuildTasks.dll</ProjectCustomTasksAssemblyPath>
-    <MSBuildCommunityTasksAssemblyPath>$(ProjectBuildBinDirectory)\MSBuild.Community.Tasks.dll</MSBuildCommunityTasksAssemblyPath>
-    <MSBuildCommunityTasksTargetsPath>$(ProjectBuildBinDirectory)\MSBuild.Community.Tasks.Targets</MSBuildCommunityTasksTargetsPath>
+    <MSBuildCommunityTasksAssemblyPath>$(ProjectBuildDirectory)\MSBuildCommunityTasks\bin\MSBuild.Community.Tasks.dll</MSBuildCommunityTasksAssemblyPath>
+    <MSBuildCommunityTasksTargetsPath>$(ProjectBuildDirectory)\MSBuildCommunityTasks\bin\MSBuild.Community.Tasks.Targets</MSBuildCommunityTasksTargetsPath>
     <ProjectSourceDirectory>$(ProjectDirectory)\src</ProjectSourceDirectory>
     <ProjectRunDirectory>$(ProjectSourceDirectory)\run</ProjectRunDirectory>
 		<FluentMigratorTasksPath Condition=" '$(FluentMigratorTasksPath)' == '' ">$(ProjectBuildDirectory)\scripts\database\migrations\</FluentMigratorTasksPath>
