@@ -137,7 +137,8 @@
   <PropertyGroup>
     <PostBuildEvent>XCopy "$(TargetDir)*.dll" "$(SolutionDir)run" /Y /C /D /I
 XCopy "$(TargetDir)*.pdb" "$(SolutionDir)run" /Y /C /D /I
-XCopy "$(TargetDir)*.config" "$(SolutionDir)run" /Y /C /D /I</PostBuildEvent>
+XCopy "$(TargetDir)*.config" "$(SolutionDir)run" /Y /C /D /I
+XCopy "$(SolutionDir)..\lib\sqlite-netFx40-static-binary-x64-2010-1.0.77.0\SQLite.Interop.dll" "$(SolutionDir)run" /Y /C /D /I</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
