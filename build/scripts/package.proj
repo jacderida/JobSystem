@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Integration" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="props\project-directory.props" />
+	<Import Project="$(MSBuildCommunityTasksTargetsPath)"/>
+
+	<Target Name="BuildWebSitePackage">
+		<MSBuild
+			Projects="$(ProjectSourceDirectory)\JobSystem.Mvc\JobSystem.Mvc.csproj"
+			Properties="Configuration=Debug;DesktopBuildPackageLocation=$(ProjectDirectory)\package\JobSystem.Mvc.zip"
+			Targets="Package" />
+	</Target>
+
+	<Target Name="BuildWebSiteDirectoryPackage">
+		<PropertyGroup>
+			<PackageDirectory>$(ProjectDirectory)\package\web</PackageDirectory>
+		</PropertyGroup>
+		<ItemGroup>
+			<SourceFiles
+				Include="$(ProjectSourceDirectory)\$(ProjectName).Mvc\**"
+				Exclude="$(ProjectSourceDirectory)\**\.svn\**;$(ProjectSourceDirectory)\**\obj\**;$(ProjectSourceDirectory)\**\*.cs;$(ProjectSourceDirectory)\**\*.csproj;$(ProjectSourceDirectory)\**\*.csproj.user;$(ProjectSourceDirectory)\**\*.gz;$(ProjectSourceDirectory)\**\*.t4;$(ProjectSourceDirectory)\**\*.tt" />
+		</ItemGroup>
+		<MakeDir Directories="$(PackageDirectory)" />
+		<Copy SourceFiles="@(SourceFiles)" DestinationFolder="$(PackageDirectory)\%(RecursiveDir)" />
+	</Target>
+
+	<Target Name="BuildBuildPackage">
+		<PropertyGroup>
+			<PackageBuildDirectory>$(ProjectPackageDirectory)\build</PackageBuildDirectory>
+		</PropertyGroup>
+		<ItemGroup>
+			<BuildFiles
+				Include="$(ProjectBuildDirectory)\**"
+				Exclude="$(ProjectBuildDirectory)\**\.svn\**;$(ProjectBuildDirectory)\**\obj\**;$(ProjectBuildDirectory)\**\*.cache" />
+		</ItemGroup>
+		<MakeDir Directories="$(PackageBuildDirectory)" />
+		<Copy SourceFiles="@(BuildFiles)" DestinationFolder="$(PackageBuildDirectory)\%(RecursiveDir)" />
+	</Target>
+</Project>

@@ -2,49 +2,4 @@
 <Project ToolsVersion="4.0" DefaultTargets="Integration" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<Import Project="props\project-directory.props" />
 	<Import Project="$(MSBuildCommunityTasksTargetsPath)"/>
-
-	<UsingTask
-		TaskName="CreateEventStoreSqlDatabase"
-		AssemblyFile="$(ProjectCustomTasksAssemblyPath)" />
-
-	<PropertyGroup>
-		<DatabaseServer>(local)</DatabaseServer>
-		<DatabaseName>JobSystem</DatabaseName>
-		<DatabaseUserName>sa</DatabaseUserName>
-		<DatabasePassword>p'ssw0rd</DatabasePassword>
-		<DatabaseLoginName>jobsystem.development</DatabaseLoginName>
-		<DatabaseLoginPassword>p'ssw0rd</DatabaseLoginPassword>
-		<DatabaseCatalogUserName>jobsystem.development</DatabaseCatalogUserName>
-		<DatabaseUserRoles>db_datareader,db_datawriter</DatabaseUserRoles>
-	</PropertyGroup>
-
-	<Target Name="CreateJobSystemDatabase">
-		<MSBuild.Community.Tasks.SqlServer.CreateServerLogin
-			DatabaseServer="$(DatabaseServer)"
-			DatabaseUsername="$(DatabaseUsername)"
-			DatabasePassword="$(DatabasePassword)"
-		 	LoginName="$(DatabaseLoginName)"
-			LoginPassword="$(DatabaseLoginPassword)" />
-		<CreateDatabase
-			DatabaseServer="$(DatabaseServer)"
-			DatabaseUsername="$(DatabaseUsername)"
-			DatabasePassword="$(DatabasePassword)"
-			DatabaseName="$(DatabaseName)" />
-		<CreateUserForLogin
-			DatabaseServer="$(DatabaseServer)"
-			DatabaseName="$(DatabaseName)"
-			DatabaseUsername="$(DatabaseUserName)"
-			DatabasePassword="$(DatabasePassword)"
-		 	LoginName="$(DatabaseLoginName)"
-		 	UserRoles="$(DatabaseUserRoles)"
-			UserName="$(DatabaseCatalogUserName)" />
-		<PropertyGroup>
-			<ConnectionString>Server=$(DatabaseServer)%3B Database=$(DatabaseName)%3BUser Id=$(DatabaseLoginName)%3B password=$(DatabaseLoginPassword)</ConnectionString>
-			<MigrationsAssembly>$(ProjectRunDirectory)\JobSystem.Migrations.dll</MigrationsAssembly>
-		</PropertyGroup>
-		<MSBuild
-			Projects="$(ProjectBuildDirectory)\scripts\database\migrations\FluentMigrator.targets"
-			Properties="MigrateDBConnection=$(ConnectionString);MigrateAssembly=$(MigrationsAssembly)"
-			Targets="Migrate" />
-	</Target>
 </Project>
