@@ -24,10 +24,11 @@
 	</Target>
 
 	<Target Name="BuildBuildPackage">
+		<Message Text="HELLO WORLD" />
+		<Message Text="$(ProjectBuildDirectory)" />
 		<PropertyGroup>
 			<PackageBuildDirectory>$(ProjectPackageDirectory)\build</PackageBuildDirectory>
 		</PropertyGroup>
-		<Message Text="$(ProjectBuildDirectory)" />
 		<ItemGroup>
 			<BuildFiles
 				Include="$(ProjectBuildDirectory)\**"
