@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="DoCreateDevelopmentDatabase" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="..\props\project.props" />
+	<Import Project="..\package.proj" />
+
+	<Target Name="CreateWebSitePackage" >
+		<CallTarget Targets="BuildWebSitePackage" />
+	</Target>
+
+	<Target Name="CreateWebSiteDirectory" >
+		<CallTarget Targets="BuildWebSiteDirectoryPackage" />
+	</Target>
+
+	<Target Name="CreateBuildPackage" >
+		<CallTarget Targets="BuildBuildPackage" />
+	</Target>
+</Project>
