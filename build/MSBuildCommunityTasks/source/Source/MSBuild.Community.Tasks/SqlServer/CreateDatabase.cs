@@ -13,7 +13,7 @@ namespace MSBuild.Community.Tasks.SqlServer
 		[Required] public string DatabasePassword { get; set; }
 		[Required] public string DatabaseName { get; set; }
 		
-		private const string DropDatabase = "DROP DATABASE {0}";
+		private const string DropDatabase = "DROP DATABASE [{0}]";
 
 		public override bool Execute()
 		{
@@ -29,7 +29,7 @@ namespace MSBuild.Community.Tasks.SqlServer
 					cmd.ExecuteNonQuery();
 				}
 				Log.LogMessage("Creating database {0} on {1}", DatabaseName, DatabaseServer);
-				cmd.CommandText = String.Format("CREATE DATABASE {0}", DatabaseName);
+				cmd.CommandText = String.Format("CREATE DATABASE [{0}]", DatabaseName);
 				cmd.ExecuteNonQuery();
 				return true;
 			}

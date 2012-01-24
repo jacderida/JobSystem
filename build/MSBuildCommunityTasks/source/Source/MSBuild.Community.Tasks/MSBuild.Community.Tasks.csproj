@@ -81,6 +81,7 @@
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -100,6 +101,8 @@
     </Compile>
     <Compile Include="JavaScript\JSCompress.cs" />
     <Compile Include="Merge.cs" />
+    <Compile Include="MsDeploy\MsDeployWebSiteDirectoryToSite.cs" />
+    <Compile Include="MSMQ\CreateQueue.cs" />
     <Compile Include="SqlAzure\CreateServerLogin.cs" />
     <Compile Include="SqlAzure\DropDatabase.cs" />
     <Compile Include="SqlServer\CreateDatabase.cs" />
@@ -244,6 +247,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>XCOPY /Q /I /Y $(TargetDir)*.dll $(SolutionDir)..\..\bin\
+XCOPY /Q /I /Y $(TargetDir)*.targets $(SolutionDir)..\..\bin\</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

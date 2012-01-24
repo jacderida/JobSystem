@@ -28,7 +28,7 @@ namespace MSBuild.Community.Tasks.SqlServer
 		}
 
 		private List<string> _roles = new List<string> { "db_datareader" };
-		private const string CreateUserQuery = "USE {0}; CREATE USER {1} FOR LOGIN {2};";
+		private const string CreateUserQuery = "USE [{0}]; CREATE USER [{1}] FOR LOGIN [{2}];";
 
 		public override bool Execute()
 		{
@@ -112,9 +112,7 @@ namespace MSBuild.Community.Tasks.SqlServer
 
 		private SqlCommand GetCreateUserCommand(SqlConnection conn)
 		{
-			var userName = String.Format("[{0}]", UserName);	// This is required in case you have a character such as a '.' in the user name.
-			var loginName = String.Format("[{0}]", LoginName);
-			var commandText = String.Format(CreateUserQuery, DatabaseName, userName, loginName);
+			var commandText = String.Format(CreateUserQuery, DatabaseName, UserName, LoginName);
 			Log.LogMessage("Executing {0}", commandText);
 			return new SqlCommand(commandText, conn);
 		}
