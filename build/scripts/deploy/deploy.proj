@@ -17,7 +17,7 @@
     
 	  <MsDeployWebSiteDirectoryToSite
       SourceContentPath="$(ProjectWebDirectory)"
-      DestinationSiteName="Default Web Site/$(BuildName)"
+      DestinationSiteName="Default Web Site/JobSystem.Mvc"
       MsDeployServerLocation="$(ApplicationHostMachineName)"
       MsDeployServerUserName="Administrator"
       MsDeployServerPassword= "Radiohead120583" />
