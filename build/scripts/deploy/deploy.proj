@@ -6,9 +6,9 @@
 	<Import Project="$(MSBuildCommunityTasksTargetsPath)"/>
 	
 	
-	<Target Name="DeployToTestSite" DependsOnTargets="BuildCustomTasksAssembly">
+	<Target Name="DeployApplicationToTestSite" DependsOnTargets="BuildCustomTasksAssembly">
 	  <PropertyGroup>
-      <ApplicationHostMachineName>ec2-46-137-36-91.eu-west-1.compute.amazonaws.com</ApplicationHostMachineName>
+			<ApplicationHostMachineName>https://ec2-46-137-36-91.eu-west-1.compute.amazonaws.com:8172/MsDeploy.axd</ApplicationHostMachineName>
     </PropertyGroup>
     <Message Text="Deploying to test site"/>
     
