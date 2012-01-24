@@ -27,7 +27,7 @@
 		<Message Text="HELLO WORLD" />
 		<Message Text="$(ProjectBuildDirectory)" />
 		<PropertyGroup>
-			<PackageBuildDirectory>$(ProjectPackageDirectory)\build</PackageBuildDirectory>
+			<PackageBuildDirectory>$(ProjectDirectory)\package\build</PackageBuildDirectory>
 		</PropertyGroup>
 		<ItemGroup>
 			<BuildFiles
