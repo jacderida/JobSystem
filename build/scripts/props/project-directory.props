@@ -13,5 +13,9 @@
     <ProjectSourceDirectory>$(ProjectDirectory)\src</ProjectSourceDirectory>
     <ProjectRunDirectory>$(ProjectSourceDirectory)\run</ProjectRunDirectory>
 		<FluentMigratorTasksPath Condition=" '$(FluentMigratorTasksPath)' == '' ">$(ProjectBuildDirectory)\scripts\database\migrations\</FluentMigratorTasksPath>
+		<ProjectPackageDirectory>$(ProjectDirectory)\package</ProjectPackageDirectory>
+    <ProjectVersioningDirectory>$(ProjectSourceDirectory)\Versioning</ProjectVersioningDirectory>
+    <ProjectWebDirectory>$(ProjectDirectory)\web</ProjectWebDirectory>
+    <ProjectVersion>$(BUILD_NUMBER)</ProjectVersion>
 	</PropertyGroup>
 </Project>
