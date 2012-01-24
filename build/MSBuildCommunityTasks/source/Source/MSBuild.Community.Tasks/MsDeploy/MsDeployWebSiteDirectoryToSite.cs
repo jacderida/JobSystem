@@ -39,8 +39,10 @@ namespace MSBuild.Community.Tasks.MsDeploy
 			process.StartInfo.UseShellExecute = false;
 			process.StartInfo.RedirectStandardError = true;
 			process.StartInfo.FileName = "msdeploy";
-			process.StartInfo.Arguments = String.Format(
+			string args = String.Format(
 				MsDeployCopyContentCommand, SourceContentPath, DestinationSiteName, MsDeployServerLocation, MsDeployServerUserName, MsDeployServerPassword);
+			Log.LogMessage(args);
+			process.StartInfo.Arguments = args;
 			process.Start();
 			error = process.StandardError.ReadToEnd();
 			process.WaitForExit();
@@ -55,8 +57,9 @@ namespace MSBuild.Community.Tasks.MsDeploy
 			process.StartInfo.UseShellExecute = false;
 			process.StartInfo.RedirectStandardError = true;
 			process.StartInfo.FileName = "msdeploy";
-			process.StartInfo.Arguments = String.Format(
+			string args = String.Format(
 				MsDeployCreateSiteCommand, DestinationSiteName, MsDeployServerLocation, MsDeployServerUserName, MsDeployServerPassword);
+			process.StartInfo.Arguments = args;
 			process.Start();
 			var error = process.StandardError.ReadToEnd();
 			process.WaitForExit();
