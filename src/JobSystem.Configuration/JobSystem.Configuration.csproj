@@ -47,6 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Versioning\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="ConfigurationConversionException.cs" />
     <Compile Include="ConfigurationItemNotFoundException.cs" />
     <Compile Include="ConfigurationService.cs" />

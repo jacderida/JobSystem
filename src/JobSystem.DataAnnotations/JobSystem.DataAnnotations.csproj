@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Versioning\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="EmailAddressAttribute.cs" />
     <Compile Include="EmailAddressOptionalAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

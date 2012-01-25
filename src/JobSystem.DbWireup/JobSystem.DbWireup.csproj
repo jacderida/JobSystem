@@ -57,6 +57,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Versioning\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="IJobSystemDatabaseCreationService.cs" />
     <Compile Include="JobSystemDatabaseCreationService.cs" />
     <Compile Include="JobSystemDefaultData.cs" />

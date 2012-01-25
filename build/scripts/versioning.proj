@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="MergeBuildOutput" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="Alea.props" />
+	<UsingTask
+		TaskName="Alea.CustomBuildTasks.WriteBuildNumberFile"
+		AssemblyFile="$(CustomTasksAssemblyPath)" />
+
+	<Target Name="IncrementVersionNumber">
+		<Version VersionFile="$(ProjectVersioningDirectory)\build.number" RevisionType="Increment">
+			<Output TaskParameter="Major" PropertyName="Major" />
+			<Output TaskParameter="Minor" PropertyName="Minor" />
+			<Output TaskParameter="Build" PropertyName="Build" />
+			<Output TaskParameter="Revision" PropertyName="Revision" />
+		</Version>
+		<Message Text="##teamcity[buildNumber '$(Major).$(Minor).$(Build).$(Revision)']" />
+		<VersionFormat Major="$(Major)" Minor="$(Minor)" MinorPadding="3"  Build="$(Build)" BuildPadding="2" Revision="$(Revision)" RevisionPadding="3">
+			<Output TaskParameter="FormattedBuildNumber" PropertyName="ProjectVersion"/>
+		</VersionFormat>
+		<FileUpdate
+			Files="$(ProjectVersioningDirectory)\VersionInfo.cs"
+			Regex="(\d+)\.(\d+)\.(\d+)\.(\d+)"
+			ReplacementText="$(ProjectVersion)" />
+		<AssemblyInfo
+			CodeLanguage="CS"
+			OutputFile="$(ProjectVersioningDirectory)\VersionInfo.cs"
+			AssemblyProduct="Job System"
+			CLSCompliant="true"
+			AssemblyDelaySign="false"
+			AssemblyVersion="$(ProjectVersion)"
+			AssemblyFileVersion="$(ProjectVersion)" />
+	</Target>
+
+	<Target Name="PopulateVersionNumber">
+		<FileUpdate
+			Files="$(ProjectVersioningDirectory)\VersionInfo.cs"
+			Regex="(\d+)\.(\d+)\.(\d+)\.(\d+)"
+			ReplacementText="$(ProjectVersion)" />
+		<AssemblyInfo
+			CodeLanguage="CS"
+			OutputFile="$(ProjectVersioningDirectory)\VersionInfo.cs"
+			AssemblyProduct="Job System"
+			CLSCompliant="true"
+			AssemblyDelaySign="false"
+			AssemblyVersion="$(ProjectVersion)"
+			AssemblyFileVersion="$(ProjectVersion)" />
+	</Target>
+
+	<Target Name="ReadCurrentBuildNumber">
+		<Version VersionFile="$(ProjectVersionDirectory)\build.number" RevisionType="None">
+			<Output TaskParameter="Major" PropertyName="Major" />
+			<Output TaskParameter="Minor" PropertyName="Minor" />
+			<Output TaskParameter="Build" PropertyName="Build" />
+			<Output TaskParameter="Revision" PropertyName="Revision" />
+		</Version>
+		<VersionFormat Major="$(Major)" Minor="$(Minor)" Build="$(Build)" Revision="$(Revision)">
+			<Output TaskParameter="FormattedBuildNumber" PropertyName="ProjectVersion"/>
+		</VersionFormat>
+	</Target>
+
+	<Target Name="PopulatePreviousVersionNumber">
+		<Version VersionFile="$(ProjectVersioningDirectory)\PreviouslyReleasedVersion.number" RevisionType="None">
+			<Output TaskParameter="Major" PropertyName="Major" />
+			<Output TaskParameter="Minor" PropertyName="Minor" />
+			<Output TaskParameter="Build" PropertyName="Build" />
+			<Output TaskParameter="Revision" PropertyName="Revision" />
+		</Version>
+		<VersionFormat Major="$(Major)" Minor="$(Minor)" Build="$(Build)" Revision="$(Revision)">
+			<Output TaskParameter="FormattedBuildNumber" PropertyName="PreviouslyReleasedVersion"/>
+		</VersionFormat>
+	</Target>
+
+	<Target Name="UpdatePreviousBuildNumber">
+		<PropertyGroup>
+			<VersionDirectory>$(ProjectDirectory)\SourceToUpdate\source\alea\Versioning</VersionDirectory>
+		</PropertyGroup>
+		<WriteBuildNumberFile
+			VersionInfoFilePath="$(VersionDirectory)\PreviouslyReleasedVersion.number"
+			VersionNumber="$(ProjectVersion)" />
+		<PropertyGroup>
+			<CleanupCommand>svn cleanup "$(VersionDirectory)"</CleanupCommand>
+			<CommitCommand>svn commit "$(VersionDirectory)\PreviouslyReleasedVersion.number" -m "Updating previous version number."</CommitCommand>
+		</PropertyGroup>
+		<Exec Command="$(CleanupCommand)" />
+		<Exec Command="$(CommitCommand)" />
+	</Target>
+
+	<Target Name="CommitVersionNumber">
+		<PropertyGroup>
+			<CleanupCommand>svn cleanup "$(ProjectDirectory)\SourceToUpdate\source\alea\Versioning"</CleanupCommand>
+			<CommitCommand>svn commit "$(ProjectDirectory)\SourceToUpdate\source\alea\Versioning" --message "Incrementing build number."</CommitCommand>
+		</PropertyGroup>
+		<Exec Command="$(CleanupCommand)" />
+		<Exec Command="$(CommitCommand)" />
+	</Target>
+</Project>

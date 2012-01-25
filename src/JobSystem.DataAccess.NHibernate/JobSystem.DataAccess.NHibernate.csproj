@@ -75,6 +75,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Versioning\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="ContextConnectionProviderBase.cs" />
     <Compile Include="INHibernateConfigurationCache.cs" />
     <Compile Include="ISessionStorage.cs" />
