@@ -3,7 +3,6 @@
 
 	<Import Project="..\props\project-directory.props" />
 	<Import Project="..\database.proj" />
-	<Import Project="..\utils.proj" />
 	<Import Project="..\build.proj" />
 	<Import Project="$(MSBuildCommunityTasksTargetsPath)"/>
 	
