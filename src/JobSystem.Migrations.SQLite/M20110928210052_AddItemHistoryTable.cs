@@ -9,7 +9,7 @@ namespace JobSystem.Migrations
 	{
 		public override void Up()
 		{
-			Create.Table("ItemHistory")
+			Create.Table("ItemHistories")
 				.WithIdColumn()
 				.WithColumn("JobItemId").AsGuid().NotNullable()
 				.WithColumn("DateCreated").AsDateTime().NotNullable()
@@ -21,27 +21,27 @@ namespace JobSystem.Migrations
 				.WithColumn("WorkLocationId").AsGuid().NotNullable()
 				.WithColumn("UserAccountId").AsGuid().NotNullable();
 			Create.ForeignKey("FK_ItemHistory_Status")
-				.FromTable("ItemHistory")
+				.FromTable("ItemHistories")
 				.ForeignColumn("StatusId")
 				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_ItemHistory_JobItems")
-				.FromTable("ItemHistory")
+				.FromTable("ItemHistories")
 				.ForeignColumn("JobItemId")
 				.ToTable("JobItems")
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_ItemHistory_WorkLocation")
-				.FromTable("ItemHistory")
+				.FromTable("ItemHistories")
 				.ForeignColumn("WorkLocationId")
 				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_ItemHistory_WorkType")
-				.FromTable("ItemHistory")
+				.FromTable("ItemHistories")
 				.ForeignColumn("WorkTypeId")
 				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_ItemHistory_UserAccounts")
-				.FromTable("ItemHistory")
+				.FromTable("ItemHistories")
 				.ForeignColumn("UserAccountId")
 				.ToTable("UserAccounts")
 				.PrimaryColumn("Id");
@@ -49,12 +49,12 @@ namespace JobSystem.Migrations
 
 		public override void Down()
 		{
-			Delete.ForeignKey("FK_ItemHistory_UserAccounts").OnTable("ItemHistory");
-			Delete.ForeignKey("FK_ItemHistory_WorkType").OnTable("ItemHistory");
-			Delete.ForeignKey("FK_ItemHistory_WorkLocation").OnTable("ItemHistory");
-			Delete.ForeignKey("FK_ItemHistory_JobItems").OnTable("ItemHistory");
-			Delete.ForeignKey("FK_ItemHistory_Status").OnTable("ItemHistory");
-			Delete.Table("ItemHistory");
+			Delete.ForeignKey("FK_ItemHistory_UserAccounts").OnTable("ItemHistories");
+			Delete.ForeignKey("FK_ItemHistory_WorkType").OnTable("ItemHistories");
+			Delete.ForeignKey("FK_ItemHistory_WorkLocation").OnTable("ItemHistories");
+			Delete.ForeignKey("FK_ItemHistory_JobItems").OnTable("ItemHistories");
+			Delete.ForeignKey("FK_ItemHistory_Status").OnTable("ItemHistories");
+			Delete.Table("ItemHistories");
 		}
 	}
 }

@@ -66,6 +66,29 @@ namespace JobSystem.BusinessLogic.Services
 			return jobItem;
 		}
 
+		public ItemHistory CreateItemHistory(Guid id, Guid jobItemId, int workTime, int overTime, string report, Guid workStatusId, Guid workTypeId, Guid workLocationId)
+		{
+			var jobItem = GetById(jobItemId);
+			var itemHistory = new ItemHistory
+			{
+				Id = id,
+				DateCreated = AppDateTime.GetUtcNow(),
+				JobItem = jobItem,
+				User = CurrentUser,
+				WorkTime = workTime,
+				OverTime = overTime,
+				Report = report,
+				Status = GetListItem(workStatusId),
+				WorkLocation = GetListItem(workLocationId),
+				WorkType = GetListItem(workTypeId)
+			};
+			_jobItemRepository.CreateItemHistory(itemHistory);
+			jobItem.Status = GetListItem(workStatusId);
+			jobItem.Location = GetListItem(workLocationId);
+			_jobItemRepository.Update(jobItem);
+			return itemHistory;
+		}
+
 		public JobItem GetById(Guid id)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

@@ -19,9 +19,17 @@ namespace JobSystem.DbWireup
 	{
 		private const string DatabaseExistsQuery = "USE master; SELECT COUNT(*) FROM sysdatabases WHERE name='{0}'";
 		private readonly string _databaseName;
+		private readonly string _connectionName;
 
-		public JobSystemDatabaseCreationService(string databaseName)
+
+		/// <summary>
+		/// Initialises an instance of the JobSystemDatabaseCreationService class.
+		/// </summary>
+		/// <param name="connectionName">The name of the initial connection (which should be configured to point to the master database).</param>
+		/// <param name="databaseName">The name of the database to create, which will be prefixed with "JobSystem."</param>
+		public JobSystemDatabaseCreationService(string connectionName, string databaseName)
 		{
+			_connectionName = connectionName;
 			_databaseName = String.Format("JobSystem.{0}", databaseName);
 		}
 
@@ -161,21 +169,14 @@ namespace JobSystem.DbWireup
 			return NHibernateSession.Current.Get<ListItem>(id);
 		}
 
-		private string GetHashedPassword(string password)
-		{
-			var cryptographyService = new CryptographicService();
-
-			return null;
-		}
-
 		private SqlConnection GetConnection()
 		{
-			return new SqlConnection(ConfigurationManager.ConnectionStrings["JobSystemDatabase"].ConnectionString);
+			return new SqlConnection(ConfigurationManager.ConnectionStrings[_connectionName].ConnectionString);
 		}
 
 		private string GetConnectionStringForCatalog(string databaseName)
 		{
-			var csb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["JobSystemDatabase"].ConnectionString);
+			var csb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings[_connectionName].ConnectionString);
 			csb.InitialCatalog = databaseName;
 			return csb.ToString();
 		}

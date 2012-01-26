@@ -117,9 +117,17 @@
       <Project>{4F88F47B-AAE1-4E7D-AFF1-654C67A8A61C}</Project>
       <Name>JobSystem.DataModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JobSystem.DbWireup\JobSystem.DbWireup.csproj">
+      <Project>{DF20A53E-E26C-409C-B5CA-39200146AC30}</Project>
+      <Name>JobSystem.DbWireup</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JobSystem.Framework\JobSystem.Framework.csproj">
       <Project>{904034C0-4B56-4A2E-82BA-5D4B84195D99}</Project>
       <Name>JobSystem.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JobSystem.Migrations\JobSystem.Migrations.csproj">
+      <Project>{D9ABEB4E-A164-4DA4-AE77-BEC40A240BD5}</Project>
+      <Name>JobSystem.Migrations</Name>
     </ProjectReference>
     <ProjectReference Include="..\JobSystem.Queueing.Msmq\JobSystem.Queueing.Msmq.csproj">
       <Project>{BDCF5B98-B407-4E13-974B-FBB19010C4F6}</Project>

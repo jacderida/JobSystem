@@ -7,7 +7,7 @@ namespace JobSystem.DbWireup.ConsoleRunner
 	{
 		static void Main(string[] args)
 		{
-			var databaseService = new JobSystemDatabaseCreationService("Development");
+			var databaseService = new JobSystemDatabaseCreationService("JobSystemDatabase", "Development");
 			databaseService.CreateDatabase(true);
 			databaseService.CreateJobSystemSchemaFromMigrations("JobSystem.Migrations.dll");
 			databaseService.InitHibernate();
@@ -22,8 +22,8 @@ namespace JobSystem.DbWireup.ConsoleRunner
 				.WithJobItemInitialStatusItems("UKAS Calibration", "House Calibration", "Sub Contract", "Repair")
 				.WithJobItemWorkStatusItems("Calibrated", "Repaired", "Failed", "Investigated", "Returned", "Completed", "Reviewed")
 				.WithJobItemStatusItems("Quote Prepared", "Quote Accepted", "Quote Rejected", "Consigned", "Order Reviewed", "Ordered", "Delivery Note Produced", "Booked In")
-				.WithJobItemWorkTypes("Calibrated", "Repair", "Investigate", "Administration")
-				.WithJobItemLocations("Completed", "Calibrated", "Repair", "Sub Contract", "Quote", "Investigated")
+				.WithJobItemWorkTypes("Calibration", "Repair", "Investigation", "Administration")
+				.WithJobItemLocations("Completed", "Calibrated", "Repaired", "Sub Contract", "Quoted", "Investigated")
 				.WithBankDetails(
 					new BankDetails { Id = defaultBankDetailsId, Name = "Bank of Scotland", ShortName = "BoS", AccountNo = "00131183", SortCode = "801653", Address1 = "High Street", Address2 = "Johnstone", Iban = "placeholder IBAN"})
 				.WithPaymentTerms(Tuple.Create<Guid, string>(defaultPaymentTermId, "30 Days"), Tuple.Create<Guid, string>(Guid.NewGuid(), "As Agreed"))

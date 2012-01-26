@@ -100,6 +100,7 @@
     <Compile Include="Helpers\UserManagementServiceFactory.cs" />
     <Compile Include="InstrumentSearchTests.cs" />
     <Compile Include="InstrumentTests.cs" />
+    <Compile Include="ItemHistoryTests.cs" />
     <Compile Include="JobItemTests.cs" />
     <Compile Include="JobTests.cs" />
     <Compile Include="SearchTest.cs" />

@@ -39,6 +39,17 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 
+		public static JobItemService CreateForItemHistory(IJobItemRepository jobItemRepository, Guid workStatusId, Guid workLocationId, Guid workTypeId, IUserContext userContext)
+		{
+			return new JobItemService(
+				userContext,
+				MockRepository.GenerateStub<IJobRepository>(),
+				jobItemRepository,
+				MockRepository.GenerateStub<IInstrumentRepository>(),
+				GetListItemRepositoryForItemHistory(workStatusId, workTypeId, workLocationId),
+				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+		}
+
 		private static IJobRepository GetJobRepository(Guid jobId, int jobItemCount)
 		{
 			var jobRepository = MockRepository.GenerateStub<IJobRepository>();
@@ -76,6 +87,24 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			else
 				listItemRepositoryStub.Stub(x => x.GetById(fieldId)).Return(null);
 			listItemRepositoryStub.Stub(x => x.GetByName("Booked In")).Return(GetBookedInStatus());
+			return listItemRepositoryStub;
+		}
+
+		private static IListItemRepository GetListItemRepositoryForItemHistory(Guid workStatusId, Guid workTypeId, Guid workLocationId)
+		{
+			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
+			if (workStatusId != Guid.Empty)
+				listItemRepositoryStub.Stub(x => x.GetById(workStatusId)).Return(GetItemHistoryWorkStatus(workStatusId));
+			else
+				listItemRepositoryStub.Stub(x => x.GetById(workStatusId)).Return(null);
+			if (workTypeId != Guid.Empty)
+				listItemRepositoryStub.Stub(x => x.GetById(workTypeId)).Return(GetItemHistoryWorkType(workTypeId));
+			else
+				listItemRepositoryStub.Stub(x => x.GetById(workTypeId)).Return(null);
+			if (workLocationId != Guid.Empty)
+				listItemRepositoryStub.Stub(x => x.GetById(workLocationId)).Return(GetItemHistoryWorkLocation(workLocationId));
+			else
+				listItemRepositoryStub.Stub(x => x.GetById(workLocationId)).Return(null);
 			return listItemRepositoryStub;
 		}
 
@@ -166,6 +195,36 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 				Id = fieldId,
 				Name = "E - Electrical",
 				Type = ListItemType.JobItemField
+			};
+		}
+
+		private static ListItem GetItemHistoryWorkStatus(Guid statusId)
+		{
+			return new ListItem
+			{
+				Id = statusId,
+				Name = "Calibrated",
+				Type = ListItemType.JobItemWorkStatus
+			};
+		}
+
+		private static ListItem GetItemHistoryWorkType(Guid workTypeId)
+		{
+			return new ListItem
+			{
+				Id = workTypeId,
+				Name = "Calibration",
+				Type = ListItemType.JobItemWorkType
+			};
+		}
+
+		private static ListItem GetItemHistoryWorkLocation(Guid workLocationId)
+		{
+			return new ListItem
+			{
+				Id = workLocationId,
+				Name = "Calibrated",
+				Type = ListItemType.JobItemLocation
 			};
 		}
 	}
