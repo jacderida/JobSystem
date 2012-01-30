@@ -703,7 +703,7 @@ div#title {
 	margin-right: 15px;
 }
 
-#job-details-fields {
+.job-details-fields {
 	float: left;
 	width: 215px;
 	min-height: 120px;
@@ -715,7 +715,7 @@ div#title {
 }
 
 .details-header {
-	outline: 1px solid #ddd;
+	outline: 1px solid #d4d4d4;
 	border: 1px solid white;
 	background-color: #f9f9f9;
 	display: block;
@@ -758,7 +758,7 @@ div#title {
 #job-details-customer-info #custname {
 	width: 240px;
 	display: inline-block;
-	padding-bottom: 5px;
+	padding-bottom: 7px;
 	border-bottom: 1px solid #ddd;
 	text-shadow: 1px 1px #fff;
 	font-size: 1.1em;
@@ -850,12 +850,14 @@ div#title {
 #search input[type="text"] {
 	height: 25px;
 	float: left;
+	width: 200px;
+	margin-right: 3px;
 }
 
 #search #search-button {
-	width: 32px;
-	height: 32px;
-	background-image: url('../Content/images/search-icon.png');
+	width: 22px;
+	height: 22px !important;
+	padding: 3 !important;
 	background-repeat : no-repeat;
 	float: left;
 }
@@ -892,4 +894,19 @@ div#title {
 
 #job-item-assetno {
 	color: #081A58;
+}
+
+#work-item-list {
+	float: left;
+	width: 29%;
+}
+
+.work-item-details {
+	width: 70%;
+	height: 300px;
+	background-color: #081A58;
+	float: left;
+	outline: 1px solid #DDD;
+	border: 1px solid white;
+	background-color: #F9F9F9;
 }

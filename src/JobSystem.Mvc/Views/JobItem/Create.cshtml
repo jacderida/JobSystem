@@ -106,5 +106,6 @@
 	</fieldset>
 	@Html.HiddenFor(model => model.JobId)
 	<input type="submit" class="primary-action" value="Create"/>
+	<a href="@Url.Action("Details", "Job")" class="secondary-action">Cancel</a>
 }
 </div>

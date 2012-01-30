@@ -11,7 +11,7 @@
 <a href="#" id="createJobButton" class="primary-action">Create Job</a>
 <div id="search">
 	<input type="text" class="short-text"/>
-	<input type="submit" value="" id="search-button" class="primary-action"/>
+	<input type="image" id="search-button" class="primary-action" src="../Content/images/search-icon.png"/>
 </div>
 @if (Model.Jobs.Any()) {
 	<table>
@@ -20,6 +20,7 @@
 			<th>Order Number</th>
 			<th>Booked By</th>
 			<th>Created</th>
+			<th></th>
 		</tr>
 	@foreach (var item in Model.Jobs)
 	 {
@@ -35,6 +36,9 @@
 				</td>
 				<td>
 					@item.DateCreated
+				</td>
+				<td>
+					@Html.ActionLink("Approve", "ApproveJob", new { id = item.Id } )
 				</td>
 			</tr>
 	 }

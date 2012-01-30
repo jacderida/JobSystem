@@ -147,5 +147,22 @@ namespace JobSystem.Mvc.Controllers
 
 			return View(viewModel);
 		}
+
+		public ActionResult ApproveJob(Guid id)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					_jobService.ApproveJob(id);
+					return RedirectToAction("PendingJobs");
+				}
+				catch (DomainValidationException dex)
+				{
+					ModelState.UpdateFromDomain(dex.Result);
+				}
+			}
+			return RedirectToAction("Details", new { id = id });
+		}
 	}
 }
