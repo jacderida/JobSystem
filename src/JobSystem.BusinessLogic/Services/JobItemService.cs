@@ -68,23 +68,30 @@ namespace JobSystem.BusinessLogic.Services
 
 		public ItemHistory CreateItemHistory(Guid id, Guid jobItemId, int workTime, int overTime, string report, Guid workStatusId, Guid workTypeId, Guid workLocationId)
 		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.ItemHistoryInsufficientSecurityClearance);
+			if (id == Guid.Empty)
+				throw new ArgumentException("An ID must be supplied to create the work item.");
 			var jobItem = GetById(jobItemId);
+			if (jobItem == null)
+				throw new ArgumentException("A valid job item ID must be supplied.");
 			var itemHistory = new ItemHistory
 			{
 				Id = id,
 				DateCreated = AppDateTime.GetUtcNow(),
 				JobItem = jobItem,
 				User = CurrentUser,
-				WorkTime = workTime,
-				OverTime = overTime,
+				WorkTime = GetAndValidateWorkTime(workTime),
+				OverTime = GetAndValidateOverTime(overTime),
 				Report = report,
 				Status = GetListItem(workStatusId),
 				WorkLocation = GetListItem(workLocationId),
 				WorkType = GetListItem(workTypeId)
 			};
-			_jobItemRepository.CreateItemHistory(itemHistory);
 			jobItem.Status = GetListItem(workStatusId);
 			jobItem.Location = GetListItem(workLocationId);
+			ValidateAnnotatedObjectThrowOnFailure(itemHistory);
+			_jobItemRepository.CreateItemHistory(itemHistory);
 			_jobItemRepository.Update(jobItem);
 			return itemHistory;
 		}
@@ -134,6 +141,20 @@ namespace JobSystem.BusinessLogic.Services
 			if (calPeriod <= 0)
 				throw new DomainValidationException(Messages.InvalidCalPeriod, "CalPeriod");
 			return calPeriod;
+		}
+
+		private int GetAndValidateWorkTime(int workTime)
+		{
+			if (workTime < 0)
+				throw new DomainValidationException(Messages.ItemHistoryInvalidWorkTime, "WorkTime");
+			return workTime;
+		}
+
+		private int GetAndValidateOverTime(int overTime)
+		{
+			if (overTime < 0)
+				throw new DomainValidationException(Messages.ItemHistoryInvalidOverTime, "OverTime");
+			return overTime;
 		}
 	}
 }

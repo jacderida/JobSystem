@@ -106,6 +106,42 @@ namespace JobSystem.Resources.JobItems {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must have a member role to perform this action.
+        /// </summary>
+        public static string ItemHistoryInsufficientSecurityClearance {
+            get {
+                return ResourceManager.GetString("ItemHistoryInsufficientSecurityClearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The over time must be greater than or equal to 0.
+        /// </summary>
+        public static string ItemHistoryInvalidOverTime {
+            get {
+                return ResourceManager.GetString("ItemHistoryInvalidOverTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The work time must be greater than or equal to 0.
+        /// </summary>
+        public static string ItemHistoryInvalidWorkTime {
+            get {
+                return ResourceManager.GetString("ItemHistoryInvalidWorkTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The report cannot exceed 255 characters.
+        /// </summary>
+        public static string ItemHistoryReportTooLarge {
+            get {
+                return ResourceManager.GetString("ItemHistoryReportTooLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are currently no job items..
         /// </summary>
         public static string NoJobItems {

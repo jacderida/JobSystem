@@ -132,6 +132,18 @@
   <data name="InvalidCalPeriod" xml:space="preserve">
     <value>The cal period must be greater than 0</value>
   </data>
+  <data name="ItemHistoryInsufficientSecurityClearance" xml:space="preserve">
+    <value>You must have a member role to perform this action</value>
+  </data>
+  <data name="ItemHistoryInvalidOverTime" xml:space="preserve">
+    <value>The over time must be greater than or equal to 0</value>
+  </data>
+  <data name="ItemHistoryInvalidWorkTime" xml:space="preserve">
+    <value>The work time must be greater than or equal to 0</value>
+  </data>
+  <data name="ItemHistoryReportTooLarge" xml:space="preserve">
+    <value>The report cannot exceed 255 characters</value>
+  </data>
   <data name="NoJobItems" xml:space="preserve">
     <value>There are currently no job items.</value>
   </data>

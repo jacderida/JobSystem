@@ -3,12 +3,12 @@ using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Tests.Context;
 using JobSystem.BusinessLogic.Tests.Helpers;
 using JobSystem.BusinessLogic.Validation.Core;
+using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework;
 using NUnit.Framework;
 using Rhino.Mocks;
-using JobSystem.DataModel;
 
 namespace JobSystem.BusinessLogic.Tests
 {
@@ -73,6 +73,132 @@ namespace JobSystem.BusinessLogic.Tests
 			Assert.AreEqual("graham.robertson@intertek.com", _savedItemHistory.User.EmailAddress);
 			Assert.AreEqual(workStatusId, _jobItemToUpdate.Status.Id);
 			Assert.AreEqual(workLocationId, _jobItemToUpdate.Location.Id);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void CreateItemHistory_EmptyItemHistoryId_ArgumentExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			_jobItemService = JobItemServiceFactory.CreateForItemHistory(jobItemRepositoryMock, workStatusId, workLocationId, workTypeId, _userContext);
+			CreateItemHistory(Guid.Empty, _jobItemId, 10, 10, "Instrument calibrated", workStatusId, workTypeId, workLocationId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void CreateItemHistory_InvalidJobItemIdSupplied_ArgumentExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			_jobItemService = JobItemServiceFactory.CreateForItemHistory(jobItemRepositoryMock, workStatusId, workLocationId, workTypeId, _userContext);
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemId)).Return(_jobItemToUpdate);
+			CreateItemHistory(Guid.NewGuid(), Guid.Empty, 10, 10, "Instrument calibrated", workStatusId, workTypeId, workLocationId);
+		}
+
+		[Test]
+		public void CreateItemHistory_InvalidWorkTimeSupplied_DomainValidationExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			_jobItemService = JobItemServiceFactory.CreateForItemHistory(jobItemRepositoryMock, workStatusId, workLocationId, workTypeId, _userContext);
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemId)).Return(_jobItemToUpdate);
+			CreateItemHistory(Guid.NewGuid(), _jobItemId, -1, 10, "Instrument calibrated", workStatusId, workTypeId, workLocationId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.ItemHistoryInvalidWorkTime));
+		}
+
+		[Test]
+		public void CreateItemHistory_InvalidOverTimeSupplied_DomainValidationExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			_jobItemService = JobItemServiceFactory.CreateForItemHistory(jobItemRepositoryMock, workStatusId, workLocationId, workTypeId, _userContext);
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemId)).Return(_jobItemToUpdate);
+			CreateItemHistory(Guid.NewGuid(), _jobItemId, 10, -1, "Instrument calibrated", workStatusId, workTypeId, workLocationId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.ItemHistoryInvalidOverTime));
+		}
+
+		[Test]
+		public void CreateItemHistory_InvalidReportSupplied_DomainValidationExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			_jobItemService = JobItemServiceFactory.CreateForItemHistory(jobItemRepositoryMock, workStatusId, workLocationId, workTypeId, _userContext);
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemId)).Return(_jobItemToUpdate);
+			CreateItemHistory(Guid.NewGuid(), _jobItemId, 10, 10, new string('A', 256), workStatusId, workTypeId, workLocationId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.ItemHistoryReportTooLarge));
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void CreateItemHistory_InvalidStatusId_ArgumentExceptionThrown()
+		{
+			var workStatusId = Guid.Empty;
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			_jobItemService = JobItemServiceFactory.CreateForItemHistory(jobItemRepositoryMock, workStatusId, workLocationId, workTypeId, _userContext);
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemId)).Return(_jobItemToUpdate);
+			CreateItemHistory(Guid.NewGuid(), _jobItemId, 10, 10, "Instrument calibrated", workStatusId, workTypeId, workLocationId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void CreateItemHistory_InvalidWorkTypeId_ArgumentExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.Empty;
+			var workLocationId = Guid.NewGuid();
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			_jobItemService = JobItemServiceFactory.CreateForItemHistory(jobItemRepositoryMock, workStatusId, workLocationId, workTypeId, _userContext);
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemId)).Return(_jobItemToUpdate);
+			CreateItemHistory(Guid.NewGuid(), _jobItemId, 10, 10, "Instrument calibrated", workStatusId, workTypeId, workLocationId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void CreateItemHistory_InvalidLocationId_ArgumentExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.Empty;
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			_jobItemService = JobItemServiceFactory.CreateForItemHistory(jobItemRepositoryMock, workStatusId, workLocationId, workTypeId, _userContext);
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemId)).Return(_jobItemToUpdate);
+			CreateItemHistory(Guid.NewGuid(), _jobItemId, 10, 10, "Instrument calibrated", workStatusId, workTypeId, workLocationId);
+		}
+
+		[Test]
+		public void CreateItemHistory_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			_jobItemService = JobItemServiceFactory.CreateForItemHistory(jobItemRepositoryMock, workStatusId, workLocationId, workTypeId,
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemId)).Return(_jobItemToUpdate);
+			CreateItemHistory(Guid.NewGuid(), _jobItemId, 10, 10, "Instrument calibrated", workStatusId, workTypeId, workLocationId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.ItemHistoryInsufficientSecurityClearance));
 		}
 
 		private void CreateItemHistory(Guid id, Guid jobItemId, int workTime, int overTime, string report, Guid workStatusId, Guid workTypeId, Guid workLocationId)

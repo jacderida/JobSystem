@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using JobSystem.Resources.JobItems;
 
 namespace JobSystem.DataModel.Entities
 {
@@ -9,6 +11,7 @@ namespace JobSystem.DataModel.Entities
 		public virtual DateTime DateCreated { get; set; }
 		public virtual int WorkTime { get; set; }
 		public virtual int OverTime { get; set; }
+		[StringLength(255, ErrorMessageResourceName = "ItemHistoryReportTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string Report { get; set; }
 		public virtual ListItem Status { get; set; }
 		public virtual ListItem WorkType { get; set; }
