@@ -172,17 +172,17 @@
 			});
 		});
 
-//		// Horizontal Sliding Tabs demo
-//		$('div#st_horizontal').slideTabs({
-//			// Options  			
-//			contentAnim: 'slideH',
-//			contentAnimTime: 200,
-//			contentEasing: 'easeInOutExpo',
-//			tabsAnimTime: 100,
-//			tabsScroll: false,
-//			autoHeight: true,
-//			totalWidth: '774'
-//		});
+		//		// Horizontal Sliding Tabs demo
+		//		$('div#st_horizontal').slideTabs({
+		//			// Options  			
+		//			contentAnim: 'slideH',
+		//			contentAnimTime: 200,
+		//			contentEasing: 'easeInOutExpo',
+		//			tabsAnimTime: 100,
+		//			tabsScroll: false,
+		//			autoHeight: true,
+		//			totalWidth: '774'
+		//		});
 
 		//Populate customer delivery/invoice address with main address details
 		function populateAddressFields(fieldsToPopulate, selected) {
@@ -235,5 +235,12 @@
 		$('#invoiceCheckbox').click(function () {
 			populateAddressFields('invoice', $(this).is(':checked'));
 		});
+	});
+
+	//Show/hide work item details
+	$('.work-item-list-item').live('click', function () {
+		var elem = $(this);
+		var elemToShow = $('work-item-' + elem.attr('id'));
+		elemToShow.show();
 	});
 });

@@ -901,7 +901,16 @@ div#title {
 	width: 29%;
 }
 
+#work-item-list li {
+	margin-bottom: 10px;
+}
+
+#work-item-list li:hover {
+	cursor: pointer;
+}
+
 .work-item-details {
+	display: none;
 	width: 70%;
 	height: 300px;
 	background-color: #081A58;
