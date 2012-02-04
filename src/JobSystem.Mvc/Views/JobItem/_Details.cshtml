@@ -1,5 +1,6 @@
 ﻿@model JobSystem.Mvc.ViewModels.JobItems.JobItemViewModel
 
+<script src="@Url.Content("~/Scripts/jobitem.js")" type="text/javascript"></script>
 <script type="text/javascript">
 	// Horizontal Sliding Tabs demo
 	$(document).ready(function () {
@@ -16,19 +17,26 @@
 	});
 </script>
 
-<h3>@Model.AssetNo</h3>
-<br />
-@Model.InstrumentDetails
-<br />
+<input type="hidden" id="createWorkItemUrl" value="@Url.Action("Create", "WorkItem")"/>
 
-<div class="job-details-fields">
-	<span class="details-header">Calibration Period</span>
-	@Model.CalPeriod
+<div id="item-details-container">
+	<div class="item-details-fields">
+		<h3 id="job-item-number">@Model.AssetNo</h3>
+		<span class="field-label">Instrument</span>
+		<span class="field">@Model.InstrumentDetails</span>
+	@*	@if (@Model.SerialNo) {*@
+			<span class="field-label">Serial Number</span>
+			<span class="field">@Model.SerialNo</span>
+	@*	}*@
+		<span class="field-label">Calibration Period</span>
+		<span class="field">@Model.CalPeriod</span>
+		@*@if (@Model.Fields.Count() > 0) {*@
+			<span class="field-label">Fields</span>
+			<span class="field">@Model.Fields</span>
+		@*}*@
+	</div>
 </div>
-<div class="job-details-fields">
-	<span class="details-header">Field</span>
-	@Model.Fields
-</div>
+
 
 <div class="st_tabs_container">
 	<div class="st_slide_container">
@@ -48,48 +56,31 @@
 <div class="st_view_container">
 	<div class="st_view">
 		<div id="st_content_1" class="st_tab_view st_first_tab_view">
+			<a href="#" class="primary-action createWorkButton" id="@Model.Id">Create Work Item</a>
 			<div class="text">
 				<ul id="work-item-list">
-					<li class="work-item-list-item" id="1">
-						<h3>Work Item 1</h3>
-						<span>27/12/2011 13:45 PM</span>
-					</li>
-					<li class="work-item-list-item" id="2">
-						<h3>Work Item 2</h3>
-						<span>27/12/2011 13:45 PM</span>
-					</li>
-					<li class="work-item-list-item" id="3">
-						<h3>Work Item 3</h3>
-						<span>27/12/2011 13:45 PM</span>
-					</li>
+					@for (int i = 0; i < Model.WorkItems.Count; i++)
+					{
+						var curItem = Model.WorkItems[i];
+
+						<li class="work-item-list-item" id="@i">
+							<h3>Work Item @i</h3>
+							<span>@curItem.DateCreated</span>
+							<div class="work-item-details" id="work-item-@i">
+								<h3>Work Item @i</h3>
+								<ul>
+									<li>Work by: @curItem.WorkBy</li>
+									<li>Type: @curItem.WorkType</li>
+									<li>Result: @curItem.Status</li>
+									<li>Location: @curItem.WorkLocation</li>
+									<li>Work Time: @curItem.WorkTime</li>
+									<li>Overtime: @curItem.OverTime</li>
+									<li>Report: @curItem.Report</li>
+								</ul>
+							</div>
+						</li>	
+					}
 				</ul>
-				<div class="work-item-details" id="work-item-1">
-					<h3>Work Item 1</h3>
-					Work by: Graham Robertson
-					Type: Calibration
-					Result: Calibrated
-					Location: Finished Work
-					Work Time: 12 hours
-					Overtime: 2 hours
-				</div>
-				<div class="work-item-details" id="work-item-2">
-					<h3>Work Item 2</h3>
-					Work by: Graham Robertson
-					Type: Calibration
-					Result: Calibrated
-					Location: Finished Work
-					Work Time: 12 hours
-					Overtime: 2 hours
-				</div>
-				<div class="work-item-details" id="work-item-3">
-					<h3>Work Item 3</h3>
-					Work by: Graham Robertson
-					Type: Calibration
-					Result: Calibrated
-					Location: Finished Work
-					Work Time: 12 hours
-					Overtime: 2 hours
-				</div>
 			</div>
 		</div>
 		<div id="st_content_2" class="st_tab_view">
