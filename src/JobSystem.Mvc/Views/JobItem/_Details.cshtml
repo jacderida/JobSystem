@@ -66,26 +66,21 @@
 						<li class="work-item-list-item" id="@i">
 							<h3>Work Item @i</h3>
 							<span>@curItem.DateCreated</span>
-						</li>
+							<div class="work-item-details" id="work-item-@i">
+								<h3>Work Item @i</h3>
+								<ul>
+									<li>Work by: @curItem.WorkBy</li>
+									<li>Type: @curItem.WorkType</li>
+									<li>Result: @curItem.Status</li>
+									<li>Location: @curItem.WorkLocation</li>
+									<li>Work Time: @curItem.WorkTime</li>
+									<li>Overtime: @curItem.OverTime</li>
+									<li>Report: @curItem.Report</li>
+								</ul>
+							</div>
+						</li>	
 					}
 				</ul>
-				@for (int i = 0; i < Model.WorkItems.Count; i++)
-				{	
-					var curItem = Model.WorkItems[i];
-
-					<div class="work-item-details" id="work-item-@i">
-						<h3>Work Item @i</h3>
-						<ul>
-							<li>Work by: @curItem.WorkBy</li>
-							<li>Type: @curItem.WorkType</li>
-							<li>Result: @curItem.Status</li>
-							<li>Location: @curItem.WorkLocation</li>
-							<li>Work Time: @curItem.WorkTime</li>
-							<li>Overtime: @curItem.OverTime</li>
-							<li>Report: @curItem.Report</li>
-						</ul>
-					</div>
-				}
 			</div>
 		</div>
 		<div id="st_content_2" class="st_tab_view">

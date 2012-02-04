@@ -904,26 +904,29 @@ div#title {
 	float: left;
 	width: 200px;
 	padding: 1px 0 0 1px;
+	margin-top: 20px;
 }
 
-#work-item-list li {
-	
+.work-item-list-item {
+	position: relative;
 	padding: 10px;
 }
 
-#work-item-list li:hover {
+.work-item-list-item:hover {
 	cursor: pointer;
 	outline: 1px solid #DDD;
-	border: 1px solid white;
+	border: 1px solid #fff;
 	background-color: #F9F9F9;
 }
 
 .work-item-details {
+	position:absolute;
 	display: none;
 	width: 485px;
 	height: 157px;
 	background-color: #081A58;
-	float: left;
+	left: 200px;
+	top: -2px;
 	outline: 1px solid #DDD;
 	border: 1px solid white;
 	background-color: #F9F9F9;
