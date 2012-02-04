@@ -1,8 +1,10 @@
-﻿@model JobSystem.Mvc.ViewModels.WorkItems.WorkItemViewModel
+﻿@model JobSystem.Mvc.ViewModels.WorkItems.WorkItemCreateViewModel
+<script src="@Url.Content("~/Scripts/jobitem.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <div id="create-workitem-container">
-@using (Html.BeginForm("Create", "WorkItem", FormMethod.Post))
+@using (Ajax.BeginForm("Create", "WorkItem", new AjaxOptions() { UpdateTargetId = "st_horizontal" }))
 {
 	@Html.ValidationSummary(true)
 	<fieldset class="fieldset-no-legend">
@@ -41,6 +43,14 @@
 			@Html.EditorFor(model => model.OverTime)
 			@Html.ValidationMessageFor(model => model.OverTime)
 		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Report)
+		</div>
+		<div class="editor-field">
+			@Html.TextAreaFor(model => model.Report)
+			@Html.ValidationMessageFor(model => model.Report)
+		</div>
+		@Html.HiddenFor(model => model.JobItemId)
 	</fieldset>
 	<div class="buttons-row">
 		<input type="submit" class="primary-action" value="Create"/>

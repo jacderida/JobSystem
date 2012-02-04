@@ -26,7 +26,7 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 		public string ReturnReason { get; set; }
 		public string Comments { get; set; }
 		public string InstrumentDetails { get; set; }
-		public IList<WorkItemViewModel> WorkItems { get; set; } 
+		public IList<WorkItemDetailsViewModel> WorkItems { get; set; } 
 		[Display(Name = "Instrument")]
 		public IEnumerable<SelectListItem> Instruments { get; set; }
 		[Display(Name = "Status")]

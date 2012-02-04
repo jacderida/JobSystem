@@ -87,16 +87,18 @@ namespace JobSystem.Mvc.Controllers
 				Instructions = job.Instructions,
 				IsReturned = job.IsReturned,
 				ReturnReason = job.ReturnReason,
-				WorkItems = job.HistoryItems.Select(wi => new WorkItemViewModel
+				WorkItems = job.HistoryItems.Select(wi => new WorkItemDetailsViewModel
 				{
-					//Id = wi.Id,
-					//JobItemId = wi.JobItem.Id,
-					//OverTime = wi.OverTime,
-					//Report = wi.Report,
-					//Status = _listItemService.(ListItemType.JobItemField).ToSelectList(),
-					//WorkLocation = wi.WorkLocation,
-					//WorkTime = wi.WorkTime,
-					//WorkType = wi.WorkType,
+					Id = wi.Id,
+					JobItemId = wi.JobItem.Id,
+					OverTime = wi.OverTime,
+					Report = wi.Report,
+					Status = wi.Status.Name.ToString(),
+					WorkLocation = wi.WorkLocation.Name.ToString(),
+					WorkTime = wi.WorkTime,
+					WorkType = wi.WorkType.Name.ToString(),
+					WorkBy = wi.User.Name,
+					DateCreated = wi.DateCreated.ToLongDateString() + ' ' + wi.DateCreated.ToShortTimeString()
 					}).ToList()
 			};
 			viewmodel.InstrumentDetails = String.Format("{0} - {1} : {2}", job.Instrument.ModelNo, job.Instrument.Manufacturer.ToString(), job.Instrument.Description);

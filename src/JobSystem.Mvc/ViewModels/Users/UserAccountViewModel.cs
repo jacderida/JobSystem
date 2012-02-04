@@ -6,6 +6,7 @@ namespace JobSystem.Mvc.ViewModels.Users
 	public class UserAccountViewModel
 	{
 		public Guid Id { get; set; }
+		[Required]
 		[Display(Name = "Name")]
 		public string Name { get; set; }
 		[Required]

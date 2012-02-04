@@ -35,6 +35,7 @@
 				modal: true,
 				width: 335,
 				title: 'Edit User',
+				position: ['center', 100],
 				open: function (event, ui) {
 					//Load the Edit action which will return 
 					// the partial view _Edit
@@ -53,20 +54,6 @@
 
 		$('#createJobButton').click(function () {
 			$("#create-job-container").dialog('open');
-		});
-
-		//Create WORK ITEM modal form
-		$('.createWorkButton').click(function () {
-			var elemId = $(this).attr('id');
-			var Url = $('#createWorkItemUrl').val() + '/' + elemId;
-			$("#create-work-item-container").dialog({
-				modal: true,
-				width: 335,
-				title: 'Create Work Item',
-				create: function (event, ui) {
-					$(this).load(Url);
-				}
-			});
 		});
 
 		//Create INSTRUMENT modal form
@@ -89,6 +76,7 @@
 				modal: true,
 				width: 335,
 				title: 'Edit Instrument',
+				position: ['center', 100],
 				open: function (event, ui) {
 					//Load the Edit action which will return 
 					// the partial view _Edit
@@ -136,12 +124,14 @@
 
 		//Get Job Item Details
 		$('.getJobItem').click(function () {
+//			$('html, body').animate({
+//				scrollTop: $("#horz_tabs_container").offset().top
+//			}, 50);
 			$.get("../../JobItem/Details/" + $(this).attr('id'),
 			   function (data) {
 			   	$('#st_horizontal').hide();
 			   	$('#st_horizontal').fadeIn(300);
 			   	$('#st_horizontal').html(data);
-
 			   });
 		});
 

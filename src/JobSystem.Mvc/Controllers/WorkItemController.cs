@@ -23,7 +23,7 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult Create(Guid id)
 		{
-			var viewmodel = new WorkItemViewModel()
+			var viewmodel = new WorkItemCreateViewModel()
 			{
 				WorkType = _listItemService.GetAllByType(ListItemType.JobItemWorkType).ToSelectList(),
 				WorkLocation = _listItemService.GetAllByType(ListItemType.JobItemLocation).ToSelectList(),
@@ -36,7 +36,7 @@ namespace JobSystem.Mvc.Controllers
 
 		[HttpPost]
 		[Transaction]
-		public ActionResult Create(WorkItemViewModel viewmodel)
+		public ActionResult Create(WorkItemCreateViewModel viewmodel)
 		{
 			if (ModelState.IsValid)
 			{
@@ -51,7 +51,8 @@ namespace JobSystem.Mvc.Controllers
 						viewmodel.StatusId,
 						viewmodel.WorkTypeId,
 						viewmodel.WorkLocationId);
-						}
+					return RedirectToAction("Details", "JobItem", new { Id = viewmodel.JobItemId });
+				}
 				catch (DomainValidationException dex)
 				{
 					ModelState.UpdateFromDomain(dex.Result);
