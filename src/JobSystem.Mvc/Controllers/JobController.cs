@@ -137,6 +137,7 @@ namespace JobSystem.Mvc.Controllers
 				CustomerAddress5 = job.Customer.Address5,
 				CustomerEmail = job.Customer.Email,
 				CustomerTelephone = job.Customer.Telephone,
+				IsPending = job.IsPending,
 				JobItems = jobItems.Select(ji => new JobItemViewModel
 					{
 						Id = ji.Id,
@@ -148,6 +149,7 @@ namespace JobSystem.Mvc.Controllers
 			return View(viewModel);
 		}
 
+		[Transaction]
 		public ActionResult ApproveJob(Guid id)
 		{
 			if (ModelState.IsValid)

@@ -4,13 +4,14 @@
 	ViewBag.Title = String.Format("Job {0}", @Model.JobNumber);
 }
 
-@*@Html.Partial("~/Views/JobItem/_Create.cshtml", Model.JobItemCreateModel)*@
-<input type="hidden" id="editUrl" value="@Url.Action("Create", "JobItem")"/>
-<div id="create-job-item-container">
+<div id="create-work-item-container">
+	@*Content ajaxed in*@
 </div>
 
 <div id="job-top-section">
-	<div id="pending-banner"></div>
+	@if (Model.IsPending) {
+		<div id="pending-banner"></div>
+	}
 	<div id="job-title-container">
 		<h2>Job @Model.JobNumber</h2>
 		<p id="job-created-by">Created on @Model.DateCreated by <a href="mailto:@Model.CreatedBy">@Model.CreatedBy</a></p>
@@ -62,11 +63,11 @@
             
                 <ul class="st_tabs">
                     <li><a href="@Url.Action("Create", "JobItem", new { id = @Model.Id })" id="@Model.Id" class="create-item-button">Add a new Job Item</a></li>
-					@for (int i=0; i < Model.JobItems.Count(); i++ )
-					{
-						var jobItem = Model.JobItems[i];
+					@for (int i = 0; i < Model.JobItems.Count(); i++)
+	 {
+		 var jobItem = Model.JobItems[i];
 						<li><a href="#stv_content_1" rel="v_tab_0" class="st_tab getJobItem @(i == 0 ? "st_tab_active" : "")" id="@jobItem.Id">@jobItem.AssetNo<span>@jobItem.InstrumentDetails</span></a></li>
-					}                                                      
+	 }                                                      
                 </ul>
             </div> <!-- /.st_slide_container -->
         </div> <!-- /.st_tabs_container -->
@@ -79,7 +80,9 @@
 			@if (@Model.JobItems.Any())
 			{
 				@Html.Partial("~/Views/JobItem/_Details.cshtml", Model.JobItems.First())
-			} else {
+			}
+			else
+			{
 				<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoJobItems</div>
 			}
 		</div>

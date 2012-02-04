@@ -7,6 +7,8 @@ using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.JobItems;
 using JobSystem.DataModel.Entities;
 using System;
+using System.Linq;
+using JobSystem.Mvc.ViewModels.WorkItems;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -84,7 +86,18 @@ namespace JobSystem.Mvc.Controllers
 				Comments = job.Comments,
 				Instructions = job.Instructions,
 				IsReturned = job.IsReturned,
-				ReturnReason = job.ReturnReason
+				ReturnReason = job.ReturnReason,
+				WorkItems = job.HistoryItems.Select(wi => new WorkItemViewModel
+				{
+					//Id = wi.Id,
+					//JobItemId = wi.JobItem.Id,
+					//OverTime = wi.OverTime,
+					//Report = wi.Report,
+					//Status = _listItemService.(ListItemType.JobItemField).ToSelectList(),
+					//WorkLocation = wi.WorkLocation,
+					//WorkTime = wi.WorkTime,
+					//WorkType = wi.WorkType,
+					}).ToList()
 			};
 			viewmodel.InstrumentDetails = String.Format("{0} - {1} : {2}", job.Instrument.ModelNo, job.Instrument.Manufacturer.ToString(), job.Instrument.Description);
 			return PartialView("_Details", viewmodel);

@@ -142,6 +142,7 @@ div.st_horizontal div.st_view_container { /* Main content container */
 	position:relative;
 	z-index:5;
 	height:277px;
+	min-height: 200px;
 	padding:20px 20px 23px; /* Set the padding for the content here */
 	border:1px solid #d4d4d4;
 	background-color:#fff;

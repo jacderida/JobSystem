@@ -29,6 +29,7 @@ namespace JobSystem.Mvc.ViewModels.Jobs
 		public string CustomerAddress5 { get; set; }
 		public string CustomerEmail { get; set; }
 		public string CustomerTelephone { get; set; }
+		public bool IsPending { get; set; }
 		public IList<JobItemViewModel> JobItems { get; set; }
 	}
 }

@@ -677,16 +677,16 @@ div#title {
 	/*margin-right: 20px;*/
 }
 
-#job-details-container .field {
+#job-details-container .field,  #item-details-container .field {
 	margin-bottom: 10px;
 }
 
-#job-details-container .field-label {
+#job-details-container .field-label, #item-details-container .field-label {
 	font-weight: bold;
 	margin-bottom: 4px;
 }
 
-#job-details-container .field-label, .field {
+#job-details-container .field-label,  #item-details-container .field-label, .field {
 	display: block;
 	margin-left: 5px;
 }
@@ -712,6 +712,10 @@ div#title {
 
 #job-details-fields .details-header {
 	width: 210px;
+}
+
+#job-item-number {
+	margin-bottom: 15px;
 }
 
 .details-header {
@@ -898,24 +902,31 @@ div#title {
 
 #work-item-list {
 	float: left;
-	width: 29%;
+	width: 200px;
+	padding: 1px 0 0 1px;
 }
 
 #work-item-list li {
-	margin-bottom: 10px;
+	
+	padding: 10px;
 }
 
 #work-item-list li:hover {
 	cursor: pointer;
+	outline: 1px solid #DDD;
+	border: 1px solid white;
+	background-color: #F9F9F9;
 }
 
 .work-item-details {
 	display: none;
-	width: 70%;
-	height: 300px;
+	width: 485px;
+	height: 157px;
 	background-color: #081A58;
 	float: left;
 	outline: 1px solid #DDD;
 	border: 1px solid white;
 	background-color: #F9F9F9;
+	padding: 20px;
+	margin-top: 1px;
 }

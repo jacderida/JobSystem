@@ -1,0 +1,49 @@
+﻿@model JobSystem.Mvc.ViewModels.WorkItems.WorkItemViewModel
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<div id="create-workitem-container">
+@using (Html.BeginForm("Create", "WorkItem", FormMethod.Post))
+{
+	@Html.ValidationSummary(true)
+	<fieldset class="fieldset-no-legend">
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Status)
+		</div>
+		<div class="editor-field">
+			@Html.DropDownListFor(model => model.StatusId, Model.Status)
+			@Html.ValidationMessageFor(model => model.Status)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.WorkLocation)
+		</div>
+		<div class="editor-field">
+			@Html.DropDownListFor(model => model.WorkLocationId, Model.WorkLocation)
+			@Html.ValidationMessageFor(model => model.WorkLocation)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.WorkType)
+		</div>
+		<div class="editor-field">
+			@Html.DropDownListFor(model => model.WorkTypeId, Model.WorkType)
+			@Html.ValidationMessageFor(model => model.WorkType)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.WorkTime)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.WorkTime)
+			@Html.ValidationMessageFor(model => model.WorkTime)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.OverTime)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.OverTime)
+			@Html.ValidationMessageFor(model => model.OverTime)
+		</div>
+	</fieldset>
+	<div class="buttons-row">
+		<input type="submit" class="primary-action" value="Create"/>
+	</div>
+}
+</div>

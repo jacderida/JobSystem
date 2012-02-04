@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using JobSystem.Mvc.ViewModels.WorkItems;
 
 namespace JobSystem.Mvc.ViewModels.JobItems
 {
@@ -25,6 +26,7 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 		public string ReturnReason { get; set; }
 		public string Comments { get; set; }
 		public string InstrumentDetails { get; set; }
+		public IList<WorkItemViewModel> WorkItems { get; set; } 
 		[Display(Name = "Instrument")]
 		public IEnumerable<SelectListItem> Instruments { get; set; }
 		[Display(Name = "Status")]

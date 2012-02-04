@@ -55,6 +55,20 @@
 			$("#create-job-container").dialog('open');
 		});
 
+		//Create WORK ITEM modal form
+		$('.createWorkButton').click(function () {
+			var elemId = $(this).attr('id');
+			var Url = $('#createWorkItemUrl').val() + '/' + elemId;
+			$("#create-work-item-container").dialog({
+				modal: true,
+				width: 335,
+				title: 'Create Work Item',
+				create: function (event, ui) {
+					$(this).load(Url);
+				}
+			});
+		});
+
 		//Create INSTRUMENT modal form
 		$("#create-instrument-container").dialog({
 			autoOpen: false,
@@ -124,7 +138,10 @@
 		$('.getJobItem').click(function () {
 			$.get("../../JobItem/Details/" + $(this).attr('id'),
 			   function (data) {
+			   	$('#st_horizontal').hide();
+			   	$('#st_horizontal').fadeIn(300);
 			   	$('#st_horizontal').html(data);
+
 			   });
 		});
 
@@ -171,18 +188,6 @@
 				});
 			});
 		});
-
-		//		// Horizontal Sliding Tabs demo
-		//		$('div#st_horizontal').slideTabs({
-		//			// Options  			
-		//			contentAnim: 'slideH',
-		//			contentAnimTime: 200,
-		//			contentEasing: 'easeInOutExpo',
-		//			tabsAnimTime: 100,
-		//			tabsScroll: false,
-		//			autoHeight: true,
-		//			totalWidth: '774'
-		//		});
 
 		//Populate customer delivery/invoice address with main address details
 		function populateAddressFields(fieldsToPopulate, selected) {
@@ -238,9 +243,14 @@
 	});
 
 	//Show/hide work item details
-	$('.work-item-list-item').live('click', function () {
+	$('.work-item-list-item').live('mouseenter', function () {
 		var elem = $(this);
-		var elemToShow = $('work-item-' + elem.attr('id'));
-		elemToShow.show();
+		var elemToShow = $('#work-item-' + elem.attr('id'));
+		elemToShow.stop(true, true).fadeIn(200);
+	});
+	$('.work-item-list-item').live('mouseleave', function () {
+		var elem = $(this);
+		var elemToShow = $('#work-item-' + elem.attr('id'));
+		elemToShow.stop(true, true).fadeOut(200);
 	});
 });
