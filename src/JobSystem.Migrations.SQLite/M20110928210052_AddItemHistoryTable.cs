@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FluentMigrator;
 
-namespace JobSystem.Migrations
+namespace JobSystem.Migrations.SqlLite
 {
 	[Migration(20110928210052)]
 	public class M20110928210052_AddItemHistoryTable : Migration

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FluentMigrator;
 
-namespace JobSystem.Migrations
+namespace JobSystem.Migrations.SqlLite
 {
 	[Migration(20111230053929)]
 	public class M20111230053929_AddEntityIdLookupsTable : Migration

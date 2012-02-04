@@ -1,5 +1,6 @@
 ﻿using System;
 using JobSystem.BusinessLogic.Services;
+using JobSystem.BusinessLogic.Tests.Context;
 using JobSystem.BusinessLogic.Tests.Helpers;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel.Dto;
@@ -7,7 +8,6 @@ using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using NUnit.Framework;
 using Rhino.Mocks;
-using JobSystem.BusinessLogic.Tests.Context;
 
 namespace JobSystem.BusinessLogic.Tests
 {
