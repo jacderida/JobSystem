@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
 
-namespace JobSystem.Migrations
+namespace JobSystem.Migrations.SqlLite
 {
 	[Migration(20110928201038)]
 	public class M20110928201038_AddListItemsTable : Migration

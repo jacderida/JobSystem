@@ -104,6 +104,7 @@
     <Compile Include="JobItemTests.cs" />
     <Compile Include="JobTests.cs" />
     <Compile Include="SearchTest.cs" />
+    <Compile Include="SupplierTests.cs" />
     <Compile Include="UserManagementTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

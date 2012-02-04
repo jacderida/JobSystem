@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
 
-namespace JobSystem.Migrations
+namespace JobSystem.Migrations.SqlLite
 {
 	[Migration(20111228143737)]
 	public class M20111228143737_AddIsPendingColumnToJobsTable : Migration

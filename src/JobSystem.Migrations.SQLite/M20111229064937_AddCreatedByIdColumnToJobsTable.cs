@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FluentMigrator;
 
-namespace JobSystem.Migrations
+namespace JobSystem.Migrations.SqlLite
 {
 	[Migration(20111229064937)]
 	public class M20111229064937_AddCreatedByIdColumnToJobsTable : Migration
