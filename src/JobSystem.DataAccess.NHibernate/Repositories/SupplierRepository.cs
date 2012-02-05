@@ -8,7 +8,6 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 { 
 	public class SupplierRepository : RepositoryBase<Supplier>, ISupplierRepository
 	{
-
 		public Supplier GetByName(string name)
 		{
 			return CurrentSession.Query<Supplier>().Where(s => s.Name == name).SingleOrDefault();

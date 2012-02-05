@@ -27,11 +27,16 @@ namespace JobSystem.DbWireup.ConsoleRunner
 				.WithBankDetails(
 					new BankDetails { Id = defaultBankDetailsId, Name = "Bank of Scotland", ShortName = "BoS", AccountNo = "00131183", SortCode = "801653", Address1 = "High Street", Address2 = "Johnstone", Iban = "placeholder IBAN"})
 				.WithPaymentTerms(Tuple.Create<Guid, string>(defaultPaymentTermId, "30 Days"), Tuple.Create<Guid, string>(Guid.NewGuid(), "As Agreed"))
-				.WithCurrencies(Tuple.Create<Guid, string>(defaultCurrencyId, "GBP"), Tuple.Create<Guid, string>(Guid.NewGuid(), "Euros"), Tuple.Create<Guid, string>(Guid.NewGuid(), "Dollars"))
+				.WithCurrencies(
+					Tuple.Create<Guid, string>(defaultCurrencyId, "GBP"),
+					Tuple.Create<Guid, string>(Guid.NewGuid(), "Euros"),
+					Tuple.Create<Guid, string>(Guid.NewGuid(), "Dollars"))
 				.WithTaxCodes(
 					new TaxCode { Id = Guid.NewGuid(), TaxCodeName = "T0", Rate = 0, Description = "No VAT" },
 					new TaxCode { Id = defaultTaxCodeId, TaxCodeName = "T1", Rate = 0.20, Description = "VAT at 20%"})
-				.WithEntitySeeds(Tuple.Create<Type, int, string>(typeof(Job), 2000, "JR"));
+				.WithEntitySeeds(
+					Tuple.Create<Type, int, string>(typeof(Job), 2000, "JR"),
+					Tuple.Create<Type, int, string>(typeof(Consignment), 2000, "CR"));
 			var defaultData = builder.Build();
 			try
 			{

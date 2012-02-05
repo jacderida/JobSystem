@@ -56,6 +56,7 @@
     <Compile Include="Dto\ContactInfo.cs" />
     <Compile Include="Entities\BankDetails.cs" />
     <Compile Include="Entities\CompanyDetails.cs" />
+    <Compile Include="Entities\Consignment.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\EntityIdLookup.cs" />
     <Compile Include="Entities\Instrument.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Queries\LinqQuery.cs" />
     <Compile Include="Repositories\IBankDetailsRepository.cs" />
     <Compile Include="Repositories\ICompanyDetailsRepository.cs" />
+    <Compile Include="Repositories\IConsignmentRepository.cs" />
     <Compile Include="Repositories\ICustomerRepository.cs" />
     <Compile Include="Repositories\IEntityIdLookupRepository.cs" />
     <Compile Include="Repositories\IInstrumentRepository.cs" />

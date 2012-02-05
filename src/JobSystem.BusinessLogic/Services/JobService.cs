@@ -1,22 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
-using JobSystem.Framework.Messaging;
 using JobSystem.Framework;
+using JobSystem.Framework.Messaging;
 using JobSystem.Resources.Jobs;
-using JobSystem.BusinessLogic.Validation.Core;
-using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
 	public class JobService : ServiceBase
 	{
-		private IJobRepository _jobRepository;
-		private IListItemRepository _listItemRepository;
-		private ICustomerRepository _customerRepository;
-		private IEntityIdProvider _entityIdProvider;
+		private readonly IJobRepository _jobRepository;
+		private readonly IListItemRepository _listItemRepository;
+		private readonly ICustomerRepository _customerRepository;
+		private readonly IEntityIdProvider _entityIdProvider;
 
 		public JobService(
 			IUserContext applicationContext,
@@ -31,8 +31,6 @@ namespace JobSystem.BusinessLogic.Services
 			_customerRepository = customerRepository;
 			_entityIdProvider = entityIdProvider;
 		}
-
-		#region Public Methods
 
 		public Job CreateJob(Guid id, string instructions, string orderNo, string adviceNo, Guid typeId, Guid customerId, string notes, string contact)
 		{
@@ -87,9 +85,6 @@ namespace JobSystem.BusinessLogic.Services
 			return _jobRepository.GetPendingJobs().OrderBy(j => j.JobNo);
 		}
 
-		#endregion
-		#region Private Implementation
-
 		private Customer GetCustomer(Guid customerId)
 		{
 			var customer = _customerRepository.GetById(customerId);
@@ -105,7 +100,5 @@ namespace JobSystem.BusinessLogic.Services
 				throw new ArgumentException(Messages.InvalidTypeId);
 			return type;
 		}
-
-		#endregion
 	}
 }
