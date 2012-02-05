@@ -4,6 +4,7 @@ using JobSystem.Resources.Suppliers;
 
 namespace JobSystem.DataModel.Entities
 {
+	[Serializable]
 	public class Supplier
 	{
 		public virtual Guid Id { get; set; }
