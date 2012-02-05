@@ -15,7 +15,7 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 
 		public IEnumerable<Customer> GetCustomers()
 		{
-			return CurrentSession.Query<Customer>().ToList();
+			return CurrentSession.Query<Customer>();
 		}
 	}
 }
