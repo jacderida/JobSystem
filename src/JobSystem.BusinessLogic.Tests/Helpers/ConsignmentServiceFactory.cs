@@ -11,6 +11,17 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 {
 	public static class ConsignmentServiceFactory
 	{
+		public static ConsignmentService Create(Guid supplierId)
+		{
+			return Create(MockRepository.GenerateStub<IConsignmentRepository>(), supplierId,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
+		}
+
+		public static ConsignmentService Create(Guid supplierId, IUserContext userContext)
+		{
+			return Create(MockRepository.GenerateStub<IConsignmentRepository>(), supplierId, userContext);
+		}
+
 		public static ConsignmentService Create(IConsignmentRepository consignmentRepository, Guid supplierId)
 		{
 			return Create(consignmentRepository, supplierId,
