@@ -20,11 +20,17 @@ namespace JobSystem.Migrations
 				.ForeignColumn("CreatedById")
 				.ToTable("UserAccounts")
 				.PrimaryColumn("Id");
+			Create.ForeignKey("FK_Consignments_Suppliers")
+				.FromTable("Consignments")
+				.ForeignColumn("SupplierId")
+				.ToTable("Suppliers")
+				.PrimaryColumn("Id");
 		}
 
 		public override void Down()
 		{
 			Delete.ForeignKey("FK_Consignments_UserAccounts").OnTable("Consignments");
+			Delete.ForeignKey("FK_Consignments_Suppliers").OnTable("Consignments");
 			Delete.Table("Consignments");
 		}
 	}
