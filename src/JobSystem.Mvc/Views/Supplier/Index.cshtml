@@ -1,0 +1,38 @@
+﻿@model IEnumerable<JobSystem.Mvc.ViewModels.Suppliers.SupplierIndexViewModel>
+@{
+	ViewBag.Title = "Supplier List";
+}
+<h2>Customer List</h2>
+@Html.ActionLink("Create Supplier", "Create", new { }, new { @class = "primary-action" })
+@if (Model.Any())
+{
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Primary Contact</th>
+			<th></th>
+		</tr>
+		@foreach (var item in Model)
+	 {
+			<tr>
+				<td>
+					@Html.ActionLink(item.Name, "Details", new { id = item.Id })
+				</td>
+				<td>
+				
+				</td>
+				<td>
+					@item.TradingContact1
+				</td>
+				<td>
+					@Html.ActionLink("Edit", "Edit", new { id = item.Id })
+				</td>
+			</tr>
+	 }
+	</table>
+}
+else
+{
+	<div id="empty-list">@JobSystem.Resources.Suppliers.Messages.NoSuppliers</div>
+}

@@ -135,7 +135,6 @@
 			   });
 		});
 
-		$("#invoiceDetails").hide();
 		$("#invoiceCheckbox").click(function () {
 			if (!$(this).attr('checked')) {
 				$("#invoiceDetails").show(300);
@@ -145,13 +144,21 @@
 			}
 		});
 
-		$("#deliveryDetails").hide();
 		$("#deliveryCheckbox").click(function () {
 			if (!$(this).attr('checked')) {
 				$("#deliveryDetails").show(300);
 			}
 			else {
 				$("#deliveryDetails").hide(300);
+			}
+		});
+
+		$("#salesCheckbox").click(function () {
+			if (!$(this).attr('checked')) {
+				$("#salesDetails").show(300);
+			}
+			else {
+				$("#salesDetails").hide(300);
 			}
 		});
 
@@ -187,6 +194,12 @@
 			var townCity = $('#Address4').val();
 			var postcode = $('#Address5').val();
 
+			var telephone = $('#Telephone').val();
+			var fax = $('#Fax').val();
+			var email = $('#Email').val();
+			var contact1 = $('#Contact1').val();
+			var contact2 = $('#Contact2').val();
+
 			switch (fieldsToPopulate) {
 				case 'invoice':
 					if (selected) {
@@ -220,6 +233,32 @@
 						$('#DeliveryAddress5').val("");
 					}
 					break;
+				case 'sales':
+					if (selected) {
+						$('#SalesAddress1').val(addressLine1);
+						$('#SalesAddress2').val(addressLine2);
+						$('#SalesAddress3').val(addressLine3);
+						$('#SalesAddress4').val(townCity);
+						$('#SalesAddress5').val(postcode);
+						$('#SalesTelephone').val(telephone);
+						$('#SalesFax').val(fax);
+						$('#SalesEmail').val(email);
+						$('#SalesContact1').val(contact1);
+						$('#SalesContact2').val(contact2);
+					}
+					else {
+						$('#SalesAddress1').val("");
+						$('#SalesAddress2').val("");
+						$('#SalesAddress3').val("");
+						$('#SalesAddress4').val("");
+						$('#SalesAddress5').val("");
+						$('#SalesTelephone').val("");
+						$('#SalesFax').val("");
+						$('#SalesEmail').val("");
+						$('#SalesContact1').val("");
+						$('#SalesContact2').val("");
+					}
+					break;
 			}
 		}
 
@@ -229,6 +268,10 @@
 
 		$('#invoiceCheckbox').click(function () {
 			populateAddressFields('invoice', $(this).is(':checked'));
+		});
+
+		$('#salesCheckbox').click(function () {
+			populateAddressFields('sales', $(this).is(':checked'));
 		});
 	});
 

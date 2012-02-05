@@ -113,5 +113,14 @@ namespace JobSystem.Resources.Suppliers {
                 return ResourceManager.GetString("NameTooLarge", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are currently no suppliers.
+        /// </summary>
+        public static string NoSuppliers {
+            get {
+                return ResourceManager.GetString("NoSuppliers", resourceCulture);
+            }
+        }
     }
 }

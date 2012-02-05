@@ -135,4 +135,7 @@
   <data name="NameTooLarge" xml:space="preserve">
     <value>The supplier name cannot exceed 255 characters.</value>
   </data>
+  <data name="NoSuppliers" xml:space="preserve">
+    <value>There are currently no suppliers</value>
+  </data>
 </root>
