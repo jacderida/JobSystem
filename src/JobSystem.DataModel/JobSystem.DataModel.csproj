@@ -64,6 +64,7 @@
     <Compile Include="Entities\JobItem.cs" />
     <Compile Include="Entities\ListItem.cs" />
     <Compile Include="Entities\ListItemType.cs" />
+    <Compile Include="Entities\Supplier.cs" />
     <Compile Include="Entities\TaxCode.cs" />
     <Compile Include="Entities\UserAccount.cs" />
     <Compile Include="Entities\UserRole.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Repositories\IJobRepository.cs" />
     <Compile Include="Repositories\IListItemRepository.cs" />
     <Compile Include="Repositories\IReadWriteRepository.cs" />
+    <Compile Include="Repositories\ISupplierRepository.cs" />
     <Compile Include="Repositories\ITaxCodeRepository.cs" />
     <Compile Include="Repositories\IUserAccountRepository.cs" />
   </ItemGroup>

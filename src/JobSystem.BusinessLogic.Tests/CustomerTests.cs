@@ -82,9 +82,6 @@ namespace JobSystem.BusinessLogic.Tests
 		[Test]
 		public void Create_NameNotSupplied_DomainValidationExceptionThrown()
 		{
-			var customerRepositoryStub = MockRepository.GenerateMock<ICustomerRepository>();
-			customerRepositoryStub.Stub(x => x.GetByName("Gael Ltd")).Return(new Customer { Name = "Gael Ltd" });
-			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
 			CreateCustomer(
 				Guid.NewGuid(), String.Empty, GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),

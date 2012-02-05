@@ -97,6 +97,7 @@
     <Compile Include="Helpers\InstrumentServiceFactory.cs" />
     <Compile Include="Helpers\JobItemServiceFactory.cs" />
     <Compile Include="Helpers\JobServiceFactory.cs" />
+    <Compile Include="Helpers\SupplierServiceFactory.cs" />
     <Compile Include="Helpers\UserManagementServiceFactory.cs" />
     <Compile Include="InstrumentSearchTests.cs" />
     <Compile Include="InstrumentTests.cs" />
