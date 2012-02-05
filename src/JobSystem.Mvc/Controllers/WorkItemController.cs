@@ -4,20 +4,20 @@ using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.DataModel.Entities;
-using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.Core.UIValidation;
+using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.WorkItems;
 
 namespace JobSystem.Mvc.Controllers
 {
-    public class WorkItemController : Controller
-    {
-		private readonly JobItemService _jobItemService;
+	public class WorkItemController : Controller
+	{
+		private readonly ItemHistoryService _itemHistoryService;
 		private readonly ListItemService _listItemService;
 
-		public WorkItemController(JobItemService jobItemService, ListItemService listItemService)
+		public WorkItemController(ItemHistoryService jobItemService, ListItemService listItemService)
 		{
-			_jobItemService = jobItemService;
+			_itemHistoryService = jobItemService;
 			_listItemService = listItemService;
 		}
 
@@ -30,7 +30,6 @@ namespace JobSystem.Mvc.Controllers
 				Status = _listItemService.GetAllByType(ListItemType.JobItemWorkStatus).ToSelectList(),
 				JobItemId = id
 			};
-
 			return PartialView("_Create", viewmodel);
 		}
 
@@ -42,7 +41,7 @@ namespace JobSystem.Mvc.Controllers
 			{
 				try
 				{
-					_jobItemService.CreateItemHistory(
+					_itemHistoryService.CreateItemHistory(
 						System.Guid.NewGuid(),
 						viewmodel.JobItemId,
 						viewmodel.WorkTime,
@@ -60,6 +59,5 @@ namespace JobSystem.Mvc.Controllers
 			}
 			return PartialView("_Create", viewmodel);
 		}
-
-    }
+	}
 }

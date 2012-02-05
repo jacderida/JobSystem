@@ -39,6 +39,7 @@ namespace TestBed
 			var jobItemService = new JobItemService(
 				testUserContext, new JobRepository(), new JobItemRepository(), new InstrumentRepository(), new ListItemRepository(), queueDispatcher);
 			var instrumentService = new InstrumentService(testUserContext, new InstrumentRepository(), queueDispatcher);
+			var itemHistoryService = new ItemHistoryService(testUserContext, new JobItemRepository(), new ListItemRepository(), queueDispatcher);
 
 			var jobId = Guid.NewGuid();
 			var jobItemId = Guid.NewGuid();
@@ -53,7 +54,7 @@ namespace TestBed
 				jobId, jobItemId, instrumentId, "12345", "AST12345", listItemService.GetAllByType(ListItemType.JobItemInitialStatus).First().Id,
 				listItemService.GetAllByType(ListItemType.JobItemLocation).First().Id, listItemService.GetAllByType(ListItemType.JobItemField).First().Id, 12,
 				"job instructions", "accessories", false, String.Empty, "comments");
-			jobItemService.CreateItemHistory(
+			itemHistoryService.CreateItemHistory(
 				Guid.NewGuid(), jobItemId, 12, 12, "blah",
 				listItemService.GetAllByType(ListItemType.JobItemWorkStatus).First().Id,
 				listItemService.GetAllByType(ListItemType.JobItemWorkType).First().Id,

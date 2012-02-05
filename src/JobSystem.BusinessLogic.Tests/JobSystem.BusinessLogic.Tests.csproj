@@ -98,6 +98,7 @@
     <Compile Include="Helpers\DomainValidationExtensions.cs" />
     <Compile Include="Helpers\EntityIdProviderFactory.cs" />
     <Compile Include="Helpers\InstrumentServiceFactory.cs" />
+    <Compile Include="Helpers\ItemHistoryServiceFactory.cs" />
     <Compile Include="Helpers\JobItemServiceFactory.cs" />
     <Compile Include="Helpers\JobServiceFactory.cs" />
     <Compile Include="Helpers\SupplierServiceFactory.cs" />
