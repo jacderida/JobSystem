@@ -92,6 +92,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BankDetailsRepository.cs" />
     <Compile Include="Repositories\CompanyDetailsRepository.cs" />
+    <Compile Include="Repositories\ConsignmentRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
     <Compile Include="Repositories\EntityIdLookupRepository.cs" />
     <Compile Include="Repositories\InstrumentRepository.cs" />

@@ -59,6 +59,7 @@
     <Compile Include="IoC\ServiceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CompanyDetailsService.cs" />
+    <Compile Include="Services\ConsignmentService.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\EntityIdProviderFromWebService.cs" />
     <Compile Include="Services\EntityIdProviderService.cs" />
