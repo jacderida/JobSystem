@@ -126,6 +126,9 @@
   <data name="DuplicateName" xml:space="preserve">
     <value>A supplier with this name already exists.</value>
   </data>
+  <data name="InsufficientSecurityClearance" xml:space="preserve">
+    <value>An internal member role is required for this view</value>
+  </data>
   <data name="NameRequired" xml:space="preserve">
     <value>A name is required for the supplier.</value>
   </data>

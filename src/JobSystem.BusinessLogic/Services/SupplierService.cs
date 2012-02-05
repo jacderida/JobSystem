@@ -1,11 +1,14 @@
 ﻿using System;
 using JobSystem.BusinessLogic.Validation;
+using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.BusinessLogic.Validation.Extensions;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Dto;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
+using JobSystem.Resources.Suppliers;
+using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -39,6 +42,39 @@ namespace JobSystem.BusinessLogic.Services
 			_supplierValidator.ValidateThrowOnFailure(supplier);
 			_supplierRepository.Create(supplier);
 			return supplier;
+		}
+
+		public Supplier Edit(
+			Guid id, string name, Address tradingAddressDetails, ContactInfo tradingContactInfo, Address salesAddressDetails, ContactInfo salesContactInfo)
+		{
+			if (id == Guid.Empty)
+				throw new ArgumentException("An ID must be supplied for the supplier.");
+			var supplier = _supplierRepository.GetById(id);
+			if (supplier == null)
+				throw new ArgumentException("An invalid ID was supplied for the supplier.");
+			supplier.Name = name;
+			PopulateTradingAddressInfo(supplier, tradingAddressDetails);
+			PopulateTradingContactInfo(supplier, tradingContactInfo);
+			PopulateSalesAddressInfo(supplier, salesAddressDetails);
+			PopulateSalesContactInfo(supplier, salesContactInfo);
+			ValidateAnnotatedObjectThrowOnFailure(supplier);
+			_supplierValidator.ValidateThrowOnFailure(supplier);
+			_supplierRepository.Update(supplier);
+			return supplier;
+		}
+
+		public Supplier GetById(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _supplierRepository.GetById(id);
+		}
+
+		public IEnumerable<Supplier> GetSuppliers()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _supplierRepository.GetSuppliers();
 		}
 
 		private void PopulateTradingAddressInfo(Supplier supplier, Address tradingAddressDetails)

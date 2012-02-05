@@ -15,6 +15,11 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			return Create(MockRepository.GenerateStub<ISupplierRepository>());
 		}
 
+		public static SupplierService Create(IUserContext userContext)
+		{
+			return Create(MockRepository.GenerateStub<ISupplierRepository>(), userContext);
+		}
+
 		public static SupplierService Create(ISupplierRepository repository)
 		{
 			return Create(repository, TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));

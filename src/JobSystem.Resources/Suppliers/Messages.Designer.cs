@@ -88,6 +88,15 @@ namespace JobSystem.Resources.Suppliers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An internal member role is required for this view.
+        /// </summary>
+        public static string InsufficientSecurityClearance {
+            get {
+                return ResourceManager.GetString("InsufficientSecurityClearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A name is required for the supplier..
         /// </summary>
         public static string NameRequired {
