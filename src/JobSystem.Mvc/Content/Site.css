@@ -710,6 +710,11 @@ div#title {
 	margin-right: 15px;
 }
 
+.st_tab_view .job-details-fields {
+	margin-top: 1px;
+	margin-left: 1px;
+}
+
 #job-details-fields .details-header {
 	width: 210px;
 }

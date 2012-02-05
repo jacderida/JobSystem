@@ -10,6 +10,9 @@
 @using (Html.BeginForm("Create", "JobItem", FormMethod.Post))
 {
 	@Html.ValidationSummary(true)
+	<span class="form-section">
+		Name & Address
+	</span>
 	<fieldset>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.Instruments)
@@ -17,8 +20,6 @@
 		<div class="editor-field">
 			@Html.TextBox("InstrumentAutocomplete", "", new { id = "instrument-autocomplete" })
 			@Html.HiddenFor(model => model.InstrumentId, new { id = "InstrumentId" })
-			@*@Html.TextBoxFor(model => model.Instruments, new { id = "instrument-autocomplete" })*@
-			@*@Html.ValidationMessageFor(model => model.Instruments)*@
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.SerialNo)
@@ -40,7 +41,7 @@
 			@Html.LabelFor(model => model.CalPeriod)
 		</div>
 		<div class="editor-field">
-			@Html.TextBoxFor(model => model.CalPeriod, new { @Value = "12" })
+			@Html.TextBoxFor(model => model.CalPeriod, new { @Value = "12", @class = "short-text" })
 			@Html.ValidationMessageFor(model => model.CalPeriod)
 		</div>
 		<div class="editor-label">
