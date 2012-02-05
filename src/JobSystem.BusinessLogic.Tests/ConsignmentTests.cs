@@ -89,5 +89,37 @@ namespace JobSystem.BusinessLogic.Tests
 				_domainValidationException = dex;
 			}
 		}
+
+		[Test]
+		public void GetById_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			try
+			{
+				_consignmentService = ConsignmentServiceFactory.Create(
+					TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Public));
+				_consignmentService.GetById(Guid.NewGuid());
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
+		}
+
+		[Test]
+		public void GetConsignments_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			try
+			{
+				_consignmentService = ConsignmentServiceFactory.Create(
+					TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Public));
+				_consignmentService.GetConsignments();
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
+		}
 	}
 }

@@ -22,6 +22,11 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			return Create(MockRepository.GenerateStub<IConsignmentRepository>(), supplierId, userContext);
 		}
 
+		public static ConsignmentService Create(IUserContext userContext)
+		{
+			return Create(MockRepository.GenerateStub<IConsignmentRepository>(), Guid.NewGuid(), userContext);
+		}
+
 		public static ConsignmentService Create(IConsignmentRepository consignmentRepository, Guid supplierId)
 		{
 			return Create(consignmentRepository, supplierId,

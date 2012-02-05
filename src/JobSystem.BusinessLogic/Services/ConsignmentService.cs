@@ -6,6 +6,7 @@ using JobSystem.Framework;
 using JobSystem.Framework.Messaging;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.Resources.Consignments;
+using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -41,6 +42,20 @@ namespace JobSystem.BusinessLogic.Services
 			consignment.ConsignmentNo = _entityIdProvider.GetIdFor<Consignment>();
 			_consignmentRepository.Create(consignment);
 			return consignment;
+		}
+
+		public Consignment GetById(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _consignmentRepository.GetById(id);
+		}
+
+		public IEnumerable<Consignment> GetConsignments()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _consignmentRepository.GetConsignments();
 		}
 
 		private Supplier GetSupplier(Guid supplierId)
