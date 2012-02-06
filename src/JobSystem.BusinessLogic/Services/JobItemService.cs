@@ -16,7 +16,6 @@ namespace JobSystem.BusinessLogic.Services
 		private IJobItemRepository _jobItemRepository;
 		private InstrumentService _instrumentService;
 		private ListItemService _listItemService;
-		//private ItemHistoryService 
 
 		public JobItemService(
 			IUserContext applicationContext,
@@ -64,21 +63,6 @@ namespace JobSystem.BusinessLogic.Services
 			var job = GetJob(jobId);
 			jobItem.Job = job;
 			_jobItemRepository.Create(jobItem);
-			return jobItem;
-		}
-
-		public JobItem UpdateStatus(Guid jobItemId, Guid statusId)
-		{
-			if (!CurrentUser.HasRole(UserRole.Member))
-				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
-			var jobItem = _jobItemRepository.GetById(jobItemId);
-			if (jobItem == null)
-				throw new ArgumentException("A valid job item ID is required to update the status of the job item.");
-			var status = _listItemService.GetById(statusId);
-			if (status.Type != ListItemType.JobItemStatus)
-				throw new DomainValidationException(Messages.InvalidListItemType);
-			jobItem.Status = _listItemService.GetById(statusId);
-			_jobItemRepository.Update(jobItem);
 			return jobItem;
 		}
 
