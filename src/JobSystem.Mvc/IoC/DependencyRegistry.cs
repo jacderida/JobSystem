@@ -28,7 +28,7 @@ namespace JobSystem.Mvc.IoC
 			builder.RegisterModule(new ServiceModule());
 			builder.RegisterAssemblyTypes(typeof(UserAccountRepository).Assembly)
 				.Where(t => t.Name.EndsWith("Repository"))
-				.AsImplementedInterfaces();
+				.AsImplementedInterfaces().SingleInstance();
 			builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>();
 			builder.RegisterType<LocalAppConfig>().As<IAppConfig>().InstancePerLifetimeScope();
 			builder.RegisterType<HostRequestConfigDomainProvider>().As<IConfigDomainProvider>();

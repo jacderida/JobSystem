@@ -19,8 +19,16 @@ namespace JobSystem.BusinessLogic.Services
 			_listItemRepository = listItemRepository;
 		}
 
+		public ListItem GetByName(string name)
+		{
+			return _listItemRepository.GetByName(name);
+		}
+
 		public ListItem GetById(Guid id)
 		{
+			var listItem = _listItemRepository.GetById(id);
+			if (listItem == null)
+				throw new ArgumentException("A valid ID must be supplied for the list item ID");
 			return _listItemRepository.GetById(id);
 		}
 

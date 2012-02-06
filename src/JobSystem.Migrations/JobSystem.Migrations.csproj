@@ -69,6 +69,7 @@
     <Compile Include="M20111230053929_AddEntityIdLookupsTable.cs" />
     <Compile Include="M20120204172935_AddSupplierTable.cs" />
     <Compile Include="M20120205154517_AddConsignmentsTable.cs" />
+    <Compile Include="M20120205193700_AddConsignmentItemsTable.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -14,7 +14,7 @@ namespace JobSystem.BusinessLogic.Services
 	{
 		private IJobRepository _jobRepository;
 		private IInstrumentRepository _instrumentRepository;
-		private IListItemRepository _listItemRepository;
+		private ListItemService _listItemService;
 		private IJobItemRepository _jobItemRepository;
 
 		public JobItemService(
@@ -22,13 +22,13 @@ namespace JobSystem.BusinessLogic.Services
 			IJobRepository jobRepository,
 			IJobItemRepository jobItemRepository,
 			IInstrumentRepository instrumentRepository,
-			IListItemRepository listItemRepository,
+			ListItemService listItemService,
 			IQueueDispatcher<IMessage> dispatcher)
 			: base(applicationContext, dispatcher)
 		{
 			_jobRepository = jobRepository;
 			_instrumentRepository = instrumentRepository;
-			_listItemRepository = listItemRepository;
+			_listItemService = listItemService;
 			_jobItemRepository = jobItemRepository;
 		}
 
@@ -47,10 +47,10 @@ namespace JobSystem.BusinessLogic.Services
 				Instrument = GetInstrument(instrumentId),
 				SerialNo = serialNo,
 				AssetNo = assetNo,
-				InitialStatus = GetListItem(initialStatusId),
-				Status = _listItemRepository.GetByName("Booked In"),
-				Location = GetListItem(locationId),
-				Field = GetListItem(fieldId),
+				InitialStatus = _listItemService.GetById(initialStatusId),
+				Status = _listItemService.GetByName("Booked In"),
+				Location = _listItemService.GetById(locationId),
+				Field = _listItemService.GetById(fieldId),
 				CalPeriod = GetAndValidateCalPeriod(calPeriod),
 				Instructions = instructions,
 				Accessories = accessories,
@@ -96,14 +96,6 @@ namespace JobSystem.BusinessLogic.Services
 			if (instrument == null)
 				throw new ArgumentException("A valid ID must be supplied for the instrument ID");
 			return instrument;
-		}
-
-		private ListItem GetListItem(Guid listItemId)
-		{
-			var type = _listItemRepository.GetById(listItemId);
-			if (type == null)
-				throw new ArgumentException("A valid ID must be supplied for the list item ID");
-			return type;
 		}
 
 		private int GetAndValidateCalPeriod(int calPeriod)

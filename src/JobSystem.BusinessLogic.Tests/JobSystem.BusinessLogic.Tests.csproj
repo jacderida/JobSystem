@@ -88,11 +88,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompanyDetailsTests.cs" />
+    <Compile Include="ConsignmentItemTests.cs" />
     <Compile Include="ConsignmentTests.cs" />
     <Compile Include="Context\TestAppConfig.cs" />
     <Compile Include="Context\TestUserContext.cs" />
     <Compile Include="CustomerTests.cs" />
     <Compile Include="Helpers\CompanyDetailsServiceFactory.cs" />
+    <Compile Include="Helpers\ConsignmentItemServiceFactory.cs" />
     <Compile Include="Helpers\ConsignmentServiceFactory.cs" />
     <Compile Include="Helpers\CustomerServiceFactory.cs" />
     <Compile Include="Helpers\DomainValidationExtensions.cs" />

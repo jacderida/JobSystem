@@ -30,24 +30,26 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 		public static JobItemService Create(
 			IJobItemRepository jobItemRepository, Guid jobId, Guid instrumentId, Guid initialStatusId, Guid locationId, Guid fieldId, int jobItemCount, IUserContext userContext)
 		{
+			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
 			return new JobItemService(
 				userContext,
 				GetJobRepository(jobId, jobItemCount),
 				jobItemRepository,
 				GetInstrumentRepository(instrumentId),
-				GetListItemRepository(initialStatusId, locationId, fieldId),
-				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+				new ListItemService(userContext, GetListItemRepository(initialStatusId, locationId, fieldId), dispatcher),
+				dispatcher);
 		}
 
 		public static JobItemService CreateForItemHistory(IJobItemRepository jobItemRepository, Guid workStatusId, Guid workLocationId, Guid workTypeId, IUserContext userContext)
 		{
+			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
 			return new JobItemService(
 				userContext,
 				MockRepository.GenerateStub<IJobRepository>(),
 				jobItemRepository,
 				MockRepository.GenerateStub<IInstrumentRepository>(),
-				ItemHistoryServiceFactory.GetListItemRepositoryForItemHistory(workStatusId, workTypeId, workLocationId),
-				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+				new ListItemService(userContext, ItemHistoryServiceFactory.GetListItemRepositoryForItemHistory(workStatusId, workTypeId, workLocationId), dispatcher),
+				dispatcher);
 		}
 
 		private static IJobRepository GetJobRepository(Guid jobId, int jobItemCount)
