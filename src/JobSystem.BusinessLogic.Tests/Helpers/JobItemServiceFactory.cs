@@ -54,18 +54,30 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 
 		public static JobItemService CreateForUpdateStatus(IJobItemRepository jobItemRepository, Guid statusId)
 		{
-			return CreateForUpdateStatus(jobItemRepository, statusId,
+			return CreateForUpdateStatus(jobItemRepository,GetListItemRepositoryForUpdateStatus(statusId),
 				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
 		}
 
 		public static JobItemService CreateForUpdateStatus(IJobItemRepository jobItemRepository, Guid statusId, IUserContext userContext)
+		{
+			return CreateForUpdateStatus(jobItemRepository, GetListItemRepositoryForUpdateStatus(statusId), userContext);
+		}
+
+		public static JobItemService CreateForUpdateStatus(IJobItemRepository jobItemRepository, IListItemRepository listItemRepository)
+		{
+			return CreateForUpdateStatus(jobItemRepository, listItemRepository,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
+		}
+
+		public static JobItemService CreateForUpdateStatus(
+			IJobItemRepository jobItemRepository, IListItemRepository listItemRepository, IUserContext userContext)
 		{
 			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
 			return new JobItemService(
 				userContext,
 				MockRepository.GenerateStub<IJobRepository>(),
 				jobItemRepository,
-				new ListItemService(userContext, GetListItemRepositoryForUpdateStatus(statusId), dispatcher),
+				new ListItemService(userContext, listItemRepository, dispatcher),
 				new InstrumentService(userContext, MockRepository.GenerateStub<IInstrumentRepository>(), dispatcher),
 				dispatcher);
 		}

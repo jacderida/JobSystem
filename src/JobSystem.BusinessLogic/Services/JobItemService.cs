@@ -68,7 +68,14 @@ namespace JobSystem.BusinessLogic.Services
 
 		public JobItem UpdateStatus(Guid jobItemId, Guid statusId)
 		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			var jobItem = _jobItemRepository.GetById(jobItemId);
+			if (jobItem == null)
+				throw new ArgumentException("A valid job item ID is required to update the status of the job item.");
+			var status = _listItemService.GetById(statusId);
+			if (status.Type != ListItemType.JobItemStatus)
+				throw new DomainValidationException(Messages.InvalidListItemType);
 			jobItem.Status = _listItemService.GetById(statusId);
 			_jobItemRepository.Update(jobItem);
 			return jobItem;
@@ -77,14 +84,14 @@ namespace JobSystem.BusinessLogic.Services
 		public JobItem GetById(Guid id)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
-				throw new DomainValidationException("A member role is required for this operation");
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			return _jobItemRepository.GetById(id);
 		}
 
 		public IEnumerable<JobItem> GetJobItems(Guid jobId)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
-				throw new DomainValidationException("A member role is required for this operation");
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			return _jobItemRepository.GetJobItems(jobId);
 		}
 

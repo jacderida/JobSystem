@@ -97,11 +97,29 @@ namespace JobSystem.Resources.JobItems {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The member role is required for this operation.
+        /// </summary>
+        public static string InsufficientSecurityClearance {
+            get {
+                return ResourceManager.GetString("InsufficientSecurityClearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The cal period must be greater than 0.
         /// </summary>
         public static string InvalidCalPeriod {
             get {
                 return ResourceManager.GetString("InvalidCalPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The list item type used must be a job item status.
+        /// </summary>
+        public static string InvalidListItemType {
+            get {
+                return ResourceManager.GetString("InvalidListItemType", resourceCulture);
             }
         }
         

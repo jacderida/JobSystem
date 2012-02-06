@@ -129,8 +129,14 @@
   <data name="InstructionsTooLarge" xml:space="preserve">
     <value>The instructions cannot exceed 255 characters</value>
   </data>
+  <data name="InsufficientSecurityClearance" xml:space="preserve">
+    <value>The member role is required for this operation</value>
+  </data>
   <data name="InvalidCalPeriod" xml:space="preserve">
     <value>The cal period must be greater than 0</value>
+  </data>
+  <data name="InvalidListItemType" xml:space="preserve">
+    <value>The list item type used must be a job item status</value>
   </data>
   <data name="ItemHistoryInsufficientSecurityClearance" xml:space="preserve">
     <value>You must have a member role to perform this action</value>
