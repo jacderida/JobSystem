@@ -57,7 +57,7 @@ namespace JobSystem.Mvc.Controllers
 
 		[HttpPost]
 		[Transaction]
-		public ActionResult Create(SupplierCreateViewModel viewModel)
+		public ActionResult Create(SupplierViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
@@ -79,6 +79,43 @@ namespace JobSystem.Mvc.Controllers
 				}
 			}
 			return View(viewModel);
+		}
+
+		public ActionResult Edit(Guid Id)
+		{
+			var supplier = _supplierService.GetById(Id);
+			return View(SupplierViewModel.GetSupplierViewModelFromSupplier(supplier));
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult Edit(SupplierViewModel viewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					_supplierService.Edit(
+						viewModel.Id,
+						viewModel.Name,
+						Address.GetAddressFromLineDetails(viewModel.Address1, viewModel.Address2, viewModel.Address3, viewModel.Address4, viewModel.Address5),
+						ContactInfo.GetContactInfoFromDetails(viewModel.Telephone, viewModel.Fax, viewModel.Email, viewModel.Contact1, viewModel.Contact2),
+						Address.GetAddressFromLineDetails(viewModel.SalesAddress1, viewModel.SalesAddress2, viewModel.SalesAddress3, viewModel.SalesAddress4, viewModel.SalesAddress5),
+						ContactInfo.GetContactInfoFromDetails(viewModel.SalesTelephone, viewModel.SalesFax, viewModel.SalesEmail, viewModel.SalesContact1, viewModel.SalesContact2));
+					return RedirectToAction("Index");
+				}
+				catch (DomainValidationException dex)
+				{
+					ModelState.UpdateFromDomain(dex.Result);
+				}
+			}
+			return View(viewModel);
+		}
+
+		public ActionResult Details(Guid Id)
+		{
+			var supplier = _supplierService.GetById(Id);
+			return View(SupplierViewModel.GetSupplierViewModelFromSupplier(supplier));
 		}
     }
 }

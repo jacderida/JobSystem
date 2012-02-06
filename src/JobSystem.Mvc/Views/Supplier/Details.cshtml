@@ -1,0 +1,102 @@
+﻿@model JobSystem.Mvc.ViewModels.Suppliers.SupplierViewModel
+@{
+	ViewBag.Title = "Details";
+}
+<span class="form-section">
+	Name & Trading Address
+</span>
+<fieldset>
+	<div class="display-label">@Html.LabelFor(model => model.Name)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Name)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.Address1)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Address1)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.Address2)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Address2)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.Address3)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Address3)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.Address4)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Address4)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.Address5)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Address5)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.Telephone)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Telephone)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.Fax)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Fax)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.Email)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Email)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.Contact1)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Contact1)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.Contact2)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Contact2)
+	</div>
+</fieldset>
+<span class="form-section">
+	Sales Address
+</span>
+<fieldset>
+	<div class="display-label">@Html.LabelFor(model => model.SalesAddress1)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.SalesAddress1)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.SalesAddress2)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.SalesAddress2)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.SalesAddress3)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.SalesAddress3)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.SalesAddress4)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.SalesAddress4)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.SalesAddress5)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.SalesAddress5)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.SalesTelephone)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.SalesTelephone)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.SalesFax)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.SalesFax)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.Email)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Email)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.SalesContact1)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.SalesContact1)
+	</div>
+	<div class="display-label">@Html.LabelFor(model => model.SalesContact2)</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.SalesContact2)
+	</div>
+</fieldset>
+<p>
+	@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+	@Html.ActionLink("Back to List", "Index")
+</p>
