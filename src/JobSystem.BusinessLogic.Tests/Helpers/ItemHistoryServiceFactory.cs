@@ -15,9 +15,11 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 	{
 		public static ItemHistoryService Create(IJobItemRepository jobItemRepository, Guid workStatusId, Guid workLocationId, Guid workTypeId, IUserContext userContext)
 		{
+			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
 			return new ItemHistoryService(
-				userContext, jobItemRepository, GetListItemRepositoryForItemHistory(workStatusId, workTypeId, workLocationId),
-				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+				userContext, jobItemRepository,
+				new ListItemService(userContext, GetListItemRepositoryForItemHistory(workStatusId, workTypeId, workLocationId), dispatcher),
+				dispatcher);
 		}
 
 		public static IListItemRepository GetListItemRepositoryForItemHistory(Guid workStatusId, Guid workTypeId, Guid workLocationId)

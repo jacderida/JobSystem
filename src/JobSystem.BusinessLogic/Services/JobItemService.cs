@@ -13,9 +13,10 @@ namespace JobSystem.BusinessLogic.Services
 	public class JobItemService : ServiceBase
 	{
 		private IJobRepository _jobRepository;
+		private IJobItemRepository _jobItemRepository;
 		private InstrumentService _instrumentService;
 		private ListItemService _listItemService;
-		private IJobItemRepository _jobItemRepository;
+		//private ItemHistoryService 
 
 		public JobItemService(
 			IUserContext applicationContext,

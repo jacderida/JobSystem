@@ -11,17 +11,17 @@ namespace JobSystem.BusinessLogic.Services
 {
 	public class ItemHistoryService : ServiceBase
 	{
-		private IJobItemRepository _jobItemRepository;
-		private IListItemRepository _listItemRepository;
+		private readonly IJobItemRepository _jobItemRepository;
+		private readonly ListItemService _listItemService;
 
 		public ItemHistoryService(
 			IUserContext applicationContext,
 			IJobItemRepository jobItemRepository,
-			IListItemRepository listItemRepository,
+			ListItemService listItemService,
 			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
 		{
 			_jobItemRepository = jobItemRepository;
-			_listItemRepository = listItemRepository;
+			_listItemService = listItemService;
 		}
 
 		public ItemHistory CreateItemHistory(Guid id, Guid jobItemId, int workTime, int overTime, string report, Guid workStatusId, Guid workTypeId, Guid workLocationId)
@@ -42,24 +42,16 @@ namespace JobSystem.BusinessLogic.Services
 				WorkTime = GetAndValidateWorkTime(workTime),
 				OverTime = GetAndValidateOverTime(overTime),
 				Report = report,
-				Status = GetListItem(workStatusId),
-				WorkLocation = GetListItem(workLocationId),
-				WorkType = GetListItem(workTypeId)
+				Status = _listItemService.GetById(workStatusId),
+				WorkLocation = _listItemService.GetById(workLocationId),
+				WorkType = _listItemService.GetById(workTypeId)
 			};
-			jobItem.Status = GetListItem(workStatusId);
-			jobItem.Location = GetListItem(workLocationId);
+			jobItem.Status = _listItemService.GetById(workStatusId);
+			jobItem.Location = _listItemService.GetById(workLocationId);
 			ValidateAnnotatedObjectThrowOnFailure(itemHistory);
 			_jobItemRepository.CreateItemHistory(itemHistory);
 			_jobItemRepository.Update(jobItem);
 			return itemHistory;
-		}
-
-		private ListItem GetListItem(Guid listItemId)
-		{
-			var type = _listItemRepository.GetById(listItemId);
-			if (type == null)
-				throw new ArgumentException("A valid ID must be supplied for the list item ID");
-			return type;
 		}
 
 		private int GetAndValidateWorkTime(int workTime)

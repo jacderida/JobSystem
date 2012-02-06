@@ -12,7 +12,6 @@ namespace JobSystem.BusinessLogic.Services
 	{
 		private readonly ListItemService _listItemService;
 		private readonly ItemHistoryService _itemHistoryService;
-		private readonly JobItemService _jobItemService;
 		private readonly IConsignmentRepository _consignmentRepository;
 		private readonly IConsignmentItemRepository _consignmentItemRepository;
 		
@@ -28,7 +27,6 @@ namespace JobSystem.BusinessLogic.Services
 		{
 			_listItemService = listItemService;
 			_itemHistoryService = itemHistoryService;
-			_jobItemService = jobItemRepository;
 			_consignmentRepository = consignmentRepository;
 			_consignmentItemRepository = consignmentItemRepository;
 		}

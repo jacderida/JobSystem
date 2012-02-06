@@ -42,7 +42,8 @@ namespace TestBed
 				new InstrumentService(testUserContext, new InstrumentRepository(), queueDispatcher),
 				queueDispatcher);
 			var instrumentService = new InstrumentService(testUserContext, new InstrumentRepository(), queueDispatcher);
-			var itemHistoryService = new ItemHistoryService(testUserContext, new JobItemRepository(), new ListItemRepository(), queueDispatcher);
+			var itemHistoryService = new ItemHistoryService(testUserContext, new JobItemRepository(),
+				new ListItemService(testUserContext, new ListItemRepository(), queueDispatcher), queueDispatcher);
 
 			var jobId = Guid.NewGuid();
 			var jobItemId = Guid.NewGuid();
