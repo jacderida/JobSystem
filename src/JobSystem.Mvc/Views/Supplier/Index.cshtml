@@ -10,6 +10,7 @@
 		<tr>
 			<th>Name</th>
 			<th>Email</th>
+			<th>Telephone</th>
 			<th>Primary Contact</th>
 			<th></th>
 		</tr>
@@ -20,7 +21,10 @@
 					@Html.ActionLink(item.Name, "Details", new { id = item.Id })
 				</td>
 				<td>
-				
+					@item.TradingEmail
+				</td>
+				<td>
+					@item.TradingTelephone
 				</td>
 				<td>
 					@item.TradingContact1
