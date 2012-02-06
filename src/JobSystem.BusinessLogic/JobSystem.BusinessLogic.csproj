@@ -64,6 +64,7 @@
     <Compile Include="Services\EntityIdProviderFromWebService.cs" />
     <Compile Include="Services\EntityIdProviderService.cs" />
     <Compile Include="Services\InstrumentService.cs" />
+    <Compile Include="Services\ItemHistoryService.cs" />
     <Compile Include="Services\JobItemService.cs" />
     <Compile Include="Services\JobService.cs" />
     <Compile Include="Services\ListItemService.cs" />
