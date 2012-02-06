@@ -3,6 +3,7 @@ using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Tests.Context;
 using JobSystem.BusinessLogic.Tests.Helpers;
 using JobSystem.BusinessLogic.Validation.Core;
+using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework;
@@ -18,13 +19,50 @@ namespace JobSystem.BusinessLogic.Tests
 		private DomainValidationException _domainValidationException;
 		private JobItem _savedJobItem;
 		private DateTime _dateCreated = new DateTime(2011, 12, 29);
+		private JobItem _jobItemToUpdate;
+		private Guid _jobItemToUpdateId;
+		private IUserContext _userContext;
+
+		[TestFixtureSetUp]
+		public void FixtureSetup()
+		{
+			_userContext = TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member);
+		}
 
 		[SetUp]
 		public void Setup()
 		{
+			_jobItemToUpdateId = Guid.NewGuid();
 			_domainValidationException = null;
 			AppDateTime.GetUtcNow = () => _dateCreated;
+			_jobItemToUpdate = new JobItem
+			{
+				Job = new Job
+				{
+					Id = _jobItemToUpdateId,
+					JobNo = "JR2000",
+					CreatedBy = _userContext.GetCurrentUser(),
+					OrderNo = "ORDER12345",
+					DateCreated = DateTime.UtcNow,
+					Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" }
+				},
+				ItemNo = 1,
+				SerialNo = "12345",
+				Instrument = new Instrument
+				{
+					Id = Guid.NewGuid(),
+					Manufacturer = "Druck",
+					ModelNo = "DPI601IS",
+					Range = "None",
+					Description = "Digital Pressure Indicator"
+				},
+				CalPeriod = 12,
+				Created = DateTime.UtcNow,
+				CreatedUser = _userContext.GetCurrentUser(),
+			};
 		}
+
+		#region Create
 
 		[Test]
 		public void CreateJobItem_ValidJobItemDetailsWithFirstItem_JobItemCreatedSuccessfullyWithItemNoAs1()
@@ -296,5 +334,36 @@ namespace JobSystem.BusinessLogic.Tests
 				_domainValidationException = dex;
 			}
 		}
+
+		#endregion
+		#region UpdateStatus
+
+		[Test]
+		public void UpdateStatus_ValidDetailsSupplied_JobItemUpdated()
+		{
+			var statusId = Guid.NewGuid();
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
+			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate));
+			_jobItemService = JobItemServiceFactory.CreateForUpdateStatus(jobItemRepositoryMock, statusId);
+			UpdateJobItemStatus(statusId);
+			jobItemRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(statusId, _jobItemToUpdate.Status.Id);
+		}
+
+		private void UpdateJobItemStatus(Guid statusId)
+		{
+			try
+			{
+				_jobItemToUpdate = _jobItemService.UpdateStatus(_jobItemToUpdateId, statusId);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
 	}
 }

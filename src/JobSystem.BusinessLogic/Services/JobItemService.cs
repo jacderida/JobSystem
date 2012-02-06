@@ -66,6 +66,14 @@ namespace JobSystem.BusinessLogic.Services
 			return jobItem;
 		}
 
+		public JobItem UpdateStatus(Guid jobItemId, Guid statusId)
+		{
+			var jobItem = _jobItemRepository.GetById(jobItemId);
+			jobItem.Status = _listItemService.GetById(statusId);
+			_jobItemRepository.Update(jobItem);
+			return jobItem;
+		}
+
 		public JobItem GetById(Guid id)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

@@ -52,6 +52,24 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 				dispatcher);
 		}
 
+		public static JobItemService CreateForUpdateStatus(IJobItemRepository jobItemRepository, Guid statusId)
+		{
+			return CreateForUpdateStatus(jobItemRepository, statusId,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
+		}
+
+		public static JobItemService CreateForUpdateStatus(IJobItemRepository jobItemRepository, Guid statusId, IUserContext userContext)
+		{
+			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
+			return new JobItemService(
+				userContext,
+				MockRepository.GenerateStub<IJobRepository>(),
+				jobItemRepository,
+				new ListItemService(userContext, GetListItemRepositoryForUpdateStatus(statusId), dispatcher),
+				new InstrumentService(userContext, MockRepository.GenerateStub<IInstrumentRepository>(), dispatcher),
+				dispatcher);
+		}
+
 		private static IJobRepository GetJobRepository(Guid jobId, int jobItemCount)
 		{
 			var jobRepository = MockRepository.GenerateStub<IJobRepository>();
@@ -89,6 +107,16 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			else
 				listItemRepositoryStub.Stub(x => x.GetById(fieldId)).Return(null);
 			listItemRepositoryStub.Stub(x => x.GetByName("Booked In")).Return(GetBookedInStatus());
+			return listItemRepositoryStub;
+		}
+
+		private static IListItemRepository GetListItemRepositoryForUpdateStatus(Guid statusId)
+		{
+			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
+			if (statusId != Guid.Empty)
+				listItemRepositoryStub.Stub(x => x.GetById(statusId)).Return(GetStatusForUpdate(statusId));
+			else
+				listItemRepositoryStub.Stub(x => x.GetById(statusId)).Return(null);
 			return listItemRepositoryStub;
 		}
 
@@ -179,6 +207,16 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 				Id = fieldId,
 				Name = "E - Electrical",
 				Type = ListItemType.JobItemField
+			};
+		}
+
+		private static ListItem GetStatusForUpdate(Guid statusId)
+		{
+			return new ListItem
+			{
+				Id = statusId,
+				Name = "Calibrated",
+				Type = ListItemType.JobItemStatus
 			};
 		}
 	}
