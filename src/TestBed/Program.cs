@@ -37,8 +37,10 @@ namespace TestBed
 			var jobService = new JobService(
 				testUserContext, new JobRepository(), new ListItemRepository(), new CustomerRepository(), new EntityIdProvider(), queueDispatcher);
 			var jobItemService = new JobItemService(
-				testUserContext, new JobRepository(), new JobItemRepository(), new InstrumentRepository(),
-				new ListItemService(testUserContext, new ListItemRepository(), queueDispatcher), queueDispatcher);
+				testUserContext, new JobRepository(), new JobItemRepository(),
+				new ListItemService(testUserContext, new ListItemRepository(), queueDispatcher),
+				new InstrumentService(testUserContext, new InstrumentRepository(), queueDispatcher),
+				queueDispatcher);
 			var instrumentService = new InstrumentService(testUserContext, new InstrumentRepository(), queueDispatcher);
 			var itemHistoryService = new ItemHistoryService(testUserContext, new JobItemRepository(), new ListItemRepository(), queueDispatcher);
 

@@ -35,8 +35,8 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 				userContext,
 				GetJobRepository(jobId, jobItemCount),
 				jobItemRepository,
-				GetInstrumentRepository(instrumentId),
 				new ListItemService(userContext, GetListItemRepository(initialStatusId, locationId, fieldId), dispatcher),
+				new InstrumentService(userContext, GetInstrumentRepository(instrumentId), dispatcher),
 				dispatcher);
 		}
 
@@ -47,8 +47,8 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 				userContext,
 				MockRepository.GenerateStub<IJobRepository>(),
 				jobItemRepository,
-				MockRepository.GenerateStub<IInstrumentRepository>(),
 				new ListItemService(userContext, ItemHistoryServiceFactory.GetListItemRepositoryForItemHistory(workStatusId, workTypeId, workLocationId), dispatcher),
+				new InstrumentService(userContext, MockRepository.GenerateStub<IInstrumentRepository>(), dispatcher),
 				dispatcher);
 		}
 

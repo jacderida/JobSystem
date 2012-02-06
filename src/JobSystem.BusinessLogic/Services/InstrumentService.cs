@@ -54,7 +54,10 @@ namespace JobSystem.BusinessLogic.Services
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
-			return _instrumentRepository.GetById(id);
+			var instrument = _instrumentRepository.GetById(id);
+			if (instrument == null)
+				throw new ArgumentException("A valid ID must be supplied for the instrument ID");
+			return instrument;
 		}
 
 		public IEnumerable<Instrument> GetInstruments()

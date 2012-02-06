@@ -13,7 +13,7 @@ namespace JobSystem.BusinessLogic.Services
 	public class JobItemService : ServiceBase
 	{
 		private IJobRepository _jobRepository;
-		private IInstrumentRepository _instrumentRepository;
+		private InstrumentService _instrumentService;
 		private ListItemService _listItemService;
 		private IJobItemRepository _jobItemRepository;
 
@@ -21,13 +21,13 @@ namespace JobSystem.BusinessLogic.Services
 			IUserContext applicationContext,
 			IJobRepository jobRepository,
 			IJobItemRepository jobItemRepository,
-			IInstrumentRepository instrumentRepository,
 			ListItemService listItemService,
+			InstrumentService instrumentService,
 			IQueueDispatcher<IMessage> dispatcher)
 			: base(applicationContext, dispatcher)
 		{
 			_jobRepository = jobRepository;
-			_instrumentRepository = instrumentRepository;
+			_instrumentService = instrumentService;
 			_listItemService = listItemService;
 			_jobItemRepository = jobItemRepository;
 		}
@@ -44,7 +44,7 @@ namespace JobSystem.BusinessLogic.Services
 				ItemNo = _jobRepository.GetJobItemCount(jobId) + 1,
 				Created = AppDateTime.GetUtcNow(),
 				CreatedUser = CurrentUser,
-				Instrument = GetInstrument(instrumentId),
+				Instrument = _instrumentService.GetById(instrumentId),
 				SerialNo = serialNo,
 				AssetNo = assetNo,
 				InitialStatus = _listItemService.GetById(initialStatusId),
@@ -88,14 +88,6 @@ namespace JobSystem.BusinessLogic.Services
 			if (job == null)
 				throw new ArgumentException("A valid ID must be supplied for the job ID");
 			return job;
-		}
-
-		private Instrument GetInstrument(Guid instrumentId)
-		{
-			var instrument = _instrumentRepository.GetById(instrumentId);
-			if (instrument == null)
-				throw new ArgumentException("A valid ID must be supplied for the instrument ID");
-			return instrument;
 		}
 
 		private int GetAndValidateCalPeriod(int calPeriod)
