@@ -78,11 +78,15 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Details(Guid Id)
 		{
 			var job = _jobItemService.GetById(Id);
-			var viewmodel = new JobItemViewModel()
+			var viewmodel = new JobItemDetailsViewModel()
 			{
 				Accessories = job.Accessories,
 				AssetNo = job.AssetNo,
 				CalPeriod = job.CalPeriod,
+				Field = job.Field.Name.ToString(),
+				InitialStatus = job.InitialStatus.Name.ToString(),
+				SerialNo = job.SerialNo,
+				Location = job.Location.Name.ToString(),
 				Comments = job.Comments,
 				Instructions = job.Instructions,
 				IsReturned = job.IsReturned,

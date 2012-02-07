@@ -30,6 +30,6 @@ namespace JobSystem.Mvc.ViewModels.Jobs
 		public string CustomerEmail { get; set; }
 		public string CustomerTelephone { get; set; }
 		public bool IsPending { get; set; }
-		public IList<JobItemViewModel> JobItems { get; set; }
+		public IList<JobItemDetailsViewModel> JobItems { get; set; }
 	}
 }

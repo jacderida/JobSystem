@@ -1,4 +1,14 @@
-﻿$(document).ready(function () {
+﻿var app = {
+	closeModal: function (element) {
+		switch (element) {
+			case 'work-item':
+				$("#create-work-item-container").dialog('close');
+				break;
+		}
+	}
+}
+
+$(document).ready(function () {
 	//Show/hide returned reason box on job item create
 	//Initial hide
 	$('#return-reason-group').hide();
@@ -124,9 +134,9 @@
 
 		//Get Job Item Details
 		$('.getJobItem').click(function () {
-//			$('html, body').animate({
-//				scrollTop: $("#horz_tabs_container").offset().top
-//			}, 50);
+			//			$('html, body').animate({
+			//				scrollTop: $("#horz_tabs_container").offset().top
+			//			}, 50);
 			$.get("../../JobItem/Details/" + $(this).attr('id'),
 			   function (data) {
 			   	$('#st_horizontal').hide();

@@ -28,20 +28,21 @@
             <div id="menucontainer">
                 <ul id="menu">		
 					<li>@Html.MenuLink("Jobs", "Index", "Job", "nav-link")</li>
+					<li>@Html.MenuLink("Consignments", "About", "Home", "nav-link")</li>
 					<li>@Html.MenuLink("Orders", "About", "Home", "nav-link")</li>
 					<li>@Html.MenuLink("Delivery", "About", "Home", "nav-link")</li>
 					<li>@Html.MenuLink("Invoicing", "About", "Home", "nav-link")</li>
-					<li>@Html.MenuLink("Suppliers", "Index", "Supplier", "nav-link")</li>
-                    <li>@Html.MenuLink("Customers", "Index", "Customer", "nav-link")</li>
 					<li>@Html.MenuLink("Reports", "About", "Home", "nav-link")</li>
 					<li id="settings"><a href="@Url.Action("About", "Home")" class="nav-link settings">_</a></li>
                 </ul>  
             </div>
 
 				<ul id="admin-menu" class="hidden">
-					<li>@Html.MenuLink("Company Details", "EditCompanyDetails", "Admin", "nav-link")</li>
-					<li>@Html.ActionLink("User Management", "Index", "UserManagement", new { }, new { @class = "nav-link" })</li>
+					<li>@Html.MenuLink("Customers", "Index", "Customer", "nav-link")</li>
+					<li>@Html.MenuLink("Suppliers", "Index", "Supplier", "nav-link")</li>
 					<li>@Html.MenuLink("Instruments", "Index", "Instrument", "nav-link")</li>
+					<li>@Html.ActionLink("Users", "Index", "UserManagement", new { }, new { @class = "nav-link" })</li>
+					<li>@Html.MenuLink("Company Details", "EditCompanyDetails", "Admin", "nav-link")</li>
 					<li><a href="#">Certificate Register</a></li>
 					<li><a href="#">Safety Standards</a></li>
 				</ul>
