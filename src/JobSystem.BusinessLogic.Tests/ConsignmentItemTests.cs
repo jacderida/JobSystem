@@ -5,6 +5,7 @@ using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using NUnit.Framework;
 using JobSystem.BusinessLogic.Tests.Context;
+using Rhino.Mocks;
 
 namespace JobSystem.BusinessLogic.Tests
 {
@@ -49,6 +50,12 @@ namespace JobSystem.BusinessLogic.Tests
 				Created = DateTime.UtcNow,
 				CreatedUser = _userContext.GetCurrentUser(),
 			};
+		}
+
+		[Test]
+		public void CreateConsignmentItem_ValidDetailsSupplied_SuccessfullyCreated()
+		{
+			var itemHistoryServiceMock = MockRepository.GenerateMock<ItemHistoryService>();
 		}
 	}
 }

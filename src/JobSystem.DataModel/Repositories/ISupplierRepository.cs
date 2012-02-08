@@ -10,5 +10,6 @@ namespace JobSystem.DataModel.Repositories
 	{
 		Supplier GetByName(string name);
 		IEnumerable<Supplier> GetSuppliers();
+		IEnumerable<Supplier> SearchByKeyword(string keyword);
 	}
 }

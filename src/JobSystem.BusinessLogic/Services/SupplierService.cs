@@ -77,6 +77,13 @@ namespace JobSystem.BusinessLogic.Services
 			return _supplierRepository.GetSuppliers();
 		}
 
+		public IEnumerable<Supplier> SearchByKeyword(string keyword)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _supplierRepository.SearchByKeyword(keyword);
+		}
+
 		private void PopulateTradingAddressInfo(Supplier supplier, Address tradingAddressDetails)
 		{
 			supplier.Address1 = !String.IsNullOrEmpty(tradingAddressDetails.Line1) ? tradingAddressDetails.Line1 : String.Empty;

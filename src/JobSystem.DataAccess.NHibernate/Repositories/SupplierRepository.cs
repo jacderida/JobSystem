@@ -3,6 +3,7 @@ using System.Linq;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using NHibernate.Linq;
+using NHibernate.Criterion;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 { 
@@ -16,6 +17,16 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		public IEnumerable<Supplier> GetSuppliers()
 		{
 			return CurrentSession.Query<Supplier>();
+		}
+
+		public IEnumerable<Supplier> SearchByKeyword(string keyword)
+		{
+			var criteria = CurrentSession.CreateCriteria<Supplier>();
+			var keywordCriteria = Restrictions.Disjunction();
+			keywordCriteria.Add(Restrictions.InsensitiveLike("Name", keyword + "%"));
+			keywordCriteria.Add(Restrictions.InsensitiveLike("Name", "% " + keyword + "%"));
+			criteria.Add(keywordCriteria);
+			return criteria.List<Supplier>();
 		}
 	}
 }
