@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.DataModel.Dto;
-using JobSystem.Mvc.ViewModels.Suppliers;
+using JobSystem.DataModel.Entities;
 using JobSystem.Mvc.Core.UIValidation;
+using JobSystem.Mvc.ViewModels.Suppliers;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -116,6 +118,14 @@ namespace JobSystem.Mvc.Controllers
 		{
 			var supplier = _supplierService.GetById(Id);
 			return View(SupplierViewModel.GetSupplierViewModelFromSupplier(supplier));
+		}
+
+		[HttpPost]
+		public ActionResult SearchSuppliers(string query)
+		{
+			IEnumerable<Supplier> suppliers = _supplierService.SearchByKeyword(query);
+
+			return Json(suppliers);
 		}
     }
 }

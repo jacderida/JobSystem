@@ -4,6 +4,9 @@
 			case 'work-item':
 				$("#create-work-item-container").dialog('close');
 				break;
+			case 'consignment-item':
+				$("#create-consignment-container").dialog('close');
+				break;
 		}
 	}
 }
@@ -118,7 +121,6 @@ $(document).ready(function () {
 			minLength: 1, // require at least one character from the user
 			dataType: 'json'
 		});
-
 
 		// Vertical Sliding Tabs demo
 		$('div#st_vertical').slideTabs({

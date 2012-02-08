@@ -17,4 +17,19 @@
 		return false;
 	});
 
+	//Create WORK ITEM modal form
+	$('.createConsignmentButton').click(function () {
+		var elemId = $(this).attr('id');
+		var Url = $('#createConsignmentUrl').val() + '/' + elemId;
+		$("#create-consignment-container").dialog({
+			modal: true,
+			width: 335,
+			title: 'Raise Consignment',
+			position: ['center', 100],
+			open: function (event, ui) {
+				$(this).load(Url);
+			}
+		});
+		return false;
+	});
 });

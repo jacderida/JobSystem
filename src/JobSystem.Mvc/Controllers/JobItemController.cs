@@ -1,13 +1,13 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataAccess.NHibernate.Web;
+using JobSystem.DataModel.Entities;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.JobItems;
-using JobSystem.DataModel.Entities;
-using System;
-using System.Linq;
 using JobSystem.Mvc.ViewModels.WorkItems;
 
 namespace JobSystem.Mvc.Controllers
@@ -80,6 +80,7 @@ namespace JobSystem.Mvc.Controllers
 			var job = _jobItemService.GetById(Id);
 			var viewmodel = new JobItemDetailsViewModel()
 			{
+				Id = job.Id,
 				Accessories = job.Accessories,
 				AssetNo = job.AssetNo,
 				CalPeriod = job.CalPeriod,
