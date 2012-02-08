@@ -192,7 +192,7 @@ ul#menu li {
     display: inline-block;
     list-style: none;
     height: 30px;
-    width: 90px;
+    width: 100px;
     margin-left: 2px;
 	background: transparent url(../Content/images/nav_bg.png) repeat-x;
 }

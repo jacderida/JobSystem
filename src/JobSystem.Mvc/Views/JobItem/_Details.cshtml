@@ -1,4 +1,4 @@
-﻿@model JobSystem.Mvc.ViewModels.JobItems.JobItemViewModel
+﻿@model JobSystem.Mvc.ViewModels.JobItems.JobItemDetailsViewModel
 
 <script src="@Url.Content("~/Scripts/jobitem.js")" type="text/javascript"></script>
 <script type="text/javascript">
@@ -21,19 +21,21 @@
 
 <div id="item-details-container">
 	<div class="item-details-fields">
-		<h3 id="job-item-number">@Model.AssetNo</h3>
+		<h3 id="job-item-number">@Model.InitialStatus</h3>
 		<span class="field-label">Instrument</span>
 		<span class="field">@Model.InstrumentDetails</span>
-	@*	@if (@Model.SerialNo) {*@
+		@if (!@Model.SerialNo.IsEmpty()) {
 			<span class="field-label">Serial Number</span>
 			<span class="field">@Model.SerialNo</span>
-	@*	}*@
+		}
+		@if (!@Model.AssetNo.IsEmpty()) {
+			<span class="field-label">Asset Number</span>
+			<span class="field">@Model.AssetNo</span>
+		}
 		<span class="field-label">Calibration Period</span>
 		<span class="field">@Model.CalPeriod</span>
-		@*@if (@Model.Fields.Count() > 0) {*@
-			<span class="field-label">Fields</span>
-			<span class="field">@Model.Fields</span>
-		@*}*@
+		<span class="field-label">Field</span>
+		<span class="field">@Model.Field</span>
 	</div>
 </div>
 
@@ -120,24 +122,11 @@
 					Justo gravida erat quam mauris purus, aliquam quisque, eget nisl. Pellentesque nibh
 					duis odio morbi quam, scelerisque convallis aenean quam tincidunt ornare nam nec
 					feugiat sodales tristique.</p>
-				<blockquote>
-					<p>
-						Aliquam commodo ullamcorper aenean erat. Nullam vel justo in neque porttitor eget
-						laoreet. Aenean lacus adipiscing.</p>
-				</blockquote>
-				<p>
-					Aliquam commodo ullamcorper erat. Nullam vel justo cras porttitor laoreet. Aenean
-					lacus dui, consequat eu, adipiscing nonummy, eget non, nisi. Morbi nunc est, dignissim
-					non, ornare sed, luctus eu, massa. Vivamus tincidunt diam nec eget urna.</p>
-				<p>
-					Curabitur velit. Veniam donec orci viverra, lorem convallis in libero quisque, purus
-					erat dolor curabitur, justo arcu nisl, natoque velit euismod dapibus nulla semper.
-					Suspendisse odio tempor. Id ornare nam nec feugiat, ac consectetuer magna, dolor
-					enim vel in, pulvinar bibendum ante ac, dui nibh dui est neque lacinia et. Duis
-					netus ut posuere feugiat arcu, purus wisi quis fringilla at, nunc ut eget elit duis
-					erat, eu praesent, ut fermentum lacus turpis cras. Justo gravida erat quam mauris
-					purus, aliquam quisque, eget nisl. Pellentesque nibh ut odio morbi quam, scelerisque
-					convallis tincidunt tristique.</p>
+			</div>
+		</div>
+		<div id="st_content_4" class="st_tab_view">
+			<div class="text">
+				<a href="#" class="primary-action createConsigmentButton" id="@Model.Id">Raise Consigment</a>
 			</div>
 		</div>
 		<div id="st_content_7" class="st_tab_view">

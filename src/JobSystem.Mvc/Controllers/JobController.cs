@@ -139,10 +139,15 @@ namespace JobSystem.Mvc.Controllers
 				CustomerEmail = job.Customer.Email,
 				CustomerTelephone = job.Customer.Telephone,
 				IsPending = job.IsPending,
-				JobItems = jobItems.Select(ji => new JobItemViewModel
+				JobItems = jobItems.Select(ji => new JobItemDetailsViewModel
 					{
 						Id = ji.Id,
 						AssetNo = ji.AssetNo,
+						SerialNo = ji.SerialNo,
+						InitialStatus = ji.Status.Name.ToString(),
+						CalPeriod = ji.CalPeriod,
+						Field = ji.Field.Name.ToString(),
+						Location = ji.Location.Name.ToString(),
 						InstrumentDetails = String.Format("{0} - {1} : {2}", ji.Instrument.ModelNo, ji.Instrument.Manufacturer.ToString(), ji.Instrument.Description),
 						WorkItems = ji.HistoryItems.Select(wi => new WorkItemDetailsViewModel
 						{
