@@ -6,6 +6,8 @@ using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.Mvc.ViewModels.Consignments;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -16,6 +18,25 @@ namespace JobSystem.Mvc.Controllers
 		public ConsignmentController(ConsignmentService consignmentService)
 		{
 			_consignmentService = consignmentService;
+		}
+
+		public ActionResult Index()
+		{
+			IList<ConsignmentIndexViewModel> viewmodels = new List<ConsignmentIndexViewModel>();
+
+			for (int i = 0; i < 10; i++)
+			{
+				viewmodels.Add(new ConsignmentIndexViewModel()
+				{
+					Id = i.ToString(),
+					Instructions = "aaa",
+					JobItemId = "11",
+					SupplierId = "aa",
+					SupplierName = "SupplierName" + i
+				});
+			}
+			
+			return View(viewmodels);
 		}
 
         public ActionResult Create(Guid Id)

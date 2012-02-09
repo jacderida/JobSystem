@@ -138,6 +138,7 @@
     <Compile Include="ViewModels\Account\LogOnViewModel.cs" />
     <Compile Include="ViewModels\Admin\CompanyDetailsViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentCreateViewModel.cs" />
+    <Compile Include="ViewModels\Consignments\ConsignmentIndexViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerIndexViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerViewModel.cs" />
     <Compile Include="ViewModels\Instruments\InstrumentViewModel.cs" />
@@ -347,6 +348,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Consignment\_Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Consignment\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

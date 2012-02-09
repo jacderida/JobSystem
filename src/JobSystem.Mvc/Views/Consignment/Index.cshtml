@@ -1,0 +1,43 @@
+﻿@model IList<JobSystem.Mvc.ViewModels.Consignments.ConsignmentIndexViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Consignments</h2>
+<a href="#" id="createConsignmentButton" class="primary-action">Raise Consignment</a>
+@if (Model.Any()) {
+	<table>
+		<tr>
+			<th></th>
+			<th>Supplier Name</th>
+			<th>Instructions</th>
+			<th></th>
+		</tr>
+	@foreach (var item in Model.OrderBy(i => i.SupplierName))
+	 {
+		<tr>
+			<td>
+				@Html.CheckBox("toBeConverted", false)
+			</td>
+			<td>
+				@item.SupplierName
+			</td>
+			<td>
+				@item.Instructions
+			</td>
+			<td>
+				<a href="#" class="editConsignmentButton" id="@item.Id">Edit</a>
+			</td>
+		</tr>
+	 }
+	</table>
+}else{
+	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
+}
+
+
+<div id="edit-consignment-container">
+</div>
+
+<input type="hidden" id="editUrl" value="@Url.Action("Edit", "Consignment")"/>
