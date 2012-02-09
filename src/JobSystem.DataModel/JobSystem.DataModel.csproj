@@ -82,6 +82,7 @@
     <Compile Include="Repositories\ICustomerRepository.cs" />
     <Compile Include="Repositories\IEntityIdLookupRepository.cs" />
     <Compile Include="Repositories\IInstrumentRepository.cs" />
+    <Compile Include="Repositories\IItemHistoryRepository.cs" />
     <Compile Include="Repositories\IJobItemRepository.cs" />
     <Compile Include="Repositories\IJobRepository.cs" />
     <Compile Include="Repositories\IListItemRepository.cs" />
