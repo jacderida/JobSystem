@@ -9,13 +9,15 @@ namespace JobSystem.DbWireup
 {
 	public class JobSystemDefaultDataBuilder
 	{
+		private List<ListItemCategory> _listItemCategories;
 		private List<ListItem> _jobTypes;
 		private List<ListItem> _jobItemLocations;
+		private List<ListItem> _jobItemInitialLocations;
 		private List<ListItem> _jobItemWorkStatusItems;
 		private List<ListItem> _jobItemInitialStatusItems;
 		private List<ListItem> _jobItemStatusItems;
 		private List<ListItem> _jobItemWorkTypes;
-		private List<ListItem> _jobItemFields;
+		private List<ListItem> _jobItemCategories;
 
 		private List<ListItem> _paymentTerms;
 		private List<TaxCode> _taxCodes;
@@ -25,13 +27,15 @@ namespace JobSystem.DbWireup
 
 		public JobSystemDefaultDataBuilder()
 		{
+			_listItemCategories = new List<ListItemCategory>();
 			_jobTypes = new List<ListItem>();
 			_jobItemLocations = new List<ListItem>();
+			_jobItemInitialLocations = new List<ListItem>();
 			_jobItemWorkStatusItems = new List<ListItem>();
 			_jobItemInitialStatusItems = new List<ListItem>();
 			_jobItemStatusItems = new List<ListItem>();
 			_jobItemWorkTypes = new List<ListItem>();
-			_jobItemFields = new List<ListItem>();
+			_jobItemCategories = new List<ListItem>();
 			_paymentTerms = new List<ListItem>();
 			_taxCodes = new List<TaxCode>();
 			_currencies = new List<ListItem>();
@@ -42,86 +46,90 @@ namespace JobSystem.DbWireup
 		public JobSystemDefaultData Build()
 		{
 			var defaultData = new JobSystemDefaultData();
-			foreach (var type in _jobTypes)
-				defaultData.JobTypes.Add(type);
-			foreach (var location in _jobItemLocations)
-				defaultData.JobItemLocations.Add(location);
-			foreach (var statusItem in _jobItemWorkStatusItems)
-				defaultData.JobItemWorkStatusItems.Add(statusItem);
-			foreach (var statusItem in _jobItemInitialStatusItems)
-				defaultData.JobItemInitialStatusItems.Add(statusItem);
-			foreach (var statusItem in _jobItemStatusItems)
-				defaultData.JobItemStatusItems.Add(statusItem);
-			foreach (var workType in _jobItemWorkTypes)
-				defaultData.JobItemWorkTypes.Add(workType);
-			foreach (var field in _jobItemFields)
-				defaultData.JobItemFields.Add(field);
-			foreach (var paymentTerm in _paymentTerms)
-				defaultData.PaymentTerms.Add(paymentTerm);
-			foreach (var taxCode in _taxCodes)
-				defaultData.TaxCodes.Add(taxCode);
-			foreach (var currency in _currencies)
-				defaultData.Currencies.Add(currency);
-			foreach (var bankDetails in _bankDetails)
-				defaultData.BankDetails.Add(bankDetails);
-			foreach (var entityLookup in _entityIdLookups)
-				defaultData.EntityIdLookups.Add(entityLookup);
+			_listItemCategories.ForEach(c => defaultData.ListItemCategories.Add(c));
+			_jobTypes.ForEach(jt => defaultData.JobTypes.Add(jt));
+			_jobItemLocations.ForEach(jil => defaultData.JobItemLocations.Add(jil));
+			_jobItemInitialLocations.ForEach(i => defaultData.JobItemInitialLocations.Add(i));
+			_jobItemWorkStatusItems.ForEach(si => defaultData.JobItemWorkStatusItems.Add(si));
+			_jobItemInitialStatusItems.ForEach(si => defaultData.JobItemInitialStatusItems.Add(si));
+			_jobItemStatusItems.ForEach(si => defaultData.JobItemStatusItems.Add(si));
+			_jobItemWorkTypes.ForEach(wt => defaultData.JobItemWorkTypes.Add(wt));
+			_jobItemCategories.ForEach(c => defaultData.JobItemCategories.Add(c));
+			_paymentTerms.ForEach(pt => defaultData.PaymentTerms.Add(pt));
+			_taxCodes.ForEach(tc => defaultData.TaxCodes.Add(tc));
+			_currencies.ForEach(c => defaultData.Currencies.Add(c));
+			_bankDetails.ForEach(bd => defaultData.BankDetails.Add(bd));
+			_entityIdLookups.ForEach(e => defaultData.EntityIdLookups.Add(e));
 			return defaultData;
 		}
 
-		public JobSystemDefaultDataBuilder WithJobTypes(params string[] jobTypes)
+		public JobSystemDefaultDataBuilder WithListItemCategories(params Tuple<string, ListItemCategoryType>[] categories)
+		{
+			foreach (var category in categories)
+				_listItemCategories.Add(new ListItemCategory { Id = Guid.NewGuid(), Name = category.Item1, Type = category.Item2 });
+			return this;
+		}
+
+		public JobSystemDefaultDataBuilder WithJobTypes(params Tuple<string, ListItemType>[] jobTypes)
 		{
 			foreach (var type in jobTypes)
-				_jobTypes.Add(new ListItem { Id = Guid.NewGuid(), Name = type, Type = ListItemType.JobType });
+				_jobTypes.Add(new ListItem { Id = Guid.NewGuid(), Name = type.Item1, Type = type.Item2 });
 			return this;
 		}
 
-		public JobSystemDefaultDataBuilder WithJobItemLocations(params string[] workLocations)
+		public JobSystemDefaultDataBuilder WithJobItemInitialLocations(params Tuple<string, ListItemType>[] workLocations)
 		{
 			foreach (var location in workLocations)
-				_jobItemLocations.Add(new ListItem { Id = Guid.NewGuid(), Name = location, Type = ListItemType.JobItemLocation });
+				_jobItemInitialLocations.Add(new ListItem { Id = Guid.NewGuid(), Name = location.Item1, Type = location.Item2 });
 			return this;
 		}
 
-		public JobSystemDefaultDataBuilder WithJobItemWorkStatusItems(params string[] workStatusItems)
+		public JobSystemDefaultDataBuilder WithJobItemLocations(params Tuple<string, ListItemType>[] workLocations)
+		{
+			foreach (var location in workLocations)
+				_jobItemLocations.Add(new ListItem { Id = Guid.NewGuid(), Name = location.Item1, Type = location.Item2 });
+			return this;
+		}
+
+		public JobSystemDefaultDataBuilder WithJobItemWorkStatusItems(params Tuple<string, ListItemType>[] workStatusItems)
 		{
 			foreach (var statusItem in workStatusItems)
-				_jobItemWorkStatusItems.Add(new ListItem { Id = Guid.NewGuid(), Name = statusItem, Type = ListItemType.JobItemWorkStatus });
+				_jobItemWorkStatusItems.Add(new ListItem { Id = Guid.NewGuid(), Name = statusItem.Item1, Type = statusItem.Item2 });
 			return this;
 		}
 
-		public JobSystemDefaultDataBuilder WithJobItemInitialStatusItems(params string[] initialStatusItems)
+		public JobSystemDefaultDataBuilder WithJobItemInitialStatusItems(params Tuple<string, ListItemType>[] initialStatusItems)
 		{
 			foreach (var statusItem in initialStatusItems)
-				_jobItemInitialStatusItems.Add(new ListItem { Id = Guid.NewGuid(), Name = statusItem, Type = ListItemType.JobItemInitialStatus });
+				_jobItemInitialStatusItems.Add(new ListItem { Id = Guid.NewGuid(), Name = statusItem.Item1, Type = statusItem.Item2 });
 			return this;
 		}
 
-		public JobSystemDefaultDataBuilder WithJobItemStatusItems(params string[] statusItems)
+		public JobSystemDefaultDataBuilder WithJobItemStatusItems(params Tuple<string, ListItemType>[] statusItems)
 		{
 			foreach (var statusItem in statusItems)
-				_jobItemStatusItems.Add(new ListItem { Id = Guid.NewGuid(), Name = statusItem, Type = ListItemType.JobItemStatus });
+				_jobItemStatusItems.Add(new ListItem { Id = Guid.NewGuid(), Name = statusItem.Item1, Type = statusItem.Item2 });
 			return this;
 		}
 
-		public JobSystemDefaultDataBuilder WithJobItemWorkTypes(params string[] workTypes)
+		public JobSystemDefaultDataBuilder WithJobItemWorkTypes(params Tuple<string, ListItemType>[] workTypes)
 		{
 			foreach (var workType in workTypes)
-				_jobItemWorkTypes.Add(new ListItem { Id = Guid.NewGuid(), Name = workType, Type = ListItemType.JobItemWorkType });
+				_jobItemWorkTypes.Add(new ListItem { Id = Guid.NewGuid(), Name = workType.Item1, Type = workType.Item2 });
 			return this;
 		}
 
-		public JobSystemDefaultDataBuilder WithJobItemFields(params string[] fields)
+		public JobSystemDefaultDataBuilder WithJobItemCategories(params Tuple<string, ListItemType>[] categories)
 		{
-			foreach (var workType in fields)
-				_jobItemFields.Add(new ListItem { Id = Guid.NewGuid(), Name = workType, Type = ListItemType.JobItemField });
+			foreach (var category in categories)
+				_jobItemCategories.Add(new ListItem { Id = Guid.NewGuid(), Name = category.Item1, Type = category.Item2 });
 			return this;
 		}
 
-		public JobSystemDefaultDataBuilder WithPaymentTerms(params Tuple<Guid, string>[] paymentTerms)
+		public JobSystemDefaultDataBuilder WithPaymentTerms(params Tuple<Guid, string, ListItemType>[] paymentTerms)
 		{
 			foreach (var paymentTerm in paymentTerms)
-				_paymentTerms.Add(new ListItem { Id = paymentTerm.Item1, Name = paymentTerm.Item2, Type = ListItemType.PaymentTerm });
+				_paymentTerms.Add(new ListItem { Id = paymentTerm.Item1, Name = paymentTerm.Item2, Type = paymentTerm.Item3 });
 			return this;
 		}
 
@@ -132,10 +140,10 @@ namespace JobSystem.DbWireup
 			return this;
 		}
 
-		public JobSystemDefaultDataBuilder WithCurrencies(params Tuple<Guid, string>[] currencies)
+		public JobSystemDefaultDataBuilder WithCurrencies(params Tuple<Guid, string, ListItemType>[] currencies)
 		{
 			foreach (var currency in currencies)
-				_currencies.Add(new ListItem { Id = currency.Item1, Name = currency.Item2, Type = ListItemType.Currency });
+				_currencies.Add(new ListItem { Id = currency.Item1, Name = currency.Item2, Type = currency.Item3 });
 			return this;
 		}
 

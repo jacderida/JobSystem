@@ -14,9 +14,9 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			return CurrentSession.Query<ListItem>().Where(li => li.Name == name).SingleOrDefault();
 		}
 
-		public IEnumerable<ListItem> GetAllByType(ListItemType type)
+		public IEnumerable<ListItem> GetAllByCategory(ListItemCategoryType category)
 		{
-			return CurrentSession.Query<ListItem>().Where(li => li.Type == type);
+			return CurrentSession.Query<ListItem>().Where(li => li.Category.Type == category);
 		}
 	}
 }

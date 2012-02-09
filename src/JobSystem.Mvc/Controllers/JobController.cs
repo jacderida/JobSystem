@@ -35,7 +35,7 @@ namespace JobSystem.Mvc.Controllers
 			var jobViewModel = new JobCreateViewModel()
 			{
 				CreatedBy = "Graham Robertson",	// Hard coded for now.
-				JobTypes = _listItemService.GetAllByType(ListItemType.JobType).ToSelectList(),
+				JobTypes = _listItemService.GetAllByCategory(ListItemCategoryType.JobType).ToSelectList(),
 			};
 			return View(jobViewModel);
 		}
@@ -86,7 +86,7 @@ namespace JobSystem.Mvc.Controllers
 				CreateViewModel = new JobCreateViewModel(),
 				Jobs = jobs
 			};
-			jobList.CreateViewModel.JobTypes = _listItemService.GetAllByType(ListItemType.JobType).ToSelectList();
+			jobList.CreateViewModel.JobTypes = _listItemService.GetAllByCategory(ListItemCategoryType.JobType).ToSelectList();
 			jobList.CreateViewModel.Customers = _customerServive.GetCustomers().ToSelectList();
 
 			return View(jobList);
@@ -109,7 +109,7 @@ namespace JobSystem.Mvc.Controllers
 				CreateViewModel = new JobCreateViewModel(),
 				Jobs = jobs
 			};
-			jobList.CreateViewModel.JobTypes = _listItemService.GetAllByType(ListItemType.JobType).ToSelectList();
+			jobList.CreateViewModel.JobTypes = _listItemService.GetAllByCategory(ListItemCategoryType.JobType).ToSelectList();
 			jobList.CreateViewModel.Customers = _customerServive.GetCustomers().ToSelectList();
 
 			return View(jobList);

@@ -157,7 +157,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			{
 				Id = Guid.NewGuid(),
 				Name = "Lab Services",
-				Type = ListItemType.JobType
+				Type = ListItemType.JobTypeService
 			};
 		}
 
@@ -167,7 +167,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			{
 				Id = Guid.NewGuid(),
 				Name = "Booked In",
-				Type = ListItemType.JobItemStatus
+				Type = ListItemType.StatusBookedIn
 			};
 		}
 
@@ -198,7 +198,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			{
 				Id = initialStatusId,
 				Name = "UKAS Calibration",
-				Type = ListItemType.JobItemInitialStatus
+				Type = ListItemType.InitialStatusUkasCalibration
 			};
 		}
 
@@ -207,8 +207,8 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			return new ListItem
 			{
 				Id = locationId,
-				Name = "UKAS Calibration",
-				Type = ListItemType.JobItemLocation
+				Name = "Calibrated",
+				Type = ListItemType.WorkLocationCalibrated
 			};
 		}
 
@@ -218,7 +218,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			{
 				Id = fieldId,
 				Name = "E - Electrical",
-				Type = ListItemType.JobItemField
+				Type = ListItemType.CategoryElectrical
 			};
 		}
 
@@ -228,7 +228,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			{
 				Id = statusId,
 				Name = "Calibrated",
-				Type = ListItemType.JobItemStatus
+				Type = ListItemType.WorkStatusCalibrated
 			};
 		}
 	}

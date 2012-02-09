@@ -46,7 +46,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			{
 				Id = statusId,
 				Name = "Calibrated",
-				Type = ListItemType.JobItemWorkStatus
+				Type = ListItemType.WorkStatusCalibrated
 			};
 		}
 
@@ -56,7 +56,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			{
 				Id = workTypeId,
 				Name = "Calibration",
-				Type = ListItemType.JobItemWorkType
+				Type = ListItemType.WorkTypeCalibration
 			};
 		}
 
@@ -66,7 +66,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			{
 				Id = workLocationId,
 				Name = "Calibrated",
-				Type = ListItemType.JobItemLocation
+				Type = ListItemType.WorkLocationCalibrated
 			};
 		}
 	}

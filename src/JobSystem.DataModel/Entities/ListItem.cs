@@ -7,5 +7,6 @@ namespace JobSystem.DataModel.Entities
 		public virtual Guid Id { get; set; }
 		public virtual string Name { get; set; }
 		public virtual ListItemType Type { get; set; }
+		public virtual ListItemCategory Category { get; set; }
 	}
 }

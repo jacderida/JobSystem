@@ -129,7 +129,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			{
 				Id = id,
 				Name = "GBP",
-				Type = ListItemType.Currency
+				Type = ListItemType.CurrencyGbp
 			};
 		}
 
@@ -150,7 +150,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			{
 				Id = id,
 				Name = "30 Days",
-				Type = ListItemType.PaymentTerm
+				Type = ListItemType.PaymentTerm30Days
 			};
 		}
 	}

@@ -60,7 +60,7 @@ namespace JobSystem.BusinessLogic.Tests
 			{
 				Id = id,
 				Name = "GBP",
-				Type = ListItemType.Currency
+				Type = ListItemType.CurrencyGbp
 			};
 		}
 
@@ -81,7 +81,7 @@ namespace JobSystem.BusinessLogic.Tests
 			{
 				Id = id,
 				Name = "30 Days",
-				Type = ListItemType.PaymentTerm
+				Type = ListItemType.PaymentTerm30Days
 			};
 		}
 

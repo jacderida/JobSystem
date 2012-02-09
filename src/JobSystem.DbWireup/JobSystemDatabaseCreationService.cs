@@ -93,9 +93,13 @@ namespace JobSystem.DbWireup
 			if (!NHibernateSession.Current.Transaction.IsActive)
 				throw new InvalidOperationException("A transaction must be in progress before default data can be inserted");
 			var session = NHibernateSession.Current;
+			foreach (var listItemCategory in defaultData.ListItemCategories)
+				session.Save(listItemCategory);
 			foreach (var type in defaultData.JobTypes)
 				session.Save(type);
 			foreach (var location in defaultData.JobItemLocations)
+				session.Save(location);
+			foreach (var location in defaultData.JobItemInitialLocations)
 				session.Save(location);
 			foreach (var statusItem in defaultData.JobItemWorkStatusItems)
 				session.Save(statusItem);
@@ -105,7 +109,7 @@ namespace JobSystem.DbWireup
 				session.Save(statusItem);
 			foreach (var workType in defaultData.JobItemWorkTypes)
 				session.Save(workType);
-			foreach (var field in defaultData.JobItemFields)
+			foreach (var field in defaultData.JobItemCategories)
 				session.Save(field);
 			foreach (var paymentTerm in defaultData.PaymentTerms)
 				session.Save(paymentTerm);

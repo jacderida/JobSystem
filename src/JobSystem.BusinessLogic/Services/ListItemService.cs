@@ -32,9 +32,9 @@ namespace JobSystem.BusinessLogic.Services
 			return _listItemRepository.GetById(id);
 		}
 
-		public IEnumerable<ListItem> GetAllByType(ListItemType type)
+		public IEnumerable<ListItem> GetAllByCategory(ListItemCategoryType category)
 		{
-			return _listItemRepository.GetAllByType(type);
+			return _listItemRepository.GetAllByCategory(category);
 		}
 	}
 }

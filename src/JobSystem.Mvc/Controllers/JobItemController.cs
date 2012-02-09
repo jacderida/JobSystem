@@ -30,10 +30,10 @@ namespace JobSystem.Mvc.Controllers
 		{
 			var viewmodel = new JobItemViewModel()
 			{
-				Fields = _listItemService.GetAllByType(ListItemType.JobItemField).ToSelectList(),
+				Fields = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).ToSelectList(),
 				Instruments = _instrumentService.GetInstruments().ToSelectList(),
-				Locations =  _listItemService.GetAllByType(ListItemType.JobItemLocation).ToSelectList(),
-				Status = _listItemService.GetAllByType(ListItemType.JobItemInitialStatus).ToSelectList(),
+				Locations =  _listItemService.GetAllByCategory(ListItemCategoryType.JobItemLocation).ToSelectList(),
+				Status = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).ToSelectList(),
 				JobId = id
 			};
 

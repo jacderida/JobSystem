@@ -63,7 +63,7 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			{
 				Id = typeId,
 				Name = "Lab Services",
-				Type = ListItemType.JobType
+				Type = ListItemType.JobTypeField
 			};
 		}
 

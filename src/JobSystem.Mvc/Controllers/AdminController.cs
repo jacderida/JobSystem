@@ -53,8 +53,8 @@ namespace JobSystem.Mvc.Controllers
 				PaymentTermId = company.DefaultPaymentTerm.Id,
 				BankDetailsId = company.DefaultBankDetails.Id,
 				TaxCodeId = company.DefaultTaxCode.Id,
-				Currencies = _listItemService.GetAllByType(ListItemType.Currency).ToSelectList(),
-				PaymentTerms = _listItemService.GetAllByType(ListItemType.PaymentTerm).ToSelectList(),
+				Currencies = _listItemService.GetAllByCategory(ListItemCategoryType.Currency).ToSelectList(),
+				PaymentTerms = _listItemService.GetAllByCategory(ListItemCategoryType.PaymentTerm).ToSelectList(),
 				TaxCodes = _companyDetailsService.GetTaxCodes().Select(t => new { Id = t.Id, Name = t.TaxCodeName }).ToSelectList(),
 				BankDetails = _companyDetailsService.GetBankDetails().Select(t => new { Id = t.Id, Name = t.ShortName }).ToSelectList()
 			};

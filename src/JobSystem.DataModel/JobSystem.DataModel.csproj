@@ -65,6 +65,8 @@
     <Compile Include="Entities\Job.cs" />
     <Compile Include="Entities\JobItem.cs" />
     <Compile Include="Entities\ListItem.cs" />
+    <Compile Include="Entities\ListItemCategory.cs" />
+    <Compile Include="Entities\ListItemCategoryType.cs" />
     <Compile Include="Entities\ListItemType.cs" />
     <Compile Include="Entities\Supplier.cs" />
     <Compile Include="Entities\TaxCode.cs" />

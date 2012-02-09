@@ -25,9 +25,9 @@ namespace JobSystem.Mvc.Controllers
 		{
 			var viewmodel = new WorkItemCreateViewModel()
 			{
-				WorkType = _listItemService.GetAllByType(ListItemType.JobItemWorkType).ToSelectList(),
-				WorkLocation = _listItemService.GetAllByType(ListItemType.JobItemLocation).ToSelectList(),
-				Status = _listItemService.GetAllByType(ListItemType.JobItemWorkStatus).ToSelectList(),
+				WorkType = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemWorkType).ToSelectList(),
+				WorkLocation = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemLocation).ToSelectList(),
+				Status = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemWorkStatus).ToSelectList(),
 				JobItemId = id
 			};
 			return PartialView("_Create", viewmodel);

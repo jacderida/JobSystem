@@ -7,6 +7,6 @@ namespace JobSystem.DataModel.Repositories
 	public interface IListItemRepository : IReadWriteRepository<ListItem, Guid>
 	{
 		ListItem GetByName(string name);
-		IEnumerable<ListItem> GetAllByType(ListItemType type);
+		IEnumerable<ListItem> GetAllByCategory(ListItemCategoryType category);
 	}
 }
