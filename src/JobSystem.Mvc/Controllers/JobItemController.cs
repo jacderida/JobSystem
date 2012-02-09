@@ -104,7 +104,7 @@ namespace JobSystem.Mvc.Controllers
 					WorkType = wi.WorkType.Name.ToString(),
 					WorkBy = wi.User.Name,
 					DateCreated = wi.DateCreated.ToLongDateString() + ' ' + wi.DateCreated.ToShortTimeString()
-					}).ToList()
+				}).OrderByDescending(wi => wi.DateCreated).ToList()
 			};
 			viewmodel.InstrumentDetails = String.Format("{0} - {1} : {2}", job.Instrument.ModelNo, job.Instrument.Manufacturer.ToString(), job.Instrument.Description);
 			return PartialView("_Details", viewmodel);

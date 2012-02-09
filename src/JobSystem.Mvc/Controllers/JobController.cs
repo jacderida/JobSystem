@@ -123,7 +123,7 @@ namespace JobSystem.Mvc.Controllers
 			{
 				Id = job.Id.ToString(),
 				CreatedBy = job.CreatedBy.ToString(),
-				DateCreated = job.DateCreated.ToString(),
+				DateCreated = job.DateCreated.ToLongDateString() + ' ' + job.DateCreated.ToShortTimeString(),
 				JobNumber = job.JobNo,
 				OrderNumber = job.OrderNo,
 				AdviceNumber = job.AdviceNo,
@@ -161,7 +161,7 @@ namespace JobSystem.Mvc.Controllers
 							WorkType = wi.WorkType.Name.ToString(),
 							WorkBy = wi.User.Name.ToString(),
 							DateCreated = wi.DateCreated.ToLongDateString() + ' ' + wi.DateCreated.ToShortTimeString()
-							}).ToList()
+							}).OrderByDescending(wi => wi.DateCreated).ToList()
 					}).ToList()
 			};
 			return View(viewModel);

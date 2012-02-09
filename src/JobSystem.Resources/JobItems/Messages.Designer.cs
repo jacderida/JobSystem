@@ -160,11 +160,65 @@ namespace JobSystem.Resources.JobItems {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are currently no certificates..
+        /// </summary>
+        public static string NoCertificates {
+            get {
+                return ResourceManager.GetString("NoCertificates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are currently no consignments..
+        /// </summary>
+        public static string NoConsignments {
+            get {
+                return ResourceManager.GetString("NoConsignments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are currently no deliveries..
+        /// </summary>
+        public static string NoDelivery {
+            get {
+                return ResourceManager.GetString("NoDelivery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are currently no job items..
         /// </summary>
         public static string NoJobItems {
             get {
                 return ResourceManager.GetString("NoJobItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are currently no orders..
+        /// </summary>
+        public static string NoOrders {
+            get {
+                return ResourceManager.GetString("NoOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are currently no quotes..
+        /// </summary>
+        public static string NoQuotes {
+            get {
+                return ResourceManager.GetString("NoQuotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are currently no work items..
+        /// </summary>
+        public static string NoWorkItems {
+            get {
+                return ResourceManager.GetString("NoWorkItems", resourceCulture);
             }
         }
         

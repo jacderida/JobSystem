@@ -1,6 +1,8 @@
 ﻿$(document).ready(function () {
 	$(".primary-action").button();
 
+	$('.work-item-list-item').last().addClass('last');
+
 	//Create WORK ITEM modal form
 	$('.createWorkButton').click(function () {
 		var elemId = $(this).attr('id');
