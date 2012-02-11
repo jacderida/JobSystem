@@ -55,7 +55,6 @@ namespace JobSystem.BusinessLogic.Tests
 		[Test]
 		public void CreateConsignmentItem_ValidDetailsSupplied_SuccessfullyCreated()
 		{
-			var itemHistoryServiceMock = MockRepository.GenerateMock<ItemHistoryService>();
 		}
 	}
 }

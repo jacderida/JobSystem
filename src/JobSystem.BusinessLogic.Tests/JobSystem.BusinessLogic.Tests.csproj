@@ -100,14 +100,12 @@
     <Compile Include="Helpers\DomainValidationExtensions.cs" />
     <Compile Include="Helpers\EntityIdProviderFactory.cs" />
     <Compile Include="Helpers\InstrumentServiceFactory.cs" />
-    <Compile Include="Helpers\ItemHistoryServiceFactory.cs" />
     <Compile Include="Helpers\JobItemServiceFactory.cs" />
     <Compile Include="Helpers\JobServiceFactory.cs" />
     <Compile Include="Helpers\SupplierServiceFactory.cs" />
     <Compile Include="Helpers\UserManagementServiceFactory.cs" />
     <Compile Include="InstrumentSearchTests.cs" />
     <Compile Include="InstrumentTests.cs" />
-    <Compile Include="ItemHistoryTests.cs" />
     <Compile Include="JobItemTests.cs" />
     <Compile Include="JobTests.cs" />
     <Compile Include="SearchTest.cs" />

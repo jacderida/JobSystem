@@ -12,12 +12,12 @@ namespace JobSystem.Mvc.Controllers
 {
 	public class WorkItemController : Controller
 	{
-		private readonly ItemHistoryService _itemHistoryService;
+		private readonly JobItemService _jobItemService;
 		private readonly ListItemService _listItemService;
 
-		public WorkItemController(ItemHistoryService jobItemService, ListItemService listItemService)
+		public WorkItemController(JobItemService jobItemService, ListItemService listItemService)
 		{
-			_itemHistoryService = jobItemService;
+			_jobItemService = jobItemService;
 			_listItemService = listItemService;
 		}
 
@@ -41,8 +41,7 @@ namespace JobSystem.Mvc.Controllers
 			{
 				try
 				{
-					_itemHistoryService.CreateItemHistory(
-						System.Guid.NewGuid(),
+					_jobItemService.AddWorkItem(
 						viewmodel.JobItemId,
 						viewmodel.WorkTime,
 						viewmodel.OverTime,

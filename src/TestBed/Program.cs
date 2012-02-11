@@ -42,8 +42,6 @@ namespace TestBed
 				new InstrumentService(testUserContext, new InstrumentRepository(), queueDispatcher),
 				queueDispatcher);
 			var instrumentService = new InstrumentService(testUserContext, new InstrumentRepository(), queueDispatcher);
-			var itemHistoryService = new ItemHistoryService(testUserContext, new JobItemRepository(),
-				new ListItemService(testUserContext, new ListItemRepository(), queueDispatcher), queueDispatcher);
 
 			var jobId = Guid.NewGuid();
 			var jobItemId = Guid.NewGuid();
@@ -58,11 +56,6 @@ namespace TestBed
 				jobId, jobItemId, instrumentId, "12345", "AST12345", listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemLocation).First().Id, listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id, 12,
 				"job instructions", "accessories", false, String.Empty, "comments");
-			itemHistoryService.CreateItemHistory(
-				Guid.NewGuid(), jobItemId, 12, 12, "blah",
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemWorkStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemWorkType).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemLocation).First().Id);
 			NHibernateSession.Current.Transaction.Commit();
 		}
 
