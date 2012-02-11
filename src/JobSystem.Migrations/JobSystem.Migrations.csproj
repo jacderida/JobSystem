@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="M20110928190038_AddListItemCategoryTable.cs" />
     <Compile Include="M20110928201038_AddListItemsTable.cs" />
     <Compile Include="M20110928201039_AddCustomerTable.cs" />
     <Compile Include="M20110928202143_AddInstrumentsTable.cs" />

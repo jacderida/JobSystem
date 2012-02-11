@@ -66,6 +66,11 @@ namespace JobSystem.BusinessLogic.Services
 			return jobItem;
 		}
 
+		public JobItem AddWork(Guid jobItemId, int workTime, int overTime, string report, Guid workStatusId, Guid workTypeId, Guid workLocationId)
+		{
+
+		}
+
 		public JobItem GetById(Guid id)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

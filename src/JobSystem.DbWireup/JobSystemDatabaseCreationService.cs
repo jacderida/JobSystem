@@ -21,7 +21,6 @@ namespace JobSystem.DbWireup
 		private readonly string _databaseName;
 		private readonly string _connectionName;
 
-
 		/// <summary>
 		/// Initialises an instance of the JobSystemDatabaseCreationService class.
 		/// </summary>
@@ -94,29 +93,69 @@ namespace JobSystem.DbWireup
 				throw new InvalidOperationException("A transaction must be in progress before default data can be inserted");
 			var session = NHibernateSession.Current;
 			foreach (var listItemCategory in defaultData.ListItemCategories)
-				session.Save(listItemCategory);
+				session.Save(listItemCategory, listItemCategory.Id);
 			foreach (var type in defaultData.JobTypes)
-				session.Save(type);
+			{
+				var listItem = type.Item2;
+				listItem.Category = session.Get<ListItemCategory>(type.Item1);
+				session.Save(listItem);
+			}
 			foreach (var location in defaultData.JobItemLocations)
-				session.Save(location);
+			{
+				var listItem = location.Item2;
+				listItem.Category = session.Get<ListItemCategory>(location.Item1);
+				session.Save(listItem);
+			}
 			foreach (var location in defaultData.JobItemInitialLocations)
-				session.Save(location);
+			{
+				var listItem = location.Item2;
+				listItem.Category = session.Get<ListItemCategory>(location.Item1);
+				session.Save(listItem);
+			}
 			foreach (var statusItem in defaultData.JobItemWorkStatusItems)
-				session.Save(statusItem);
+			{
+				var listItem = statusItem.Item2;
+				listItem.Category = session.Get<ListItemCategory>(statusItem.Item1);
+				session.Save(listItem);
+			}
 			foreach (var statusItem in defaultData.JobItemInitialStatusItems)
-				session.Save(statusItem);
+			{
+				var listItem = statusItem.Item2;
+				listItem.Category = session.Get<ListItemCategory>(statusItem.Item1);
+				session.Save(listItem);
+			}
 			foreach (var statusItem in defaultData.JobItemStatusItems)
-				session.Save(statusItem);
+			{
+				var listItem = statusItem.Item2;
+				listItem.Category = session.Get<ListItemCategory>(statusItem.Item1);
+				session.Save(listItem);
+			}
 			foreach (var workType in defaultData.JobItemWorkTypes)
-				session.Save(workType);
-			foreach (var field in defaultData.JobItemCategories)
-				session.Save(field);
+			{
+				var listItem = workType.Item2;
+				listItem.Category = session.Get<ListItemCategory>(workType.Item1);
+				session.Save(listItem);
+			}
+			foreach (var category in defaultData.JobItemCategories)
+			{
+				var listItem = category.Item2;
+				listItem.Category = session.Get<ListItemCategory>(category.Item1);
+				session.Save(listItem);
+			}
 			foreach (var paymentTerm in defaultData.PaymentTerms)
-				session.Save(paymentTerm);
+			{
+				var listItem = paymentTerm.Item2;
+				listItem.Category = session.Get<ListItemCategory>(paymentTerm.Item1);
+				session.Save(listItem);
+			}
 			foreach (var taxCode in defaultData.TaxCodes)
 				session.Save(taxCode);
 			foreach (var currency in defaultData.Currencies)
-				session.Save(currency);
+			{
+				var listItem = currency.Item2;
+				listItem.Category = session.Get<ListItemCategory>(currency.Item1);
+				session.Save(listItem);
+			}
 			foreach (var bankDetails in defaultData.BankDetails)
 				session.Save(bankDetails);
 			foreach (var entityIdLookup in defaultData.EntityIdLookups)

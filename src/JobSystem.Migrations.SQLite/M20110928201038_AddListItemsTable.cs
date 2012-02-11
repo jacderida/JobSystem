@@ -10,11 +10,18 @@ namespace JobSystem.Migrations.SqlLite
 			Create.Table("ListItems")
 				.WithIdColumn()
 				.WithColumn("Name").AsString(255).NotNullable()
-				.WithColumn("Type").AsInt32().NotNullable();
+				.WithColumn("Type").AsInt32().NotNullable()
+				.WithColumn("CategoryId").AsGuid().NotNullable();
+			Create.ForeignKey("FK_ListItems_ListItemCategories")
+				.FromTable("ListItems")
+				.ForeignColumn("CategoryId")
+				.ToTable("ListItemCategories")
+				.PrimaryColumn("Id");
 		}
 
 		public override void Down()
 		{
+			Delete.ForeignKey("FK_ListItems_ListItemCategories").OnTable("ListItems");
 			Delete.Table("ListItems");
 		}
 	}
