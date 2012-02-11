@@ -1,11 +1,11 @@
-﻿@model IList<JobSystem.Mvc.ViewModels.Consignments.ConsignmentIndexViewModel>
+﻿@model IList<JobSystem.Mvc.ViewModels.Orders.OrderIndexViewModel>
 
 @{
-    ViewBag.Title = "Consignments";
+    ViewBag.Title = "Orders";
 }
 
-<h2>Consignments</h2>
-<a href="#" id="createOrderButton" class="primary-action">Convert to Order</a>
+<h2>Orders</h2>
+@Html.ActionLink("Raise Order", "Create", new { }, new { @class = "primary-action" })
 @if (Model.Any()) {
 	<table>
 		<tr>
@@ -33,11 +33,11 @@
 	 }
 	</table>
 }else{
-	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
+	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
 }
 
 
-<div id="edit-consignment-container">
+<div id="edit-order-container">
 </div>
 
-<input type="hidden" id="editUrl" value="@Url.Action("Edit", "Consignment")"/>
+<input type="hidden" id="editUrl" value="@Url.Action("Edit", "Order")"/>

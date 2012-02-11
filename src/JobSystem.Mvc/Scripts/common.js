@@ -198,6 +198,13 @@ $(document).ready(function () {
 			});
 		});
 
+		var uploader = new qq.FileUploader({
+			// pass the dom node (ex. $(selector)[0] for jQuery users)
+			element: document.getElementById('file-uploader'),
+			// path to server-side upload script
+			action: '/server/upload'
+		});
+
 		//Populate customer delivery/invoice address with main address details
 		function populateAddressFields(fieldsToPopulate, selected) {
 			var addressLine1 = $('#Address1').val();
