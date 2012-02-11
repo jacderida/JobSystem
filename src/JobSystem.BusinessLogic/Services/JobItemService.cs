@@ -51,7 +51,7 @@ namespace JobSystem.BusinessLogic.Services
 				Status = _listItemService.GetByName("Booked In"),
 				Location = _listItemService.GetById(locationId),
 				Field = _listItemService.GetById(fieldId),
-				CalPeriod = GetAndValidateCalPeriod(calPeriod),
+				CalPeriod = ValidateCalPeriod(calPeriod),
 				Instructions = instructions,
 				Accessories = accessories,
 				IsReturned = isReturned,
@@ -66,9 +66,22 @@ namespace JobSystem.BusinessLogic.Services
 			return jobItem;
 		}
 
-		public JobItem AddWork(Guid jobItemId, int workTime, int overTime, string report, Guid workStatusId, Guid workTypeId, Guid workLocationId)
+		public JobItem AddWorkItem(Guid jobItemId, int workTime, int overTime, string report, Guid workStatusId, Guid workTypeId, Guid workLocationId)
 		{
-
+			var jobItem = _jobItemRepository.GetById(jobItemId);
+			if (jobItem == null)
+				throw new ArgumentException("A valid job item ID must be supplied.");
+			var status = ValidateWorkStatus(workStatusId);
+			var workType = ValidateWorkType(workTypeId);
+			var workLocation = ValidateWorkLocation(workLocationId);
+			workTime = ValidateWorkTime(workTime);
+			overTime = ValidateOverTime(overTime);
+			report = ValidateReport(report);
+			jobItem.Status = status;
+			jobItem.Location = workLocation;
+			_jobItemRepository.CreateItemHistory(CurrentUser, jobItemId, workTime, overTime, report, status.Type, workType.Type, workLocation.Type);
+			_jobItemRepository.Update(jobItem);
+			return jobItem;
 		}
 
 		public JobItem GetById(Guid id)
@@ -95,11 +108,56 @@ namespace JobSystem.BusinessLogic.Services
 			return job;
 		}
 
-		private int GetAndValidateCalPeriod(int calPeriod)
+		private ListItem ValidateWorkStatus(Guid workStatusId)
+		{
+			var status = _listItemService.GetById(workStatusId);
+			if (status.Category.Type != ListItemCategoryType.JobItemWorkStatus)
+				throw new DomainValidationException(Messages.InvalidStatusCategory, "WorkStatusId");
+			return status;
+		}
+
+		private ListItem ValidateWorkType(Guid workTypeId)
+		{
+			var workType = _listItemService.GetById(workTypeId);
+			if (workType.Category.Type != ListItemCategoryType.JobItemWorkType)
+				throw new DomainValidationException(Messages.InvalidWorkTypeCategory, "WorkTypeId");
+			return workType;
+		}
+
+		private ListItem ValidateWorkLocation(Guid workLocationId)
+		{
+			var workType = _listItemService.GetById(workLocationId);
+			if (workType.Category.Type != ListItemCategoryType.JobItemLocation)
+				throw new DomainValidationException(Messages.InvalidWorkLocationCategory, "WorkLocationId");
+			return workType;
+		}
+
+		private int ValidateCalPeriod(int calPeriod)
 		{
 			if (calPeriod <= 0)
 				throw new DomainValidationException(Messages.InvalidCalPeriod, "CalPeriod");
 			return calPeriod;
+		}
+
+		private int ValidateWorkTime(int workTime)
+		{
+			if (workTime < 0)
+				throw new DomainValidationException(Messages.ItemHistoryInvalidWorkTime, "WorkTime");
+			return workTime;
+		}
+
+		private int ValidateOverTime(int overTime)
+		{
+			if (overTime < 0)
+				throw new DomainValidationException(Messages.ItemHistoryInvalidOverTime, "OverTime");
+			return overTime;
+		}
+
+		private string ValidateReport(string report)
+		{
+			if (report.Length > 255)
+				throw new DomainValidationException(Messages.ItemHistoryReportTooLarge, "Report");
+			return report;
 		}
 	}
 }

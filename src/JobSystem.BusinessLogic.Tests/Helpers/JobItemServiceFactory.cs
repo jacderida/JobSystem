@@ -52,6 +52,30 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 				dispatcher);
 		}
 
+		public static JobItemService CreateForAddWorkItem(IJobItemRepository jobItemRepository, Guid workStatusId, Guid workLocationId, Guid workTypeId, IUserContext userContext)
+		{
+			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
+			return new JobItemService(
+				userContext,
+				MockRepository.GenerateStub<IJobRepository>(),
+				jobItemRepository,
+				new ListItemService(userContext, GetListItemRepositoryForAddWorkItem(workStatusId, workTypeId, workLocationId), dispatcher),
+				new InstrumentService(userContext, MockRepository.GenerateStub<IInstrumentRepository>(), dispatcher),
+				dispatcher);
+		}
+
+		public static JobItemService CreateForAddWorkItem(IJobItemRepository jobItemRepository, IListItemRepository listItemRepository, IUserContext userContext)
+		{
+			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
+			return new JobItemService(
+				userContext,
+				MockRepository.GenerateStub<IJobRepository>(),
+				jobItemRepository,
+				new ListItemService(userContext, listItemRepository, dispatcher),
+				new InstrumentService(userContext, MockRepository.GenerateStub<IInstrumentRepository>(), dispatcher),
+				dispatcher);
+		}
+
 		public static JobItemService CreateForUpdateStatus(IJobItemRepository jobItemRepository, Guid statusId)
 		{
 			return CreateForUpdateStatus(jobItemRepository,GetListItemRepositoryForUpdateStatus(statusId),
@@ -80,6 +104,72 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 				new ListItemService(userContext, listItemRepository, dispatcher),
 				new InstrumentService(userContext, MockRepository.GenerateStub<IInstrumentRepository>(), dispatcher),
 				dispatcher);
+		}
+
+		public static IListItemRepository GetListItemRepositoryForAddWorkItem(Guid workStatusId, Guid workTypeId, Guid workLocationId)
+		{
+			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
+			if (workStatusId != Guid.Empty)
+				listItemRepositoryStub.Stub(x => x.GetById(workStatusId)).Return(GetAddWorkItemWorkStatus(workStatusId));
+			else
+				listItemRepositoryStub.Stub(x => x.GetById(workStatusId)).Return(null);
+			if (workTypeId != Guid.Empty)
+				listItemRepositoryStub.Stub(x => x.GetById(workTypeId)).Return(GetAddWorkItemWorkType(workTypeId));
+			else
+				listItemRepositoryStub.Stub(x => x.GetById(workTypeId)).Return(null);
+			if (workLocationId != Guid.Empty)
+				listItemRepositoryStub.Stub(x => x.GetById(workLocationId)).Return(GetAddWorkItemWorkLocation(workLocationId));
+			else
+				listItemRepositoryStub.Stub(x => x.GetById(workLocationId)).Return(null);
+			return listItemRepositoryStub;
+		}
+
+		public static ListItem GetAddWorkItemWorkStatus(Guid statusId)
+		{
+			return new ListItem
+			{
+				Id = statusId,
+				Name = "Calibrated",
+				Type = ListItemType.WorkStatusCalibrated,
+				Category = new ListItemCategory
+				{
+					Id = Guid.NewGuid(),
+					Name = "Status",
+					Type = ListItemCategoryType.JobItemWorkStatus
+				}
+			};
+		}
+
+		public static ListItem GetAddWorkItemWorkType(Guid workTypeId)
+		{
+			return new ListItem
+			{
+				Id = workTypeId,
+				Name = "Calibration",
+				Type = ListItemType.WorkTypeCalibration,
+				Category = new ListItemCategory
+				{
+					Id = Guid.NewGuid(),
+					Name = "Work Type",
+					Type = ListItemCategoryType.JobItemWorkType
+				}
+			};
+		}
+
+		public static ListItem GetAddWorkItemWorkLocation(Guid workLocationId)
+		{
+			return new ListItem
+			{
+				Id = workLocationId,
+				Name = "Completed",
+				Type = ListItemType.WorkLocationCalibrated,
+				Category = new ListItemCategory
+				{
+					Id = Guid.NewGuid(),
+					Name = "Location",
+					Type = ListItemCategoryType.JobItemLocation
+				}
+			};
 		}
 
 		private static IJobRepository GetJobRepository(Guid jobId, int jobItemCount)

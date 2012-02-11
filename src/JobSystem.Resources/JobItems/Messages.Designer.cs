@@ -124,6 +124,33 @@ namespace JobSystem.Resources.JobItems {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The job item status list item must be assigned a value from the job item work status category..
+        /// </summary>
+        public static string InvalidStatusCategory {
+            get {
+                return ResourceManager.GetString("InvalidStatusCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A work location list item must be assigned a value from the work location category..
+        /// </summary>
+        public static string InvalidWorkLocationCategory {
+            get {
+                return ResourceManager.GetString("InvalidWorkLocationCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A work type list item must be assigned a value from the work type category..
+        /// </summary>
+        public static string InvalidWorkTypeCategory {
+            get {
+                return ResourceManager.GetString("InvalidWorkTypeCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You must have a member role to perform this action.
         /// </summary>
         public static string ItemHistoryInsufficientSecurityClearance {

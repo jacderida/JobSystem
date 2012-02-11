@@ -60,6 +60,7 @@ namespace JobSystem.BusinessLogic.Tests
 				Created = DateTime.UtcNow,
 				CreatedUser = _userContext.GetCurrentUser(),
 			};
+			_savedJobItem = null;
 		}
 
 		#region Create
@@ -338,7 +339,272 @@ namespace JobSystem.BusinessLogic.Tests
 		#endregion
 		#region AddWork
 
+		[Test]
+		public void AddWorkItem_ValidWorkItemDetails_WorkItemAdded()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+			var workTime = 25;
+			var overTime = 10;
+			var report = "Instrument calibrated OK";
 
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
+			jobItemRepositoryMock.Expect(x => x.CreateItemHistory(
+				_userContext.GetCurrentUser(), _jobItemToUpdateId, workTime, overTime, report, ListItemType.WorkStatusCalibrated, ListItemType.WorkTypeCalibration, ListItemType.WorkLocationCalibrated));
+			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate));
+			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryMock, workStatusId, workLocationId, workTypeId, _userContext);
+			AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId, workLocationId);
+			jobItemRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(ListItemType.WorkStatusCalibrated, _savedJobItem.Status.Type);
+			Assert.AreEqual(ListItemType.WorkLocationCalibrated, _savedJobItem.Location.Type);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void AddWorkItem_InvalidJobItemIdSupplied_ArgumentExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+			var workTime = 25;
+			var overTime = 10;
+			var report = "Instrument calibrated OK";
+
+			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
+			jobItemRepositoryStub.Stub(x => x.GetById(Guid.NewGuid())).Return(null);
+			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryStub, workStatusId, workLocationId, workTypeId, _userContext);
+			AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId, workLocationId);
+		}
+
+		[Test]
+		public void AddWorkItem_InvalidWorkTimeSupplied_DomainValidationExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+			var workTime = -2;
+			var overTime = 10;
+			var report = "Instrument calibrated OK";
+
+			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
+			jobItemRepositoryStub.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
+			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryStub, workStatusId, workLocationId, workTypeId, _userContext);
+			AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId, workLocationId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.ItemHistoryInvalidWorkTime));
+		}
+
+		[Test]
+		public void AddWorkItem_InvalidOverTimeSupplied_DomainValidationExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+			var workTime = 25;
+			var overTime = -10;
+			var report = "Instrument calibrated OK";
+
+			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
+			jobItemRepositoryStub.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
+			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryStub, workStatusId, workLocationId, workTypeId, _userContext);
+			AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId, workLocationId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.ItemHistoryInvalidOverTime));
+		}
+
+		[Test]
+		public void AddWorkItem_InvalidReportSupplied_DomainValidationExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+			var workTime = 25;
+			var overTime = 10;
+			var report = new string('a', 256);
+
+			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
+			jobItemRepositoryStub.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
+			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryStub, workStatusId, workLocationId, workTypeId, _userContext);
+			AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId, workLocationId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.ItemHistoryReportTooLarge));
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void AddWorkItem_InvalidStatusId_ArgumentExceptionThrown()
+		{
+			var workStatusId = Guid.Empty;
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+			var workTime = 25;
+			var overTime = 10;
+			var report = "Instrument calibrated OK";
+
+			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
+			jobItemRepositoryStub.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
+			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryStub, workStatusId, workLocationId, workTypeId, _userContext);
+			AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId, workLocationId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void AddWorkItem_InvalidWorkTypeId_ArgumentExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.Empty;
+			var workLocationId = Guid.NewGuid();
+			var workTime = 25;
+			var overTime = 10;
+			var report = "Instrument calibrated OK";
+
+			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
+			jobItemRepositoryStub.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
+			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryStub, workStatusId, workLocationId, workTypeId, _userContext);
+			AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId, workLocationId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void AddWorkItem_InvalidLocationId_ArgumentExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.Empty;
+			var workTime = 25;
+			var overTime = 10;
+			var report = "Instrument calibrated OK";
+
+			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
+			jobItemRepositoryStub.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
+			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryStub, workStatusId, workLocationId, workTypeId, _userContext);
+			AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId, workLocationId);
+		}
+
+		[Test]
+		public void AddWorkItem_StatusWithInvalidCategory_ArgumentExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+			var workTime = 25;
+			var overTime = 10;
+			var report = "Instrument calibrated OK";
+
+			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
+			jobItemRepositoryStub.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
+			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryStub, GetListItemRepositoryForInvalidStatusCategory(workStatusId, workTypeId, workLocationId), _userContext);
+			AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId, workLocationId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.InvalidStatusCategory));
+		}
+
+		[Test]
+		public void AddWorkItem_WorkTypeWithInvalidCategory_ArgumentExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+			var workTime = 25;
+			var overTime = 10;
+			var report = "Instrument calibrated OK";
+
+			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
+			jobItemRepositoryStub.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
+			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryStub, GetListItemRepositoryForInvalidWorkTypeCategory(workStatusId, workTypeId, workLocationId), _userContext);
+			AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId, workLocationId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.InvalidWorkTypeCategory));
+		}
+
+		[Test]
+		public void AddWorkItem_WorkLocationWithInvalidCategory_ArgumentExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+			var workTime = 25;
+			var overTime = 10;
+			var report = "Instrument calibrated OK";
+
+			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
+			jobItemRepositoryStub.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
+			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryStub, GetListItemRepositoryForInvalidWorkLocationCategory(workStatusId, workTypeId, workLocationId), _userContext);
+			AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId, workLocationId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.InvalidWorkLocationCategory));
+		}
+
+		private void AddWorkItem(Guid jobItemId, int workTime, int overTime, string report, Guid workStatusId, Guid workTypeId, Guid workLocationId)
+		{
+			try
+			{
+				_savedJobItem = _jobItemService.AddWorkItem(jobItemId, workTime, overTime, report, workStatusId, workTypeId, workLocationId);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		private static IListItemRepository GetListItemRepositoryForInvalidStatusCategory(Guid workStatusId, Guid workTypeId, Guid workLocationId)
+		{
+			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
+			listItemRepositoryStub.Stub(x => x.GetById(workStatusId)).Return(
+				new ListItem
+				{
+					Id = Guid.NewGuid(),
+					Type = ListItemType.InitialStatusHouseCalibration,
+					Name = "House Calibration",
+					Category = new ListItemCategory
+					{
+						Id = Guid.NewGuid(),
+						Name = "Initial Status",
+						Type = ListItemCategoryType.JobItemInitialStatus
+					}
+				});
+			listItemRepositoryStub.Stub(x => x.GetById(workTypeId)).Return(JobItemServiceFactory.GetAddWorkItemWorkType(workTypeId));
+			listItemRepositoryStub.Stub(x => x.GetById(workLocationId)).Return(JobItemServiceFactory.GetAddWorkItemWorkLocation(workLocationId));
+			return listItemRepositoryStub;
+		}
+
+		private static IListItemRepository GetListItemRepositoryForInvalidWorkTypeCategory(Guid workStatusId, Guid workTypeId, Guid workLocationId)
+		{
+			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
+			listItemRepositoryStub.Stub(x => x.GetById(workStatusId)).Return(JobItemServiceFactory.GetAddWorkItemWorkStatus(workStatusId));
+			listItemRepositoryStub.Stub(x => x.GetById(workTypeId)).Return(
+				new ListItem
+				{
+					Id = Guid.NewGuid(),
+					Type = ListItemType.WorkStatusRepaired,
+					Name = "Repaired",
+					Category = new ListItemCategory
+					{
+						Id = Guid.NewGuid(),
+						Name = "Status",
+						Type = ListItemCategoryType.JobItemWorkStatus
+					}
+				});
+			listItemRepositoryStub.Stub(x => x.GetById(workLocationId)).Return(JobItemServiceFactory.GetAddWorkItemWorkLocation(workLocationId));
+			return listItemRepositoryStub;
+		}
+
+		private static IListItemRepository GetListItemRepositoryForInvalidWorkLocationCategory(Guid workStatusId, Guid workTypeId, Guid workLocationId)
+		{
+			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
+			listItemRepositoryStub.Stub(x => x.GetById(workStatusId)).Return(JobItemServiceFactory.GetAddWorkItemWorkStatus(workStatusId));
+			listItemRepositoryStub.Stub(x => x.GetById(workTypeId)).Return(JobItemServiceFactory.GetAddWorkItemWorkType(workTypeId));
+			listItemRepositoryStub.Stub(x => x.GetById(workLocationId)).Return(
+				new ListItem
+				{
+					Id = Guid.NewGuid(),
+					Type = ListItemType.InitialWorkLocationRepair,
+					Name = "Repair",
+					Category = new ListItemCategory
+					{
+						Id = Guid.NewGuid(),
+						Name = "Initial Location",
+						Type = ListItemCategoryType.JobItemInitialLocation
+					}
+				});
+			return listItemRepositoryStub;
+		}
 
 		#endregion
 	}
