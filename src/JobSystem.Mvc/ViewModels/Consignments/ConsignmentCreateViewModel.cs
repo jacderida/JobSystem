@@ -12,5 +12,8 @@ namespace JobSystem.Mvc.ViewModels.Consignments
 		[Display(Name="Supplier")]
 		public Guid SupplierId { get; set; }
 		public string Instructions { get; set; }
+		[Display(Name = "Consign Individually")]
+		public bool IsIndividual { get; set; }
+		public Guid JobItemId { get; set; }
 	}
 }

@@ -56,6 +56,15 @@
 			@Html.TextAreaFor(model => model.JobNote)
 			@Html.ValidationMessageFor(model => model.JobNote)
 		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Attachments)
+		</div>
+		<div id="file-uploader">       
+			<noscript>          
+				<p>Please enable JavaScript to use file uploader.</p>
+				<!-- or put a simple form for upload here -->
+			</noscript>         
+		</div>
 		</fieldset>
 		<div class="clear"></div>
 	<div class="buttons-row">

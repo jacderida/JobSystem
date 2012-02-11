@@ -37,5 +37,6 @@ namespace JobSystem.Mvc.ViewModels.Jobs
 		public IEnumerable<SelectListItem> JobTypes { get; set; }
 		// Rather than having a list of customers in a drop down, use a type ahead?
 		public Guid CustomerId { get; set; }
+		public string Attachments { get; set; }
 	}
 }

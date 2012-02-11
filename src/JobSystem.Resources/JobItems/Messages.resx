@@ -159,8 +159,26 @@
   <data name="ItemHistoryReportTooLarge" xml:space="preserve">
     <value>The report cannot exceed 255 characters</value>
   </data>
+  <data name="NoCertificates" xml:space="preserve">
+    <value>There are currently no certificates.</value>
+  </data>
+  <data name="NoConsignments" xml:space="preserve">
+    <value>There are currently no consignments.</value>
+  </data>
+  <data name="NoDelivery" xml:space="preserve">
+    <value>There are currently no deliveries.</value>
+  </data>
   <data name="NoJobItems" xml:space="preserve">
     <value>There are currently no job items.</value>
+  </data>
+  <data name="NoOrders" xml:space="preserve">
+    <value>There are currently no orders.</value>
+  </data>
+  <data name="NoQuotes" xml:space="preserve">
+    <value>There are currently no quotes.</value>
+  </data>
+  <data name="NoWorkItems" xml:space="preserve">
+    <value>There are currently no work items.</value>
   </data>
   <data name="ReturnReasonTooLarge" xml:space="preserve">
     <value>The return reason cannot exceed 255 characters</value>

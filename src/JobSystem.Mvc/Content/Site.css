@@ -180,6 +180,10 @@ footer,
 	visibility: hidden;
 }
 
+.smallText {
+	font-size: 0.85em;
+}
+
 /* TAB MENU   
 ----------------------------------------------------------*/
 ul#menu {
@@ -928,7 +932,7 @@ div#title {
 	position:absolute;
 	display: none;
 	width: 485px;
-	height: 157px;
+	min-height: 157px;
 	background-color: #081A58;
 	left: 200px;
 	top: -2px;
@@ -937,4 +941,24 @@ div#title {
 	background-color: #F9F9F9;
 	padding: 20px;
 	margin-top: 1px;
+}
+
+/*#work-item-list li:first-child .work-item-details {
+	top: -2px;	
+}
+
+#work-item-list li:last-child .work-item-details {
+	top: -139px;	
+}*/
+
+.work-item-details ul {
+	margin-bottom: 0;
+}
+
+.work-item-details li {
+	margin-bottom: 5px;
+}
+
+.work-item-details li span {
+	font-weight: bold;
 }

@@ -10,8 +10,10 @@ namespace JobSystem.Mvc.ViewModels.WorkItems
 	{
 		public Guid Id { get; set; }
 		public Guid JobItemId { get; set; }
+		[Required]
 		[Display(Name = "Work Time")]
 		public int WorkTime { get; set; }
+		[Required]
 		[Display(Name = "Over Time")]
 		public int OverTime { get; set; }
 		[StringLength(255, ErrorMessageResourceName = "ItemHistoryReportTooLarge", ErrorMessageResourceType = typeof(Messages))]

@@ -4,6 +4,9 @@
 			case 'work-item':
 				$("#create-work-item-container").dialog('close');
 				break;
+			case 'consignment-item':
+				$("#create-consignment-container").dialog('close');
+				break;
 		}
 	}
 }
@@ -119,7 +122,6 @@ $(document).ready(function () {
 			dataType: 'json'
 		});
 
-
 		// Vertical Sliding Tabs demo
 		$('div#st_vertical').slideTabs({
 			// Options
@@ -194,6 +196,13 @@ $(document).ready(function () {
 					}, 300);
 				});
 			});
+		});
+
+		var uploader = new qq.FileUploader({
+			// pass the dom node (ex. $(selector)[0] for jQuery users)
+			element: document.getElementById('file-uploader'),
+			// path to server-side upload script
+			action: '/server/upload'
 		});
 
 		//Populate customer delivery/invoice address with main address details
@@ -286,14 +295,48 @@ $(document).ready(function () {
 	});
 
 	//Show/hide work item details
+	$('.work-item-list-item').last().addClass('last');
+
 	$('.work-item-list-item').live('mouseenter', function () {
 		var elem = $(this);
 		var elemToShow = $('#work-item-' + elem.attr('id'));
-		elemToShow.stop(true, true).fadeIn(200);
+		var curHeight = $('.st_view').height();
+
+		var itemCount = $('#work-item-list').children('li').length;
+
+		if (elem.hasClass('last')) {
+			animateElementShow(curHeight + 125);
+		} else if (itemCount == 1) {
+			animateElementShow(elemToShow.height() + 95);
+		} else if (elem.hasClass('last') && itemCount == 2) {
+			animateElementShow(elemToShow.height() + 55);
+		} else {
+			elemToShow.stop(true, true).fadeIn(200);
+		}
+
+		$('.work-item-list-item').live('mouseleave', function () {
+			if (elem.hasClass('last') || itemCount == 1 || (elem.hasClass('last') && itemCount == 2)) {
+				animateElementHide(curHeight);
+			} else {
+				elemToShow.stop(true, true).fadeOut(200);
+			}
+		});
+
+		function animateElementShow(newHeight) {
+			$('.st_view').animate({
+				height: newHeight
+			}, 50, function () {
+				elemToShow.stop(true, true).fadeIn(200);
+			});
+		}
+
+		function animateElementHide(newHeight) {
+			$('.st_view').animate({
+				height: newHeight
+			}, 50, function () {
+				elemToShow.stop(true, true).fadeOut(200);
+			});
+		}
 	});
-	$('.work-item-list-item').live('mouseleave', function () {
-		var elem = $(this);
-		var elemToShow = $('#work-item-' + elem.attr('id'));
-		elemToShow.stop(true, true).fadeOut(200);
-	});
+
 });

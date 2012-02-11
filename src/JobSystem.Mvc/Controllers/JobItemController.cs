@@ -1,13 +1,13 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataAccess.NHibernate.Web;
+using JobSystem.DataModel.Entities;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.JobItems;
-using JobSystem.DataModel.Entities;
-using System;
-using System.Linq;
 using JobSystem.Mvc.ViewModels.WorkItems;
 
 namespace JobSystem.Mvc.Controllers
@@ -79,6 +79,7 @@ namespace JobSystem.Mvc.Controllers
 			var job = _jobItemService.GetById(Id);
 			var viewmodel = new JobItemDetailsViewModel()
 			{
+				Id = job.Id,
 				Accessories = job.Accessories,
 				AssetNo = job.AssetNo,
 				CalPeriod = job.CalPeriod,
@@ -102,7 +103,7 @@ namespace JobSystem.Mvc.Controllers
 					WorkType = wi.WorkType.Name.ToString(),
 					WorkBy = wi.User.Name,
 					DateCreated = wi.DateCreated.ToLongDateString() + ' ' + wi.DateCreated.ToShortTimeString()
-					}).ToList()
+				}).OrderByDescending(wi => wi.DateCreated).ToList()
 			};
 			viewmodel.InstrumentDetails = String.Format("{0} - {1} : {2}", job.Instrument.ModelNo, job.Instrument.Manufacturer.ToString(), job.Instrument.Description);
 			return PartialView("_Details", viewmodel);
