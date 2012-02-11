@@ -481,7 +481,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void AddWorkItem_StatusWithInvalidCategory_ArgumentExceptionThrown()
+		public void AddWorkItem_StatusWithInvalidCategory_DomainValidationExceptionThrown()
 		{
 			var workStatusId = Guid.NewGuid();
 			var workTypeId = Guid.NewGuid();
@@ -498,7 +498,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void AddWorkItem_WorkTypeWithInvalidCategory_ArgumentExceptionThrown()
+		public void AddWorkItem_WorkTypeWithInvalidCategory_DomainValidationExceptionThrown()
 		{
 			var workStatusId = Guid.NewGuid();
 			var workTypeId = Guid.NewGuid();
@@ -515,7 +515,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		[Test]
-		public void AddWorkItem_WorkLocationWithInvalidCategory_ArgumentExceptionThrown()
+		public void AddWorkItem_WorkLocationWithInvalidCategory_DomainValidationExceptionThrown()
 		{
 			var workStatusId = Guid.NewGuid();
 			var workTypeId = Guid.NewGuid();
@@ -529,6 +529,24 @@ namespace JobSystem.BusinessLogic.Tests
 			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryStub, GetListItemRepositoryForInvalidWorkLocationCategory(workStatusId, workTypeId, workLocationId), _userContext);
 			AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId, workLocationId);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.InvalidWorkLocationCategory));
+		}
+
+		[Test]
+		public void AddWorkItem_CurrentUserHasInsufficientSecurity_DomainValidationExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workLocationId = Guid.NewGuid();
+			var workTime = 25;
+			var overTime = 10;
+			var report = "Instrument calibrated OK";
+
+			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
+			jobItemRepositoryStub.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
+			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(
+				jobItemRepositoryStub, workStatusId, workLocationId, workTypeId, TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
+			AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId, workLocationId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.InsufficientSecurityClearance));
 		}
 
 		private void AddWorkItem(Guid jobItemId, int workTime, int overTime, string report, Guid workStatusId, Guid workTypeId, Guid workLocationId)

@@ -68,7 +68,7 @@ namespace JobSystem.BusinessLogic.Services
 
 		public JobItem AddWorkItem(Guid jobItemId, int workTime, int overTime, string report, Guid workStatusId, Guid workTypeId, Guid workLocationId)
 		{
-			var jobItem = _jobItemRepository.GetById(jobItemId);
+			var jobItem = GetById(jobItemId);
 			if (jobItem == null)
 				throw new ArgumentException("A valid job item ID must be supplied.");
 			var status = ValidateWorkStatus(workStatusId);
