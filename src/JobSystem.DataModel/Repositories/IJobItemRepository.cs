@@ -36,6 +36,8 @@ namespace JobSystem.DataModel.Repositories
 		/// of this interface should be free to assume that no null reference exception will result. If it does, it's the fault of the caller.
 		/// </remarks>
 		void EmitItemHistory(UserAccount createdBy, Guid jobItemId, int workTime, int overTime, string report, ListItemType workStatus, ListItemType workType, ListItemType workLocation);
+		ConsignmentItem GetLatestConsignmentItem(Guid jobItemId);
+		PendingConsignmentItem GetPendingConsignmentItem(Guid jobItemId);
 		IEnumerable<JobItem> GetJobItems(Guid jobId);
 	}
 }

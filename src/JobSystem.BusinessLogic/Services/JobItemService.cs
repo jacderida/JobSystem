@@ -98,6 +98,20 @@ namespace JobSystem.BusinessLogic.Services
 			return _jobItemRepository.GetJobItems(jobId);
 		}
 
+		public ConsignmentItem GetLatestConsignmentItem(Guid jobItemId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _jobItemRepository.GetLatestConsignmentItem(jobItemId);
+		}
+
+		public PendingConsignmentItem GetPendingConsignmentItem(Guid jobItemId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _jobItemRepository.GetPendingConsignmentItem(jobItemId);
+		}
+
 		private Job GetJob(Guid jobId)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

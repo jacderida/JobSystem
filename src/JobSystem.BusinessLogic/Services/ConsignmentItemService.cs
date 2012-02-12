@@ -5,6 +5,7 @@ using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
 using JobSystem.Resources.Consignments;
+using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -85,6 +86,16 @@ namespace JobSystem.BusinessLogic.Services
 			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
 			_consignmentItemRepository.CreatePendingItem(pendingItem);
 			return pendingItem;
+		}
+
+		public IEnumerable<PendingConsignmentItem> GetPendingItems()
+		{
+			return _consignmentItemRepository.GetPendingConsignmentItems();
+		}
+
+		public IEnumerable<PendingConsignmentItem> GetPendingItems(IList<Guid> pendingItemIds)
+		{
+			return _consignmentItemRepository.GetPendingConsignmentItems(pendingItemIds);
 		}
 	}
 }

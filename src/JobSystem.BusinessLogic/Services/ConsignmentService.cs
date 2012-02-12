@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
@@ -15,6 +16,7 @@ namespace JobSystem.BusinessLogic.Services
 		private readonly IConsignmentRepository _consignmentRepository;
 		private readonly ISupplierRepository _supplierRepository;
 		private readonly IEntityIdProvider _entityIdProvider;
+		private readonly ConsignmentItemService _consignmentItemService;
 
 		public ConsignmentService(
 			IUserContext applicationContext,
@@ -27,6 +29,7 @@ namespace JobSystem.BusinessLogic.Services
 			_consignmentRepository = consignmentRepository;
 			_supplierRepository = supplierRepository;
 			_entityIdProvider = entityIdProvider;
+			_consignmentItemService = consignmentItemService;
 		}
 
 		public Consignment Create(Guid id, Guid supplierId)
@@ -43,6 +46,16 @@ namespace JobSystem.BusinessLogic.Services
 			consignment.ConsignmentNo = _entityIdProvider.GetIdFor<Consignment>();
 			_consignmentRepository.Create(consignment);
 			return consignment;
+		}
+
+		public void CreateConsignmentFromPendingItems()
+		{
+			//var pendingItems = _consignmentItemService.GetPendingItems().OrderBy(pi => ;
+		}
+
+		public void CreateConsignmentsFromPendingItems(IList<Guid> pendingItemIds)
+		{
+
 		}
 
 		public Consignment GetById(Guid id)

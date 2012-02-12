@@ -36,5 +36,15 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		{
 			return CurrentSession.Query<JobItem>().Where(ji => ji.Job.Id == jobId);
 		}
+
+		public ConsignmentItem GetLatestConsignmentItem(Guid jobItemId)
+		{
+			return CurrentSession.Query<ConsignmentItem>().Where(ci => ci.JobItem.Id == jobItemId).OrderBy(ci => ci.Consignment.DateCreated).SingleOrDefault();
+		}
+
+		public PendingConsignmentItem GetPendingConsignmentItem(Guid jobItemId)
+		{
+			return CurrentSession.Query<PendingConsignmentItem>().Where(pi => pi.JobItem.Id == jobItemId).SingleOrDefault();
+		}
 	}
 }
