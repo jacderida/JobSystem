@@ -93,6 +93,7 @@
     <Compile Include="M20120204172935_AddSupplierTable.cs" />
     <Compile Include="M20120205154517_AddConsignmentsTable.cs" />
     <Compile Include="M20120205193700_AddConsignmentItemsTable.cs" />
+    <Compile Include="M20120212155352_AddPendingConsignmentItemsTable.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

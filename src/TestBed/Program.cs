@@ -42,13 +42,24 @@ namespace TestBed
 				new InstrumentService(testUserContext, new InstrumentRepository(), queueDispatcher),
 				queueDispatcher);
 			var instrumentService = new InstrumentService(testUserContext, new InstrumentRepository(), queueDispatcher);
+			var supplierService = new SupplierService(testUserContext, new SupplierRepository(), queueDispatcher);
+			var consignmentItemRepository = new ConsignmentItemService(
+				testUserContext,
+				new ConsignmentRepository(),
+				new ConsignmentItemRepository(),
+				new JobItemRepository(),
+				new ListItemRepository(),
+				new SupplierRepository(),
+				queueDispatcher);
 
 			var jobId = Guid.NewGuid();
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
 			var instrumentId = Guid.NewGuid();
 
 			NHibernateSession.Current.BeginTransaction();
+			supplierService.Create(supplierId, "Gael Ltd", new Address(), new ContactInfo(), new Address(), new ContactInfo());
 			customerService.Create(customerId, "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo());
 			instrumentService.Create(instrumentId, "Druck", "DPI601IS", "None", "Digital Pressure Indicator");
 			jobService.CreateJob(jobId, "job instructions", "ORDER12345", "ADVICE12345", listItemService.GetAllByCategory(ListItemCategoryType.JobType).First().Id, customerId, "job notes", "job contact");
@@ -56,6 +67,8 @@ namespace TestBed
 				jobId, jobItemId, instrumentId, "12345", "AST12345", listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemLocation).First().Id, listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id, 12,
 				"job instructions", "accessories", false, String.Empty, "comments");
+			jobService.ApproveJob(jobId);
+			consignmentItemRepository.CreatePending(Guid.NewGuid(), jobItemId, supplierId, null);
 			NHibernateSession.Current.Transaction.Commit();
 		}
 

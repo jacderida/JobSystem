@@ -68,6 +68,7 @@
     <Compile Include="Entities\ListItemCategory.cs" />
     <Compile Include="Entities\ListItemCategoryType.cs" />
     <Compile Include="Entities\ListItemType.cs" />
+    <Compile Include="Entities\PendingConsignmentItem.cs" />
     <Compile Include="Entities\Supplier.cs" />
     <Compile Include="Entities\TaxCode.cs" />
     <Compile Include="Entities\UserAccount.cs" />

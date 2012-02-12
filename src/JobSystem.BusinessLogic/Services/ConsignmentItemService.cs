@@ -1,9 +1,9 @@
 ﻿using System;
+using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
-using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.Resources.Consignments;
 
 namespace JobSystem.BusinessLogic.Services
@@ -14,6 +14,7 @@ namespace JobSystem.BusinessLogic.Services
 		private readonly IConsignmentItemRepository _consignmentItemRepository;
 		private readonly IJobItemRepository _jobItemRepository;
 		private readonly IListItemRepository _listItemRepository;
+		private readonly ISupplierRepository _supplierRepository;
 
 		public ConsignmentItemService(
 			IUserContext applicationContext,
@@ -21,12 +22,14 @@ namespace JobSystem.BusinessLogic.Services
 			IConsignmentItemRepository consignmentItemRepository,
 			IJobItemRepository jobItemRepository,
 			IListItemRepository listItemRepository,
+			ISupplierRepository supplierRepository,
 			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
 		{
 			_consignmentRepository = consignmentRepository;
 			_consignmentItemRepository = consignmentItemRepository;
 			_jobItemRepository = jobItemRepository;
 			_listItemRepository = listItemRepository;
+			_supplierRepository = supplierRepository;
 		}
 
 		public ConsignmentItem Create(Guid id, Guid jobItemId, Guid consignmentId, string instructions)
@@ -58,6 +61,30 @@ namespace JobSystem.BusinessLogic.Services
 			_consignmentItemRepository.Create(consignmentItem);
 			_jobItemRepository.Update(jobItem);
 			return consignmentItem;
+		}
+
+		public PendingConsignmentItem CreatePending(Guid id, Guid jobItemId, Guid supplierId, string instructions)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			var jobItem = _jobItemRepository.GetById(jobItemId);
+			if (jobItem == null)
+				throw new ArgumentException("An ID must be supplied for the job item.");
+			if (jobItem.Job.IsPending)
+				throw new DomainValidationException(Messages.PendingJob);
+			var supplier = _supplierRepository.GetById(supplierId);
+			if (supplier == null)
+				throw new ArgumentException("An ID must be supplied for the supplier.");
+			var pendingItem = new PendingConsignmentItem
+			{
+				Id = id,
+				JobItem = jobItem,
+				Supplier = supplier,
+				Instructions = instructions
+			};
+			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
+			_consignmentItemRepository.CreatePendingItem(pendingItem);
+			return pendingItem;
 		}
 	}
 }

@@ -17,7 +17,23 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 			return new ConsignmentItemService(
 				userContext,
 				GetConsignmentRepository(consignmentId, itemCount),
-				consignmentItemRepository, jobItemRepository, GetListItemRepository(), MockRepository.GenerateMock<IQueueDispatcher<IMessage>>());
+				consignmentItemRepository,
+				jobItemRepository,
+				GetListItemRepository(),
+				MockRepository.GenerateMock<ISupplierRepository>(),
+				MockRepository.GenerateMock<IQueueDispatcher<IMessage>>());
+		}
+
+		public static ConsignmentItemService CreateForPendingItems(IConsignmentItemRepository consignmentItemRepository, Guid jobItemId, Guid supplierId, IUserContext userContext, bool jobIsPending = false)
+		{
+			return new ConsignmentItemService(
+				userContext,
+				MockRepository.GenerateStub<IConsignmentRepository>(),
+				consignmentItemRepository,
+				GetJobItemRepository(jobItemId, userContext, jobIsPending),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				GetSupplierRepository(supplierId),
+				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 
 		private static IConsignmentRepository GetConsignmentRepository(Guid consignmentId, int itemCount)
@@ -61,6 +77,53 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 					Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Status", Type = ListItemCategoryType.JobItemLocation }
 				});
 			return listItemRepositoryStub;
+		}
+
+		private static ISupplierRepository GetSupplierRepository(Guid supplierId)
+		{
+			var supplierRepositoryStub = MockRepository.GenerateStub<ISupplierRepository>();
+			if (supplierId != Guid.Empty)
+				supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(new Supplier { Id = supplierId, Name = "Gael Ltd" });
+			else
+				supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(null);
+			return supplierRepositoryStub;
+		}
+
+		private static IJobItemRepository GetJobItemRepository(Guid jobItemId, IUserContext userContext, bool isJobPending)
+		{
+			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
+			if (jobItemId != Guid.Empty)
+				jobItemRepositoryStub.Stub(x => x.GetById(jobItemId)).Return(
+					new JobItem
+					{
+						Id = jobItemId,
+						Job = new Job
+						{
+							Id = Guid.NewGuid(),
+							JobNo = "JR2000",
+							CreatedBy = userContext.GetCurrentUser(),
+							OrderNo = "ORDER12345",
+							DateCreated = DateTime.UtcNow,
+							Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" },
+							IsPending = isJobPending
+						},
+						ItemNo = 1,
+						SerialNo = "12345",
+						Instrument = new Instrument
+						{
+							Id = Guid.NewGuid(),
+							Manufacturer = "Druck",
+							ModelNo = "DPI601IS",
+							Range = "None",
+							Description = "Digital Pressure Indicator"
+						},
+						CalPeriod = 12,
+						Created = DateTime.UtcNow,
+						CreatedUser = userContext.GetCurrentUser(),
+					});
+			else
+				jobItemRepositoryStub.Stub(x => x.GetById(jobItemId)).Return(null);
+			return jobItemRepositoryStub;
 		}
 	}
 }
