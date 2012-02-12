@@ -21,6 +21,7 @@ namespace JobSystem.BusinessLogic.Services
 			IConsignmentRepository consignmentRepository,
 			ISupplierRepository supplierRepository,
 			IEntityIdProvider entityIdProvider,
+			ConsignmentItemService consignmentItemService,
 			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
 		{
 			_consignmentRepository = consignmentRepository;

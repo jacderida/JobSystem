@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{962577F3-201E-4512-B266-7B54EF3FB827}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JobSystem.TestHelpers</RootNamespace>
+    <AssemblyName>JobSystem.TestHelpers</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\lib\rhinomocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CompanyDetailsServiceFactory.cs" />
+    <Compile Include="ConsignmentItemServiceFactory.cs" />
+    <Compile Include="ConsignmentServiceFactory.cs" />
+    <Compile Include="Context\TestAppConfig.cs" />
+    <Compile Include="Context\TestUserContext.cs" />
+    <Compile Include="CustomerServiceFactory.cs" />
+    <Compile Include="DomainValidationExtensions.cs" />
+    <Compile Include="EntityIdProviderFactory.cs" />
+    <Compile Include="InstrumentServiceFactory.cs" />
+    <Compile Include="JobItemServiceFactory.cs" />
+    <Compile Include="JobServiceFactory.cs" />
+    <Compile Include="SupplierServiceFactory.cs" />
+    <Compile Include="UserManagementServiceFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JobSystem.BusinessLogic\JobSystem.BusinessLogic.csproj">
+      <Project>{D14C39B9-B192-43A7-ABE6-82789BB2CADB}</Project>
+      <Name>JobSystem.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JobSystem.DataModel\JobSystem.DataModel.csproj">
+      <Project>{4F88F47B-AAE1-4E7D-AFF1-654C67A8A61C}</Project>
+      <Name>JobSystem.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JobSystem.Framework\JobSystem.Framework.csproj">
+      <Project>{904034C0-4B56-4A2E-82BA-5D4B84195D99}</Project>
+      <Name>JobSystem.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>XCopy "$(TargetDir)*.dll" "$(SolutionDir)run" /Y /C /D /I
+XCopy "$(TargetDir)*.pdb" "$(SolutionDir)run" /Y /C /D /I
+XCopy "$(TargetDir)*.config" "$(SolutionDir)run" /Y /C /D /I
+XCopy "$(SolutionDir)..\lib\sqlite-netFx40-static-binary-x64-2010-1.0.77.0\SQLite.Interop.dll" "$(SolutionDir)run" /Y /C /D /I</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
