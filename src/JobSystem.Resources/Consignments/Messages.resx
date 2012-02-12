@@ -117,7 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InstructionsTooLarge" xml:space="preserve">
+    <value>The instructions for the item cannot exceed 255 characters.</value>
+  </data>
   <data name="InsufficientSecurityClearance" xml:space="preserve">
     <value>An internal member role is required for this view</value>
+  </data>
+  <data name="PendingJob" xml:space="preserve">
+    <value>A consignment item cannot be raised for this job item because its job is pending approval.</value>
   </data>
 </root>

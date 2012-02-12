@@ -61,11 +61,29 @@ namespace JobSystem.Resources.Consignments {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The instructions for the item cannot exceed 255 characters..
+        /// </summary>
+        public static string InstructionsTooLarge {
+            get {
+                return ResourceManager.GetString("InstructionsTooLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An internal member role is required for this view.
         /// </summary>
         public static string InsufficientSecurityClearance {
             get {
                 return ResourceManager.GetString("InsufficientSecurityClearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A consignment item cannot be raised for this job item because its job is pending approval..
+        /// </summary>
+        public static string PendingJob {
+            get {
+                return ResourceManager.GetString("PendingJob", resourceCulture);
             }
         }
     }

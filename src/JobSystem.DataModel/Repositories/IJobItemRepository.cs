@@ -7,7 +7,7 @@ namespace JobSystem.DataModel.Repositories
 	public interface IJobItemRepository : IReadWriteRepository<JobItem, Guid>
 	{
 		/// <summary>
-		/// Creates a piece of item history for a job item.
+		/// Emits a piece of item history for a job item.
 		/// </summary>
 		/// <param name="createdBy">The user who performed the action..</param>
 		/// <param name="jobItemId">The ID of the job item that the action relates to.</param>
@@ -35,8 +35,7 @@ namespace JobSystem.DataModel.Repositories
 		/// that there is a test to catch out the case when a bad job item ID gets passed in, and throw an exception at the calling level. Implementors
 		/// of this interface should be free to assume that no null reference exception will result. If it does, it's the fault of the caller.
 		/// </remarks>
-		void CreateItemHistory(UserAccount createdBy, Guid jobItemId, int workTime, int overTime, string report, ListItemType workStatus, ListItemType workType, ListItemType workLocation);
-		void CreateItemHistory(ItemHistory itemHistory);
+		void EmitItemHistory(UserAccount createdBy, Guid jobItemId, int workTime, int overTime, string report, ListItemType workStatus, ListItemType workType, ListItemType workLocation);
 		IEnumerable<JobItem> GetJobItems(Guid jobId);
 	}
 }

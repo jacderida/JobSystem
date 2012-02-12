@@ -10,7 +10,7 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 {
 	public class JobItemRepository : RepositoryBase<JobItem>, IJobItemRepository
 	{
-		public void CreateItemHistory(UserAccount createdBy, Guid jobItemId, int workTime, int overTime, string report, ListItemType workStatus, ListItemType workType, ListItemType workLocation)
+		public void EmitItemHistory(UserAccount createdBy, Guid jobItemId, int workTime, int overTime, string report, ListItemType workStatus, ListItemType workType, ListItemType workLocation)
 		{
 			var jobItem = CurrentSession.Get<JobItem>(jobItemId);
 			var status = CurrentSession.Query<ListItem>().Where(li => li.Type == workStatus).Single();
@@ -29,11 +29,6 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 				WorkLocation = location,
 				WorkType = workTypeItem
 			};
-			CurrentSession.Save(itemHistory);
-		}
-
-		public void CreateItemHistory(ItemHistory itemHistory)
-		{
 			CurrentSession.Save(itemHistory);
 		}
 

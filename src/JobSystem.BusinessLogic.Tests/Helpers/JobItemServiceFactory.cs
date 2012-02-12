@@ -64,6 +64,18 @@ namespace JobSystem.BusinessLogic.Tests.Helpers
 				dispatcher);
 		}
 
+		public static JobItemService CreateToReturnJobItem(IJobItemRepository jobItemRepository, IUserContext userContext)
+		{
+			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
+			return new JobItemService(
+				userContext,
+				MockRepository.GenerateStub<IJobRepository>(),
+				jobItemRepository,
+				new ListItemService(userContext, MockRepository.GenerateStub<IListItemRepository>(), dispatcher),
+				new InstrumentService(userContext, MockRepository.GenerateStub<IInstrumentRepository>(), dispatcher),
+				dispatcher);
+		}
+
 		public static JobItemService CreateForUpdateStatus(IJobItemRepository jobItemRepository, Guid statusId)
 		{
 			return CreateForUpdateStatus(jobItemRepository,GetListItemRepositoryForUpdateStatus(statusId),

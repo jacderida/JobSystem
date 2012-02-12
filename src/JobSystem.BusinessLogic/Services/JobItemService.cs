@@ -79,7 +79,7 @@ namespace JobSystem.BusinessLogic.Services
 			report = ValidateReport(report);
 			jobItem.Status = status;
 			jobItem.Location = workLocation;
-			_jobItemRepository.CreateItemHistory(CurrentUser, jobItemId, workTime, overTime, report, status.Type, workType.Type, workLocation.Type);
+			_jobItemRepository.EmitItemHistory(CurrentUser, jobItemId, workTime, overTime, report, status.Type, workType.Type, workLocation.Type);
 			_jobItemRepository.Update(jobItem);
 			return jobItem;
 		}

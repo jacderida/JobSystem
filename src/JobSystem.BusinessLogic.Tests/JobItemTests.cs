@@ -337,7 +337,7 @@ namespace JobSystem.BusinessLogic.Tests
 		}
 
 		#endregion
-		#region AddWork
+		#region AddWorkItem
 
 		[Test]
 		public void AddWorkItem_ValidWorkItemDetails_WorkItemAdded()
@@ -351,7 +351,7 @@ namespace JobSystem.BusinessLogic.Tests
 
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
-			jobItemRepositoryMock.Expect(x => x.CreateItemHistory(
+			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
 				_userContext.GetCurrentUser(), _jobItemToUpdateId, workTime, overTime, report, ListItemType.WorkStatusCalibrated, ListItemType.WorkTypeCalibration, ListItemType.WorkLocationCalibrated));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate));
 			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryMock, workStatusId, workLocationId, workTypeId, _userContext);

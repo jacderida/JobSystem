@@ -6,6 +6,7 @@ namespace JobSystem.DataModel.Repositories
 {
 	public interface IConsignmentRepository : IReadWriteRepository<Consignment, Guid>
 	{
+		int GetConsignmentItemCount(Guid consignmentId);
 		IEnumerable<Consignment> GetConsignments();
 	}
 }
