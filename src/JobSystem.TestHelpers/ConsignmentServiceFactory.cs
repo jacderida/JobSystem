@@ -35,7 +35,21 @@ namespace JobSystem.TestHelpers
 
 		public static ConsignmentService Create(IConsignmentRepository consignmentRepository, Guid supplierId, IUserContext userContext)
 		{
-			return new ConsignmentService(userContext, consignmentRepository, GetSupplierRepository(supplierId), EntityIdProviderFactory.GetEntityIdProviderFor<Consignment>("CR2000"), MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
+			return new ConsignmentService(
+				userContext,
+				consignmentRepository,
+				GetSupplierRepository(supplierId),
+				EntityIdProviderFactory.GetEntityIdProviderFor<Consignment>("CR2000"),
+				new ConsignmentItemService(
+					userContext,
+					MockRepository.GenerateStub<IConsignmentRepository>(),
+					MockRepository.GenerateStub<IConsignmentItemRepository>(),
+					MockRepository.GenerateStub<IJobItemRepository>(),
+					MockRepository.GenerateStub<IListItemRepository>(),
+					MockRepository.GenerateStub<ISupplierRepository>(),
+					dispatcher),
+				dispatcher);
 		}
 
 		private static ISupplierRepository GetSupplierRepository(Guid supplierId)
