@@ -14,10 +14,12 @@ namespace JobSystem.Mvc.Controllers
     public class ConsignmentController : Controller
     {
         private readonly ConsignmentService _consignmentService;
+		private readonly ConsignmentItemService _consignmentItemService;
 		
-		public ConsignmentController(ConsignmentService consignmentService)
+		public ConsignmentController(ConsignmentService consignmentService, ConsignmentItemService consignmentItemService)
 		{
 			_consignmentService = consignmentService;
+			_consignmentItemService = consignmentItemService;
 		}
 
 		public ActionResult Index()
@@ -28,7 +30,6 @@ namespace JobSystem.Mvc.Controllers
 			{
 				viewmodels.Add(new ConsignmentIndexViewModel()
 				{
-					Id = i.ToString(),
 					Instructions = "aaa",
 					JobItemId = "11",
 					SupplierId = "aa",
@@ -55,7 +56,20 @@ namespace JobSystem.Mvc.Controllers
 			{
 				try
 				{
-					_consignmentService.Create(System.Guid.NewGuid(), viewmodel.SupplierId);
+					if (viewmodel.IsIndividual) 
+					{
+						var consignment = _consignmentService.Create(System.Guid.NewGuid(), viewmodel.SupplierId);
+						_consignmentItemService.Create(
+							Guid.NewGuid(),
+							viewmodel.JobItemId,
+							consignment.Id,
+							viewmodel.Instructions
+						);
+					}
+					else 
+					{
+						
+					}
 					return RedirectToAction("Details", "JobItem", new { Id = viewmodel.JobItemId });
 				}
 				catch (DomainValidationException dex)
