@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using JobSystem.Mvc.ViewModels.WorkItems;
+using JobSystem.Mvc.ViewModels.Consignments;
 
 namespace JobSystem.Mvc.ViewModels.JobItems
 {
@@ -20,6 +21,7 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 		public string Comments { get; set; }
 		public string InstrumentDetails { get; set; }
 		public IList<WorkItemDetailsViewModel> WorkItems { get; set; }
+		public ConsignmentIndexViewModel ConsignmentItem { get; set; }
 		public string Instrument { get; set; }
 		public string InitialStatus { get; set; }
 		public string Location { get; set; }

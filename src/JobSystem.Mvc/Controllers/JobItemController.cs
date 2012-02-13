@@ -9,6 +9,7 @@ using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.JobItems;
 using JobSystem.Mvc.ViewModels.WorkItems;
+using JobSystem.Mvc.ViewModels.Consignments;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -17,12 +18,14 @@ namespace JobSystem.Mvc.Controllers
 		private readonly JobItemService _jobItemService;
 		private readonly ListItemService _listItemService;
 		private readonly InstrumentService _instrumentService;
+		private readonly ConsignmentService _consignmentService;
 
-		public JobItemController(JobItemService jobItemService, ListItemService listItemService, InstrumentService instrumentService)
+		public JobItemController(JobItemService jobItemService, ListItemService listItemService, InstrumentService instrumentService, ConsignmentService consignmentService)
 		{
 			_jobItemService = jobItemService;
 			_listItemService = listItemService;
 			_instrumentService = instrumentService;
+			_consignmentService = consignmentService;
 		}
 
 		[HttpGet]
@@ -106,6 +109,26 @@ namespace JobSystem.Mvc.Controllers
 				}).OrderByDescending(wi => wi.DateCreated).ToList()
 			};
 			viewmodel.InstrumentDetails = String.Format("{0} - {1} : {2}", job.Instrument.ModelNo, job.Instrument.Manufacturer.ToString(), job.Instrument.Description);
+			
+			//var pendingItem = _jobItemService.GetPendingConsignmentItem(Id);
+			//if (pendingItem == null)
+			//{
+			//    var item = _jobItemService.GetLatestConsignmentItem(Id);
+			//    viewmodel.ConsignmentItem = new ConsignmentIndexViewModel(){
+			//        Id = item.Id,
+			//        Instructions = item.Instructions,
+			//        SupplierName = item.Consignment.Supplier.Name
+			//    };
+			//} 
+			//else
+			//{
+			//    viewmodel.ConsignmentItem = new ConsignmentIndexViewModel()
+			//    {
+			//        Id = pendingItem.Id,
+			//        Instructions = pendingItem.Instructions,
+			//        SupplierName = pendingItem.Supplier.Name
+			//    };
+			//} 
 			return PartialView("_Details", viewmodel);
 		}
 

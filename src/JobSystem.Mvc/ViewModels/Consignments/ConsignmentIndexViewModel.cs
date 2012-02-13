@@ -7,7 +7,7 @@ namespace JobSystem.Mvc.ViewModels.Consignments
 {
 	public class ConsignmentIndexViewModel
 	{
-		public string Id { get; set; }
+		public Guid Id { get; set; }
 		public string SupplierId { get; set; }
 		public string SupplierName { get; set; }
 		public string Instructions { get; set; }
