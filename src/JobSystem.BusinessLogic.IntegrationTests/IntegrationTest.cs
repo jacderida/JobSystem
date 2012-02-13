@@ -7,9 +7,10 @@ using NUnit.Framework;
 
 namespace JobSystem.BusinessLogic.IntegrationTests
 {
+	[SetUpFixture]
 	public class IntegrationTest
 	{
-		[SetUpFixture]
+		[SetUp]
 		public void InitNHibernateSqlLite()
 		{
 			SQLiteConnection.CreateFile("JobSystem.Development.db3");

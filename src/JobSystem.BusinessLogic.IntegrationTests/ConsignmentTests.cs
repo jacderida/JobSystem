@@ -6,6 +6,7 @@ using JobSystem.DataAccess.NHibernate.Repositories;
 using JobSystem.DataModel.Dto;
 using JobSystem.DataModel.Entities;
 using JobSystem.Framework.Messaging;
+using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -13,7 +14,7 @@ using Rhino.Mocks;
 namespace JobSystem.BusinessLogic.IntegrationTests
 {
 	[TestFixture]
-	public class ConsignmentTests : IntegrationTest
+	public class ConsignmentTests
 	{
 		private ConsignmentService _consignmentService;
 
@@ -24,6 +25,7 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			var userRepository = new UserAccountRepository();
 			var user = userRepository.GetByEmail("admin@intertek.com", false);
 			var userContext = new TestUserContext(user);
+			NHibernateSession.Current.BeginTransaction();
 
 			var consignmentRepository = new ConsignmentRepository();
 			var consignmentItemRepository = new ConsignmentItemRepository();
@@ -31,84 +33,20 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			var jobRepository = new JobRepository();
 			var jobItemRepository = new JobItemRepository();
 			var listItemRepository = new ListItemRepository();
-			var customerRepository = new CustomerRepository();
 			var entityIdProvider = new DirectEntityIdProvider();
 			var instrumentRepository = new InstrumentRepository();
-
-			NHibernateSession.Current.BeginTransaction();
-			var instrumentId = Guid.NewGuid();
-			var instrumentService = new InstrumentService(userContext, instrumentRepository, dispatcher);
-			instrumentService.Create(instrumentId, "Druck", "DPI601IS", "None", "Description");
-
-			var customerId = Guid.NewGuid();
-			var customerService = new CustomerService(userContext, customerRepository, dispatcher);
-			customerService.Create(customerId, "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo());
 
 			var supplier1Id = Guid.NewGuid();
 			var supplier2Id = Guid.NewGuid();
 			var supplier3Id = Guid.NewGuid();
-			var supplierService = new SupplierService(userContext, supplierRepository, dispatcher);
-			supplierService.Create(supplier1Id, "Supplier 1", new Address(), new ContactInfo(), new Address(), new ContactInfo());
-			supplierService.Create(supplier2Id, "Supplier 2", new Address(), new ContactInfo(), new Address(), new ContactInfo());
-			supplierService.Create(supplier3Id, "Supplier 3", new Address(), new ContactInfo(), new Address(), new ContactInfo());
-
-			var listItemService = new ListItemService(userContext, listItemRepository, dispatcher);
 			var job1Id = Guid.NewGuid();
 			var job2Id = Guid.NewGuid();
 			var job3Id = Guid.NewGuid();
-			var jobService = new JobService(userContext, jobRepository, listItemRepository, customerRepository, entityIdProvider, dispatcher);
-			jobService.CreateJob(job1Id, "some instructions", "order no", "advice no", listItemService.GetAllByCategory(ListItemCategoryType.JobType).First().Id, customerId, "notes", "contact");
-			jobService.CreateJob(job2Id, "some instructions", "order no", "advice no", listItemService.GetAllByCategory(ListItemCategoryType.JobType).First().Id, customerId, "notes", "contact");
-			jobService.CreateJob(job3Id, "some instructions", "order no", "advice no", listItemService.GetAllByCategory(ListItemCategoryType.JobType).First().Id, customerId, "notes", "contact");
+			CreateConsignmentsFromPendingItemsHelper.CreateContextForPendingItemTests(job1Id, job2Id, job3Id, supplier1Id, supplier2Id, supplier3Id);
 
+			var instrumentService = new InstrumentService(userContext, instrumentRepository, dispatcher);
+			var listItemService = new ListItemService(userContext, listItemRepository, dispatcher);
 			var jobItemService = new JobItemService(userContext, jobRepository, jobItemRepository, listItemService, instrumentService, dispatcher);
-			jobItemService.CreateJobItem(
-				job1Id, Guid.NewGuid(), instrumentId, "12345", String.Empty,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
-				12, "instructions", String.Empty, false, String.Empty, String.Empty);
-			jobItemService.CreateJobItem(
-				job1Id, Guid.NewGuid(), instrumentId, "123456", String.Empty,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
-				12, "instructions", String.Empty, false, String.Empty, String.Empty);
-			jobItemService.CreateJobItem(
-				job1Id, Guid.NewGuid(), instrumentId, "123457", String.Empty,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
-				12, "instructions", String.Empty, false, String.Empty, String.Empty);
-			jobItemService.CreateJobItem(
-				job2Id, Guid.NewGuid(), instrumentId, "12345", String.Empty,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
-				12, "instructions", String.Empty, false, String.Empty, String.Empty);
-			jobItemService.CreateJobItem(
-				job2Id, Guid.NewGuid(), instrumentId, "123456", String.Empty,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
-				12, "instructions", String.Empty, false, String.Empty, String.Empty);
-			jobItemService.CreateJobItem(
-				job2Id, Guid.NewGuid(), instrumentId, "1234567", String.Empty,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
-				12, "instructions", String.Empty, false, String.Empty, String.Empty);
-			jobItemService.CreateJobItem(
-				job3Id, Guid.NewGuid(), instrumentId, "12345", String.Empty,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
-				12, "instructions", String.Empty, false, String.Empty, String.Empty);
-			jobService.ApproveJob(job1Id);
-			jobService.ApproveJob(job2Id);
-			jobService.ApproveJob(job3Id);
-
-			NHibernateSession.Current.Transaction.Begin();
 			var consignmentItemService = new ConsignmentItemService(
 				userContext,
 				consignmentRepository, consignmentItemRepository, jobItemRepository, new ListItemRepository(), supplierRepository, dispatcher);
@@ -123,20 +61,36 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			consignmentItemService.CreatePending(Guid.NewGuid(), jobItems[2].Id, supplier3Id, "for cal");
 			jobItems = jobItemService.GetJobItems(job3Id).OrderBy(ji => ji.ItemNo).ToList();
 			consignmentItemService.CreatePending(Guid.NewGuid(), jobItems[0].Id, supplier3Id, "for cal");
-			NHibernateSession.Current.Transaction.Commit();
 
-			NHibernateSession.Current.Transaction.Begin();
 			var consignmentService = new ConsignmentService(userContext, consignmentRepository, supplierRepository, entityIdProvider, consignmentItemService, dispatcher);
 			consignmentService.CreateConsignmentsFromPendingItems();
-			NHibernateSession.Current.Transaction.Commit();
 
-			NHibernateSession.Current.Transaction.Begin();
-			foreach (var consignment in consignmentService.GetConsignments())
-			{
-				Console.WriteLine("Consignment {0}", consignment.ConsignmentNo);
-				foreach (var item in consignmentItemService.GetConsignmentItems(consignment.Id).OrderBy(ci => ci.ItemNo))
-					Console.WriteLine("Item {0}: {1}/{2}, {3}", item.ItemNo, item.JobItem.Job.JobNo, item.JobItem.ItemNo, consignment.Supplier.Name);
-			}
+			var consignments = consignmentService.GetConsignments().OrderBy(c => c.ConsignmentNo).ToList();
+			Assert.AreEqual(3, consignments.Count);
+			Assert.AreEqual("CR2000", consignments[0].ConsignmentNo);
+			Assert.AreEqual(supplier1Id, consignments[0].Supplier.Id);
+			Assert.AreEqual("CR2001", consignments[1].ConsignmentNo);
+			Assert.AreEqual(supplier2Id, consignments[1].Supplier.Id);
+			Assert.AreEqual("CR2002", consignments[2].ConsignmentNo);
+			Assert.AreEqual(supplier3Id, consignments[2].Supplier.Id);
+
+			var consignmentItems = consignmentItemService.GetConsignmentItems(consignments[0].Id).OrderBy(ci => ci.ItemNo).ToList();
+			Assert.AreEqual(3, consignmentItems.Count);
+			Assert.AreEqual("JR2000/1", String.Format("{0}/{1}", consignmentItems[0].JobItem.Job.JobNo, consignmentItems[0].JobItem.ItemNo));
+			Assert.AreEqual("JR2000/3", String.Format("{0}/{1}", consignmentItems[1].JobItem.Job.JobNo, consignmentItems[1].JobItem.ItemNo));
+			Assert.AreEqual("JR2001/1", String.Format("{0}/{1}", consignmentItems[2].JobItem.Job.JobNo, consignmentItems[2].JobItem.ItemNo));
+
+			consignmentItems = consignmentItemService.GetConsignmentItems(consignments[1].Id).OrderBy(ci => ci.ItemNo).ToList();
+			Assert.AreEqual(2, consignmentItems.Count);
+			Assert.AreEqual("JR2000/2", String.Format("{0}/{1}", consignmentItems[0].JobItem.Job.JobNo, consignmentItems[0].JobItem.ItemNo));
+			Assert.AreEqual("JR2001/2", String.Format("{0}/{1}", consignmentItems[1].JobItem.Job.JobNo, consignmentItems[1].JobItem.ItemNo));
+
+			consignmentItems = consignmentItemService.GetConsignmentItems(consignments[2].Id).OrderBy(ci => ci.ItemNo).ToList();
+			Assert.AreEqual(2, consignmentItems.Count);
+			Assert.AreEqual("JR2001/3", String.Format("{0}/{1}", consignmentItems[0].JobItem.Job.JobNo, consignmentItems[0].JobItem.ItemNo));
+			Assert.AreEqual("JR2002/1", String.Format("{0}/{1}", consignmentItems[1].JobItem.Job.JobNo, consignmentItems[1].JobItem.ItemNo));
+
+			NHibernateSession.Current.Transaction.Rollback();
 		}
 	}
 }

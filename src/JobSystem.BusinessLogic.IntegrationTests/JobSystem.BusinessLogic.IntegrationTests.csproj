@@ -75,7 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsignmentTests.cs" />
-    <Compile Include="DirectEntityIdProvider.cs" />
     <Compile Include="InstrumentSearchTests.cs" />
     <Compile Include="IntegrationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
