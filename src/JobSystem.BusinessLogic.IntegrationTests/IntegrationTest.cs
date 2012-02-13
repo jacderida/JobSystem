@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SQLite;
+using System.IO;
 using JobSystem.DataModel.Entities;
 using JobSystem.DbWireup;
 using NHibernate.Connection;
@@ -13,6 +14,7 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 		[SetUp]
 		public void InitNHibernateSqlLite()
 		{
+			File.Delete("JobSystem.Development.db3");
 			SQLiteConnection.CreateFile("JobSystem.Development.db3");
 			var databaseService = new JobSystemDatabaseCreationService("JobSystemDatabase", "Development");
 			databaseService.CreateJobSystemSchemaFromMigrations("JobSystem.Migrations.SQLite.dll", "Data Source=JobSystem.Development.db3", "sqlite");

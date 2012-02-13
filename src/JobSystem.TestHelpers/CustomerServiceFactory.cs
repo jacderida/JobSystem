@@ -1,10 +1,10 @@
 ﻿using JobSystem.BusinessLogic.Services;
 using JobSystem.DataModel;
-using Rhino.Mocks;
+using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
 using JobSystem.TestHelpers.Context;
-using JobSystem.DataModel.Entities;
+using Rhino.Mocks;
 
 namespace JobSystem.TestHelpers
 {

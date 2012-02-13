@@ -49,7 +49,9 @@
     <Compile Include="ConsignmentServiceFactory.cs" />
     <Compile Include="Context\TestAppConfig.cs" />
     <Compile Include="Context\TestUserContext.cs" />
+    <Compile Include="CreateConsignmentsFromPendingItemsHelper.cs" />
     <Compile Include="CustomerServiceFactory.cs" />
+    <Compile Include="DirectEntityIdProvider.cs" />
     <Compile Include="DomainValidationExtensions.cs" />
     <Compile Include="EntityIdProviderFactory.cs" />
     <Compile Include="InstrumentServiceFactory.cs" />
@@ -63,6 +65,10 @@
     <ProjectReference Include="..\JobSystem.BusinessLogic\JobSystem.BusinessLogic.csproj">
       <Project>{D14C39B9-B192-43A7-ABE6-82789BB2CADB}</Project>
       <Name>JobSystem.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JobSystem.DataAccess.NHibernate\JobSystem.DataAccess.NHibernate.csproj">
+      <Project>{7792D324-DF29-4F9F-9409-6E6FFFB28C6C}</Project>
+      <Name>JobSystem.DataAccess.NHibernate</Name>
     </ProjectReference>
     <ProjectReference Include="..\JobSystem.DataModel\JobSystem.DataModel.csproj">
       <Project>{4F88F47B-AAE1-4E7D-AFF1-654C67A8A61C}</Project>

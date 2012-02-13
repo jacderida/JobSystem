@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using JobSystem.DataAccess.NHibernate.Repositories;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Repositories;
-using JobSystem.DataAccess.NHibernate.Repositories;
 
-namespace JobSystem.BusinessLogic.IntegrationTests
+namespace JobSystem.TestHelpers
 {
 	public class DirectEntityIdProvider : IEntityIdProvider
 	{
