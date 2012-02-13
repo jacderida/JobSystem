@@ -19,7 +19,7 @@ namespace JobSystem.Migrations.SqlLite
 				.WithColumn("Report").AsString(255).Nullable()
 				.WithColumn("StatusId").AsGuid().NotNullable()
 				.WithColumn("WorkLocationId").AsGuid().NotNullable()
-				.WithColumn("UserAccountId").AsGuid().NotNullable();
+				.WithColumn("UserId").AsGuid().NotNullable();
 			Create.ForeignKey("FK_ItemHistory_Status")
 				.FromTable("ItemHistories")
 				.ForeignColumn("StatusId")
@@ -42,7 +42,7 @@ namespace JobSystem.Migrations.SqlLite
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_ItemHistory_UserAccounts")
 				.FromTable("ItemHistories")
-				.ForeignColumn("UserAccountId")
+				.ForeignColumn("UserId")
 				.ToTable("UserAccounts")
 				.PrimaryColumn("Id");
 		}

@@ -58,6 +58,10 @@
     <Reference Include="Remotion.Data.Linq">
       <HintPath>..\..\lib\fluentnhibernate-NH3.1-1.2\Remotion.Data.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\rhinomocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite">
@@ -88,6 +92,10 @@
     <ProjectReference Include="..\JobSystem.DataModel\JobSystem.DataModel.csproj">
       <Project>{4F88F47B-AAE1-4E7D-AFF1-654C67A8A61C}</Project>
       <Name>JobSystem.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JobSystem.DbWireup\JobSystem.DbWireup.csproj">
+      <Project>{DF20A53E-E26C-409C-B5CA-39200146AC30}</Project>
+      <Name>JobSystem.DbWireup</Name>
     </ProjectReference>
     <ProjectReference Include="..\JobSystem.Framework\JobSystem.Framework.csproj">
       <Project>{904034C0-4B56-4A2E-82BA-5D4B84195D99}</Project>

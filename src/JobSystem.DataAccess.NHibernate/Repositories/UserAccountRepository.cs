@@ -9,9 +9,6 @@ using NHibernate.Linq;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 {
-	/// <summary>
-	/// The concrete implementation of IUserAccountRepository
-	/// </summary>
 	public class UserAccountRepository : RepositoryBase<UserAccount>, IUserAccountRepository
 	{
 		public UserAccountRepository()

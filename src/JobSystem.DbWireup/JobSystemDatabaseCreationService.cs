@@ -61,13 +61,23 @@ namespace JobSystem.DbWireup
 
 		public void CreateJobSystemSchemaFromMigrations(string migrationsAssemblyPath)
 		{
-			MigrationsSchemaBuilder.CreateSchemaFromMigrations(migrationsAssemblyPath, GetConnectionStringForCatalog(_databaseName), "sqlserver");
+			CreateJobSystemSchemaFromMigrations(migrationsAssemblyPath, GetConnectionStringForCatalog(_databaseName), "sqlserver");
+		}
+
+		public void CreateJobSystemSchemaFromMigrations(string migrationsAssemblyPath, string connectionString, string providerType)
+		{
+			MigrationsSchemaBuilder.CreateSchemaFromMigrations(migrationsAssemblyPath, connectionString, providerType);
 		}
 
 		public void InitHibernate()
 		{
 			SimpleConnectionProvider.CatalogName = _databaseName;
 			var dbConfigurer = MsSqlConfiguration.MsSql2008.ConnectionString(NHibernateSession.GetInitialConnectionString()).Provider<SimpleConnectionProvider>();
+			InitHibernate(dbConfigurer);
+		}
+
+		public void InitHibernate(IPersistenceConfigurer dbConfigurer)
+		{
 			NHibernateSession.Init(
 				new SimpleSessionStorage(), new[] { "JobSystem.DataAccess.NHibernate.dll" }, new AutoPersistenceModelGenerator().Generate(), null, null, null, dbConfigurer);
 		}

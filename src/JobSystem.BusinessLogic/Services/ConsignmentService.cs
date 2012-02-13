@@ -48,14 +48,14 @@ namespace JobSystem.BusinessLogic.Services
 			return consignment;
 		}
 
-		public void CreateConsignmentFromPendingItems()
+		public void CreateConsignmentsFromPendingItems()
 		{
-			//var pendingItems = _consignmentItemService.GetPendingItems().OrderBy(pi => ;
+			DoCreateConsignmentItems(_consignmentItemService.GetPendingItems());
 		}
 
 		public void CreateConsignmentsFromPendingItems(IList<Guid> pendingItemIds)
 		{
-
+			DoCreateConsignmentItems(_consignmentItemService.GetPendingItems(pendingItemIds));
 		}
 
 		public Consignment GetById(Guid id)
@@ -70,6 +70,22 @@ namespace JobSystem.BusinessLogic.Services
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			return _consignmentRepository.GetConsignments();
+		}
+
+		private void DoCreateConsignmentItems(IEnumerable<PendingConsignmentItem> pendingItems)
+		{
+			var groupedByPendingItems = pendingItems.GroupBy(p => p.Supplier.Name, p => p).OrderBy(p => p.Key);
+			foreach (var group in groupedByPendingItems)
+			{
+				var i = 0;
+				var consignmentId = Guid.NewGuid();
+				foreach (var item in group.OrderBy(p => p.JobItem.Job.JobNo).ThenBy(p => p.JobItem.ItemNo))
+				{
+					if (i++ == 0)	// Ahh, horribly hack-ish, but it works! :/
+						Create(consignmentId, item.Supplier.Id);
+					_consignmentItemService.Create(Guid.NewGuid(), item.JobItem.Id, consignmentId, !String.IsNullOrEmpty(item.Instructions) ? item.Instructions : String.Empty);
+				}
+			}
 		}
 
 		private Supplier GetSupplier(Guid supplierId)

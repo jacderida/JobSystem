@@ -169,6 +169,8 @@ namespace JobSystem.BusinessLogic.Services
 
 		private string ValidateReport(string report)
 		{
+			if (String.IsNullOrEmpty(report))
+				return String.Empty;
 			if (report.Length > 255)
 				throw new DomainValidationException(Messages.ItemHistoryReportTooLarge, "Report");
 			return report;

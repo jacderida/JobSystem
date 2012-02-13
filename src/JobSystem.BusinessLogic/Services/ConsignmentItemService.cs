@@ -88,6 +88,11 @@ namespace JobSystem.BusinessLogic.Services
 			return pendingItem;
 		}
 
+		public IEnumerable<ConsignmentItem> GetConsignmentItems(Guid consignmentId)
+		{
+			return _consignmentItemRepository.GetConsignmentItems(consignmentId);
+		}
+
 		public IEnumerable<PendingConsignmentItem> GetPendingItems()
 		{
 			return _consignmentItemRepository.GetPendingConsignmentItems();

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
+using NHibernate.Linq;
+using NHibernate.Criterion;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 {
@@ -14,12 +17,21 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 
 		public IEnumerable<PendingConsignmentItem> GetPendingConsignmentItems()
 		{
-			return null;
+			return CurrentSession.Query<PendingConsignmentItem>();
 		}
 
 		public IEnumerable<PendingConsignmentItem> GetPendingConsignmentItems(IList<Guid> pendingItemIds)
 		{
-			return null;
+			var query = Restrictions.Disjunction();
+			foreach (var id in pendingItemIds)
+				query.Add(Restrictions.Eq("Id", id));
+			var criteria = CurrentSession.CreateCriteria<PendingConsignmentItem>().Add(query);
+			return criteria.List<PendingConsignmentItem>();
+		}
+
+		public IEnumerable<ConsignmentItem> GetConsignmentItems(Guid consignmentId)
+		{
+			return CurrentSession.Query<ConsignmentItem>().Where(ci => ci.Consignment.Id == consignmentId);
 		}
 	}
 }

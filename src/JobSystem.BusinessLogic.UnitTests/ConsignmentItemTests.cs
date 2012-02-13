@@ -311,6 +311,12 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
 		}
 
+		[Test]
+		public void CreatePending_JobItemAlreadyHasPendingItem_DomainValidationExceptionThrown()
+		{
+			throw new NotImplementedException();
+		}
+
 		private void CreatePendingConsignmentItem(Guid id, Guid jobItemId, Guid supplierId, string instructions)
 		{
 			try

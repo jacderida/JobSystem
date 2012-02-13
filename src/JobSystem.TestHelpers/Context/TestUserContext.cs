@@ -4,9 +4,6 @@ using JobSystem.DataModel.Entities;
 
 namespace JobSystem.TestHelpers.Context
 {
-	/// <summary>
-	/// A user context for running test cases
-	/// </summary>
 	public class TestUserContext : IUserContext
 	{
 		private readonly UserAccount _userAccount;
@@ -16,10 +13,6 @@ namespace JobSystem.TestHelpers.Context
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="TestUserContext"/> class.
-		/// </summary>
-		/// <param name="userAccount">The user account to associated with the account</param>
 		public TestUserContext(UserAccount userAccount)
 		{
 			_userAccount = userAccount;
@@ -55,17 +48,9 @@ namespace JobSystem.TestHelpers.Context
 			};
 		}
 
-		#region IUserContext Members
-
-		/// <summary>
-		/// Return the currently logged in user. 
-		/// </summary>
-		/// <returns></returns>
 		public UserAccount GetCurrentUser()
 		{
 			return _userAccount;
 		}
-
-		#endregion
 	}
 }
