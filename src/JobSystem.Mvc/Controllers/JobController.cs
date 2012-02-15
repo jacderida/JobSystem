@@ -11,6 +11,7 @@ using JobSystem.Mvc.ViewModels.JobItems;
 using JobSystem.Mvc.ViewModels.Jobs;
 using System.Collections.Generic;
 using JobSystem.Mvc.ViewModels.WorkItems;
+using JobSystem.Mvc.ViewModels.Consignments;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -149,6 +150,7 @@ namespace JobSystem.Mvc.Controllers
 						Field = ji.Field.Name.ToString(),
 						Location = ji.Location.Name.ToString(),
 						InstrumentDetails = String.Format("{0} - {1} : {2}", ji.Instrument.ModelNo, ji.Instrument.Manufacturer.ToString(), ji.Instrument.Description),
+						ConsignmentItem = PopulateConsignmentItemViewModel(ji.Id),
 						WorkItems = ji.HistoryItems.Select(wi => new WorkItemDetailsViewModel
 						{
 							Id = wi.Id,
@@ -164,6 +166,7 @@ namespace JobSystem.Mvc.Controllers
 							}).OrderByDescending(wi => wi.DateCreated).ToList()
 					}).ToList()
 			};
+
 			return View(viewModel);
 		}
 
@@ -183,6 +186,36 @@ namespace JobSystem.Mvc.Controllers
 				}
 			}
 			return RedirectToAction("Details", new { id = id });
+		}
+
+		private ConsignmentItemIndexViewModel PopulateConsignmentItemViewModel(Guid Id)
+		{
+			var pendingItem = _jobItemService.GetPendingConsignmentItem(Id);
+			if (pendingItem == null)
+			{
+				var item = _jobItemService.GetLatestConsignmentItem(Id);
+				if (item != null) {
+					var viewmodel = new ConsignmentItemIndexViewModel()
+					{
+						Id = item.Id,
+						Instructions = item.Instructions,
+						SupplierName = item.Consignment.Supplier.Name
+					};
+					return viewmodel;
+				} else {
+					return null;
+				}
+			}
+			else
+			{
+				var viewmodel = new ConsignmentItemIndexViewModel()
+				{
+					Id = pendingItem.Id,
+					Instructions = pendingItem.Instructions,
+					SupplierName = pendingItem.Supplier.Name
+				};
+				return viewmodel;
+			}
 		}
 	}
 }

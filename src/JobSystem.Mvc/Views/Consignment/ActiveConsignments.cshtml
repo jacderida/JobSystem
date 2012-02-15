@@ -5,29 +5,29 @@
 }
 
 <h2>Consignments</h2>
-<a href="#" id="createOrderButton" class="primary-action">Convert to Order</a>
+<div id="toggle-container">
+	<span class="toggle toggle-left"><a href="@Url.Action("PendingConsignments")">Pending</a></span>
+	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ActiveConsignments")">Consigned</a></span>
+</div>
+
 @if (Model.Any()) {
 	<table>
 		<tr>
-			<th></th>
+			<th>Consignment No</th>
 			<th>Supplier Name</th>
-			<th>Instructions</th>
-			<th></th>
+			<th>Created</th>
 		</tr>
 	@foreach (var item in Model.OrderBy(i => i.SupplierName))
 	 {
 		<tr>
 			<td>
-				@Html.CheckBox("toBeConverted", false)
+				@item.ConsignmentNo
 			</td>
 			<td>
 				@item.SupplierName
 			</td>
 			<td>
-				@item.Instructions
-			</td>
-			<td>
-				<a href="#" class="editConsignmentButton" id="@item.Id">Edit</a>
+				@item.DateCreated
 			</td>
 		</tr>
 	 }

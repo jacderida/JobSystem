@@ -109,26 +109,48 @@ namespace JobSystem.Mvc.Controllers
 				}).OrderByDescending(wi => wi.DateCreated).ToList()
 			};
 			viewmodel.InstrumentDetails = String.Format("{0} - {1} : {2}", job.Instrument.ModelNo, job.Instrument.Manufacturer.ToString(), job.Instrument.Description);
-			
-			//var pendingItem = _jobItemService.GetPendingConsignmentItem(Id);
-			//if (pendingItem == null)
-			//{
-			//    var item = _jobItemService.GetLatestConsignmentItem(Id);
-			//    viewmodel.ConsignmentItem = new ConsignmentIndexViewModel(){
-			//        Id = item.Id,
-			//        Instructions = item.Instructions,
-			//        SupplierName = item.Consignment.Supplier.Name
-			//    };
-			//} 
-			//else
-			//{
-			//    viewmodel.ConsignmentItem = new ConsignmentIndexViewModel()
-			//    {
-			//        Id = pendingItem.Id,
-			//        Instructions = pendingItem.Instructions,
-			//        SupplierName = pendingItem.Supplier.Name
-			//    };
-			//} 
+
+			var pendingItem = _jobItemService.GetPendingConsignmentItem(Id);
+			if (pendingItem == null)
+			{
+				var item = _jobItemService.GetLatestConsignmentItem(Id);
+				if (item != null) 
+				{
+					if (item.Consignment != null)
+					{
+						viewmodel.Consignment = new ConsignmentIndexViewModel()
+						{
+							Id = item.Consignment.Id,
+							ConsignmentNo = item.Consignment.ConsignmentNo,
+							CreatedBy = item.Consignment.CreatedBy.Name,
+							DateCreated = item.Consignment.DateCreated.ToLongDateString() + ' ' + item.Consignment.DateCreated.ToShortTimeString(),
+							SupplierName = item.Consignment.Supplier.Name
+						};
+					}
+					else
+					{
+						viewmodel.ConsignmentItem = new ConsignmentItemIndexViewModel()
+						{
+							Id = item.Id,
+							Instructions = item.Instructions,
+							SupplierName = item.Consignment.Supplier.Name
+						};
+					}
+				} 
+				else 
+				{
+					viewmodel.ConsignmentItem = null;
+				}
+			}
+			else
+			{
+				viewmodel.ConsignmentItem = new ConsignmentItemIndexViewModel()
+				{
+					Id = pendingItem.Id,
+					Instructions = pendingItem.Instructions,
+					SupplierName = pendingItem.Supplier.Name
+				};
+			} 
 			return PartialView("_Details", viewmodel);
 		}
 

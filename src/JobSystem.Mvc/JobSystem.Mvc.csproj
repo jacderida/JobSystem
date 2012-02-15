@@ -140,6 +140,7 @@
     <Compile Include="ViewModels\Admin\CompanyDetailsViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentCreateViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentIndexViewModel.cs" />
+    <Compile Include="ViewModels\Consignments\ConsignmentItemIndexViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerIndexViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerViewModel.cs" />
     <Compile Include="ViewModels\Instruments\InstrumentViewModel.cs" />
@@ -355,7 +356,8 @@
     <Content Include="Views\Consignment\_Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Consignment\Index.cshtml" />
+    <Content Include="Views\Consignment\ActiveConsignments.cshtml" />
+    <None Include="Views\Consignment\PendingConsignments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\Index.cshtml" />

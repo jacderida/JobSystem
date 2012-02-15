@@ -21,7 +21,8 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 		public string Comments { get; set; }
 		public string InstrumentDetails { get; set; }
 		public IList<WorkItemDetailsViewModel> WorkItems { get; set; }
-		public ConsignmentIndexViewModel ConsignmentItem { get; set; }
+		public ConsignmentItemIndexViewModel ConsignmentItem { get; set; }
+		public ConsignmentIndexViewModel Consignment { get; set; }
 		public string Instrument { get; set; }
 		public string InitialStatus { get; set; }
 		public string Location { get; set; }

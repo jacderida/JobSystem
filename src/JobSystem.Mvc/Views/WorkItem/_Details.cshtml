@@ -1,0 +1,23 @@
+﻿<ul id="work-item-list">
+	@for (int i = 0; i < Model.WorkItems.Count; i++)
+ {
+	 var curItem = Model.WorkItems[i];
+		<li class="work-item-list-item" id="@i">
+			<h3>
+				Work Item @i</h3>
+			<span>@curItem.Status</span><br />
+			<span class="smallText">@curItem.DateCreated</span>
+			<div class="work-item-details" id="work-item-@i">
+				<ul>
+					<li><span>Work by:</span> @curItem.WorkBy</li>
+					<li><span>Status:</span> @curItem.Status</li>
+					<li><span>Type:</span> @curItem.WorkType</li>
+					<li><span>Location:</span> @curItem.WorkLocation</li>
+					<li><span>Work Time:</span> @curItem.WorkTime</li>
+					<li><span>Overtime:</span> @curItem.OverTime</li>
+					<li><span>Report:</span> @curItem.Report</li>
+				</ul>
+			</div>
+		</li>	
+ }
+</ul>

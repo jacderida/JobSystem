@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using System.Linq;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.Mvc.Core.UIValidation;
@@ -24,20 +25,11 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult Index()
 		{
-			IList<ConsignmentIndexViewModel> viewmodels = new List<ConsignmentIndexViewModel>();
-
-			for (int i = 0; i < 10; i++)
-			{
-				viewmodels.Add(new ConsignmentIndexViewModel()
-				{
-					Instructions = "aaa",
-					JobItemId = "11",
-					SupplierId = "aa",
-					SupplierName = "SupplierName" + i
-				});
-			}
-			
-			return View(viewmodels);
+			//Placeholder admin role check to see whether user should be shown pending or approved jobs by default
+			var isAdmin = true;
+			if (isAdmin)
+				return RedirectToAction("PendingConsignments");
+			return RedirectToAction("ActiveConsignments");
 		}
 
         public ActionResult Create(Guid Id)
@@ -68,7 +60,12 @@ namespace JobSystem.Mvc.Controllers
 					}
 					else 
 					{
-						
+						_consignmentItemService.CreatePending(
+							Guid.NewGuid(),
+							viewmodel.JobItemId,
+							viewmodel.SupplierId,
+							viewmodel.Instructions
+						);
 					}
 					return RedirectToAction("Details", "JobItem", new { Id = viewmodel.JobItemId });
 				}
@@ -78,6 +75,33 @@ namespace JobSystem.Mvc.Controllers
 				}
 			}
 			return PartialView("_Create", viewmodel);
+		}
+
+		public ActionResult PendingConsignments()
+		{
+			var items = _consignmentItemService.GetPendingItems().Select(
+				c => new ConsignmentItemIndexViewModel
+				{
+					Id = c.Id,
+					JobItemId = c.JobItem.Id,
+					Instructions = c.Instructions,
+					SupplierName = c.Supplier.Name
+				}).ToList();
+			return View(items);
+		}
+
+		public ActionResult ActiveConsignments()
+		{
+			var items = _consignmentService.GetConsignments().Select(
+			    c => new ConsignmentIndexViewModel
+			    {
+			        Id = c.Id,
+			        ConsignmentNo = c.ConsignmentNo,
+			        CreatedBy = c.CreatedBy.Name,
+					DateCreated = c.DateCreated.ToLongDateString() + ' ' + c.DateCreated.ToShortTimeString(),
+					SupplierName = c.Supplier.Name
+			    }).ToList();
+			return View(items);
 		}
     }
 }

@@ -21,6 +21,10 @@
 <input type="hidden" id="createWorkItemUrl" value="@Url.Action("Create", "WorkItem")"/>
 <input type="hidden" id="createConsignmentUrl" value="@Url.Action("Create", "Consignment")"/>
 
+<div id="item-tooltip">
+<!-- Content replaced by javascript -->
+</div>
+
 <div id="item-details-container">
 	<div class="item-details-fields">
 		<h3 id="job-item-number">@Model.InitialStatus</h3>
@@ -36,7 +40,7 @@
 		}
 		<span class="field-label">Calibration Period</span>
 		<span class="field">@Model.CalPeriod</span>
-		<span class="field-label">Field</span>
+		<span class="field-label">Category</span>
 		<span class="field">@Model.Field</span>
 	</div>
 </div>
@@ -63,29 +67,7 @@
 			<a href="#" class="primary-action createWorkButton" id="@Model.Id">Create Work Item</a>
 			<div class="text">
 			@if (Model.WorkItems.Any()){
-				<ul id="work-item-list">
-					@for (int i = 0; i < Model.WorkItems.Count; i++)
-					{
-						var curItem = Model.WorkItems[i];
-
-						<li class="work-item-list-item" id="@i">
-							<h3>Work Item @i</h3>
-							<span>@curItem.Status</span><br />
-							<span class="smallText">@curItem.DateCreated</span>
-							<div class="work-item-details" id="work-item-@i">
-								<ul>
-									<li><span>Work by:</span> @curItem.WorkBy</li>
-									<li><span>Status:</span> @curItem.Status</li>
-									<li><span>Type:</span> @curItem.WorkType</li>
-									<li><span>Location:</span> @curItem.WorkLocation</li>
-									<li><span>Work Time:</span> @curItem.WorkTime</li>
-									<li><span>Overtime:</span> @curItem.OverTime</li>
-									<li><span>Report:</span> @curItem.Report</li>
-								</ul>
-							</div>
-						</li>	
-					}
-				</ul>
+				@Html.Partial("~/Views/WorkItem/_Details.cshtml")
 			} else {
 				<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoWorkItems</div>
 			}
@@ -104,7 +86,22 @@
 		<div id="st_content_4" class="st_tab_view">
 			<div class="text">
 				<a href="#" class="primary-action createConsignmentButton" id="@Model.Id">Raise Consigment</a>
-				<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
+				@if (Model.ConsignmentItem != null) {
+					<div class="consignment-item">
+						<h3>@Model.ConsignmentItem.SupplierName</h3>
+						@Model.ConsignmentItem.Instructions
+					</div>
+				} else if (Model.Consignment != null) {
+					<div class="consignment-item">
+						<h3>@Model.Consignment.SupplierName</h3>
+						@Model.Consignment.ConsignmentNo<br />
+						<span class="verySmallText">
+							Created by <span class="strongText">@Model.Consignment.CreatedBy</span> on <span class="strongText">@Model.Consignment.DateCreated</span>
+						</span>
+					</div>
+				} else {
+					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
+				}
 			</div>
 		</div>
 		<div id="st_content_7" class="st_tab_view">
