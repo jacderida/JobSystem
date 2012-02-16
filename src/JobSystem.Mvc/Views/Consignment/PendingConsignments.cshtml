@@ -1,4 +1,4 @@
-﻿@model IList<JobSystem.Mvc.ViewModels.Consignments.ConsignmentItemIndexViewModel>
+﻿@model JobSystem.Mvc.ViewModels.Consignments.ConsignmentPendingListViewModel
 
 @{
     ViewBag.Title = "Consignments";
@@ -9,8 +9,11 @@
 	<span class="toggle toggle-active toggle-left"><a href="@Url.Action("PendingConsignments")">Pending</a></span>
 	<span class="toggle toggle-right"><a href="@Url.Action("ActiveConsignments")">Consigned</a></span>
 </div>
-<a href="#" id="creatConsignmentButton" class="primary-action">Consign</a>
-@if (Model.Any()) {
+
+@using (Html.BeginForm("ConsignPending", "Consignment", FormMethod.Post))
+{
+<input class="primary-action" type="submit" value="Consign"/>
+if (Model.ConsignmentItems.Any()) {
 	<table>
 		<tr>
 			<th></th>
@@ -18,17 +21,17 @@
 			<th>Instructions</th>
 			<th></th>
 		</tr>
-	@foreach (var item in Model.OrderBy(i => i.SupplierName))
+	@foreach (var item in Model.ConsignmentItems.OrderBy(i => i.SupplierName))
 	 {
 		<tr>
 			<td>
-				@Html.CheckBox("toBeConverted", false)
+				<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>
 			</td>
 			<td>
-				@item.SupplierName
+				@Html.LabelFor(c => item.SupplierName)
 			</td>
 			<td>
-				@item.Instructions
+				@Html.LabelFor(c => item.Instructions)
 			</td>
 			<td>
 				<a href="#" class="editConsignmentButton" id="@item.Id">Edit</a>
@@ -39,7 +42,7 @@
 }else{
 	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
 }
-
+}
 
 <div id="edit-consignment-container">
 </div>

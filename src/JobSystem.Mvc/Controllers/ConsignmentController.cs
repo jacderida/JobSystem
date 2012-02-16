@@ -87,7 +87,10 @@ namespace JobSystem.Mvc.Controllers
 					Instructions = c.Instructions,
 					SupplierName = c.Supplier.Name
 				}).ToList();
-			return View(items);
+			var viewmodel = new ConsignmentPendingListViewModel(){
+				ConsignmentItems = items
+			};
+			return View(viewmodel);
 		}
 
 		public ActionResult ActiveConsignments()
@@ -102,6 +105,21 @@ namespace JobSystem.Mvc.Controllers
 					SupplierName = c.Supplier.Name
 			    }).ToList();
 			return View(items);
+		}
+
+		public ActionResult ConsignPending(Guid[] ToBeConvertedIds)
+		{
+			IList<Guid> idList = new List<Guid>();
+			if (ToBeConvertedIds.Length > 0)
+			{
+				for (var i = 0; i < ToBeConvertedIds.Length; i++)
+				{
+					idList.Add(ToBeConvertedIds[i]);
+				}
+			}
+			if (idList.Any()) _consignmentService.CreateConsignmentsFromPendingItems(idList);
+			
+			return RedirectToAction("PendingConsignments");
 		}
     }
 }
