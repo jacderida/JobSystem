@@ -24,6 +24,18 @@ namespace JobSystem.TestHelpers
 				MockRepository.GenerateMock<IQueueDispatcher<IMessage>>());
 		}
 
+		public static ConsignmentItemService CreateForPendingItems(Guid jobItemId, Guid supplierId, IUserContext userContext, bool jobIsPending = false)
+		{
+			return new ConsignmentItemService(
+				userContext,
+				MockRepository.GenerateStub<IConsignmentRepository>(),
+				GetConsignmentItemRepository(),
+				GetJobItemRepository(jobItemId, userContext, jobIsPending),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				GetSupplierRepository(supplierId),
+				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+		}
+
 		public static ConsignmentItemService CreateForPendingItems(IConsignmentItemRepository consignmentItemRepository, Guid jobItemId, Guid supplierId, IUserContext userContext, bool jobIsPending = false)
 		{
 			return new ConsignmentItemService(
@@ -34,6 +46,40 @@ namespace JobSystem.TestHelpers
 				MockRepository.GenerateStub<IListItemRepository>(),
 				GetSupplierRepository(supplierId),
 				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+		}
+
+		public static ConsignmentItemService EditForPendingItems(PendingConsignmentItem pendingItem, Guid jobItemId, Guid supplierId, IUserContext userContext, bool jobIsPending = false)
+		{
+			return new ConsignmentItemService(
+				userContext,
+				MockRepository.GenerateStub<IConsignmentRepository>(),
+				GetConsignmentItemRepository(pendingItem),
+				GetJobItemRepository(jobItemId, userContext, jobIsPending),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				GetSupplierRepository(supplierId),
+				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+		}
+
+		public static ConsignmentItemService CreateForEditForPendingItems(IConsignmentItemRepository consignmentItemRepository, Guid jobItemId, Guid supplierId, IUserContext userContext, bool jobIsPending = false)
+		{
+			return new ConsignmentItemService(
+				userContext,
+				MockRepository.GenerateStub<IConsignmentRepository>(),
+				consignmentItemRepository,
+				GetJobItemRepository(jobItemId, userContext, jobIsPending),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				GetSupplierRepository(supplierId),
+				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+		}
+
+		private static IConsignmentItemRepository GetConsignmentItemRepository(PendingConsignmentItem pendingItem)
+		{
+			var consignmentItemRepositoryStub = MockRepository.GenerateStub<IConsignmentItemRepository>();
+			if (pendingItem != null)
+				consignmentItemRepositoryStub.Stub(x => x.GetPendingItem(pendingItem.Id)).Return(pendingItem);
+			else
+				consignmentItemRepositoryStub.Stub(x => x.GetPendingItem(Guid.Empty)).IgnoreArguments().Return(null);
+			return consignmentItemRepositoryStub;
 		}
 
 		private static IConsignmentRepository GetConsignmentRepository(Guid consignmentId, int itemCount)
@@ -87,6 +133,13 @@ namespace JobSystem.TestHelpers
 			else
 				supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(null);
 			return supplierRepositoryStub;
+		}
+
+		private static IConsignmentItemRepository GetConsignmentItemRepository()
+		{
+			var consignmentItemRepositoryStub = MockRepository.GenerateStub<IConsignmentItemRepository>();
+			consignmentItemRepositoryStub.Stub(x => x.JobItemHasPendingConsignmentItem(Guid.Empty)).IgnoreArguments().Return(false);
+			return consignmentItemRepositoryStub;
 		}
 
 		private static IJobItemRepository GetJobItemRepository(Guid jobItemId, IUserContext userContext, bool isJobPending)

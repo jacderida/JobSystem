@@ -68,6 +68,8 @@ namespace JobSystem.BusinessLogic.Services
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			if (_consignmentItemRepository.JobItemHasPendingConsignmentItem(jobItemId))
+				throw new DomainValidationException(Messages.PendingItemAlreadyExists);
 			var jobItem = _jobItemRepository.GetById(jobItemId);
 			if (jobItem == null)
 				throw new ArgumentException("An ID must be supplied for the job item.");
@@ -85,6 +87,27 @@ namespace JobSystem.BusinessLogic.Services
 			};
 			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
 			_consignmentItemRepository.CreatePendingItem(pendingItem);
+			return pendingItem;
+		}
+
+		public PendingConsignmentItem EditPending(Guid id, Guid jobItemId, Guid supplierId, string instructions)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			var pendingItem = _consignmentItemRepository.GetPendingItem(id);
+			if (pendingItem == null)
+				throw new ArgumentException("A valid ID must be supplied for the pending consignment.");
+			var jobItem = _jobItemRepository.GetById(jobItemId);
+			if (jobItem == null)
+				throw new ArgumentException("A valid ID must be supplied for the job item.");
+			var supplier = _supplierRepository.GetById(supplierId);
+			if (supplier == null)
+				throw new ArgumentException("A valid ID must be supplied for the supplier.");
+			pendingItem.JobItem = jobItem;
+			pendingItem.Supplier = supplier;
+			pendingItem.Instructions = instructions;
+			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
+			_consignmentItemRepository.UpdatePendingItem(pendingItem);
 			return pendingItem;
 		}
 

@@ -23,6 +23,11 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private JobItem _jobItemToUpdate;
 		private IUserContext _userContext;
 
+		private Guid _jobItemforEditPendingId;
+		private JobItem _jobItemForEditPending;
+		private Guid _pendingItemId;
+		private PendingConsignmentItem _pendingItemForEdit;
+
 		[TestFixtureSetUp]
 		public void FixtureSetup()
 		{
@@ -55,7 +60,44 @@ namespace JobSystem.BusinessLogic.UnitTests
 				Created = DateTime.UtcNow,
 				CreatedUser = _userContext.GetCurrentUser(),
 			};
+			_jobItemforEditPendingId = Guid.NewGuid();
+			_jobItemForEditPending = new JobItem
+			{
+				Id = _jobItemforEditPendingId,
+				Job = new Job
+				{
+					Id = Guid.NewGuid(),
+					JobNo = "JR2001",
+					CreatedBy = _userContext.GetCurrentUser(),
+					OrderNo = "ORDER12345",
+					DateCreated = DateTime.UtcNow,
+					Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" }
+				},
+				ItemNo = 1,
+				SerialNo = "12345",
+				Instrument = new Instrument
+				{
+					Id = Guid.NewGuid(),
+					Manufacturer = "Druck",
+					ModelNo = "DPI601IS",
+					Range = "None",
+					Description = "Digital Pressure Indicator"
+				},
+				CalPeriod = 12,
+				Created = DateTime.UtcNow,
+				CreatedUser = _userContext.GetCurrentUser(),
+			};
+			_pendingItemId = Guid.NewGuid();
+			_pendingItemForEdit = new PendingConsignmentItem
+			{
+				Id = _pendingItemId,
+				Supplier = new Supplier { Id = Guid.NewGuid(), Name = "Gael Ltd" },
+				JobItem = _jobItemForEditPending,
+				Instructions = "some instructions"
+			};
 		}
+
+		#region Create
 
 		[Test]
 		public void Create_ValidDetailsSuppliedConsignmentHas0Items_SuccessfullyCreated()
@@ -224,6 +266,9 @@ namespace JobSystem.BusinessLogic.UnitTests
 			}
 		}
 
+		#endregion
+		#region CreatePending
+
 		[Test]
 		public void CreatePending_ValidPendingItemDetails_PendingItemCreated()
 		{
@@ -249,8 +294,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var supplierId = Guid.NewGuid();
 			var instructions = "Please consign this item";
 
-			_consignmentItemService = ConsignmentItemServiceFactory.CreateForPendingItems(
-				MockRepository.GenerateStub<IConsignmentItemRepository>(), jobItemId, supplierId, _userContext);
+			_consignmentItemService = ConsignmentItemServiceFactory.CreateForPendingItems(jobItemId, supplierId, _userContext);
 			CreatePendingConsignmentItem(id, jobItemId, supplierId, instructions);
 		}
 
@@ -263,8 +307,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var supplierId = Guid.Empty;
 			var instructions = "Please consign this item";
 
-			_consignmentItemService = ConsignmentItemServiceFactory.CreateForPendingItems(
-				MockRepository.GenerateStub<IConsignmentItemRepository>(), jobItemId, supplierId, _userContext);
+			_consignmentItemService = ConsignmentItemServiceFactory.CreateForPendingItems(jobItemId, supplierId, _userContext);
 			CreatePendingConsignmentItem(id, jobItemId, supplierId, instructions);
 		}
 
@@ -276,8 +319,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var supplierId = Guid.NewGuid();
 			var instructions = "Please consign this item";
 
-			_consignmentItemService = ConsignmentItemServiceFactory.CreateForPendingItems(
-				MockRepository.GenerateStub<IConsignmentItemRepository>(), jobItemId, supplierId, _userContext, true);
+			_consignmentItemService = ConsignmentItemServiceFactory.CreateForPendingItems(jobItemId, supplierId, _userContext, true);
 			CreatePendingConsignmentItem(id, jobItemId, supplierId, instructions);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.PendingJob));
 		}
@@ -290,8 +332,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var supplierId = Guid.NewGuid();
 			var instructions = new string('a', 256);
 
-			_consignmentItemService = ConsignmentItemServiceFactory.CreateForPendingItems(
-				MockRepository.GenerateStub<IConsignmentItemRepository>(), jobItemId, supplierId, _userContext);
+			_consignmentItemService = ConsignmentItemServiceFactory.CreateForPendingItems(jobItemId, supplierId, _userContext);
 			CreatePendingConsignmentItem(id, jobItemId, supplierId, instructions);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InstructionsTooLarge));
 		}
@@ -304,8 +345,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var supplierId = Guid.NewGuid();
 			var instructions = "Please consign this item";
 
-			_consignmentItemService = ConsignmentItemServiceFactory.CreateForPendingItems(
-				MockRepository.GenerateStub<IConsignmentItemRepository>(), jobItemId, supplierId,
+			_consignmentItemService = ConsignmentItemServiceFactory.CreateForPendingItems(jobItemId, supplierId,
 				 TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
 			CreatePendingConsignmentItem(id, jobItemId, supplierId, instructions);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
@@ -314,7 +354,16 @@ namespace JobSystem.BusinessLogic.UnitTests
 		[Test]
 		public void CreatePending_JobItemAlreadyHasPendingItem_DomainValidationExceptionThrown()
 		{
-			throw new NotImplementedException();
+			var id = Guid.NewGuid();
+			var jobItemId = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var instructions = "Please consign this item";
+
+			var consignmentItemRepositoryMock = MockRepository.GenerateStub<IConsignmentItemRepository>();
+			consignmentItemRepositoryMock.Stub(x => x.JobItemHasPendingConsignmentItem(jobItemId)).Return(true);
+			_consignmentItemService = ConsignmentItemServiceFactory.CreateForPendingItems(consignmentItemRepositoryMock, jobItemId, supplierId, _userContext);
+			CreatePendingConsignmentItem(id, jobItemId, supplierId, instructions);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.PendingItemAlreadyExists));
 		}
 
 		private void CreatePendingConsignmentItem(Guid id, Guid jobItemId, Guid supplierId, string instructions)
@@ -328,5 +377,105 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_domainValidationException = dex;
 			}
 		}
+
+		#endregion
+		#region EditPending
+
+		[Test]
+		public void EditPending_ValidDetails_ItemEdited()
+		{
+			var supplierId = Guid.NewGuid();
+			var instructions = "some edited instructions";
+
+			var consignmentItemRepositoryMock = MockRepository.GenerateMock<IConsignmentItemRepository>();
+			consignmentItemRepositoryMock.Stub(x => x.GetPendingItem(_pendingItemId)).Return(_pendingItemForEdit);
+			consignmentItemRepositoryMock.Expect(x => x.UpdatePendingItem(null)).IgnoreArguments();
+			_consignmentItemService = ConsignmentItemServiceFactory.CreateForEditForPendingItems(consignmentItemRepositoryMock, _jobItemforEditPendingId, supplierId, _userContext);
+			EditPendingConsignmentItem(_pendingItemId, _jobItemforEditPendingId, supplierId, instructions);
+			consignmentItemRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(instructions, _pendingItemForEdit.Instructions);
+			Assert.AreEqual(supplierId, _pendingItemForEdit.Supplier.Id);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void EditPending_InvalidPendingItemId_ArgumentException()
+		{
+			var id = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var instructions = "some edited instructions";
+
+			var consignmentItemRepositoryStub = MockRepository.GenerateMock<IConsignmentItemRepository>();
+			consignmentItemRepositoryStub.Stub(x => x.GetPendingItem(id)).Return(null);
+			_consignmentItemService = ConsignmentItemServiceFactory.CreateForEditForPendingItems(consignmentItemRepositoryStub, _jobItemforEditPendingId, supplierId, _userContext);
+			EditPendingConsignmentItem(_pendingItemId, _jobItemforEditPendingId, supplierId, instructions);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void EditPending_InvalidJobItemId_ArgumentException()
+		{
+			var supplierId = Guid.NewGuid();
+			var instructions = "some edited instructions";
+
+			var consignmentItemRepositoryStub = MockRepository.GenerateMock<IConsignmentItemRepository>();
+			consignmentItemRepositoryStub.Stub(x => x.GetPendingItem(_pendingItemId)).Return(_pendingItemForEdit);
+			_consignmentItemService = ConsignmentItemServiceFactory.CreateForEditForPendingItems(consignmentItemRepositoryStub, Guid.Empty, supplierId, _userContext);
+			EditPendingConsignmentItem(_pendingItemId, _jobItemforEditPendingId, supplierId, instructions);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void EditPending_InvalidSupplierId_ArgumentException()
+		{
+			var supplierId = Guid.Empty;
+			var instructions = "some edited instructions";
+
+			var consignmentItemRepositoryStub = MockRepository.GenerateMock<IConsignmentItemRepository>();
+			consignmentItemRepositoryStub.Stub(x => x.GetPendingItem(_pendingItemId)).Return(_pendingItemForEdit);
+			_consignmentItemService = ConsignmentItemServiceFactory.CreateForEditForPendingItems(consignmentItemRepositoryStub, _jobItemforEditPendingId, supplierId, _userContext);
+			EditPendingConsignmentItem(_pendingItemId, _jobItemforEditPendingId, supplierId, instructions);
+		}
+
+		[Test]
+		public void EditPending_InvalidInstructions_DomainValidationException()
+		{
+			var supplierId = Guid.NewGuid();
+			var instructions = new string('a', 256);
+
+			var consignmentItemRepositoryStub = MockRepository.GenerateMock<IConsignmentItemRepository>();
+			consignmentItemRepositoryStub.Stub(x => x.GetPendingItem(_pendingItemId)).Return(_pendingItemForEdit);
+			_consignmentItemService = ConsignmentItemServiceFactory.CreateForEditForPendingItems(consignmentItemRepositoryStub, _jobItemforEditPendingId, supplierId, _userContext);
+			EditPendingConsignmentItem(_pendingItemId, _jobItemforEditPendingId, supplierId, instructions);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InstructionsTooLarge));
+		}
+
+		[Test]
+		public void EditPending_UserHasInsufficientSecurity_DomainValidationException()
+		{
+			var supplierId = Guid.NewGuid();
+			var instructions = "some instructions";
+
+			var consignmentItemRepositoryStub = MockRepository.GenerateMock<IConsignmentItemRepository>();
+			consignmentItemRepositoryStub.Stub(x => x.GetPendingItem(_pendingItemId)).Return(_pendingItemForEdit);
+			_consignmentItemService = ConsignmentItemServiceFactory.CreateForEditForPendingItems(consignmentItemRepositoryStub, _jobItemforEditPendingId, supplierId,
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
+			EditPendingConsignmentItem(_pendingItemId, _jobItemforEditPendingId, supplierId, instructions);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
+		}
+
+		private void EditPendingConsignmentItem(Guid id, Guid jobItemId, Guid supplierId, string instructions)
+		{
+			try
+			{
+				_pendingItemForEdit = _consignmentItemService.EditPending(id, jobItemId, supplierId, instructions);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
 	}
 }

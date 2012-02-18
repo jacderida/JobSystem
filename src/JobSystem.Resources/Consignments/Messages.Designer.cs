@@ -79,6 +79,15 @@ namespace JobSystem.Resources.Consignments {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This job item already has a pending consignment item..
+        /// </summary>
+        public static string PendingItemAlreadyExists {
+            get {
+                return ResourceManager.GetString("PendingItemAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A consignment item cannot be raised for this job item because its job is pending approval..
         /// </summary>
         public static string PendingJob {
