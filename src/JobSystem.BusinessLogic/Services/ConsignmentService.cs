@@ -84,6 +84,7 @@ namespace JobSystem.BusinessLogic.Services
 					if (i++ == 0)	// Ahh, horribly hack-ish, but it works! :/
 						Create(consignmentId, item.Supplier.Id);
 					_consignmentItemService.Create(Guid.NewGuid(), item.JobItem.Id, consignmentId, !String.IsNullOrEmpty(item.Instructions) ? item.Instructions : String.Empty);
+					_consignmentItemService.DeletePendingItem(item.Id);
 				}
 			}
 		}

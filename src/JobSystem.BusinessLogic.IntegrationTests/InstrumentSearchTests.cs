@@ -9,20 +9,30 @@ using NUnit.Framework;
 namespace JobSystem.BusinessLogic.IntegrationTests
 {
 	[TestFixture]
-	public class InstrumentSearchTests : IntegrationTest
+	public class InstrumentSearchTests
 	{
 		private InstrumentService _instrumentService;
 		private InstrumentRepository _instrumentRepository = new InstrumentRepository();
 
+		[SetUp]
+		public void Setup()
+		{
+			NHibernateSession.Current.BeginTransaction();
+		}
+
+		[TearDown]
+		public void TearDown()
+		{
+			NHibernateSession.Current.Transaction.Rollback();
+		}
+
 		[Test]
 		public void SearchByKeyword_ManufacturerExactMatch_2Results()
 		{
-			NHibernateSession.Current.BeginTransaction();
 			_instrumentService = InstrumentServiceFactory.CreateForSearch(_instrumentRepository);
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI601IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI701IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Fluke", "FLK100", "None", "Digital Pressure Indicator");
-			NHibernateSession.Current.Transaction.Commit();
 
 			var instruments = _instrumentService.SearchByKeyword("Druck");
 			Assert.AreEqual(2, instruments.ToList().Count);
@@ -32,12 +42,10 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 		[Test]
 		public void SearchByKeyword_ManufacturerExactMatchCaseInsensitive_2Results()
 		{
-			NHibernateSession.Current.BeginTransaction();
 			_instrumentService = InstrumentServiceFactory.CreateForSearch(_instrumentRepository);
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI601IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI701IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Fluke", "FLK100", "None", "Digital Pressure Indicator");
-			NHibernateSession.Current.Transaction.Commit();
 
 			var instruments = _instrumentService.SearchByKeyword("dRucK");
 			Assert.AreEqual(2, instruments.ToList().Count);
@@ -47,12 +55,10 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 		[Test]
 		public void SearchByKeyword_ManufacturerContains_2Results()
 		{
-			NHibernateSession.Current.BeginTransaction();
 			_instrumentService = InstrumentServiceFactory.CreateForSearch(_instrumentRepository);
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI601IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI701IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Fluke", "FLK100", "None", "Digital Pressure Indicator");
-			NHibernateSession.Current.Transaction.Commit();
 
 			var instruments = _instrumentService.SearchByKeyword("Dru");
 			Assert.AreEqual(2, instruments.ToList().Count);
@@ -62,12 +68,10 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 		[Test]
 		public void SearchByKeyword_ManufacturerContainsCaseInsensitive_2Results()
 		{
-			NHibernateSession.Current.BeginTransaction();
 			_instrumentService = InstrumentServiceFactory.CreateForSearch(_instrumentRepository);
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI601IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI701IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Fluke", "FLK100", "None", "Digital Pressure Indicator");
-			NHibernateSession.Current.Transaction.Commit();
 
 			var instruments = _instrumentService.SearchByKeyword("dRu");
 			Assert.AreEqual(2, instruments.ToList().Count);
@@ -77,12 +81,10 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 		[Test]
 		public void SearchByKeyword_ModelNoExactMatch_2Results()
 		{
-			NHibernateSession.Current.BeginTransaction();
 			_instrumentService = InstrumentServiceFactory.CreateForSearch(_instrumentRepository);
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI601IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI701IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Fluke", "FLK100", "None", "Digital Pressure Indicator");
-			NHibernateSession.Current.Transaction.Commit();
 
 			var instruments = _instrumentService.SearchByKeyword("DPI601is");
 			Assert.AreEqual(1, instruments.ToList().Count);
@@ -92,12 +94,10 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 		[Test]
 		public void SearchByKeyword_ModelNoExactMatchCaseInsensitive_2Results()
 		{
-			NHibernateSession.Current.BeginTransaction();
 			_instrumentService = InstrumentServiceFactory.CreateForSearch(_instrumentRepository);
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI601IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI701IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Fluke", "FLK100", "None", "Digital Pressure Indicator");
-			NHibernateSession.Current.Transaction.Commit();
 
 			var instruments = _instrumentService.SearchByKeyword("dpi601IS");
 			Assert.AreEqual(1, instruments.ToList().Count);
@@ -107,12 +107,10 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 		[Test]
 		public void SearchByKeyword_ModelNoContains_2Results()
 		{
-			NHibernateSession.Current.BeginTransaction();
 			_instrumentService = InstrumentServiceFactory.CreateForSearch(_instrumentRepository);
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI601IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI701IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Fluke", "FLK100", "None", "Digital Pressure Indicator");
-			NHibernateSession.Current.Transaction.Commit();
 
 			var instruments = _instrumentService.SearchByKeyword("DPI");
 			Assert.AreEqual(2, instruments.ToList().Count);
@@ -122,12 +120,10 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 		[Test]
 		public void SearchByKeyword_ModelNoContainsCaseInsensitive_2Results()
 		{
-			NHibernateSession.Current.BeginTransaction();
 			_instrumentService = InstrumentServiceFactory.CreateForSearch(_instrumentRepository);
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI601IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI701IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Fluke", "FLK100", "None", "Digital Pressure Indicator");
-			NHibernateSession.Current.Transaction.Commit();
 
 			var instruments = _instrumentService.SearchByKeyword("dpi");
 			Assert.AreEqual(2, instruments.ToList().Count);
@@ -137,12 +133,10 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 		[Test]
 		public void SearchByKeyword_ManufacturerOrModelNoContains_2Results()
 		{
-			NHibernateSession.Current.BeginTransaction();
 			_instrumentService = InstrumentServiceFactory.CreateForSearch(_instrumentRepository);
 			_instrumentService.Create(Guid.NewGuid(), "Bird", "DPI601IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI701IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Fluke", "DruckDPI601", "None", "Digital Pressure Indicator");
-			NHibernateSession.Current.Transaction.Commit();
 
 			var instruments = _instrumentService.SearchByKeyword("Druck");
 			Assert.AreEqual(2, instruments.ToList().Count);

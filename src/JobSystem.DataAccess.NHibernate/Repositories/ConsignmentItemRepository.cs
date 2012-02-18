@@ -33,5 +33,10 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		{
 			return CurrentSession.Query<ConsignmentItem>().Where(ci => ci.Consignment.Id == consignmentId);
 		}
+
+		public void DeletePendingItem(Guid id)
+		{
+			CurrentSession.Delete(CurrentSession.Get<PendingConsignmentItem>(id));
+		}
 	}
 }

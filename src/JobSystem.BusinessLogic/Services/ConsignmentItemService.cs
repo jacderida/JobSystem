@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
 using JobSystem.Resources.Consignments;
-using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -86,6 +86,11 @@ namespace JobSystem.BusinessLogic.Services
 			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
 			_consignmentItemRepository.CreatePendingItem(pendingItem);
 			return pendingItem;
+		}
+
+		public void DeletePendingItem(Guid id)
+		{
+			_consignmentItemRepository.DeletePendingItem(id);
 		}
 
 		public IEnumerable<ConsignmentItem> GetConsignmentItems(Guid consignmentId)

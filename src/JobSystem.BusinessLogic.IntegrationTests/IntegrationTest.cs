@@ -104,8 +104,8 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 					new TaxCode { Id = Guid.NewGuid(), TaxCodeName = "T0", Rate = 0, Description = "No VAT" },
 					new TaxCode { Id = defaultTaxCodeId, TaxCodeName = "T1", Rate = 0.20, Description = "VAT at 20%" })
 				.WithEntitySeeds(
-					Tuple.Create<Type, int, string>(typeof(Job), 2000, "JR"),
-					Tuple.Create<Type, int, string>(typeof(Consignment), 2000, "CR"));
+					Tuple.Create<Type, int, string>(typeof(Job), 2000, "JR"));
+					//Tuple.Create<Type, int, string>(typeof(Consignment), 2000, "CR"));
 			var defaultData = builder.Build();
 			try
 			{

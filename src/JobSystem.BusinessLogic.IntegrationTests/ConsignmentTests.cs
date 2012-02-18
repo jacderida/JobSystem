@@ -18,6 +18,18 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 	{
 		private ConsignmentService _consignmentService;
 
+		[SetUp]
+		public void Setup()
+		{
+			NHibernateSession.Current.BeginTransaction();
+		}
+
+		[TearDown]
+		public void TearDown()
+		{
+			NHibernateSession.Current.Transaction.Rollback();
+		}
+
 		[Test]
 		public void CreateConsignmentsFromPendingItems_ValidPendingConsignmentItems_ConsignmentsCreated()
 		{
@@ -25,7 +37,6 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			var userRepository = new UserAccountRepository();
 			var user = userRepository.GetByEmail("admin@intertek.com", false);
 			var userContext = new TestUserContext(user);
-			NHibernateSession.Current.BeginTransaction();
 
 			var consignmentRepository = new ConsignmentRepository();
 			var consignmentItemRepository = new ConsignmentItemRepository();
@@ -42,7 +53,16 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			var job1Id = Guid.NewGuid();
 			var job2Id = Guid.NewGuid();
 			var job3Id = Guid.NewGuid();
-			CreateConsignmentsFromPendingItemsHelper.CreateContextForPendingItemTests(job1Id, job2Id, job3Id, supplier1Id, supplier2Id, supplier3Id);
+			var jobItem1Id = Guid.NewGuid();
+			var jobItem2Id = Guid.NewGuid();
+			var jobItem3Id = Guid.NewGuid();
+			var jobItem4Id = Guid.NewGuid();
+			var jobItem5Id = Guid.NewGuid();
+			var jobItem6Id = Guid.NewGuid();
+			var jobItem7Id = Guid.NewGuid();
+			CreateConsignmentsFromPendingItemsHelper.CreateContextForPendingItemTests(
+				job1Id, job2Id, job3Id, supplier1Id, supplier2Id, supplier3Id,
+				jobItem1Id, jobItem2Id, jobItem3Id, jobItem4Id, jobItem5Id, jobItem6Id, jobItem7Id);
 
 			var instrumentService = new InstrumentService(userContext, instrumentRepository, dispatcher);
 			var listItemService = new ListItemService(userContext, listItemRepository, dispatcher);
@@ -67,30 +87,30 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 
 			var consignments = consignmentService.GetConsignments().OrderBy(c => c.ConsignmentNo).ToList();
 			Assert.AreEqual(3, consignments.Count);
-			Assert.AreEqual("CR2000", consignments[0].ConsignmentNo);
+			Assert.AreEqual("1", consignments[0].ConsignmentNo);
 			Assert.AreEqual(supplier1Id, consignments[0].Supplier.Id);
-			Assert.AreEqual("CR2001", consignments[1].ConsignmentNo);
+			Assert.AreEqual("2", consignments[1].ConsignmentNo);
 			Assert.AreEqual(supplier2Id, consignments[1].Supplier.Id);
-			Assert.AreEqual("CR2002", consignments[2].ConsignmentNo);
+			Assert.AreEqual("3", consignments[2].ConsignmentNo);
 			Assert.AreEqual(supplier3Id, consignments[2].Supplier.Id);
 
 			var consignmentItems = consignmentItemService.GetConsignmentItems(consignments[0].Id).OrderBy(ci => ci.ItemNo).ToList();
 			Assert.AreEqual(3, consignmentItems.Count);
-			Assert.AreEqual("JR2000/1", String.Format("{0}/{1}", consignmentItems[0].JobItem.Job.JobNo, consignmentItems[0].JobItem.ItemNo));
-			Assert.AreEqual("JR2000/3", String.Format("{0}/{1}", consignmentItems[1].JobItem.Job.JobNo, consignmentItems[1].JobItem.ItemNo));
-			Assert.AreEqual("JR2001/1", String.Format("{0}/{1}", consignmentItems[2].JobItem.Job.JobNo, consignmentItems[2].JobItem.ItemNo));
+			Assert.AreEqual(jobItem1Id, consignmentItems[0].JobItem.Id);	// JR2000/1
+			Assert.AreEqual(jobItem3Id, consignmentItems[1].JobItem.Id);	// JR2000/3
+			Assert.AreEqual(jobItem4Id, consignmentItems[2].JobItem.Id);	// JR2001/1
 
 			consignmentItems = consignmentItemService.GetConsignmentItems(consignments[1].Id).OrderBy(ci => ci.ItemNo).ToList();
 			Assert.AreEqual(2, consignmentItems.Count);
-			Assert.AreEqual("JR2000/2", String.Format("{0}/{1}", consignmentItems[0].JobItem.Job.JobNo, consignmentItems[0].JobItem.ItemNo));
-			Assert.AreEqual("JR2001/2", String.Format("{0}/{1}", consignmentItems[1].JobItem.Job.JobNo, consignmentItems[1].JobItem.ItemNo));
+			Assert.AreEqual(jobItem2Id, consignmentItems[0].JobItem.Id);	// JR2000/2
+			Assert.AreEqual(jobItem5Id, consignmentItems[1].JobItem.Id);	// JR2001/2
 
 			consignmentItems = consignmentItemService.GetConsignmentItems(consignments[2].Id).OrderBy(ci => ci.ItemNo).ToList();
 			Assert.AreEqual(2, consignmentItems.Count);
-			Assert.AreEqual("JR2001/3", String.Format("{0}/{1}", consignmentItems[0].JobItem.Job.JobNo, consignmentItems[0].JobItem.ItemNo));
-			Assert.AreEqual("JR2002/1", String.Format("{0}/{1}", consignmentItems[1].JobItem.Job.JobNo, consignmentItems[1].JobItem.ItemNo));
+			Assert.AreEqual(jobItem6Id, consignmentItems[0].JobItem.Id);	// JR2001/3
+			Assert.AreEqual(jobItem7Id, consignmentItems[1].JobItem.Id);	// JR2002/1
 
-			NHibernateSession.Current.Transaction.Rollback();
+			Assert.AreEqual(0, consignmentItemService.GetPendingItems().Count());
 		}
 
 		[Test]
@@ -100,7 +120,6 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			var userRepository = new UserAccountRepository();
 			var user = userRepository.GetByEmail("admin@intertek.com", false);
 			var userContext = new TestUserContext(user);
-			NHibernateSession.Current.BeginTransaction();
 
 			var consignmentRepository = new ConsignmentRepository();
 			var consignmentItemRepository = new ConsignmentItemRepository();
@@ -117,7 +136,16 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			var job1Id = Guid.NewGuid();
 			var job2Id = Guid.NewGuid();
 			var job3Id = Guid.NewGuid();
-			CreateConsignmentsFromPendingItemsHelper.CreateContextForPendingItemTests(job1Id, job2Id, job3Id, supplier1Id, supplier2Id, supplier3Id);
+			var jobItem1Id = Guid.NewGuid();
+			var jobItem2Id = Guid.NewGuid();
+			var jobItem3Id = Guid.NewGuid();
+			var jobItem4Id = Guid.NewGuid();
+			var jobItem5Id = Guid.NewGuid();
+			var jobItem6Id = Guid.NewGuid();
+			var jobItem7Id = Guid.NewGuid();
+			CreateConsignmentsFromPendingItemsHelper.CreateContextForPendingItemTests(
+				job1Id, job2Id, job3Id, supplier1Id, supplier2Id, supplier3Id,
+				jobItem1Id, jobItem2Id, jobItem3Id, jobItem4Id, jobItem5Id, jobItem6Id, jobItem7Id);
 
 			var instrumentService = new InstrumentService(userContext, instrumentRepository, dispatcher);
 			var listItemService = new ListItemService(userContext, listItemRepository, dispatcher);
@@ -147,27 +175,27 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 
 			var consignments = consignmentService.GetConsignments().OrderBy(c => c.ConsignmentNo).ToList();
 			Assert.AreEqual(3, consignments.Count);
-			Assert.AreEqual("CR2000", consignments[0].ConsignmentNo);
+			Assert.AreEqual("1", consignments[0].ConsignmentNo);
 			Assert.AreEqual(supplier1Id, consignments[0].Supplier.Id);
-			Assert.AreEqual("CR2001", consignments[1].ConsignmentNo);
+			Assert.AreEqual("2", consignments[1].ConsignmentNo);
 			Assert.AreEqual(supplier2Id, consignments[1].Supplier.Id);
-			Assert.AreEqual("CR2002", consignments[2].ConsignmentNo);
+			Assert.AreEqual("3", consignments[2].ConsignmentNo);
 			Assert.AreEqual(supplier3Id, consignments[2].Supplier.Id);
 
 			var consignmentItems = consignmentItemService.GetConsignmentItems(consignments[0].Id).OrderBy(ci => ci.ItemNo).ToList();
 			Assert.AreEqual(2, consignmentItems.Count);
-			Assert.AreEqual("JR2000/1", String.Format("{0}/{1}", consignmentItems[0].JobItem.Job.JobNo, consignmentItems[0].JobItem.ItemNo));
-			Assert.AreEqual("JR2000/3", String.Format("{0}/{1}", consignmentItems[1].JobItem.Job.JobNo, consignmentItems[1].JobItem.ItemNo));
+			Assert.AreEqual(jobItem1Id, consignmentItems[0].JobItem.Id);	// JR2000/1
+			Assert.AreEqual(jobItem3Id, consignmentItems[1].JobItem.Id);	// JR2000/3
 
 			consignmentItems = consignmentItemService.GetConsignmentItems(consignments[1].Id).OrderBy(ci => ci.ItemNo).ToList();
 			Assert.AreEqual(1, consignmentItems.Count);
-			Assert.AreEqual("JR2001/2", String.Format("{0}/{1}", consignmentItems[0].JobItem.Job.JobNo, consignmentItems[0].JobItem.ItemNo));
+			Assert.AreEqual(jobItem5Id, consignmentItems[0].JobItem.Id);	// JR2001/2
 
 			consignmentItems = consignmentItemService.GetConsignmentItems(consignments[2].Id).OrderBy(ci => ci.ItemNo).ToList();
 			Assert.AreEqual(1, consignmentItems.Count);
-			Assert.AreEqual("JR2002/1", String.Format("{0}/{1}", consignmentItems[0].JobItem.Job.JobNo, consignmentItems[0].JobItem.ItemNo));
+			Assert.AreEqual(jobItem7Id, consignmentItems[0].JobItem.Id);	// JR2002/1
 
-			NHibernateSession.Current.Transaction.Rollback();
+			Assert.AreEqual(3, consignmentItemService.GetPendingItems().Count());
 		}
 	}
 }

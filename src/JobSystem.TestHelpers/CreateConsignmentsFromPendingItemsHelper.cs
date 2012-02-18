@@ -12,7 +12,9 @@ namespace JobSystem.TestHelpers
 {
 	public static class CreateConsignmentsFromPendingItemsHelper
 	{
-		public static void CreateContextForPendingItemTests(Guid job1Id, Guid job2Id, Guid job3Id, Guid supplier1Id, Guid supplier2Id, Guid supplier3Id)
+		public static void CreateContextForPendingItemTests(
+			Guid job1Id, Guid job2Id, Guid job3Id, Guid supplier1Id, Guid supplier2Id, Guid supplier3Id,
+			Guid jobItem1Id, Guid jobItem2Id, Guid jobItem3Id, Guid jobItem4Id, Guid jobItem5Id, Guid jobItem6Id, Guid jobItem7Id)
 		{
 			var dispatcher = MockRepository.GenerateMock<IQueueDispatcher<IMessage>>();
 			var userRepository = new UserAccountRepository();
@@ -36,7 +38,6 @@ namespace JobSystem.TestHelpers
 			var customerId = Guid.NewGuid();
 			var customerService = new CustomerService(userContext, customerRepository, dispatcher);
 			customerService.Create(customerId, "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo());
-
 			
 			var supplierService = new SupplierService(userContext, supplierRepository, dispatcher);
 			supplierService.Create(supplier1Id, "Supplier 1", new Address(), new ContactInfo(), new Address(), new ContactInfo());
@@ -51,43 +52,43 @@ namespace JobSystem.TestHelpers
 
 			var jobItemService = new JobItemService(userContext, jobRepository, jobItemRepository, listItemService, instrumentService, dispatcher);
 			jobItemService.CreateJobItem(
-				job1Id, Guid.NewGuid(), instrumentId, "12345", String.Empty,
+				job1Id, jobItem1Id, instrumentId, "12345", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobItemService.CreateJobItem(
-				job1Id, Guid.NewGuid(), instrumentId, "123456", String.Empty,
+				job1Id, jobItem2Id, instrumentId, "123456", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobItemService.CreateJobItem(
-				job1Id, Guid.NewGuid(), instrumentId, "123457", String.Empty,
+				job1Id, jobItem3Id, instrumentId, "123457", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobItemService.CreateJobItem(
-				job2Id, Guid.NewGuid(), instrumentId, "12345", String.Empty,
+				job2Id, jobItem4Id, instrumentId, "12345", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobItemService.CreateJobItem(
-				job2Id, Guid.NewGuid(), instrumentId, "123456", String.Empty,
+				job2Id, jobItem5Id, instrumentId, "123456", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobItemService.CreateJobItem(
-				job2Id, Guid.NewGuid(), instrumentId, "1234567", String.Empty,
+				job2Id, jobItem6Id, instrumentId, "1234567", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobItemService.CreateJobItem(
-				job3Id, Guid.NewGuid(), instrumentId, "12345", String.Empty,
+				job3Id, jobItem7Id, instrumentId, "12345", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
