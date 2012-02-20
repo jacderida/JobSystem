@@ -104,6 +104,16 @@ namespace JobSystem.Mvc.Controllers
 					DateCreated = c.DateCreated.ToLongDateString() + ' ' + c.DateCreated.ToShortTimeString(),
 					SupplierName = c.Supplier.Name
 			    }).ToList();
+
+			foreach (var item in items)
+			{
+				var consignmentItems = _consignmentItemService.GetConsignmentItems(item.Id);
+				item.ConsignmentItems = consignmentItems.Select(ci => new ConsignmentItemIndexViewModel
+						{
+							Instructions = ci.Instructions,
+							InstrumentDetails = String.Format("{0} - {1} : {2}", ci.JobItem.Instrument.ModelNo, ci.JobItem.Instrument.Manufacturer.ToString(), ci.JobItem.Instrument.Description),
+							}).ToList();
+			}
 			return View(items);
 		}
 

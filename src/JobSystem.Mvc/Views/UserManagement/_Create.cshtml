@@ -35,6 +35,13 @@
 			@Html.EditorFor(model => model.JobTitle)
 			@Html.ValidationMessageFor(model => model.JobTitle)
 		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Roles)
+		</div>
+		<div class="editor-field">
+			@Html.DropDownListFor(model => model.RoleId, Model.Roles, new { @class = "long-dropdown" })
+			@Html.ValidationMessageFor(model => model.Roles)
+		</div>
 	</fieldset>
 	<div class="buttons-row">
 		<input type="submit" class="primary-action" value="Create"/>

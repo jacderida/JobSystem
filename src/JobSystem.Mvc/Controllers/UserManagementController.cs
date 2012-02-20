@@ -13,10 +13,12 @@ namespace JobSystem.Mvc.Controllers
 	public class UserManagementController : Controller
 	{
 		private readonly UserManagementService _userManagementService;
+		private readonly ListItemService _listItemService;
 
-		public UserManagementController(UserManagementService userManagementService)
+		public UserManagementController(UserManagementService userManagementService, ListItemService listItemService)
 		{
 			_userManagementService = userManagementService;
+			_listItemService = listItemService;
 		}
 
 		public ActionResult Index()
@@ -38,6 +40,11 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult Create()
 		{
+			var viewmodel = new UserAccountViewModel()
+			{
+				//Roles = _listItemService.GetAllByCategory(ListItemCategoryType.).ToSelectList(),
+			};
+			
 			return View();
 		}
 

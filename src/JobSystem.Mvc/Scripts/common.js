@@ -3,6 +3,9 @@
 		switch (element) {
 			case 'work-item':
 				$("#create-work-item-container").dialog('close');
+				//And update the job item tab status
+				var label = $('#st_vertical .st_tab_active .jiStatus');
+				label.text($('#StatusId option:selected').text());
 				break;
 			case 'consignment-item':
 				$("#create-consignment-container").dialog('close');

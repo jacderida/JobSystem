@@ -986,3 +986,12 @@ div#title {
 .consignment-item h3 {
 	margin-bottom: 5px;
 }
+
+.consignmentItemCount {
+	text-decoration: underline;
+}
+
+.consignmentItemCount:hover, .consignmentItemCount:focus {
+	text-decoration: none;
+	cursor: pointer;
+}

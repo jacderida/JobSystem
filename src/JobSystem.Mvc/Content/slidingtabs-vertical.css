@@ -121,6 +121,11 @@ div.st_vertical ul.st_tabs li a span {
 	padding-top:3px;
 }
 
+div.st_vertical ul.st_tabs li a span.jiStatus {
+	font-weight: bold;
+	color: #021538;
+}
+
 div.st_vertical ul.st_tabs a:hover { /* Tabs hover state */
 	color:#333;
 }

@@ -16,6 +16,7 @@
 			<th>Consignment No</th>
 			<th>Supplier Name</th>
 			<th>Created</th>
+			<th></th>
 		</tr>
 	@foreach (var item in Model.OrderBy(i => i.SupplierName))
 	 {
@@ -29,10 +30,24 @@
 			<td>
 				@item.DateCreated
 			</td>
+			<td>
+				<span class="the-tooltip top center dark-midnight-blue consignmentItemCount">
+					@item.ConsignmentItems.Count items
+					@foreach (var ci in item.ConsignmentItems) {
+						<span>
+							@ci.InstrumentDetails <br />
+							@ci.Instructions
+						</span>
+					}	
+				</span>
+				
+			</td>
 		</tr>
 	 }
 	</table>
-}else{
+}
+else
+{
 	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
 }
 

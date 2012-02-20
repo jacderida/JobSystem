@@ -87,7 +87,7 @@ namespace JobSystem.Mvc.Controllers
 				AssetNo = job.AssetNo,
 				CalPeriod = job.CalPeriod,
 				Field = job.Field.Name.ToString(),
-				InitialStatus = job.InitialStatus.Name.ToString(),
+				InitialStatus = job.Status.Name.ToString(),
 				SerialNo = job.SerialNo,
 				Location = job.Location.Name.ToString(),
 				Comments = job.Comments,

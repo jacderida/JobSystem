@@ -1,5 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using JobSystem.DataModel.Entities;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace JobSystem.Mvc.ViewModels.Users
 {
@@ -18,5 +21,8 @@ namespace JobSystem.Mvc.ViewModels.Users
 		public string Password { get; set; }
 		[Display(Name = "Job Title")]
 		public string JobTitle { get; set; }
+		[Display(Name = "Role")]
+		public IEnumerable<SelectListItem> Roles { get; set; }
+		public Guid RoleId { get; set; }
 	}
 }

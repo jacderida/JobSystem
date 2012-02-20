@@ -172,6 +172,7 @@
     <Content Include="Content\images\white_carbon.png" />
     <Content Include="Content\slidingtabs-horizontal.css" />
     <Content Include="Content\slidingtabs-vertical.css" />
+    <Content Include="Content\the-tooltip.css" />
     <Content Include="Content\themes\aristo\Aristo.css" />
     <Content Include="Content\themes\aristo\images\bg_fallback.png" />
     <Content Include="Content\themes\aristo\images\icon_sprite.png" />
@@ -222,6 +223,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
+    <Content Include="Scripts\selectivizr-min.js" />
+    <Content Include="Scripts\the-tooltip.min.js" />
     <Content Include="Scripts\workitem.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
