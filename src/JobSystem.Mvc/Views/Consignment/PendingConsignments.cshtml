@@ -28,10 +28,10 @@ if (Model.ConsignmentItems.Any()) {
 				<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>
 			</td>
 			<td>
-				@Html.LabelFor(c => item.SupplierName)
+				@item.SupplierName
 			</td>
 			<td>
-				@Html.LabelFor(c => item.Instructions)
+				@item.Instructions
 			</td>
 			<td>
 				<a href="#" class="editConsignmentButton" id="@item.Id">Edit</a>
