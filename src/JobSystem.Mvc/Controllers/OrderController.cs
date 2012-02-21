@@ -32,7 +32,7 @@ namespace JobSystem.Mvc.Controllers
 				});
 			}
 			
-			return View(viewmodels);
+			return View("PendingOrders", viewmodels);
 		}
 
 		[HttpGet]

@@ -196,6 +196,10 @@ footer,
 	float: left;
 }
 
+.narrowHeader {
+	width: 78px;
+}
+
 /* TAB MENU   
 ----------------------------------------------------------*/
 ul#menu {
@@ -413,6 +417,10 @@ input[type="submit"] {
 
 .long-dropdown {
 	width: 308px;
+}
+
+.shortDropdown {
+	width: 170px;
 }
 
 /* TABLE
