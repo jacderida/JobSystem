@@ -85,7 +85,7 @@
     <Compile Include="Mappings\Conventions\EnumConvention.cs" />
     <Compile Include="Mappings\Conventions\PrimaryKeyConvention.cs" />
     <Compile Include="Mappings\Conventions\TableNameConvention.cs" />
-    <Compile Include="Mappings\SaturnAutomappingConfiguration.cs" />
+    <Compile Include="Mappings\JobSystemAutomappingConfiguration.cs" />
     <Compile Include="NHibernateConfigurationFileCache.cs" />
     <Compile Include="NHibernateInitializer.cs" />
     <Compile Include="NHibernateSession.cs" />

@@ -27,9 +27,12 @@ namespace JobSystem.DataModel.Entities
 		public virtual IList<JobItem> JobItems { get; set; }
 		public virtual bool IsPending { get; set; }
 
+		public virtual IList<Attachment> Attachments { get; set; }
+
 		public Job()
 		{
 			JobItems = new List<JobItem>();
+			Attachments = new List<Attachment>();
 		}
 	}
 }
