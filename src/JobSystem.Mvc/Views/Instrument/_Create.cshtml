@@ -8,18 +8,18 @@
 	@Html.ValidationSummary(true)
 	<fieldset class="fieldset-no-legend fieldset-float-left">
 		<div class="editor-label">
-			@Html.LabelFor(model => model.ModelNo)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.ModelNo)
-			@Html.ValidationMessageFor(model => model.ModelNo)
-		</div>
-		<div class="editor-label">
 			@Html.LabelFor(model => model.Manufacturer)
 		</div>
 		<div class="editor-field">
 			@Html.EditorFor(model => model.Manufacturer)
 			@Html.ValidationMessageFor(model => model.Manufacturer)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.ModelNo)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.ModelNo)
+			@Html.ValidationMessageFor(model => model.ModelNo)
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.Range)

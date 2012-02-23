@@ -31,14 +31,17 @@
 				@item.DateCreated
 			</td>
 			<td>
-				<span class="the-tooltip top center dark-midnight-blue consignmentItemCount">
+				<span class="the-tooltip center top dark-midnight-blue consignmentItemCount">
 					@item.ConsignmentItems.Count items
+					<span>
 					@foreach (var ci in item.ConsignmentItems) {
 						<span>
 							@ci.InstrumentDetails <br />
 							@ci.Instructions
-						</span>
+						</span><br />
+						
 					}	
+					</span>
 				</span>
 				
 			</td>

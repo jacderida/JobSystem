@@ -1,0 +1,45 @@
+﻿@model IList<JobSystem.Mvc.ViewModels.Quotes.QuoteIndexViewModel>
+
+@{
+    ViewBag.Title = "ApprovedQuotes";
+}
+
+<h2>ApprovedQuotes</h2>
+
+<h2>Orders</h2>
+@Html.ActionLink("Raise Order", "Create", new { }, new { @class = "primary-action" })
+@if (Model.Any()) {
+	<table>
+		<tr>
+			<th></th>
+			<th>Order No</th>
+			<th>Advice No</th>
+			<th></th>
+		</tr>
+	@foreach (var item in Model.OrderBy(i => i.OrderNo))
+	 {
+		<tr>
+			<td>
+				@Html.CheckBox("toBeConverted", false)
+			</td>
+			<td>
+				@item.OrderNo
+			</td>
+			<td>
+				@item.AdviceNo
+			</td>
+			<td>
+				<a href="#" class="editQuoteButton" id="@item.Id">Edit</a>
+			</td>
+		</tr>
+	 }
+	</table>
+}else{
+	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
+}
+
+
+<div id="edit-quote-container">
+</div>
+
+<input type="hidden" id="editUrl" value="@Url.Action("Edit", "Quote")"/>

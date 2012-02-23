@@ -10,25 +10,25 @@
 	@Html.ValidationSummary(true)
 	<fieldset class="fieldset-no-legend">
 		<div class="editor-label">
+			@Html.LabelFor(model => model.WorkType)
+		</div>
+		<div class="editor-field">
+			@Html.DropDownListFor(model => model.WorkTypeId, Model.WorkType, new { @class = "shortDropdown" })
+			@Html.ValidationMessageFor(model => model.WorkType)
+		</div>
+		<div class="editor-label">
 			@Html.LabelFor(model => model.Status)
 		</div>
 		<div class="editor-field">
-			@Html.DropDownListFor(model => model.StatusId, Model.Status)
+			@Html.DropDownListFor(model => model.StatusId, Model.Status, new { @class = "shortDropdown" })
 			@Html.ValidationMessageFor(model => model.Status)
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.WorkLocation)
 		</div>
 		<div class="editor-field">
-			@Html.DropDownListFor(model => model.WorkLocationId, Model.WorkLocation)
+			@Html.DropDownListFor(model => model.WorkLocationId, Model.WorkLocation, new { @class = "shortDropdown" })
 			@Html.ValidationMessageFor(model => model.WorkLocation)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.WorkType)
-		</div>
-		<div class="editor-field">
-			@Html.DropDownListFor(model => model.WorkTypeId, Model.WorkType)
-			@Html.ValidationMessageFor(model => model.WorkType)
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.WorkTime)
@@ -36,13 +36,6 @@
 		<div class="editor-field">
 			@Html.EditorFor(model => model.WorkTime)
 			@Html.ValidationMessageFor(model => model.WorkTime)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.OverTime)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.OverTime)
-			@Html.ValidationMessageFor(model => model.OverTime)
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.Report)

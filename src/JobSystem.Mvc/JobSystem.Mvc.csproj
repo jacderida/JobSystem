@@ -123,6 +123,7 @@
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\JobItemController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Controllers\WorkItemController.cs" />
@@ -150,6 +151,8 @@
     <Compile Include="ViewModels\JobItems\JobItemViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderIndexViewModel.cs" />
+    <Compile Include="ViewModels\Quotes\QuoteCreateViewModel.cs" />
+    <Compile Include="ViewModels\Quotes\QuoteIndexViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierIndexViewModel.cs" />
     <Compile Include="ViewModels\WorkItems\WorkItemCreateViewModel.cs" />
@@ -363,9 +366,12 @@
     <Content Include="Views\Consignment\ActiveConsignments.cshtml" />
     <None Include="Views\Consignment\PendingConsignments.cshtml" />
     <Content Include="Views\WorkItem\_Details.cshtml" />
+    <Content Include="Views\Order\ApprovedOrders.cshtml" />
+    <Content Include="Views\Quote\PendingQuotes.cshtml" />
+    <Content Include="Views\Quote\ApprovedQuotes.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\PendingOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\Create.cshtml" />

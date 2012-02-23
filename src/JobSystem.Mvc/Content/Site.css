@@ -140,7 +140,7 @@ header, #header {
     position: relative;
     margin-bottom: 0px;
     color: #000;
-    background: #F2F2F2 url(../Content/images/header-bg.png) repeat-x;
+    /*background: #F2F2F2 url(../Content/images/header-bg.png) repeat-x;*/
 }
 
 header h1, #header h1 {
@@ -196,29 +196,39 @@ footer,
 	float: left;
 }
 
+.narrowHeader {
+	width: 78px;
+}
+
 /* TAB MENU   
 ----------------------------------------------------------*/
 ul#menu {
     position: relative;
-    margin: 0 20px 0 0;
+    margin: 0;
     text-align: right;
 }
 
 ul#menu li {
     display: inline-block;
-    list-style: none;
-    height: 30px;
-    width: 100px;
-    margin-left: 2px;
-	background: transparent url(../Content/images/nav_bg.png) repeat-x;
+    list-style-type: none;
+	height: 50px;
+	width: 100px;
+	background: transparent url(../Content/images/seperator-main-nav.png) left 5px no-repeat;
 }
 
 ul#menu li:hover, ul#menu li:focus {
-	background: #023467 url(../Content/images/nav_bg_focus.png) repeat-x;
+	
 }
 
 ul#menu li#settings {
 	width: 42px;
+}
+
+
+ul#menu li#settings span {
+	display: block;
+	width: 42px;
+	height: 50px;
 }
 
 ul#menu li#greeting {
@@ -230,29 +240,16 @@ ul#menu li#greeting {
 }
 
 ul#menu li a {
-	border-left: 1px solid #A5A5A5;
-    border-right: 1px solid #A5A5A5;
-    height: 30px;
-    font-weight: bold;
+	font-weight: bold;
     text-decoration: none;
-    color: #021538; 
-    line-height: 2.5em;
-    margin: 0 auto 0 auto;
+    color: #fff; 
+	line-height: 50px;
+    margin: 0 -auto 0 auto;
     display: block;
     text-align: center;
-    text-shadow: 1px 1px 1px #eaeaea;
-    filter: dropshadow(color=#a6a6a6, offx=1, offy=1);
 }
 
 ul#menu li a:focus, ul#menu li a:hover {
-	border-left: 1px solid #979797;
-    border-right: 1px solid #979797;
-    color: white;
-    text-shadow: 1px 1px 1px #4D4D4D;
-    height: 30px;
-    -moz-box-shadow:0px 0px 4px #979797;
-    -webkit-box-shadow:0px 0px 4px #979797;
-    box-shadow:0px 0px 4px #979797;
 }
 
 ul#menu li.selected a {
@@ -262,32 +259,26 @@ ul#menu li.selected a {
 
 ul#menu li a.active {
 	color: White;
-	border-left: 1px solid #979797;
-    border-right: 1px solid #979797;
-	text-shadow: 1px 1px 1px #4D4D4D;
-	background: #023467 url(../Content/images/nav_bg_active.png) repeat-x;
+	background: #13223C;
 }
 
 ul#menu li a.settings {
-	background: transparent url(../Content/images/settings_icon.png) no-repeat 9px 4px;
+	background: transparent url(../Content/images/settings_icon_focus.png) no-repeat 10px center;
 }
 
 ul#menu li a.settings:focus, ul#menu li a.settings:hover {
-	background: transparent url(../Content/images/settings_icon_focus.png) no-repeat 9px center;
+	background: transparent url(../Content/images/settings_icon_focus.png) no-repeat center center;
 }
 
 #admin-menu {
 	position: absolute;
 	background: #fff url(../Content/images/menu_gradient.png) repeat-x bottom;
 	width: 200px;
-	top: 64px;
-	right: 20px;
+	top: 72px;
+	right: 0px;
 	border-right: 1px solid #021538;
 	border-left: 1px solid #021538;
 	border-bottom: 1px solid #021538;
-	-moz-box-shadow:0px 0px 4px #b5b5b5;
-    -webkit-box-shadow:0px 0px 4px #b5b5b5;
-    box-shadow:0px 0px 4px #b5b5b5;
 	z-index: 201;
 }
 
@@ -415,6 +406,10 @@ input[type="submit"] {
 	width: 308px;
 }
 
+.shortDropdown {
+	width: 170px;
+}
+
 /* TABLE
 ----------------------------------------------------------*/
 
@@ -470,9 +465,9 @@ table tr:nth-child(odd)
 
 nav, 
 #menucontainer {
-    border-bottom: 2px solid #081A58;
-    height: 30px;
-    margin-top: 20px;
+    border-bottom: 2px solid #13223C;
+    height: 50px;
+	background:#f7fbff url(../Content/images/header_bg.png) repeat-x;
 }
 
 #menucontainer
@@ -489,11 +484,14 @@ a.primary-action:hover, a.primary-action:focus {
 }
 
 div#title {
-    display: block;
+	display: block;
     float: left;
     text-align: left;
-    margin-top: 7px;
-    margin-left: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
+	background-color: #eaeaea;
+	border: 1px solid #fff;
+	outline: 1px solid #ddd;
 }
 
 #logindisplay 
@@ -501,35 +499,28 @@ div#title {
     font-size: 0.9em;
     display: block;
     text-align: right;
-    color: darkgray;
-    margin-right: 20px;
+    color: #B1B1B1;
+	height: 20px;
+	background-color: #13223C;
 }
 
 #logindisplay a:link {
-    color: #021538;
-    text-decoration: underline;
+    color: #B1B1B1;
+	text-decoration: none;
 }
 
 #logindisplay a:visited {
-    color: #021538;
-    text-decoration: underline;
 }
 
 #logindisplay a:hover {
-    color: black;
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 #user-details-container {
-	color: #808080;
-	background-color: #ddd;
-	padding: 10px 20px 0px 20px;
-	border-right: 1px solid #d2d2d2;
-	border-left: 1px solid #d2d2d2;
-	border-bottom: 1px solid #d2d2d2;
-	-moz-border-radius:0px 0px 5px 5px;
-	-webkit-border-radius:0px 0px 5px 5px;
-	border-radius:0px 0px 5px 5px;
+	font-size: 0.95em;
+	display: inline-block;
+	color: #B1B1B1;
+	padding: 5px 20px 0px 20px;
 }
 
 /* Styles for validation helpers
