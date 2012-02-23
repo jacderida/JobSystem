@@ -367,6 +367,8 @@
     <None Include="Views\Consignment\PendingConsignments.cshtml" />
     <Content Include="Views\WorkItem\_Details.cshtml" />
     <Content Include="Views\Order\ApprovedOrders.cshtml" />
+    <Content Include="Views\Quote\PendingQuotes.cshtml" />
+    <Content Include="Views\Quote\ApprovedQuotes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\PendingOrders.cshtml" />
