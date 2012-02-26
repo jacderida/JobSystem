@@ -11,6 +11,18 @@ namespace JobSystem.TestHelpers
 {
 	public class JobServiceFactory
 	{
+		public static JobService Create(IJobRepository jobRepository, IAttachmentRepository attachmentRepository)
+		{
+			return new JobService(
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member),
+				attachmentRepository,
+				jobRepository,
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>(),
+				MockRepository.GenerateStub<IEntityIdProvider>(),
+				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+		}
+
 		public static JobService Create(Guid typeId, Guid customerId)
 		{
 			return Create(MockRepository.GenerateStub<IJobRepository>(), typeId, customerId,
@@ -25,7 +37,7 @@ namespace JobSystem.TestHelpers
 
 		public static JobService Create(IJobRepository jobRepository, Guid typeId, Guid customerId, IUserContext userContext)
 		{
-			return new JobService(userContext, jobRepository, GetListItemRepository(typeId), GetCustomerRepository(customerId), EntityIdProviderFactory.GetEntityIdProviderFor<Job>("2000JR"), MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+			return new JobService(userContext, MockRepository.GenerateStub<IAttachmentRepository>(), jobRepository, GetListItemRepository(typeId), GetCustomerRepository(customerId), EntityIdProviderFactory.GetEntityIdProviderFor<Job>("2000JR"), MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 
 		public static JobService CreateForApproval(IJobRepository jobRepository, Guid jobId, Guid typeId, Guid customerId, IUserContext userContext)
@@ -34,7 +46,7 @@ namespace JobSystem.TestHelpers
 				jobRepository.Stub(x => x.GetById(jobId)).Return(GetJob(jobId, customerId, typeId));
 			else
 				jobRepository.Stub(x => x.GetById(jobId)).Return(null);
-			return new JobService(userContext, jobRepository, GetListItemRepository(typeId), GetCustomerRepository(customerId), EntityIdProviderFactory.GetEntityIdProviderFor<Job>("2000JR"), MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+			return new JobService(userContext, MockRepository.GenerateStub<IAttachmentRepository>(), jobRepository, GetListItemRepository(typeId), GetCustomerRepository(customerId), EntityIdProviderFactory.GetEntityIdProviderFor<Job>("2000JR"), MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 
 		private static IListItemRepository GetListItemRepository(Guid typeId)

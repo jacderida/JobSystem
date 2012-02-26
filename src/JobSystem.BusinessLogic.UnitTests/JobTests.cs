@@ -1,6 +1,7 @@
 ﻿using System;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
+using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework;
@@ -8,6 +9,8 @@ using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
 using NUnit.Framework;
 using Rhino.Mocks;
+using System.IO;
+using JobSystem.DataModel.Storage;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {
@@ -18,12 +21,32 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private DomainValidationException _domainValidationException;
 		private Job _savedJob;
 		private DateTime _dateCreated = new DateTime(2011, 12, 29);
+		private Guid _jobForAttachmentId = Guid.NewGuid();
+		private Job _jobForAttachment;
+		private IUserContext _userContext;
 
 		[SetUp]
 		public void Setup()
 		{
 			_domainValidationException = null;
-			AppDateTime.GetUtcNow = () =>_dateCreated;
+			AppDateTime.GetUtcNow = () => _dateCreated;
+			_userContext = TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member);
+			_jobForAttachment = new Job
+			{
+				Id = _jobForAttachmentId,
+				Type = new ListItem
+				{
+					Id = Guid.NewGuid(),
+					Type = ListItemType.JobTypeField,
+					Name = "Field",
+					Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Job Type", Type = ListItemCategoryType.JobType }
+				},
+				Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" },
+				OrderNo = "blah",
+				DateCreated = DateTime.Now,
+				CreatedBy = _userContext.GetCurrentUser(),
+				JobNo = "JR2000"
+			};
 		}
 
 		#region Create
@@ -196,6 +219,44 @@ namespace JobSystem.BusinessLogic.UnitTests
 			try
 			{
 				_savedJob = _jobService.ApproveJob(id);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region AddAttachment
+
+		[Test]
+		public void AddAttachment_ValidAttachmentDetails_AttachmentAdded()
+		{
+			var attachmentId = Guid.NewGuid();
+			var fileName = "attachment.pdf";
+			var contentType = "image";
+			var content = new byte[] { 1, 2, 3, 4, 5 };
+
+			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			jobRepositoryMock.Stub(x => x.GetById(_jobForAttachmentId)).Return(_jobForAttachment);
+			var attachmentRepositoryMock = MockRepository.GenerateMock<IAttachmentRepository>();
+			attachmentRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
+			_jobService = JobServiceFactory.Create(jobRepositoryMock, attachmentRepositoryMock);
+			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
+			jobRepositoryMock.VerifyAllExpectations();
+			attachmentRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(1, _jobForAttachment.Attachments.Count);
+		}
+
+		private void AddAttachment(Guid jobId, Guid attachmentId, string fileName, string contentType, byte[] content)
+		{
+			try
+			{
+				MemoryStream ms = null;
+				if (content != null)
+					ms = new MemoryStream(content);
+				_jobForAttachment = _jobService.AddAttachment(jobId, new AttachmentData { Id = attachmentId, Content = ms, ContentType = contentType, Filename = fileName });
 			}
 			catch (DomainValidationException dex)
 			{

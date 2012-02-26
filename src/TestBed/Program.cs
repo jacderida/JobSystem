@@ -35,7 +35,7 @@ namespace TestBed
 			var listItemService = new ListItemService(testUserContext, new ListItemRepository(), queueDispatcher);
 			var customerService = new CustomerService(testUserContext, new CustomerRepository(), queueDispatcher);
 			var jobService = new JobService(
-				testUserContext, new JobRepository(), new ListItemRepository(), new CustomerRepository(), new EntityIdProvider(), queueDispatcher);
+				testUserContext, new AttachmentRepository(), new JobRepository(), new ListItemRepository(), new CustomerRepository(), new EntityIdProvider(), queueDispatcher);
 			var jobItemService = new JobItemService(
 				testUserContext, new JobRepository(), new JobItemRepository(),
 				new ListItemService(testUserContext, new ListItemRepository(), queueDispatcher),

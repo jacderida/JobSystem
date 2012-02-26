@@ -8,18 +8,21 @@ using JobSystem.DataModel.Repositories;
 using JobSystem.Framework;
 using JobSystem.Framework.Messaging;
 using JobSystem.Resources.Jobs;
+using JobSystem.DataModel.Storage;
 
 namespace JobSystem.BusinessLogic.Services
 {
 	public class JobService : ServiceBase
 	{
 		private readonly IJobRepository _jobRepository;
+		private readonly IAttachmentRepository _attachmentRepository;
 		private readonly IListItemRepository _listItemRepository;
 		private readonly ICustomerRepository _customerRepository;
 		private readonly IEntityIdProvider _entityIdProvider;
 
 		public JobService(
 			IUserContext applicationContext,
+			IAttachmentRepository attachmentRepository,
 			IJobRepository jobRepository,
 			IListItemRepository listItemRepository,
 			ICustomerRepository customerRepository,
@@ -50,6 +53,11 @@ namespace JobSystem.BusinessLogic.Services
 			ValidateAnnotatedObjectThrowOnFailure(job);
 			_jobRepository.Create(job);
 			return job;
+		}
+
+		public Job AddAttachment(Guid jobId, AttachmentData attachmentData)
+		{
+			throw new NotImplementedException();
 		}
 
 		public Job ApproveJob(Guid jobId)
