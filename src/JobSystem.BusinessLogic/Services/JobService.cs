@@ -5,30 +5,31 @@ using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
+using JobSystem.DataModel.Storage;
 using JobSystem.Framework;
 using JobSystem.Framework.Messaging;
 using JobSystem.Resources.Jobs;
-using JobSystem.DataModel.Storage;
 
 namespace JobSystem.BusinessLogic.Services
 {
 	public class JobService : ServiceBase
 	{
+		private readonly IJobAttachmentDataRepository _jobAttachmentDataRepository;
 		private readonly IJobRepository _jobRepository;
-		private readonly IAttachmentRepository _attachmentRepository;
 		private readonly IListItemRepository _listItemRepository;
 		private readonly ICustomerRepository _customerRepository;
 		private readonly IEntityIdProvider _entityIdProvider;
 
 		public JobService(
 			IUserContext applicationContext,
-			IAttachmentRepository attachmentRepository,
+			IJobAttachmentDataRepository jobAttachmentDataRepository,
 			IJobRepository jobRepository,
 			IListItemRepository listItemRepository,
 			ICustomerRepository customerRepository,
 			IEntityIdProvider entityIdProvider,
 			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
 		{
+			_jobAttachmentDataRepository = jobAttachmentDataRepository;
 			_jobRepository = jobRepository;
 			_listItemRepository = listItemRepository;
 			_customerRepository = customerRepository;
@@ -57,7 +58,23 @@ namespace JobSystem.BusinessLogic.Services
 
 		public Job AddAttachment(Guid jobId, AttachmentData attachmentData)
 		{
-			throw new NotImplementedException();
+			var job = GetJob(jobId);
+			if (job.IsPending)
+				throw new DomainValidationException(Messages.JobNotApproved, "IsPending");
+			if (attachmentData.Id == Guid.Empty)
+				throw new ArgumentException("An ID must be supplied for the attachment.");
+			if (String.IsNullOrEmpty(attachmentData.Filename))
+				throw new DomainValidationException(Messages.FileNameRequired, "Filename");
+			if (attachmentData.Filename.Length > 2000)
+				throw new DomainValidationException(Messages.FileNameTooLarge, "Filename");
+			if (String.IsNullOrEmpty(attachmentData.ContentType))
+				throw new DomainValidationException(Messages.ContentTypeNotSupplied, "ContentType");
+			if (attachmentData.Content == null)
+				throw new DomainValidationException(Messages.ContentNotSupplied, "Content");
+			job.Attachments.Add(new Attachment { Id = attachmentData.Id, Filename = attachmentData.Filename });
+			_jobAttachmentDataRepository.Put(attachmentData);
+			_jobRepository.Update(job);
+			return job;
 		}
 
 		public Job ApproveJob(Guid jobId)
@@ -76,7 +93,10 @@ namespace JobSystem.BusinessLogic.Services
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
-			return _jobRepository.GetById(id);
+			var job = _jobRepository.GetById(id);
+			if (job == null)
+				throw new ArgumentException("An invalid ID was supplied for the job");
+			return job;
 		}
 
 		public IEnumerable<Job> GetApprovedJobs()

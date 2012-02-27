@@ -45,7 +45,7 @@ namespace JobSystem.TestHelpers
 			supplierService.Create(supplier3Id, "Supplier 3", new Address(), new ContactInfo(), new Address(), new ContactInfo());
 
 			var listItemService = new ListItemService(userContext, listItemRepository, dispatcher);
-			var jobService = new JobService(userContext, new AttachmentRepository(), jobRepository, listItemRepository, customerRepository, entityIdProvider, dispatcher);
+			var jobService = new JobService(userContext, null, jobRepository, listItemRepository, customerRepository, entityIdProvider, dispatcher);
 			jobService.CreateJob(job1Id, "some instructions", "order no", "advice no", listItemService.GetAllByCategory(ListItemCategoryType.JobType).First().Id, customerId, "notes", "contact");
 			jobService.CreateJob(job2Id, "some instructions", "order no", "advice no", listItemService.GetAllByCategory(ListItemCategoryType.JobType).First().Id, customerId, "notes", "contact");
 			jobService.CreateJob(job3Id, "some instructions", "order no", "advice no", listItemService.GetAllByCategory(ListItemCategoryType.JobType).First().Id, customerId, "notes", "contact");

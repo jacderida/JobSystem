@@ -79,6 +79,51 @@ namespace JobSystem.Resources.Jobs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The attachment must have content.
+        /// </summary>
+        public static string ContentNotSupplied {
+            get {
+                return ResourceManager.GetString("ContentNotSupplied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The content type must be supplied for the attachment.
+        /// </summary>
+        public static string ContentTypeNotSupplied {
+            get {
+                return ResourceManager.GetString("ContentTypeNotSupplied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The content supplied for the attachment must be greater than 0 bytes.
+        /// </summary>
+        public static string ContentZeroLength {
+            get {
+                return ResourceManager.GetString("ContentZeroLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A file name is required for the attachment.
+        /// </summary>
+        public static string FileNameRequired {
+            get {
+                return ResourceManager.GetString("FileNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file name cannot exceed 2000 characters.
+        /// </summary>
+        public static string FileNameTooLarge {
+            get {
+                return ResourceManager.GetString("FileNameTooLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The instructions cannot exceed 2000 characters.
         /// </summary>
         public static string InstructionsTooLarge {
@@ -111,6 +156,15 @@ namespace JobSystem.Resources.Jobs {
         public static string InvalidTypeId {
             get {
                 return ResourceManager.GetString("InvalidTypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This action is not available until the job has been approved.
+        /// </summary>
+        public static string JobNotApproved {
+            get {
+                return ResourceManager.GetString("JobNotApproved", resourceCulture);
             }
         }
         

@@ -123,6 +123,21 @@
   <data name="ContactTooLarge" xml:space="preserve">
     <value>The contact cannot exceed 50 characters</value>
   </data>
+  <data name="ContentNotSupplied" xml:space="preserve">
+    <value>The attachment must have content</value>
+  </data>
+  <data name="ContentTypeNotSupplied" xml:space="preserve">
+    <value>The content type must be supplied for the attachment</value>
+  </data>
+  <data name="ContentZeroLength" xml:space="preserve">
+    <value>The content supplied for the attachment must be greater than 0 bytes</value>
+  </data>
+  <data name="FileNameRequired" xml:space="preserve">
+    <value>A file name is required for the attachment</value>
+  </data>
+  <data name="FileNameTooLarge" xml:space="preserve">
+    <value>The file name cannot exceed 2000 characters</value>
+  </data>
   <data name="InstructionsTooLarge" xml:space="preserve">
     <value>The instructions cannot exceed 2000 characters</value>
   </data>
@@ -134,6 +149,9 @@
   </data>
   <data name="InvalidTypeId" xml:space="preserve">
     <value>An invalid type ID was supplied</value>
+  </data>
+  <data name="JobNotApproved" xml:space="preserve">
+    <value>This action is not available until the job has been approved</value>
   </data>
   <data name="NoApprovedJobs" xml:space="preserve">
     <value>There are currently no approved jobs</value>

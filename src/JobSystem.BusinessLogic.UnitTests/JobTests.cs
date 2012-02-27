@@ -237,16 +237,138 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var contentType = "image";
 			var content = new byte[] { 1, 2, 3, 4, 5 };
 
+			var attachmentDataRepositoryMock = MockRepository.GenerateMock<IJobAttachmentDataRepository>();
+			attachmentDataRepositoryMock.Expect(x => x.Put(null)).IgnoreArguments();
 			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
 			jobRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
 			jobRepositoryMock.Stub(x => x.GetById(_jobForAttachmentId)).Return(_jobForAttachment);
-			var attachmentRepositoryMock = MockRepository.GenerateMock<IAttachmentRepository>();
-			attachmentRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
-			_jobService = JobServiceFactory.Create(jobRepositoryMock, attachmentRepositoryMock);
+			_jobService = JobServiceFactory.Create(jobRepositoryMock, attachmentDataRepositoryMock);
 			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
 			jobRepositoryMock.VerifyAllExpectations();
-			attachmentRepositoryMock.VerifyAllExpectations();
+			attachmentDataRepositoryMock.VerifyAllExpectations();
 			Assert.AreEqual(1, _jobForAttachment.Attachments.Count);
+		}
+
+		[Test]
+		public void AddAttachment_FilenameGreaterThan2000Characters_DomainValidationExceptionThrow()
+		{
+			var attachmentId = Guid.NewGuid();
+			var fileName = new string('a', 2001);
+			var contentType = "image";
+			var content = new byte[] { 1, 2, 3, 4, 5 };
+
+			var jobRepositoryStub = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryStub.Stub(x => x.GetById(_jobForAttachmentId)).Return(_jobForAttachment);
+			_jobService = JobServiceFactory.Create(jobRepositoryStub, MockRepository.GenerateStub<IJobAttachmentDataRepository>());
+			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.FileNameTooLarge));
+		}
+
+		[Test]
+		public void AddAttachment_FilenameNotSupplied_DomainValidationExceptionThrow()
+		{
+			var attachmentId = Guid.NewGuid();
+			var fileName = String.Empty;
+			var contentType = "image";
+			var content = new byte[] { 1, 2, 3, 4, 5 };
+
+			var jobRepositoryStub = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryStub.Stub(x => x.GetById(_jobForAttachmentId)).Return(_jobForAttachment);
+			_jobService = JobServiceFactory.Create(jobRepositoryStub, MockRepository.GenerateStub<IJobAttachmentDataRepository>());
+			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.FileNameRequired));
+		}
+
+		[Test]
+		public void AddAttachment_ContentTypeNotSupplied_DomainValidationExceptionThrow()
+		{
+			var attachmentId = Guid.NewGuid();
+			var fileName = "attachment.pdf";
+			var contentType = String.Empty;
+			var content = new byte[] { 1, 2, 3, 4, 5 };
+
+			var jobRepositoryStub = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryStub.Stub(x => x.GetById(_jobForAttachmentId)).Return(_jobForAttachment);
+			_jobService = JobServiceFactory.Create(jobRepositoryStub, MockRepository.GenerateStub<IJobAttachmentDataRepository>());
+			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.ContentTypeNotSupplied));
+		}
+
+		[Test]
+		public void AddAttachment_ContentNotSupplied_DomainValidationExceptionThrow()
+		{
+			var attachmentId = Guid.NewGuid();
+			var fileName = "attachment.pdf";
+			var contentType = "image";
+			byte[] content = null;
+
+			var jobRepositoryStub = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryStub.Stub(x => x.GetById(_jobForAttachmentId)).Return(_jobForAttachment);
+			_jobService = JobServiceFactory.Create(jobRepositoryStub, MockRepository.GenerateStub<IJobAttachmentDataRepository>());
+			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.ContentNotSupplied));
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void AddAttachment_AttachmentIdNotSupplied_ArgumentExceptionThrow()
+		{
+			var attachmentId = Guid.Empty;
+			var fileName = "attachment.pdf";
+			var contentType = "image";
+			byte[] content = new byte[] { 1, 2, 3, 4, 5 };
+
+			var jobRepositoryStub = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryStub.Stub(x => x.GetById(_jobForAttachmentId)).Return(_jobForAttachment);
+			_jobService = JobServiceFactory.Create(jobRepositoryStub, MockRepository.GenerateStub<IJobAttachmentDataRepository>());
+			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
+		}
+
+		[Test]
+		public void AddAttachment_UserDoesNotHaveMemberRole_DomainValidationExceptionThrow()
+		{
+			var attachmentId = Guid.NewGuid();
+			var fileName = "attachment.pdf";
+			var contentType = "image";
+			byte[] content = new byte[] { 1, 2, 3, 4, 5 };
+
+			var jobRepositoryStub = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryStub.Stub(x => x.GetById(_jobForAttachmentId)).Return(_jobForAttachment);
+			_jobService = JobServiceFactory.Create(jobRepositoryStub, MockRepository.GenerateStub<IJobAttachmentDataRepository>(),
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
+			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.InsufficientSecurityClearance));
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void AddAttachment_InvalidJobIdSupplied_ArgumentExceptionThrow()
+		{
+			var attachmentId = Guid.NewGuid();
+			var fileName = "attachment.pdf";
+			var contentType = "image";
+			byte[] content = new byte[] { 1, 2, 3, 4, 5 };
+
+			var jobRepositoryStub = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryStub.Stub(x => x.GetById(Guid.Empty)).Return(null);
+			_jobService = JobServiceFactory.Create(jobRepositoryStub, MockRepository.GenerateStub<IJobAttachmentDataRepository>());
+			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
+		}
+
+		[Test]
+		public void AddAttachment_JobNotApproved_DomainValidationExceptionThrow()
+		{
+			var attachmentId = Guid.NewGuid();
+			var fileName = "attachment.pdf";
+			var contentType = "image";
+			byte[] content = new byte[] { 1, 2, 3, 4, 5 };
+			_jobForAttachment.IsPending = true;
+
+			var jobRepositoryStub = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryStub.Stub(x => x.GetById(_jobForAttachmentId)).Return(_jobForAttachment);
+			_jobService = JobServiceFactory.Create(jobRepositoryStub, MockRepository.GenerateStub<IJobAttachmentDataRepository>());
+			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.JobNotApproved));
 		}
 
 		private void AddAttachment(Guid jobId, Guid attachmentId, string fileName, string contentType, byte[] content)

@@ -54,7 +54,6 @@
     </Compile>
     <Compile Include="Dto\Address.cs" />
     <Compile Include="Entities\Attachment.cs" />
-    <Compile Include="Repositories\IAttachmentRepository.cs" />
     <Compile Include="Storage\AttachmentData.cs" />
     <Compile Include="Dto\ContactInfo.cs" />
     <Compile Include="Entities\BankDetails.cs" />
@@ -96,7 +95,7 @@
     <Compile Include="Repositories\ISupplierRepository.cs" />
     <Compile Include="Repositories\ITaxCodeRepository.cs" />
     <Compile Include="Repositories\IUserAccountRepository.cs" />
-    <Compile Include="Storage\IJobAttachmentRepository.cs" />
+    <Compile Include="Storage\IJobAttachmentDataRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JobSystem.DataAnnotations\JobSystem.DataAnnotations.csproj">
