@@ -89,6 +89,11 @@ namespace JobSystem.BusinessLogic.Services
 			return job;
 		}
 
+		public AttachmentData GetAttachment(Guid id)
+		{
+			return _jobAttachmentDataRepository.GetById(id);
+		}
+
 		public Job GetJob(Guid id)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.DataModel.Entities;
+using JobSystem.DataModel.Storage;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
+using JobSystem.Mvc.ViewModels.Consignments;
 using JobSystem.Mvc.ViewModels.JobItems;
 using JobSystem.Mvc.ViewModels.Jobs;
-using System.Collections.Generic;
 using JobSystem.Mvc.ViewModels.WorkItems;
-using JobSystem.Mvc.ViewModels.Consignments;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -168,6 +169,44 @@ namespace JobSystem.Mvc.Controllers
 			};
 
 			return View(viewModel);
+		}
+
+		public ActionResult GetAttachment(Guid id)
+		{
+			var attachment = _jobService.GetAttachment(id);
+			var result = new FileStreamResult(attachment.Content, attachment.ContentType)
+			{
+				FileDownloadName = attachment.Filename
+			};
+			return result;
+		}
+
+		[HttpPost]
+		[Transaction]
+		public virtual ActionResult AddAttachment(HttpPostedFileBase attachment, System.Guid entityId)
+		{
+			// touching attachment.InputStream here causes the ASP.Net framework to read the entire upload,
+			// which is buffered to disk, see http://msdn.microsoft.com/en-us/library/system.web.httppostedfile.aspx
+			var attachmentData = new AttachmentData
+			{
+				Id = Guid.NewGuid(),
+				Content = attachment.InputStream,
+				ContentType = attachment.ContentType,
+				Filename = attachment.FileName
+			};
+			_jobService.AddAttachment(entityId, attachmentData);
+
+			// Pasted from risk, IJ to fill in...
+			//var result = new AttachmentViewModel()
+			//{
+			//    Filename = attachmentData.Filename,
+			//    RemoveUrl = Url.Action(MVC.Risk.RemoveAttachment(entityId, attachmentData.Id)),
+			//    Id = attachmentData.Id,
+			//    ContentUrl = Url.Action(MVC.Risk.GetAttachment(entityId, attachmentData.Id, false)),
+			//    ThumbnailUrl = Url.Action(MVC.Risk.GetAttachment(entityId, attachmentData.Id, true))
+			//};
+			//return Json(result);
+			return null;
 		}
 
 		[Transaction]
