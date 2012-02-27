@@ -54,7 +54,6 @@ table {
 
 body {
     background: #F3F3F5 url(../Content/images/white_carbon.png) repeat;
-    font-size: .85em;
     font-family:Arial, Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
@@ -217,7 +216,7 @@ ul#menu li {
 }
 
 ul#menu li:hover, ul#menu li:focus {
-	
+	background: #305596 url(../Content/images/header_bg_focus.png) no-repeat;
 }
 
 ul#menu li#settings {
@@ -259,7 +258,7 @@ ul#menu li.selected a {
 
 ul#menu li a.active {
 	color: White;
-	background: #13223C;
+	background: #13223C url(../Content/images/header_bg_focus.png) no-repeat;
 }
 
 ul#menu li a.settings {
@@ -274,7 +273,7 @@ ul#menu li a.settings:focus, ul#menu li a.settings:hover {
 	position: absolute;
 	background: #fff url(../Content/images/menu_gradient.png) repeat-x bottom;
 	width: 200px;
-	top: 72px;
+	top: 70px;
 	right: 0px;
 	border-right: 1px solid #021538;
 	border-left: 1px solid #021538;
@@ -465,7 +464,6 @@ table tr:nth-child(odd)
 
 nav, 
 #menucontainer {
-    border-bottom: 2px solid #13223C;
     height: 50px;
 	background:#f7fbff url(../Content/images/header_bg.png) repeat-x;
 }
