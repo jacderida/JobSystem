@@ -13,12 +13,12 @@ namespace JobSystem.Mvc.ViewModels.Quotes
 		public string OrderNo { get; set; }
 		[Display(Name = "Advice Number")]
 		public string AdviceNo { get; set; }
-		public string Repair { get; set; }
-		public string Calibration { get; set; }
-		public string Parts { get; set; }
-		public string Carriage { get; set; }
-		public string Investigation { get; set; }
-		public string Days { get; set; }
+		public decimal Repair { get; set; }
+		public decimal Calibration { get; set; }
+		public decimal Parts { get; set; }
+		public decimal Carriage { get; set; }
+		public decimal Investigation { get; set; }
+		public int Days { get; set; }
 		[Display(Name = "Item BER")]
 		public bool ItemBER { get; set; }
 		public string Report { get; set; }

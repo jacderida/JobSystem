@@ -152,7 +152,7 @@
     <Compile Include="ViewModels\Orders\OrderCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderIndexViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteCreateViewModel.cs" />
-    <Compile Include="ViewModels\Quotes\QuoteIndexViewModel.cs" />
+    <Compile Include="ViewModels\Quotes\QuoteItemIndexViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierIndexViewModel.cs" />
     <Compile Include="ViewModels\WorkItems\WorkItemCreateViewModel.cs" />
@@ -369,6 +369,7 @@
     <Content Include="Views\Order\ApprovedOrders.cshtml" />
     <Content Include="Views\Quote\PendingQuotes.cshtml" />
     <Content Include="Views\Quote\ApprovedQuotes.cshtml" />
+    <Content Include="Views\Quote\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\PendingOrders.cshtml" />
