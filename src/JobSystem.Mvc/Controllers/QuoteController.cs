@@ -18,19 +18,7 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult Index()
 		{
-			IList<QuoteIndexViewModel> viewmodels = new List<QuoteIndexViewModel>();
-
-			for (int i = 0; i < 10; i++)
-			{
-				viewmodels.Add(new QuoteIndexViewModel()
-				{
-					Id = i.ToString(),
-					AdviceNo = "ADV" + i.ToString(),
-					OrderNo = "ORDN" + i.ToString()
-				});
-			}
-
-			return View("PendingQuotes", viewmodels);
+			return RedirectToAction("PendingQuotes");
 		}
 
 		[HttpGet]
@@ -39,5 +27,38 @@ namespace JobSystem.Mvc.Controllers
 			return View();
 		}
 
+		[HttpGet]
+		public ActionResult PendingQuotes()
+		{
+			IList<QuoteItemIndexViewModel> viewmodels = new List<QuoteItemIndexViewModel>();
+
+			for (int i = 0; i < 10; i++)
+			{
+				viewmodels.Add(new QuoteItemIndexViewModel()
+				{
+					Id = i.ToString(),
+					AdviceNo = "ADV" + i.ToString(),
+					OrderNo = "ORDN" + i.ToString()
+				});
+			}
+			return View(viewmodels);
+		}
+
+		[HttpGet]
+		public ActionResult ApprovedQuotes()
+		{
+			IList<QuoteItemIndexViewModel> viewmodels = new List<QuoteItemIndexViewModel>();
+
+			for (int i = 0; i < 10; i++)
+			{
+				viewmodels.Add(new QuoteItemIndexViewModel()
+				{
+					Id = i.ToString(),
+					AdviceNo = "ADV" + i.ToString(),
+					OrderNo = "ORDN" + i.ToString()
+				});
+			}
+			return View(viewmodels);
+		}
 	}
 }

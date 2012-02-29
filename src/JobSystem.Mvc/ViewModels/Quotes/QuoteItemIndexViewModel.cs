@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JobSystem.Mvc.ViewModels.Quotes
 {
-	public class QuoteIndexViewModel
+	public class QuoteItemIndexViewModel
 	{
 		public string Id { get; set; }
 		[Display(Name = "Order Number")]

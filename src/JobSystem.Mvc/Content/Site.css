@@ -485,11 +485,13 @@ div#title {
 	display: block;
     float: left;
     text-align: left;
-    margin-top: 10px;
-    margin-left: 10px;
-	background-color: #eaeaea;
-	border: 1px solid #fff;
-	outline: 1px solid #ddd;
+    margin-top: 30px;
+    margin-left: 20px;
+	font-size: 2em;
+	font-weight: bold;
+	text-shadow: 1px 1px 1px gdarkray;
+	font-family: Tahoma, Geneva, sans-serif;
+	color: #fff;
 }
 
 #logindisplay 
@@ -793,7 +795,7 @@ div#title {
 /* START OF TOGGLE STYLES */
 #toggle-container {
 	width: 250px;
-	margin: 0 auto 20px auto;
+	margin: 20px auto 20px auto;
 }
 
 .toggle {

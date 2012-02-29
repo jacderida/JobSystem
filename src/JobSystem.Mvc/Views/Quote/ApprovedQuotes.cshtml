@@ -1,13 +1,17 @@
-﻿@model IList<JobSystem.Mvc.ViewModels.Quotes.QuoteIndexViewModel>
+﻿@model IList<JobSystem.Mvc.ViewModels.Quotes.QuoteItemIndexViewModel>
 
 @{
     ViewBag.Title = "ApprovedQuotes";
 }
 
-<h2>ApprovedQuotes</h2>
+@*<h2>Approved Quotes</h2>*@
 
-<h2>Orders</h2>
-@Html.ActionLink("Raise Order", "Create", new { }, new { @class = "primary-action" })
+<div id="toggle-container">
+	<span class="toggle toggle-left"><a href="@Url.Action("PendingQuotes")">Pending</a></span>
+	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedQuotes")">Approved</a></span>
+</div>
+
+@Html.ActionLink("Raise Quote", "Create", new { }, new { @class = "primary-action" })
 @if (Model.Any()) {
 	<table>
 		<tr>

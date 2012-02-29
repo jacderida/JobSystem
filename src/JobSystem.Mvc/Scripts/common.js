@@ -205,7 +205,9 @@ $(document).ready(function () {
 			// pass the dom node (ex. $(selector)[0] for jQuery users)
 			element: document.getElementById('file-uploader'),
 			// path to server-side upload script
-			action: '/server/upload'
+			action: "../../Attachment/Upload",
+			onComplete: function (id, fileName, responseJSON) {
+			}
 		});
 
 		//Populate customer delivery/invoice address with main address details

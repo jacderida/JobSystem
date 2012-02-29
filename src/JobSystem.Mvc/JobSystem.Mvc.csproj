@@ -97,6 +97,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -106,6 +107,11 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Telerik.Reporting, Version=6.0.12.215, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Reporting.DatabaseSession, Version=6.0.12.215, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Reporting.Design, Version=6.0.12.215, Culture=neutral, PublicKeyToken=a9d7983dfcc261be" />
+    <Reference Include="Telerik.Reporting.Service, Version=6.0.12.215, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.ReportViewer.WebForms, Version=6.0.12.215, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Versioning\VersionInfo.cs">
@@ -137,6 +143,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="IoC\DependencyRegistry.cs" />
+    <Compile Include="Reports\ConsignmentNote.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\ConsignmentNote.Designer.cs">
+      <DependentUpon>ConsignmentNote.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Account\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\Account\LogOnViewModel.cs" />
     <Compile Include="ViewModels\Admin\CompanyDetailsViewModel.cs" />
@@ -153,7 +165,7 @@
     <Compile Include="ViewModels\Orders\OrderCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderIndexViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteCreateViewModel.cs" />
-    <Compile Include="ViewModels\Quotes\QuoteIndexViewModel.cs" />
+    <Compile Include="ViewModels\Quotes\QuoteItemIndexViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierIndexViewModel.cs" />
     <Compile Include="ViewModels\WorkItems\WorkItemCreateViewModel.cs" />
@@ -230,6 +242,7 @@
     <Content Include="Scripts\selectivizr-min.js" />
     <Content Include="Scripts\the-tooltip.min.js" />
     <Content Include="Scripts\workitem.js" />
+    <Content Include="Views\Consignment\RepConsignmentNote.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -255,6 +268,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Report\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -370,12 +384,18 @@
     <Content Include="Views\Order\ApprovedOrders.cshtml" />
     <Content Include="Views\Quote\PendingQuotes.cshtml" />
     <Content Include="Views\Quote\ApprovedQuotes.cshtml" />
+    <Content Include="Views\Quote\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\PendingOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\ConsignmentNote.resx">
+      <DependentUpon>ConsignmentNote.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

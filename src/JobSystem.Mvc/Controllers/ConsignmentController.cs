@@ -120,17 +120,33 @@ namespace JobSystem.Mvc.Controllers
 		[Transaction]
 		public ActionResult ConsignPending(Guid[] ToBeConvertedIds)
 		{
-			IList<Guid> idList = new List<Guid>();
-			if (ToBeConvertedIds.Length > 0)
+			if (ModelState.IsValid)
 			{
-				for (var i = 0; i < ToBeConvertedIds.Length; i++)
+				try
 				{
-					idList.Add(ToBeConvertedIds[i]);
+					IList<Guid> idList = new List<Guid>();
+					if (ToBeConvertedIds.Length > 0)
+					{
+						for (var i = 0; i < ToBeConvertedIds.Length; i++)
+						{
+							idList.Add(ToBeConvertedIds[i]);
+						}
+					}
+					if (idList.Any()) _consignmentService.CreateConsignmentsFromPendingItems(idList);
+
+					return RedirectToAction("PendingConsignments");
+				}
+				catch (DomainValidationException dex)
+				{
+					ModelState.UpdateFromDomain(dex.Result);
 				}
 			}
-			if (idList.Any()) _consignmentService.CreateConsignmentsFromPendingItems(idList);
-			
 			return RedirectToAction("PendingConsignments");
+		}
+
+		public ActionResult GenerateConsignmentNote(Guid Id)
+		{
+			return View("RepConsignmentNote");
 		}
     }
 }
