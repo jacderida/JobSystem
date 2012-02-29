@@ -15,7 +15,7 @@ using JobSystem.DataModel.Storage;
 namespace JobSystem.BusinessLogic.UnitTests
 {
 	[TestFixture]
-	public class JobTests
+	public class JobServiceTests
 	{
 		private JobService _jobService;
 		private DomainValidationException _domainValidationException;
@@ -237,31 +237,13 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var contentType = "image";
 			var content = new byte[] { 1, 2, 3, 4, 5 };
 
-			var attachmentDataRepositoryMock = MockRepository.GenerateMock<IJobAttachmentDataRepository>();
-			attachmentDataRepositoryMock.Expect(x => x.Put(null)).IgnoreArguments();
 			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
 			jobRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
 			jobRepositoryMock.Stub(x => x.GetById(_jobForAttachmentId)).Return(_jobForAttachment);
-			_jobService = JobServiceFactory.Create(jobRepositoryMock, attachmentDataRepositoryMock);
+			_jobService = JobServiceFactory.Create(jobRepositoryMock, MockRepository.GenerateStub<IJobAttachmentDataRepository>());
 			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
 			jobRepositoryMock.VerifyAllExpectations();
-			attachmentDataRepositoryMock.VerifyAllExpectations();
 			Assert.AreEqual(1, _jobForAttachment.Attachments.Count);
-		}
-
-		[Test]
-		public void AddAttachment_FilenameGreaterThan2000Characters_DomainValidationExceptionThrow()
-		{
-			var attachmentId = Guid.NewGuid();
-			var fileName = new string('a', 2001);
-			var contentType = "image";
-			var content = new byte[] { 1, 2, 3, 4, 5 };
-
-			var jobRepositoryStub = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryStub.Stub(x => x.GetById(_jobForAttachmentId)).Return(_jobForAttachment);
-			_jobService = JobServiceFactory.Create(jobRepositoryStub, MockRepository.GenerateStub<IJobAttachmentDataRepository>());
-			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
-			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.FileNameTooLarge));
 		}
 
 		[Test]
@@ -277,36 +259,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_jobService = JobServiceFactory.Create(jobRepositoryStub, MockRepository.GenerateStub<IJobAttachmentDataRepository>());
 			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.FileNameRequired));
-		}
-
-		[Test]
-		public void AddAttachment_ContentTypeNotSupplied_DomainValidationExceptionThrow()
-		{
-			var attachmentId = Guid.NewGuid();
-			var fileName = "attachment.pdf";
-			var contentType = String.Empty;
-			var content = new byte[] { 1, 2, 3, 4, 5 };
-
-			var jobRepositoryStub = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryStub.Stub(x => x.GetById(_jobForAttachmentId)).Return(_jobForAttachment);
-			_jobService = JobServiceFactory.Create(jobRepositoryStub, MockRepository.GenerateStub<IJobAttachmentDataRepository>());
-			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
-			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.ContentTypeNotSupplied));
-		}
-
-		[Test]
-		public void AddAttachment_ContentNotSupplied_DomainValidationExceptionThrow()
-		{
-			var attachmentId = Guid.NewGuid();
-			var fileName = "attachment.pdf";
-			var contentType = "image";
-			byte[] content = null;
-
-			var jobRepositoryStub = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryStub.Stub(x => x.GetById(_jobForAttachmentId)).Return(_jobForAttachment);
-			_jobService = JobServiceFactory.Create(jobRepositoryStub, MockRepository.GenerateStub<IJobAttachmentDataRepository>());
-			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
-			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.ContentNotSupplied));
 		}
 
 		[Test]
@@ -378,7 +330,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MemoryStream ms = null;
 				if (content != null)
 					ms = new MemoryStream(content);
-				_jobForAttachment = _jobService.AddAttachment(jobId, new AttachmentData { Id = attachmentId, Content = ms, ContentType = contentType, Filename = fileName });
+				_jobForAttachment = _jobService.AddAttachment(jobId, attachmentId, fileName);
 			}
 			catch (DomainValidationException dex)
 			{

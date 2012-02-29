@@ -87,13 +87,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttachmentServiceTests.cs" />
     <Compile Include="CompanyDetailsTests.cs" />
     <Compile Include="ConsignmentItemTests.cs" />
     <Compile Include="ConsignmentTests.cs" />
     <Compile Include="CustomerTests.cs" />
     <Compile Include="InstrumentTests.cs" />
     <Compile Include="JobItemTests.cs" />
-    <Compile Include="JobTests.cs" />
+    <Compile Include="JobServiceTests.cs" />
     <Compile Include="SupplierTests.cs" />
     <Compile Include="UserManagementTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

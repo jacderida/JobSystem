@@ -58,6 +58,7 @@
     </Compile>
     <Compile Include="IoC\ServiceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AttachmentService.cs" />
     <Compile Include="Services\CompanyDetailsService.cs" />
     <Compile Include="Services\ConsignmentItemService.cs" />
     <Compile Include="Services\ConsignmentService.cs" />
@@ -68,6 +69,8 @@
     <Compile Include="Services\JobItemService.cs" />
     <Compile Include="Services\JobService.cs" />
     <Compile Include="Services\ListItemService.cs" />
+    <Compile Include="Services\QuoteItemService.cs" />
+    <Compile Include="Services\QuoteService.cs" />
     <Compile Include="Services\ServiceBase.cs" />
     <Compile Include="Services\SupplierService.cs" />
     <Compile Include="Services\UserManagementService.cs" />
