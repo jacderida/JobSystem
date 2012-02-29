@@ -17,6 +17,7 @@
 			<th>Supplier Name</th>
 			<th>Created</th>
 			<th></th>
+			<th></th>
 		</tr>
 	@foreach (var item in Model.OrderBy(i => i.SupplierName))
 	 {
@@ -43,7 +44,9 @@
 					}	
 					</span>
 				</span>
-				
+			</td>
+			<td>
+				@Html.ActionLink("Print Note", "GenerateConsignmentNote", new { Id = @item.Id })
 			</td>
 		</tr>
 	 }
