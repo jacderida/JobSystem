@@ -52,6 +52,7 @@ namespace JobSystem.Mvc.Controllers
 				{
 					var id = Guid.NewGuid();
 					_jobService.CreateJob(id, viewModel.Instructions, viewModel.OrderNumber, viewModel.AdviceNumber, viewModel.TypeId, viewModel.CustomerId, viewModel.JobNote, viewModel.Contact);
+					// _jobService.AddAttachment(Guid.NewGuid(), Guid.NewGuid(), String.Empty); IJ to fill in.
 					return RedirectToAction("PendingJobs");
 				}
 				catch (DomainValidationException dex)
@@ -171,42 +172,14 @@ namespace JobSystem.Mvc.Controllers
 			return View(viewModel);
 		}
 
-		public ActionResult GetAttachment(Guid id)
+		public ActionResult GetAttachment(Guid id, System.Guid attachmentId)
 		{
-			var attachment = _jobService.GetAttachment(id);
+			var attachment = _jobService.GetAttachment(id, attachmentId);
 			var result = new FileStreamResult(attachment.Content, attachment.ContentType)
 			{
 				FileDownloadName = attachment.Filename
 			};
 			return result;
-		}
-
-		[HttpPost]
-		[Transaction]
-		public virtual ActionResult AddAttachment(HttpPostedFileBase attachment, System.Guid entityId)
-		{
-			// touching attachment.InputStream here causes the ASP.Net framework to read the entire upload,
-			// which is buffered to disk, see http://msdn.microsoft.com/en-us/library/system.web.httppostedfile.aspx
-			var attachmentData = new AttachmentData
-			{
-				Id = Guid.NewGuid(),
-				Content = attachment.InputStream,
-				ContentType = attachment.ContentType,
-				Filename = attachment.FileName
-			};
-			_jobService.AddAttachment(entityId, attachmentData);
-
-			// Pasted from risk, IJ to fill in...
-			//var result = new AttachmentViewModel()
-			//{
-			//    Filename = attachmentData.Filename,
-			//    RemoveUrl = Url.Action(MVC.Risk.RemoveAttachment(entityId, attachmentData.Id)),
-			//    Id = attachmentData.Id,
-			//    ContentUrl = Url.Action(MVC.Risk.GetAttachment(entityId, attachmentData.Id, false)),
-			//    ThumbnailUrl = Url.Action(MVC.Risk.GetAttachment(entityId, attachmentData.Id, true))
-			//};
-			//return Json(result);
-			return null;
 		}
 
 		[Transaction]

@@ -54,6 +54,10 @@
     </Compile>
     <Compile Include="Dto\Address.cs" />
     <Compile Include="Entities\Attachment.cs" />
+    <Compile Include="Entities\Quote.cs" />
+    <Compile Include="Entities\QuoteItem.cs" />
+    <Compile Include="Repositories\IQuoteItemRepository.cs" />
+    <Compile Include="Repositories\IQuoteRepository.cs" />
     <Compile Include="Storage\AttachmentData.cs" />
     <Compile Include="Dto\ContactInfo.cs" />
     <Compile Include="Entities\BankDetails.cs" />

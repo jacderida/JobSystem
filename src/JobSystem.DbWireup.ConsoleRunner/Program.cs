@@ -97,7 +97,8 @@ namespace JobSystem.DbWireup.ConsoleRunner
 					new TaxCode { Id = defaultTaxCodeId, TaxCodeName = "T1", Rate = 0.20, Description = "VAT at 20%" })
 				.WithEntitySeeds(
 					Tuple.Create<Type, int, string>(typeof(Job), 2000, "JR"),
-					Tuple.Create<Type, int, string>(typeof(Consignment), 2000, "CR"));
+					Tuple.Create<Type, int, string>(typeof(Consignment), 2000, "CR"),
+					Tuple.Create<Type, int, string>(typeof(Quote), 2000, "QR"));
 			var defaultData = builder.Build();
 			try
 			{

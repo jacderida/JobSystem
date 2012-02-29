@@ -56,23 +56,16 @@ namespace JobSystem.BusinessLogic.Services
 			return job;
 		}
 
-		public Job AddAttachment(Guid jobId, AttachmentData attachmentData)
+		public Job AddAttachment(Guid jobId, Guid attachmentId, string fileName)
 		{
 			var job = GetJob(jobId);
 			if (job.IsPending)
 				throw new DomainValidationException(Messages.JobNotApproved, "IsPending");
-			if (attachmentData.Id == Guid.Empty)
-				throw new ArgumentException("An ID must be supplied for the attachment.");
-			if (String.IsNullOrEmpty(attachmentData.Filename))
-				throw new DomainValidationException(Messages.FileNameRequired, "Filename");
-			if (attachmentData.Filename.Length > 2000)
-				throw new DomainValidationException(Messages.FileNameTooLarge, "Filename");
-			if (String.IsNullOrEmpty(attachmentData.ContentType))
-				throw new DomainValidationException(Messages.ContentTypeNotSupplied, "ContentType");
-			if (attachmentData.Content == null)
-				throw new DomainValidationException(Messages.ContentNotSupplied, "Content");
-			job.Attachments.Add(new Attachment { Id = attachmentData.Id, Filename = attachmentData.Filename });
-			_jobAttachmentDataRepository.Put(attachmentData);
+			if (attachmentId == Guid.Empty)
+				throw new ArgumentException("An ID must be supplied for the attachment");
+			if (String.IsNullOrEmpty(fileName))
+				throw new DomainValidationException(Messages.FileNameRequired);
+			job.Attachments.Add(new Attachment { Id = attachmentId, Filename = fileName });
 			_jobRepository.Update(job);
 			return job;
 		}
@@ -89,9 +82,10 @@ namespace JobSystem.BusinessLogic.Services
 			return job;
 		}
 
-		public AttachmentData GetAttachment(Guid id)
+		public AttachmentData GetAttachment(Guid jobId, Guid attachmentId)
 		{
-			return _jobAttachmentDataRepository.GetById(id);
+			throw new NotImplementedException();
+			//return _jobAttachmentDataRepository.GetById(id);
 		}
 
 		public Job GetJob(Guid id)
