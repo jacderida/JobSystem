@@ -6,7 +6,7 @@
 
 <html>
 <head runat="server">
-    <title>ViewPage1</title>
+    <title>Consignment Note</title>
 </head>
 <body>
     <form clientidmode="Static" id="frep" runat="server">
