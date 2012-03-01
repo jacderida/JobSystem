@@ -44,7 +44,7 @@ namespace JobSystem.Mvc.Controllers
 
 		[HttpPost]
 		[Transaction]
-		public ActionResult Create(JobCreateViewModel viewModel)
+		public ActionResult Create(JobCreateViewModel viewModel, Guid[] AttachmentId, string[] AttachmentName)
 		{
 			if (ModelState.IsValid)
 			{
@@ -52,7 +52,12 @@ namespace JobSystem.Mvc.Controllers
 				{
 					var id = Guid.NewGuid();
 					_jobService.CreateJob(id, viewModel.Instructions, viewModel.OrderNumber, viewModel.AdviceNumber, viewModel.TypeId, viewModel.CustomerId, viewModel.JobNote, viewModel.Contact);
-					// _jobService.AddAttachment(Guid.NewGuid(), Guid.NewGuid(), String.Empty); IJ to fill in.
+					
+					for (var i = 0; i < AttachmentId.Length; i++)
+					{
+						_jobService.AddAttachment(id, AttachmentId[i], AttachmentName[i]);
+					}
+					
 					return RedirectToAction("PendingJobs");
 				}
 				catch (DomainValidationException dex)
@@ -95,7 +100,7 @@ namespace JobSystem.Mvc.Controllers
 			return View(jobList);
 		}
 
-		public ActionResult ApprovedJobs()
+		public ActionResult ApprovedJobs(int page = 1)
 		{
 			var jobs = _jobService.GetApprovedJobs().Select(
 				j => new JobIndexViewModel

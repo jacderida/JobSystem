@@ -3,7 +3,7 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <div id="create-job-container">
-@using (Html.BeginForm("Create", "Job", FormMethod.Post))
+@using (Html.BeginForm("Create", "Job", FormMethod.Post, new { id = "createJobForm" }))
 {
 	@Html.ValidationSummary(true)
 	<fieldset class="fieldset-no-legend fieldset-float-left">
@@ -41,7 +41,7 @@
 		<div class="editor-field">
 			@Html.EditorFor(model => model.Contact)
 			@Html.ValidationMessageFor(model => model.Contact)
-		</d
+		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.Instructions)
 		</div>
