@@ -38,6 +38,10 @@
 			</div>
 			<div id="job-details-notes">
 				<span class="details-header">Attachments</span>
+				@foreach (var attachment in Model.Attachments)
+				{
+					<span class="field-label">@Html.ActionLink(@attachment.Name, "GetAttachment", new { id = @Model.Id, attachmentId = @attachment.Id }) </span>
+				}
 			</div>
 			<div id="job-details-customer-info">
 				<span id="custname">Customer</span>
@@ -70,14 +74,14 @@
                 <ul class="st_tabs">
                     <li><a href="@Url.Action("Create", "JobItem", new { id = @Model.Id })" id="@Model.Id" class="create-item-button">Add a new Job Item</a></li>
 					@for (int i = 0; i < Model.JobItems.Count(); i++)
-					{
-						var jobItem = Model.JobItems[i];
+	 {
+		 var jobItem = Model.JobItems[i];
 						<li>
 							<a href="#stv_content_1" rel="v_tab_0" class="st_tab getJobItem @(i == 0 ? "st_tab_active" : "")" id="@jobItem.Id">
 							<span class="jiStatus">@jobItem.InitialStatus</span>
 							<span>@jobItem.InstrumentDetails</span></a>
 						</li>
-					}                                                      
+	 }                                                      
                 </ul>
             </div> <!-- /.st_slide_container -->
         </div> <!-- /.st_tabs_container -->
@@ -88,11 +92,11 @@
 		<div id="st_horizontal" class="st_horizontal">
 			<!-- This partial is replaced by ajax -->
 			@if (@Model.JobItems.Any())
-			{
+   {
 				@Html.Partial("~/Views/JobItem/_Details.cshtml", Model.JobItems.First())
-			}
-			else
-			{
+   }
+   else
+   {
 				<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoJobItems</div>
 			}
 		</div>

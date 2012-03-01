@@ -13,6 +13,7 @@ using JobSystem.Mvc.ViewModels.Consignments;
 using JobSystem.Mvc.ViewModels.JobItems;
 using JobSystem.Mvc.ViewModels.Jobs;
 using JobSystem.Mvc.ViewModels.WorkItems;
+using JobSystem.Mvc.ViewModels;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -171,13 +172,17 @@ namespace JobSystem.Mvc.Controllers
 							WorkBy = wi.User.Name.ToString(),
 							DateCreated = wi.DateCreated.ToLongDateString() + ' ' + wi.DateCreated.ToShortTimeString()
 							}).OrderByDescending(wi => wi.DateCreated).ToList()
-					}).ToList()
+					}).ToList(),
+				Attachments = job.Attachments.Select(a => new AttachmentViewModel()
+				{
+					Id = a.Id,
+					Name = a.Filename
+				}).ToList()
 			};
-
 			return View(viewModel);
 		}
 
-		public ActionResult GetAttachment(Guid id, System.Guid attachmentId)
+		public ActionResult GetAttachment(Guid id, Guid attachmentId)
 		{
 			var attachment = _jobService.GetAttachment(id, attachmentId);
 			var result = new FileStreamResult(attachment.Content, attachment.ContentType)
