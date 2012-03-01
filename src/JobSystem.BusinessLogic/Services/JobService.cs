@@ -59,8 +59,6 @@ namespace JobSystem.BusinessLogic.Services
 		public Job AddAttachment(Guid jobId, Guid attachmentId, string fileName)
 		{
 			var job = GetJob(jobId);
-			if (job.IsPending)
-				throw new DomainValidationException(Messages.JobNotApproved, "IsPending");
 			if (attachmentId == Guid.Empty)
 				throw new ArgumentException("An ID must be supplied for the attachment");
 			if (String.IsNullOrEmpty(fileName))
@@ -84,8 +82,11 @@ namespace JobSystem.BusinessLogic.Services
 
 		public AttachmentData GetAttachment(Guid jobId, Guid attachmentId)
 		{
-			throw new NotImplementedException();
-			//return _jobAttachmentDataRepository.GetById(id);
+			var job = GetJob(jobId);
+			var attachment = job.Attachments.Where(x => x.Id.Equals(attachmentId)).SingleOrDefault();
+			if (attachment == null)
+				throw new DomainValidationException(String.Format("No attachment exists for job {0}", job.JobNo));
+			return _jobAttachmentDataRepository.GetById(attachmentId);
 		}
 
 		public Job GetJob(Guid id)

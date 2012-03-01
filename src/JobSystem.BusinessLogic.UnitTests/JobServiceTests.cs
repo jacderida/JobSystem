@@ -307,22 +307,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
 		}
 
-		[Test]
-		public void AddAttachment_JobNotApproved_DomainValidationExceptionThrow()
-		{
-			var attachmentId = Guid.NewGuid();
-			var fileName = "attachment.pdf";
-			var contentType = "image";
-			byte[] content = new byte[] { 1, 2, 3, 4, 5 };
-			_jobForAttachment.IsPending = true;
-
-			var jobRepositoryStub = MockRepository.GenerateMock<IJobRepository>();
-			jobRepositoryStub.Stub(x => x.GetById(_jobForAttachmentId)).Return(_jobForAttachment);
-			_jobService = JobServiceFactory.Create(jobRepositoryStub, MockRepository.GenerateStub<IJobAttachmentDataRepository>());
-			AddAttachment(_jobForAttachmentId, attachmentId, fileName, contentType, content);
-			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.JobNotApproved));
-		}
-
 		private void AddAttachment(Guid jobId, Guid attachmentId, string fileName, string contentType, byte[] content)
 		{
 			try
