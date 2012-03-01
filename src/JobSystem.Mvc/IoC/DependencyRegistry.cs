@@ -48,7 +48,7 @@ namespace JobSystem.Mvc.IoC
 
 		public AttachmentData GetById(Guid id)
 		{
-			var metaFilePath = GetAttachmentPath(id.ToString(), ".metadata");
+			var metaFilePath = GetAttachmentPath(id.ToString(), "metadata");
 			var doc = XDocument.Load(metaFilePath);
 			var contentType = doc.Descendants("value")
 				.Where(x => x.Attribute("name") != null && x.Attribute("name").Value.Equals("content-type"))
@@ -78,7 +78,7 @@ namespace JobSystem.Mvc.IoC
 
 		private void PutAttachment(AttachmentData attachmentData)
 		{
-			var path = GetAttachmentPath(attachmentData.Id.ToString(), ".attachment");
+			var path = GetAttachmentPath(attachmentData.Id.ToString(), "attachment");
 			using (var outputStream = File.OpenWrite(path))
 			{
 				using (var inputStream = attachmentData.Content)
@@ -94,7 +94,7 @@ namespace JobSystem.Mvc.IoC
 
 		private string GetAttachmentPath(string filePath, string extension)
 		{
-			return Path.Combine(_attachmentLocation, Path.Combine(filePath, extension));
+			return Path.Combine(_attachmentLocation, String.Format("{0}.{1}", filePath, extension));
 		}
 
 		private void PutMetadata(AttachmentData attachmentData)
@@ -104,7 +104,7 @@ namespace JobSystem.Mvc.IoC
 			doc.AppendChild(root);
 			root.AppendChild(CreateValueNode(doc, "content-type", attachmentData.ContentType));
 			root.AppendChild(CreateValueNode(doc, "filename", attachmentData.Filename));
-			var path = GetAttachmentPath(attachmentData.Id.ToString(), ".metadata");
+			var path = GetAttachmentPath(attachmentData.Id.ToString(), "metadata");
 			doc.Save(path);
 		}
 
