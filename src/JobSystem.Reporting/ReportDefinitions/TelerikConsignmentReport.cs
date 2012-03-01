@@ -1,4 +1,4 @@
-namespace JobSystem.Mvc.Reports
+namespace JobSystem.Reporting.ReportDefinitions
 {
 	using System;
 	using System.ComponentModel;
@@ -8,11 +8,11 @@ namespace JobSystem.Mvc.Reports
 	using Telerik.Reporting.Drawing;
 
 	/// <summary>
-	/// Summary description for ConsignmentNote.
+	/// Summary description for TelerikConsignmentReport.
 	/// </summary>
-	public partial class ConsignmentNote : Telerik.Reporting.Report
+	public partial class TelerikConsignmentReport : Telerik.Reporting.Report
 	{
-		public ConsignmentNote()
+		public TelerikConsignmentReport()
 		{
 			//
 			// Required for telerik Reporting designer support
