@@ -175,6 +175,7 @@
     <Compile Include="ViewModels\Account\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\Account\LogOnViewModel.cs" />
     <Compile Include="ViewModels\Admin\CompanyDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Attachments\AttachmentViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentCreateViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentIndexViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentItemIndexViewModel.cs" />

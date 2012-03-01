@@ -30,13 +30,12 @@ namespace JobSystem.Mvc.ViewModels.Jobs
 		public string Instructions { get; set; }
 		[Display(Name = "Customer")]
 		public IEnumerable<SelectListItem> Customers { get; set; }
-
 		public string CreatedBy { get; set; }
 		public Guid TypeId { get; set; }
 		[Display(Name = "Job Type")]
 		public IEnumerable<SelectListItem> JobTypes { get; set; }
 		// Rather than having a list of customers in a drop down, use a type ahead?
 		public Guid CustomerId { get; set; }
-		public string Attachments { get; set; }
+		public AttachmentViewModel[] Attachments { get; set; }
 	}
 }
