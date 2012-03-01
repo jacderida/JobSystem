@@ -144,9 +144,9 @@ namespace JobSystem.Mvc.Controllers
 			return RedirectToAction("PendingConsignments");
 		}
 
-		public ActionResult GenerateConsignmentNote(Guid Id)
+		public ActionResult GenerateConsignmentNote(Guid id)
 		{
-			return View("RepConsignmentNote");
+			return View("RepConsignmentNote", id);
 		}
     }
 }

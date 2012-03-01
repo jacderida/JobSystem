@@ -166,12 +166,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="IoC\DependencyRegistry.cs" />
-    <Compile Include="Reports\ConsignmentNote.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\ConsignmentNote.Designer.cs">
-      <DependentUpon>ConsignmentNote.cs</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\Account\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\Account\LogOnViewModel.cs" />
     <Compile Include="ViewModels\Admin\CompanyDetailsViewModel.cs" />
@@ -318,6 +312,10 @@
       <Project>{BDCF5B98-B407-4E13-974B-FBB19010C4F6}</Project>
       <Name>JobSystem.Queueing.Msmq</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JobSystem.Reporting\JobSystem.Reporting.csproj">
+      <Project>{1BF82DDE-CF7D-48EC-B00E-29991FC2A14D}</Project>
+      <Name>JobSystem.Reporting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JobSystem.Resources\JobSystem.Resources.csproj">
       <Project>{1F5102EF-90BA-4300-9286-5BDE8A35C242}</Project>
       <Name>JobSystem.Resources</Name>
@@ -415,11 +413,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Reports\ConsignmentNote.resx">
-      <DependentUpon>ConsignmentNote.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
