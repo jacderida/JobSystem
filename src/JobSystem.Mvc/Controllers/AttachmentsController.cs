@@ -29,7 +29,7 @@ namespace JobSystem.Mvc.Controllers
 				Content = Request.InputStream
 			};
 			_attachmentService.Create(attachmentData);
-			return Json(new { success = true, Id = attachmentData.Id, Filename = attachmentData.Filename });
+			return Json(new { success = true, Id = attachmentData.Id, Filename = attachmentData.Filename }, "text/html");
 		}
 	}
 }
