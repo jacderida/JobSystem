@@ -7,6 +7,8 @@ using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
 using JobSystem.Resources.CompanyDetails;
+using System.Drawing;
+using System.IO;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -103,6 +105,12 @@ namespace JobSystem.BusinessLogic.Services
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.ViewBankDetailsInsufficientSecurityClearance);
 			return _bankDetailsRepository.GetBankDetails();
+		}
+
+		public Image GetCompanyLogo()
+		{
+			var logoBytes = _companyDetailsRepository.GetLogoBytes();
+			return Image.FromStream(new MemoryStream(logoBytes));
 		}
 
 		#endregion

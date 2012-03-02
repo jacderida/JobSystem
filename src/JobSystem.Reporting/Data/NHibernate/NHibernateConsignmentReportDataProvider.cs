@@ -18,13 +18,14 @@ namespace JobSystem.Reporting.Data.NHibernate
 			foreach (var item in consignment.Items)
 			{
 				var reportItem = new ConsignmentReportModel();
+				PopulateCompanyDetails(reportItem);
 				reportItem.ConsignmentNo = consignment.ConsignmentNo;
 				reportItem.SupplierName = supplier.Name;
 				reportItem.SupplierAddress1 = !String.IsNullOrEmpty(supplier.Address1) ? supplier.Address1 : String.Empty;
-				reportItem.SupplierAddress1 = !String.IsNullOrEmpty(supplier.Address2) ? supplier.Address2 : String.Empty;
-				reportItem.SupplierAddress1 = !String.IsNullOrEmpty(supplier.Address3) ? supplier.Address3 : String.Empty;
-				reportItem.SupplierAddress1 = !String.IsNullOrEmpty(supplier.Address4) ? supplier.Address4 : String.Empty;
-				reportItem.SupplierAddress1 = !String.IsNullOrEmpty(supplier.Address5) ? supplier.Address5 : String.Empty;
+				reportItem.SupplierAddress2 = !String.IsNullOrEmpty(supplier.Address2) ? supplier.Address2 : String.Empty;
+				reportItem.SupplierAddress3 = !String.IsNullOrEmpty(supplier.Address3) ? supplier.Address3 : String.Empty;
+				reportItem.SupplierAddress4 = !String.IsNullOrEmpty(supplier.Address4) ? supplier.Address4 : String.Empty;
+				reportItem.SupplierAddress5 = !String.IsNullOrEmpty(supplier.Address5) ? supplier.Address5 : String.Empty;
 				reportItem.SupplierTel = !String.IsNullOrEmpty(supplier.Telephone) ? supplier.Telephone : String.Empty;
 				reportItem.SupplierFax = !String.IsNullOrEmpty(supplier.Fax) ? supplier.Fax : String.Empty;
 				reportItem.DateCreated = consignment.DateCreated.ToShortDateString();

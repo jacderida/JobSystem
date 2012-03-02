@@ -1,6 +1,6 @@
 ﻿namespace JobSystem.Reporting.Models
 {
-	public class ConsignmentReportModel
+	public class ConsignmentReportModel : ReportModelBase
 	{
 		public string ConsignmentNo { get; set; }
 		public string SupplierName { get; set; }

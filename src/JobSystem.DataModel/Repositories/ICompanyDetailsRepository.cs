@@ -7,5 +7,6 @@ namespace JobSystem.DataModel.Repositories
 	{
 		void ChangeMainLogo(Guid companyId, byte[] mainLogo);
 		CompanyDetails GetCompany();
+		byte[] GetLogoBytes();
 	}
 }

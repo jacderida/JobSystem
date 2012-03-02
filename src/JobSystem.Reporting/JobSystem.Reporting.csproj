@@ -79,6 +79,7 @@
     <Compile Include="Data\NHibernate\NHibernateConsignmentReportDataProvider.cs" />
     <Compile Include="Data\NHibernate\NHibernateReportDataProviderBase.cs" />
     <Compile Include="Models\ConsignmentReportModel.cs" />
+    <Compile Include="Models\ReportModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportDefinitions\TelerikConsignmentReport.cs">
       <SubType>Component</SubType>

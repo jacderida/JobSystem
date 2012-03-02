@@ -1,5 +1,9 @@
 ﻿using System;
 using JobSystem.DataModel.Entities;
+using System.Drawing;
+using System.Reflection;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace JobSystem.DbWireup.ConsoleRunner
 {
@@ -118,6 +122,10 @@ namespace JobSystem.DbWireup.ConsoleRunner
 		static CompanyDetails GetCompanyDetails(
 			JobSystemDatabaseCreationService databaseService, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermId, Guid defaultTaxCodeId)
 		{
+			var logoImage = Image.FromStream(
+				Assembly.GetExecutingAssembly().GetManifestResourceStream("JobSystem.DbWireup.ConsoleRunner.intertek_logon.gif"));
+			var ms = new MemoryStream();
+			logoImage.Save(ms, logoImage.RawFormat);
 			return new CompanyDetails
 			{
 				Id = Guid.NewGuid(),
@@ -137,7 +145,8 @@ namespace JobSystem.DbWireup.ConsoleRunner
 				DefaultBankDetails = databaseService.GetBankDetails(defaultBankDetailsId),
 				DefaultCurrency = databaseService.GetCurrency(defaultCurrencyId),
 				DefaultPaymentTerm = databaseService.GetPaymentTerm(defaultPaymentTermId),
-				DefaultTaxCode = databaseService.GetTaxCode(defaultTaxCodeId)
+				DefaultTaxCode = databaseService.GetTaxCode(defaultTaxCodeId),
+				MainLogo = ms.ToArray()
 			};
 		}
 	}

@@ -23,5 +23,10 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			NHibernateUtil.Initialize(companyDetails.DefaultTaxCode);
 			return companyDetails;
 		}
+
+		public byte[] GetLogoBytes()
+		{
+			return CurrentSession.Query<CompanyDetails>().Single().MainLogo;
+		}
 	}
 }
