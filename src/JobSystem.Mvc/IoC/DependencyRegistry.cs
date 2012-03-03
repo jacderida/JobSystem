@@ -58,7 +58,7 @@ namespace JobSystem.Mvc.IoC
 				.Where(x => x.Attribute("name") != null && x.Attribute("name").Value.Equals("filename"))
 				.Select(x => x.Attribute("value").Value)
 				.Single();
-			var attachmentPath = GetAttachmentPath(id.ToString(), ".attachment");
+			var attachmentPath = GetAttachmentPath(id.ToString(), "attachment");
 			return new AttachmentData
 			{
 				Id = id,

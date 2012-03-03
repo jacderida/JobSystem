@@ -58,6 +58,7 @@
     <Compile Include="InstrumentServiceFactory.cs" />
     <Compile Include="JobItemServiceFactory.cs" />
     <Compile Include="JobServiceFactory.cs" />
+    <Compile Include="QuoteServiceTestHelper.cs" />
     <Compile Include="SupplierServiceFactory.cs" />
     <Compile Include="UserManagementServiceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -10,6 +10,7 @@ namespace JobSystem.DataModel.Entities
 		JobApprover = 2,
 		OrderApprover = 4,
 		Admin = 8,
-		Public = 16
+		Manager = 16,
+		Public = 32
 	}
 }
