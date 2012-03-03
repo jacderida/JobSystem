@@ -12,7 +12,9 @@
 </head>
 <body>
 	<form clientidmode="Static" id="frep" runat="server">
-		<telerik:ReportViewer ID="ReportViewer1" runat="server" Report="JobSystem.Reporting.ReportDefinitions.TelerikConsignmentReport, JobSystem.Reporting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+		<telerik:ReportViewer ID="ReportViewer1" runat="server" 
+			Report="JobSystem.Reporting.ReportDefinitions.TelerikConsignmentReport, JobSystem.Reporting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" 
+			Height="842px" Width="650px">
 		</telerik:ReportViewer>
 	</form>
 	<script runat="server">
@@ -31,10 +33,10 @@
 			var companyDetailsService = DependencyResolver.Current.GetService<CompanyDetailsService>();
 			var report = new JobSystem.Reporting.ReportDefinitions.TelerikConsignmentReport();
 			var logo = companyDetailsService.GetCompanyLogo();
-			report.MainLogo.Width = new Telerik.Reporting.Drawing.Unit(logo.Width, Telerik.Reporting.Drawing.UnitType.Pixel);
-			report.MainLogo.Height = new Telerik.Reporting.Drawing.Unit(logo.Height, Telerik.Reporting.Drawing.UnitType.Pixel);
+			//report.MainLogo.Width = new Telerik.Reporting.Drawing.Unit(logo.Width, Telerik.Reporting.Drawing.UnitType.Pixel);
+			//report.MainLogo.Height = new Telerik.Reporting.Drawing.Unit(logo.Height, Telerik.Reporting.Drawing.UnitType.Pixel);
 			var pageWidth = report.Width.Value;
-			report.MainLogo.Location = new Telerik.Reporting.Drawing.PointU(new System.Drawing.Point((int)(pageWidth - logo.Width), 0));
+			//report.MainLogo.Location = new Telerik.Reporting.Drawing.PointU(new System.Drawing.Point((int)(pageWidth - logo.Width), 0));
 			report.MainLogo.Value = logo;
 			report.DataSource = dataSource;
 			ReportViewer1.Report = report;
