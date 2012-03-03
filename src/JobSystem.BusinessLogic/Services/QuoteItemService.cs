@@ -1,6 +1,10 @@
-﻿using JobSystem.DataModel;
+﻿using System;
+using JobSystem.BusinessLogic.Validation.Core;
+using JobSystem.DataModel;
+using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
+using JobSystem.Resources.QuoteItems;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -26,6 +30,97 @@ namespace JobSystem.BusinessLogic.Services
 			_customerRepository = customerRepository;
 			_jobItemRepository = jobItemRepository;
 			_listItemRepository = listItemRepository;
+		}
+
+		public QuoteItem Create(Guid id, Guid quoteId, Guid jobItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool ber)
+		{
+			if (!CurrentUser.HasRole(UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			if (id == Guid.Empty)
+				throw new ArgumentException("An ID must be supplied for the quote item");
+			var quote = GetQuote(quoteId);
+			var quoteItem = new QuoteItem();
+			quoteItem.Id = id;
+			quoteItem.ItemNo = quote.QuoteItems.Count + 1;
+			quoteItem.Quote = quote;
+			quoteItem.Labour = GetLabour(labour);
+			quoteItem.Calibration = GetCalibration(calibration);
+			quoteItem.Parts = GetParts(parts);
+			quoteItem.Carriage = GetCarriage(carriage);
+			quoteItem.Investigation = GetInvestigation(investigation);
+			quoteItem.Report = report;
+			quoteItem.Days = GetDays(days);
+			quoteItem.BeyondEconomicRepair = ber;
+			quoteItem.Status = _listItemRepository.GetByType(ListItemType.StatusQuotedPrepared);
+			ValidateAnnotatedObjectThrowOnFailure(quoteItem);
+			var jobItem = GetJobItem(jobItemId);
+			jobItem.Status = _listItemRepository.GetByType(ListItemType.StatusQuotedPrepared);
+			jobItem.Location = _listItemRepository.GetByType(ListItemType.WorkLocationQuoted);
+			_jobItemRepository.EmitItemHistory(
+				CurrentUser, jobItemId, 0, 0, String.Format("Item quoted on {0}", quote.QuoteNumber), ListItemType.StatusQuotedPrepared, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationQuoted);
+			_quoteItemRepository.Create(quoteItem);
+			_jobItemRepository.Update(jobItem);
+			return quoteItem;
+		}
+
+		private Quote GetQuote(Guid quoteId)
+		{
+			var quote = _quoteRepository.GetById(quoteId);
+			if (quote == null)
+				throw new ArgumentException("A valid ID must be supplied for the quote");
+			return quote;
+		}
+
+		private JobItem GetJobItem(Guid jobItemId)
+		{
+			var jobItem = _jobItemRepository.GetById(jobItemId);
+			if (jobItem == null)
+				throw new ArgumentException("A valid ID must be supplied for the job item");
+			if (jobItem.Job.IsPending)
+				throw new DomainValidationException(Messages.PendingJob, "JobItemId");
+			return jobItem;
+		}
+
+		private decimal GetLabour(decimal labour)
+		{
+			if (labour < 0)
+				throw new DomainValidationException(Messages.InvalidLabour, "Labour");
+			return labour;
+		}
+
+		private decimal GetCalibration(decimal calibration)
+		{
+			if (calibration < 0)
+				throw new DomainValidationException(Messages.InvalidCalibration, "Calibration");
+			return calibration;
+		}
+
+		private decimal GetParts(decimal parts)
+		{
+			if (parts < 0)
+				throw new DomainValidationException(Messages.InvalidParts, "Parts");
+			return parts;
+		}
+
+		private decimal GetCarriage(decimal carriage)
+		{
+			if (carriage < 0)
+				throw new DomainValidationException(Messages.InvalidCarriage, "Carriage");
+			return carriage;
+		}
+
+		private decimal GetInvestigation(decimal investigation)
+		{
+			if (investigation < 0)
+				throw new DomainValidationException(Messages.InvalidInvestigation, "Investigation");
+			return investigation;
+		}
+
+		private int GetDays(int days)
+		{
+			if (days < 0)
+				throw new DomainValidationException(Messages.InvalidDays, "Days");
+			return days;
 		}
 	}
 }

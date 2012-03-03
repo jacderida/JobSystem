@@ -196,7 +196,7 @@ namespace JobSystem.DbWireup
 				EmailAddress = emailAddress,
 				PasswordSalt = passwordSalt,
 				PasswordHash = cryptographyService.ComputeHash(password, passwordSalt),
-				Roles = UserRole.Admin | UserRole.JobApprover | UserRole.OrderApprover | UserRole.Member,
+				Roles = UserRole.Admin | UserRole.JobApprover | UserRole.OrderApprover | UserRole.Member | UserRole.Manager,
 				JobTitle = jobTitle,
 			};
 			NHibernateSession.Current.Save(adminUser);

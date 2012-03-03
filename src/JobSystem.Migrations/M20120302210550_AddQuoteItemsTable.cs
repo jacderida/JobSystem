@@ -11,6 +11,7 @@ namespace JobSystem.Migrations
 		{
 			Create.Table("QuoteItems")
 				.WithIdColumn()
+				.WithColumn("ItemNo").AsInt32().NotNullable()
 				.WithColumn("QuoteId").AsGuid().NotNullable()
 				.WithColumn("JobItemId").AsGuid().NotNullable()
 				.WithColumn("DateAccepted").AsGuid().Nullable()

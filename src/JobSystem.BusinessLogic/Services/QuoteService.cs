@@ -1,10 +1,10 @@
 ﻿using System;
+using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
-using JobSystem.Framework.Messaging;
 using JobSystem.Framework;
-using JobSystem.BusinessLogic.Validation.Core;
+using JobSystem.Framework.Messaging;
 using JobSystem.Resources.Quotes;
 
 namespace JobSystem.BusinessLogic.Services
