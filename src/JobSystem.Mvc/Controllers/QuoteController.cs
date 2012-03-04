@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Linq;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataAccess.NHibernate.Web;
@@ -88,31 +89,33 @@ namespace JobSystem.Mvc.Controllers
 							viewmodel.ItemBER
 						);
 					}
-					return RedirectToAction("Details", "Job", new { Id = viewmodel.JobItemId, TabNo = "3" });
+					return RedirectToAction("Details", "Job", new { id = viewmodel.JobId, TabNo = "3" });
 				}
 				catch (DomainValidationException dex)
 				{
 					ModelState.UpdateFromDomain(dex.Result);
 				}
 			}
-			return PartialView("Create", viewmodel);
+			return View("Create", viewmodel);
 		}
 
 		[HttpGet]
 		public ActionResult PendingQuotes()
 		{
-			IList<QuoteItemIndexViewModel> viewmodels = new List<QuoteItemIndexViewModel>();
-
-			for (int i = 0; i < 10; i++)
-			{
-				viewmodels.Add(new QuoteItemIndexViewModel()
+			var items = _quoteItemService.GetPendingQuoteItems().Select(
+				q => new QuoteItemIndexViewModel
 				{
-					Id = i.ToString(),
-					AdviceNo = "ADV" + i.ToString(),
-					OrderNo = "ORDN" + i.ToString()
-				});
-			}
-			return View(viewmodels);
+					Id = q.Id,
+					Repair = q.Labour,
+					Calibration = q.Calibration,
+					Parts = q.Parts,
+					Carriage = q.Carriage,
+					Investigation = q.Investigation,
+					Days = q.Days,
+					ItemBER = q.BeyondEconomicRepair
+				}).ToList();
+
+			return View(items);
 		}
 
 		[HttpGet]
@@ -124,9 +127,7 @@ namespace JobSystem.Mvc.Controllers
 			{
 				viewmodels.Add(new QuoteItemIndexViewModel()
 				{
-					Id = i.ToString(),
-					AdviceNo = "ADV" + i.ToString(),
-					OrderNo = "ORDN" + i.ToString()
+					Id = Guid.NewGuid()
 				});
 			}
 			return View(viewmodels);

@@ -54,9 +54,12 @@ namespace JobSystem.Mvc.Controllers
 					var id = Guid.NewGuid();
 					_jobService.CreateJob(id, viewModel.Instructions, viewModel.OrderNumber, viewModel.AdviceNumber, viewModel.TypeId, viewModel.CustomerId, viewModel.JobNote, viewModel.Contact);
 					
-					for (var i = 0; i < AttachmentId.Length; i++)
+					if (AttachmentId != null)
 					{
-						_jobService.AddAttachment(id, AttachmentId[i], AttachmentName[i]);
+						for (var i = 0; i < AttachmentId.Length; i++)
+						{
+							_jobService.AddAttachment(id, AttachmentId[i], AttachmentName[i]);
+						}
 					}
 					
 					return RedirectToAction("PendingJobs");
@@ -170,6 +173,7 @@ namespace JobSystem.Mvc.Controllers
 				JobItems = jobItems.Select(ji => new JobItemDetailsViewModel
 					{
 						Id = ji.Id,
+						JobId = id,
 						AssetNo = ji.AssetNo,
 						SerialNo = ji.SerialNo,
 						InitialStatus = ji.Status.Name.ToString(),

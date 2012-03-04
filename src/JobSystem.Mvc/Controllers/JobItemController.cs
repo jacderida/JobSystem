@@ -86,6 +86,7 @@ namespace JobSystem.Mvc.Controllers
 			var viewmodel = new JobItemDetailsViewModel()
 			{
 				Id = job.Id,
+				JobId = job.Job.Id,
 				Accessories = job.Accessories,
 				AssetNo = job.AssetNo,
 				CalPeriod = job.CalPeriod,

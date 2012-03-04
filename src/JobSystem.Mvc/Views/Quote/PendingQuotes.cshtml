@@ -11,26 +11,46 @@
 	<span class="toggle toggle-right"><a href="@Url.Action("ApprovedQuotes")">Approved</a></span>
 </div>
 
-@Html.ActionLink("Raise Quote", "Create", new { }, new { @class = "primary-action" })
+<input class="primary-action" type="submit" value="Quote"/>
 @if (Model.Any()) {
 	<table>
 		<tr>
 			<th></th>
-			<th>Order No</th>
-			<th>Advice No</th>
+			<th>Repair</th>
+			<th>Calibration</th>
+			<th>Parts</th>
+			<th>Carriage</th>
+			<th>Investigation</th>
+			<th>Days</th>
+			<th>Item BER</th>
 			<th></th>
 		</tr>
-	@foreach (var item in Model.OrderBy(i => i.OrderNo))
+	@foreach (var item in Model.OrderBy(i => i.Repair))
 	 {
 		<tr>
 			<td>
 				@Html.CheckBox("toBeConverted", false)
 			</td>
 			<td>
-				@item.OrderNo
+				@item.Repair
 			</td>
 			<td>
-				@item.AdviceNo
+				@item.Calibration
+			</td>
+			<td>
+				@item.Parts
+			</td>
+			<td>
+				@item.Carriage
+			</td>
+			<td>
+				@item.Investigation
+			</td>
+			<td>
+				@item.Days
+			</td>
+			<td>
+				@item.ItemBER
 			</td>
 			<td>
 				<a href="#" class="editQuoteButton" id="@item.Id">Edit</a>
