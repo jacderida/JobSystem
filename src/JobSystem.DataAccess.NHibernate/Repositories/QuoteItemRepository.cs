@@ -3,6 +3,7 @@ using System.Linq;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using NHibernate.Linq;
+using System.Collections.Generic;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 {
@@ -26,6 +27,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		public void UpdatePendingItem(PendingQuoteItem pendingItem)
 		{
 			CurrentSession.Update(pendingItem);
+		}
+
+		public IEnumerable<PendingQuoteItem> GetPendingQuoteItems()
+		{
+			return CurrentSession.Query<PendingQuoteItem>();
 		}
 	}
 }

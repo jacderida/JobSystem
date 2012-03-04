@@ -1093,11 +1093,65 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidReport));
 		}
 
+		[Test]
+		public void EditPending_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var labour = 150m;
+			var calibration = 50m;
+			var parts = 20m;
+			var carriage = 20m;
+			var investigation = 30m;
+			var report = "report";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member),
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurity));
+		}
+
 		private void EditPendingItem(Guid pendingItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool ber)
 		{
 			try
 			{
 				_pendingItemForEdit = _quoteItemService.EditPending(pendingItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region GetPendingItems
+
+		[Test]
+		public void GetPendingItems_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member),
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				MockRepository.GenerateStub<IQuoteItemRepository>(),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			GetPendingItems();
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurity));
+		}
+
+		private void GetPendingItems()
+		{
+			try
+			{
+				_quoteItemService.GetPendingQuoteItems();
 			}
 			catch (DomainValidationException dex)
 			{

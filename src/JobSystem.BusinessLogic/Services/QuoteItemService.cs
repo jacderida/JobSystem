@@ -5,6 +5,7 @@ using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
 using JobSystem.Resources.QuoteItems;
+using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -92,6 +93,8 @@ namespace JobSystem.BusinessLogic.Services
 		public PendingQuoteItem EditPending(
 			Guid pendingItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair)
 		{
+			if (!CurrentUser.HasRole(UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
 			var pendingItem = _quoteItemRepository.GetPendingQuoteItem(pendingItemId);
 			if (pendingItem == null)
 				throw new ArgumentException("A valid ID must be supplied for the pending item");
@@ -106,6 +109,13 @@ namespace JobSystem.BusinessLogic.Services
 			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
 			_quoteItemRepository.UpdatePendingItem(pendingItem);
 			return pendingItem;
+		}
+
+		public IEnumerable<PendingQuoteItem> GetPendingQuoteItems()
+		{
+			if (!CurrentUser.HasRole(UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			return _quoteItemRepository.GetPendingQuoteItems();
 		}
 
 		private Customer GetCustomer(Guid customerId)
