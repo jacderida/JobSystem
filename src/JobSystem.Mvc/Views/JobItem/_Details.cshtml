@@ -27,12 +27,12 @@
 
 <div id="item-details-container">
 	<div class="item-details-fields">
-		<h3 id="job-item-number">@Model.InitialStatus</h3>
+		<h3 id="job-item-number">@Model.InstrumentDetails</h3>
 		<div class="details-fields">
 			<span class="field-label">Location</span>
 			<span class="field">@Model.Location</span>
-			<span class="field-label">Instrument</span>
-			<span class="field">@Model.InstrumentDetails</span>
+			<span class="field-label">Status</span>
+			<span class="field">@Model.InitialStatus</span>
 			@if (!@Model.SerialNo.IsEmpty()) {
 				<span class="field-label">Serial Number</span>
 				<span class="field">@Model.SerialNo</span>
@@ -98,6 +98,7 @@
 		</div>
 		<div id="st_content_3" class="st_tab_view">
 			<div class="text">
+				@Html.ActionLink("Raise Quote", "Create", "Quote", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action createQuoteButton" })
 				<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
 			</div>
 		</div>

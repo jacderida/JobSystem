@@ -125,6 +125,23 @@ $(document).ready(function () {
 			dataType: 'json'
 		});
 
+		$('.editConsignmentButton').click(function () {
+			var elemId = $(this).attr('id');
+			var editUrl = $('#editUrl').val() + '/' + elemId;
+			//Edit user modal form
+			$("#edit-consignment-container").dialog({
+				modal: true,
+				width: 335,
+				title: 'Edit Consignment Item',
+				position: ['center', 100],
+				open: function (event, ui) {
+					//Load the Edit action which will return 
+					// the partial view _Edit
+					$(this).load(editUrl);
+				}
+			});
+		});
+
 		// Vertical Sliding Tabs demo
 		$('div#st_vertical').slideTabs({
 			// Options

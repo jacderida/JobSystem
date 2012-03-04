@@ -171,6 +171,7 @@
     <Compile Include="ViewModels\Admin\CompanyDetailsViewModel.cs" />
     <Compile Include="ViewModels\Attachments\AttachmentViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentCreateViewModel.cs" />
+    <Compile Include="ViewModels\Consignments\ConsignmentEditViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentIndexViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentItemIndexViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentPendingListViewModel.cs" />
@@ -180,9 +181,11 @@
     <Compile Include="ViewModels\Instruments\InstrumentListViewModel.cs" />
     <Compile Include="ViewModels\JobItems\JobItemDetailsViewModel.cs" />
     <Compile Include="ViewModels\JobItems\JobItemViewModel.cs" />
+    <Compile Include="ViewModels\Jobs\JobEditViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderIndexViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteCreateViewModel.cs" />
+    <Compile Include="ViewModels\Quotes\QuoteIndexViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteItemIndexViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierIndexViewModel.cs" />
@@ -407,6 +410,7 @@
     <Content Include="Views\Quote\PendingQuotes.cshtml" />
     <Content Include="Views\Quote\ApprovedQuotes.cshtml" />
     <Content Include="Views\Quote\Create.cshtml" />
+    <Content Include="Views\Consignment\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\PendingOrders.cshtml" />

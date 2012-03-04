@@ -69,6 +69,25 @@ namespace JobSystem.Mvc.Controllers
 			return View(viewModel);
 		}
 
+		//Not yet in use
+		public ActionResult Edit(Guid id)
+		{
+			var job = _jobService.GetJob(id);
+
+			var viewmodel = new JobEditViewModel(){
+				JobTypes = _listItemService.GetAllByCategory(ListItemCategoryType.JobType).ToSelectList(),
+				//Customers = job.Customer,
+				OrderNumber = job.OrderNo,
+				AdviceNumber = job.AdviceNo,
+				Contact = job.Contact,
+				Instructions = job.Instructions,
+				JobNote = job.Notes
+				//Attachments = job.Attachments
+			};
+
+			return PartialView("_Edit", viewmodel);
+		}
+
 		public ActionResult Index()
 		{
 			//Placeholder admin role check to see whether user should be shown pending or approved jobs by default
@@ -124,7 +143,7 @@ namespace JobSystem.Mvc.Controllers
 			return View(jobList);
 		}
 
-		public ActionResult Details(Guid id)
+		public ActionResult Details(Guid id, string TabNo)
 		{
 			var job = _jobService.GetJob(id);
 			var jobItems = _jobItemService.GetJobItems(id);

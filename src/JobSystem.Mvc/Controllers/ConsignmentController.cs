@@ -77,6 +77,34 @@ namespace JobSystem.Mvc.Controllers
 			return PartialView("_Create", viewmodel);
 		}
 
+		[HttpGet]
+		public ActionResult EditPending(Guid id)
+		{
+			var consignment = _consignmentItemService.GetPendingItem(id);
+			
+			var viewmodel = new ConsignmentEditViewModel()
+			{
+				Id = consignment.Id,
+				JobItemId = consignment.JobItem.Id,
+				SupplierId = consignment.Supplier.Id,
+				Instructions = consignment.Instructions
+			};
+			return PartialView("_Edit", viewmodel);
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult EditPending(ConsignmentEditViewModel viewmodel)
+		{
+			_consignmentItemService.EditPending(
+				viewmodel.Id,
+				viewmodel.JobItemId,
+				viewmodel.SupplierId,
+				viewmodel.Instructions);
+
+				return RedirectToAction("PendingConsignments", "Consignment");
+		}
+
 		public ActionResult PendingConsignments()
 		{
 			var items = _consignmentItemService.GetPendingItems().Select(

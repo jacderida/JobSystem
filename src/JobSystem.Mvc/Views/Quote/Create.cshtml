@@ -96,6 +96,8 @@
 			@Html.CheckBoxFor(model => model.ItemBER)
 			@Html.ValidationMessageFor(model => model.ItemBER)
 		</div>
+		@Html.HiddenFor(model => model.JobItemId)
+		@Html.HiddenFor(model => model.JobId)
 	</fieldset>
 	<input type="submit" class="primary-action" value="Create"/>
 }

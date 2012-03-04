@@ -1,20 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using JobSystem.BusinessLogic.Services;
+using JobSystem.BusinessLogic.Validation.Core;
+using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.Mvc.ViewModels.Quotes;
+using JobSystem.Mvc.Core.UIValidation;
+using JobSystem.Mvc.Core.Utilities;
 
 namespace JobSystem.Mvc.Controllers
 {
 	public class QuoteController : Controller
 	{
-		//private readonly QuoteService _quoteService;
+		private readonly QuoteService _quoteService;
+		private readonly QuoteItemService _quoteItemService;
+		private readonly JobService _jobService;
 
-		// public QuoteController(QuoteService quoteService)
-		// {
-		//     _quoteService = quoteService;
-		// }
+		public QuoteController(QuoteService quoteService, QuoteItemService quoteItemService, JobService jobService)
+		{
+			_quoteService = quoteService;
+			_quoteItemService = quoteItemService;
+			_jobService = jobService;
+		}
 
 		public ActionResult Index()
 		{
@@ -22,9 +29,73 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Create()
+		public ActionResult Create(Guid jobItemId, Guid jobId)
 		{
-			return View();
+			var viewmodel = new QuoteCreateViewModel(){
+				JobItemId = jobItemId,
+				JobId = jobId
+			};
+			return View("Create", viewmodel);
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult Create(QuoteCreateViewModel viewmodel)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					var job = _jobService.GetJob(viewmodel.JobId);
+
+					if (viewmodel.IsIndividual)
+					{
+						var quote = _quoteService.Create(
+							Guid.NewGuid(),
+							job.Customer.Id,
+							viewmodel.OrderNo,
+							viewmodel.AdviceNo,
+							viewmodel.CurrencyId
+						);
+
+						_quoteItemService.Create(
+							Guid.NewGuid(),
+							quote.Id,
+							viewmodel.JobItemId,
+							viewmodel.Repair,
+							viewmodel.Calibration,
+							viewmodel.Parts,
+							viewmodel.Carriage,
+							viewmodel.Investigation,
+							viewmodel.Report,
+							viewmodel.Days,
+							viewmodel.ItemBER
+						);
+					}
+					else
+					{
+						_quoteItemService.CreatePending(
+							Guid.NewGuid(),
+							job.Customer.Id,
+							viewmodel.JobItemId,
+							viewmodel.Repair,
+							viewmodel.Calibration,
+							viewmodel.Parts,
+							viewmodel.Carriage,
+							viewmodel.Investigation,
+							viewmodel.Report,
+							viewmodel.Days,
+							viewmodel.ItemBER
+						);
+					}
+					return RedirectToAction("Details", "Job", new { Id = viewmodel.JobItemId, TabNo = "3" });
+				}
+				catch (DomainValidationException dex)
+				{
+					ModelState.UpdateFromDomain(dex.Result);
+				}
+			}
+			return PartialView("Create", viewmodel);
 		}
 
 		[HttpGet]

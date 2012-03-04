@@ -10,6 +10,7 @@ using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.JobItems;
 using JobSystem.Mvc.ViewModels.WorkItems;
 using JobSystem.Mvc.ViewModels.Consignments;
+using JobSystem.Mvc.ViewModels.Quotes;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -19,13 +20,15 @@ namespace JobSystem.Mvc.Controllers
 		private readonly ListItemService _listItemService;
 		private readonly InstrumentService _instrumentService;
 		private readonly ConsignmentService _consignmentService;
+		private readonly QuoteItemService _quoteItemServive;
 
-		public JobItemController(JobItemService jobItemService, ListItemService listItemService, InstrumentService instrumentService, ConsignmentService consignmentService)
+		public JobItemController(JobItemService jobItemService, ListItemService listItemService, InstrumentService instrumentService, ConsignmentService consignmentService, QuoteItemService quoteItemService)
 		{
 			_jobItemService = jobItemService;
 			_listItemService = listItemService;
 			_instrumentService = instrumentService;
 			_consignmentService = consignmentService;
+			_quoteItemServive = quoteItemService;
 		}
 
 		[HttpGet]
@@ -150,9 +153,8 @@ namespace JobSystem.Mvc.Controllers
 					Instructions = pendingItem.Instructions,
 					SupplierName = pendingItem.Supplier.Name
 				};
-			} 
+			}
 			return PartialView("_Details", viewmodel);
 		}
-
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using JobSystem.Mvc.ViewModels.WorkItems;
 using JobSystem.Mvc.ViewModels.Consignments;
+using JobSystem.Mvc.ViewModels.Quotes;
 
 namespace JobSystem.Mvc.ViewModels.JobItems
 {
@@ -23,6 +24,8 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 		public IList<WorkItemDetailsViewModel> WorkItems { get; set; }
 		public ConsignmentItemIndexViewModel ConsignmentItem { get; set; }
 		public ConsignmentIndexViewModel Consignment { get; set; }
+		public QuoteItemIndexViewModel QuoteItem { get; set; }
+		public QuoteIndexViewModel Quote { get; set; }
 		public string Instrument { get; set; }
 		public string InitialStatus { get; set; }
 		public string Location { get; set; }
