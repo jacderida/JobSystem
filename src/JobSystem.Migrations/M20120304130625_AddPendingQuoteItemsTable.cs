@@ -14,6 +14,7 @@ namespace JobSystem.Migrations
 				.WithColumn("Labour").AsDecimal().NotNullable()
 				.WithColumn("Calibration").AsDecimal().NotNullable()
 				.WithColumn("Parts").AsDecimal().NotNullable()
+				.WithColumn("Carriage").AsDecimal().NotNullable()
 				.WithColumn("Investigation").AsDecimal().NotNullable()
 				.WithColumn("Report").AsString(2000).Nullable()
 				.WithColumn("Days").AsInt32().Nullable()

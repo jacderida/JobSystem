@@ -19,6 +19,7 @@ namespace JobSystem.Migrations.SqlLite
 				.WithColumn("Labour").AsDecimal().Nullable()
 				.WithColumn("Calibration").AsDecimal().Nullable()
 				.WithColumn("Parts").AsDecimal().Nullable()
+				.WithColumn("Carriage").AsDecimal().NotNullable()
 				.WithColumn("Investigation").AsDecimal().Nullable()
 				.WithColumn("Report").AsString(2000).Nullable()
 				.WithColumn("StatusId").AsGuid().NotNullable()

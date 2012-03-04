@@ -35,7 +35,7 @@ namespace JobSystem.BusinessLogic.Services
 
 		public QuoteItem Create(Guid id, Guid quoteId, Guid jobItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair)
 		{
-			if (!CurrentUser.HasRole(UserRole.Manager))
+			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
 			if (id == Guid.Empty)
 				throw new ArgumentException("An ID must be supplied for the quote item");
@@ -67,7 +67,7 @@ namespace JobSystem.BusinessLogic.Services
 		public PendingQuoteItem CreatePending(
 			Guid id, Guid customerId, Guid jobItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair)
 		{
-			if (!CurrentUser.HasRole(UserRole.Manager))
+			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
 			if (id == Guid.Empty)
 				throw new ArgumentException("An ID must be supplied for the pending item");
@@ -93,7 +93,7 @@ namespace JobSystem.BusinessLogic.Services
 		public PendingQuoteItem EditPending(
 			Guid pendingItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair)
 		{
-			if (!CurrentUser.HasRole(UserRole.Manager))
+			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
 			var pendingItem = _quoteItemRepository.GetPendingQuoteItem(pendingItemId);
 			if (pendingItem == null)
@@ -113,7 +113,7 @@ namespace JobSystem.BusinessLogic.Services
 
 		public IEnumerable<PendingQuoteItem> GetPendingQuoteItems()
 		{
-			if (!CurrentUser.HasRole(UserRole.Manager))
+			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
 			return _quoteItemRepository.GetPendingQuoteItems();
 		}

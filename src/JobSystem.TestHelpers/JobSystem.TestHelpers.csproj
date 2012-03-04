@@ -51,6 +51,7 @@
     <Compile Include="Context\TestAppConfig.cs" />
     <Compile Include="Context\TestUserContext.cs" />
     <Compile Include="CreateConsignmentsFromPendingItemsHelper.cs" />
+    <Compile Include="CreateQuotesFromPendingItemsHelper.cs" />
     <Compile Include="CustomerServiceFactory.cs" />
     <Compile Include="DirectEntityIdProvider.cs" />
     <Compile Include="DomainValidationExtensions.cs" />
