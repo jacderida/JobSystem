@@ -31,6 +31,20 @@ namespace JobSystem.TestHelpers
 				dispatcher);
 		}
 
+		public static ICustomerRepository GetCustomerRepository_StubsGetById_ReturnsCustomer(Guid customerId)
+		{
+			var customerRepositoryStub = MockRepository.GenerateStub<ICustomerRepository>();
+			customerRepositoryStub.Stub(x => x.GetById(customerId)).Return(new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" });
+			return customerRepositoryStub;
+		}
+
+		public static ICustomerRepository GetCustomerRepository_StubsGetById_ReturnsNull(Guid customerId)
+		{
+			var customerRepositoryStub = MockRepository.GenerateStub<ICustomerRepository>();
+			customerRepositoryStub.Stub(x => x.GetById(customerId)).Return(null);
+			return customerRepositoryStub;
+		}
+
 		public static IQuoteRepository GetQuoteRepository_StubsGetById_ReturnsQuoteWith0Items(Guid quoteId)
 		{
 			var quoteRepositoryStub = MockRepository.GenerateStub<IQuoteRepository>();

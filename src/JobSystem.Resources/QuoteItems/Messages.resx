@@ -141,6 +141,9 @@
   <data name="InvalidReport" xml:space="preserve">
     <value>The report cannot exceed 2000 characters</value>
   </data>
+  <data name="PendingItemExists" xml:space="preserve">
+    <value>This job item is already pending quotation</value>
+  </data>
   <data name="PendingJob" xml:space="preserve">
     <value>A quote item cannot be raised for this job item because its job is pending approval.</value>
   </data>

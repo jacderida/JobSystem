@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Dto\Address.cs" />
     <Compile Include="Entities\Attachment.cs" />
+    <Compile Include="Entities\PendingQuoteItem.cs" />
     <Compile Include="Entities\Quote.cs" />
     <Compile Include="Entities\QuoteItem.cs" />
     <Compile Include="Repositories\IQuoteItemRepository.cs" />

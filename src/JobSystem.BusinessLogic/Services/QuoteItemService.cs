@@ -32,7 +32,7 @@ namespace JobSystem.BusinessLogic.Services
 			_listItemRepository = listItemRepository;
 		}
 
-		public QuoteItem Create(Guid id, Guid quoteId, Guid jobItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool ber)
+		public QuoteItem Create(Guid id, Guid quoteId, Guid jobItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair)
 		{
 			if (!CurrentUser.HasRole(UserRole.Manager))
 				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
@@ -50,7 +50,7 @@ namespace JobSystem.BusinessLogic.Services
 			quoteItem.Investigation = GetInvestigation(investigation);
 			quoteItem.Report = report;
 			quoteItem.Days = GetDays(days);
-			quoteItem.BeyondEconomicRepair = ber;
+			quoteItem.BeyondEconomicRepair = beyondEconomicRepair;
 			quoteItem.Status = _listItemRepository.GetByType(ListItemType.StatusQuotedPrepared);
 			ValidateAnnotatedObjectThrowOnFailure(quoteItem);
 			var jobItem = GetJobItem(jobItemId);
@@ -61,6 +61,40 @@ namespace JobSystem.BusinessLogic.Services
 			_quoteItemRepository.Create(quoteItem);
 			_jobItemRepository.Update(jobItem);
 			return quoteItem;
+		}
+
+		public PendingQuoteItem CreatePending(
+			Guid id, Guid customerId, Guid jobItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair)
+		{
+			if (!CurrentUser.HasRole(UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			if (id == Guid.Empty)
+				throw new ArgumentException("An ID must be supplied for the pending item");
+			if (_quoteItemRepository.JobItemHasPendingQuoteItem(jobItemId))
+				throw new DomainValidationException(Messages.PendingItemExists, "JobItemId");
+			var pendingItem = new PendingQuoteItem();
+			pendingItem.Id = id;
+			pendingItem.Customer = GetCustomer(customerId);
+			pendingItem.JobItem = GetJobItem(jobItemId);
+			pendingItem.Labour = GetLabour(labour);
+			pendingItem.Calibration = GetCalibration(calibration);
+			pendingItem.Parts = GetParts(parts);
+			pendingItem.Carriage = GetCarriage(carriage);
+			pendingItem.Investigation = GetInvestigation(investigation);
+			pendingItem.Report = report;
+			pendingItem.Days = GetDays(days);
+			pendingItem.BeyondEconomicRepair = beyondEconomicRepair;
+			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
+			_quoteItemRepository.CreatePendingQuoteItem(pendingItem);
+			return pendingItem;
+		}
+
+		private Customer GetCustomer(Guid customerId)
+		{
+			var customer = _customerRepository.GetById(customerId);
+			if (customer == null)
+				throw new ArgumentException("A valid ID must be supplied for the customer.");
+			return customer;
 		}
 
 		private Quote GetQuote(Guid quoteId)

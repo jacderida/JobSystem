@@ -111,6 +111,11 @@ namespace JobSystem.BusinessLogic.Services
 			return pendingItem;
 		}
 
+		public PendingConsignmentItem GetPendingItem(Guid id)
+		{
+			return _consignmentItemRepository.GetPendingItem(id);
+		}
+
 		public void DeletePendingItem(Guid id)
 		{
 			_consignmentItemRepository.DeletePendingItem(id);

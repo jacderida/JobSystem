@@ -133,6 +133,15 @@ namespace JobSystem.Resources.QuoteItems {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This job item is already pending quotation.
+        /// </summary>
+        public static string PendingItemExists {
+            get {
+                return ResourceManager.GetString("PendingItemExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A quote item cannot be raised for this job item because its job is pending approval..
         /// </summary>
         public static string PendingJob {
