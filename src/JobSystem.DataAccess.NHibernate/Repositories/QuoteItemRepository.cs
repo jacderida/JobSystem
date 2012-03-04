@@ -22,5 +22,10 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		{
 			return CurrentSession.Query<PendingQuoteItem>().Where(p => p.JobItem.Id == jobItemId).SingleOrDefault() != null;
 		}
+
+		public void UpdatePendingItem(PendingQuoteItem pendingItem)
+		{
+			CurrentSession.Update(pendingItem);
+		}
 	}
 }

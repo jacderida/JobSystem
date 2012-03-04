@@ -89,6 +89,25 @@ namespace JobSystem.BusinessLogic.Services
 			return pendingItem;
 		}
 
+		public PendingQuoteItem EditPending(
+			Guid pendingItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair)
+		{
+			var pendingItem = _quoteItemRepository.GetPendingQuoteItem(pendingItemId);
+			if (pendingItem == null)
+				throw new ArgumentException("A valid ID must be supplied for the pending item");
+			pendingItem.Labour = GetLabour(labour);
+			pendingItem.Calibration = GetCalibration(calibration);
+			pendingItem.Parts = GetParts(parts);
+			pendingItem.Carriage = GetCarriage(carriage);
+			pendingItem.Investigation = GetInvestigation(investigation);
+			pendingItem.Days = GetDays(days);
+			pendingItem.Report = report;
+			pendingItem.BeyondEconomicRepair = beyondEconomicRepair;
+			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
+			_quoteItemRepository.UpdatePendingItem(pendingItem);
+			return pendingItem;
+		}
+
 		private Customer GetCustomer(Guid customerId)
 		{
 			var customer = _customerRepository.GetById(customerId);

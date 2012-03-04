@@ -25,6 +25,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private Guid _jobItemToUpdateId;
 		private JobItem _jobItemToUpdate;
 		private PendingQuoteItem _savedPendingItem;
+		private Guid _pendingItemForEditId;
+		private PendingQuoteItem _pendingItemForEdit;
 
 		[SetUp]
 		public void Setup()
@@ -34,6 +36,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_savedQuoteItem = null;
 			_savedPendingItem = null;
 			_domainValidationException = null;
+			_pendingItemForEditId = Guid.NewGuid();
 			AppDateTime.GetUtcNow = () => _dateCreated;
 			_userContext = TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Manager | UserRole.Member);
 			_jobItemToUpdate = new JobItem
@@ -61,6 +64,20 @@ namespace JobSystem.BusinessLogic.UnitTests
 				CalPeriod = 12,
 				Created = DateTime.UtcNow,
 				CreatedUser = _userContext.GetCurrentUser(),
+			};
+			_pendingItemForEdit = new PendingQuoteItem
+			{
+				Id = _pendingItemForEditId,
+				JobItem = new JobItem { Id = Guid.NewGuid() },
+				Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" },
+				Calibration = 30,
+				Labour = 40,
+				Carriage = 30,
+				Parts = 10,
+				Investigation = 40,
+				Days = 30,
+				Report = "item calibrated ok",
+				BeyondEconomicRepair = false
 			};
 		}
 
@@ -833,6 +850,254 @@ namespace JobSystem.BusinessLogic.UnitTests
 			try
 			{
 				_savedPendingItem = _quoteItemService.CreatePending(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region EditPending
+
+		[Test]
+		public void EditPending_ValidDetails_ItemEdited()
+		{
+			var labour = 150m;
+			var calibration = 50m;
+			var parts = 20m;
+			var carriage = 20m;
+			var investigation = 30m;
+			var report = "Item calibrated ok";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryMock = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryMock.Expect(x => x.UpdatePendingItem(null)).IgnoreArguments();
+			quoteItemRepositoryMock.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryMock,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			quoteItemRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(150, _pendingItemForEdit.Labour);
+			Assert.AreEqual(50, _pendingItemForEdit.Calibration);
+			Assert.AreEqual(20, _pendingItemForEdit.Parts);
+			Assert.AreEqual(20, _pendingItemForEdit.Carriage);
+			Assert.AreEqual(30, _pendingItemForEdit.Investigation);
+			Assert.AreEqual("Item calibrated ok", _pendingItemForEdit.Report);
+			Assert.AreEqual(true, _pendingItemForEdit.BeyondEconomicRepair);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void EditPending_InvalidPendingItemId_ArgumentExceptionThrown()
+		{
+			var labour = 150m;
+			var calibration = 50m;
+			var parts = 20m;
+			var carriage = 20m;
+			var investigation = 30m;
+			var report = "Item calibrated ok";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(null);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+		}
+
+		[Test]
+		public void EditPending_LabourLessThan0_DomainValidationExceptionThrown()
+		{
+			var labour = -150m;
+			var calibration = 50m;
+			var parts = 20m;
+			var carriage = 20m;
+			var investigation = 30m;
+			var report = "Item calibrated ok";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidLabour));
+		}
+
+		[Test]
+		public void EditPending_CalibrationLessThan0_DomainValidationExceptionThrown()
+		{
+			var labour = 150m;
+			var calibration = -50m;
+			var parts = 20m;
+			var carriage = 20m;
+			var investigation = 30m;
+			var report = "Item calibrated ok";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidCalibration));
+		}
+
+		[Test]
+		public void EditPending_PartsLessThan0_DomainValidationExceptionThrown()
+		{
+			var labour = 150m;
+			var calibration = 50m;
+			var parts = -20m;
+			var carriage = 20m;
+			var investigation = 30m;
+			var report = "Item calibrated ok";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidParts));
+		}
+
+		[Test]
+		public void EditPending_CarriageLessThan0_DomainValidationExceptionThrown()
+		{
+			var labour = 150m;
+			var calibration = 50m;
+			var parts = 20m;
+			var carriage = -20m;
+			var investigation = 30m;
+			var report = "Item calibrated ok";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidCarriage));
+		}
+
+		[Test]
+		public void EditPending_InvestigationLessThan0_DomainValidationExceptionThrown()
+		{
+			var labour = 150m;
+			var calibration = 50m;
+			var parts = 20m;
+			var carriage = 20m;
+			var investigation = -30m;
+			var report = "Item calibrated ok";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidInvestigation));
+		}
+
+		[Test]
+		public void EditPending_DaysLessThan0_DomainValidationExceptionThrown()
+		{
+			var labour = 150m;
+			var calibration = 50m;
+			var parts = 20m;
+			var carriage = 20m;
+			var investigation = 30m;
+			var report = "Item calibrated ok";
+			var days = -20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidDays));
+		}
+
+		[Test]
+		public void EditPending_ReportGreaterThan2000Characters_DomainValidationExceptionThrown()
+		{
+			var labour = 150m;
+			var calibration = 50m;
+			var parts = 20m;
+			var carriage = 20m;
+			var investigation = 30m;
+			var report = new string('a', 2001);
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidReport));
+		}
+
+		private void EditPendingItem(Guid pendingItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool ber)
+		{
+			try
+			{
+				_pendingItemForEdit = _quoteItemService.EditPending(pendingItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
 			}
 			catch (DomainValidationException dex)
 			{
