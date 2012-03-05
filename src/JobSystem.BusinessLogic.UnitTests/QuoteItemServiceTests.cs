@@ -474,7 +474,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemId = Guid.NewGuid();
 
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
-				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member),
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
 				QuoteItemServiceTestHelper.GetQuoteRepository_StubsGetById_ReturnsQuoteWith0Items(quoteId),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
 				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
@@ -515,6 +515,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var ber = false;
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryMock = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryMock.Expect(x => x.CreatePendingQuoteItem(null)).IgnoreArguments();
@@ -525,7 +527,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
-			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			quoteItemRepositoryMock.VerifyAllExpectations();
 			Assert.AreNotEqual(Guid.Empty, _savedPendingItem.Id);
 		}
@@ -545,6 +547,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var ber = false;
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
@@ -553,7 +557,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
-			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 		}
 
 		[Test]
@@ -570,6 +574,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var ber = false;
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateStub<IQuoteItemRepository>();
 			quoteItemRepositoryStub.Stub(x => x.JobItemHasPendingQuoteItem(jobItemId)).Return(true);
@@ -580,7 +586,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
-			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.PendingItemExists));
 		}
 
@@ -599,6 +605,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var ber = false;
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
@@ -607,7 +615,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsNull(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
-			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 		}
 
 		[Test]
@@ -624,6 +632,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var ber = false;
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
@@ -632,7 +642,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItemOnPendingJob(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
-			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.PendingJob));
 		}
 
@@ -651,6 +661,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var ber = false;
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
@@ -659,7 +671,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsNull(customerId));
-			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 		}
 
 		[Test]
@@ -676,6 +688,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var ber = false;
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
@@ -684,7 +698,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
-			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidLabour));
 		}
 
@@ -702,6 +716,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var ber = false;
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
@@ -710,7 +726,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
-			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidCalibration));
 		}
 
@@ -728,6 +744,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var ber = false;
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
@@ -736,7 +754,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
-			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidParts));
 		}
 
@@ -754,6 +772,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var ber = false;
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
@@ -762,7 +782,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
-			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidCarriage));
 		}
 
@@ -780,6 +800,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var ber = false;
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
@@ -788,7 +810,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
-			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidInvestigation));
 		}
 
@@ -806,6 +828,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var ber = false;
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
@@ -814,7 +838,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
-			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidReport));
 		}
 
@@ -832,24 +856,82 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var ber = false;
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
-				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member),
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
 				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
-			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurity));
 		}
 
+		[Test]
+		public void CreatePending_OrderNoGreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var labour = 50m;
+			var calibration = 50m;
+			var parts = 20m;
+			var carriage = 20m;
+			var investigation = 30m;
+			var report = "a report";
+			var days = 30;
+			var ber = false;
+			var jobItemId = Guid.NewGuid();
+			var customerId = Guid.NewGuid();
+			var orderNo = new string('a', 51);
+			var adviceNo = "AD1000";
+
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				MockRepository.GenerateStub<IQuoteItemRepository>(),
+				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidOrderNo));
+		}
+
+		[Test]
+		public void CreatePending_AdviceNoGreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var labour = 50m;
+			var calibration = 50m;
+			var parts = 20m;
+			var carriage = 20m;
+			var investigation = 30m;
+			var report = "a report";
+			var days = 30;
+			var ber = false;
+			var jobItemId = Guid.NewGuid();
+			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = new string('a', 51);
+
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				MockRepository.GenerateStub<IQuoteItemRepository>(),
+				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
+			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidAdviceNo));
+		}
+
 		private void CreatePendingQuoteItem(
-			Guid id, Guid customerId, Guid jobItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool ber)
+			Guid id, Guid customerId, Guid jobItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool ber, string orderNo, string adviceNo)
 		{
 			try
 			{
-				_savedPendingItem = _quoteItemService.CreatePending(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+				_savedPendingItem = _quoteItemService.CreatePending(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			}
 			catch (DomainValidationException dex)
 			{
@@ -871,6 +953,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var report = "Item calibrated ok";
 			var days = 20;
 			var ber = true;
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryMock = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryMock.Expect(x => x.UpdatePendingItem(null)).IgnoreArguments();
@@ -882,7 +966,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			quoteItemRepositoryMock.VerifyAllExpectations();
 			Assert.AreEqual(150, _pendingItemForEdit.Labour);
 			Assert.AreEqual(50, _pendingItemForEdit.Calibration);
@@ -905,6 +989,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var report = "Item calibrated ok";
 			var days = 20;
 			var ber = true;
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(null);
@@ -915,7 +1001,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 		}
 
 		[Test]
@@ -929,6 +1015,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var report = "Item calibrated ok";
 			var days = 20;
 			var ber = true;
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -939,7 +1027,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidLabour));
 		}
 
@@ -954,6 +1042,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var report = "Item calibrated ok";
 			var days = 20;
 			var ber = true;
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -964,7 +1054,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidCalibration));
 		}
 
@@ -979,6 +1069,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var report = "Item calibrated ok";
 			var days = 20;
 			var ber = true;
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -989,7 +1081,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidParts));
 		}
 
@@ -1004,6 +1096,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var report = "Item calibrated ok";
 			var days = 20;
 			var ber = true;
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -1014,7 +1108,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidCarriage));
 		}
 
@@ -1029,6 +1123,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var report = "Item calibrated ok";
 			var days = 20;
 			var ber = true;
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -1039,7 +1135,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidInvestigation));
 		}
 
@@ -1054,6 +1150,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var report = "Item calibrated ok";
 			var days = -20;
 			var ber = true;
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -1064,7 +1162,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidDays));
 		}
 
@@ -1079,6 +1177,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var report = new string('a', 2001);
 			var days = 20;
 			var ber = true;
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -1089,7 +1189,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidReport));
 		}
 
@@ -1104,25 +1204,85 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var report = "report";
 			var days = 20;
 			var ber = true;
+			var orderNo = "PO1000";
+			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
-				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member),
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				quoteItemRepositoryStub,
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber);
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurity));
 		}
 
-		private void EditPendingItem(Guid pendingItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool ber)
+		[Test]
+		public void EditPending_OrderNoGreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var labour = 50m;
+			var calibration = 50m;
+			var parts = 20m;
+			var carriage = 20m;
+			var investigation = 30m;
+			var report = "a report";
+			var days = 30;
+			var ber = false;
+			var jobItemId = Guid.NewGuid();
+			var customerId = Guid.NewGuid();
+			var orderNo = new string('a', 51);
+			var adviceNo = "AD1000";
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidOrderNo));
+		}
+
+		[Test]
+		public void EditPending_AdviceNoGreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var labour = 50m;
+			var calibration = 50m;
+			var parts = 20m;
+			var carriage = 20m;
+			var investigation = 30m;
+			var report = "a report";
+			var days = 30;
+			var ber = false;
+			var jobItemId = Guid.NewGuid();
+			var customerId = Guid.NewGuid();
+			var orderNo = "PO1000";
+			var adviceNo = new string('a', 51);
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
+			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidAdviceNo));
+		}
+
+		private void EditPendingItem(Guid pendingItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool ber, string orderNo, string adviceNo)
 		{
 			try
 			{
-				_pendingItemForEdit = _quoteItemService.EditPending(pendingItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
+				_pendingItemForEdit = _quoteItemService.EditPending(pendingItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
 			}
 			catch (DomainValidationException dex)
 			{
@@ -1137,7 +1297,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void GetPendingItems_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
 		{
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
-				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member),
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
 				MockRepository.GenerateStub<IJobItemRepository>(),

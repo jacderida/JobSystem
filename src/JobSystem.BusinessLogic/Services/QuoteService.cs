@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
@@ -52,6 +53,12 @@ namespace JobSystem.BusinessLogic.Services
 			ValidateAnnotatedObjectThrowOnFailure(quote);
 			_quoteRepository.Create(quote);
 			return quote;
+		}
+
+		public void CreateQuotesFromPendingItems()
+		{
+			var pendingItems = _quoteItemService.GetPendingQuoteItems();
+			//var group = pendingItems.GroupBy(g => new { g.JobItem.Job, g.order
 		}
 
 		private Customer GetCustomer(Guid customerId)

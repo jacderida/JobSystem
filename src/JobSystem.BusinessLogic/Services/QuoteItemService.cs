@@ -65,7 +65,7 @@ namespace JobSystem.BusinessLogic.Services
 		}
 
 		public PendingQuoteItem CreatePending(
-			Guid id, Guid customerId, Guid jobItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair)
+			Guid id, Guid customerId, Guid jobItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair, string orderNo, string adviceNo)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
@@ -75,6 +75,8 @@ namespace JobSystem.BusinessLogic.Services
 				throw new DomainValidationException(Messages.PendingItemExists, "JobItemId");
 			var pendingItem = new PendingQuoteItem();
 			pendingItem.Id = id;
+			pendingItem.OrderNo = orderNo;
+			pendingItem.AdviceNo = adviceNo;
 			pendingItem.Customer = GetCustomer(customerId);
 			pendingItem.JobItem = GetJobItem(jobItemId);
 			pendingItem.Labour = GetLabour(labour);
@@ -91,13 +93,15 @@ namespace JobSystem.BusinessLogic.Services
 		}
 
 		public PendingQuoteItem EditPending(
-			Guid pendingItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair)
+			Guid pendingItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair, string orderNo, string adviceNo)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
 			var pendingItem = _quoteItemRepository.GetPendingQuoteItem(pendingItemId);
 			if (pendingItem == null)
 				throw new ArgumentException("A valid ID must be supplied for the pending item");
+			pendingItem.OrderNo = orderNo;
+			pendingItem.AdviceNo = adviceNo;
 			pendingItem.Labour = GetLabour(labour);
 			pendingItem.Calibration = GetCalibration(calibration);
 			pendingItem.Parts = GetParts(parts);

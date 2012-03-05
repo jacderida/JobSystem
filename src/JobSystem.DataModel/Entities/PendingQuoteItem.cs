@@ -8,6 +8,10 @@ namespace JobSystem.DataModel.Entities
 	public class PendingQuoteItem
 	{
 		public virtual Guid Id { get; set; }
+		[StringLength(50, ErrorMessageResourceName = "InvalidOrderNo", ErrorMessageResourceType = typeof(Messages))]
+		public virtual string OrderNo { get; set; }
+		[StringLength(50, ErrorMessageResourceName = "InvalidAdviceNo", ErrorMessageResourceType = typeof(Messages))]
+		public virtual string AdviceNo { get; set; }
 		public virtual Customer Customer { get; set; }
 		public virtual JobItem JobItem { get; set; }
 		public virtual decimal Labour { get; set; }

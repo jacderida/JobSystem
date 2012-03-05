@@ -78,6 +78,7 @@
     <Compile Include="InstrumentSearchTests.cs" />
     <Compile Include="IntegrationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuoteServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JobSystem.BusinessLogic\JobSystem.BusinessLogic.csproj">

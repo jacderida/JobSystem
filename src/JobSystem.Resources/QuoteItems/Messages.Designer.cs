@@ -61,11 +61,20 @@ namespace JobSystem.Resources.QuoteItems {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A manager role is required to create a quote.
+        ///   Looks up a localized string similar to A member role is required to create a quote.
         /// </summary>
         public static string InsufficientSecurity {
             get {
                 return ResourceManager.GetString("InsufficientSecurity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The advice number cannot exceed 50 characters.
+        /// </summary>
+        public static string InvalidAdviceNo {
+            get {
+                return ResourceManager.GetString("InvalidAdviceNo", resourceCulture);
             }
         }
         
@@ -111,6 +120,15 @@ namespace JobSystem.Resources.QuoteItems {
         public static string InvalidLabour {
             get {
                 return ResourceManager.GetString("InvalidLabour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The order number cannot exceed 50 characters.
+        /// </summary>
+        public static string InvalidOrderNo {
+            get {
+                return ResourceManager.GetString("InvalidOrderNo", resourceCulture);
             }
         }
         

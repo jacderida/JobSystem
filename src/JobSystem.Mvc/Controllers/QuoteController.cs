@@ -86,7 +86,7 @@ namespace JobSystem.Mvc.Controllers
 							viewmodel.Investigation,
 							viewmodel.Report,
 							viewmodel.Days,
-							viewmodel.ItemBER
+							viewmodel.ItemBER, "ORDERNO", "ADVICENO"	/* IJ to edit */
 						);
 					}
 					return RedirectToAction("Details", "Job", new { id = viewmodel.JobId, TabNo = "3" });

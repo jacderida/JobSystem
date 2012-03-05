@@ -9,6 +9,8 @@ namespace JobSystem.Migrations
 		{
 			Create.Table("PendingQuoteItems")
 				.WithIdColumn()
+				.WithColumn("OrderNo").AsString(50).Nullable()
+				.WithColumn("AdviceNo").AsString(50).Nullable()
 				.WithColumn("CustomerId").AsGuid().NotNullable()
 				.WithColumn("JobItemId").AsGuid().NotNullable()
 				.WithColumn("Labour").AsDecimal().NotNullable()
