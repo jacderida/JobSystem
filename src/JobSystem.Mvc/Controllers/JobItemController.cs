@@ -20,7 +20,7 @@ namespace JobSystem.Mvc.Controllers
 		private readonly ListItemService _listItemService;
 		private readonly InstrumentService _instrumentService;
 		private readonly ConsignmentService _consignmentService;
-		private readonly QuoteItemService _quoteItemServive;
+		private readonly QuoteItemService _quoteItemService;
 
 		public JobItemController(JobItemService jobItemService, ListItemService listItemService, InstrumentService instrumentService, ConsignmentService consignmentService, QuoteItemService quoteItemService)
 		{
@@ -28,7 +28,7 @@ namespace JobSystem.Mvc.Controllers
 			_listItemService = listItemService;
 			_instrumentService = instrumentService;
 			_consignmentService = consignmentService;
-			_quoteItemServive = quoteItemService;
+			_quoteItemService = quoteItemService;
 		}
 
 		[HttpGet]
@@ -98,6 +98,7 @@ namespace JobSystem.Mvc.Controllers
 				Instructions = job.Instructions,
 				IsReturned = job.IsReturned,
 				ReturnReason = job.ReturnReason,
+				QuoteItem = PopulateQuoteItemViewModel(Id),
 				WorkItems = job.HistoryItems.Select(wi => new WorkItemDetailsViewModel
 				{
 					Id = wi.Id,
@@ -156,6 +157,56 @@ namespace JobSystem.Mvc.Controllers
 				};
 			}
 			return PartialView("_Details", viewmodel);
+		}
+
+		private QuoteItemIndexViewModel PopulateQuoteItemViewModel(Guid Id)
+		{
+			var pendingItem = _quoteItemService.GetPendingQuoteItem(Id);
+			if (pendingItem == null)
+			{
+				//var item = _quoteItemService.GetLatestQuoteItem(Id);
+				//if (item != null)
+				//{
+				//    var viewmodel = new QuoteItemIndexViewModel()
+				//    {
+				//        Id = item.Id,
+				//        AdviceNo = ,
+				//        Calibration = ,
+				//        Carriage = ,
+				//        Days = ,
+				//        Investigation = ,
+				//        ItemBER = ,
+				//        OrderNo = ,
+				//        Parts = ,
+				//        Repair = ,
+				//        Report = 
+				//    };
+				//    return viewmodel;
+				//}
+				//else
+				//{
+				//    return null;
+				//}
+				return null;
+			}
+			else
+			{
+				var viewmodel = new QuoteItemIndexViewModel()
+				{
+					Id = pendingItem.Id,
+					AdviceNo = pendingItem.AdviceNo,
+					Calibration = pendingItem.Calibration,
+					Carriage = pendingItem.Carriage,
+					Days = pendingItem.Days,
+					Investigation = pendingItem.Investigation,
+					ItemBER = pendingItem.BeyondEconomicRepair,
+					OrderNo = pendingItem.OrderNo,
+					Parts = pendingItem.Parts,
+					Repair = pendingItem.Labour,
+					Report = pendingItem.Report
+				};
+				return viewmodel;
+			}
 		}
     }
 }

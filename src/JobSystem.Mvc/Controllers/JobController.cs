@@ -24,13 +24,15 @@ namespace JobSystem.Mvc.Controllers
 		private readonly ListItemService _listItemService;
 		private readonly CustomerService _customerServive;
 		private readonly JobItemService _jobItemService;
+		private readonly QuoteItemService _quoteItemService;
 
-		public JobController(JobService jobService, ListItemService listItemService, CustomerService customerService, JobItemService jobItemService)
+		public JobController(JobService jobService, ListItemService listItemService, CustomerService customerService, JobItemService jobItemService, QuoteItemService quoteItemService)
 		{
 			_jobService = jobService;
 			_listItemService = listItemService;
 			_customerServive = customerService;
 			_jobItemService = jobItemService;
+			_quoteItemService = quoteItemService;
 		}
 
 		[HttpGet]
@@ -182,6 +184,7 @@ namespace JobSystem.Mvc.Controllers
 						Field = ji.Field.Name.ToString(),
 						Location = ji.Location.Name.ToString(),
 						InstrumentDetails = String.Format("{0} - {1} : {2}", ji.Instrument.ModelNo, ji.Instrument.Manufacturer.ToString(), ji.Instrument.Description),
+						QuoteItem = PopulateQuoteItemViewModel(ji.Id),
 						ConsignmentItem = PopulateConsignmentItemViewModel(ji.Id),
 						WorkItems = ji.HistoryItems.Select(wi => new WorkItemDetailsViewModel
 						{
@@ -264,53 +267,54 @@ namespace JobSystem.Mvc.Controllers
 			}
 		}
 
-		//private QuoteItemIndexViewModel PopulateQuoteItemViewModel(Guid Id)
-		//{
-		//    var pendingItem = _jobItemService.GetPendingQuoteItem(Id);
-		//    if (pendingItem == null)
-		//    {
-		//        var item = _jobItemService.GetLatestQuoteItem(Id);
-		//        if (item != null)
-		//        {
-		//            var viewmodel = new QuoteItemIndexViewModel()
-		//            {
-		//                Id = item.Id,
-		//                AdviceNo = ,
-		//                Calibration = ,
-		//                Carriage = ,
-		//                Days = ,
-		//                Investigation = ,
-		//                ItemBER = ,
-		//                OrderNo = ,
-		//                Parts = ,
-		//                Repair = ,
-		//                Report = 
-		//            };
-		//            return viewmodel;
-		//        }
-		//        else
-		//        {
-		//            return null;
-		//        }
-		//    }
-		//    else
-		//    {
-		//        var viewmodel = new QuoteItemIndexViewModel()
-		//        {
-		//            Id = item.Id,
-		//            AdviceNo = ,
-		//            Calibration = ,
-		//            Carriage = ,
-		//            Days = ,
-		//            Investigation = ,
-		//            ItemBER = ,
-		//            OrderNo = ,
-		//            Parts = ,
-		//            Repair = ,
-		//            Report = 
-		//        };
-		//        return viewmodel;
-		//    }
-		//}
+		private QuoteItemIndexViewModel PopulateQuoteItemViewModel(Guid Id)
+		{
+		    var pendingItem = _quoteItemService.GetPendingQuoteItem(Id);
+		    if (pendingItem == null)
+		    {
+				//var item = _quoteItemService.GetLatestQuoteItem(Id);
+				//if (item != null)
+				//{
+				//    var viewmodel = new QuoteItemIndexViewModel()
+				//    {
+				//        Id = item.Id,
+				//        AdviceNo = ,
+				//        Calibration = ,
+				//        Carriage = ,
+				//        Days = ,
+				//        Investigation = ,
+				//        ItemBER = ,
+				//        OrderNo = ,
+				//        Parts = ,
+				//        Repair = ,
+				//        Report = 
+				//    };
+				//    return viewmodel;
+				//}
+				//else
+				//{
+				//    return null;
+				//}
+				return null;
+		    }
+		    else
+		    {
+		        var viewmodel = new QuoteItemIndexViewModel()
+		        {
+		            Id = pendingItem.Id,
+		            AdviceNo = pendingItem.AdviceNo,
+		            Calibration = pendingItem.Calibration,
+		            Carriage = pendingItem.Carriage,
+		            Days = pendingItem.Days,
+		            Investigation = pendingItem.Investigation,
+		            ItemBER = pendingItem.BeyondEconomicRepair,
+		            OrderNo = pendingItem.OrderNo,
+		            Parts = pendingItem.Parts,
+		            Repair = pendingItem.Labour,
+		            Report = pendingItem.Report
+		        };
+		        return viewmodel;
+		    }
+		}
 	}
 }
