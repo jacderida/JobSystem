@@ -13,8 +13,6 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 	[TestFixture]
 	public class QuoteServiceTests
 	{
-		private QuoteService _quoteService;
-
 		[SetUp]
 		public void Setup()
 		{
@@ -73,7 +71,7 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			quoteItemService.CreatePending(Guid.NewGuid(), customerId, jobItem9Id, 85, 40, 39, 25, 12, "report", 30, false, "PO1200", "AD1200");
 			
 			var quoteService = new QuoteService(
-				userContext, quoteRepository, customerRepository, entityIdProvider, listItemRepository, quoteItemService, dispatcher);
+				userContext, quoteRepository, customerRepository, entityIdProvider, listItemRepository, quoteItemService, new CompanyDetailsRepository(), dispatcher);
 			quoteService.CreateQuotesFromPendingItems();
 		}
 	}

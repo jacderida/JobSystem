@@ -55,7 +55,7 @@ namespace JobSystem.TestHelpers
 				new QuoteItemService(
 					userContext, quoteRepository, MockRepository.GenerateStub<IQuoteItemRepository>(),
 					MockRepository.GenerateStub<IJobItemRepository>(), MockRepository.GenerateStub<IListItemRepository>(),
-					MockRepository.GenerateStub<ICustomerRepository>(), dispatcher), dispatcher);
+					MockRepository.GenerateStub<ICustomerRepository>(), dispatcher), MockRepository.GenerateStub<ICompanyDetailsRepository>(), dispatcher);
 		}
 
 		private static Customer GetCustomer(Guid customerId)

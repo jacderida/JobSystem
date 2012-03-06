@@ -97,7 +97,7 @@ namespace JobSystem.BusinessLogic.Services
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
-			var pendingItem = _quoteItemRepository.GetPendingQuoteItem(pendingItemId);
+			var pendingItem = _quoteItemRepository.GetPendingQuoteItemForJobItem(pendingItemId);
 			if (pendingItem == null)
 				throw new ArgumentException("A valid ID must be supplied for the pending item");
 			pendingItem.OrderNo = orderNo;
@@ -115,11 +115,16 @@ namespace JobSystem.BusinessLogic.Services
 			return pendingItem;
 		}
 
-		public PendingQuoteItem GetPendingQuoteItem(Guid id)
+		public PendingQuoteItem GetPendingQuoteItemForJobItem(Guid jobItemId)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
-			return _quoteItemRepository.GetPendingQuoteItem(id);
+			return _quoteItemRepository.GetPendingQuoteItemForJobItem(jobItemId);
+		}
+
+		public void DeletePendingQuoteItem(Guid id)
+		{
+			_quoteItemRepository.DeletePendingQuoteItem(id);
 		}
 
 		public IEnumerable<PendingQuoteItem> GetPendingQuoteItems()

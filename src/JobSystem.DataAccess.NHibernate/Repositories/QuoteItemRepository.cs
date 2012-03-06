@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
-using NHibernate.Linq;
-using System.Collections.Generic;
 using NHibernate.Criterion;
+using NHibernate.Linq;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 {
@@ -15,9 +15,14 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			CurrentSession.Save(pendingQuoteItem);
 		}
 
-		public PendingQuoteItem GetPendingQuoteItem(Guid id)
+		public PendingQuoteItem GetPendingQuoteItemForJobItem(Guid jobItemId)
 		{
-			return CurrentSession.Query<PendingQuoteItem>().Where(p => p.Id == id).SingleOrDefault();
+			return CurrentSession.Query<PendingQuoteItem>().Where(p => p.JobItem.Id == jobItemId).SingleOrDefault();
+		}
+
+		public void DeletePendingQuoteItem(Guid id)
+		{
+			CurrentSession.Delete(CurrentSession.Get<PendingQuoteItem>(id));
 		}
 
 		public bool JobItemHasPendingQuoteItem(Guid jobItemId)

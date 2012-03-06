@@ -18,6 +18,7 @@ namespace JobSystem.BusinessLogic.Services
 		private readonly IEntityIdProvider _entityIdProvider;
 		private readonly IListItemRepository _listItemRepository;
 		private readonly QuoteItemService _quoteItemService;
+		private readonly ICompanyDetailsRepository _companyDetailsRepository;
 
 		public QuoteService(
 			IUserContext applicationContext,
@@ -26,6 +27,7 @@ namespace JobSystem.BusinessLogic.Services
 			IEntityIdProvider entityIdProvider,
 			IListItemRepository listItemRepository,
 			QuoteItemService quoteItemService,
+			ICompanyDetailsRepository companyDetailsRepository,
 			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
 		{
 			_quoteRepository = quoteRepository;
@@ -33,6 +35,7 @@ namespace JobSystem.BusinessLogic.Services
 			_entityIdProvider = entityIdProvider;
 			_quoteItemService = quoteItemService;
 			_listItemRepository = listItemRepository;
+			_companyDetailsRepository = companyDetailsRepository;
 		}
 
 		public Quote Create(Guid id, Guid customerId, string orderNumber, string adviceNumber, Guid currencyId)
@@ -61,14 +64,24 @@ namespace JobSystem.BusinessLogic.Services
 			DoCreateQuotesFromPendingItems(_quoteItemService.GetPendingQuoteItems());
 		}
 
+		public void CreateQuoteFromPendingItems(IList<Guid> pendingItemIds)
+		{
+			DoCreateQuotesFromPendingItems(_quoteItemService.GetPendingQuoteItems(pendingItemIds));
+		}
+
 		private void DoCreateQuotesFromPendingItems(IEnumerable<PendingQuoteItem> pendingItems)
 		{
-			var groups = pendingItems.GroupBy(g => new { g.JobItem.Job.JobNo, g.OrderNo });
-			foreach (var group in groups)
+			var jobNoOrderNoGroups = pendingItems.GroupBy(g => new { g.JobItem.Job.JobNo, g.OrderNo });
+			foreach (var group in jobNoOrderNoGroups)
 			{
-				foreach (var item in group)
+				var i = 0;
+				var quoteId = Guid.NewGuid();
+				foreach (var item in group.OrderBy(p => p.JobItem.ItemNo))
 				{
-					Console.WriteLine(String.Format("{0}/{1}", item.JobItem.Job.JobNo, item.JobItem.ItemNo));
+					if (i++ == 0)
+						Create(quoteId, item.Customer.Id, item.OrderNo, item.AdviceNo, _companyDetailsRepository.GetCompany().DefaultCurrency.Id);
+					_quoteItemService.Create(Guid.NewGuid(), quoteId, item.JobItem.Id, item.Labour, item.Calibration, item.Parts, item.Carriage, item.Investigation, item.Report, item.Days, item.BeyondEconomicRepair);
+					_quoteItemService.DeletePendingQuoteItem(item.Id);
 				}
 			}
 		}

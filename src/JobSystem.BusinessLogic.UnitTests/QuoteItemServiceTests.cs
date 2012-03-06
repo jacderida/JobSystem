@@ -959,7 +959,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			var quoteItemRepositoryMock = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryMock.Expect(x => x.UpdatePendingItem(null)).IgnoreArguments();
-			quoteItemRepositoryMock.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			quoteItemRepositoryMock.Stub(x => x.GetPendingQuoteItemForJobItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
@@ -994,7 +994,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
-			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(null);
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItemForJobItem(_pendingItemForEditId)).Return(null);
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
@@ -1020,7 +1020,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
-			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItemForJobItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
@@ -1047,7 +1047,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
-			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItemForJobItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
@@ -1074,7 +1074,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
-			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItemForJobItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
@@ -1101,7 +1101,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
-			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItemForJobItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
@@ -1128,7 +1128,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
-			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItemForJobItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
@@ -1155,7 +1155,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
-			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItemForJobItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
@@ -1182,7 +1182,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
-			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItemForJobItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
@@ -1209,7 +1209,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
-			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItemForJobItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
 				MockRepository.GenerateStub<IQuoteRepository>(),
@@ -1238,7 +1238,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var adviceNo = "AD1000";
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
-			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItemForJobItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
@@ -1267,7 +1267,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var adviceNo = new string('a', 51);
 
 			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
-			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			quoteItemRepositoryStub.Stub(x => x.GetPendingQuoteItemForJobItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
@@ -1367,7 +1367,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			try
 			{
-				_quoteItemService.GetPendingQuoteItem(id);
+				_quoteItemService.GetPendingQuoteItemForJobItem(id);
 			}
 			catch (DomainValidationException dex)
 			{
