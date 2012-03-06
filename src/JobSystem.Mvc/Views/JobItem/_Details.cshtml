@@ -99,21 +99,62 @@
 		<div id="st_content_3" class="st_tab_view">
 			<div class="text">
 				@Html.ActionLink("Raise Quote", "Create", "Quote", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action createQuoteButton" })
-				<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
+				@if (Model.QuoteItem != null)
+				{
+					<div class="consignment-item">
+						<h3>@Model.QuoteItem.OrderNo</h3>
+						<div class="details-fields">
+							<span class="field-label">Advice No.</span>
+							<span class="field">@Model.QuoteItem.AdviceNo</span>
+							<span class="field-label">Report</span>
+							<span class="field">@Model.QuoteItem.Report</span>
+							<span class="field-label">Repair</span>
+							<span class="field">@Model.QuoteItem.Repair</span>
+							<span class="field-label">Calibration</span>
+							<span class="field">@Model.QuoteItem.Calibration</span>
+							<span class="field-label">Parts</span>
+							<span class="field">@Model.QuoteItem.Parts</span>
+							<span class="field-label">Carriage</span>
+							<span class="field">@Model.QuoteItem.Carriage</span>
+							<span class="field-label">Investigation</span>
+							<span class="field">@Model.QuoteItem.Investigation</span>
+							<span class="field-label">Days</span>
+							<span class="field">@Model.QuoteItem.Days</span>
+						</div>
+						@Model.QuoteItem.AdviceNo
+						@Model.ConsignmentItem.Instructions
+					</div>
+				}
+				else if (Model.Quote != null)
+				{
+					<div class="consignment-item">
+						<h3>Some stuff for quote</h3>
+					</div>
+				}
+				else
+				{
+					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
+				}
 			</div>
 		</div>
 		<div id="st_content_4" class="st_tab_view">
 			<div class="text">
 				<a href="#" class="primary-action createConsignmentButton" id="@Model.Id">Raise Consigment</a>
+
+				<input type="hidden" id="editConsignmentItemUrl" value="@Url.Action("EditPending", "Consignment")"/>
+				<div id="edit-consignment-container">@*Content ajaxed in*@</div>
+
 				@if (Model.ConsignmentItem != null)
-	{
+				{
 					<div class="consignment-item">
 						<h3>@Model.ConsignmentItem.SupplierName</h3>
 						@Model.ConsignmentItem.Instructions
 					</div>
-	}
-	else if (Model.Consignment != null)
-	{
+					<br />
+					<a href="#" class="primary-action editConsignmentButton" id="@Model.ConsignmentItem.Id">Edit</a>
+				}
+				else if (Model.Consignment != null)
+				{
 					<div class="consignment-item">
 						<h3>@Model.Consignment.SupplierName</h3>
 						@Model.Consignment.ConsignmentNo<br />
@@ -121,11 +162,11 @@
 							Created by <span class="strongText">@Model.Consignment.CreatedBy</span> on <span class="strongText">@Model.Consignment.DateCreated</span>
 						</span>
 					</div>
-	}
-	else
-	{
+				}
+				else
+				{
 					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
-	}
+				}
 			</div>
 		</div>
 		<div id="st_content_7" class="st_tab_view">

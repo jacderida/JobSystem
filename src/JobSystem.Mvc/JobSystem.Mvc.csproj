@@ -186,6 +186,7 @@
     <Compile Include="ViewModels\Orders\OrderIndexViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteCreateViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteIndexViewModel.cs" />
+    <Compile Include="ViewModels\Quotes\QuoteItemEditViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteItemIndexViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierIndexViewModel.cs" />
@@ -245,6 +246,7 @@
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\autocompletes.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\fileuploader.js" />
     <Content Include="Scripts\jobitem.js" />

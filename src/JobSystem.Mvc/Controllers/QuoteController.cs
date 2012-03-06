@@ -32,9 +32,13 @@ namespace JobSystem.Mvc.Controllers
 		[HttpGet]
 		public ActionResult Create(Guid jobItemId, Guid jobId)
 		{
+			var job = _jobService.GetJob(jobId);
+
 			var viewmodel = new QuoteCreateViewModel(){
 				JobItemId = jobItemId,
-				JobId = jobId
+				JobId = jobId,
+				OrderNo = job.OrderNo,
+				AdviceNo = job.AdviceNo
 			};
 			return View("Create", viewmodel);
 		}
@@ -106,6 +110,9 @@ namespace JobSystem.Mvc.Controllers
 				q => new QuoteItemIndexViewModel
 				{
 					Id = q.Id,
+					AdviceNo = q.AdviceNo,
+					OrderNo = q.OrderNo,
+					Report = q.Report,
 					Repair = q.Labour,
 					Calibration = q.Calibration,
 					Parts = q.Parts,
@@ -132,5 +139,67 @@ namespace JobSystem.Mvc.Controllers
 			}
 			return View(viewmodels);
 		}
+
+		[Transaction]
+		public ActionResult QuotePending(Guid[] ToBeConvertedIds)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					IList<Guid> idList = new List<Guid>();
+					if (ToBeConvertedIds.Length > 0)
+					{
+						for (var i = 0; i < ToBeConvertedIds.Length; i++)
+						{
+							idList.Add(ToBeConvertedIds[i]);
+						}
+					}
+					//if (idList.Any()) _quoteService.CreateQuotesFromPendingItems(idList);
+
+					return RedirectToAction("PendingConsignments");
+				}
+				catch (DomainValidationException dex)
+				{
+					ModelState.UpdateFromDomain(dex.Result);
+				}
+			}
+			return RedirectToAction("PendingConsignments");
+		}
+
+		//[HttpGet]
+		//public ActionResult EditPendingItem(Guid id)
+		//{
+		//    var quote = _quoteItemService.GetPendingItem(id);
+
+		//    var viewmodel = new QuoteItemEditViewModel()
+		//    {
+		//        Id = quote.Id,
+		//        AdviceNo = ,
+		//        Calibration = ,
+		//        Carriage = ,
+		//        Days = ,
+		//        Investigation = ,
+		//        ItemBER = ,
+		//        OrderNo = ,
+		//        Parts = ,
+		//        Repair = ,
+		//        Report = 
+		//    };
+		//    return PartialView("_Edit", viewmodel);
+		//}
+
+		//[HttpPost]
+		//[Transaction]
+		//public ActionResult EditPending(QuoteItemEditViewModel viewmodel)
+		//{
+		//    _quoteItemService.EditPending(
+		//        viewmodel.Id,
+		//        viewmodel.JobItemId,
+		//        viewmodel.SupplierId,
+		//        viewmodel.Instructions);
+
+		//    return RedirectToAction("PendingQuotes", "Quote");
+		//}
 	}
 }

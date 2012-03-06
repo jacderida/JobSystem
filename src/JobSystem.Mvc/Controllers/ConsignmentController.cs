@@ -86,6 +86,7 @@ namespace JobSystem.Mvc.Controllers
 			{
 				Id = consignment.Id,
 				JobItemId = consignment.JobItem.Id,
+				SupplierName = consignment.Supplier.Name,
 				SupplierId = consignment.Supplier.Id,
 				Instructions = consignment.Instructions
 			};
