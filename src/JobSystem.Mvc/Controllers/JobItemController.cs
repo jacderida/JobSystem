@@ -161,7 +161,7 @@ namespace JobSystem.Mvc.Controllers
 
 		private QuoteItemIndexViewModel PopulateQuoteItemViewModel(Guid Id)
 		{
-			var pendingItem = _quoteItemService.GetPendingQuoteItem(Id);
+			var pendingItem = _quoteItemService.GetPendingQuoteItemForJobItem(Id);
 			if (pendingItem == null)
 			{
 				//var item = _quoteItemService.GetLatestQuoteItem(Id);
