@@ -14,6 +14,7 @@ using JobSystem.Mvc.ViewModels.JobItems;
 using JobSystem.Mvc.ViewModels.Jobs;
 using JobSystem.Mvc.ViewModels.WorkItems;
 using JobSystem.Mvc.ViewModels;
+using JobSystem.Mvc.ViewModels.Quotes;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -262,5 +263,54 @@ namespace JobSystem.Mvc.Controllers
 				return viewmodel;
 			}
 		}
+
+		//private QuoteItemIndexViewModel PopulateQuoteItemViewModel(Guid Id)
+		//{
+		//    var pendingItem = _jobItemService.GetPendingQuoteItem(Id);
+		//    if (pendingItem == null)
+		//    {
+		//        var item = _jobItemService.GetLatestQuoteItem(Id);
+		//        if (item != null)
+		//        {
+		//            var viewmodel = new QuoteItemIndexViewModel()
+		//            {
+		//                Id = item.Id,
+		//                AdviceNo = ,
+		//                Calibration = ,
+		//                Carriage = ,
+		//                Days = ,
+		//                Investigation = ,
+		//                ItemBER = ,
+		//                OrderNo = ,
+		//                Parts = ,
+		//                Repair = ,
+		//                Report = 
+		//            };
+		//            return viewmodel;
+		//        }
+		//        else
+		//        {
+		//            return null;
+		//        }
+		//    }
+		//    else
+		//    {
+		//        var viewmodel = new QuoteItemIndexViewModel()
+		//        {
+		//            Id = item.Id,
+		//            AdviceNo = ,
+		//            Calibration = ,
+		//            Carriage = ,
+		//            Days = ,
+		//            Investigation = ,
+		//            ItemBER = ,
+		//            OrderNo = ,
+		//            Parts = ,
+		//            Repair = ,
+		//            Report = 
+		//        };
+		//        return viewmodel;
+		//    }
+		//}
 	}
 }

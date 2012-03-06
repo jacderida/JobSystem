@@ -11,11 +11,15 @@
 	<span class="toggle toggle-right"><a href="@Url.Action("ApprovedQuotes")">Approved</a></span>
 </div>
 
+@using (Html.BeginForm("QuotePending", "Quote", FormMethod.Post))
+{
 <input class="primary-action" type="submit" value="Quote"/>
-@if (Model.Any()) {
+if (Model.Any()) {
 	<table>
 		<tr>
 			<th></th>
+			<th>Order No.</th>
+			<th>Advice No.</th>
 			<th>Repair</th>
 			<th>Calibration</th>
 			<th>Parts</th>
@@ -30,6 +34,12 @@
 		<tr>
 			<td>
 				@Html.CheckBox("toBeConverted", false)
+			</td>
+			<td>
+				@item.OrderNo
+			</td>
+			<td>
+				@item.AdviceNo
 			</td>
 			<td>
 				@item.Repair
@@ -61,7 +71,7 @@
 }else{
 	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
 }
-
+}
 
 <div id="edit-quote-container">
 </div>

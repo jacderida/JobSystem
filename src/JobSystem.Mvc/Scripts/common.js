@@ -112,14 +112,16 @@ $(document).ready(function () {
 					data: { query: request.term },
 					success: function (data) {
 						response($.map(data, function (item) {
-							instrumentId = item.Id;
-							return item.Manufacturer + " - " + item.ModelNo + " - " + item.Range;
+							return {
+								value: item.Manufacturer + " - " + item.ModelNo + " - " + item.Range,
+								key: item.Id
+							}
 						}))
 					}
 				})
 			},
 			select: function (e, ui) {
-				$("#InstrumentId").val(instrumentId);
+				$("#InstrumentId").val(ui.item.key);
 			},
 			minLength: 1, // require at least one character from the user
 			dataType: 'json'
@@ -127,7 +129,7 @@ $(document).ready(function () {
 
 		$('.editConsignmentButton').click(function () {
 			var elemId = $(this).attr('id');
-			var editUrl = $('#editUrl').val() + '/' + elemId;
+			var editUrl = $('#editConsignmentItemUrl').val() + '/' + elemId;
 			//Edit user modal form
 			$("#edit-consignment-container").dialog({
 				modal: true,
@@ -224,7 +226,7 @@ $(document).ready(function () {
 			// path to server-side upload script
 			action: "../Attachments/AddAttachment",
 			onComplete: function (id, fileName, responseJSON) {
-				var idHidden = '<input type="hidden" name="AttachmentId" value="' + responseJSON.Id +'"/>';
+				var idHidden = '<input type="hidden" name="AttachmentId" value="' + responseJSON.Id + '"/>';
 				var nameHidden = '<input type="hidden" name="AttachmentName" value="' + responseJSON.Filename + '"/>';
 				$('#createJobForm').append(idHidden).append(nameHidden);
 			}

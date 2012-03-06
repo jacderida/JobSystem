@@ -1,6 +1,6 @@
 ﻿@model JobSystem.Mvc.ViewModels.Consignments.ConsignmentEditViewModel
 
-<script src="@Url.Content("~/Scripts/workitem.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/autocompletes.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
@@ -13,7 +13,7 @@
 			@Html.LabelFor(model => model.SupplierId)
 		</div>
 		<div class="editor-field">
-			@Html.TextBox("SupplierAutocomplete", "", new { id = "supplier-autocomplete" })
+			@Html.TextBox("SupplierAutocomplete", @Model.SupplierName, new { id = "supplier-autocomplete" })
 			@Html.HiddenFor(model => model.SupplierId, new { id = "SupplierId" })
 		</div>
 		<div class="editor-label">
@@ -27,7 +27,7 @@
 	</fieldset>
 		<div class="clear"></div>
 	<div class="buttons-row">
-		<input type="submit" class="primary-action" value="Raise"/>
+		<input type="submit" class="primary-action" value="Save"/>
 	</div>
 }
 </div>
