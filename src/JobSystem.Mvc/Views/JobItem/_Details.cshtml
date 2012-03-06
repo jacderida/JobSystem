@@ -101,9 +101,10 @@
 				@Html.ActionLink("Raise Quote", "Create", "Quote", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action createQuoteButton" })
 				@if (Model.QuoteItem != null)
 				{
-					<div class="consignment-item">
-						<h3>@Model.QuoteItem.OrderNo</h3>
+					<div class="quote-item">
 						<div class="details-fields">
+							<span class="field-label">Order No.</span>
+							<span class="field">@Model.QuoteItem.OrderNo</span>
 							<span class="field-label">Advice No.</span>
 							<span class="field">@Model.QuoteItem.AdviceNo</span>
 							<span class="field-label">Report</span>
@@ -112,6 +113,8 @@
 							<span class="field">@Model.QuoteItem.Repair</span>
 							<span class="field-label">Calibration</span>
 							<span class="field">@Model.QuoteItem.Calibration</span>
+						</div>
+						<div class="details-fields">
 							<span class="field-label">Parts</span>
 							<span class="field">@Model.QuoteItem.Parts</span>
 							<span class="field-label">Carriage</span>
@@ -121,8 +124,6 @@
 							<span class="field-label">Days</span>
 							<span class="field">@Model.QuoteItem.Days</span>
 						</div>
-						@Model.QuoteItem.AdviceNo
-						@Model.ConsignmentItem.Instructions
 					</div>
 				}
 				else if (Model.Quote != null)

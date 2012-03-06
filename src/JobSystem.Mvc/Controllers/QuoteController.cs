@@ -95,7 +95,7 @@ namespace JobSystem.Mvc.Controllers
 							viewmodel.AdviceNo
 						);
 					}
-					return RedirectToAction("Details", "Job", new { id = viewmodel.JobId, TabNo = "3" });
+					return RedirectToAction("Details", "Job", new { id = viewmodel.JobId, TabNo = "#tab_3" });
 				}
 				catch (DomainValidationException dex)
 				{
@@ -146,7 +146,7 @@ namespace JobSystem.Mvc.Controllers
 		[HttpGet]
 		public ActionResult EditPending(Guid id)
 		{
-			var pendingItem = _quoteItemService.GetPendingQuoteItem(id);
+			var pendingItem = _quoteItemService.GetPendingQuoteItemForJobItem(id);
 
 			var viewmodel = new QuoteItemEditViewModel()
 			{
@@ -164,6 +164,26 @@ namespace JobSystem.Mvc.Controllers
 				Report = pendingItem.Report
 			};
 			return View("Edit", viewmodel);
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult EditPending(QuoteItemEditViewModel viewmodel)
+		{
+			_quoteItemService.EditPending(
+				viewmodel.Id,
+				viewmodel.Repair,
+				viewmodel.Calibration,
+				viewmodel.Parts,
+				viewmodel.Carriage,
+				viewmodel.Investigation,
+				viewmodel.Report,
+				viewmodel.Days,
+				viewmodel.ItemBER,
+				viewmodel.OrderNo,
+				viewmodel.AdviceNo);
+
+			return RedirectToAction("PendingQuotes");
 		}
 
 		[Transaction]

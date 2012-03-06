@@ -35,13 +35,6 @@
 			@Html.TextAreaFor(model => model.Report)
 			@Html.ValidationMessageFor(model => model.Report)
 		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.IsIndividual)
-		</div>
-		<div class="editor-field">
-			@Html.CheckBoxFor(model => model.IsIndividual)
-			@Html.ValidationMessageFor(model => model.IsIndividual)
-		</div>
 	</fieldset>
 	<span class="form-section">
 		Quote Figures
@@ -96,6 +89,7 @@
 			@Html.CheckBoxFor(model => model.ItemBER)
 			@Html.ValidationMessageFor(model => model.ItemBER)
 		</div>
+		@Html.HiddenFor(model => model.Id)
 		@Html.HiddenFor(model => model.JobItemId)
 		@Html.HiddenFor(model => model.JobId)
 	</fieldset>

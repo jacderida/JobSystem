@@ -684,11 +684,11 @@ div#title {
 	/*margin-right: 20px;*/
 }
 
-#job-details-container .field,  #item-details-container .field {
+.field {
 	margin-bottom: 10px;
 }
 
-#job-details-container .field-label, #item-details-container .field-label {
+.field-label {
 	font-weight: bold;
 	margin-bottom: 4px;
 }
@@ -985,4 +985,8 @@ div#title {
 .consignmentItemCount:hover, .consignmentItemCount:focus {
 	text-decoration: none;
 	cursor: pointer;
+}
+
+.quote-item {
+	margin-top: 20px;
 }
