@@ -63,7 +63,7 @@ if (Model.Any()) {
 				@item.ItemBER
 			</td>
 			<td>
-				<a href="#" class="editQuoteButton" id="@item.Id">Edit</a>
+				@Html.ActionLink("Edit", "EditPending", new { id = item.JobItemId })
 			</td>
 		</tr>
 	 }

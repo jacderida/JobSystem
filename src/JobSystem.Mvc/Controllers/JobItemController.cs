@@ -98,7 +98,7 @@ namespace JobSystem.Mvc.Controllers
 				Instructions = job.Instructions,
 				IsReturned = job.IsReturned,
 				ReturnReason = job.ReturnReason,
-				QuoteItem = PopulateQuoteItemViewModel(Id),
+				QuoteItem = PopulateQuoteItemViewModel(job.Id),
 				WorkItems = job.HistoryItems.Select(wi => new WorkItemDetailsViewModel
 				{
 					Id = wi.Id,

@@ -413,6 +413,7 @@
     <Content Include="Views\Quote\ApprovedQuotes.cshtml" />
     <Content Include="Views\Quote\Create.cshtml" />
     <Content Include="Views\Consignment\_Edit.cshtml" />
+    <Content Include="Views\Quote\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\PendingOrders.cshtml" />

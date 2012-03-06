@@ -90,7 +90,9 @@ namespace JobSystem.Mvc.Controllers
 							viewmodel.Investigation,
 							viewmodel.Report,
 							viewmodel.Days,
-							viewmodel.ItemBER, "ORDERNO", "ADVICENO"	/* IJ to edit */
+							viewmodel.ItemBER,
+							viewmodel.OrderNo,
+							viewmodel.AdviceNo
 						);
 					}
 					return RedirectToAction("Details", "Job", new { id = viewmodel.JobId, TabNo = "3" });
@@ -110,6 +112,7 @@ namespace JobSystem.Mvc.Controllers
 				q => new QuoteItemIndexViewModel
 				{
 					Id = q.Id,
+					JobItemId = q.JobItem.Id,
 					AdviceNo = q.AdviceNo,
 					OrderNo = q.OrderNo,
 					Report = q.Report,
@@ -138,6 +141,29 @@ namespace JobSystem.Mvc.Controllers
 				});
 			}
 			return View(viewmodels);
+		}
+
+		[HttpGet]
+		public ActionResult EditPending(Guid id)
+		{
+			var pendingItem = _quoteItemService.GetPendingQuoteItem(id);
+
+			var viewmodel = new QuoteItemEditViewModel()
+			{
+				Id = pendingItem.Id,
+				JobItemId = pendingItem.JobItem.Id,
+				AdviceNo = pendingItem.AdviceNo,
+				Calibration = pendingItem.Calibration,
+				Carriage = pendingItem.Carriage,
+				Days = pendingItem.Days,
+				Investigation = pendingItem.Investigation,
+				ItemBER = pendingItem.BeyondEconomicRepair,
+				OrderNo = pendingItem.OrderNo,
+				Parts = pendingItem.Parts,
+				Repair = pendingItem.Labour,
+				Report = pendingItem.Report
+			};
+			return View("Edit", viewmodel);
 		}
 
 		[Transaction]
