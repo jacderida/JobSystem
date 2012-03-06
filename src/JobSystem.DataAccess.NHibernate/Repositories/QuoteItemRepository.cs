@@ -4,6 +4,7 @@ using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using NHibernate.Linq;
 using System.Collections.Generic;
+using NHibernate.Criterion;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 {
@@ -32,6 +33,15 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		public IEnumerable<PendingQuoteItem> GetPendingQuoteItems()
 		{
 			return CurrentSession.Query<PendingQuoteItem>();
+		}
+
+		public IEnumerable<PendingQuoteItem> GetPendingQuoteItems(IList<Guid> pendingItemIds)
+		{
+			var query = Restrictions.Disjunction();
+			foreach (var id in pendingItemIds)
+				query.Add(Restrictions.Eq("Id", id));
+			var criteria = CurrentSession.CreateCriteria<PendingQuoteItem>().Add(query);
+			return criteria.List<PendingQuoteItem>();
 		}
 	}
 }

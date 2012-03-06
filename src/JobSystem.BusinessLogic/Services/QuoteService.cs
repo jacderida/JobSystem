@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
@@ -57,8 +58,19 @@ namespace JobSystem.BusinessLogic.Services
 
 		public void CreateQuotesFromPendingItems()
 		{
-			var pendingItems = _quoteItemService.GetPendingQuoteItems();
-			//var group = pendingItems.GroupBy(g => new { g.JobItem.Job, g.order
+			DoCreateQuotesFromPendingItems(_quoteItemService.GetPendingQuoteItems());
+		}
+
+		private void DoCreateQuotesFromPendingItems(IEnumerable<PendingQuoteItem> pendingItems)
+		{
+			var groups = pendingItems.GroupBy(g => new { g.JobItem.Job.JobNo, g.OrderNo });
+			foreach (var group in groups)
+			{
+				foreach (var item in group)
+				{
+					Console.WriteLine(String.Format("{0}/{1}", item.JobItem.Job.JobNo, item.JobItem.ItemNo));
+				}
+			}
 		}
 
 		private Customer GetCustomer(Guid customerId)

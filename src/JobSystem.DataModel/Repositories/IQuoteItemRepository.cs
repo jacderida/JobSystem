@@ -9,6 +9,7 @@ namespace JobSystem.DataModel.Repositories
 		void CreatePendingQuoteItem(PendingQuoteItem pendingQuoteItem);
 		PendingQuoteItem GetPendingQuoteItem(Guid id);
 		IEnumerable<PendingQuoteItem> GetPendingQuoteItems();
+		IEnumerable<PendingQuoteItem> GetPendingQuoteItems(IList<Guid> pendingItemIds);
 		bool JobItemHasPendingQuoteItem(Guid jobItemId);
 		void UpdatePendingItem(PendingQuoteItem pendingItem);
 	}

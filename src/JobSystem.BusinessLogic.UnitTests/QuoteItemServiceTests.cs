@@ -10,6 +10,7 @@ using JobSystem.DataModel.Repositories;
 using Rhino.Mocks;
 using JobSystem.TestHelpers;
 using JobSystem.Resources.QuoteItems;
+using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {
@@ -1312,6 +1313,61 @@ namespace JobSystem.BusinessLogic.UnitTests
 			try
 			{
 				_quoteItemService.GetPendingQuoteItems();
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		[Test]
+		public void GetPendingItemsWithIds_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				MockRepository.GenerateStub<IQuoteItemRepository>(),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			GetPendingItems(new List<Guid> { Guid.NewGuid(), Guid.NewGuid() });
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurity));
+		}
+
+		private void GetPendingItems(List<Guid> pendingIds)
+		{
+			try
+			{
+				_quoteItemService.GetPendingQuoteItems(pendingIds);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region GetPendingQuoteItem
+
+		[Test]
+		public void GetPendingQuoteItem_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				MockRepository.GenerateStub<IQuoteItemRepository>(),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			GetPendingItem(Guid.NewGuid());
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurity));
+		}
+
+		private void GetPendingItem(Guid id)
+		{
+			try
+			{
+				_quoteItemService.GetPendingQuoteItem(id);
 			}
 			catch (DomainValidationException dex)
 			{

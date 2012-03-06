@@ -115,11 +115,25 @@ namespace JobSystem.BusinessLogic.Services
 			return pendingItem;
 		}
 
+		public PendingQuoteItem GetPendingQuoteItem(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			return _quoteItemRepository.GetPendingQuoteItem(id);
+		}
+
 		public IEnumerable<PendingQuoteItem> GetPendingQuoteItems()
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
 			return _quoteItemRepository.GetPendingQuoteItems();
+		}
+
+		public IEnumerable<PendingQuoteItem> GetPendingQuoteItems(IList<Guid> pendingItemIds)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			return _quoteItemRepository.GetPendingQuoteItems(pendingItemIds);
 		}
 
 		private Customer GetCustomer(Guid customerId)
