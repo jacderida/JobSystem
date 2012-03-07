@@ -25,5 +25,6 @@ namespace JobSystem.Mvc.ViewModels.Quotes
 		public string AdviceNo { get; set; }
 		public string Report { get; set; }
 		public string JobNo { get; set; }
+		public string ItemNo { get; set; }
 	}
 }

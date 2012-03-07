@@ -5,7 +5,13 @@ namespace JobSystem.Mvc.ViewModels.Quotes
 {
 	public class QuoteIndexViewModel
 	{
-		public Guid id { get; set; }
+		public Guid Id { get; set; }
+		public string QuoteNo { get; set; }
+		public string CreatedBy { get; set; }
+		public string DateCreated { get; set; }
+		public string CustomerName { get; set; }
+		public string OrderNo { get; set; }
+		public string AdviceNo { get; set; }
 		public List<QuoteItemIndexViewModel> QuoteItems { get; set; }
 	}
 }
