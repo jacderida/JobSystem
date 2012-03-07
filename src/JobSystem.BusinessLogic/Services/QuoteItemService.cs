@@ -123,6 +123,13 @@ namespace JobSystem.BusinessLogic.Services
 			return _quoteItemRepository.GetById(id);
 		}
 
+		public IEnumerable<QuoteItem> GetQuoteItems(Guid quoteId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			return _quoteItemRepository.GetQuoteItems(quoteId);
+		}
+
 		public PendingQuoteItem GetPendingQuoteItemForJobItem(Guid jobItemId)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

@@ -83,7 +83,7 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			Assert.AreEqual("PO1000", quotes[2].OrderNumber);
 			Assert.AreEqual("PO1200", quotes[3].OrderNumber);
 
-			//var quoteItems = quoteItemService.getby
+			//var quoteItems = quoteItemService.GetById(
 		}
 	}
 }

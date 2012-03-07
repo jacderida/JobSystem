@@ -20,6 +20,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			return CurrentSession.Query<PendingQuoteItem>().Where(p => p.JobItem.Id == jobItemId).SingleOrDefault();
 		}
 
+		public IEnumerable<QuoteItem> GetQuoteItems(Guid quoteId)
+		{
+			return CurrentSession.Query<QuoteItem>().Where(qi => qi.Quote.Id == quoteId);
+		}
+
 		public void DeletePendingQuoteItem(Guid id)
 		{
 			CurrentSession.Delete(CurrentSession.Get<PendingQuoteItem>(id));
