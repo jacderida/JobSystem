@@ -8,61 +8,62 @@
 
 <div id="toggle-container">
 	<span class="toggle toggle-active toggle-left"><a href="@Url.Action("PendingQuotes")">Pending</a></span>
-	<span class="toggle toggle-right"><a href="@Url.Action("ApprovedQuotes")">Approved</a></span>
+	<span class="toggle toggle-right"><a href="@Url.Action("ApprovedQuotes")">Quoted</a></span>
 </div>
 
 @using (Html.BeginForm("QuotePending", "Quote", FormMethod.Post))
 {
 <input class="primary-action" type="submit" value="Quote"/>
 if (Model.Any()) {
-	<table>
+	<br /><br />
+	foreach (var grp in Model.GroupBy(g => g.JobNo)) { 
+		<h3>@Html.Encode(grp.Key)</h3>
+		<table id="quoteTable">
 		<tr>
-			<th></th>
-			<th>Order No.</th>
-			<th>Advice No.</th>
-			<th>Repair</th>
-			<th>Calibration</th>
-			<th>Parts</th>
-			<th>Carriage</th>
-			<th>Investigation</th>
-			<th>Days</th>
-			<th>Item BER</th>
+			<th class="shortColumn"></th>
+			<th class="shortColumn">Order No.</th>
+			<th class="shortColumn">Advice No.</th>
+			<th class="shortColumn">Repair</th>
+			<th class="shortColumn">Calibration</th>
+			<th class="shortColumn">Parts</th>
+			<th class="shortColumn">Carriage</th>
+			<th class="shortColumn">Investigation</th>
+			<th class="shortColumn">Days</th>
+			<th class="shortColumn">Item BER</th>
 			<th></th>
 		</tr>
-	@foreach (var grp in Model.GroupBy(g => g.JobNo)) { 
-		@Html.Encode(grp.Key)
-	foreach (var item in grp.OrderBy(i => i.OrderNo))
+	@foreach (var item in grp.OrderBy(i => i.OrderNo))
 	{
 		
 		<tr>
-			<td>
+			<td class="shortColumn">
 				@Html.CheckBox("toBeConverted", false)
 			</td>
-			<td>
+			<td class="shortColumn">
 				@item.OrderNo
 			</td>
-			<td>
+			<td class="shortColumn">
 				@item.AdviceNo
 			</td>
-			<td>
+			<td class="shortColumn">
 				@item.Repair
 			</td>
-			<td>
+			<td class="shortColumn">
 				@item.Calibration
 			</td>
-			<td>
+			<td class="shortColumn">
 				@item.Parts
 			</td>
-			<td>
+			<td class="shortColumn">
 				@item.Carriage
 			</td>
-			<td>
+			<td class="shortColumn">
 				@item.Investigation
 			</td>
-			<td>
+			<td class="shortColumn">
 				@item.Days
 			</td>
-			<td>
+			<td class="shortColumn">
 				@item.ItemBER
 			</td>
 			<td>
@@ -70,8 +71,9 @@ if (Model.Any()) {
 			</td>
 		</tr>
 }
+</table>
  }
-	</table>
+	
 }
 else
 {

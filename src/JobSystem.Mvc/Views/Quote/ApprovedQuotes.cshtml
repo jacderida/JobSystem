@@ -1,54 +1,67 @@
-﻿@model IList<JobSystem.Mvc.ViewModels.Quotes.QuoteItemIndexViewModel>
+﻿@model IList<JobSystem.Mvc.ViewModels.Quotes.QuoteIndexViewModel>
 
 @{
-    ViewBag.Title = "ApprovedQuotes";
+    ViewBag.Title = "Approved Quotes";
 }
 
 @*<h2>Approved Quotes</h2>*@
 
 <div id="toggle-container">
 	<span class="toggle toggle-left"><a href="@Url.Action("PendingQuotes")">Pending</a></span>
-	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedQuotes")">Approved</a></span>
+	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedQuotes")">Quoted</a></span>
 </div>
 
 @if (Model.Any()) {
 	<table>
 		<tr>
+			<th>Quote No.</th>
+			<th>Order No.</th>
+			<th>Advice No.</th>
+			<th>Customer</th>
+			<th>Created By</th>
+			<th>Date Created</th>
+			<th>Quote Items</th>
 			<th></th>
-			<th>Repair</th>
-			<th>Calibration</th>
-			<th>Parts</th>
-			<th>Carriage</th>
-			<th>Investigation</th>
-			<th>Days</th>
-			<th>Item BER</th>
 		</tr>
-	@foreach (var item in Model.OrderBy(i => i.Repair))
+	@foreach (var item in Model.OrderBy(i => i.QuoteNo))
 	 {
 		<tr>
 			<td>
-				@Html.CheckBox("toBeConverted", false)
+				@item.QuoteNo
 			</td>
 			<td>
-				@item.Repair
+				@item.OrderNo
 			</td>
 			<td>
-				@item.Calibration
+				@item.AdviceNo
 			</td>
 			<td>
-				@item.Parts
+				@item.CustomerName
 			</td>
 			<td>
-				@item.Carriage
+				@item.CreatedBy
 			</td>
 			<td>
-				@item.Investigation
+				@item.DateCreated
 			</td>
 			<td>
-				@item.Days
-			</td>
-			<td>
-				@item.ItemBER
+				<span class="the-tooltip center top dark-midnight-blue consignmentItemCount">
+					@item.QuoteItems.Count items
+					<span>
+					@foreach (var qi in item.QuoteItems) {
+						<span>
+							Item Number @qi.ItemNo <br />
+							Repair @qi.Repair<br />
+							Calibration @qi.Calibration<br />
+							Parts @qi.Parts<br />
+							Cariage @qi.Carriage<br />
+							Investigation @qi.Investigation<br />
+							Days @qi.Days<br />
+							BER? @qi.ItemBER<br />
+						</span><br />
+					}	
+					</span>
+				</span>
 			</td>
 			<td>
 				<a href="#" class="editQuoteButton" id="@item.Id">Edit</a>

@@ -140,16 +140,35 @@ namespace JobSystem.Mvc.Controllers
 		[HttpGet]
 		public ActionResult ApprovedQuotes()
 		{
-			IList<QuoteItemIndexViewModel> viewmodels = new List<QuoteItemIndexViewModel>();
+			var quotes = _quoteService.GetQuotes().Select(
+			    q => new QuoteIndexViewModel
+			    {
+			        Id = q.Id,
+					CustomerName = q.Customer.Name,
+					QuoteNo = q.QuoteNumber,
+					CreatedBy = q.CreatedBy.Name,
+					DateCreated = q.DateCreated.ToLongDateString() + ' ' + q.DateCreated.ToShortTimeString(),
+					OrderNo = q.OrderNumber,
+					AdviceNo = q.AdviceNumber
+			    }).ToList();
 
-			for (int i = 0; i < 10; i++)
+			foreach (var quote in quotes)
 			{
-				viewmodels.Add(new QuoteItemIndexViewModel()
-				{
-					Id = Guid.NewGuid()
-				});
+				var quoteItems = _quoteItemService.GetQuoteItems(quote.Id);
+				quote.QuoteItems = quoteItems.Select(qi => new QuoteItemIndexViewModel
+						{
+							Report = qi.Report,
+							Repair = qi.Labour,
+							Calibration = qi.Calibration,
+							Parts = qi.Parts,
+							Carriage = qi.Carriage,
+							Investigation = qi.Investigation,
+							Days = qi.Days,
+							ItemBER = qi.BeyondEconomicRepair,
+							ItemNo = qi.ItemNo.ToString()
+							}).ToList();
 			}
-			return View(viewmodels);
+			return View(quotes);
 		}
 
 		[HttpGet]

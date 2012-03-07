@@ -990,3 +990,7 @@ div#title {
 .quote-item {
 	margin-top: 20px;
 }
+
+#quoteTable .shortColumn {
+	width: 100px;
+}
