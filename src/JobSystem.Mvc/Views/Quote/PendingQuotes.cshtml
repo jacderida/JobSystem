@@ -29,8 +29,11 @@ if (Model.Any()) {
 			<th>Item BER</th>
 			<th></th>
 		</tr>
-	@foreach (var item in Model.OrderBy(i => i.OrderNo))
-	 {
+	@foreach (var grp in Model.GroupBy(g => g.JobNo)) { 
+		@Html.Encode(grp.Key)
+	foreach (var item in grp.OrderBy(i => i.OrderNo))
+	{
+		
 		<tr>
 			<td>
 				@Html.CheckBox("toBeConverted", false)
@@ -66,12 +69,16 @@ if (Model.Any()) {
 				@Html.ActionLink("Edit", "EditPending", new { id = item.JobItemId })
 			</td>
 		</tr>
-	 }
+}
+ }
 	</table>
-}else{
+}
+else
+{
 	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
 }
 }
+
 
 <div id="edit-quote-container">
 </div>

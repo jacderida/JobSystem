@@ -48,6 +48,13 @@
 	</span>
 	<fieldset>
 		<div class="editor-label">
+			@Html.LabelFor(model => model.Currencies)
+		</div>
+		<div class="editor-field">
+			@Html.DropDownListFor(model => model.CurrencyId, Model.Currencies, new { @class = "long-dropdown" })
+			@Html.ValidationMessageFor(model => model.Currencies)
+		</div>
+		<div class="editor-label">
 			@Html.LabelFor(model => model.Repair)
 		</div>
 		<div class="editor-field">

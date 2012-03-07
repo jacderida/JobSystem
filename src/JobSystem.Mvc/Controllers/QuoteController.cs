@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
 using System.Linq;
+using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataAccess.NHibernate.Web;
-using JobSystem.Mvc.ViewModels.Quotes;
+using JobSystem.DataModel.Entities;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
+using JobSystem.Mvc.ViewModels.Quotes;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -16,12 +17,16 @@ namespace JobSystem.Mvc.Controllers
 		private readonly QuoteService _quoteService;
 		private readonly QuoteItemService _quoteItemService;
 		private readonly JobService _jobService;
+		private readonly ListItemService _listItemService;
+		private readonly CompanyDetailsService _companyDetailsService;
 
-		public QuoteController(QuoteService quoteService, QuoteItemService quoteItemService, JobService jobService)
+		public QuoteController(QuoteService quoteService, QuoteItemService quoteItemService, JobService jobService, ListItemService listItemService, CompanyDetailsService companyDetailsService)
 		{
 			_quoteService = quoteService;
 			_quoteItemService = quoteItemService;
 			_jobService = jobService;
+			_listItemService = listItemService;
+			_companyDetailsService = companyDetailsService;
 		}
 
 		public ActionResult Index()
@@ -33,12 +38,15 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Create(Guid jobItemId, Guid jobId)
 		{
 			var job = _jobService.GetJob(jobId);
+			var company = _companyDetailsService.GetCompany();
 
 			var viewmodel = new QuoteCreateViewModel(){
 				JobItemId = jobItemId,
 				JobId = jobId,
 				OrderNo = job.OrderNo,
-				AdviceNo = job.AdviceNo
+				AdviceNo = job.AdviceNo,
+				Currencies = _listItemService.GetAllByCategory(ListItemCategoryType.Currency).ToSelectList(),
+				CurrencyId = company.DefaultCurrency.Id
 			};
 			return View("Create", viewmodel);
 		}
@@ -113,6 +121,7 @@ namespace JobSystem.Mvc.Controllers
 				{
 					Id = q.Id,
 					JobItemId = q.JobItem.Id,
+					JobNo = q.JobItem.Job.JobNo,
 					AdviceNo = q.AdviceNo,
 					OrderNo = q.OrderNo,
 					Report = q.Report,
