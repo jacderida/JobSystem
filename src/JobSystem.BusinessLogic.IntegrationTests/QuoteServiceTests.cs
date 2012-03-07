@@ -83,7 +83,26 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			Assert.AreEqual("PO1000", quotes[2].OrderNumber);
 			Assert.AreEqual("PO1200", quotes[3].OrderNumber);
 
-			//var quoteItems = quoteItemService.GetById(
+			var quoteItems = quoteItemService.GetQuoteItems(quotes[0].Id).ToList();
+			Assert.AreEqual(2, quoteItems.Count);
+			Assert.AreEqual(jobItem1Id, quoteItems[0].JobItem.Id);
+			Assert.AreEqual(jobItem3Id, quoteItems[1].JobItem.Id);
+
+			quoteItems = quoteItemService.GetQuoteItems(quotes[1].Id).ToList();
+			Assert.AreEqual(2, quoteItems.Count);
+			Assert.AreEqual(jobItem2Id, quoteItems[0].JobItem.Id);
+			Assert.AreEqual(jobItem4Id, quoteItems[1].JobItem.Id);
+
+			quoteItems = quoteItemService.GetQuoteItems(quotes[2].Id).ToList();
+			Assert.AreEqual(3, quoteItems.Count);
+			Assert.AreEqual(jobItem5Id, quoteItems[0].JobItem.Id);
+			Assert.AreEqual(jobItem6Id, quoteItems[1].JobItem.Id);
+			Assert.AreEqual(jobItem7Id, quoteItems[2].JobItem.Id);
+
+			quoteItems = quoteItemService.GetQuoteItems(quotes[3].Id).ToList();
+			Assert.AreEqual(2, quoteItems.Count);
+			Assert.AreEqual(jobItem8Id, quoteItems[0].JobItem.Id);
+			Assert.AreEqual(jobItem9Id, quoteItems[1].JobItem.Id);
 		}
 	}
 }
