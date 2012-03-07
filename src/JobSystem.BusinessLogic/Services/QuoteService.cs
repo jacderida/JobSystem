@@ -54,6 +54,7 @@ namespace JobSystem.BusinessLogic.Services
 			quote.AdviceNumber = adviceNumber;
 			quote.Currency = GetCurrency(currencyId);
 			quote.IsActive = true;
+			quote.Revision = 1;
 			ValidateAnnotatedObjectThrowOnFailure(quote);
 			_quoteRepository.Create(quote);
 			return quote;

@@ -54,6 +54,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.That(_savedQuote.QuoteNumber.StartsWith("QR"));
 			Assert.AreEqual(_dateCreated, _savedQuote.DateCreated);
 			Assert.AreEqual("graham.robertson@intertek.com", _savedQuote.CreatedBy.EmailAddress);
+			Assert.AreEqual(1, _savedQuote.Revision);
 			Assert.IsTrue(_savedQuote.IsActive);
 		}
 

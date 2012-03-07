@@ -19,6 +19,7 @@ namespace JobSystem.DataModel.Entities
 		public virtual string AdviceNumber { get; set; }
 		public virtual ListItem Currency { get; set; }
 		public virtual bool IsActive { get; set; }
+		public virtual int Revision { get; set; }
 		public virtual IList<QuoteItem> QuoteItems { get; set; }
 
 		public Quote()

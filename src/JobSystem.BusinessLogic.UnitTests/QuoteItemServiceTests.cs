@@ -28,6 +28,10 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private PendingQuoteItem _savedPendingItem;
 		private Guid _pendingItemForEditId;
 		private PendingQuoteItem _pendingItemForEdit;
+		private Quote _quoteForEdit;
+		private Guid _quoteForEditId;
+		private QuoteItem _quoteItemForEdit;
+		private Guid _quoteItemForEditId;
 
 		[SetUp]
 		public void Setup()
@@ -79,6 +83,43 @@ namespace JobSystem.BusinessLogic.UnitTests
 				Days = 30,
 				Report = "item calibrated ok",
 				BeyondEconomicRepair = false
+			};
+			_quoteForEditId = Guid.NewGuid();
+			_quoteForEdit = new Quote
+			{
+				Id = _quoteForEditId,
+				CreatedBy = _userContext.GetCurrentUser(),
+				Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" },
+				DateCreated = DateTime.Now,
+				OrderNumber = "PO1000",
+				AdviceNumber = "AD1000",
+				QuoteNumber = "QR2000",
+				Revision = 1
+			};
+			_quoteItemForEditId = Guid.NewGuid();
+			_quoteItemForEdit = new QuoteItem
+			{
+				Id = _quoteItemForEditId,
+				ItemNo = 1,
+				Labour = 45,
+				Calibration = 55,
+				Parts = 23,
+				Carriage = 14,
+				Investigation = 45,
+				Days = 30,
+				Status = new ListItem
+				{
+					Id = Guid.NewGuid(),
+					Category = new ListItemCategory
+					{
+						Id = Guid.NewGuid(),
+						Name = "Job Item Status",
+						Type = ListItemCategoryType.JobItemStatus
+					},
+					Name = "Quote Prepared",
+					Type = ListItemType.StatusQuotedPrepared
+				},
+				Quote = new Quote { Id = _quoteForEditId }
 			};
 		}
 
@@ -1292,6 +1333,285 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		#endregion
+		#region Edit
+
+		[Test]
+		public void Edit_ValidDetails_ItemEditedSuccessfully()
+		{
+			var labour = 20;
+			var calibration = 30;
+			var carriage = 30;
+			var parts = 24;
+			var investgation = 25;
+			var report = "new report";
+			var days = 20;
+			var ber = true;
+
+			var quoteRepositoryMock = MockRepository.GenerateMock<IQuoteRepository>();
+			quoteRepositoryMock.Stub(x => x.GetById(_quoteForEditId)).Return(_quoteForEdit);
+			quoteRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			var quoteItemRepositoryMock = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryMock.Stub(x => x.GetById(_quoteItemForEditId)).Return(_quoteItemForEdit);
+			quoteItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				quoteRepositoryMock,
+				quoteItemRepositoryMock,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Edit(_quoteItemForEditId, labour, calibration, parts, carriage, investgation, report, days, ber);
+			quoteRepositoryMock.VerifyAllExpectations();
+			quoteItemRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(2, _quoteForEdit.Revision);
+			Assert.AreEqual(20, _quoteItemForEdit.Labour);
+			Assert.AreEqual(30, _quoteItemForEdit.Calibration);
+			Assert.AreEqual(24, _quoteItemForEdit.Parts);
+			Assert.AreEqual(25, _quoteItemForEdit.Investigation);
+			Assert.AreEqual("new report", _quoteItemForEdit.Report);
+			Assert.AreEqual(20, _quoteItemForEdit.Days);
+			Assert.AreEqual(true, _quoteItemForEdit.BeyondEconomicRepair);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidQuoteItemId_ArgumentExceptionThrown()
+		{
+			var labour = 20;
+			var calibration = 30;
+			var carriage = 30;
+			var parts = 24;
+			var investgation = 25;
+			var report = "new report";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetById(_quoteItemForEditId)).Return(null);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Edit(_quoteItemForEditId, labour, calibration, parts, carriage, investgation, report, days, ber);
+		}
+
+		[Test]
+		public void Edit_UserHasInsufficientSecurity_DomainValidationExceptionThrown()
+		{
+			var labour = 20;
+			var calibration = 30;
+			var carriage = 30;
+			var parts = 24;
+			var investgation = 25;
+			var report = "new report";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetById(_quoteItemForEditId)).Return(null);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Edit(_quoteItemForEditId, labour, calibration, parts, carriage, investgation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurity));
+		}
+
+		[Test]
+		public void Edit_LabourLessThan0_DomainValidationExceptionThrown()
+		{
+			var labour = -20;
+			var calibration = 30;
+			var carriage = 30;
+			var parts = 24;
+			var investgation = 25;
+			var report = "new report";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetById(_quoteItemForEditId)).Return(_quoteItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Edit(_quoteItemForEditId, labour, calibration, parts, carriage, investgation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidLabour));
+		}
+
+		[Test]
+		public void Edit_CalibrationLessThan0_DomainValidationExceptionThrown()
+		{
+			var labour = 20;
+			var calibration = -30;
+			var carriage = 30;
+			var parts = 24;
+			var investgation = 25;
+			var report = "new report";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetById(_quoteItemForEditId)).Return(_quoteItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Edit(_quoteItemForEditId, labour, calibration, parts, carriage, investgation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidCalibration));
+		}
+
+		[Test]
+		public void Edit_CarriageLessThan0_DomainValidationExceptionThrown()
+		{
+			var labour = 20;
+			var calibration = 30;
+			var carriage = -30;
+			var parts = 24;
+			var investgation = 25;
+			var report = "new report";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetById(_quoteItemForEditId)).Return(_quoteItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Edit(_quoteItemForEditId, labour, calibration, parts, carriage, investgation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidCarriage));
+		}
+
+		[Test]
+		public void Edit_PartsLessThan0_DomainValidationExceptionThrown()
+		{
+			var labour = 20;
+			var calibration = 30;
+			var carriage = 30;
+			var parts = -24;
+			var investgation = 25;
+			var report = "new report";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetById(_quoteItemForEditId)).Return(_quoteItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Edit(_quoteItemForEditId, labour, calibration, parts, carriage, investgation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidParts));
+		}
+
+		[Test]
+		public void Edit_InvestigationLessThan0_DomainValidationExceptionThrown()
+		{
+			var labour = 20;
+			var calibration = 30;
+			var carriage = 30;
+			var parts = 24;
+			var investgation = -25;
+			var report = "new report";
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetById(_quoteItemForEditId)).Return(_quoteItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Edit(_quoteItemForEditId, labour, calibration, parts, carriage, investgation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidInvestigation));
+		}
+
+		[Test]
+		public void Edit_DaysLessThan0_DomainValidationExceptionThrown()
+		{
+			var labour = 20;
+			var calibration = 30;
+			var carriage = 30;
+			var parts = 24;
+			var investgation = 25;
+			var report = "new report";
+			var days = -20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetById(_quoteItemForEditId)).Return(_quoteItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Edit(_quoteItemForEditId, labour, calibration, parts, carriage, investgation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidDays));
+		}
+
+		[Test]
+		public void Edit_ReportGreaterThan2000Characters_DomainValidationExceptionThrown()
+		{
+			var labour = 20;
+			var calibration = 30;
+			var carriage = 30;
+			var parts = 24;
+			var investgation = 25;
+			var report = new string('a', 2001);
+			var days = 20;
+			var ber = true;
+
+			var quoteItemRepositoryStub = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetById(_quoteItemForEditId)).Return(_quoteItemForEdit);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Edit(_quoteItemForEditId, labour, calibration, parts, carriage, investgation, report, days, ber);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidReport));
+		}
+
+		private void Edit(Guid quoteItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair)
+		{
+			try
+			{
+				_quoteItemForEdit = _quoteItemService.Edit(quoteItemId, labour, calibration, parts, carriage, investigation, report, days, beyondEconomicRepair);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
 		#region GetPendingItems
 
 		[Test]
@@ -1390,6 +1710,23 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<ICustomerRepository>());
 			GetById(Guid.NewGuid());
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurity));
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void GetById_InvalidQuoteItemId_ArgumentExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var quoteItemRepositoryStub = MockRepository.GenerateStub<IQuoteItemRepository>();
+			quoteItemRepositoryStub.Stub(x => x.GetById(id)).Return(null);
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			GetById(id);
 		}
 
 		private void GetById(Guid id)

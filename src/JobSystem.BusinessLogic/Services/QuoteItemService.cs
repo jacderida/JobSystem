@@ -93,6 +93,26 @@ namespace JobSystem.BusinessLogic.Services
 			return pendingItem;
 		}
 
+		public QuoteItem Edit(
+			Guid id, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair)
+		{
+			var quoteItem = GetById(id);
+			quoteItem.Labour = GetLabour(labour);
+			quoteItem.Calibration = GetCalibration(calibration);
+			quoteItem.Parts = GetParts(parts);
+			quoteItem.Carriage = GetCarriage(carriage);
+			quoteItem.Investigation = GetInvestigation(investigation);
+			quoteItem.Report = report;
+			quoteItem.Days = GetDays(days);
+			quoteItem.BeyondEconomicRepair = beyondEconomicRepair;
+			ValidateAnnotatedObjectThrowOnFailure(quoteItem);
+			var quote = _quoteRepository.GetById(quoteItem.Quote.Id);
+			quote.Revision++;
+			_quoteRepository.Update(quote);
+			_quoteItemRepository.Update(quoteItem);
+			return quoteItem;
+		}
+
 		public PendingQuoteItem EditPending(
 			Guid pendingItemId, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair, string orderNo, string adviceNo)
 		{
@@ -120,6 +140,9 @@ namespace JobSystem.BusinessLogic.Services
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			var quoteItem = _quoteItemRepository.GetById(id);
+			if (quoteItem == null)
+				throw new ArgumentException("A valid ID must be supplied for the quote item");
 			return _quoteItemRepository.GetById(id);
 		}
 
