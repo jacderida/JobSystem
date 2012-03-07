@@ -196,5 +196,32 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		#endregion
+		#region GetQuotes
+
+		[Test]
+		public void GetQuotes_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
+			GetQuotes();
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Quotes.Messages.InsufficientSecurity));
+		}
+
+		private void GetQuotes()
+		{
+			try
+			{
+				_quoteService.GetQuotes();
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
 	}
 }

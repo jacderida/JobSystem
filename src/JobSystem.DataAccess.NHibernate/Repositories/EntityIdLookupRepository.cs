@@ -22,8 +22,8 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		public string GetNextId(string typeName)
 		{
 			string result;
-			lock (Padlock)
-			{
+			//lock (Padlock)
+			//{
 				var lookup = CurrentSession.Query<EntityIdLookup>().SingleOrDefault(lu => lu.EntityTypeName == typeName) ??
 					new EntityIdLookup
 					{
@@ -36,7 +36,7 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 					result = String.Format("{0}{1}", lookup.Prefix, result);
 				lookup.NextId++;
 				CurrentSession.SaveOrUpdate(lookup);
-			}
+			//}
 			return result;
 		}
 	}

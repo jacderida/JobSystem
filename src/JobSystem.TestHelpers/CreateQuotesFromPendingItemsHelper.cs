@@ -84,7 +84,7 @@ namespace JobSystem.TestHelpers
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobItemService.CreateJobItem(
-				job3Id, jobItem7Id, instrumentId, "123457", String.Empty,
+				job2Id, jobItem7Id, instrumentId, "123457", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,

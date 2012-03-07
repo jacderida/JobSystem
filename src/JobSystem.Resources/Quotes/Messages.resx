@@ -120,8 +120,11 @@
   <data name="AdviceNoTooLarge" xml:space="preserve">
     <value>The advice number cannot exceed 50 characters</value>
   </data>
+  <data name="InsufficientSecurity" xml:space="preserve">
+    <value>A member role is required for this operation</value>
+  </data>
   <data name="InsufficientSecurityClearance" xml:space="preserve">
-    <value>A manager role is required to create a quotation</value>
+    <value>A member role is required to create a quotation</value>
   </data>
   <data name="OrderNoTooLarge" xml:space="preserve">
     <value>The order number cannot exceed 50 characters</value>

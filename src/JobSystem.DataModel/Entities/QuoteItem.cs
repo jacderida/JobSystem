@@ -11,8 +11,8 @@ namespace JobSystem.DataModel.Entities
 		public virtual int ItemNo { get; set; }
 		public virtual Quote Quote { get; set; }
 		public virtual JobItem JobItem { get; set; }
-		public virtual DateTime DateAccepted { get; set; }
-		public virtual DateTime DateRejected { get; set; }
+		public virtual DateTime? DateAccepted { get; set; }
+		public virtual DateTime? DateRejected { get; set; }
 		public virtual decimal Labour { get; set; }
 		public virtual decimal Calibration { get; set; }
 		public virtual decimal Parts { get; set; }

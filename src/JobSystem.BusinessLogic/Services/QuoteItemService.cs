@@ -59,6 +59,7 @@ namespace JobSystem.BusinessLogic.Services
 			jobItem.Location = _listItemRepository.GetByType(ListItemType.WorkLocationQuoted);
 			_jobItemRepository.EmitItemHistory(
 				CurrentUser, jobItemId, 0, 0, String.Format("Item quoted on {0}", quote.QuoteNumber), ListItemType.StatusQuotedPrepared, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationQuoted);
+			quoteItem.JobItem = jobItem;
 			_quoteItemRepository.Create(quoteItem);
 			_jobItemRepository.Update(jobItem);
 			return quoteItem;
@@ -113,6 +114,13 @@ namespace JobSystem.BusinessLogic.Services
 			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
 			_quoteItemRepository.UpdatePendingItem(pendingItem);
 			return pendingItem;
+		}
+
+		public QuoteItem GetById(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			return _quoteItemRepository.GetById(id);
 		}
 
 		public PendingQuoteItem GetPendingQuoteItemForJobItem(Guid jobItemId)

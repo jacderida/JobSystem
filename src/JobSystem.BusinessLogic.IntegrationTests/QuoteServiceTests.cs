@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.DataAccess.NHibernate;
 using JobSystem.DataAccess.NHibernate.Repositories;
@@ -73,6 +74,16 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			var quoteService = new QuoteService(
 				userContext, quoteRepository, customerRepository, entityIdProvider, listItemRepository, quoteItemService, new CompanyDetailsRepository(), dispatcher);
 			quoteService.CreateQuotesFromPendingItems();
+
+			var quotes = quoteService.GetQuotes().OrderBy(q => q.QuoteNumber).ToList();
+			Assert.AreEqual(4, quotes.Count);
+			Assert.AreEqual("1", quotes[0].QuoteNumber);
+			Assert.AreEqual("PO1000", quotes[0].OrderNumber);
+			Assert.AreEqual("PO1001", quotes[1].OrderNumber);
+			Assert.AreEqual("PO1000", quotes[2].OrderNumber);
+			Assert.AreEqual("PO1200", quotes[3].OrderNumber);
+
+			//var quoteItems = quoteItemService.getby
 		}
 	}
 }

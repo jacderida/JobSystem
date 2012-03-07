@@ -69,6 +69,13 @@ namespace JobSystem.BusinessLogic.Services
 			DoCreateQuotesFromPendingItems(_quoteItemService.GetPendingQuoteItems(pendingItemIds));
 		}
 
+		public IEnumerable<Quote> GetQuotes()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			return _quoteRepository.GetQuotes();
+		}
+
 		private void DoCreateQuotesFromPendingItems(IEnumerable<PendingQuoteItem> pendingItems)
 		{
 			var jobNoOrderNoGroups = pendingItems.GroupBy(g => new { g.JobItem.Job.JobNo, g.OrderNo });

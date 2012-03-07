@@ -70,7 +70,16 @@ namespace JobSystem.Resources.Quotes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A manager role is required to create a quotation.
+        ///   Looks up a localized string similar to A member role is required for this operation.
+        /// </summary>
+        public static string InsufficientSecurity {
+            get {
+                return ResourceManager.GetString("InsufficientSecurity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A member role is required to create a quotation.
         /// </summary>
         public static string InsufficientSecurityClearance {
             get {
