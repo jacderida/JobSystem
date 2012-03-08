@@ -142,6 +142,23 @@ namespace JobSystem.BusinessLogic.UnitTests
 			CreateOrder(orderId, supplierId, instructions, currencyId);
 		}
 
+		[Test]
+		public void Create_UserHasInsufficentSecurity_DomainValidationExceptionThrown()
+		{
+			var orderId = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var instructions = "some instructions";
+			var currencyId = Guid.NewGuid();
+
+			_orderService = OrderServiceTestHelper.CreateOrderService(
+				MockRepository.GenerateStub<IOrderRepository>(),
+				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				ListItemTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
+			CreateOrder(orderId, supplierId, instructions, currencyId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
+		}
+
 		private void CreateOrder(Guid id, Guid supplierId, string instructions, Guid currencyId)
 		{
 			try

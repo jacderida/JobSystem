@@ -1,9 +1,11 @@
 ﻿using System;
+using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework;
 using JobSystem.Framework.Messaging;
+using JobSystem.Resources.Orders;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -30,6 +32,8 @@ namespace JobSystem.BusinessLogic.Services
 
 		public Order Create(Guid id, Guid supplierId, string instructions, Guid currencyId)
 		{
+			if (!CurrentUser.HasRole(UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			if (id == Guid.Empty)
 				throw new ArgumentException("An ID must be supplied for the order");
 			var order = new Order();

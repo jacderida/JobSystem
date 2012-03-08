@@ -120,4 +120,7 @@
   <data name="InstructionsTooLarge" xml:space="preserve">
     <value>The instructions cannot exceed 255 characters</value>
   </data>
+  <data name="InsufficientSecurityClearance" xml:space="preserve">
+    <value>A member role is required for this operation</value>
+  </data>
 </root>
