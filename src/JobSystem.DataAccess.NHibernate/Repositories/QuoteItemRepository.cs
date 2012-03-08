@@ -20,6 +20,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			return CurrentSession.Query<PendingQuoteItem>().Where(p => p.JobItem.Id == jobItemId).SingleOrDefault();
 		}
 
+		public QuoteItem GetQuoteItemForJobItem(Guid jobItemId)
+		{
+			return CurrentSession.Query<QuoteItem>().SingleOrDefault(qi => qi.JobItem.Id == jobItemId);
+		}
+
 		public IEnumerable<QuoteItem> GetQuoteItems(Guid quoteId)
 		{
 			return CurrentSession.Query<QuoteItem>().Where(qi => qi.Quote.Id == quoteId);

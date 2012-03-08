@@ -153,6 +153,13 @@ namespace JobSystem.BusinessLogic.Services
 			return _quoteItemRepository.GetQuoteItems(quoteId);
 		}
 
+		public QuoteItem GetQuoteItemForJobItem(Guid jobItemId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			return _quoteItemRepository.GetQuoteItemForJobItem(jobItemId);
+		}
+
 		public PendingQuoteItem GetPendingQuoteItemForJobItem(Guid jobItemId)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
