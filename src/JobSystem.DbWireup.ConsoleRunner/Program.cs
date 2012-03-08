@@ -102,7 +102,8 @@ namespace JobSystem.DbWireup.ConsoleRunner
 				.WithEntitySeeds(
 					Tuple.Create<Type, int, string>(typeof(Job), 2000, "JR"),
 					Tuple.Create<Type, int, string>(typeof(Consignment), 2000, "CR"),
-					Tuple.Create<Type, int, string>(typeof(Quote), 2000, "QR"));
+					Tuple.Create<Type, int, string>(typeof(Quote), 2000, "QR"),
+					Tuple.Create<Type, int, string>(typeof(Order), 2000, "OR"));
 			var defaultData = builder.Build();
 			try
 			{

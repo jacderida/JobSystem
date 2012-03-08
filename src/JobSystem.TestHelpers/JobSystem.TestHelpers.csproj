@@ -59,6 +59,8 @@
     <Compile Include="InstrumentServiceFactory.cs" />
     <Compile Include="JobItemServiceFactory.cs" />
     <Compile Include="JobServiceFactory.cs" />
+    <Compile Include="ListItemTestHelper.cs" />
+    <Compile Include="OrderServiceTestHelper.cs" />
     <Compile Include="QuoteItemServiceTestHelper.cs" />
     <Compile Include="QuoteServiceTestHelper.cs" />
     <Compile Include="SupplierServiceFactory.cs" />

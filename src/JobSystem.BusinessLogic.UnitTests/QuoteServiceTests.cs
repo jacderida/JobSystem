@@ -2,13 +2,13 @@
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
+using JobSystem.DataModel.Entities;
+using JobSystem.DataModel.Repositories;
 using JobSystem.Framework;
+using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
 using NUnit.Framework;
-using JobSystem.DataModel.Entities;
-using JobSystem.TestHelpers;
 using Rhino.Mocks;
-using JobSystem.DataModel.Repositories;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {
@@ -46,7 +46,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
 				quoteRepositoryMock,
 				QuoteServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
-				QuoteServiceTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				ListItemTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateQuote(id, customerId, orderNo, adviceNo, currencyId);
 			quoteRepositoryMock.VerifyAllExpectations();
@@ -106,7 +106,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				QuoteServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
-				QuoteServiceTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				ListItemTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateQuote(id, customerId, orderNo, adviceNo, currencyId);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Quotes.Messages.OrderNoTooLarge));
@@ -124,7 +124,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				QuoteServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
-				QuoteServiceTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				ListItemTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateQuote(id, customerId, orderNo, adviceNo, currencyId);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Quotes.Messages.AdviceNoTooLarge));
@@ -143,7 +143,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				QuoteServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
-				QuoteServiceTestHelper.GetListItemRepository_StubsGetById_ReturnsNull(currencyId),
+				ListItemTestHelper.GetListItemRepository_StubsGetById_ReturnsNull(currencyId),
 				_userContext);
 			CreateQuote(id, customerId, orderNo, adviceNo, currencyId);
 		}
@@ -161,7 +161,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				QuoteServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
-				QuoteServiceTestHelper.GetListItemRepository_StubsGetById_ReturnsNonCurrencyListItem(currencyId),
+				ListItemTestHelper.GetListItemRepository_StubsGetById_ReturnsNonCurrencyListItem(currencyId),
 				_userContext);
 			CreateQuote(id, customerId, orderNo, adviceNo, currencyId);
 		}
@@ -178,7 +178,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				QuoteServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
-				QuoteServiceTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				ListItemTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member));
 			CreateQuote(id, customerId, orderNo, adviceNo, currencyId);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Quotes.Messages.InsufficientSecurityClearance));

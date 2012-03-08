@@ -70,6 +70,7 @@
     <Compile Include="Services\JobItemService.cs" />
     <Compile Include="Services\JobService.cs" />
     <Compile Include="Services\ListItemService.cs" />
+    <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\QuoteItemService.cs" />
     <Compile Include="Services\QuoteService.cs" />
     <Compile Include="Services\ServiceBase.cs" />
