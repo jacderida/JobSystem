@@ -97,10 +97,10 @@
 			</div>
 		</div>
 		<div id="st_content_3" class="st_tab_view">
-			<div class="text">
-				@Html.ActionLink("Raise Quote", "Create", "Quote", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action createQuoteButton" })
+			<div class="text">	
 				@if (Model.QuoteItem != null)
 				{
+					@Html.ActionLink("Edit Quote", "EditPending", "Quote", new { id = @Model.Id, fromJi = true }, new { @class = "primary-action" })
 					<div class="quote-item">
 						<div class="details-fields">
 							<span class="field-label">Order No.</span>
@@ -128,12 +128,14 @@
 				}
 				else if (Model.Quote != null)
 				{
+					@Html.ActionLink("Edit Quote", "EditQuoted", "Quote", new { id = @Model.Id, fromJi = true }, new { @class = "primary-action" })
 					<div class="consignment-item">
 						<h3>Some stuff for quote</h3>
 					</div>
 				}
 				else
 				{
+					@Html.ActionLink("Raise Quote", "Create", "Quote", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action createQuoteButton" })
 					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
 				}
 			</div>
@@ -146,16 +148,16 @@
 				<div id="edit-consignment-container">@*Content ajaxed in*@</div>
 
 				@if (Model.ConsignmentItem != null)
-				{
+	{
 					<div class="consignment-item">
 						<h3>@Model.ConsignmentItem.SupplierName</h3>
 						@Model.ConsignmentItem.Instructions
 					</div>
 					<br />
 					<a href="#" class="primary-action editConsignmentButton" id="@Model.ConsignmentItem.Id">Edit</a>
-				}
-				else if (Model.Consignment != null)
-				{
+	}
+	else if (Model.Consignment != null)
+	{
 					<div class="consignment-item">
 						<h3>@Model.Consignment.SupplierName</h3>
 						@Model.Consignment.ConsignmentNo<br />
@@ -163,11 +165,11 @@
 							Created by <span class="strongText">@Model.Consignment.CreatedBy</span> on <span class="strongText">@Model.Consignment.DateCreated</span>
 						</span>
 					</div>
-				}
-				else
-				{
+	}
+	else
+	{
 					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
-				}
+	}
 			</div>
 		</div>
 		<div id="st_content_7" class="st_tab_view">

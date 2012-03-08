@@ -1,4 +1,4 @@
-﻿@model IList<JobSystem.Mvc.ViewModels.Quotes.QuoteItemIndexViewModel>
+﻿@model JobSystem.Mvc.ViewModels.Quotes.QuotePendingListViewModel
 
 @{
     ViewBag.Title = "Pending Quotes";
@@ -14,9 +14,9 @@
 @using (Html.BeginForm("QuotePending", "Quote", FormMethod.Post))
 {
 <input class="primary-action" type="submit" value="Quote"/>
-if (Model.Any()) {
+if (Model.QuoteItems.Any()) {
 	<br /><br />
-	foreach (var grp in Model.GroupBy(g => g.JobNo)) { 
+	foreach (var grp in Model.QuoteItems.GroupBy(g => g.JobNo)) { 
 		<h3>@Html.Encode(grp.Key)</h3>
 		<table id="quoteTable">
 		<tr>
@@ -37,7 +37,7 @@ if (Model.Any()) {
 		
 		<tr>
 			<td class="shortColumn">
-				@Html.CheckBox("toBeConverted", false)
+				<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>
 			</td>
 			<td class="shortColumn">
 				@item.OrderNo
