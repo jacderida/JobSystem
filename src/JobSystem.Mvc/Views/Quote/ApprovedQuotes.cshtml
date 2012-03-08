@@ -21,7 +21,6 @@
 			<th>Created By</th>
 			<th>Date Created</th>
 			<th>Quote Items</th>
-			<th></th>
 		</tr>
 	@foreach (var item in Model.OrderBy(i => i.QuoteNo))
 	 {
@@ -62,9 +61,6 @@
 					}	
 					</span>
 				</span>
-			</td>
-			<td>
-				<a href="#" class="editQuoteButton" id="@item.Id">Edit</a>
 			</td>
 		</tr>
 	 }

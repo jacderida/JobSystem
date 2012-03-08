@@ -133,8 +133,10 @@ namespace JobSystem.Mvc.Controllers
 					Days = q.Days,
 					ItemBER = q.BeyondEconomicRepair
 				}).ToList();
-
-			return View(items);
+			var viewmodel = new QuotePendingListViewModel(){
+				QuoteItems = items
+			};
+			return View(viewmodel);
 		}
 
 		[HttpGet]
@@ -172,13 +174,14 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult EditPending(Guid id)
+		public ActionResult EditPending(Guid id, bool fromJi)
 		{
 			var pendingItem = _quoteItemService.GetPendingQuoteItemForJobItem(id);
 
 			var viewmodel = new QuoteItemEditViewModel()
 			{
 				Id = pendingItem.Id,
+				JobId = pendingItem.JobItem.Job.Id,
 				JobItemId = pendingItem.JobItem.Id,
 				AdviceNo = pendingItem.AdviceNo,
 				Calibration = pendingItem.Calibration,
@@ -189,7 +192,8 @@ namespace JobSystem.Mvc.Controllers
 				OrderNo = pendingItem.OrderNo,
 				Parts = pendingItem.Parts,
 				Repair = pendingItem.Labour,
-				Report = pendingItem.Report
+				Report = pendingItem.Report,
+				EditedFromJobItem = fromJi
 			};
 			return View("Edit", viewmodel);
 		}
@@ -210,8 +214,13 @@ namespace JobSystem.Mvc.Controllers
 				viewmodel.ItemBER,
 				viewmodel.OrderNo,
 				viewmodel.AdviceNo);
-
-			return RedirectToAction("PendingQuotes");
+			
+			if (viewmodel.EditedFromJobItem){
+				return RedirectToAction("Details", "Job", new { id = viewmodel.JobId });
+			}else{
+				return RedirectToAction("PendingQuotes");
+			}
+			
 		}
 
 		[Transaction]
@@ -229,9 +238,9 @@ namespace JobSystem.Mvc.Controllers
 							idList.Add(ToBeConvertedIds[i]);
 						}
 					}
-					//if (idList.Any()) _quoteService.CreateQuotesFromPendingItems(idList);
+					if (idList.Any()) _quoteService.CreateQuoteFromPendingItems(idList);
 
-					return RedirectToAction("PendingConsignments");
+					return RedirectToAction("PendingQuotes");
 				}
 				catch (DomainValidationException dex)
 				{

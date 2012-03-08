@@ -28,5 +28,6 @@ namespace JobSystem.Mvc.ViewModels.Quotes
 		public Guid CurrencyId { get; set; }
 		[Display(Name = "Currency")]
 		public IEnumerable<SelectListItem> Currencies { get; set; }
+		public bool EditedFromJobItem { get; set; }
 	}
 }
