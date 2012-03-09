@@ -76,9 +76,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\IConsignmentReportDataProvider.cs" />
+    <Compile Include="Data\IQuoteReportDataProvider.cs" />
     <Compile Include="Data\NHibernate\NHibernateConsignmentReportDataProvider.cs" />
+    <Compile Include="Data\NHibernate\NHibernateQuoteReportDataProvider.cs" />
     <Compile Include="Data\NHibernate\NHibernateReportDataProviderBase.cs" />
     <Compile Include="Models\ConsignmentReportModel.cs" />
+    <Compile Include="Models\QuoteReportModel.cs" />
     <Compile Include="Models\ReportModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportDefinitions\TelerikConsignmentReport.cs">
