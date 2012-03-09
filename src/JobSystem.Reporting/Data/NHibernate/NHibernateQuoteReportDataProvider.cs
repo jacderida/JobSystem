@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using JobSystem.Reporting.Models;
 using System.ComponentModel;
 using JobSystem.DataModel.Entities;
+using JobSystem.Reporting.Models;
 
 namespace JobSystem.Reporting.Data.NHibernate
 {
