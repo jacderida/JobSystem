@@ -101,6 +101,8 @@
     <Compile Include="Repositories\JobItemRepository.cs" />
     <Compile Include="Repositories\JobRepository.cs" />
     <Compile Include="Repositories\ListItemRepository.cs" />
+    <Compile Include="Repositories\OrderItemRepository.cs" />
+    <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Repositories\QuoteItemRepository.cs" />
     <Compile Include="Repositories\QuoteRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />

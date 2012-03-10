@@ -46,7 +46,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				orderRepositoryMock,
 				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
-				ListItemTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
 			orderRepositoryMock.VerifyAllExpectations();
@@ -69,7 +69,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
 				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
-				ListItemTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
 		}
@@ -86,7 +86,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
 				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsNull(supplierId),
-				ListItemTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
 		}
@@ -102,7 +102,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
 				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
-				ListItemTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InstructionsTooLarge));
@@ -120,7 +120,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
 				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
-				ListItemTestHelper.GetListItemRepository_StubsGetById_ReturnsNull(currencyId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsNull(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
 		}
@@ -137,7 +137,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
 				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
-				ListItemTestHelper.GetListItemRepository_StubsGetById_ReturnsNonCurrencyListItem(currencyId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsNonCurrencyListItem(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
 		}
@@ -153,7 +153,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
 				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
-				ListItemTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
 			CreateOrder(orderId, supplierId, instructions, currencyId);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));

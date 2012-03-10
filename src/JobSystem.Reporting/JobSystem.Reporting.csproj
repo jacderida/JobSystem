@@ -90,6 +90,12 @@
     <Compile Include="ReportDefinitions\TelerikConsignmentReport.Designer.cs">
       <DependentUpon>TelerikConsignmentReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReportDefinitions\TelerikQuoteReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportDefinitions\TelerikQuoteReport.Designer.cs">
+      <DependentUpon>TelerikQuoteReport.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JobSystem.DataAccess.NHibernate\JobSystem.DataAccess.NHibernate.csproj">
@@ -104,6 +110,9 @@
   <ItemGroup>
     <EmbeddedResource Include="ReportDefinitions\TelerikConsignmentReport.resx">
       <DependentUpon>TelerikConsignmentReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportDefinitions\TelerikQuoteReport.resx">
+      <DependentUpon>TelerikQuoteReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

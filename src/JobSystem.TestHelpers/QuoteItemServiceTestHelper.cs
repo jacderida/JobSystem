@@ -19,18 +19,6 @@ namespace JobSystem.TestHelpers
 				userContext, quoteRepository, quoteItemRepository, jobItemRepository, listItemRepository, customerRepository, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 
-		public static JobItemService CreateJobItemService(IUserContext userContext, IJobItemRepository jobItemRepository)
-		{
-			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
-			return new JobItemService(
-				userContext,
-				MockRepository.GenerateStub<IJobRepository>(),
-				jobItemRepository,
-				new ListItemService(userContext, MockRepository.GenerateStub<IListItemRepository>(), dispatcher),
-				new InstrumentService(userContext, MockRepository.GenerateStub<IInstrumentRepository>(), dispatcher),
-				dispatcher);
-		}
-
 		public static ICustomerRepository GetCustomerRepository_StubsGetById_ReturnsCustomer(Guid customerId)
 		{
 			var customerRepositoryStub = MockRepository.GenerateStub<ICustomerRepository>();
@@ -64,27 +52,6 @@ namespace JobSystem.TestHelpers
 			var quoteRepositoryStub = MockRepository.GenerateStub<IQuoteRepository>();
 			quoteRepositoryStub.Stub(x => x.GetById(quoteId)).Return(null);
 			return quoteRepositoryStub;
-		}
-
-		public static IJobItemRepository GetJobItemRepository_StubsGetById_ReturnsNull(Guid jobItemId)
-		{
-			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
-			jobItemRepositoryStub.Stub(x => x.GetById(jobItemId)).Return(null);
-			return jobItemRepositoryStub;
-		}
-
-		public static IJobItemRepository GetJobItemRepository_StubsGetById_ReturnsJobItemOnPendingJob(Guid jobItemId)
-		{
-			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
-			jobItemRepositoryStub.Stub(x => x.GetById(jobItemId)).Return(GetJobItem(jobItemId, true));
-			return jobItemRepositoryStub;
-		}
-
-		public static IJobItemRepository GetJobItemRepository_StubsGetById_ReturnsJobItem(Guid jobItemId)
-		{
-			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
-			jobItemRepositoryStub.Stub(x => x.GetById(jobItemId)).Return(GetJobItem(jobItemId, false));
-			return jobItemRepositoryStub;
 		}
 
 		public static IListItemRepository GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted()

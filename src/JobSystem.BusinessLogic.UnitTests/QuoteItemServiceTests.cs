@@ -1,16 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
-using NUnit.Framework;
-using JobSystem.Framework;
-using JobSystem.TestHelpers.Context;
 using JobSystem.DataModel.Repositories;
-using Rhino.Mocks;
-using JobSystem.TestHelpers;
+using JobSystem.Framework;
 using JobSystem.Resources.QuoteItems;
-using System.Collections.Generic;
+using JobSystem.TestHelpers;
+using JobSystem.TestHelpers.Context;
+using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {
@@ -154,7 +154,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				jobItemRepositoryMock,
 				QuoteItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			_jobItemService = QuoteItemServiceTestHelper.CreateJobItemService(_userContext, jobItemRepositoryMock);
+			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
 			CreateQuoteItem(id, quoteId, _jobItemToUpdateId, labour, calibration, parts, carriage, investigation, report, days, ber);
 			jobItemRepositoryMock.VerifyAllExpectations();
 			quoteItemRepositoryMock.VerifyAllExpectations();
@@ -194,7 +194,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				jobItemRepositoryMock,
 				QuoteItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			_jobItemService = QuoteItemServiceTestHelper.CreateJobItemService(_userContext, jobItemRepositoryMock);
+			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
 			CreateQuoteItem(id, quoteId, _jobItemToUpdateId, labour, calibration, parts, carriage, investigation, report, days, ber);
 			jobItemRepositoryMock.VerifyAllExpectations();
 			quoteItemRepositoryMock.VerifyAllExpectations();
@@ -227,7 +227,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				QuoteItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			_jobItemService = QuoteItemServiceTestHelper.CreateJobItemService(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
 			CreateQuoteItem(id, quoteId, _jobItemToUpdateId, labour, calibration, parts, carriage, investigation, report, days, ber);
 		}
 
@@ -253,7 +253,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				QuoteItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			_jobItemService = QuoteItemServiceTestHelper.CreateJobItemService(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
 			CreateQuoteItem(id, quoteId, _jobItemToUpdateId, labour, calibration, parts, carriage, investigation, report, days, ber);
 		}
 
@@ -277,10 +277,10 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				QuoteItemServiceTestHelper.GetQuoteRepository_StubsGetById_ReturnsQuoteWith0Items(quoteId),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsNull(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsNull(jobItemId),
 				QuoteItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			_jobItemService = QuoteItemServiceTestHelper.CreateJobItemService(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
 			CreateQuoteItem(id, quoteId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
 		}
 
@@ -303,10 +303,10 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				QuoteItemServiceTestHelper.GetQuoteRepository_StubsGetById_ReturnsQuoteWith0Items(quoteId),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItemOnPendingJob(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItemOnPendingJob(jobItemId),
 				QuoteItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			_jobItemService = QuoteItemServiceTestHelper.CreateJobItemService(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
 			CreateQuoteItem(id, quoteId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.PendingJob));
 		}
@@ -330,10 +330,10 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				QuoteItemServiceTestHelper.GetQuoteRepository_StubsGetById_ReturnsQuoteWith0Items(quoteId),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				QuoteItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			_jobItemService = QuoteItemServiceTestHelper.CreateJobItemService(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
 			CreateQuoteItem(id, quoteId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidLabour));
 		}
@@ -357,10 +357,10 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				QuoteItemServiceTestHelper.GetQuoteRepository_StubsGetById_ReturnsQuoteWith0Items(quoteId),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				QuoteItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			_jobItemService = QuoteItemServiceTestHelper.CreateJobItemService(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
 			CreateQuoteItem(id, quoteId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidCalibration));
 		}
@@ -384,10 +384,10 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				QuoteItemServiceTestHelper.GetQuoteRepository_StubsGetById_ReturnsQuoteWith0Items(quoteId),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				QuoteItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			_jobItemService = QuoteItemServiceTestHelper.CreateJobItemService(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
 			CreateQuoteItem(id, quoteId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidParts));
 		}
@@ -411,10 +411,10 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				QuoteItemServiceTestHelper.GetQuoteRepository_StubsGetById_ReturnsQuoteWith0Items(quoteId),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				QuoteItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			_jobItemService = QuoteItemServiceTestHelper.CreateJobItemService(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
 			CreateQuoteItem(id, quoteId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidCarriage));
 		}
@@ -438,10 +438,10 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				QuoteItemServiceTestHelper.GetQuoteRepository_StubsGetById_ReturnsQuoteWith0Items(quoteId),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				QuoteItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			_jobItemService = QuoteItemServiceTestHelper.CreateJobItemService(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
 			CreateQuoteItem(id, quoteId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidInvestigation));
 		}
@@ -465,10 +465,10 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				QuoteItemServiceTestHelper.GetQuoteRepository_StubsGetById_ReturnsQuoteWith0Items(quoteId),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				QuoteItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			_jobItemService = QuoteItemServiceTestHelper.CreateJobItemService(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
 			CreateQuoteItem(id, quoteId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidDays));
 		}
@@ -492,10 +492,10 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				QuoteItemServiceTestHelper.GetQuoteRepository_StubsGetById_ReturnsQuoteWith0Items(quoteId),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				QuoteItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			_jobItemService = QuoteItemServiceTestHelper.CreateJobItemService(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
 			CreateQuoteItem(id, quoteId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidReport));
 		}
@@ -519,10 +519,10 @@ namespace JobSystem.BusinessLogic.UnitTests
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
 				QuoteItemServiceTestHelper.GetQuoteRepository_StubsGetById_ReturnsQuoteWith0Items(quoteId),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				QuoteItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusQuotePreparedAndLocationQuoted(),
 				MockRepository.GenerateStub<ICustomerRepository>());
-			_jobItemService = QuoteItemServiceTestHelper.CreateJobItemService(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
 			CreateQuoteItem(id, quoteId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurity));
 		}
@@ -566,7 +566,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				quoteItemRepositoryMock,
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -596,7 +596,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -625,7 +625,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				quoteItemRepositoryStub,
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -654,7 +654,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsNull(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsNull(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -681,7 +681,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItemOnPendingJob(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItemOnPendingJob(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -710,7 +710,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsNull(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -737,7 +737,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -765,7 +765,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -793,7 +793,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -821,7 +821,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -849,7 +849,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -877,7 +877,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -905,7 +905,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -933,7 +933,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -961,7 +961,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				MockRepository.GenerateStub<IQuoteItemRepository>(),
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			CreatePendingQuoteItem(id, customerId, jobItemId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -1284,7 +1284,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				quoteItemRepositoryStub,
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);
@@ -1313,7 +1313,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IQuoteRepository>(),
 				quoteItemRepositoryStub,
-				QuoteItemServiceTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				QuoteItemServiceTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId));
 			EditPendingItem(_pendingItemForEditId, labour, calibration, parts, carriage, investigation, report, days, ber, orderNo, adviceNo);

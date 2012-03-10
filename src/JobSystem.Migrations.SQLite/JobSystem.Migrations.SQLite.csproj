@@ -99,6 +99,8 @@
     <Compile Include="M20120227211642_AddQuotesTable.cs" />
     <Compile Include="M20120302210550_AddQuoteItemsTable.cs" />
     <Compile Include="M20120304130625_AddPendingQuoteItemsTable.cs" />
+    <Compile Include="M20120308205415_AddOrdersTable.cs" />
+    <Compile Include="M20120309213452_AddOrderItemsTable.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

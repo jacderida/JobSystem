@@ -5,7 +5,7 @@ using Rhino.Mocks;
 
 namespace JobSystem.TestHelpers
 {
-	public static class ListItemTestHelper
+	public static class ListItemRepositoryTestHelper
 	{
 		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsGbpCurrency(Guid currencyId)
 		{

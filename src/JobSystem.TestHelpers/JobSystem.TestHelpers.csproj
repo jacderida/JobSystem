@@ -57,9 +57,11 @@
     <Compile Include="DomainValidationExtensions.cs" />
     <Compile Include="EntityIdProviderFactory.cs" />
     <Compile Include="InstrumentServiceFactory.cs" />
+    <Compile Include="JobItemRepositoryTestHelper.cs" />
     <Compile Include="JobItemServiceFactory.cs" />
     <Compile Include="JobServiceFactory.cs" />
-    <Compile Include="ListItemTestHelper.cs" />
+    <Compile Include="ListItemRepositoryTestHelper.cs" />
+    <Compile Include="OrderItemServiceTestHelper.cs" />
     <Compile Include="OrderServiceTestHelper.cs" />
     <Compile Include="QuoteItemServiceTestHelper.cs" />
     <Compile Include="QuoteServiceTestHelper.cs" />

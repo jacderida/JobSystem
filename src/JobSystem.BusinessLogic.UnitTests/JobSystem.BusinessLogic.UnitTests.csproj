@@ -95,6 +95,7 @@
     <Compile Include="InstrumentTests.cs" />
     <Compile Include="JobItemTests.cs" />
     <Compile Include="JobServiceTests.cs" />
+    <Compile Include="OrderItemServiceTests.cs" />
     <Compile Include="OrderServiceTests.cs" />
     <Compile Include="QuoteItemServiceTests.cs" />
     <Compile Include="QuoteServiceTests.cs" />
