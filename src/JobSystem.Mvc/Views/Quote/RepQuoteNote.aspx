@@ -27,7 +27,7 @@
 		protected override void OnLoad(EventArgs e)
 		{
 			var dataSource = new Telerik.Reporting.ObjectDataSource();
-			dataSource.DataSource = typeof(NHibernateConsignmentReportDataProvider);
+			dataSource.DataSource = typeof(NHibernateQuoteReportDataProvider);
 			dataSource.DataMember = "GetQuoteReportData";
 			dataSource.Parameters.Add(new Telerik.Reporting.ObjectDataSourceParameter("quoteId", typeof(Guid), Model));
 			var companyDetailsService = DependencyResolver.Current.GetService<CompanyDetailsService>();

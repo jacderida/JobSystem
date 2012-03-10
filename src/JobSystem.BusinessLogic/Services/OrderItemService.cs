@@ -63,6 +63,19 @@ namespace JobSystem.BusinessLogic.Services
 			return orderItem;
 		}
 
+		public OrderItem Edit(Guid id, int quantity, string partNo, string instructions, int deliveryDays, decimal price)
+		{
+			var orderItem = GetById(id);
+			orderItem.Quantity = GetQuantity(quantity);
+			orderItem.PartNo = partNo;
+			orderItem.Instructions = instructions;
+			orderItem.DeliveryDays = GetDeliveryDays(deliveryDays);
+			orderItem.Price = GetPrice(price);
+			ValidateAnnotatedObjectThrowOnFailure(orderItem);
+			_orderItemRepository.Update(orderItem);
+			return orderItem;
+		}
+
 		public PendingOrderItem CreatePending(Guid id, Guid supplierId, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
@@ -83,6 +96,16 @@ namespace JobSystem.BusinessLogic.Services
 			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
 			_orderItemRepository.CreatePending(pendingItem);
 			return pendingItem;
+		}
+
+		public OrderItem GetById(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
+			var orderItem = _orderItemRepository.GetById(id);
+			if (orderItem == null)
+				throw new ArgumentException("A valid ID must be supplied for the order item");
+			return orderItem;
 		}
 
 		private Supplier GetSupplier(Guid supplierId)
