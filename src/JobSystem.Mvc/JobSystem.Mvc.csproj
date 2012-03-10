@@ -267,6 +267,7 @@
     <Content Include="Scripts\the-tooltip.min.js" />
     <Content Include="Scripts\workitem.js" />
     <Content Include="Views\Consignment\RepConsignmentNote.aspx" />
+    <Content Include="Views\Quote\RepQuoteNote.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

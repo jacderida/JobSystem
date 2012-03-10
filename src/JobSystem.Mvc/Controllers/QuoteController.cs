@@ -298,5 +298,10 @@ namespace JobSystem.Mvc.Controllers
 			}
 			return RedirectToAction("PendingConsignments");
 		}
+
+		public ActionResult GenerateQuoteReport(Guid id)
+		{
+			return View("RepQuoteNote", id);
+		}
 	}
 }

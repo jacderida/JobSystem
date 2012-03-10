@@ -18,6 +18,7 @@
 			<th>Customer</th>
 			<th>Created By</th>
 			<th>Date Created</th>
+			<th></th>
 		</tr>
 	</table>
 	
@@ -42,6 +43,9 @@
 			</td>
 			<td>
 				@item.DateCreated
+			</td>
+			<td>
+				@Html.ActionLink("Print Quote", "GenerateQuoteReport",  new { Id = @item.Id }, new { target="_blank"})
 			</td>
 		</tr>
 	 </table>
