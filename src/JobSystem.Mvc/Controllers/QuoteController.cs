@@ -174,51 +174,96 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult EditPending(Guid id, bool fromJi)
+		public ActionResult Edit(Guid id, bool fromJi, bool isQuoted)
 		{
-			var pendingItem = _quoteItemService.GetPendingQuoteItemForJobItem(id);
-
-			var viewmodel = new QuoteItemEditViewModel()
+			if (!isQuoted) 
 			{
-				Id = pendingItem.Id,
-				JobId = pendingItem.JobItem.Job.Id,
-				JobItemId = pendingItem.JobItem.Id,
-				AdviceNo = pendingItem.AdviceNo,
-				Calibration = pendingItem.Calibration,
-				Carriage = pendingItem.Carriage,
-				Days = pendingItem.Days,
-				Investigation = pendingItem.Investigation,
-				ItemBER = pendingItem.BeyondEconomicRepair,
-				OrderNo = pendingItem.OrderNo,
-				Parts = pendingItem.Parts,
-				Repair = pendingItem.Labour,
-				Report = pendingItem.Report,
-				EditedFromJobItem = fromJi
-			};
-			return View("Edit", viewmodel);
+				var pendingItem = _quoteItemService.GetPendingQuoteItemForJobItem(id);
+
+				var viewmodel = new QuoteItemEditViewModel()
+				{
+					Id = pendingItem.Id,
+					JobId = pendingItem.JobItem.Job.Id,
+					JobItemId = pendingItem.JobItem.Id,
+					AdviceNo = pendingItem.AdviceNo,
+					Calibration = pendingItem.Calibration,
+					Carriage = pendingItem.Carriage,
+					Days = pendingItem.Days,
+					Investigation = pendingItem.Investigation,
+					ItemBER = pendingItem.BeyondEconomicRepair,
+					OrderNo = pendingItem.OrderNo,
+					Parts = pendingItem.Parts,
+					Repair = pendingItem.Labour,
+					Report = pendingItem.Report,
+					EditedFromJobItem = fromJi,
+					IsQuoted = isQuoted
+				};
+				return View("Edit", viewmodel);
+			}
+			else
+			{
+				var item = _quoteItemService.GetQuoteItemForJobItem(id);
+
+				var viewmodel = new QuoteItemEditViewModel()
+				{
+					Id = item.Id,
+					JobId = item.JobItem.Job.Id,
+					JobItemId = item.JobItem.Id,
+					AdviceNo = item.Quote.AdviceNumber,
+					Calibration = item.Calibration,
+					Carriage = item.Carriage,
+					Days = item.Days,
+					Investigation = item.Investigation,
+					ItemBER = item.BeyondEconomicRepair,
+					OrderNo = item.Quote.OrderNumber,
+					Parts = item.Parts,
+					Repair = item.Labour,
+					Report = item.Report,
+					EditedFromJobItem = fromJi,
+					IsQuoted = isQuoted
+				};
+				return View("Edit", viewmodel);
+			}
 		}
 
 		[HttpPost]
 		[Transaction]
-		public ActionResult EditPending(QuoteItemEditViewModel viewmodel)
+		public ActionResult Edit(QuoteItemEditViewModel viewmodel)
 		{
-			_quoteItemService.EditPending(
-				viewmodel.Id,
-				viewmodel.Repair,
-				viewmodel.Calibration,
-				viewmodel.Parts,
-				viewmodel.Carriage,
-				viewmodel.Investigation,
-				viewmodel.Report,
-				viewmodel.Days,
-				viewmodel.ItemBER,
-				viewmodel.OrderNo,
-				viewmodel.AdviceNo);
+			if (!viewmodel.IsQuoted) 
+			{
+				_quoteItemService.EditPending(
+					viewmodel.Id,
+					viewmodel.Repair,
+					viewmodel.Calibration,
+					viewmodel.Parts,
+					viewmodel.Carriage,
+					viewmodel.Investigation,
+					viewmodel.Report,
+					viewmodel.Days,
+					viewmodel.ItemBER,
+					viewmodel.OrderNo,
+					viewmodel.AdviceNo);
+			}
+			else
+			{
+				_quoteItemService.Edit(
+					viewmodel.Id,
+					viewmodel.Repair,
+					viewmodel.Calibration,
+					viewmodel.Parts,
+					viewmodel.Carriage,
+					viewmodel.Investigation,
+					viewmodel.Report,
+					viewmodel.Days,
+					viewmodel.ItemBER);
+			}
 			
 			if (viewmodel.EditedFromJobItem){
 				return RedirectToAction("Details", "Job", new { id = viewmodel.JobId });
 			}else{
-				return RedirectToAction("PendingQuotes");
+				if (!viewmodel.IsQuoted) return RedirectToAction("PendingQuotes");
+					else return RedirectToAction("ApprovedQuotes");
 			}
 			
 		}
@@ -249,40 +294,5 @@ namespace JobSystem.Mvc.Controllers
 			}
 			return RedirectToAction("PendingConsignments");
 		}
-
-		//[HttpGet]
-		//public ActionResult EditPendingItem(Guid id)
-		//{
-		//    var quote = _quoteItemService.GetPendingItem(id);
-
-		//    var viewmodel = new QuoteItemEditViewModel()
-		//    {
-		//        Id = quote.Id,
-		//        AdviceNo = ,
-		//        Calibration = ,
-		//        Carriage = ,
-		//        Days = ,
-		//        Investigation = ,
-		//        ItemBER = ,
-		//        OrderNo = ,
-		//        Parts = ,
-		//        Repair = ,
-		//        Report = 
-		//    };
-		//    return PartialView("_Edit", viewmodel);
-		//}
-
-		//[HttpPost]
-		//[Transaction]
-		//public ActionResult EditPending(QuoteItemEditViewModel viewmodel)
-		//{
-		//    _quoteItemService.EditPending(
-		//        viewmodel.Id,
-		//        viewmodel.JobItemId,
-		//        viewmodel.SupplierId,
-		//        viewmodel.Instructions);
-
-		//    return RedirectToAction("PendingQuotes", "Quote");
-		//}
 	}
 }

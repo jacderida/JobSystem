@@ -994,3 +994,14 @@ div#title {
 #quoteTable .shortColumn {
 	width: 100px;
 }
+
+.approvedQuoteTable {
+	table-layout: fixed;
+	margin: 0;
+}
+
+.approvedQuoteTable td {
+	height: 10px;
+	padding: 0;
+	padding: 5px 0 5px 0;
+}

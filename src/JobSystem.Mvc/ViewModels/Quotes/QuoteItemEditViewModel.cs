@@ -29,5 +29,6 @@ namespace JobSystem.Mvc.ViewModels.Quotes
 		[Display(Name = "Currency")]
 		public IEnumerable<SelectListItem> Currencies { get; set; }
 		public bool EditedFromJobItem { get; set; }
+		public bool IsQuoted { get; set; }
 	}
 }

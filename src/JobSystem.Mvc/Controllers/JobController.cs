@@ -269,52 +269,53 @@ namespace JobSystem.Mvc.Controllers
 
 		private QuoteItemIndexViewModel PopulateQuoteItemViewModel(Guid Id)
 		{
-		    var pendingItem = _quoteItemService.GetPendingQuoteItemForJobItem(Id);
-		    if (pendingItem == null)
-		    {
-				//var item = _quoteItemService.GetLatestQuoteItem(Id);
-				//if (item != null)
-				//{
-				//    var viewmodel = new QuoteItemIndexViewModel()
-				//    {
-				//        Id = item.Id,
-				//        AdviceNo = ,
-				//        Calibration = ,
-				//        Carriage = ,
-				//        Days = ,
-				//        Investigation = ,
-				//        ItemBER = ,
-				//        OrderNo = ,
-				//        Parts = ,
-				//        Repair = ,
-				//        Report = 
-				//    };
-				//    return viewmodel;
-				//}
-				//else
-				//{
-				//    return null;
-				//}
-				return null;
-		    }
-		    else
-		    {
-		        var viewmodel = new QuoteItemIndexViewModel()
-		        {
-		            Id = pendingItem.Id,
-		            AdviceNo = pendingItem.AdviceNo,
-		            Calibration = pendingItem.Calibration,
-		            Carriage = pendingItem.Carriage,
-		            Days = pendingItem.Days,
-		            Investigation = pendingItem.Investigation,
-		            ItemBER = pendingItem.BeyondEconomicRepair,
-		            OrderNo = pendingItem.OrderNo,
-		            Parts = pendingItem.Parts,
-		            Repair = pendingItem.Labour,
-		            Report = pendingItem.Report
-		        };
-		        return viewmodel;
-		    }
+			var pendingItem = _quoteItemService.GetPendingQuoteItemForJobItem(Id);
+			if (pendingItem == null)
+			{
+				var item = _quoteItemService.GetQuoteItemForJobItem(Id);
+				if (item != null)
+				{
+					var viewmodel = new QuoteItemIndexViewModel()
+					{
+						Id = item.Id,
+						AdviceNo = item.Quote.AdviceNumber,
+						Calibration = item.Calibration,
+						Carriage = item.Carriage,
+						Days = item.Days,
+						Investigation = item.Investigation,
+						ItemBER = item.BeyondEconomicRepair,
+						OrderNo = item.Quote.OrderNumber,
+						Parts = item.Parts,
+						Repair = item.Labour,
+						Report = item.Report,
+						IsQuoted = true
+					};
+					return viewmodel;
+				}
+				else
+				{
+					return null;
+				}
+			}
+			else
+			{
+				var viewmodel = new QuoteItemIndexViewModel()
+				{
+					Id = pendingItem.Id,
+					AdviceNo = pendingItem.AdviceNo,
+					Calibration = pendingItem.Calibration,
+					Carriage = pendingItem.Carriage,
+					Days = pendingItem.Days,
+					Investigation = pendingItem.Investigation,
+					ItemBER = pendingItem.BeyondEconomicRepair,
+					OrderNo = pendingItem.OrderNo,
+					Parts = pendingItem.Parts,
+					Repair = pendingItem.Labour,
+					Report = pendingItem.Report,
+					IsQuoted = false
+				};
+				return viewmodel;
+			}
 		}
 	}
 }
