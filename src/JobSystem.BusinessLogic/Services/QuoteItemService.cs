@@ -118,7 +118,7 @@ namespace JobSystem.BusinessLogic.Services
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
-			var pendingItem = _quoteItemRepository.GetPendingQuoteItemForJobItem(pendingItemId);
+			var pendingItem = _quoteItemRepository.GetPendingQuoteItem(pendingItemId);
 			if (pendingItem == null)
 				throw new ArgumentException("A valid ID must be supplied for the pending item");
 			pendingItem.OrderNo = orderNo;

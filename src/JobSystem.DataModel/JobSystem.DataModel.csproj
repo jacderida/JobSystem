@@ -56,6 +56,7 @@
     <Compile Include="Entities\Attachment.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderItem.cs" />
+    <Compile Include="Entities\PendingOrderItem.cs" />
     <Compile Include="Entities\PendingQuoteItem.cs" />
     <Compile Include="Entities\Quote.cs" />
     <Compile Include="Entities\QuoteItem.cs" />

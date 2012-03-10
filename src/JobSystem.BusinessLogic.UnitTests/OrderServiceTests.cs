@@ -1,15 +1,16 @@
 ﻿using System;
+using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
-using NUnit.Framework;
-using JobSystem.BusinessLogic.Services;
-using JobSystem.Framework;
-using JobSystem.TestHelpers.Context;
 using JobSystem.DataModel.Entities;
-using Rhino.Mocks;
 using JobSystem.DataModel.Repositories;
-using JobSystem.TestHelpers;
+using JobSystem.Framework;
 using JobSystem.Resources.Orders;
+using JobSystem.TestHelpers;
+using JobSystem.TestHelpers.Context;
+using JobSystem.TestHelpers.RepositoryHelpers;
+using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {
@@ -45,7 +46,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			orderRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				orderRepositoryMock,
-				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
@@ -68,7 +69,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
-				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
@@ -85,7 +86,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
-				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsNull(supplierId),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsNull(supplierId),
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
@@ -101,7 +102,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
-				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
@@ -119,7 +120,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
-				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsNull(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
@@ -136,7 +137,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
-				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsNonCurrencyListItem(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
@@ -152,7 +153,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
-				OrderServiceTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
 			CreateOrder(orderId, supplierId, instructions, currencyId);

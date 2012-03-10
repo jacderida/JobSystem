@@ -11,12 +11,14 @@ namespace JobSystem.TestHelpers
 {
 	public static class OrderItemServiceTestHelper
 	{
-		public static OrderItemService GetOrderItemService(IUserContext userContext, IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, IJobItemRepository jobItemRepository, IListItemRepository listItemRepository)
+		public static OrderItemService GetOrderItemService(
+			IUserContext userContext, IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, ISupplierRepository supplierRepository, IJobItemRepository jobItemRepository, IListItemRepository listItemRepository)
 		{
 			return new OrderItemService(
 				userContext,
 				orderRepository,
 				orderItemRepository,
+				supplierRepository,
 				jobItemRepository,
 				listItemRepository,
 				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());

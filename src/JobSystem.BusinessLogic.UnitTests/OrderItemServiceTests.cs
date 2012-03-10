@@ -9,6 +9,7 @@ using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
 using NUnit.Framework;
 using Rhino.Mocks;
+using JobSystem.TestHelpers.RepositoryHelpers;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {
@@ -22,6 +23,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private IUserContext _userContext;
 		private Guid _jobItemToUpdateId;
 		private JobItem _jobItemToUpdate;
+		private PendingOrderItem _savedPendingItem;
 
 		[SetUp]
 		public void Setup()
@@ -30,6 +32,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_jobItemToUpdateId = Guid.NewGuid();
 			_orderItemService = null;
 			_savedOrderItem = null;
+			_savedPendingItem = null;
 			_userContext = TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Manager | UserRole.Member);
 			_jobItemToUpdate = new JobItem
 			{
@@ -59,6 +62,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			};
 		}
 
+		#region Create
+
 		[Test]
 		public void Create_ValidOrderItemDetailsOnOrderWith0ItemsWithNoJobItem_OrderItemCreated()
 		{
@@ -77,6 +82,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				orderItemRepositoryMock,
+				MockRepository.GenerateStub<ISupplierRepository>(),
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>());
 			CreateOrderItem(id, orderId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
@@ -103,6 +109,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith1Item(orderId),
 				orderItemRepositoryMock,
+				MockRepository.GenerateStub<ISupplierRepository>(),
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>());
 			CreateOrderItem(id, orderId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
@@ -134,6 +141,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				orderItemRepositoryMock,
+				MockRepository.GenerateStub<ISupplierRepository>(),
 				jobItemRepositoryMock,
 				OrderItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusOrderedAndLocationSubContract());
 			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
@@ -170,6 +178,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith1Item(orderId),
 				orderItemRepositoryMock,
+				MockRepository.GenerateStub<ISupplierRepository>(),
 				jobItemRepositoryMock,
 				OrderItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusOrderedAndLocationSubContract());
 			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
@@ -199,6 +208,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				MockRepository.GenerateStub<IOrderRepository>(),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>());
 			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
@@ -221,6 +231,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsNull(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>());
 			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
@@ -243,6 +254,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsNull(_jobItemToUpdateId),
 				MockRepository.GenerateStub<IListItemRepository>());
 			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
@@ -264,6 +276,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItemOnPendingJob(_jobItemToUpdateId),
 				MockRepository.GenerateStub<IListItemRepository>());
 			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
@@ -286,6 +299,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
 				MockRepository.GenerateStub<IListItemRepository>());
 			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
@@ -308,6 +322,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
 				MockRepository.GenerateStub<IListItemRepository>());
 			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
@@ -330,6 +345,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
 				MockRepository.GenerateStub<IListItemRepository>());
 			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
@@ -352,6 +368,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
 				MockRepository.GenerateStub<IListItemRepository>());
 			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
@@ -374,11 +391,35 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
 				MockRepository.GenerateStub<IListItemRepository>());
 			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
 			CreateOrderItem(id, orderId, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidInstructions));
+		}
+
+		[Test]
+		public void Create_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var orderId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "PART1000";
+			var instructions = "some instructions";
+			var deliveryDays = 30;
+			var price = 29.99m;
+
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
+				MockRepository.GenerateStub<IListItemRepository>());
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			CreateOrderItem(id, orderId, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
 		}
 
 		private void CreateOrderItem(Guid id, Guid orderId, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
@@ -394,5 +435,166 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_domainValidationException = dex;
 			}
 		}
+
+		#endregion
+		#region CreatePending
+
+		[Test]
+		public void CreatePending_ValidItemDetails_PendingItemCreated()
+		{
+			var id = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var jobItemId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "PART1000";
+			var instructions = "some instructions";
+			var deliveryDays = 30;
+			var price = 29.99m;
+
+			var orderItemRepositoryMock = MockRepository.GenerateMock<IOrderItemRepository>();
+			orderItemRepositoryMock.Expect(x => x.CreatePending(null)).IgnoreArguments();
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				orderItemRepositoryMock,
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>());
+			CreatePending(id, supplierId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+			orderItemRepositoryMock.VerifyAllExpectations();
+			Assert.AreNotEqual(Guid.Empty, _savedPendingItem.Id);
+			Assert.IsNotNull(_savedPendingItem.JobItem);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void CreatePending_IdNotSupplied_ArgumentExceptionThrown()
+		{
+			var id = Guid.Empty;
+			var supplierId = Guid.NewGuid();
+			var jobItemId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "PART1000";
+			var instructions = "some instructions";
+			var deliveryDays = 30;
+			var price = 29.99m;
+
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>());
+			CreatePending(id, supplierId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void CreatePending_InvalidSupplierId_ArgumentExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var jobItemId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "PART1000";
+			var instructions = "some instructions";
+			var deliveryDays = 30;
+			var price = 29.99m;
+
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsNull(supplierId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>());
+			CreatePending(id, supplierId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void CreatePending_InvalidJobId_ArgumentExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var jobItemId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "PART1000";
+			var instructions = "some instructions";
+			var deliveryDays = 30;
+			var price = 29.99m;
+
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsNull(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>());
+			CreatePending(id, supplierId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+		}
+
+		[Test]
+		public void CreatePending_JobIsPending_ArgumentExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var jobItemId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "PART1000";
+			var instructions = "some instructions";
+			var deliveryDays = 30;
+			var price = 29.99m;
+
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItemOnPendingJob(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>());
+			CreatePending(id, supplierId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.JobPending));
+		}
+
+		[Test]
+		public void CreatePending_JobItemAlreadyHasPendingItem_ArgumentExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var jobItemId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "PART1000";
+			var instructions = "some instructions";
+			var deliveryDays = 30;
+			var price = 29.99m;
+
+			var orderItemRepositoryStub = MockRepository.GenerateStub<IOrderItemRepository>();
+			orderItemRepositoryStub.Stub(x => x.JobItemHasPendingOrderItem(jobItemId)).Return(true);
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				orderItemRepositoryStub,
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItemOnPendingJob(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>());
+			CreatePending(id, supplierId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.PendingItemExists));
+		}
+
+		public void CreatePending(Guid id, Guid supplierId, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
+		{
+			try
+			{
+				_savedPendingItem = _orderItemService.CreatePending(id, supplierId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
 	}
 }

@@ -20,28 +20,5 @@ namespace JobSystem.TestHelpers
 				userContext, orderRepository, supplierRepository, listItemRepository,
 				EntityIdProviderFactory.GetEntityIdProviderFor<Order>("OR2000"), MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
-
-		public static ISupplierRepository GetSupplierRepository_GetById_ReturnsSupplier(Guid supplierId)
-		{
-			var supplierRepository = MockRepository.GenerateStub<ISupplierRepository>();
-			supplierRepository.Stub(x => x.GetById(supplierId)).Return(GetSupplier(supplierId));
-			return supplierRepository;
-		}
-
-		public static ISupplierRepository GetSupplierRepository_GetById_ReturnsNull(Guid supplierId)
-		{
-			var supplierRepository = MockRepository.GenerateStub<ISupplierRepository>();
-			supplierRepository.Stub(x => x.GetById(supplierId)).Return(null);
-			return supplierRepository;
-		}
-
-		private static Supplier GetSupplier(Guid supplierId)
-		{
-			return new Supplier
-			{
-				Id = supplierId,
-				Name = "Gael Ltd"
-			};
-		}
 	}
 }

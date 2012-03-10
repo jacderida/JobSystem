@@ -61,6 +61,15 @@ namespace JobSystem.Resources.Orders {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A member role is required to perform this operation.
+        /// </summary>
+        public static string InsufficientSecurity {
+            get {
+                return ResourceManager.GetString("InsufficientSecurity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The delivery days cannot be less than 0.
         /// </summary>
         public static string InvalidDeliveryDays {
@@ -111,6 +120,15 @@ namespace JobSystem.Resources.Orders {
         public static string JobPending {
             get {
                 return ResourceManager.GetString("JobPending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The job item is already pending order.
+        /// </summary>
+        public static string PendingItemExists {
+            get {
+                return ResourceManager.GetString("PendingItemExists", resourceCulture);
             }
         }
     }

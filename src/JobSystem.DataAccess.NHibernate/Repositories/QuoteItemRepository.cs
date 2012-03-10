@@ -15,6 +15,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			CurrentSession.Save(pendingQuoteItem);
 		}
 
+		public PendingQuoteItem GetPendingQuoteItem(Guid id)
+		{
+			return CurrentSession.Get<PendingQuoteItem>(id);
+		}
+
 		public PendingQuoteItem GetPendingQuoteItemForJobItem(Guid jobItemId)
 		{
 			return CurrentSession.Query<PendingQuoteItem>().Where(p => p.JobItem.Id == jobItemId).SingleOrDefault();

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InsufficientSecurity" xml:space="preserve">
+    <value>A member role is required to perform this operation</value>
+  </data>
   <data name="InvalidDeliveryDays" xml:space="preserve">
     <value>The delivery days cannot be less than 0</value>
   </data>
@@ -134,5 +137,8 @@
   </data>
   <data name="JobPending" xml:space="preserve">
     <value>The job item that this order relates to is still pending approval</value>
+  </data>
+  <data name="PendingItemExists" xml:space="preserve">
+    <value>The job item is already pending order</value>
   </data>
 </root>
