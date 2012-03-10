@@ -65,6 +65,8 @@ namespace JobSystem.BusinessLogic.Services
 
 		public PendingOrderItem CreatePending(Guid id, Guid supplierId, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
 		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
 			if (id == Guid.Empty)
 				throw new ArgumentException("A valid ID must be supplied for the pending item");
 			if (_orderItemRepository.JobItemHasPendingOrderItem(jobItemId))
@@ -78,6 +80,7 @@ namespace JobSystem.BusinessLogic.Services
 			pendingItem.DeliveryDays = GetDeliveryDays(deliveryDays);
 			pendingItem.JobItem = GetJobItem(jobItemId);
 			pendingItem.Price = GetPrice(price);
+			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
 			_orderItemRepository.CreatePending(pendingItem);
 			return pendingItem;
 		}
