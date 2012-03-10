@@ -4,8 +4,6 @@
     ViewBag.Title = "Pending Quotes";
 }
 
-@*<h2>Pending Quotes</h2>*@
-
 <div id="toggle-container">
 	<span class="toggle toggle-active toggle-left"><a href="@Url.Action("PendingQuotes")">Pending</a></span>
 	<span class="toggle toggle-right"><a href="@Url.Action("ApprovedQuotes")">Quoted</a></span>
@@ -21,6 +19,7 @@ if (Model.QuoteItems.Any()) {
 		<table id="quoteTable">
 		<tr>
 			<th class="shortColumn"></th>
+			<th class="shortColumn">Job Item</th>
 			<th class="shortColumn">Order No.</th>
 			<th class="shortColumn">Advice No.</th>
 			<th class="shortColumn">Repair</th>
@@ -38,6 +37,9 @@ if (Model.QuoteItems.Any()) {
 		<tr>
 			<td class="shortColumn">
 				<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>
+			</td>
+			<td class="shortColumn">
+				@item.JobItemNo
 			</td>
 			<td class="shortColumn">
 				@item.OrderNo

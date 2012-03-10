@@ -288,7 +288,8 @@ namespace JobSystem.Mvc.Controllers
 						Parts = item.Parts,
 						Repair = item.Labour,
 						Report = item.Report,
-						IsQuoted = true
+						IsQuoted = true,
+						JobItemNo = item.JobItem.ItemNo.ToString()
 					};
 					return viewmodel;
 				}
@@ -312,7 +313,8 @@ namespace JobSystem.Mvc.Controllers
 					Parts = pendingItem.Parts,
 					Repair = pendingItem.Labour,
 					Report = pendingItem.Report,
-					IsQuoted = false
+					IsQuoted = false,
+					JobItemNo = pendingItem.JobItem.ItemNo.ToString()
 				};
 				return viewmodel;
 			}

@@ -170,6 +170,7 @@ namespace JobSystem.Mvc.Controllers
 				    var viewmodel = new QuoteItemIndexViewModel()
 				    {
 						Id = item.Id,
+						JobItemId = item.JobItem.Id,
 						AdviceNo = item.Quote.AdviceNumber,
 						Calibration = item.Calibration,
 						Carriage = item.Carriage,
@@ -180,7 +181,8 @@ namespace JobSystem.Mvc.Controllers
 						Parts = item.Parts,
 						Repair = item.Labour,
 						Report = item.Report,
-						IsQuoted = true
+						IsQuoted = true,
+						JobItemNo = item.JobItem.ItemNo.ToString()
 				    };
 				    return viewmodel;
 				}
@@ -194,6 +196,7 @@ namespace JobSystem.Mvc.Controllers
 				var viewmodel = new QuoteItemIndexViewModel()
 				{
 					Id = pendingItem.Id,
+					JobItemId = pendingItem.JobItem.Id,
 					AdviceNo = pendingItem.AdviceNo,
 					Calibration = pendingItem.Calibration,
 					Carriage = pendingItem.Carriage,
@@ -204,7 +207,8 @@ namespace JobSystem.Mvc.Controllers
 					Parts = pendingItem.Parts,
 					Repair = pendingItem.Labour,
 					Report = pendingItem.Report,
-					IsQuoted = false
+					IsQuoted = false,
+					JobItemNo = pendingItem.JobItem.ItemNo.ToString()
 				};
 				return viewmodel;
 			}
