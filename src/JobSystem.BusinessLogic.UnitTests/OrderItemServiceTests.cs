@@ -536,7 +536,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
-		public void CreatePending_JobIsPending_ArgumentExceptionThrown()
+		public void CreatePending_JobIsPending_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
 			var supplierId = Guid.NewGuid();
@@ -559,7 +559,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
-		public void CreatePending_JobItemAlreadyHasPendingItem_ArgumentExceptionThrown()
+		public void CreatePending_JobItemAlreadyHasPendingItem_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
 			var supplierId = Guid.NewGuid();
@@ -577,10 +577,148 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IOrderRepository>(),
 				orderItemRepositoryStub,
 				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
-				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItemOnPendingJob(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				MockRepository.GenerateStub<IListItemRepository>());
 			CreatePending(id, supplierId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.PendingItemExists));
+		}
+
+		[Test]
+		public void CreatePending_QuantityLessThan1_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var jobItemId = Guid.NewGuid();
+			var quantity = 0;
+			var partNo = "PART1000";
+			var instructions = "some instructions";
+			var deliveryDays = 30;
+			var price = 29.99m;
+
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>());
+			CreatePending(id, supplierId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidQuantity));
+		}
+
+		[Test]
+		public void CreatePending_PartNoGreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var jobItemId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = new string('a', 51);
+			var instructions = "some instructions";
+			var deliveryDays = 30;
+			var price = 29.99m;
+
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>());
+			CreatePending(id, supplierId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidPartNo));
+		}
+
+		[Test]
+		public void CreatePending_InstructionsGreaterThan2000Characters_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var jobItemId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "PART1000";
+			var instructions = new string('a', 2001);
+			var deliveryDays = 30;
+			var price = 29.99m;
+
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>());
+			CreatePending(id, supplierId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidInstructions));
+		}
+
+		[Test]
+		public void CreatePending_PriceLessThan0_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var jobItemId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "PART1000";
+			var instructions = "some instructions";
+			var deliveryDays = 30;
+			var price = -29.99m;
+
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>());
+			CreatePending(id, supplierId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidPrice));
+		}
+
+		[Test]
+		public void CreatePending_DeliveryDaysLessThan0_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var jobItemId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "PART1000";
+			var instructions = "some instructions";
+			var deliveryDays = -30;
+			var price = 29.99m;
+
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>());
+			CreatePending(id, supplierId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidDeliveryDays));
+		}
+
+		[Test]
+		public void CreatePending_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var jobItemId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "PART1000";
+			var instructions = "some instructions";
+			var deliveryDays = 30;
+			var price = 29.99m;
+
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+				MockRepository.GenerateStub<IListItemRepository>());
+			CreatePending(id, supplierId, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
 		}
 
 		public void CreatePending(Guid id, Guid supplierId, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
