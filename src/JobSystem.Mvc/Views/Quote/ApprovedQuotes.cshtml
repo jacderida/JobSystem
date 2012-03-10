@@ -12,7 +12,7 @@
 </div>
 
 @if (Model.Any()) {
-	<table class="approvedQuoteTable">
+	<table class="approvedQuoteTable" id="approvedQuoteTableHead">
 		<tr>
 			<th>Quote No.</th>
 			<th>Order No.</th>
@@ -22,9 +22,10 @@
 			<th>Date Created</th>
 		</tr>
 	</table>
-	<table class="approvedQuoteTable">
-	@foreach (var item in Model.OrderBy(i => i.QuoteNo))
+	
+	foreach (var item in Model.OrderBy(i => i.QuoteNo))
 	 {
+	<table class="approvedQuoteTable">
 		<tr>
 			<td>
 				@item.QuoteNo
@@ -45,8 +46,53 @@
 				@item.DateCreated
 			</td>
 		</tr>
+	 </table>
+	 <table class="approvedQuoteItemTable">
+		<tr>
+			<th>Repair</th>
+			<th>Calibration</th>
+			<th>Parts</th>
+			<th>Carriage</th>
+			<th>Investigation</th>
+			<th class="shortColumn">Days</th>
+			<th>BER</th>
+			<th class="shortColumn"></th>
+		</tr>	
+		 @foreach (var qi in item.QuoteItems)
+		 {
+		
+		<tr>
+			<td>
+				@qi.Repair
+			</td>
+			<td>
+				@qi.Calibration
+			</td>
+			<td>
+				@qi.Parts
+			</td>
+			<td>
+				@qi.Carriage
+			</td>
+			<td>
+				@qi.Investigation
+			</td>
+			<td class="shortColumn">
+				@qi.Days
+			</td>
+			<td>
+				@qi.ItemBER
+			</td>
+			<td class="shortColumn">
+				@Html.ActionLink("Edit", "Edit", new { id = qi.JobItemId, fromJi = false, isQuoted = true })
+			</td>
+		</tr>
+		
 	 }
-	</table>
+	 </table>
+	 <div class="clear"></div>
+}
+	
 }else{
 	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
 }
