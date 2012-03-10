@@ -105,10 +105,11 @@
 			@Html.ValidationMessageFor(model => model.ItemBER)
 		</div>
 		@Html.HiddenFor(model => model.Id)
-		@Html.HiddenFor(model => model.JobItemId)
 		@Html.HiddenFor(model => model.JobId)
+		@Html.HiddenFor(model => model.JobItemId)
 		@Html.HiddenFor(model => model.EditedFromJobItem)
 		@Html.HiddenFor(model => model.IsQuoted)
+		@Html.HiddenFor(model => model.QuoteItemId)
 	</fieldset>
 	<input type="submit" class="primary-action" value="Save"/>
 }

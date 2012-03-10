@@ -4,8 +4,6 @@
     ViewBag.Title = "Approved Quotes";
 }
 
-@*<h2>Approved Quotes</h2>*@
-
 <div id="toggle-container">
 	<span class="toggle toggle-left"><a href="@Url.Action("PendingQuotes")">Pending</a></span>
 	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedQuotes")">Quoted</a></span>
@@ -49,6 +47,7 @@
 	 </table>
 	 <table class="approvedQuoteItemTable">
 		<tr>
+			<th>Job Item</th>
 			<th>Repair</th>
 			<th>Calibration</th>
 			<th>Parts</th>
@@ -62,6 +61,9 @@
 		 {
 		
 		<tr>
+			<td>
+				@qi.JobItemNo
+			</td>
 			<td>
 				@qi.Repair
 			</td>

@@ -131,7 +131,8 @@ namespace JobSystem.Mvc.Controllers
 					Carriage = q.Carriage,
 					Investigation = q.Investigation,
 					Days = q.Days,
-					ItemBER = q.BeyondEconomicRepair
+					ItemBER = q.BeyondEconomicRepair,
+					JobItemNo = q.JobItem.ItemNo.ToString()
 				}).ToList();
 			var viewmodel = new QuotePendingListViewModel(){
 				QuoteItems = items
@@ -169,7 +170,8 @@ namespace JobSystem.Mvc.Controllers
 							Investigation = qi.Investigation,
 							Days = qi.Days,
 							ItemBER = qi.BeyondEconomicRepair,
-							ItemNo = qi.ItemNo.ToString()
+							ItemNo = qi.ItemNo.ToString(),
+							JobItemNo = qi.JobItem.ItemNo.ToString()
 							}).ToList();
 			}
 			return View(quotes);
@@ -184,7 +186,7 @@ namespace JobSystem.Mvc.Controllers
 
 				var viewmodel = new QuoteItemEditViewModel()
 				{
-					Id = pendingItem.Id,
+					QuoteItemId = pendingItem.Id,
 					JobId = pendingItem.JobItem.Job.Id,
 					JobItemId = pendingItem.JobItem.Id,
 					AdviceNo = pendingItem.AdviceNo,
@@ -208,7 +210,7 @@ namespace JobSystem.Mvc.Controllers
 
 				var viewmodel = new QuoteItemEditViewModel()
 				{
-					Id = item.Id,
+					QuoteItemId = item.Id,
 					JobId = item.JobItem.Job.Id,
 					JobItemId = item.JobItem.Id,
 					AdviceNo = item.Quote.AdviceNumber,
@@ -235,7 +237,7 @@ namespace JobSystem.Mvc.Controllers
 			if (!viewmodel.IsQuoted) 
 			{
 				_quoteItemService.EditPending(
-					viewmodel.Id,
+					viewmodel.QuoteItemId,
 					viewmodel.Repair,
 					viewmodel.Calibration,
 					viewmodel.Parts,
@@ -250,7 +252,7 @@ namespace JobSystem.Mvc.Controllers
 			else
 			{
 				_quoteItemService.Edit(
-					viewmodel.Id,
+					viewmodel.QuoteItemId,
 					viewmodel.Repair,
 					viewmodel.Calibration,
 					viewmodel.Parts,
