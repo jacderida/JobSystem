@@ -12,7 +12,7 @@
 </div>
 
 @if (Model.Any()) {
-	<table>
+	<table class="approvedQuoteTable">
 		<tr>
 			<th>Quote No.</th>
 			<th>Order No.</th>
@@ -20,8 +20,9 @@
 			<th>Customer</th>
 			<th>Created By</th>
 			<th>Date Created</th>
-			<th>Quote Items</th>
 		</tr>
+	</table>
+	<table class="approvedQuoteTable">
 	@foreach (var item in Model.OrderBy(i => i.QuoteNo))
 	 {
 		<tr>
@@ -42,25 +43,6 @@
 			</td>
 			<td>
 				@item.DateCreated
-			</td>
-			<td>
-				<span class="the-tooltip center top dark-midnight-blue consignmentItemCount">
-					@item.QuoteItems.Count items
-					<span>
-					@foreach (var qi in item.QuoteItems) {
-						<span>
-							Item Number @qi.ItemNo <br />
-							Repair @qi.Repair<br />
-							Calibration @qi.Calibration<br />
-							Parts @qi.Parts<br />
-							Cariage @qi.Carriage<br />
-							Investigation @qi.Investigation<br />
-							Days @qi.Days<br />
-							BER? @qi.ItemBER<br />
-						</span><br />
-					}	
-					</span>
-				</span>
 			</td>
 		</tr>
 	 }

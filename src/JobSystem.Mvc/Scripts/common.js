@@ -127,7 +127,7 @@ $(document).ready(function () {
 			dataType: 'json'
 		});
 
-		$('.editConsignmentButton').click(function () {
+		$('.editConsignmentButton').live('click', function () {
 			var elemId = $(this).attr('id');
 			var editUrl = $('#editConsignmentItemUrl').val() + '/' + elemId;
 			//Edit user modal form

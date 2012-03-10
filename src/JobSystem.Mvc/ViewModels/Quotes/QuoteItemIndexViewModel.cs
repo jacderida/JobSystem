@@ -26,5 +26,6 @@ namespace JobSystem.Mvc.ViewModels.Quotes
 		public string Report { get; set; }
 		public string JobNo { get; set; }
 		public string ItemNo { get; set; }
+		public bool IsQuoted { get; set; }
 	}
 }

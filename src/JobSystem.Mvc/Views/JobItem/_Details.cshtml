@@ -100,7 +100,11 @@
 			<div class="text">	
 				@if (Model.QuoteItem != null)
 				{
-					@Html.ActionLink("Edit Quote", "EditPending", "Quote", new { id = @Model.Id, fromJi = true }, new { @class = "primary-action" })
+					if (Model.QuoteItem.IsQuoted) {
+						@Html.ActionLink("Edit Quote", "Edit", "Quote", new { id = @Model.Id, fromJi = true, isQuoted = Model.QuoteItem.IsQuoted }, new { @class = "primary-action" })
+					} else {
+						@Html.ActionLink("Edit Quote", "Edit", "Quote", new { id = @Model.Id, fromJi = true, isQuoted = Model.QuoteItem.IsQuoted }, new { @class = "primary-action" })
+					}
 					<div class="quote-item">
 						<div class="details-fields">
 							<span class="field-label">Order No.</span>
@@ -124,13 +128,6 @@
 							<span class="field-label">Days</span>
 							<span class="field">@Model.QuoteItem.Days</span>
 						</div>
-					</div>
-				}
-				else if (Model.Quote != null)
-				{
-					@Html.ActionLink("Edit Quote", "EditQuoted", "Quote", new { id = @Model.Id, fromJi = true }, new { @class = "primary-action" })
-					<div class="consignment-item">
-						<h3>Some stuff for quote</h3>
 					</div>
 				}
 				else
