@@ -159,6 +159,8 @@ namespace JobSystem.Mvc.Controllers
 				var quoteItems = _quoteItemService.GetQuoteItems(quote.Id);
 				quote.QuoteItems = quoteItems.Select(qi => new QuoteItemIndexViewModel
 						{
+							Id = qi.Id,
+							JobItemId = qi.JobItem.Id,
 							Report = qi.Report,
 							Repair = qi.Labour,
 							Calibration = qi.Calibration,
