@@ -10,6 +10,9 @@ namespace JobSystem.DataModel.Entities
 		public virtual Guid Id { get; set; }
 		public virtual Supplier Supplier { get; set; }
 		public virtual JobItem JobItem { get; set; }
+		[Required(ErrorMessageResourceName = "EmptyDescription", ErrorMessageResourceType = typeof(OrderItemMessages))]
+		[StringLength(50, ErrorMessageResourceName = "InvalidDescription", ErrorMessageResourceType = typeof(OrderItemMessages))]
+		public virtual string Description { get; set; }
 		public virtual int Quantity { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "InvalidPartNo", ErrorMessageResourceType = typeof(OrderItemMessages))]
 		public virtual string PartNo { get; set; }

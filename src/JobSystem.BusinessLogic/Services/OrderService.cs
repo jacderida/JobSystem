@@ -86,7 +86,7 @@ namespace JobSystem.BusinessLogic.Services
 				{
 					if (i++ == 0)
 						Create(orderId, item.Supplier.Id, item.Instructions, defaultCurrencyId);
-					_orderItemService.Create(Guid.NewGuid(), orderId, item.Quantity, item.PartNo, item.Instructions, item.DeliveryDays, item.JobItem.Id, item.Price);
+					_orderItemService.Create(Guid.NewGuid(), orderId, item.Description, item.Quantity, item.PartNo, item.Instructions, item.DeliveryDays, item.JobItem.Id, item.Price);
 					_orderItemService.DeletePendingItem(item.Id);
 				}
 			}

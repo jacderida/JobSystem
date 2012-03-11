@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
-using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.Resources.Orders;
-using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -33,15 +33,17 @@ namespace JobSystem.BusinessLogic.Services
 			_listItemRepository = listItemRepository;
 		}
 
-		public OrderItem Create(Guid id, Guid orderId, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
+		public OrderItem Create(
+			Guid id, Guid orderId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
 		{
-			return DoCreateOrderItem(id, orderId, quantity, partNo, instructions, deliveryDays, jobItemId, price, ListItemType.StatusAwaitingParts);
+			return DoCreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, ListItemType.StatusAwaitingParts);
 		}
 
-		public OrderItem Edit(Guid id, int quantity, string partNo, string instructions, int deliveryDays, decimal price)
+		public OrderItem Edit(Guid id, string description, int quantity, string partNo, string instructions, int deliveryDays, decimal price)
 		{
 			var orderItem = GetById(id);
 			orderItem.Quantity = GetQuantity(quantity);
+			orderItem.Description = description;
 			orderItem.PartNo = partNo;
 			orderItem.Instructions = instructions;
 			orderItem.DeliveryDays = GetDeliveryDays(deliveryDays);
@@ -51,7 +53,7 @@ namespace JobSystem.BusinessLogic.Services
 			return orderItem;
 		}
 
-		public PendingOrderItem CreatePending(Guid id, Guid supplierId, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
+		public PendingOrderItem CreatePending(Guid id, Guid supplierId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
@@ -62,6 +64,7 @@ namespace JobSystem.BusinessLogic.Services
 			var pendingItem = new PendingOrderItem();
 			pendingItem.Id = id;
 			pendingItem.Supplier = GetSupplier(supplierId);
+			pendingItem.Description = description;
 			pendingItem.Quantity = GetQuantity(quantity);
 			pendingItem.PartNo = partNo;
 			pendingItem.Instructions = instructions;
@@ -74,7 +77,7 @@ namespace JobSystem.BusinessLogic.Services
 		}
 
 		public PendingOrderItem EditPending(
-			Guid id, Guid supplierId, int quantity, string partNo, string instructions, int deliveryDays, decimal price)
+			Guid id, Guid supplierId, string description, int quantity, string partNo, string instructions, int deliveryDays, decimal price)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
@@ -82,6 +85,7 @@ namespace JobSystem.BusinessLogic.Services
 			if (pendingItem == null)
 				throw new ArgumentException("A valid ID must be supplied for the pending item");
 			pendingItem.Supplier = GetSupplier(supplierId);
+			pendingItem.Description = description;
 			pendingItem.Quantity = GetQuantity(quantity);
 			pendingItem.PartNo = partNo;
 			pendingItem.Instructions = instructions;
@@ -148,7 +152,7 @@ namespace JobSystem.BusinessLogic.Services
 		}
 
 		private OrderItem DoCreateOrderItem(
-			Guid id, Guid orderId, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price, ListItemType jobItemStatusType)
+			Guid id, Guid orderId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price, ListItemType jobItemStatusType)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
@@ -159,6 +163,7 @@ namespace JobSystem.BusinessLogic.Services
 			orderItem.Id = id;
 			orderItem.Order = order;
 			orderItem.ItemNo = order.Items.Count + 1;
+			orderItem.Description = description;
 			orderItem.Quantity = GetQuantity(quantity);
 			orderItem.PartNo = partNo;
 			orderItem.Instructions = instructions;

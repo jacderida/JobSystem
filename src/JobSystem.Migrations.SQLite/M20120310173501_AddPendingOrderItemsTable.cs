@@ -13,6 +13,7 @@ namespace JobSystem.Migrations.SqlLite
 				.WithIdColumn()
 				.WithColumn("SupplierId").AsGuid().NotNullable()
 				.WithColumn("JobItemId").AsGuid().NotNullable()
+				.WithColumn("Description").AsString(255).NotNullable()
 				.WithColumn("Quantity").AsInt32().NotNullable()
 				.WithColumn("PartNo").AsString(50).Nullable()
 				.WithColumn("Instructions").AsString(2000).Nullable()
