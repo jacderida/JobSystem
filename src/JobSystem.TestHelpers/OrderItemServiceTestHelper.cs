@@ -26,23 +26,30 @@ namespace JobSystem.TestHelpers
 
 		public static IOrderRepository GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(Guid orderId)
 		{
-			var quoteRepositoryStub = MockRepository.GenerateStub<IOrderRepository>();
-			quoteRepositoryStub.Stub(x => x.GetById(orderId)).Return(GetOrder(orderId));
-			return quoteRepositoryStub;
+			var orderRepositoryStub = MockRepository.GenerateStub<IOrderRepository>();
+			orderRepositoryStub.Stub(x => x.GetById(orderId)).Return(GetOrder(orderId));
+			return orderRepositoryStub;
 		}
 
 		public static IOrderRepository GetOrderRepository_StubsGetById_ReturnsOrderWith1Item(Guid orderId)
 		{
-			var quoteRepositoryStub = MockRepository.GenerateStub<IOrderRepository>();
-			quoteRepositoryStub.Stub(x => x.GetById(orderId)).Return(GetOrderWith1Item(orderId));
-			return quoteRepositoryStub;
+			var orderRepositoryStub = MockRepository.GenerateStub<IOrderRepository>();
+			orderRepositoryStub.Stub(x => x.GetById(orderId)).Return(GetOrderWith1Item(orderId));
+			return orderRepositoryStub;
 		}
 
 		public static IOrderRepository GetOrderRepository_StubsGetById_ReturnsNull(Guid orderId)
 		{
-			var quoteRepositoryStub = MockRepository.GenerateStub<IOrderRepository>();
-			quoteRepositoryStub.Stub(x => x.GetById(orderId)).Return(null);
-			return quoteRepositoryStub;
+			var orderRepositoryStub = MockRepository.GenerateStub<IOrderRepository>();
+			orderRepositoryStub.Stub(x => x.GetById(orderId)).Return(null);
+			return orderRepositoryStub;
+		}
+
+		public static IOrderItemRepository GetOrderItemRepository_StubsGetPendingOrderItemForJobItem_ReturnsNull(Guid jobItemId)
+		{
+			var orderItemRepositoryStub = MockRepository.GenerateStub<IOrderItemRepository>();
+			orderItemRepositoryStub.Stub(x => x.GetPendingOrderItemForJobItem(jobItemId)).Return(null);
+			return orderItemRepositoryStub;
 		}
 
 		public static IListItemRepository GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusOrderedAndLocationSubContract()

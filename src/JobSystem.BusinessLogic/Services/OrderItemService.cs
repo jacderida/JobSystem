@@ -5,6 +5,7 @@ using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.Resources.Orders;
+using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -125,6 +126,51 @@ namespace JobSystem.BusinessLogic.Services
 			if (orderItem == null)
 				throw new ArgumentException("A valid ID must be supplied for the order item");
 			return orderItem;
+		}
+
+		public IEnumerable<OrderItem> GetOrderItems(Guid orderId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
+			return _orderItemRepository.GetOrderItems(orderId);
+		}
+
+		public IEnumerable<OrderItem> GetOrderItemsForJobItem(Guid jobItemId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
+			return _orderItemRepository.GetOrderItemsForJobItem(jobItemId);
+		}
+
+		public PendingOrderItem GetPendingOrderItemForJobItem(Guid jobItemId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
+			var pendingItem = _orderItemRepository.GetPendingOrderItemForJobItem(jobItemId);
+			if (pendingItem == null)
+				throw new ArgumentException("A valid ID must be supplied for the job item");
+			return pendingItem;
+		}
+
+		public void DeletePendingItem(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
+			_orderItemRepository.DeletePendingItem(id);
+		}
+
+		public IEnumerable<PendingOrderItem> GetPendingOrderItems()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
+			return _orderItemRepository.GetPendingOrderItems();
+		}
+
+		public IEnumerable<PendingOrderItem> GetPendingOrderItems(IList<Guid> pendingItemIds)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
+			return _orderItemRepository.GetPendingOrderItems(pendingItemIds);
 		}
 
 		private Supplier GetSupplier(Guid supplierId)

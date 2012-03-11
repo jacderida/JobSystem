@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
@@ -1210,6 +1211,184 @@ namespace JobSystem.BusinessLogic.UnitTests
 			try
 			{
 				_orderItemService.GetById(id);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region GetOrderItems
+
+		[Test]
+		public void GetOrderItems_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			GetOrderItems(Guid.NewGuid());
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
+		}
+
+		private void GetOrderItems(Guid orderId)
+		{
+			try
+			{
+				_orderItemService.GetOrderItems(orderId);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region GetOrderItemsForJobItem
+
+		[Test]
+		public void GetOrderItemsForJobItem_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			GetOrderItemsForJobItem(Guid.NewGuid());
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
+		}
+
+		private void GetOrderItemsForJobItem(Guid jobItemId)
+		{
+			try
+			{
+				_orderItemService.GetOrderItemsForJobItem(jobItemId);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region GetPendingOrderItemForJobItem
+
+		[Test]
+		public void GetPendingOrderItemForJobItem_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			GetPendingOrderItemForJobItem(Guid.NewGuid());
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void GetPendingOrderItemForJobItem_InvalidJobItemId_ArgumentExceptionThrown()
+		{
+			var jobItemId = Guid.NewGuid();
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				OrderItemServiceTestHelper.GetOrderItemRepository_StubsGetPendingOrderItemForJobItem_ReturnsNull(jobItemId),
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			GetPendingOrderItemForJobItem(jobItemId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
+		}
+
+		private void GetPendingOrderItemForJobItem(Guid jobItemId)
+		{
+			try
+			{
+				_orderItemService.GetPendingOrderItemForJobItem(jobItemId);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region DeletePendingItem
+
+		[Test]
+		public void DeletePendingItem_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			DeletePendingItem(Guid.NewGuid());
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
+		}
+
+		private void DeletePendingItem(Guid id)
+		{
+			try
+			{
+				_orderItemService.DeletePendingItem(id);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region GetPendingOrderItems
+
+		[Test]
+		public void GetPendingOrderItems_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			GetPendingOrderItems(new List<Guid>());
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
+		}
+
+		[Test]
+		public void GetPendingOrderItemsWithIdList_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<IOrderItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			GetPendingOrderItems(new List<Guid> { Guid.NewGuid() });
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
+		}
+
+		private void GetPendingOrderItems(List<Guid> pendingItemIds)
+		{
+			try
+			{
+				if (pendingItemIds.Count == 0)
+					_orderItemService.GetPendingOrderItems();
+				else
+					_orderItemService.GetPendingOrderItems(pendingItemIds);
 			}
 			catch (DomainValidationException dex)
 			{
