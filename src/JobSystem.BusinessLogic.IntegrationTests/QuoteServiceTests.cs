@@ -6,6 +6,7 @@ using JobSystem.DataAccess.NHibernate.Repositories;
 using JobSystem.Framework.Messaging;
 using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
+using JobSystem.TestHelpers.IntegrationHelpers;
 using NUnit.Framework;
 using Rhino.Mocks;
 

@@ -8,9 +8,9 @@ using JobSystem.Framework.Messaging;
 using JobSystem.TestHelpers.Context;
 using Rhino.Mocks;
 
-namespace JobSystem.TestHelpers
+namespace JobSystem.TestHelpers.IntegrationHelpers
 {
-	public static class CreateConsignmentsFromPendingItemsHelper
+	public static class CreateOrdersFromPendingItemsHelper
 	{
 		public static void CreateContextForPendingItemTests(
 			Guid job1Id, Guid job2Id, Guid job3Id, Guid supplier1Id, Guid supplier2Id, Guid supplier3Id,
@@ -38,7 +38,7 @@ namespace JobSystem.TestHelpers
 			var customerId = Guid.NewGuid();
 			var customerService = new CustomerService(userContext, customerRepository, dispatcher);
 			customerService.Create(customerId, "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo());
-			
+
 			var supplierService = new SupplierService(userContext, supplierRepository, dispatcher);
 			supplierService.Create(supplier1Id, "Supplier 1", new Address(), new ContactInfo(), new Address(), new ContactInfo());
 			supplierService.Create(supplier2Id, "Supplier 2", new Address(), new ContactInfo(), new Address(), new ContactInfo());
