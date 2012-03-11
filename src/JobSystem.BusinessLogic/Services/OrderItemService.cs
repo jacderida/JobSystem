@@ -98,6 +98,25 @@ namespace JobSystem.BusinessLogic.Services
 			return pendingItem;
 		}
 
+		public PendingOrderItem EditPending(
+			Guid id, Guid supplierId, int quantity, string partNo, string instructions, int deliveryDays, decimal price)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
+			var pendingItem = _orderItemRepository.GetPendingOrderItem(id);
+			if (pendingItem == null)
+				throw new ArgumentException("A valid ID must be supplied for the pending item");
+			pendingItem.Supplier = GetSupplier(supplierId);
+			pendingItem.Quantity = GetQuantity(quantity);
+			pendingItem.PartNo = partNo;
+			pendingItem.Instructions = instructions;
+			pendingItem.DeliveryDays = GetDeliveryDays(deliveryDays);
+			pendingItem.Price = GetPrice(price);
+			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
+			_orderItemRepository.UpdatePendingItem(pendingItem);
+			return pendingItem;
+		}
+
 		public OrderItem GetById(Guid id)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

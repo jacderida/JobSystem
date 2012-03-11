@@ -7,9 +7,9 @@ using JobSystem.DataModel.Repositories;
 using JobSystem.Resources.Orders;
 using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
+using JobSystem.TestHelpers.RepositoryHelpers;
 using NUnit.Framework;
 using Rhino.Mocks;
-using JobSystem.TestHelpers.RepositoryHelpers;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {
@@ -26,6 +26,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private PendingOrderItem _savedPendingItem;
 		private OrderItem _orderItemForEdit;
 		private Guid _orderItemForEditId;
+		private PendingOrderItem _pendingItemForEdit;
+		private Guid _pendingItemForEditId;
 
 		[SetUp]
 		public void Setup()
@@ -73,6 +75,18 @@ namespace JobSystem.BusinessLogic.UnitTests
 				Quantity = 1,
 				Price = 10.99m,
 				Order = new Order { Id = Guid.NewGuid() }
+			};
+			_pendingItemForEditId = Guid.NewGuid();
+			_pendingItemForEdit = new PendingOrderItem
+			{
+				Id = _pendingItemForEditId,
+				PartNo = "part no",
+				Instructions = "instructions",
+				Price = 99.99m,
+				Supplier = new Supplier { Id = Guid.NewGuid(), Name = "Gael Ltd" },
+				Quantity = 1,
+				DeliveryDays = 20,
+				JobItem = new JobItem { Id = Guid.NewGuid() }
 			};
 		}
 
@@ -937,6 +951,236 @@ namespace JobSystem.BusinessLogic.UnitTests
 			try
 			{
 				_orderItemForEdit = _orderItemService.Edit(id, quantity, partNo, instructions, deliveryDays, price);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region EditPending
+
+		[Test]
+		public void EditPending_ValidItemDetails_ItemEditedSuccessfully()
+		{
+			var supplierId = Guid.NewGuid();
+			var quantity = 3;
+			var partNo = "edited part no - edit";
+			var instructions = "some instructions - edited";
+			var deliveryDays = 25;
+			var price = 20.99m;
+
+			var orderItemRepositoryMock = MockRepository.GenerateMock<IOrderItemRepository>();
+			orderItemRepositoryMock.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			orderItemRepositoryMock.Expect(x => x.UpdatePendingItem(null)).IgnoreArguments();
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				orderItemRepositoryMock,
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			EditPending(_pendingItemForEditId, supplierId, quantity, partNo, instructions, deliveryDays, price);
+			orderItemRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(supplierId, _pendingItemForEdit.Supplier.Id);
+			Assert.AreEqual(quantity, _pendingItemForEdit.Quantity);
+			Assert.AreEqual(partNo, _pendingItemForEdit.PartNo);
+			Assert.AreEqual(instructions, _pendingItemForEdit.Instructions);
+			Assert.AreEqual(deliveryDays, _pendingItemForEdit.DeliveryDays);
+			Assert.AreEqual(price, _pendingItemForEdit.Price);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void EditPending_InvalidPendingId_ArgumentExceptionThrown()
+		{
+			var supplierId = Guid.NewGuid();
+			var quantity = 3;
+			var partNo = "edited part no - edit";
+			var instructions = "some instructions - edited";
+			var deliveryDays = 25;
+			var price = 20.99m;
+
+			var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
+			orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(null);
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				orderItemRepositoryStub,
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			EditPending(_pendingItemForEditId, supplierId, quantity, partNo, instructions, deliveryDays, price);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void EditPending_InvalidSupplierId_ArgumentExceptionThrown()
+		{
+			var supplierId = Guid.NewGuid();
+			var quantity = 3;
+			var partNo = "edited part no - edit";
+			var instructions = "some instructions - edited";
+			var deliveryDays = 25;
+			var price = 20.99m;
+
+			var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
+			orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				orderItemRepositoryStub,
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsNull(supplierId),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			EditPending(_pendingItemForEditId, supplierId, quantity, partNo, instructions, deliveryDays, price);
+		}
+
+		[Test]
+		public void EditPending_InvalidQuantity_DomainValidationExceptionThrown()
+		{
+			var supplierId = Guid.NewGuid();
+			var quantity = 0;
+			var partNo = "edited part no - edit";
+			var instructions = "some instructions - edited";
+			var deliveryDays = 25;
+			var price = 20.99m;
+
+			var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
+			orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				orderItemRepositoryStub,
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			EditPending(_pendingItemForEditId, supplierId, quantity, partNo, instructions, deliveryDays, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidQuantity));
+		}
+
+		[Test]
+		public void EditPending_InvalidPartNo_DomainValidationExceptionThrown()
+		{
+			var supplierId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = new string('a', 51);
+			var instructions = "some instructions - edited";
+			var deliveryDays = 25;
+			var price = 20.99m;
+
+			var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
+			orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				orderItemRepositoryStub,
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			EditPending(_pendingItemForEditId, supplierId, quantity, partNo, instructions, deliveryDays, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidPartNo));
+		}
+
+		[Test]
+		public void EditPending_InvalidInstructions_DomainValidationExceptionThrown()
+		{
+			var supplierId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "part no";
+			var instructions = new string('a', 2001);
+			var deliveryDays = 25;
+			var price = 20.99m;
+
+			var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
+			orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				orderItemRepositoryStub,
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			EditPending(_pendingItemForEditId, supplierId, quantity, partNo, instructions, deliveryDays, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidInstructions));
+		}
+
+		[Test]
+		public void EditPending_InvalidDeliveryDays_DomainValidationExceptionThrown()
+		{
+			var supplierId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "part no";
+			var instructions = "some instructions";
+			var deliveryDays = -25;
+			var price = 20.99m;
+
+			var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
+			orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				orderItemRepositoryStub,
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			EditPending(_pendingItemForEditId, supplierId, quantity, partNo, instructions, deliveryDays, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidDeliveryDays));
+		}
+
+		[Test]
+		public void EditPending_InvalidPrice_DomainValidationExceptionThrown()
+		{
+			var supplierId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "part no";
+			var instructions = "some instructions";
+			var deliveryDays = 25;
+			var price = -20.99m;
+
+			var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
+			orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				orderItemRepositoryStub,
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			EditPending(_pendingItemForEditId, supplierId, quantity, partNo, instructions, deliveryDays, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidPrice));
+		}
+
+		[Test]
+		public void EditPending_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var supplierId = Guid.NewGuid();
+			var quantity = 1;
+			var partNo = "part no";
+			var instructions = "some instructions";
+			var deliveryDays = 25;
+			var price = 20.99m;
+
+			var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
+			orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<IOrderRepository>(),
+				orderItemRepositoryStub,
+				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>());
+			EditPending(_pendingItemForEditId, supplierId, quantity, partNo, instructions, deliveryDays, price);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
+		}
+
+		private void EditPending(
+			Guid id, Guid supplierId, int quantity, string partNo, string instructions, int deliveryDays, decimal price)
+		{
+			try
+			{
+				_pendingItemForEdit = _orderItemService.EditPending(id, supplierId, quantity, partNo, instructions, deliveryDays, price);
 			}
 			catch (DomainValidationException dex)
 			{
