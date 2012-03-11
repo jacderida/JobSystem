@@ -52,11 +52,10 @@ namespace JobSystem.TestHelpers
 			return orderItemRepositoryStub;
 		}
 
-		public static IListItemRepository GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusOrderedAndLocationSubContract()
+		public static IListItemRepository GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusAwaitingParts()
 		{
 			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
-			listItemRepositoryStub.Stub(x => x.GetByType(ListItemType.StatusOrdered)).Return(GetOrderedListItem());
-			listItemRepositoryStub.Stub(x => x.GetByType(ListItemType.WorkLocationSubContract)).Return(GetSubContractLocationListItem());
+			listItemRepositoryStub.Stub(x => x.GetByType(ListItemType.StatusAwaitingParts)).Return(GetOrderedListItem());
 			return listItemRepositoryStub;
 		}
 
@@ -132,8 +131,8 @@ namespace JobSystem.TestHelpers
 			return new ListItem
 			{
 				Id = Guid.NewGuid(),
-				Name = "Ordered",
-				Type = ListItemType.StatusOrdered,
+				Name = "Awaiting Parts",
+				Type = ListItemType.StatusAwaitingParts,
 				Category = new ListItemCategory { Id = Guid.NewGuid(), Type = ListItemCategoryType.JobItemStatus, Name = "Job Item Status" }
 			};
 		}

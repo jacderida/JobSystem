@@ -35,33 +35,7 @@ namespace JobSystem.BusinessLogic.Services
 
 		public OrderItem Create(Guid id, Guid orderId, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
 		{
-			if (!CurrentUser.HasRole(UserRole.Member))
-				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
-			if (id == Guid.Empty)
-				throw new ArgumentException("A valid ID must be supplied for the order item");
-			var order = GetOrder(orderId);
-			var orderItem = new OrderItem();
-			orderItem.Id = id;
-			orderItem.Order = order;
-			orderItem.ItemNo = order.Items.Count + 1;
-			orderItem.Quantity = GetQuantity(quantity);
-			orderItem.PartNo = partNo;
-			orderItem.Instructions = instructions;
-			orderItem.DeliveryDays = GetDeliveryDays(deliveryDays);
-			orderItem.Price = GetPrice(price);
-			ValidateAnnotatedObjectThrowOnFailure(orderItem);
-			if (jobItemId != Guid.Empty)
-			{
-				var jobItem = GetJobItem(jobItemId);
-				jobItem.Status = _listItemRepository.GetByType(ListItemType.StatusOrdered);
-				jobItem.Location = _listItemRepository.GetByType(ListItemType.WorkLocationSubContract);
-				_jobItemRepository.Update(jobItem);
-				_jobItemRepository.EmitItemHistory(
-					CurrentUser, jobItem.Id, 0, 0, "Item on order OR2000", ListItemType.StatusOrdered, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationSubContract);
-				orderItem.JobItem = jobItem;
-			}
-			_orderItemRepository.Create(orderItem);
-			return orderItem;
+			return DoCreateOrderItem(id, orderId, quantity, partNo, instructions, deliveryDays, jobItemId, price, ListItemType.StatusAwaitingParts);
 		}
 
 		public OrderItem Edit(Guid id, int quantity, string partNo, string instructions, int deliveryDays, decimal price)
@@ -171,6 +145,37 @@ namespace JobSystem.BusinessLogic.Services
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
 			return _orderItemRepository.GetPendingOrderItems(pendingItemIds);
+		}
+
+		private OrderItem DoCreateOrderItem(
+			Guid id, Guid orderId, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price, ListItemType jobItemStatusType)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
+			if (id == Guid.Empty)
+				throw new ArgumentException("A valid ID must be supplied for the order item");
+			var order = GetOrder(orderId);
+			var orderItem = new OrderItem();
+			orderItem.Id = id;
+			orderItem.Order = order;
+			orderItem.ItemNo = order.Items.Count + 1;
+			orderItem.Quantity = GetQuantity(quantity);
+			orderItem.PartNo = partNo;
+			orderItem.Instructions = instructions;
+			orderItem.DeliveryDays = GetDeliveryDays(deliveryDays);
+			orderItem.Price = GetPrice(price);
+			ValidateAnnotatedObjectThrowOnFailure(orderItem);
+			if (jobItemId != Guid.Empty)
+			{
+				var jobItem = GetJobItem(jobItemId);
+				jobItem.Status = _listItemRepository.GetByType(jobItemStatusType);
+				_jobItemRepository.Update(jobItem);
+				_jobItemRepository.EmitItemHistory(
+					CurrentUser, jobItem.Id, 0, 0, "Item on order OR2000", jobItemStatusType, ListItemType.WorkTypeAdministration, jobItem.Location.Type);
+				orderItem.JobItem = jobItem;
+			}
+			_orderItemRepository.Create(orderItem);
+			return orderItem;
 		}
 
 		private Supplier GetSupplier(Guid supplierId)

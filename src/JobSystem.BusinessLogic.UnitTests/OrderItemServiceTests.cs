@@ -64,6 +64,12 @@ namespace JobSystem.BusinessLogic.UnitTests
 				CalPeriod = 12,
 				Created = DateTime.UtcNow,
 				CreatedUser = _userContext.GetCurrentUser(),
+				Location = new ListItem
+				{
+					Id = Guid.NewGuid(),
+					Name = "Calibrated",
+					Type = ListItemType.WorkLocationCalibrated
+				}
 			};
 			_orderItemForEditId = Guid.NewGuid();
 			_orderItemForEdit = new OrderItem
@@ -163,7 +169,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item on order OR2000", ListItemType.StatusOrdered, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationSubContract));
+				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item on order OR2000", ListItemType.StatusAwaitingParts, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationCalibrated));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate)).IgnoreArguments();
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
@@ -172,7 +178,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				orderItemRepositoryMock,
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				jobItemRepositoryMock,
-				OrderItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusOrderedAndLocationSubContract());
+				OrderItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusAwaitingParts());
 			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
 			CreateOrderItem(id, orderId, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
 			orderItemRepositoryMock.VerifyAllExpectations();
@@ -180,8 +186,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.AreNotEqual(Guid.Empty, _savedOrderItem.Id);
 			Assert.AreEqual(1, _savedOrderItem.ItemNo);
 			Assert.IsNotNull(_savedOrderItem.JobItem);
-			Assert.AreEqual(ListItemType.StatusOrdered, _jobItemToUpdate.Status.Type);
-			Assert.AreEqual(ListItemType.WorkLocationSubContract, _jobItemToUpdate.Location.Type);
+			Assert.AreEqual(ListItemType.StatusAwaitingParts, _jobItemToUpdate.Status.Type);
 		}
 
 		[Test]
@@ -200,7 +205,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item on order OR2000", ListItemType.StatusOrdered, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationSubContract));
+				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item on order OR2000", ListItemType.StatusAwaitingParts, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationCalibrated));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate)).IgnoreArguments();
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
@@ -209,7 +214,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				orderItemRepositoryMock,
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				jobItemRepositoryMock,
-				OrderItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusOrderedAndLocationSubContract());
+				OrderItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusAwaitingParts());
 			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
 			CreateOrderItem(id, orderId, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
 			orderItemRepositoryMock.VerifyAllExpectations();
@@ -217,8 +222,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.AreNotEqual(Guid.Empty, _savedOrderItem.Id);
 			Assert.AreEqual(2, _savedOrderItem.ItemNo);
 			Assert.IsNotNull(_savedOrderItem.JobItem);
-			Assert.AreEqual(ListItemType.StatusOrdered, _jobItemToUpdate.Status.Type);
-			Assert.AreEqual(ListItemType.WorkLocationSubContract, _jobItemToUpdate.Location.Type);
+			Assert.AreEqual(ListItemType.StatusAwaitingParts, _jobItemToUpdate.Status.Type);
 		}
 
 		[Test]
