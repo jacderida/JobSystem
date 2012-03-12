@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using JobSystem.BusinessLogic.Services;
+using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.Mvc.ViewModels.Orders;
 
 namespace JobSystem.Mvc.Controllers
 {
     public class OrderController : Controller
     {
-	   //private readonly OrderService _orderService;
-		
-	   // public OrderController(OrderService orderService)
-	   // {
-	   //     _orderService = orderService;
-	   // }
+		private readonly OrderService _orderService;
+		private readonly OrderItemService _orderItemService;
+
+		public OrderController(OrderService orderService, OrderItemService orderItemService)
+		{
+			_orderService = orderService;
+		}
 
 		public ActionResult Index()
 		{
@@ -36,8 +37,37 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Create()
+		public ActionResult Create(Guid? id)
 		{
+			return View();
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult Create(OrderCreateViewModel viewmodel)
+		{
+			if (viewmodel.IsIndividual)
+			{
+				_orderService.Create(
+					Guid.NewGuid(),
+					viewmodel.SupplierId,
+					viewmodel.Instructions,
+					viewmodel.CurrencyId);
+			}
+			else
+			{
+				_orderItemService.CreatePending(
+					Guid.NewGuid(),
+					viewmodel.SupplierId,
+					viewmodel.Description,
+					viewmodel.Quantity,
+					viewmodel.PartNo,
+					viewmodel.Instructions,
+					viewmodel.DeliveryDays,
+					viewmodel.JobItemId,
+					viewmodel.Price);
+			}
+			
 			return View();
 		}
 
