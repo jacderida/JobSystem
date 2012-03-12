@@ -16,9 +16,16 @@ namespace JobSystem.TestHelpers
 		public static OrderService CreateOrderService(
 			IOrderRepository orderRepository, ISupplierRepository supplierRepository, IListItemRepository listItemRepository, IUserContext userContext)
 		{
+			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
 			return new OrderService(
-				userContext, orderRepository, supplierRepository, listItemRepository,
-				EntityIdProviderFactory.GetEntityIdProviderFor<Order>("OR2000"), MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+				userContext,
+				orderRepository,
+				supplierRepository,
+				listItemRepository,
+				EntityIdProviderFactory.GetEntityIdProviderFor<Order>("OR2000"),
+				new OrderItemService(userContext, orderRepository, MockRepository.GenerateStub<IOrderItemRepository>(), supplierRepository, MockRepository.GenerateStub<IJobItemRepository>(), listItemRepository, dispatcher), 
+				MockRepository.GenerateStub<ICompanyDetailsRepository>(),
+				dispatcher);
 		}
 	}
 }

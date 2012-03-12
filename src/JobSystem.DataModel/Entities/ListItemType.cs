@@ -57,6 +57,8 @@ namespace JobSystem.DataModel.Entities
 		InitialWorkLocationUkasCalibration = 48,
 		InitialWorkLocationRepair = 49,
 		InitialWorkLocationSubContract = 50,
-		InitialWorkLocationSite = 51
+		InitialWorkLocationSite = 51,
+		StatusItemWithSubContractor = 52,
+		StatusAwaitingParts = 53
 	}
 }

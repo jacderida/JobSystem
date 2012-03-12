@@ -61,6 +61,15 @@ namespace JobSystem.Resources.Orders {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A description is required for the item.
+        /// </summary>
+        public static string EmptyDescription {
+            get {
+                return ResourceManager.GetString("EmptyDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A member role is required to perform this operation.
         /// </summary>
         public static string InsufficientSecurity {
@@ -75,6 +84,15 @@ namespace JobSystem.Resources.Orders {
         public static string InvalidDeliveryDays {
             get {
                 return ResourceManager.GetString("InvalidDeliveryDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The description cannot exceed 255 characters.
+        /// </summary>
+        public static string InvalidDescription {
+            get {
+                return ResourceManager.GetString("InvalidDescription", resourceCulture);
             }
         }
         

@@ -173,5 +173,32 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		#endregion
+		#region GetOrders
+
+		[Test]
+		public void GetOrders_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_orderService = OrderServiceTestHelper.CreateOrderService(
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
+			GetOrders();
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
+		}
+
+		private void GetOrders()
+		{
+			try
+			{
+				_orderService.GetOrders();
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
 	}
 }

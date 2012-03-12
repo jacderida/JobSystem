@@ -3,11 +3,10 @@ using System.Linq;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.DataAccess.NHibernate;
 using JobSystem.DataAccess.NHibernate.Repositories;
-using JobSystem.DataModel.Dto;
-using JobSystem.DataModel.Entities;
 using JobSystem.Framework.Messaging;
 using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
+using JobSystem.TestHelpers.IntegrationHelpers;
 using NUnit.Framework;
 using Rhino.Mocks;
 

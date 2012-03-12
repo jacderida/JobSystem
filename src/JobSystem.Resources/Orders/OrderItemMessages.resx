@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EmptyDescription" xml:space="preserve">
+    <value>A description is required for the item</value>
+  </data>
   <data name="InsufficientSecurity" xml:space="preserve">
     <value>A member role is required to perform this operation</value>
   </data>
   <data name="InvalidDeliveryDays" xml:space="preserve">
     <value>The delivery days cannot be less than 0</value>
+  </data>
+  <data name="InvalidDescription" xml:space="preserve">
+    <value>The description cannot exceed 255 characters</value>
   </data>
   <data name="InvalidInstructions" xml:space="preserve">
     <value>The instructions cannot exceed 2000 characters</value>

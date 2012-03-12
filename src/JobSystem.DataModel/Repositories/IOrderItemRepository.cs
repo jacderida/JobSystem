@@ -1,5 +1,6 @@
 ﻿using System;
 using JobSystem.DataModel.Entities;
+using System.Collections.Generic;
 
 namespace JobSystem.DataModel.Repositories
 {
@@ -7,5 +8,13 @@ namespace JobSystem.DataModel.Repositories
 	{
 		void CreatePending(PendingOrderItem pendingItem);
 		bool JobItemHasPendingOrderItem(Guid jobItemId);
+		IEnumerable<OrderItem> GetOrderItems(Guid orderId);
+		IEnumerable<OrderItem> GetOrderItemsForJobItem(Guid jobItemId);
+		IEnumerable<PendingOrderItem> GetPendingOrderItems();
+		IEnumerable<PendingOrderItem> GetPendingOrderItems(IList<Guid> pendingItemIds);
+		PendingOrderItem GetPendingOrderItem(Guid id);
+		PendingOrderItem GetPendingOrderItemForJobItem(Guid jobItemId);
+		void DeletePendingItem(Guid id);
+		void UpdatePendingItem(PendingOrderItem pendingItem);
 	}
 }
