@@ -15,8 +15,8 @@ namespace JobSystem.Mvc.ViewModels.Orders
 		[Display(Name = "Part Number")]
 		public string PartNo { get; set; }
 		[Display(Name = "Delivery Days")]
-		public string DeliveryDays { get; set; }
-		public double Price { get; set; }
+		public int DeliveryDays { get; set; }
+		public decimal Price { get; set; }
 		public int Quantity { get; set; }
 		public bool Requisition { get; set; }
 		public Guid JobItemId { get; set; }
