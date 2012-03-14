@@ -183,7 +183,10 @@
     <Compile Include="ViewModels\JobItems\JobItemViewModel.cs" />
     <Compile Include="ViewModels\Jobs\JobEditViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderCreateViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderIndexViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrderItemCreateViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrderItemIndexViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteCreateViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteIndexViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteItemEditViewModel.cs" />
@@ -415,6 +418,9 @@
     <Content Include="Views\Quote\Create.cshtml" />
     <Content Include="Views\Consignment\_Edit.cshtml" />
     <Content Include="Views\Quote\Edit.cshtml" />
+    <Content Include="Views\Order\CreateIndividualOrder.cshtml" />
+    <Content Include="Views\Order\Details.cshtml" />
+    <Content Include="Views\Order\CreateItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\PendingOrders.cshtml" />

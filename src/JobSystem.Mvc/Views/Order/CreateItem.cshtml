@@ -1,4 +1,4 @@
-﻿@model JobSystem.Mvc.ViewModels.Orders.OrderCreateViewModel
+﻿@model JobSystem.Mvc.ViewModels.Orders.OrderItemCreateViewModel
 @{
 	ViewBag.Title = "Raise Order";
 }
@@ -7,21 +7,13 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
 <div id="create-order-container">
-@using (Html.BeginForm("Create", "Order", FormMethod.Post))
+@using (Html.BeginForm("CreateItem", "Order", FormMethod.Post))
 {
 	@Html.ValidationSummary(true)
 	<span class="form-section">
 		Details
 	</span>
 	<fieldset>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.SupplierId)
-		</div>
-		<div class="editor-field">
-			@Html.TextBox("SupplierAutocomplete", "", new { id = "supplier-autocomplete" })
-			@Html.ValidationMessageFor(model => model.SupplierId)
-			@Html.HiddenFor(model => model.SupplierId, new { id = "SupplierId" })
-		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.Instructions)
 		</div>
@@ -71,22 +63,7 @@
 			@Html.TextBoxFor(model => model.Quantity, new { @class = "short-text" })
 			@Html.ValidationMessageFor(model => model.Quantity)
 		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Requisition)
-		</div>
-		<div class="editor-field">
-			@Html.CheckBoxFor(model => model.Requisition, new { @class = "short-text" })
-			@Html.ValidationMessageFor(model => model.Requisition)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.IsIndividual)
-		</div>
-		<div class="editor-field">
-			@Html.CheckBoxFor(model => model.IsIndividual, new { @class = "short-text" })
-			@Html.ValidationMessageFor(model => model.IsIndividual)
-		</div>
-		@Html.HiddenFor(m => m.JobItemId)
-		@Html.HiddenFor(m => m.RaisedFromMainTab)
+		@Html.HiddenFor(m => m.OrderId)
 	</fieldset>
 	<input type="submit" class="primary-action" value="Raise"/>
 	<a href="@Url.Action("Index", "Order")" class="secondary-action">Cancel</a>

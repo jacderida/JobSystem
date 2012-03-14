@@ -5,11 +5,12 @@ using System.Web.Mvc;
 
 namespace JobSystem.Mvc.ViewModels.Orders
 {
-	public class OrderCreateViewModel
+	public class OrderItemCreateViewModel
 	{
 		public Guid Id { get; set; }
-		[Required]
+		public Guid OrderId { get; set; }
 		[Display(Name = "Supplier")]
+		[Required]
 		public Guid SupplierId { get; set; }
 		public string Instructions { get; set; }
 		public string Description { get; set; }
@@ -19,13 +20,8 @@ namespace JobSystem.Mvc.ViewModels.Orders
 		public int DeliveryDays { get; set; }
 		public decimal Price { get; set; }
 		public int Quantity { get; set; }
-		public bool Requisition { get; set; }
-		public Guid JobItemId { get; set; }
-		[Display(Name = "Raise Individually")]
-		public bool IsIndividual { get; set; }
 		[Display(Name = "Currency")]
 		public IEnumerable<SelectListItem> Currencies { get; set; }
 		public Guid CurrencyId { get; set; }
-		public bool RaisedFromMainTab { get; set; }
 	}
 }

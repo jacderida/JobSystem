@@ -4,8 +4,11 @@
     ViewBag.Title = "Orders";
 }
 
+<div id="toggle-container">
+	<span class="toggle toggle-active toggle-left"><a href="@Url.Action("PendingOrders")">Pending</a></span>
+	<span class="toggle toggle-right"><a href="@Url.Action("ApprovedOrders")">Ordered</a></span>
+</div>
 
-@Html.ActionLink("Raise Order", "Create", new { }, new { @class = "primary-action" })
 @if (Model.Any()) {
 	<table>
 		<tr>
