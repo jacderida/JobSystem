@@ -114,7 +114,7 @@ namespace JobSystem.TestHelpers
 					Type = ListItemType.CurrencyGbp,
 					Category = new ListItemCategory { Id = Guid.NewGuid(), Type = ListItemCategoryType.Currency, Name = "Currency" }
 				},
-				Items = new List<OrderItem>()
+				OrderItems = new List<OrderItem>()
 				{
 					new OrderItem
 					{

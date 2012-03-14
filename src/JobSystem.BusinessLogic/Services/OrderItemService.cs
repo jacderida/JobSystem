@@ -168,7 +168,7 @@ namespace JobSystem.BusinessLogic.Services
 			var orderItem = new OrderItem();
 			orderItem.Id = id;
 			orderItem.Order = order;
-			orderItem.ItemNo = order.Items.Count + 1;
+			orderItem.ItemNo = order.OrderItems.Count + 1;
 			orderItem.Description = description;
 			orderItem.Quantity = GetQuantity(quantity);
 			orderItem.PartNo = partNo;

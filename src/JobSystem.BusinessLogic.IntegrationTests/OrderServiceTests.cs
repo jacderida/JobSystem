@@ -136,9 +136,6 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			var consignmentId = Guid.NewGuid();
 
 			CreateOrderFromConsignmentHelper.CreateContextForCreateOrderFromConsignmentTest(jobId, supplierId, consignmentId, jobItem1Id, jobItem2Id, jobItem3Id);
-			//var consignmentItemService = new ConsignmentItemService(
-			//    userContext, new ConsignmentRepository(), new ConsignmentItemRepository(), jobItemRepository, listItemRepository, supplierRepository, dispatcher);
-			//var items = consignmentItemService.GetConsignmentItems(consignmentId);
 			var orderItemService = new OrderItemService(userContext, orderRepository, orderItemRepository, supplierRepository, jobItemRepository, listItemRepository, dispatcher);
 			var orderService = new OrderService(
 				userContext, orderRepository, consignmentRepository, supplierRepository, listItemRepository, entityIdProvider,
@@ -146,10 +143,10 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			var orderId = orderService.CreateOrderFromConsignment(consignmentId);
 			var order = orderService.GetById(orderId);
 			Assert.AreEqual(supplierId, order.Supplier.Id);
-			Assert.AreEqual(3, order.Items.Count);
 			var orderItems = orderItemService.GetOrderItems(orderId).OrderBy(o => o.ItemNo).ToList();
+			Assert.AreEqual(3, orderItems.Count);
 			Assert.AreEqual(ListItemType.StatusItemWithSubContractor, orderItems[0].JobItem.Status.Type);
-			Assert.AreEqual("Druck, DPI601IS, None, Digital Pressure Indicator", orderItems[0].Description);
+			Assert.AreEqual("Druck, DPI601IS, Digital Pressure Indicator", orderItems[0].Description);
 		}
 	}
 }
