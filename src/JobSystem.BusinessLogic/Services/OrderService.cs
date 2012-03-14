@@ -14,6 +14,7 @@ namespace JobSystem.BusinessLogic.Services
 	public class OrderService : ServiceBase
 	{
 		private readonly IOrderRepository _orderRepository;
+		private readonly IConsignmentRepository _consignmentRepository;
 		private readonly ISupplierRepository _supplierRepository;
 		private readonly IListItemRepository _listItemRepository;
 		private readonly IEntityIdProvider _entityIdProvider;
@@ -23,6 +24,7 @@ namespace JobSystem.BusinessLogic.Services
 		public OrderService(
 			IUserContext applicationContext,
 			IOrderRepository orderRepository,
+			IConsignmentRepository consignmentRepository,
 			ISupplierRepository supplierRepository,
 			IListItemRepository listItemRepository,
 			IEntityIdProvider entityIdProvider,
@@ -36,6 +38,7 @@ namespace JobSystem.BusinessLogic.Services
 			_entityIdProvider = entityIdProvider;
 			_orderItemService = orderItemService;
 			_companyDetailsRepository = companyDetailsRepository;
+			_consignmentRepository = consignmentRepository;
 		}
 
 		public Order Create(Guid id, Guid supplierId, string instructions, Guid currencyId)
@@ -57,6 +60,29 @@ namespace JobSystem.BusinessLogic.Services
 			return order;
 		}
 
+		public Guid CreateOrderFromConsignment(Guid consignmentId)
+		{
+			var orderId = Guid.NewGuid();
+			var consignment = _consignmentRepository.GetById(consignmentId);
+			var items = _consignmentRepository.GetConsignmentItems(consignmentId);
+			Create(orderId, consignment.Supplier.Id, String.Empty, GetDefaultCurrencyId());
+			foreach (var item in items)
+			{
+				var instrument = item.JobItem.Instrument;
+				var description = String.Format("{0}, {1}, {2}", instrument.Manufacturer, instrument.ModelNo, instrument.Description);
+				_orderItemService.CreateFromConsignment(
+					Guid.NewGuid(), orderId, description, 1, String.Empty, item.Instructions ?? String.Empty, 30, item.JobItem.Id, 0);
+			}
+			return orderId;
+		}
+
+		public Order GetById(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _orderRepository.GetById(id);
+		}
+
 		public IEnumerable<Order> GetOrders()
 		{
 			if (!CurrentUser.HasRole(UserRole.Manager))
@@ -76,7 +102,6 @@ namespace JobSystem.BusinessLogic.Services
 
 		private void DoCreateQuotesFromPendingItems(IEnumerable<PendingOrderItem> pendingItems)
 		{
-			var defaultCurrencyId = _companyDetailsRepository.GetCompany().DefaultCurrency.Id;
 			var supplierGroups = pendingItems.GroupBy(p => p.Supplier.Id);
 			foreach (var group in supplierGroups)
 			{
@@ -85,11 +110,16 @@ namespace JobSystem.BusinessLogic.Services
 				foreach (var item in group)
 				{
 					if (i++ == 0)
-						Create(orderId, item.Supplier.Id, item.Instructions, defaultCurrencyId);
+						Create(orderId, item.Supplier.Id, item.Instructions, GetDefaultCurrencyId());
 					_orderItemService.Create(Guid.NewGuid(), orderId, item.Description, item.Quantity, item.PartNo, item.Instructions, item.DeliveryDays, item.JobItem.Id, item.Price);
 					_orderItemService.DeletePendingItem(item.Id);
 				}
 			}
+		}
+
+		private Guid GetDefaultCurrencyId()
+		{
+			return _companyDetailsRepository.GetCompany().DefaultCurrency.Id;
 		}
 
 		private Supplier GetSupplier(Guid supplierId)

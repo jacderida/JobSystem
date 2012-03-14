@@ -39,6 +39,12 @@ namespace JobSystem.BusinessLogic.Services
 			return DoCreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, ListItemType.StatusAwaitingParts);
 		}
 
+		public OrderItem CreateFromConsignment(
+			Guid id, Guid orderId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
+		{
+			return DoCreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, ListItemType.StatusItemWithSubContractor);
+		}
+
 		public OrderItem Edit(Guid id, string description, int quantity, string partNo, string instructions, int deliveryDays, decimal price)
 		{
 			var orderItem = GetById(id);

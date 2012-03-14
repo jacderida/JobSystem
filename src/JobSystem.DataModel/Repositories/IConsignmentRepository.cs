@@ -8,5 +8,6 @@ namespace JobSystem.DataModel.Repositories
 	{
 		int GetConsignmentItemCount(Guid consignmentId);
 		IEnumerable<Consignment> GetConsignments();
+		IEnumerable<ConsignmentItem> GetConsignmentItems(Guid consignmentId);
 	}
 }

@@ -18,5 +18,10 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		{
 			return CurrentSession.Query<Consignment>();
 		}
+
+		public IEnumerable<ConsignmentItem> GetConsignmentItems(Guid consignmentId)
+		{
+			return CurrentSession.Query<ConsignmentItem>().Where(ci => ci.Consignment.Id == consignmentId);
+		}
 	}
 }

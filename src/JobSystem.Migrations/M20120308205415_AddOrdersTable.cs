@@ -11,7 +11,7 @@ namespace JobSystem.Migrations
 		{
 			Create.Table("Orders")
 				.WithIdColumn()
-				.WithColumn("SuppliedId").AsGuid().NotNullable()
+				.WithColumn("SupplierId").AsGuid().NotNullable()
 				.WithColumn("OrderNo").AsString().NotNullable().Unique()
 				.WithColumn("DateCreated").AsDateTime().NotNullable()
 				.WithColumn("CreatedById").AsGuid().NotNullable()

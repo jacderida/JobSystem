@@ -17,7 +17,7 @@ namespace JobSystem.DataModel.Entities
 		public virtual string Instructions { get; set; }
 		public virtual ListItem Currency { get; set; }
 		public virtual bool IsApproved { get; set; }
-		public virtual List<OrderItem> Items { get; set; }
+		public virtual IList<OrderItem> Items { get; set; }
 
 		public Order()
 		{

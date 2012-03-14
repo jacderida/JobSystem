@@ -20,6 +20,7 @@ namespace JobSystem.TestHelpers
 			return new OrderService(
 				userContext,
 				orderRepository,
+				MockRepository.GenerateStub<IConsignmentRepository>(),
 				supplierRepository,
 				listItemRepository,
 				EntityIdProviderFactory.GetEntityIdProviderFor<Order>("OR2000"),

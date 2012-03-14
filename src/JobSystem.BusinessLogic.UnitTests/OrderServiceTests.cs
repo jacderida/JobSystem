@@ -200,5 +200,32 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		#endregion
+		#region GetById
+
+		[Test]
+		public void GetById_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_orderService = OrderServiceTestHelper.CreateOrderService(
+				MockRepository.GenerateStub<IOrderRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
+			GetById(Guid.NewGuid());
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
+		}
+
+		private void GetById(Guid id)
+		{
+			try
+			{
+				_orderService.GetById(id);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
 	}
 }

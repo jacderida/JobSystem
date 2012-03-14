@@ -51,6 +51,7 @@
     <Compile Include="Context\TestAppConfig.cs" />
     <Compile Include="Context\TestUserContext.cs" />
     <Compile Include="IntegrationHelpers\CreateConsignmentsFromPendingItemsHelper.cs" />
+    <Compile Include="IntegrationHelpers\CreateOrderFromConsignmentHelper.cs" />
     <Compile Include="IntegrationHelpers\CreateOrdersFromPendingItemsHelper.cs" />
     <Compile Include="IntegrationHelpers\CreateQuotesFromPendingItemsHelper.cs" />
     <Compile Include="CustomerServiceFactory.cs" />

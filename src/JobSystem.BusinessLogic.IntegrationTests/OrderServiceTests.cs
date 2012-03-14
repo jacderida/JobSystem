@@ -9,6 +9,7 @@ using JobSystem.TestHelpers.Context;
 using JobSystem.TestHelpers.IntegrationHelpers;
 using NUnit.Framework;
 using Rhino.Mocks;
+using JobSystem.DataModel.Entities;
 
 namespace JobSystem.BusinessLogic.IntegrationTests
 {
@@ -44,6 +45,7 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			var entityIdProvider = new DirectEntityIdProvider();
 			var instrumentRepository = new InstrumentRepository();
 			var companyDetailsRepository = new CompanyDetailsRepository();
+			var consignmentRepository = new ConsignmentRepository();
 
 			var supplier1Id = Guid.NewGuid();
 			var supplier2Id = Guid.NewGuid();
@@ -78,7 +80,7 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			orderItemService.CreatePending(Guid.NewGuid(), supplier3Id, "some description", 1, "partno", "instructions", 30, jobItem7Id, 29.99m);
 
 			var orderService = new OrderService(
-				userContext, orderRepository, supplierRepository, listItemRepository, entityIdProvider, orderItemService, companyDetailsRepository, dispatcher);
+				userContext, orderRepository, consignmentRepository, supplierRepository, listItemRepository, entityIdProvider, orderItemService, companyDetailsRepository, dispatcher);
 			orderService.CreateOrdersFromPendingItems();
 
 			var orders = orderService.GetOrders().OrderBy(o => o.OrderNo).ToList();
@@ -107,6 +109,47 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			Assert.AreEqual(jobItem7Id, orderItems[1].JobItem.Id);	// JR2002/1
 
 			Assert.AreEqual(0, orderItemService.GetPendingOrderItems().Count());
+		}
+
+		[Test]
+		public void CreateOrderFromConsignment_ValidConsignment_OrderCreated()
+		{
+			var dispatcher = MockRepository.GenerateMock<IQueueDispatcher<IMessage>>();
+			var userRepository = new UserAccountRepository();
+			var user = userRepository.GetByEmail("admin@intertek.com", false);
+			var userContext = new TestUserContext(user);
+
+			var orderRepository = new OrderRepository();
+			var orderItemRepository = new OrderItemRepository();
+			var supplierRepository = new SupplierRepository();
+			var listItemRepository = new ListItemRepository();
+			var entityIdProvider = new DirectEntityIdProvider();
+			var jobItemRepository = new JobItemRepository();
+			var companyDetailsRepository = new CompanyDetailsRepository();
+			var consignmentRepository = new ConsignmentRepository();
+
+			var supplierId = Guid.NewGuid();
+			var jobId = Guid.NewGuid();
+			var jobItem1Id = Guid.NewGuid();
+			var jobItem2Id = Guid.NewGuid();
+			var jobItem3Id = Guid.NewGuid();
+			var consignmentId = Guid.NewGuid();
+
+			CreateOrderFromConsignmentHelper.CreateContextForCreateOrderFromConsignmentTest(jobId, supplierId, consignmentId, jobItem1Id, jobItem2Id, jobItem3Id);
+			//var consignmentItemService = new ConsignmentItemService(
+			//    userContext, new ConsignmentRepository(), new ConsignmentItemRepository(), jobItemRepository, listItemRepository, supplierRepository, dispatcher);
+			//var items = consignmentItemService.GetConsignmentItems(consignmentId);
+			var orderItemService = new OrderItemService(userContext, orderRepository, orderItemRepository, supplierRepository, jobItemRepository, listItemRepository, dispatcher);
+			var orderService = new OrderService(
+				userContext, orderRepository, consignmentRepository, supplierRepository, listItemRepository, entityIdProvider,
+				orderItemService, companyDetailsRepository, dispatcher);
+			var orderId = orderService.CreateOrderFromConsignment(consignmentId);
+			var order = orderService.GetById(orderId);
+			Assert.AreEqual(supplierId, order.Supplier.Id);
+			Assert.AreEqual(3, order.Items.Count);
+			var orderItems = orderItemService.GetOrderItems(orderId).OrderBy(o => o.ItemNo).ToList();
+			Assert.AreEqual(ListItemType.StatusItemWithSubContractor, orderItems[0].JobItem.Status.Type);
+			Assert.AreEqual("Druck, DPI601IS, None, Digital Pressure Indicator", orderItems[0].Description);
 		}
 	}
 }
