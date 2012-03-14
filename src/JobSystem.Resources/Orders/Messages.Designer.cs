@@ -61,6 +61,15 @@ namespace JobSystem.Resources.Orders {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An must have at least one item before it can be approved..
+        /// </summary>
+        public static string ApprovalWithZeroItems {
+            get {
+                return ResourceManager.GetString("ApprovalWithZeroItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The instructions cannot exceed 255 characters.
         /// </summary>
         public static string InstructionsTooLarge {

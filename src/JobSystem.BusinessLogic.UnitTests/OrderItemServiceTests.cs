@@ -118,7 +118,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			orderItemRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				_userContext,
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				orderItemRepositoryMock,
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				MockRepository.GenerateStub<IJobItemRepository>(),
@@ -146,7 +146,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			orderItemRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				_userContext,
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith1Item(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith1Item(orderId),
 				orderItemRepositoryMock,
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				MockRepository.GenerateStub<IJobItemRepository>(),
@@ -179,7 +179,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				_userContext,
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				orderItemRepositoryMock,
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				jobItemRepositoryMock,
@@ -216,7 +216,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				_userContext,
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith1Item(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith1Item(orderId),
 				orderItemRepositoryMock,
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				jobItemRepositoryMock,
@@ -270,7 +270,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				_userContext,
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsNull(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsNull(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				MockRepository.GenerateStub<IJobItemRepository>(),
@@ -294,7 +294,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				_userContext,
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsNull(_jobItemToUpdateId),
@@ -317,7 +317,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				_userContext,
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItemOnPendingJob(_jobItemToUpdateId),
@@ -341,7 +341,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				_userContext,
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
@@ -365,7 +365,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				_userContext,
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
@@ -389,7 +389,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				_userContext,
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
@@ -413,7 +413,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				_userContext,
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
@@ -437,7 +437,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				_userContext,
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
@@ -461,7 +461,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				_userContext,
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
@@ -485,7 +485,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				_userContext,
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
@@ -509,7 +509,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
-				OrderItemServiceTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
 				MockRepository.GenerateStub<IOrderItemRepository>(),
 				MockRepository.GenerateStub<ISupplierRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),

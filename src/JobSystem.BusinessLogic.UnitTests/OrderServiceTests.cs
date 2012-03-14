@@ -11,6 +11,7 @@ using JobSystem.TestHelpers.Context;
 using JobSystem.TestHelpers.RepositoryHelpers;
 using NUnit.Framework;
 using Rhino.Mocks;
+using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {
@@ -22,6 +23,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private DomainValidationException _domainValidationException;
 		private IUserContext _userContext;
 		private DateTime _dateCreated = new DateTime(2011, 12, 29);
+		private Guid _orderForApprovalId;
+		private Order _orderForApproval;
 
 		[SetUp]
 		public void Setup()
@@ -30,6 +33,17 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_domainValidationException = null;
 			AppDateTime.GetUtcNow = () => _dateCreated;
 			_userContext = TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Manager | UserRole.Member);
+			_orderForApprovalId = Guid.NewGuid();
+			_orderForApproval = new Order
+			{
+				Id = _orderForApprovalId,
+				OrderNo = "OR2000",
+				CreatedBy = _userContext.GetCurrentUser(),
+				Supplier = new Supplier { Id = Guid.NewGuid(), Name = "Gael Ltd" },
+				DateCreated = DateTime.Now,
+				Instructions = "blah",
+				OrderItems = new List<OrderItem>() { new OrderItem { Id = Guid.NewGuid() }}
+			};
 		}
 
 		#region Create
@@ -165,6 +179,77 @@ namespace JobSystem.BusinessLogic.UnitTests
 			try
 			{
 				_savedOrder = _orderService.Create(id, supplierId, instructions, currencyId);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region Approve
+
+		[Test]
+		public void Approve_ValidApprovalContext_OrderSuccessfullyApproved()
+		{
+			var orderRepositoryMock = MockRepository.GenerateMock<IOrderRepository>();
+			orderRepositoryMock.Stub(x => x.GetById(_orderForApprovalId)).Return(_orderForApproval);
+			orderRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			_orderService = OrderServiceTestHelper.CreateOrderService(
+				orderRepositoryMock,
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				_userContext);
+			Approve(_orderForApprovalId);
+			orderRepositoryMock.VerifyAllExpectations();
+			Assert.IsTrue(_orderForApproval.IsApproved);
+		}
+
+		[Test]
+		public void Approve_OrderWithNoItems_DomainValidationExceptionThrown()
+		{
+			var orderRepositoryStub = MockRepository.GenerateMock<IOrderRepository>();
+			orderRepositoryStub.Stub(x => x.GetById(_orderForApprovalId)).Return(OrderRepositoryTestHelper.GetOrder(_orderForApprovalId));
+			_orderService = OrderServiceTestHelper.CreateOrderService(
+				orderRepositoryStub,
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				_userContext);
+			Approve(_orderForApprovalId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.ApprovalWithZeroItems));
+		}
+
+		[Test]
+		public void Approve_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var orderRepositoryStub = MockRepository.GenerateMock<IOrderRepository>();
+			orderRepositoryStub.Stub(x => x.GetById(_orderForApprovalId)).Return(_orderForApproval);
+			_orderService = OrderServiceTestHelper.CreateOrderService(
+				orderRepositoryStub,
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member));
+			Approve(_orderForApprovalId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Approve_InvalidOrderId_DomainValidationExceptionThrown()
+		{
+			_orderService = OrderServiceTestHelper.CreateOrderService(
+				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsNull(_orderForApprovalId),
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				_userContext);
+			Approve(_orderForApprovalId);
+		}
+
+		private void Approve(Guid orderId)
+		{
+			try
+			{
+				_orderForApproval = _orderService.ApproveOrder(orderId);
 			}
 			catch (DomainValidationException dex)
 			{

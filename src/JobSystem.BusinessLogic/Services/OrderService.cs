@@ -43,7 +43,7 @@ namespace JobSystem.BusinessLogic.Services
 
 		public Order Create(Guid id, Guid supplierId, string instructions, Guid currencyId)
 		{
-			if (!CurrentUser.HasRole(UserRole.Manager))
+			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			if (id == Guid.Empty)
 				throw new ArgumentException("An ID must be supplied for the order");
@@ -74,6 +74,20 @@ namespace JobSystem.BusinessLogic.Services
 					Guid.NewGuid(), orderId, description, 1, String.Empty, item.Instructions ?? String.Empty, 30, item.JobItem.Id, 0);
 			}
 			return orderId;
+		}
+
+		public Order ApproveOrder(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			var order = _orderRepository.GetById(id);
+			if (order == null)
+				throw new ArgumentException("A valid ID must be supplied for the order");
+			if (order.OrderItems.Count == 0)
+				throw new DomainValidationException(Messages.ApprovalWithZeroItems, "OrderItems");
+			order.IsApproved = true;
+			_orderRepository.Update(order);
+			return order;
 		}
 
 		public Order GetById(Guid id)
