@@ -5,6 +5,7 @@ using System.Web;
 using JobSystem.Mvc.ViewModels.WorkItems;
 using JobSystem.Mvc.ViewModels.Consignments;
 using JobSystem.Mvc.ViewModels.Quotes;
+using JobSystem.Mvc.ViewModels.Orders;
 
 namespace JobSystem.Mvc.ViewModels.JobItems
 {
@@ -26,6 +27,8 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 		public ConsignmentIndexViewModel Consignment { get; set; }
 		public QuoteItemIndexViewModel QuoteItem { get; set; }
 		public QuoteIndexViewModel Quote { get; set; }
+		public OrderItemIndexViewModel OrderItem { get; set; }
+		public OrderIndexViewModel Order { get; set; }
 		public string Instrument { get; set; }
 		public string InitialStatus { get; set; }
 		public string Location { get; set; }

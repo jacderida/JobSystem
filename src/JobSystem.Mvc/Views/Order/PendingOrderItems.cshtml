@@ -1,21 +1,19 @@
 ﻿@model IList<JobSystem.Mvc.ViewModels.Orders.OrderIndexViewModel>
 
 @{
-    ViewBag.Title = "Pending Orders";
+    ViewBag.Title = "Items";
 }
 
 <div id="toggle-container-orders">
-	<span class="toggle toggle-left"><a href="@Url.Action("PendingOrderItems")">Items</a></span>
-	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("PendingOrders")">Pending</a></span>
+	<span class="toggle toggle-active toggle-left"><a href="@Url.Action("PendingOrderItems")">Items</a></span>
+	<span class="toggle toggle-right"><a href="@Url.Action("PendingOrders")">Pending</a></span>
 	<span class="toggle toggle-right"><a href="@Url.Action("ApprovedOrders")">Approved</a></span>
 </div>
-
-@Html.ActionLink("Raise Order", "CreateIndividualOrder", new { }, new { @class = "primary-action" })
 
 @if (Model.Any()) {
 	<table>
 		<tr>
-			<th>Order No.</th>
+			<th></th>
 			<th>Supplier Name</th>
 			<th>Instructions</th>
 			<th></th>
@@ -24,7 +22,7 @@
 	 {
 		<tr>
 			<td>
-				@Html.ActionLink(@item.OrderNo, "Details", new { id = item.Id })
+				@Html.CheckBox("toBeConverted", false)
 			</td>
 			<td>
 				@item.SupplierName
@@ -33,7 +31,7 @@
 				@item.Instructions
 			</td>
 			<td>
-				@Html.ActionLink("Approve", "ApproveOrder", new { id = @item.Id })
+				<a href="#" class="editConsignmentButton" id="@item.Id">Edit</a>
 			</td>
 		</tr>
 	 }

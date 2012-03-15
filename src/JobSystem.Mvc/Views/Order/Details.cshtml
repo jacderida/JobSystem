@@ -8,11 +8,13 @@
 		<h2>Order @Model.OrderNo</h2>
 		<p id="job-created-by">Created on @Model.DateCreated by <a href="mailto:@Model.CreatedBy">@Model.CreatedBy</a></p>
 		<div id="job-details-container">
+			<div id="job-details-notes">
+				<span class="details-header">Supplier</span>
+				<span class="field">@Model.SupplierName</span>
+			</div>
 			<div id="job-details-instruction">
 				<span class="details-header">Instructions</span>
 				<span class="field">@Model.Instructions</span>
-			</div>
-			<div id="job-details-notes">
 			</div>
 		</div>
 	</div>
