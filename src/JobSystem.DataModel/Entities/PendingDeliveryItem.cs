@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace JobSystem.DataModel.Entities
 {
+	[Serializable]
 	public class PendingDeliveryItem
 	{
-		public Guid Id { get; set; }
-		public JobItem JobItem { get; set; }
-		public QuoteItem QuoteItem { get; set; }
-		public Customer Customer { get; set; }
-		public bool BeyondEconomicRepair { get; set; }
+		public virtual Guid Id { get; set; }
+		public virtual JobItem JobItem { get; set; }
+		public virtual QuoteItem QuoteItem { get; set; }
+		public virtual Customer Customer { get; set; }
+		public virtual string Notes { get; set; }
+		public virtual bool BeyondEconomicRepair { get; set; }
 	}
 }

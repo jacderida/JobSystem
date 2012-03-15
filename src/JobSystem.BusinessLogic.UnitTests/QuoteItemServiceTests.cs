@@ -9,6 +9,7 @@ using JobSystem.Framework;
 using JobSystem.Resources.QuoteItems;
 using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
+using JobSystem.TestHelpers.RepositoryHelpers;
 using NUnit.Framework;
 using Rhino.Mocks;
 

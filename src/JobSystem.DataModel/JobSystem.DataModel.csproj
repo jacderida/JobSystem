@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Dto\Address.cs" />
     <Compile Include="Entities\Attachment.cs" />
+    <Compile Include="Entities\DeliveryItem.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderItem.cs" />
     <Compile Include="Entities\PendingDeliveryItem.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Entities\PendingQuoteItem.cs" />
     <Compile Include="Entities\Quote.cs" />
     <Compile Include="Entities\QuoteItem.cs" />
+    <Compile Include="Repositories\IDeliveryItemRepository.cs" />
     <Compile Include="Repositories\IOrderItemRepository.cs" />
     <Compile Include="Repositories\IOrderRepository.cs" />
     <Compile Include="Repositories\IQuoteItemRepository.cs" />
