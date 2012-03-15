@@ -127,6 +127,31 @@ $(document).ready(function () {
 			dataType: 'json'
 		});
 
+		$("#supplier-autocomplete").autocomplete({
+			source: function (request, response) {
+				// define a function to call your Action (assuming UserController)
+				$.ajax({
+					url: '../Supplier/SearchSuppliers', type: "POST", dataType: "json",
+
+					// query will be the param used by your action method
+					data: { query: request.term },
+					success: function (data) {
+						response($.map(data, function (item) {
+							return {
+								value: item.Name + " - " + item.Address4 + " - " + item.Address5,
+								key: item.Id
+							}
+						}))
+					}
+				})
+			},
+			select: function (e, ui) {
+				$("#SupplierId").val(ui.item.key);
+			},
+			minLength: 1, // require at least one character from the user
+			dataType: 'json'
+		});
+
 		$('.editConsignmentButton').live('click', function () {
 			var elemId = $(this).attr('id');
 			var editUrl = $('#editConsignmentItemUrl').val() + '/' + elemId;
@@ -144,8 +169,8 @@ $(document).ready(function () {
 			});
 		});
 
-		// Vertical Sliding Tabs demo
-		$('div#st_vertical').slideTabs({
+		// Vertical Sliding Tabs
+		$('div.st_vertical_job').slideTabs({
 			// Options
 			contentAnim: 'slideH',
 			contentAnimTime: 200,
@@ -155,6 +180,19 @@ $(document).ready(function () {
 			autoHeight: true,
 			totalWidth: '168'
 		});
+
+		// Horizontal Sliding Tabs demo
+		$('div.st_vertical_order').slideTabs({
+			// Options
+			contentAnim: 'slideH',
+			contentAnimTime: 200,
+			contentEasing: 'easeInOutExpo',
+			orientation: 'vertical',
+			tabsAnimTime: 100,
+			autoHeight: true,
+			totalWidth: '984'
+		});	
+
 
 		//Get Job Item Details
 		$('.getJobItem').click(function () {
