@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
@@ -11,7 +12,6 @@ using JobSystem.TestHelpers.Context;
 using JobSystem.TestHelpers.RepositoryHelpers;
 using NUnit.Framework;
 using Rhino.Mocks;
-using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {
@@ -25,6 +25,9 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private DateTime _dateCreated = new DateTime(2011, 12, 29);
 		private Guid _orderForApprovalId;
 		private Order _orderForApproval;
+		private Order _orderForMarkReceived;
+		private Guid _orderForMarkReceivedId;
+		private DateTime _markReceivedDate = new DateTime(2012, 12, 29);
 
 		[SetUp]
 		public void Setup()
@@ -43,6 +46,17 @@ namespace JobSystem.BusinessLogic.UnitTests
 				DateCreated = DateTime.Now,
 				Instructions = "blah",
 				OrderItems = new List<OrderItem>() { new OrderItem { Id = Guid.NewGuid() }}
+			};
+			_orderForMarkReceivedId = Guid.NewGuid();
+			_orderForMarkReceived = new Order
+			{
+				Id = _orderForApprovalId,
+				OrderNo = "OR2000",
+				CreatedBy = _userContext.GetCurrentUser(),
+				Supplier = new Supplier { Id = Guid.NewGuid(), Name = "Gael Ltd" },
+				DateCreated = DateTime.Now,
+				Instructions = "blah",
+				OrderItems = new List<OrderItem>() { new OrderItem { Id = Guid.NewGuid() } }
 			};
 		}
 
