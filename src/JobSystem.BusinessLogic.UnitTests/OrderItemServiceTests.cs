@@ -1535,7 +1535,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
-		[ExpectedException(typeof(ArgumentException))]
 		public void GetPendingOrderItemForJobItem_InvalidJobItemId_ArgumentExceptionThrown()
 		{
 			var jobItemId = Guid.NewGuid();
@@ -1547,14 +1546,14 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IJobItemRepository>(),
 				MockRepository.GenerateStub<IListItemRepository>());
 			GetPendingOrderItemForJobItem(jobItemId);
-			Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
+			Assert.IsNull(_pendingItemForEdit);
 		}
 
 		private void GetPendingOrderItemForJobItem(Guid jobItemId)
 		{
 			try
 			{
-				_orderItemService.GetPendingOrderItemForJobItem(jobItemId);
+				_pendingItemForEdit = _orderItemService.GetPendingOrderItemForJobItem(jobItemId);
 			}
 			catch (DomainValidationException dex)
 			{

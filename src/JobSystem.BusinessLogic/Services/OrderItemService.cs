@@ -130,10 +130,7 @@ namespace JobSystem.BusinessLogic.Services
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
-			var pendingItem = _orderItemRepository.GetPendingOrderItemForJobItem(jobItemId);
-			if (pendingItem == null)
-				throw new ArgumentException("A valid ID must be supplied for the job item");
-			return pendingItem;
+			return _orderItemRepository.GetPendingOrderItemForJobItem(jobItemId);
 		}
 
 		public void DeletePendingItem(Guid id)

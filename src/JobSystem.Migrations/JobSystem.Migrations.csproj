@@ -80,6 +80,7 @@
     <Compile Include="M20120308205415_AddOrdersTable.cs" />
     <Compile Include="M20120309213452_AddOrderItemsTable.cs" />
     <Compile Include="M20120310173501_AddPendingOrderItemsTable.cs" />
+    <Compile Include="M20120315204615_AddPendingItemsTable.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
