@@ -25,11 +25,11 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult Index()
 		{
-			return RedirectToAction("PendingOrders");
+			return RedirectToAction("PendingOrderItems");
 		}
 
 		[HttpGet]
-		public ActionResult PendingOrders()
+		public ActionResult PendingOrderItems()
 		{
 			var items = _orderItemService.GetPendingOrderItems().Select(
 				q => new OrderIndexViewModel
@@ -43,9 +43,23 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
+		public ActionResult PendingOrders()
+		{
+			var items = _orderService.GetOrders().Where(i => !i.IsApproved).Select(
+				q => new OrderIndexViewModel
+				{
+					Id = q.Id,
+					Instructions = q.Instructions,
+					SupplierName = q.Supplier.Name,
+					OrderNo = q.OrderNo
+				}).ToList();
+			return View(items);
+		}
+
+		[HttpGet]
 		public ActionResult ApprovedOrders()
 		{
-			var items = _orderService.GetOrders().Select(
+			var items = _orderService.GetOrders().Where(i => i.IsApproved).Select(
 				q => new OrderIndexViewModel
 				{
 					Id = q.Id,
@@ -77,7 +91,7 @@ namespace JobSystem.Mvc.Controllers
 				viewmodel.Instructions,
 				viewmodel.CurrencyId);
 
-			return RedirectToAction("ApprovedOrders");
+			return RedirectToAction("PendingOrders");
 		}
 
 		[HttpGet]
@@ -171,7 +185,7 @@ namespace JobSystem.Mvc.Controllers
 				SupplierName = order.Supplier.Name,
 				DateCreated = order.DateCreated.ToLongDateString() + ' ' + order.DateCreated.ToShortTimeString(),
 				CreatedBy = order.CreatedBy.EmailAddress,
-				OrderItems = order.Items.Select(o => new OrderItemIndexViewModel() {
+				OrderItems = order.OrderItems.Select(o => new OrderItemIndexViewModel() {
 					DeliveryDays = o.DeliveryDays.ToString(),
 					Description = o.Description,
 					Instructions = o.Instructions,
@@ -181,6 +195,14 @@ namespace JobSystem.Mvc.Controllers
 				}).ToList()
 			};
 			return View(viewmodel);
+		}
+
+		[Transaction]
+		public ActionResult ApproveOrder(Guid id)
+		{
+			_orderService.ApproveOrder(id);
+
+			return RedirectToAction("PendingOrders");
 		}
     }
 }

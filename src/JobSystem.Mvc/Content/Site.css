@@ -798,6 +798,11 @@ div#title {
 	margin: 20px auto 20px auto;
 }
 
+#toggle-container-orders {
+	width: 370px;
+	margin: 20px auto 20px auto;
+}
+
 .toggle {
 	background: transparent url('../Content/images/toggle_bg.png') repeat-x;
 	font-weight: bold;

@@ -15,6 +15,7 @@ using JobSystem.Mvc.ViewModels.Jobs;
 using JobSystem.Mvc.ViewModels.WorkItems;
 using JobSystem.Mvc.ViewModels;
 using JobSystem.Mvc.ViewModels.Quotes;
+using JobSystem.Mvc.ViewModels.Orders;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -25,14 +26,16 @@ namespace JobSystem.Mvc.Controllers
 		private readonly CustomerService _customerServive;
 		private readonly JobItemService _jobItemService;
 		private readonly QuoteItemService _quoteItemService;
+		private readonly OrderItemService _orderItemService;
 
-		public JobController(JobService jobService, ListItemService listItemService, CustomerService customerService, JobItemService jobItemService, QuoteItemService quoteItemService)
+		public JobController(JobService jobService, ListItemService listItemService, CustomerService customerService, JobItemService jobItemService, QuoteItemService quoteItemService, OrderItemService orderItemService)
 		{
 			_jobService = jobService;
 			_listItemService = listItemService;
 			_customerServive = customerService;
 			_jobItemService = jobItemService;
 			_quoteItemService = quoteItemService;
+			_orderItemService = orderItemService;
 		}
 
 		[HttpGet]
@@ -186,6 +189,7 @@ namespace JobSystem.Mvc.Controllers
 						InstrumentDetails = String.Format("{0} - {1} : {2}", ji.Instrument.ModelNo, ji.Instrument.Manufacturer.ToString(), ji.Instrument.Description),
 						QuoteItem = PopulateQuoteItemViewModel(ji.Id),
 						ConsignmentItem = PopulateConsignmentItemViewModel(ji.Id),
+						OrderItem = PopulateOrderItemViewModel(ji.Id),
 						WorkItems = ji.HistoryItems.Select(wi => new WorkItemDetailsViewModel
 						{
 							Id = wi.Id,
@@ -315,6 +319,50 @@ namespace JobSystem.Mvc.Controllers
 					Report = pendingItem.Report,
 					IsQuoted = false,
 					JobItemNo = pendingItem.JobItem.ItemNo.ToString()
+				};
+				return viewmodel;
+			}
+		}
+
+		private OrderItemIndexViewModel PopulateOrderItemViewModel(Guid Id)
+		{
+			var pendingItem = _orderItemService.GetPendingOrderItemForJobItem(Id);
+			if (pendingItem == null)
+			{
+				var item = _orderItemService.GetOrderItemsForJobItem(Id).First();
+				if (item != null)
+				{
+					var viewmodel = new OrderItemIndexViewModel()
+					{
+						Id = item.Id,
+						DeliveryDays = item.DeliveryDays.ToString(),
+						Description = item.Description,
+						Instructions = item.Instructions,
+						PartNo = item.PartNo,
+						Price = item.Price.ToString(),
+						Quantity = item.Quantity.ToString(),
+						JobItemId = item.JobItem.Id
+					};
+					return viewmodel;
+				}
+				else
+				{
+					return null;
+				}
+			}
+			else
+			{
+				var viewmodel = new OrderItemIndexViewModel()
+				{
+					Id = pendingItem.Id,
+					DeliveryDays = pendingItem.DeliveryDays.ToString(),
+					Description = pendingItem.Description,
+					Instructions = pendingItem.Instructions,
+					PartNo = pendingItem.PartNo,
+					Price = pendingItem.Price.ToString(),
+					Quantity = pendingItem.Quantity.ToString(),
+					JobItemId = pendingItem.JobItem.Id,
+					SupplierId = pendingItem.Supplier.Id
 				};
 				return viewmodel;
 			}

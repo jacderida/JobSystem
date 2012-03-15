@@ -82,13 +82,13 @@
 			<a href="#" class="primary-action createWorkButton" id="@Model.Id">Create Work Item</a>
 			<div class="text">
 			@if (Model.WorkItems.Any())
-   {
+			{
 				@Html.Partial("~/Views/WorkItem/_Details.cshtml")
-   }
-   else
-   {
+			}
+			else
+			{
 				<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoWorkItems</div>
-   }
+			}
 			</div>
 		</div>
 		<div id="st_content_2" class="st_tab_view">
@@ -145,16 +145,16 @@
 				<div id="edit-consignment-container">@*Content ajaxed in*@</div>
 
 				@if (Model.ConsignmentItem != null)
-	{
+				{
 					<div class="consignment-item">
 						<h3>@Model.ConsignmentItem.SupplierName</h3>
 						@Model.ConsignmentItem.Instructions
 					</div>
 					<br />
 					<a href="#" class="primary-action editConsignmentButton" id="@Model.ConsignmentItem.Id">Edit</a>
-	}
-	else if (Model.Consignment != null)
-	{
+				}
+				else if (Model.Consignment != null)
+				{
 					<div class="consignment-item">
 						<h3>@Model.Consignment.SupplierName</h3>
 						@Model.Consignment.ConsignmentNo<br />
@@ -162,11 +162,16 @@
 							Created by <span class="strongText">@Model.Consignment.CreatedBy</span> on <span class="strongText">@Model.Consignment.DateCreated</span>
 						</span>
 					</div>
-	}
-	else
-	{
+				}
+				else
+				{
 					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
-	}
+				}
+			</div>
+		</div>
+		<div id="st_content_5" class="st_tab_view">
+			<div class="text">
+				@Html.ActionLink("Raise Order", "Create", "Order", new { jobItemId = @Model.Id }, new { @class = "primary-action" })
 			</div>
 		</div>
 		<div id="st_content_7" class="st_tab_view">
