@@ -96,6 +96,8 @@
     <Compile Include="Repositories\ConsignmentItemRepository.cs" />
     <Compile Include="Repositories\ConsignmentRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
+    <Compile Include="Repositories\DeliveryItemRepository.cs" />
+    <Compile Include="Repositories\DeliveryRepository.cs" />
     <Compile Include="Repositories\EntityIdLookupRepository.cs" />
     <Compile Include="Repositories\InstrumentRepository.cs" />
     <Compile Include="Repositories\JobItemRepository.cs" />
