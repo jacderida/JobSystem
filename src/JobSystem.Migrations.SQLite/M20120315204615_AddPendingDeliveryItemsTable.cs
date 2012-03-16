@@ -5,7 +5,7 @@ using FluentMigrator;
 namespace JobSystem.Migrations.SqlLite
 {
 	[Migration(20120315204615)]
-	public class M20120315204615_AddPendingItemsTable : Migration
+	public class M20120315204615_AddPendingDeliveryItemsTable : Migration
 	{
 		public override void Up()
 		{

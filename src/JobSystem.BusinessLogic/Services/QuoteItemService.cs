@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
 using JobSystem.Resources.QuoteItems;
-using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {

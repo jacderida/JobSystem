@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Dto\Address.cs" />
     <Compile Include="Entities\Attachment.cs" />
+    <Compile Include="Entities\Delivery.cs" />
     <Compile Include="Entities\DeliveryItem.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderItem.cs" />
