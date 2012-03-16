@@ -329,7 +329,7 @@ namespace JobSystem.Mvc.Controllers
 			var pendingItem = _orderItemService.GetPendingOrderItemForJobItem(Id);
 			if (pendingItem == null)
 			{
-				var item = _orderItemService.GetOrderItemsForJobItem(Id).First();
+				var item = _orderItemService.GetOrderItemsForJobItem(Id).FirstOrDefault();
 				if (item != null)
 				{
 					var viewmodel = new OrderItemIndexViewModel()
@@ -362,7 +362,7 @@ namespace JobSystem.Mvc.Controllers
 					Price = pendingItem.Price.ToString(),
 					Quantity = pendingItem.Quantity.ToString(),
 					JobItemId = pendingItem.JobItem.Id,
-					SupplierId = pendingItem.Supplier.Id
+					SupplierName = pendingItem.Supplier.Name
 				};
 				return viewmodel;
 			}

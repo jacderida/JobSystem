@@ -11,8 +11,10 @@
 
 @using (Html.BeginForm("QuotePending", "Quote", FormMethod.Post))
 {
-<input class="primary-action" type="submit" value="Quote"/>
+
 if (Model.QuoteItems.Any()) {
+
+<input class="primary-action" type="submit" value="Quote"/>
 	<br /><br />
 	foreach (var grp in Model.QuoteItems.GroupBy(g => g.JobNo)) { 
 		<h3>@Html.Encode(grp.Key)</h3>
@@ -48,19 +50,19 @@ if (Model.QuoteItems.Any()) {
 				@item.AdviceNo
 			</td>
 			<td class="shortColumn">
-				@item.Repair
+				@item.Repair.ToString("N2")
 			</td>
 			<td class="shortColumn">
-				@item.Calibration
+				@item.Calibration.ToString("N2")
 			</td>
 			<td class="shortColumn">
-				@item.Parts
+				@item.Parts.ToString("N2")
 			</td>
 			<td class="shortColumn">
-				@item.Carriage
+				@item.Carriage.ToString("N2")
 			</td>
 			<td class="shortColumn">
-				@item.Investigation
+				@item.Investigation.ToString("N2")
 			</td>
 			<td class="shortColumn">
 				@item.Days

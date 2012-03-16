@@ -6,7 +6,7 @@
 
 <div id="toggle-container-orders">
 	<span class="toggle toggle-left"><a href="@Url.Action("PendingOrderItems")">Items</a></span>
-	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("PendingOrders")">Pending</a></span>
+	<span class="toggle toggle-active toggle-middle"><a href="@Url.Action("PendingOrders")">Pending</a></span>
 	<span class="toggle toggle-right"><a href="@Url.Action("ApprovedOrders")">Approved</a></span>
 </div>
 
@@ -18,6 +18,7 @@
 			<th>Order No.</th>
 			<th>Supplier Name</th>
 			<th>Instructions</th>
+			<th>Items</th>
 			<th></th>
 		</tr>
 	@foreach (var item in Model.OrderBy(i => i.SupplierName))
@@ -31,6 +32,22 @@
 			</td>
 			<td>
 				@item.Instructions
+			</td>
+			<td>
+				<span class="the-tooltip center top dark-midnight-blue itemCount">
+					@item.OrderItems.Count items
+					<span>
+					@foreach (var oi in item.OrderItems) {
+						<span>
+							Delivery: @oi.DeliveryDays<br />
+							Description: @oi.Description<br />
+							Part No.: @oi.PartNo<br />
+							Price: @oi.Price<br />
+							Quantity: @oi.Quantity
+						</span><br />
+					}	
+					</span>
+				</span>
 			</td>
 			<td>
 				@Html.ActionLink("Approve", "ApproveOrder", new { id = @item.Id })

@@ -11,9 +11,7 @@ namespace JobSystem.Mvc.ViewModels.Instruments
 		[Required]
 		[Display(Name="Model Number")]
 		public string ModelNo { get; set; }
-		[Required]
 		public string Range { get; set; }
-		[Required]
 		public string Description { get; set; }
 	}  
 }

@@ -11,8 +11,10 @@
 
 @using (Html.BeginForm("ConsignPending", "Consignment", FormMethod.Post))
 {
-<input class="primary-action" type="submit" value="Consign"/>
+
 if (Model.ConsignmentItems.Any()) {
+
+<input class="primary-action" type="submit" value="Consign"/>
 	<table>
 		<tr>
 			<th class="narrowHeader"></th>

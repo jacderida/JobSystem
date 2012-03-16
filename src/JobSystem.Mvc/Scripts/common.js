@@ -191,7 +191,7 @@ $(document).ready(function () {
 			tabsAnimTime: 100,
 			autoHeight: true,
 			totalWidth: '984'
-		});	
+		});
 
 
 		//Get Job Item Details
@@ -231,6 +231,16 @@ $(document).ready(function () {
 			}
 			else {
 				$("#salesDetails").hide(300);
+			}
+		});
+
+		$("#currencyContainer").hide();
+		$('#orderCurrencyCheckbox').click(function () {
+			if ($(this).attr('checked')) {
+				$("#currencyContainer").show();
+			}
+			else {
+				$("#currencyContainer").hide();
 			}
 		});
 
