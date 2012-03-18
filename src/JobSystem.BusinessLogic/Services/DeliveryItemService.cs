@@ -35,6 +35,30 @@ namespace JobSystem.BusinessLogic.Services
 			_customerRepository = customerRepository;
 		}
 
+		public DeliveryItem Create(Guid id, Guid deliveryId, Guid jobItemId, string notes)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(DeliveryItemMessages.InsufficientSecurityClearance, "CurrentUser");
+			if (id == Guid.Empty)
+				throw new ArgumentException("An ID must be supplied for the pending item.");
+			var deliveryItem = new DeliveryItem();
+			deliveryItem.Id = id;
+			deliveryItem.ItemNo = _deliveryRepository.GetDeliveryItemCount(deliveryId) + 1;
+			deliveryItem.Delivery = GetDelivery(deliveryId);
+			var jobItem = GetJobItem(jobItemId);
+			deliveryItem.JobItem = jobItem;
+			deliveryItem.Notes = notes;
+			deliveryItem.QuoteItem = GetQuoteItem(jobItemId);
+			ValidateAnnotatedObjectThrowOnFailure(deliveryItem);
+			jobItem.Status = _listItemRepository.GetByType(ListItemType.StatusDeliveryNoteProduced);
+			jobItem.Location = _listItemRepository.GetByType(ListItemType.WorkLocationCompleted);
+			_jobItemRepository.EmitItemHistory(
+				CurrentUser, jobItem.Id, 0, 0, "Item added to delivery note DR2000", ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationCompleted);
+			_jobItemRepository.Update(jobItem);
+			_deliveryItemRepository.Create(deliveryItem);
+			return deliveryItem;
+		}
+
 		public PendingDeliveryItem CreatePending(Guid id, Guid jobItemId, Guid customerId, string notes)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
@@ -47,13 +71,19 @@ namespace JobSystem.BusinessLogic.Services
 			if (_quoteItemRepository.JobItemHasPendingQuoteItem(jobItemId))
 				throw new DomainValidationException(DeliveryItemMessages.PendingItemExists, "JobItemId");
 			pendingItem.Customer = GetCustomer(customerId);
-			var quoteItem = _quoteItemRepository.GetQuoteItemForJobItem(jobItemId);
-			if (quoteItem != null)
-				pendingItem.QuoteItem = quoteItem;
+			pendingItem.QuoteItem = GetQuoteItem(jobItemId);
 			pendingItem.Notes = notes;
 			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
 			_deliveryItemRepository.CreatePending(pendingItem);
 			return pendingItem;
+		}
+
+		private Delivery GetDelivery(Guid deliveryId)
+		{
+			var delivery = _deliveryRepository.GetById(deliveryId);
+			if (delivery == null)
+				throw new ArgumentException("A valid delivery ID must be supplied for the item");
+			return delivery;
 		}
 
 		private Customer GetCustomer(Guid customerId)
@@ -72,6 +102,11 @@ namespace JobSystem.BusinessLogic.Services
 			if (jobItem.Job.IsPending)
 				throw new DomainValidationException(DeliveryItemMessages.JobPending, "JobItemId");
 			return jobItem;
+		}
+
+		private QuoteItem GetQuoteItem(Guid jobItemId)
+		{
+			return _quoteItemRepository.GetQuoteItemForJobItem(jobItemId);
 		}
 	}
 }

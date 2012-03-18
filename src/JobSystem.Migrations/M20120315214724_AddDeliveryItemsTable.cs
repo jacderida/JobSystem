@@ -15,8 +15,7 @@ namespace JobSystem.Migrations
 				.WithColumn("ItemNo").AsInt32().NotNullable()
 				.WithColumn("JobItemId").AsGuid().NotNullable()
 				.WithColumn("QuoteItemId").AsGuid().Nullable()
-				.WithColumn("Notes").AsString(255).Nullable()
-				.WithColumn("BeyondEconomicRepair").AsBoolean().NotNullable();
+				.WithColumn("Notes").AsString(255).Nullable();
 			Create.ForeignKey("FK_DeliveryItems_Deliveries").FromTable("DeliveryItems").ForeignColumn("DeliveryId").ToTable("Deliveries").PrimaryColumn("Id");
 			Create.ForeignKey("FK_DeliveryItems_JobItems").FromTable("DeliveryItems").ForeignColumn("JobItemId").ToTable("JobItems").PrimaryColumn("Id");
 		}

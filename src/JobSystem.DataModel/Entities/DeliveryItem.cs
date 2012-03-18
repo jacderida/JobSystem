@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using JobSystem.Resources.Delivery;
 
 namespace JobSystem.DataModel.Entities
 {
@@ -10,7 +12,7 @@ namespace JobSystem.DataModel.Entities
 		public virtual Delivery Delivery { get; set; }
 		public virtual JobItem JobItem { get; set; }
 		public virtual QuoteItem QuoteItem { get; set; }
+		[StringLength(255, ErrorMessageResourceName = "InvalidNotes", ErrorMessageResourceType = typeof(DeliveryItemMessages))]
 		public virtual string Notes { get; set; }
-		public virtual string BeyondEconomicRepair { get; set; }
 	}
 }

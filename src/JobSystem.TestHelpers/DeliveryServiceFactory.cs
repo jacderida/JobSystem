@@ -1,5 +1,6 @@
 ﻿using JobSystem.BusinessLogic.Services;
 using JobSystem.DataModel;
+using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
 using Rhino.Mocks;
@@ -13,7 +14,8 @@ namespace JobSystem.TestHelpers
 			IDeliveryRepository deliveryRepository,
 			ICustomerRepository customerRepository)
 		{
-			return new DeliveryService(userContext, deliveryRepository, customerRepository, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+			return new DeliveryService(
+				userContext, deliveryRepository, customerRepository, EntityIdProviderFactory.GetEntityIdProviderFor<Delivery>("DR2000"), MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 	}
 }

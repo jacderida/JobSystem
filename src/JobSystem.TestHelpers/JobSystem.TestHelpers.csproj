@@ -62,6 +62,7 @@
     <Compile Include="EntityIdProviderFactory.cs" />
     <Compile Include="InstrumentServiceFactory.cs" />
     <Compile Include="RepositoryHelpers\CustomerRepositoryTestHelper.cs" />
+    <Compile Include="RepositoryHelpers\DeliveryRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\JobItemRepositoryTestHelper.cs" />
     <Compile Include="JobItemServiceFactory.cs" />
     <Compile Include="JobServiceFactory.cs" />

@@ -46,6 +46,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Create(id, customerId, fao);
 			deliveryRepositoryMock.VerifyAllExpectations();
 			Assert.AreNotEqual(Guid.Empty, _savedDelivery.Id);
+			Assert.That(_savedDelivery.DeliveryNoteNumber.StartsWith("DR"));
 			Assert.AreEqual(_dateCreated, _savedDelivery.DateCreated);
 			Assert.IsNotNull(_savedDelivery.Customer);
 		}

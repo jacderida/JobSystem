@@ -14,14 +14,14 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 			return quoteItemRepository;
 		}
 
-		public static IQuoteItemRepository GetQuoteItemRepository_GetQuoteItemForJobItem_ReturnsQuoteItem(Guid jobItemId)
+		public static IQuoteItemRepository GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(Guid jobItemId)
 		{
 			var quoteItemRepository = MockRepository.GenerateStub<IQuoteItemRepository>();
 			quoteItemRepository.Stub(x => x.GetQuoteItemForJobItem(jobItemId)).Return(GetQuoteItemForJobItem(jobItemId));
 			return quoteItemRepository;
 		}
 
-		public static IQuoteItemRepository GetQuoteItemRepository_GetQuoteItemForJobItem_ReturnsNull(Guid jobItemId)
+		public static IQuoteItemRepository GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsNull(Guid jobItemId)
 		{
 			var quoteItemRepository = MockRepository.GenerateStub<IQuoteItemRepository>();
 			quoteItemRepository.Stub(x => x.GetQuoteItemForJobItem(jobItemId)).Return(null);

@@ -13,15 +13,18 @@ namespace JobSystem.BusinessLogic.Services
 	{
 		private readonly ICustomerRepository _customerRepository;
 		private readonly IDeliveryRepository _deliveryRepository;
+		private readonly IEntityIdProvider _entityIdProvider;
 
 		public DeliveryService(
 			IUserContext applicationContext,
 			IDeliveryRepository deliveryRepository,
 			ICustomerRepository customerRepository,
+			IEntityIdProvider entityIdProvider,
 			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
 		{
 			_deliveryRepository = deliveryRepository;
 			_customerRepository = customerRepository;
+			_entityIdProvider = entityIdProvider;
 		}
 
 		public Delivery Create(Guid id, Guid customerId, string fao)
@@ -32,6 +35,7 @@ namespace JobSystem.BusinessLogic.Services
 				throw new ArgumentException("An ID must be supplied for the pending item.");
 			var delivery = new Delivery();
 			delivery.Id = id;
+			delivery.DeliveryNoteNumber = _entityIdProvider.GetIdFor<Delivery>();
 			delivery.Customer = GetCustomer(customerId);
 			delivery.CreatedBy = CurrentUser;
 			delivery.DateCreated = AppDateTime.GetUtcNow();

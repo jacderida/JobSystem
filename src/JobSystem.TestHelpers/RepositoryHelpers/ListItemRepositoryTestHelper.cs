@@ -28,6 +28,24 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 			return listItemRepository;
 		}
 
+		public static IListItemRepository GetListItemRepository_StubsGetByType_ReturnsListItem(ListItemType[] types)
+		{
+			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
+			foreach (var type in types)
+				listItemRepositoryStub.Stub(x => x.GetByType(type)).Return(GetByType(type));
+			return listItemRepositoryStub;
+		}
+
+		private static ListItem GetByType(ListItemType type)
+		{
+			return new ListItem
+			{
+				Id = Guid.NewGuid(),
+				Name = type.ToString(),
+				Type = type
+			};
+		}
+
 		private static ListItem GetCurrency(Guid currencyId)
 		{
 			return new ListItem

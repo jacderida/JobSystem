@@ -8,6 +8,7 @@ namespace JobSystem.DataModel.Entities
 	public class Delivery
 	{
 		public virtual Guid Id { get; set; }
+		public virtual string DeliveryNoteNumber { get; set; }
 		public virtual Customer Customer { get; set; }
 		public virtual DateTime DateCreated { get; set; }
 		public virtual UserAccount CreatedBy { get; set; }
