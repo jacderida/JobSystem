@@ -59,6 +59,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\fluentnhibernate-NH3.1-1.2\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="DataAnnotationsExtensions">
+      <HintPath>..\packages\DataAnnotationsExtensions.1.0.2.0\lib\NETFramework40\DataAnnotationsExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DataAnnotationsExtensions.ClientValidation">
+      <HintPath>..\packages\DataAnnotationsExtensions.MVC3.1.0.2.0\lib\NETFramework40\DataAnnotationsExtensions.ClientValidation.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
     </Reference>
@@ -135,11 +141,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\telerikreporting\Telerik.ReportViewer.WebForms.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.2.0.0\lib\NETFramework40\WebActivator.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Versioning\VersionInfo.cs">
       <Link>VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="App_Start\RegisterClientValidationExtensions.cs" />
     <Compile Include="Configuration\HostRequestConfigDomainProvider.cs" />
     <Compile Include="Configuration\RequestContextConnectionProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -186,6 +196,7 @@
     <Compile Include="ViewModels\Orders\OrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderIndexViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderItemCreateViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrderItemEditViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderItemIndexViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteCreateViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteIndexViewModel.cs" />
@@ -422,6 +433,7 @@
     <Content Include="Views\Order\Details.cshtml" />
     <Content Include="Views\Order\CreateItem.cshtml" />
     <Content Include="Views\Order\ApprovedOrders.cshtml" />
+    <Content Include="Views\Order\EditItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\PendingOrderItems.cshtml" />

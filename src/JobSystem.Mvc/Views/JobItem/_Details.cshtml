@@ -173,6 +173,7 @@
 			<div class="text">
 				@if (Model.OrderItem != null)
 				{
+					@Html.ActionLink("Edit Order Item", "EditItem", "Order", new { jobItemId = @Model.Id }, new { @class = "primary-action"})
 					<div class="quote-item">
 						<div class="details-fields">
 							<span class="field-label">Order No.</span>
@@ -214,7 +215,7 @@
 				}
 				else
 				{
-					@Html.ActionLink("Raise Order", "Create", "Order", new { jobItemId = @Model.Id }, new { @class = "primary-action" })
+					@Html.ActionLink("Raise Order", "Create", "Order", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action" })
 					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
 				}
 			</div>
