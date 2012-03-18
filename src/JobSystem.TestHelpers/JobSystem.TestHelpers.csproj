@@ -50,6 +50,8 @@
     <Compile Include="ConsignmentServiceFactory.cs" />
     <Compile Include="Context\TestAppConfig.cs" />
     <Compile Include="Context\TestUserContext.cs" />
+    <Compile Include="DeliveryItemServiceFactory.cs" />
+    <Compile Include="DeliveryServiceFactory.cs" />
     <Compile Include="IntegrationHelpers\CreateConsignmentsFromPendingItemsHelper.cs" />
     <Compile Include="IntegrationHelpers\CreateOrderFromConsignmentHelper.cs" />
     <Compile Include="IntegrationHelpers\CreateOrdersFromPendingItemsHelper.cs" />
@@ -59,15 +61,17 @@
     <Compile Include="DomainValidationExtensions.cs" />
     <Compile Include="EntityIdProviderFactory.cs" />
     <Compile Include="InstrumentServiceFactory.cs" />
+    <Compile Include="RepositoryHelpers\CustomerRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\JobItemRepositoryTestHelper.cs" />
     <Compile Include="JobItemServiceFactory.cs" />
     <Compile Include="JobServiceFactory.cs" />
-    <Compile Include="ListItemRepositoryTestHelper.cs" />
+    <Compile Include="RepositoryHelpers\ListItemRepositoryTestHelper.cs" />
     <Compile Include="OrderItemServiceTestHelper.cs" />
     <Compile Include="OrderServiceTestHelper.cs" />
     <Compile Include="QuoteItemServiceTestHelper.cs" />
     <Compile Include="QuoteServiceTestHelper.cs" />
     <Compile Include="RepositoryHelpers\OrderRepositoryTestHelper.cs" />
+    <Compile Include="RepositoryHelpers\QuoteItemRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\SupplierRepositoryTestHelper.cs" />
     <Compile Include="SupplierServiceFactory.cs" />
     <Compile Include="UserManagementServiceFactory.cs" />

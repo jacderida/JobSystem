@@ -3,7 +3,7 @@ using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using Rhino.Mocks;
 
-namespace JobSystem.TestHelpers
+namespace JobSystem.TestHelpers.RepositoryHelpers
 {
 	public static class ListItemRepositoryTestHelper
 	{

@@ -9,6 +9,7 @@ using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
 using NUnit.Framework;
 using Rhino.Mocks;
+using JobSystem.TestHelpers.RepositoryHelpers;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {

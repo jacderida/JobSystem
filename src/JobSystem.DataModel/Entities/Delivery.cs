@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
+using JobSystem.Resources.Delivery;
 
 namespace JobSystem.DataModel.Entities
 {
@@ -12,6 +11,7 @@ namespace JobSystem.DataModel.Entities
 		public virtual Customer Customer { get; set; }
 		public virtual DateTime DateCreated { get; set; }
 		public virtual UserAccount CreatedBy { get; set; }
+		[StringLength(255, ErrorMessageResourceName = "InvalidFao", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string Fao { get; set; }
 	}
 }

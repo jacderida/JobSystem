@@ -14,8 +14,7 @@ namespace JobSystem.Migrations.SqlLite
 				.WithColumn("JobItemId").AsGuid().NotNullable()
 				.WithColumn("QuoteItemId").AsGuid().Nullable()
 				.WithColumn("CustomerId").AsGuid().NotNullable()
-				.WithColumn("Notes").AsString(255).Nullable()
-				.WithColumn("BeyondEconomicRepair").AsBoolean().NotNullable();
+				.WithColumn("Notes").AsString(255).Nullable();
 			Create.ForeignKey("FK_PendingDeliveryItems_JobItems").FromTable("PendingDeliveryItems").ForeignColumn("JobItemId").ToTable("JobItems").PrimaryColumn("Id");
 			Create.ForeignKey("FK_PendingDeliveryItems_Customers").FromTable("PendingDeliveryItems").ForeignColumn("CustomerId").ToTable("Customers").PrimaryColumn("Id");
 		}

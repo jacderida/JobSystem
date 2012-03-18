@@ -93,6 +93,7 @@
     <Compile Include="ConsignmentTests.cs" />
     <Compile Include="CustomerTests.cs" />
     <Compile Include="DeliveryItemServiceTests.cs" />
+    <Compile Include="DeliveryServiceTests.cs" />
     <Compile Include="InstrumentTests.cs" />
     <Compile Include="JobItemTests.cs" />
     <Compile Include="JobServiceTests.cs" />
