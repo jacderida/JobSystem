@@ -5,6 +5,7 @@ using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.Resources.Delivery;
+using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -76,6 +77,25 @@ namespace JobSystem.BusinessLogic.Services
 			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
 			_deliveryItemRepository.CreatePending(pendingItem);
 			return pendingItem;
+		}
+
+		public void DeletePendingDeliveryItem(Guid id)
+		{
+			_deliveryItemRepository.DeletePendingDeliveryItem(id);
+		}
+
+		public IEnumerable<PendingDeliveryItem> GetPendingDeliveryItems()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			return _deliveryItemRepository.GetPendingDeliveryItems();
+		}
+
+		public IEnumerable<PendingDeliveryItem> GetPendingDeliveryItems(IList<Guid> pendingItemIds)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			return _deliveryItemRepository.GetPendingDeliveryItems(pendingItemIds);
 		}
 
 		private Delivery GetDelivery(Guid deliveryId)

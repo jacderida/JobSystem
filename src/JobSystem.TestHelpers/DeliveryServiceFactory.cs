@@ -14,8 +14,15 @@ namespace JobSystem.TestHelpers
 			IDeliveryRepository deliveryRepository,
 			ICustomerRepository customerRepository)
 		{
+			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
 			return new DeliveryService(
-				userContext, deliveryRepository, customerRepository, EntityIdProviderFactory.GetEntityIdProviderFor<Delivery>("DR2000"), MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+				userContext,
+				deliveryRepository,
+				new DeliveryItemService(
+					userContext, deliveryRepository, MockRepository.GenerateStub<IDeliveryItemRepository>(), MockRepository.GenerateStub<IJobItemRepository>(), MockRepository.GenerateStub<IQuoteItemRepository>(), MockRepository.GenerateStub<IListItemRepository>(), MockRepository.GenerateStub<ICustomerRepository>(), dispatcher),
+				customerRepository,
+				EntityIdProviderFactory.GetEntityIdProviderFor<Delivery>("DR2000"),
+				dispatcher);
 		}
 	}
 }

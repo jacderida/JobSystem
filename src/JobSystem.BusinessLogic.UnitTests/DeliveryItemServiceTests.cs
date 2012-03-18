@@ -19,7 +19,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private IUserContext _userContext;
 		private DomainValidationException _domainValidationException;
 		private JobItemService _jobItemService;
-		private DeliveryService _deliveryService;
 		private DeliveryItemService _deliveryItemService;
 		private DeliveryItem _savedDeliveryItem;
 		private PendingDeliveryItem _savedPendingItem;
@@ -34,7 +33,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_savedPendingItem = null;
 			_savedDeliveryItem = null;
 			_jobItemService = null;
-			_deliveryService = null;
 			_deliveryItemService = null;
 			_jobItemToUpdateId = Guid.NewGuid();
 			_jobItemToUpdate = new JobItem

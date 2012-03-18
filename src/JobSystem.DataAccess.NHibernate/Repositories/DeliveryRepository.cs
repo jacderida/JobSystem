@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
@@ -11,6 +12,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		public int GetDeliveryItemCount(Guid deliveryId)
 		{
 			return CurrentSession.Query<DeliveryItem>().Where(di => di.Delivery.Id == deliveryId).Count();
+		}
+
+		public IEnumerable<Delivery> GetDeliveries()
+		{
+			return CurrentSession.Query<Delivery>();
 		}
 	}
 }

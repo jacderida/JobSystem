@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
@@ -14,10 +16,12 @@ namespace JobSystem.BusinessLogic.Services
 		private readonly ICustomerRepository _customerRepository;
 		private readonly IDeliveryRepository _deliveryRepository;
 		private readonly IEntityIdProvider _entityIdProvider;
+		private readonly DeliveryItemService _deliveryItemService;
 
 		public DeliveryService(
 			IUserContext applicationContext,
 			IDeliveryRepository deliveryRepository,
+			DeliveryItemService deliveryItemService,
 			ICustomerRepository customerRepository,
 			IEntityIdProvider entityIdProvider,
 			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
@@ -25,6 +29,17 @@ namespace JobSystem.BusinessLogic.Services
 			_deliveryRepository = deliveryRepository;
 			_customerRepository = customerRepository;
 			_entityIdProvider = entityIdProvider;
+			_deliveryItemService = deliveryItemService;
+		}
+
+		public void CreateDeliveriesFromPendingItems()
+		{
+			DoCreateDeliveriesFromPendingItems(_deliveryItemService.GetPendingDeliveryItems());
+		}
+
+		public void CreateDeliveriesFromPendingItems(List<Guid> pendingItemIds)
+		{
+			DoCreateDeliveriesFromPendingItems(_deliveryItemService.GetPendingDeliveryItems(pendingItemIds));
 		}
 
 		public Delivery Create(Guid id, Guid customerId, string fao)
@@ -43,6 +58,30 @@ namespace JobSystem.BusinessLogic.Services
 			ValidateAnnotatedObjectThrowOnFailure(delivery);
 			_deliveryRepository.Create(delivery);
 			return delivery;
+		}
+
+		public IEnumerable<Delivery> GetDeliveries()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			return _deliveryRepository.GetDeliveries();
+		}
+
+		private void DoCreateDeliveriesFromPendingItems(IEnumerable<PendingDeliveryItem> pendingItems)
+		{
+			var customerGroups = pendingItems.GroupBy(g => g.Customer.Id);
+			foreach (var group in customerGroups)
+			{
+				var i = 0;
+				var deliveryId = Guid.NewGuid();
+				foreach (var item in group)
+				{
+					if (i++ == 0)
+						Create(deliveryId, item.Customer.Id, String.Empty);
+					_deliveryItemService.Create(Guid.NewGuid(), deliveryId, item.JobItem.Id, item.Notes);
+					_deliveryItemService.DeletePendingDeliveryItem(item.Id);
+				}
+			}
 		}
 
 		private Customer GetCustomer(Guid customerId)

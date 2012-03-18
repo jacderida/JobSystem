@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsignmentTests.cs" />
+    <Compile Include="DeliveryServiceTests.cs" />
     <Compile Include="InstrumentSearchTests.cs" />
     <Compile Include="IntegrationTest.cs" />
     <Compile Include="OrderServiceTests.cs" />
