@@ -1,4 +1,4 @@
-﻿@model IList<JobSystem.Mvc.ViewModels.Orders.OrderIndexViewModel>
+﻿@model IList<JobSystem.Mvc.ViewModels.Orders.OrderItemIndexViewModel>
 
 @{
     ViewBag.Title = "Items";
@@ -6,24 +6,32 @@
 
 <div id="toggle-container-orders">
 	<span class="toggle toggle-active toggle-left"><a href="@Url.Action("PendingOrderItems")">Items</a></span>
-	<span class="toggle toggle-right"><a href="@Url.Action("PendingOrders")">Pending</a></span>
+	<span class="toggle toggle-middle"><a href="@Url.Action("PendingOrders")">Pending</a></span>
 	<span class="toggle toggle-right"><a href="@Url.Action("ApprovedOrders")">Approved</a></span>
 </div>
 
-@if (Model.Any()) {
+@using (Html.BeginForm("OrderPending", "Order", FormMethod.Post))
+{
+
+if (Model.Any()) {
+
+	<input class="primary-action" type="submit" value="Order"/>
 	<table>
 		<tr>
 			<th></th>
-			<th>Supplier Name</th>
+			<th>Supplier</th>
 			<th>Instructions</th>
-			<th></th>
+			<th>Description</th>
+			<th>Part No.</th>
+			<th>Delivery Days</th>
+			<th>Price</th>
+			<th>Quantity</th>
 		</tr>
 	@foreach (var item in Model.OrderBy(i => i.SupplierName))
 	 {
 		<tr>
 			<td>
-				@Html.CheckBox("toBeConverted", false)
-			</td>
+				<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>
 			<td>
 				@item.SupplierName
 			</td>
@@ -31,7 +39,19 @@
 				@item.Instructions
 			</td>
 			<td>
-				<a href="#" class="editConsignmentButton" id="@item.Id">Edit</a>
+				@item.Description
+			</td>
+			<td>
+				@item.PartNo
+			</td>
+			<td>
+				@item.DeliveryDays
+			</td>
+			<td>
+				@item.Price
+			</td>
+			<td>
+				@item.Quantity
 			</td>
 		</tr>
 	 }
@@ -39,7 +59,7 @@
 }else{
 	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
 }
-
+}
 
 <div id="edit-order-container">
 </div>

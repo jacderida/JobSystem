@@ -8,7 +8,7 @@ namespace JobSystem.Mvc.ViewModels.Orders
 	public class OrderItemIndexViewModel
 	{
 		public Guid Id { get; set; }
-		public Guid SupplierId { get; set; }
+		public string SupplierName { get; set; }
 		public string Instructions { get; set; }
 		public string Description { get; set; }
 		public string PartNo { get; set; }

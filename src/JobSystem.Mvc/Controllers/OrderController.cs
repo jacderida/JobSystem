@@ -32,10 +32,15 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult PendingOrderItems()
 		{
 			var items = _orderItemService.GetPendingOrderItems().Select(
-				q => new OrderIndexViewModel
+				q => new OrderItemIndexViewModel
 				{
 					Id = q.Id,
 					JobItemId = q.JobItem.Id,
+					DeliveryDays = q.DeliveryDays.ToString(),
+					Description = q.Description,
+					PartNo = q.PartNo,
+					Price = q.Price.ToString(),
+					Quantity = q.Quantity.ToString(),
 					Instructions = q.Instructions,
 					SupplierName = q.Supplier.Name
 				}).ToList();
@@ -53,6 +58,19 @@ namespace JobSystem.Mvc.Controllers
 					SupplierName = q.Supplier.Name,
 					OrderNo = q.OrderNo
 				}).ToList();
+
+			foreach (var item in items)
+			{
+				var orderItems = _orderItemService.GetOrderItems(item.Id);
+				item.OrderItems = orderItems.Select(oi => new OrderItemIndexViewModel(){
+					DeliveryDays = oi.DeliveryDays.ToString(),
+					Description = oi.Description,
+					Instructions = oi.Instructions,
+					PartNo = oi.PartNo,
+					Price = oi.Price.ToString(),
+					Quantity = oi.Quantity.ToString()
+				}).ToList();
+			}
 			return View(items);
 		}
 
@@ -67,6 +85,20 @@ namespace JobSystem.Mvc.Controllers
 					SupplierName = q.Supplier.Name,
 					OrderNo = q.OrderNo
 				}).ToList();
+
+			foreach (var item in items)
+			{
+				var orderItems = _orderItemService.GetOrderItems(item.Id);
+				item.OrderItems = orderItems.Select(oi => new OrderItemIndexViewModel()
+				{
+					DeliveryDays = oi.DeliveryDays.ToString(),
+					Description = oi.Description,
+					Instructions = oi.Instructions,
+					PartNo = oi.PartNo,
+					Price = oi.Price.ToString(),
+					Quantity = oi.Quantity.ToString()
+				}).ToList();
+			}
 			return View(items);
 		}
 
@@ -95,10 +127,11 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Create(Guid jobItemId)
+		public ActionResult Create(Guid jobItemId, Guid jobId)
 		{
 			var viewmodel = new OrderCreateViewModel()
 			{ 
+				JobId = jobId,
 				JobItemId = jobItemId,
 				Currencies = _listItemService.GetAllByCategory(ListItemCategoryType.Currency).ToSelectList()
 			};
@@ -140,7 +173,7 @@ namespace JobSystem.Mvc.Controllers
 					viewmodel.JobItemId,
 					viewmodel.Price);
 			}
-			return View();
+			return RedirectToAction("Details", "Job", new { id = viewmodel.JobId, tabNo = "0" });
 		}
 
 		[HttpGet]
@@ -201,6 +234,62 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult ApproveOrder(Guid id)
 		{
 			_orderService.ApproveOrder(id);
+
+			return RedirectToAction("PendingOrders");
+		}
+
+		[HttpGet]
+		public ActionResult EditItem(Guid jobItemId)
+		{
+			var item = _orderItemService.GetPendingOrderItemForJobItem(jobItemId);
+
+			var viewmodel = new OrderItemEditViewModel()
+			{
+				Id = item.Id,
+				DeliveryDays = item.DeliveryDays,
+				Description = item.Description,
+				Instructions = item.Instructions,
+				PartNo = item.PartNo,
+				Price = item.Price,
+				Quantity = item.Quantity,
+				SupplierId = item.Supplier.Id,
+				SupplierName = item.Supplier.Name,
+				JobItemId = item.JobItem.Id,
+				JobId = item.JobItem.Job.Id
+			};
+
+			return View("EditItem", viewmodel);
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult EditItem(OrderItemEditViewModel viewmodel)
+		{
+			_orderItemService.EditPending(viewmodel.Id,
+				viewmodel.SupplierId,
+				viewmodel.Description,
+				viewmodel.Quantity,
+				viewmodel.PartNo,
+				viewmodel.Instructions,
+				viewmodel.DeliveryDays,
+				viewmodel.Price);
+
+			return RedirectToAction("Details", "Job", new { Id = viewmodel.JobId, tabNo = "0" });
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult OrderPending(Guid[] ToBeConvertedIds)
+		{
+			IList<Guid> idList = new List<Guid>();
+			if (ToBeConvertedIds.Length > 0)
+			{
+				for (var i = 0; i < ToBeConvertedIds.Length; i++)
+				{
+					idList.Add(ToBeConvertedIds[i]);
+				}
+			}
+			if (idList.Any()) _orderService.CreateOrdersFromPendingItems(idList);
 
 			return RedirectToAction("PendingOrders");
 		}

@@ -839,6 +839,10 @@ div#title {
 	border-radius:10px 0px 0px 10px;
 }
 
+.toggle-middle {
+	margin-left: -5px;
+}
+
 .toggle-right {
 	margin-left: -5px;
 	-moz-border-radius:0px 10px 10px 0px;
@@ -983,11 +987,11 @@ div#title {
 	margin-bottom: 5px;
 }
 
-.consignmentItemCount {
+.itemCount {
 	text-decoration: underline;
 }
 
-.consignmentItemCount:hover, .consignmentItemCount:focus {
+.itemCount:hover, .itemCount:focus {
 	text-decoration: none;
 	cursor: pointer;
 }

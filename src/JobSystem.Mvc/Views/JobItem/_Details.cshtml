@@ -114,7 +114,7 @@
 							<span class="field-label">Report</span>
 							<span class="field">@Model.QuoteItem.Report</span>
 							<span class="field-label">Repair</span>
-							<span class="field">@Model.QuoteItem.Repair</span>
+							<span class="field">@Model.QuoteItem.Repair.ToString("N2")</span>
 							<span class="field-label">Calibration</span>
 							<span class="field">@Model.QuoteItem.Calibration</span>
 						</div>
@@ -171,7 +171,53 @@
 		</div>
 		<div id="st_content_5" class="st_tab_view">
 			<div class="text">
-				@Html.ActionLink("Raise Order", "Create", "Order", new { jobItemId = @Model.Id }, new { @class = "primary-action" })
+				@if (Model.OrderItem != null)
+				{
+					@Html.ActionLink("Edit Order Item", "EditItem", "Order", new { jobItemId = @Model.Id }, new { @class = "primary-action"})
+					<div class="quote-item">
+						<div class="details-fields">
+							<span class="field-label">Order No.</span>
+							<span class="field">@Model.OrderItem.SupplierName</span>
+							<span class="field-label">Instructions</span>
+							<span class="field">@Model.OrderItem.Instructions</span>
+							<span class="field-label">Description</span>
+							<span class="field">@Model.OrderItem.Description</span>
+							<span class="field-label">Part Number</span>
+							<span class="field">@Model.OrderItem.PartNo</span>
+						</div>
+						<div class="details-fields">
+							<span class="field-label">Delivery Days</span>
+							<span class="field">@Model.OrderItem.DeliveryDays</span>
+							<span class="field-label">Price</span>
+							<span class="field">@Model.OrderItem.Price</span>
+							<span class="field-label">Quantity</span>
+							<span class="field">@Model.OrderItem.Quantity</span>
+						</div>
+					</div>
+				}
+				else if (Model.Order != null)
+				{
+					<span class="verySmallText">
+						Created by <span class="strongText">@Model.Order.CreatedBy</span> on <span class="strongText">@Model.Order.DateCreated</span>
+					</span>
+					<div class="quote-item">
+						<div class="details-fields">
+							<span class="field-label">Order No.</span>
+							<span class="field">@Model.Order.OrderNo</span>
+							<span class="field-label">Instructions</span>
+							<span class="field">@Model.Order.Instructions</span>
+							<span class="field-label">Supplier</span>
+							<span class="field">@Model.Order.SupplierName</span>
+							<span class="field-label">Currency</span>
+							<span class="field">@Model.Order.Currency</span>
+						</div>
+					</div>
+				}
+				else
+				{
+					@Html.ActionLink("Raise Order", "Create", "Order", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action" })
+					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
+				}
 			</div>
 		</div>
 		<div id="st_content_7" class="st_tab_view">

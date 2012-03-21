@@ -340,10 +340,10 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			this.titleTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.40719735622406006D), Telerik.Reporting.Drawing.Unit.Cm(0.18562497198581696D));
 			this.titleTextBox.Name = "titleTextBox";
-			this.titleTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(4.1926026344299316D), Telerik.Reporting.Drawing.Unit.Cm(0.88562500476837158D));
+			this.titleTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(2.9248940944671631D), Telerik.Reporting.Drawing.Unit.Cm(0.88562500476837158D));
 			this.titleTextBox.Style.Color = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(34)))), ((int)(((byte)(60)))));
 			this.titleTextBox.Style.Font.Name = "Arial";
-			this.titleTextBox.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(16D);
+			this.titleTextBox.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(11D);
 			this.titleTextBox.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
 			this.titleTextBox.StyleName = "Title";
 			this.titleTextBox.Value = "Consignment";
@@ -351,12 +351,12 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// consignmentNoDataTextBox
 			// 
 			this.consignmentNoDataTextBox.CanGrow = true;
-			this.consignmentNoDataTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(4.5999999046325684D), Telerik.Reporting.Drawing.Unit.Cm(0.18562497198581696D));
+			this.consignmentNoDataTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(3.3322916030883789D), Telerik.Reporting.Drawing.Unit.Cm(0.18562497198581696D));
 			this.consignmentNoDataTextBox.Name = "consignmentNoDataTextBox";
-			this.consignmentNoDataTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(3.2426068782806396D), Telerik.Reporting.Drawing.Unit.Cm(0.88552480936050415D));
+			this.consignmentNoDataTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(5.0999999046325684D), Telerik.Reporting.Drawing.Unit.Cm(0.88552480936050415D));
 			this.consignmentNoDataTextBox.Style.Color = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(34)))), ((int)(((byte)(60)))));
 			this.consignmentNoDataTextBox.Style.Font.Name = "Arial";
-			this.consignmentNoDataTextBox.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(16D);
+			this.consignmentNoDataTextBox.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(11D);
 			this.consignmentNoDataTextBox.StyleName = "Data";
 			this.consignmentNoDataTextBox.Value = "=Fields.ConsignmentNo";
 			// 
@@ -547,7 +547,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox15.Style.LineWidth = Telerik.Reporting.Drawing.Unit.Point(0D);
 			this.textBox15.Style.Padding.Top = Telerik.Reporting.Drawing.Unit.Pixel(5D);
 			this.textBox15.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center;
-			this.textBox15.Value = "RECEIVED BY";
+			this.textBox15.Value = "RECIEVED BY";
 			// 
 			// textBox11
 			// 
