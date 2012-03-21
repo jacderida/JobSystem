@@ -84,6 +84,13 @@ namespace JobSystem.BusinessLogic.Services
 			_deliveryItemRepository.DeletePendingDeliveryItem(id);
 		}
 
+		public IEnumerable<DeliveryItem> GetDeliveryItems(Guid deliveryId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			return _deliveryItemRepository.GetDeliveryItems(deliveryId);
+		}
+
 		public IEnumerable<PendingDeliveryItem> GetPendingDeliveryItems()
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

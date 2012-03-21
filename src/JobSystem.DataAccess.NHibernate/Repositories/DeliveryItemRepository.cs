@@ -38,5 +38,10 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			var criteria = CurrentSession.CreateCriteria<PendingDeliveryItem>().Add(query);
 			return criteria.List<PendingDeliveryItem>();
 		}
+
+		public IEnumerable<DeliveryItem> GetDeliveryItems(Guid deliveryId)
+		{
+			return CurrentSession.Query<DeliveryItem>().Where(di => di.Delivery.Id == deliveryId);
+		}
 	}
 }

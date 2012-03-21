@@ -80,6 +80,8 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 
 			var deliveries = deliveryService.GetDeliveries().ToList();
 			Assert.AreEqual(2, deliveries.Count);
+			var deliveryItems = deliveryItemService.GetDeliveryItems(deliveries[0].Id).ToList();
+			Assert.AreEqual(7, deliveryItems.Count);
 		}
 	}
 }

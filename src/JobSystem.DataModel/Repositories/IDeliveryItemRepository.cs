@@ -11,5 +11,6 @@ namespace JobSystem.DataModel.Repositories
 		bool JobItemHasPendingDeliveryItem(Guid jobItemId);
 		IEnumerable<PendingDeliveryItem> GetPendingDeliveryItems();
 		IEnumerable<PendingDeliveryItem> GetPendingDeliveryItems(IList<Guid> pendingItemIds);
+		IEnumerable<DeliveryItem> GetDeliveryItems(Guid deliveryId);
 	}
 }
