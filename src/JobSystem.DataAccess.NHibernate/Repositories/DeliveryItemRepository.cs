@@ -25,6 +25,26 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			return CurrentSession.Query<PendingDeliveryItem>().SingleOrDefault(di => di.JobItem.Id == jobItemId) != null;
 		}
 
+		public DeliveryItem GetDeliveryItemForJobItem(Guid jobItemId)
+		{
+			return CurrentSession.Query<DeliveryItem>().Where(di => di.JobItem.Id == jobItemId).SingleOrDefault();
+		}
+
+		public PendingDeliveryItem GetPendingDeliveryItemForJobItem(Guid jobItemId)
+		{
+			return CurrentSession.Query<PendingDeliveryItem>().Where(p => p.JobItem.Id == jobItemId).SingleOrDefault();
+		}
+
+		public PendingDeliveryItem GetPendingDeliveryItem(Guid pendingItemId)
+		{
+			return CurrentSession.Query<PendingDeliveryItem>().SingleOrDefault();
+		}
+
+		public void UpdatePendingDeliveryItem(PendingDeliveryItem pendingItem)
+		{
+			CurrentSession.Update(pendingItem);
+		}
+
 		public IEnumerable<PendingDeliveryItem> GetPendingDeliveryItems()
 		{
 			return CurrentSession.Query<PendingDeliveryItem>();

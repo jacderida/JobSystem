@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
-using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.Resources.Delivery;
-using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -60,6 +60,28 @@ namespace JobSystem.BusinessLogic.Services
 			return deliveryItem;
 		}
 
+		public DeliveryItem Edit(Guid id, string notes)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(DeliveryItemMessages.InsufficientSecurityClearance, "CurrentUser");
+			var deliveryItem = GetById(id);
+			deliveryItem.Notes = notes;
+			ValidateAnnotatedObjectThrowOnFailure(deliveryItem);
+			_deliveryItemRepository.Update(deliveryItem);
+			return deliveryItem;
+		}
+
+		public PendingDeliveryItem EditPending(Guid id, string notes)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(DeliveryItemMessages.InsufficientSecurityClearance, "CurrentUser");
+			var pendingItem = _deliveryItemRepository.GetPendingDeliveryItem(id);
+			pendingItem.Notes = notes;
+			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
+			_deliveryItemRepository.UpdatePendingDeliveryItem(pendingItem);
+			return pendingItem;
+		}
+
 		public PendingDeliveryItem CreatePending(Guid id, Guid jobItemId, Guid customerId, string notes)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
@@ -82,6 +104,30 @@ namespace JobSystem.BusinessLogic.Services
 		public void DeletePendingDeliveryItem(Guid id)
 		{
 			_deliveryItemRepository.DeletePendingDeliveryItem(id);
+		}
+
+		public DeliveryItem GetDeliveryItemForJobItem(Guid jobItemId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			return _deliveryItemRepository.GetDeliveryItemForJobItem(jobItemId);
+		}
+
+		public PendingDeliveryItem GetPendingDeliveryItemForJobItem(Guid jobItemId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			return _deliveryItemRepository.GetPendingDeliveryItemForJobItem(jobItemId);
+		}
+
+		public DeliveryItem GetById(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			var deliveryItem = _deliveryItemRepository.GetById(id);
+			if (deliveryItem == null)
+				throw new ArgumentException("A valid ID must be supplied for the delivery item");
+			return deliveryItem;
 		}
 
 		public IEnumerable<DeliveryItem> GetDeliveryItems(Guid deliveryId)

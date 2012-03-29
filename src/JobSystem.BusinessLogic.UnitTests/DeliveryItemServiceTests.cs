@@ -24,6 +24,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private PendingDeliveryItem _savedPendingItem;
 		private Guid _jobItemToUpdateId;
 		private JobItem _jobItemToUpdate;
+		private DeliveryItem _deliveryItemForEdit;
+		private Guid _deliveryItemForEditId;
 
 		[SetUp]
 		public void Setup()
@@ -61,7 +63,16 @@ namespace JobSystem.BusinessLogic.UnitTests
 				Created = DateTime.UtcNow,
 				CreatedUser = _userContext.GetCurrentUser(),
 			};
+			_deliveryItemForEditId = Guid.NewGuid();
+			_deliveryItemForEdit = new DeliveryItem
+			{
+				Id = _deliveryItemForEditId,
+				Delivery = new Delivery { Id = Guid.NewGuid(), DeliveryNoteNumber = "DR2000", Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael" } },
+				ItemNo = 1,
+			};
 		}
+
+		#region Create
 
 		[Test]
 		public void Create_DeliveryWith0ItemsAndJobItemWithQuoteItem_DeliveryItemCreated()
@@ -321,6 +332,9 @@ namespace JobSystem.BusinessLogic.UnitTests
 			}
 		}
 
+		#endregion
+		#region CreatePending
+
 		[Test]
 		public void CreatePending_JobItemWithoutQuoteItem_PendingItemCreatedSuccessfully()
 		{
@@ -523,5 +537,24 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_domainValidationException = dex;
 			}
 		}
+
+		#endregion
+		#region Edit
+
+
+
+		private void Edit(Guid deliveryItemId, string notes)
+		{
+			try
+			{
+				_deliveryItemForEdit = _deliveryItemService.Edit(deliveryItemId, notes);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
 	}
 }

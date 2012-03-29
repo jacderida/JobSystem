@@ -60,6 +60,16 @@ namespace JobSystem.BusinessLogic.Services
 			return delivery;
 		}
 
+		public Delivery Edit(Guid deliveryId, string fao)
+		{
+			var delivery = _deliveryRepository.GetById(deliveryId);
+			if (delivery == null)
+				throw new ArgumentException("An invalid ID was supplied for the delivery");
+			delivery.Fao = fao;
+			_deliveryRepository.Update(delivery);
+			return delivery;
+		}
+
 		public IEnumerable<Delivery> GetDeliveries()
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
