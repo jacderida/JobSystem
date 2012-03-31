@@ -82,6 +82,7 @@
     <Compile Include="INHibernateConfigurationCache.cs" />
     <Compile Include="ISessionStorage.cs" />
     <Compile Include="Mappings\AutoPersistanceModelGenerator.cs" />
+    <Compile Include="Mappings\CertificateMapping.cs" />
     <Compile Include="Mappings\Conventions\EnumConvention.cs" />
     <Compile Include="Mappings\Conventions\PrimaryKeyConvention.cs" />
     <Compile Include="Mappings\Conventions\TableNameConvention.cs" />

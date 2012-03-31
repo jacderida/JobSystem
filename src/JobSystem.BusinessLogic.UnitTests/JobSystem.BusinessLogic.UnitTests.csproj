@@ -102,6 +102,7 @@
     <Compile Include="QuoteItemServiceTests.cs" />
     <Compile Include="QuoteServiceTests.cs" />
     <Compile Include="SupplierTests.cs" />
+    <Compile Include="TestStandardsServiceTests.cs" />
     <Compile Include="UserManagementTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

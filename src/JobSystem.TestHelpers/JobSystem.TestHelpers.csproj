@@ -76,6 +76,7 @@
     <Compile Include="RepositoryHelpers\QuoteItemRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\SupplierRepositoryTestHelper.cs" />
     <Compile Include="SupplierServiceFactory.cs" />
+    <Compile Include="TestStandardServiceFactory.cs" />
     <Compile Include="UserManagementServiceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

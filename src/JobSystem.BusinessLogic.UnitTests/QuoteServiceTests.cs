@@ -7,9 +7,9 @@ using JobSystem.DataModel.Repositories;
 using JobSystem.Framework;
 using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
+using JobSystem.TestHelpers.RepositoryHelpers;
 using NUnit.Framework;
 using Rhino.Mocks;
-using JobSystem.TestHelpers.RepositoryHelpers;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {

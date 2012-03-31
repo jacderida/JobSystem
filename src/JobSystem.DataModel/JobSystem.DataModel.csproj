@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Dto\Address.cs" />
     <Compile Include="Entities\Attachment.cs" />
+    <Compile Include="Entities\Certificate.cs" />
     <Compile Include="Entities\Delivery.cs" />
     <Compile Include="Entities\DeliveryItem.cs" />
     <Compile Include="Entities\Order.cs" />
@@ -63,12 +64,14 @@
     <Compile Include="Entities\PendingQuoteItem.cs" />
     <Compile Include="Entities\Quote.cs" />
     <Compile Include="Entities\QuoteItem.cs" />
+    <Compile Include="Entities\TestStandard.cs" />
     <Compile Include="Repositories\IDeliveryItemRepository.cs" />
     <Compile Include="Repositories\IDeliveryRepository.cs" />
     <Compile Include="Repositories\IOrderItemRepository.cs" />
     <Compile Include="Repositories\IOrderRepository.cs" />
     <Compile Include="Repositories\IQuoteItemRepository.cs" />
     <Compile Include="Repositories\IQuoteRepository.cs" />
+    <Compile Include="Repositories\ITestStandardRepository.cs" />
     <Compile Include="Storage\AttachmentData.cs" />
     <Compile Include="Dto\ContactInfo.cs" />
     <Compile Include="Entities\BankDetails.cs" />
