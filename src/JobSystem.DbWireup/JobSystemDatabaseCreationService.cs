@@ -110,6 +110,12 @@ namespace JobSystem.DbWireup
 				listItem.Category = session.Get<ListItemCategory>(type.Item1);
 				session.Save(listItem);
 			}
+			foreach (var type in defaultData.CertificateTypes)
+			{
+				var listItem = type.Item2;
+				listItem.Category = session.Get<ListItemCategory>(type.Item1);
+				session.Save(listItem);
+			}
 			foreach (var location in defaultData.JobItemLocations)
 			{
 				var listItem = location.Item2;

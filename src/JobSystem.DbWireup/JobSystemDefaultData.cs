@@ -8,6 +8,7 @@ namespace JobSystem.DbWireup
 	{
 		public List<ListItemCategory> ListItemCategories { get; private set; }
 		public List<Tuple<Guid, ListItem>> JobTypes { get; private set; }
+		public List<Tuple<Guid, ListItem>> CertificateTypes { get; private set; }
 		public List<Tuple<Guid, ListItem>> JobItemWorkStatusItems { get; private set; }
 		public List<Tuple<Guid, ListItem>> JobItemInitialStatusItems { get; private set; }
 		public List<Tuple<Guid, ListItem>> JobItemStatusItems { get; private set; }
@@ -26,6 +27,7 @@ namespace JobSystem.DbWireup
 		{
 			ListItemCategories = new List<ListItemCategory>();
 			JobTypes = new List<Tuple<Guid, ListItem>>();
+			CertificateTypes = new List<Tuple<Guid, ListItem>>();
 			JobItemWorkStatusItems = new List<Tuple<Guid, ListItem>>();
 			JobItemInitialStatusItems = new List<Tuple<Guid, ListItem>>();
 			JobItemStatusItems = new List<Tuple<Guid, ListItem>>();

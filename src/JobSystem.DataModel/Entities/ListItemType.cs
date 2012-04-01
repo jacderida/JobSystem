@@ -59,6 +59,8 @@ namespace JobSystem.DataModel.Entities
 		InitialWorkLocationSubContract = 50,
 		InitialWorkLocationSite = 51,
 		StatusItemWithSubContractor = 52,
-		StatusAwaitingParts = 53
+		StatusAwaitingParts = 53,
+		CertificateTypeHouse = 54,
+		CertificateTypeUkas = 55
 	}
 }

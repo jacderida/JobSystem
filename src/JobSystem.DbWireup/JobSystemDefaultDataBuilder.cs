@@ -8,6 +8,7 @@ namespace JobSystem.DbWireup
 	{
 		private List<ListItemCategory> _listItemCategories;
 		private List<Tuple<Guid, ListItem>> _jobTypes;
+		private List<Tuple<Guid, ListItem>> _cerificateTypes;
 		private List<Tuple<Guid, ListItem>> _jobItemLocations;
 		private List<Tuple<Guid, ListItem>> _jobItemInitialLocations;
 		private List<Tuple<Guid, ListItem>> _jobItemWorkStatusItems;
@@ -26,6 +27,7 @@ namespace JobSystem.DbWireup
 		{
 			_listItemCategories = new List<ListItemCategory>();
 			_jobTypes = new List<Tuple<Guid, ListItem>>();
+			_cerificateTypes = new List<Tuple<Guid, ListItem>>();
 			_jobItemLocations = new List<Tuple<Guid, ListItem>>();
 			_jobItemInitialLocations = new List<Tuple<Guid, ListItem>>();
 			_jobItemWorkStatusItems = new List<Tuple<Guid, ListItem>>();
@@ -45,6 +47,7 @@ namespace JobSystem.DbWireup
 			var defaultData = new JobSystemDefaultData();
 			_listItemCategories.ForEach(c => defaultData.ListItemCategories.Add(c));
 			_jobTypes.ForEach(jt => defaultData.JobTypes.Add(jt));
+			_cerificateTypes.ForEach(ct => defaultData.CertificateTypes.Add(ct));
 			_jobItemLocations.ForEach(jil => defaultData.JobItemLocations.Add(jil));
 			_jobItemInitialLocations.ForEach(i => defaultData.JobItemInitialLocations.Add(i));
 			_jobItemWorkStatusItems.ForEach(si => defaultData.JobItemWorkStatusItems.Add(si));
@@ -64,6 +67,14 @@ namespace JobSystem.DbWireup
 		{
 			foreach (var category in categories)
 				_listItemCategories.Add(new ListItemCategory { Id = category.Item1, Name = category.Item2, Type = category.Item3 });
+			return this;
+		}
+
+		public JobSystemDefaultDataBuilder WithCertificateTypes(params Tuple<string, ListItemType, Guid>[] certificateTypes)
+		{
+			foreach (var type in certificateTypes)
+				_cerificateTypes.Add(
+					Tuple.Create<Guid, ListItem>(type.Item3, new ListItem { Id = Guid.NewGuid(), Name = type.Item1, Type = type.Item2 }));
 			return this;
 		}
 
