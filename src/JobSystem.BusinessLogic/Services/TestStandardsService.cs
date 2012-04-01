@@ -1,8 +1,10 @@
 ﻿using System;
+using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
+using JobSystem.Resources.TestStandards;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -20,6 +22,8 @@ namespace JobSystem.BusinessLogic.Services
 
 		public TestStandard Create(Guid id, string description, string serialNo, string certificateNo)
 		{
+			if (!CurrentUser.HasRole(UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
 			if (id == Guid.Empty)
 				throw new ArgumentException("An ID must be supplied for the test standard");
 			var testStandard = new TestStandard();
@@ -29,6 +33,21 @@ namespace JobSystem.BusinessLogic.Services
 			testStandard.CertificateNo = certificateNo;
 			ValidateAnnotatedObjectThrowOnFailure(testStandard);
 			_testStandardRepository.Create(testStandard);
+			return testStandard;
+		}
+
+		public TestStandard Edit(Guid id, string description, string serialNo, string certificateNo)
+		{
+			if (!CurrentUser.HasRole(UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			var testStandard = _testStandardRepository.GetById(id);
+			if (testStandard == null)
+				throw new ArgumentException("A valid ID must be supplied for the test standard");
+			testStandard.Description = description;
+			testStandard.SerialNo = serialNo;
+			testStandard.CertificateNo = certificateNo;
+			ValidateAnnotatedObjectThrowOnFailure(testStandard);
+			_testStandardRepository.Update(testStandard);
 			return testStandard;
 		}
 	}

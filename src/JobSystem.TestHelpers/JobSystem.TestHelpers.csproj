@@ -75,6 +75,7 @@
     <Compile Include="RepositoryHelpers\OrderRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\QuoteItemRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\SupplierRepositoryTestHelper.cs" />
+    <Compile Include="RepositoryHelpers\TestStandardRepositoryHelper.cs" />
     <Compile Include="SupplierServiceFactory.cs" />
     <Compile Include="TestStandardServiceFactory.cs" />
     <Compile Include="UserManagementServiceFactory.cs" />

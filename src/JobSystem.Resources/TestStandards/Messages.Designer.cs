@@ -97,6 +97,15 @@ namespace JobSystem.Resources.TestStandards {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A manager role is required for this operation.
+        /// </summary>
+        public static string InsufficientSecurityClearance {
+            get {
+                return ResourceManager.GetString("InsufficientSecurityClearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A serial number must be supplied for the test standard.
         /// </summary>
         public static string SerialNoNotSupplied {

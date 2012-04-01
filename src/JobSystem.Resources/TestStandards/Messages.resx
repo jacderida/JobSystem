@@ -129,6 +129,9 @@
   <data name="DescriptionTooLarge" xml:space="preserve">
     <value>The description cannot exceed 255 characters</value>
   </data>
+  <data name="InsufficientSecurityClearance" xml:space="preserve">
+    <value>A manager role is required for this operation</value>
+  </data>
   <data name="SerialNoNotSupplied" xml:space="preserve">
     <value>A serial number must be supplied for the test standard</value>
   </data>
