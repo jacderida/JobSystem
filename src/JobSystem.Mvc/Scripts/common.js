@@ -34,6 +34,10 @@ $(document).ready(function () {
 		// $("input:submit, a.primary-action, button, .nav-link").button();
 		$(".primary-action").button();
 
+		$('#deliveryIndividualCheckbox').live('click', function () {
+			$('#deliveryFao').slideToggle(200);
+		});
+
 		//Create USER modal form
 		$("#create-user-container").dialog({
 			autoOpen: false,
