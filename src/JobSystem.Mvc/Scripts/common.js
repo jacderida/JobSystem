@@ -10,6 +10,9 @@
 			case 'consignment-item':
 				$("#create-consignment-container").dialog('close');
 				break;
+			case 'delivery-item':
+				$("#create-delivery-container").dialog('close');
+				break;
 		}
 	}
 }

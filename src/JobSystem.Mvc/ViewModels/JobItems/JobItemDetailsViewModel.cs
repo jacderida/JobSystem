@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using JobSystem.Mvc.ViewModels.WorkItems;
 using JobSystem.Mvc.ViewModels.Consignments;
-using JobSystem.Mvc.ViewModels.Quotes;
+using JobSystem.Mvc.ViewModels.Deliveries;
 using JobSystem.Mvc.ViewModels.Orders;
+using JobSystem.Mvc.ViewModels.Quotes;
+using JobSystem.Mvc.ViewModels.WorkItems;
 
 namespace JobSystem.Mvc.ViewModels.JobItems
 {
@@ -29,6 +28,8 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 		public QuoteIndexViewModel Quote { get; set; }
 		public OrderItemIndexViewModel OrderItem { get; set; }
 		public OrderIndexViewModel Order { get; set; }
+		public DeliveryIndexViewModel Delivery { get; set; }
+		public DeliveryItemIndexViewModel DeliveryItem { get; set; }
 		public string Instrument { get; set; }
 		public string InitialStatus { get; set; }
 		public string Location { get; set; }

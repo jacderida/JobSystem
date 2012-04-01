@@ -1,0 +1,52 @@
+﻿@model List<JobSystem.Mvc.ViewModels.Deliveries.DeliveryIndexViewModel>
+@{
+	ViewBag.Title = "Approved Deliveries";
+}
+
+<div id="toggle-container">
+	<span class="toggle toggle-left"><a href="@Url.Action("PendingDeliveries")">Pending</a></span>
+	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedDeliveries")">Approved</a></span>
+</div>
+
+@if (Model.Any()) {
+	<table>
+		<tr>
+			<th>FAO</th>
+			<th>Created By</th>
+			<th>Date Created</th>
+			<th></th>
+			<th></th>
+		</tr>
+	@foreach (var item in Model)
+	 {
+			<tr>
+				<td>
+					@item.Fao
+				</td>
+				<td>
+					@item.CreatedBy
+				</td>
+				<td>
+					@item.DateCreated
+				</td>
+				<td>
+				<span class="the-tooltip center top dark-midnight-blue itemCount">
+					@item.DeliveryItems.Count items
+					<span>
+					@foreach (var ci in item.DeliveryItems) {
+						<span>
+							@ci.Notes
+						</span>
+						
+					}	
+					</span>
+				</span>
+			</td>
+				<td>@Html.ActionLink("Print Note", "GenerateDeliveryNote", "Delivery", new { id = item.Id }, new { target = "_blank" })</td>
+			</tr>
+	 }
+	</table>
+}else{
+	<div id="empty-list">@JobSystem.Resources.Delivery.Messages.NoDeliveries</div>
+}
+

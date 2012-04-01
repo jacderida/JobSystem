@@ -20,6 +20,7 @@
 
 <input type="hidden" id="createWorkItemUrl" value="@Url.Action("Create", "WorkItem")"/>
 <input type="hidden" id="createConsignmentUrl" value="@Url.Action("Create", "Consignment")"/>
+<input type="hidden" id="createDeliveryUrl" value="@Url.Action("Create", "Delivery")"/>
 
 <div id="item-tooltip">
 <!-- Content replaced by javascript -->
@@ -215,29 +216,33 @@
 				}
 				else
 				{
-					@Html.ActionLink("Raise Order", "Create", "Order", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action" })
+					@Html.ActionLink("Raise Order", "Create", "Order", new { jobItemId = @Model.Id }, new { @class = "primary-action" })
 					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
+				}
+			</div>
+		</div>
+		<div id="st_content_6" class="st_tab_view">
+			<div class="text">
+				@if (Model.Delivery != null)
+				{
+					<div class="details-fields">
+						<span class="field-label">Notes</span>
+						<span class="field">@Model.Delivery.Notes</span>
+						<span class="field-label">FAO</span>
+						<span class="field">@Model.Delivery.Fao</span>
+						<span class="field-label">Created On</span>
+						<span class="field">@Model.Delivery.DateCreated</span>
+						<span class="field-label">Created By</span>
+						<span class="field">@Model.Delivery.CreatedBy</span>
+					</div>
+				}else{
+					<a href="#" class="primary-action createDeliveryButton" id="@Model.Id">Raise Delivery</a>
 				}
 			</div>
 		</div>
 		<div id="st_content_7" class="st_tab_view">
 			<div class="text">
-				<div class="job-details-fields">
-					<span class="details-header">Accessories</span>
-					@Model.Accessories
-				</div>
-				<div class="job-details-fields">
-					<span class="details-header">Instructions</span>
-					@Model.Instructions
-				</div>
-				<div class="job-details-fields">
-					<span class="details-header">Comments</span>
-					@Model.Comments
-				</div>
-				<div class="job-details-fields">
-					<span class="details-header">Return Reason</span>
-					@Model.ReturnReason
-				</div>
+				
 			</div>
 		</div>
 	</div>

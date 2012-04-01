@@ -157,6 +157,7 @@
     <Compile Include="Controllers\AttachmentsController.cs" />
     <Compile Include="Controllers\ConsignmentController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\EntityIdController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstrumentController.cs" />
@@ -187,6 +188,9 @@
     <Compile Include="ViewModels\Consignments\ConsignmentPendingListViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerIndexViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\Deliveries\DeliveryIndexViewModel.cs" />
+    <Compile Include="ViewModels\Deliveries\DeliveryItemIndexViewModel.cs" />
+    <Compile Include="ViewModels\Deliveries\DeliveryCreateViewModel.cs" />
     <Compile Include="ViewModels\Instruments\InstrumentViewModel.cs" />
     <Compile Include="ViewModels\Instruments\InstrumentListViewModel.cs" />
     <Compile Include="ViewModels\JobItems\JobItemDetailsViewModel.cs" />
@@ -281,6 +285,7 @@
     <Content Include="Scripts\the-tooltip.min.js" />
     <Content Include="Scripts\workitem.js" />
     <Content Include="Views\Consignment\RepConsignmentNote.aspx" />
+    <Content Include="Views\Delivery\RepDeliveryNote.aspx" />
     <Content Include="Views\Quote\RepQuoteNote.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -434,6 +439,10 @@
     <Content Include="Views\Order\CreateItem.cshtml" />
     <Content Include="Views\Order\ApprovedOrders.cshtml" />
     <Content Include="Views\Order\EditItem.cshtml" />
+    <Content Include="Views\Delivery\PendingDeliveries.cshtml" />
+    <Content Include="Views\Delivery\ApprovedDeliveries.cshtml" />
+    <Content Include="Views\Delivery\_Create.cshtml" />
+    <Content Include="Views\Delivery\_Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\PendingOrderItems.cshtml" />

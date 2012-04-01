@@ -1,0 +1,38 @@
+﻿@model JobSystem.Mvc.ViewModels.Deliveries.DeliveryCreateViewModel
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<div id="create-delivery-container">
+@using (Ajax.BeginForm("Create", "Delivery", new AjaxOptions() { UpdateTargetId = "st_horizontal", OnSuccess = "app.closeModal('delivery-item')" }))
+{
+	@Html.ValidationSummary(true)
+	<fieldset class="fieldset-no-legend">
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Notes)
+		</div>
+		<div class="editor-field">
+			@Html.TextAreaFor(model => model.Notes)
+			@Html.ValidationMessageFor(model => model.Notes)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.IsIndividual)
+		</div>
+		<div class="editor-field">
+			@Html.CheckBoxFor(model => model.IsIndividual)
+			@Html.ValidationMessageFor(model => model.IsIndividual)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Fao)
+		</div>
+		<div class="editor-field">
+			@Html.TextBoxFor(model => model.Fao)
+			@Html.ValidationMessageFor(model => model.Fao)
+		</div>
+		@Html.HiddenFor(model => model.JobItemId)
+	</fieldset>
+	<div class="buttons-row">
+		<input type="submit" class="primary-action" value="Raise"/>
+	</div>
+}
+</div>

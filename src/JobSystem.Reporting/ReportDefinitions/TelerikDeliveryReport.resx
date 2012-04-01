@@ -117,16 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InsufficientSecurityClearance" xml:space="preserve">
-    <value>A member role is required to perform this operation</value>
-  </data>
-  <data name="InvalidFao" xml:space="preserve">
-    <value>The FAO field cannot exceed 255 characters</value>
-  </data>
-  <data name="NoDeliveries" xml:space="preserve">
-    <value>There are currently no approved deliveries</value>
-  </data>
-  <data name="NoPendingDeliveries" xml:space="preserve">
-    <value>There are currently no pending deliveries</value>
-  </data>
 </root>
