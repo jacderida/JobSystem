@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using JobSystem.Resources.Delivery;
 
@@ -14,5 +15,11 @@ namespace JobSystem.DataModel.Entities
 		public virtual UserAccount CreatedBy { get; set; }
 		[StringLength(255, ErrorMessageResourceName = "InvalidFao", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string Fao { get; set; }
+		public virtual IList<DeliveryItem> DeliveryItems { get; set; }
+
+		public Delivery()
+		{
+			DeliveryItems = new List<DeliveryItem>();
+		}
 	}
 }

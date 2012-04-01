@@ -65,6 +65,7 @@
     <Compile Include="Entities\Quote.cs" />
     <Compile Include="Entities\QuoteItem.cs" />
     <Compile Include="Entities\TestStandard.cs" />
+    <Compile Include="Repositories\ICertificateRepository.cs" />
     <Compile Include="Repositories\IDeliveryItemRepository.cs" />
     <Compile Include="Repositories\IDeliveryRepository.cs" />
     <Compile Include="Repositories\IOrderItemRepository.cs" />

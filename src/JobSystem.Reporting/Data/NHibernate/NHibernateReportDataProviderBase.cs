@@ -34,5 +34,18 @@ namespace JobSystem.Reporting.Data.NHibernate
 			reportModel.CompanyWww = !String.IsNullOrEmpty(companyDetails.Www) ? companyDetails.Www : String.Empty;
 			reportModel.CompanyTermsAndConditions = !String.IsNullOrEmpty(companyDetails.TermsAndConditions) ? companyDetails.TermsAndConditions : String.Empty;
 		}
+
+		public string GetInstrumentDescription(Instrument instrument)
+		{
+			return String.Format("{0}, {1}, {2}, {3}",
+				instrument.Manufacturer, instrument.ModelNo,
+				!String.IsNullOrEmpty(instrument.Range) ? instrument.Range : String.Empty,
+				!String.IsNullOrEmpty(instrument.Description) ? instrument.Description : String.Empty);
+		}
+
+		public string GetJobItemReference(JobItem jobItem)
+		{
+			return String.Format("{0}/{1}", jobItem.Job.JobNo, jobItem.ItemNo);
+		}
 	}
 }

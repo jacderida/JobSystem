@@ -36,13 +36,9 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.Investigation = item.Investigation;
 				reportItem.Report = !String.IsNullOrEmpty(item.Report) ? item.Report : String.Empty;
 				reportItem.Days = item.Days.ToString();
-				reportItem.JobRef = String.Format("{0}/{1}", item.JobItem.Job.JobNo, item.JobItem.ItemNo);
+				reportItem.JobRef = GetJobItemReference(item.JobItem);
 				reportItem.PreparedBy = quote.CreatedBy.Name;
-				var instrument = item.JobItem.Instrument;
-				reportItem.Instrument = String.Format("{0}, {1}, {2}, {3}",
-					instrument.Manufacturer, instrument.ModelNo,
-					!String.IsNullOrEmpty(instrument.Range) ? instrument.Range : String.Empty,
-					!String.IsNullOrEmpty(instrument.Description) ? instrument.Description : String.Empty);
+				reportItem.Instrument = GetInstrumentDescription(item.JobItem.Instrument);
 				result.Add(reportItem);
 			}
 			return result;

@@ -32,7 +32,8 @@ namespace JobSystem.DbWireup.ConsoleRunner
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.WorkStatusId, "Status", ListItemCategoryType.JobItemWorkStatus),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.CurrencyId, "Currency", ListItemCategoryType.Currency),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.PaymentTermId, "Payment Term", ListItemCategoryType.PaymentTerm),
-					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.InitialLocationId, "Initial Location", ListItemCategoryType.JobItemInitialLocation))
+					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.InitialLocationId, "Initial Location", ListItemCategoryType.JobItemInitialLocation),
+					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.CertificateId, "Certificate", ListItemCategoryType.Certificate))
 				.WithJobTypes(
 					Tuple.Create<string, ListItemType, Guid>("Lab Service", ListItemType.JobTypeField, ListCategoryIds.JobTypeId),
 					Tuple.Create<string, ListItemType, Guid>("Field Service", ListItemType.JobTypeService, ListCategoryIds.JobTypeId))
@@ -166,5 +167,6 @@ namespace JobSystem.DbWireup.ConsoleRunner
 		public static Guid CurrencyId = Guid.NewGuid();
 		public static Guid PaymentTermId = Guid.NewGuid();
 		public static Guid InitialLocationId = Guid.NewGuid();
+		public static Guid CertificateId = Guid.NewGuid();
 	}
 }

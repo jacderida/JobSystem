@@ -105,6 +105,8 @@
     <Compile Include="M20120315204614_AddDeliveriesTable.cs" />
     <Compile Include="M20120315204615_AddPendingDeliveryItemsTable.cs" />
     <Compile Include="M20120315214724_AddDeliveryItemsTable.cs" />
+    <Compile Include="M20120330222049_AddTestStandardsTable.cs" />
+    <Compile Include="M20120330223504_AddCertificatesTable.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

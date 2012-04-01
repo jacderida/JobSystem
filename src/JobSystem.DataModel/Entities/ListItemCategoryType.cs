@@ -25,6 +25,8 @@ namespace JobSystem.DataModel.Entities
 		[Description("Payment Term")]
 		PaymentTerm = 9,
 		[Description("Initial Location")]
-		JobItemInitialLocation = 10
+		JobItemInitialLocation = 10,
+		[Description("Certificate")]
+		Certificate = 11
 	}
 }
