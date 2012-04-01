@@ -7,11 +7,12 @@ using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.DataModel.Entities;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
-using JobSystem.Mvc.ViewModels.JobItems;
-using JobSystem.Mvc.ViewModels.WorkItems;
 using JobSystem.Mvc.ViewModels.Consignments;
-using JobSystem.Mvc.ViewModels.Quotes;
+using JobSystem.Mvc.ViewModels.Deliveries;
+using JobSystem.Mvc.ViewModels.JobItems;
 using JobSystem.Mvc.ViewModels.Orders;
+using JobSystem.Mvc.ViewModels.Quotes;
+using JobSystem.Mvc.ViewModels.WorkItems;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -23,8 +24,9 @@ namespace JobSystem.Mvc.Controllers
 		private readonly ConsignmentService _consignmentService;
 		private readonly QuoteItemService _quoteItemService;
 		private readonly OrderItemService _orderItemService;
+		private readonly DeliveryItemService _deliveryItemService;
 
-		public JobItemController(JobItemService jobItemService, ListItemService listItemService, InstrumentService instrumentService, ConsignmentService consignmentService, QuoteItemService quoteItemService, OrderItemService orderItemService)
+		public JobItemController(JobItemService jobItemService, ListItemService listItemService, InstrumentService instrumentService, ConsignmentService consignmentService, QuoteItemService quoteItemService, OrderItemService orderItemService, DeliveryItemService deliveryItemService)
 		{
 			_jobItemService = jobItemService;
 			_listItemService = listItemService;
@@ -32,6 +34,7 @@ namespace JobSystem.Mvc.Controllers
 			_consignmentService = consignmentService;
 			_quoteItemService = quoteItemService;
 			_orderItemService = orderItemService;
+			_deliveryItemService = deliveryItemService;
 		}
 
 		[HttpGet]
@@ -102,6 +105,7 @@ namespace JobSystem.Mvc.Controllers
 				IsReturned = job.IsReturned,
 				ReturnReason = job.ReturnReason,
 				QuoteItem = PopulateQuoteItemViewModel(job.Id),
+				Delivery = PopulateDeliveryItemViewModel(job.Id),
 				WorkItems = job.HistoryItems.Select(wi => new WorkItemDetailsViewModel
 				{
 					Id = wi.Id,
@@ -279,6 +283,53 @@ namespace JobSystem.Mvc.Controllers
 				};
 				jiViewmodel.OrderItem = viewmodel;
 				return;
+			}
+		}
+
+		private DeliveryIndexViewModel PopulateDeliveryItemViewModel(Guid id)
+		{
+			var pendingItem = _deliveryItemService.GetPendingDeliveryItemForJobItem(id);
+			if (pendingItem == null)
+			{
+				var item = _deliveryItemService.GetDeliveryItemForJobItem(id);
+				if (item != null)
+				{
+					if (item.Delivery != null)
+					{
+						var viewmodel = new DeliveryIndexViewModel()
+						{
+							CustomerName = item.Delivery.Customer.Name,
+							Fao = item.Delivery.Fao,
+							Id = item.Id,
+							Notes = item.Notes,
+							CreatedBy = item.Delivery.CreatedBy.Name,
+							DateCreated = item.Delivery.DateCreated.ToLongDateString() + ' ' + item.Delivery.DateCreated.ToShortTimeString(),
+						};
+						return viewmodel;
+					}
+					else
+					{
+						var viewmodel = new DeliveryIndexViewModel()
+						{
+							Id = item.Id,
+							Notes = item.Notes
+						};
+						return viewmodel;
+					}
+				}
+				else
+				{
+					return null;
+				}
+			}
+			else
+			{
+				var viewmodel = new DeliveryIndexViewModel()
+				{
+					Id = pendingItem.Id,
+					Notes = pendingItem.Notes
+				};
+				return viewmodel;
 			}
 		}
     }

@@ -16,6 +16,7 @@ using JobSystem.Mvc.ViewModels.WorkItems;
 using JobSystem.Mvc.ViewModels;
 using JobSystem.Mvc.ViewModels.Quotes;
 using JobSystem.Mvc.ViewModels.Orders;
+using JobSystem.Mvc.ViewModels.Deliveries;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -27,8 +28,9 @@ namespace JobSystem.Mvc.Controllers
 		private readonly JobItemService _jobItemService;
 		private readonly QuoteItemService _quoteItemService;
 		private readonly OrderItemService _orderItemService;
+		private readonly DeliveryItemService _deliveryItemService;
 
-		public JobController(JobService jobService, ListItemService listItemService, CustomerService customerService, JobItemService jobItemService, QuoteItemService quoteItemService, OrderItemService orderItemService)
+		public JobController(JobService jobService, ListItemService listItemService, CustomerService customerService, JobItemService jobItemService, QuoteItemService quoteItemService, OrderItemService orderItemService, DeliveryItemService deliveryItemService)
 		{
 			_jobService = jobService;
 			_listItemService = listItemService;
@@ -36,6 +38,7 @@ namespace JobSystem.Mvc.Controllers
 			_jobItemService = jobItemService;
 			_quoteItemService = quoteItemService;
 			_orderItemService = orderItemService;
+			_deliveryItemService = deliveryItemService;
 		}
 
 		[HttpGet]
@@ -190,6 +193,7 @@ namespace JobSystem.Mvc.Controllers
 						QuoteItem = PopulateQuoteItemViewModel(ji.Id),
 						ConsignmentItem = PopulateConsignmentItemViewModel(ji.Id),
 						OrderItem = PopulateOrderItemViewModel(ji.Id),
+						Delivery = PopulateDeliveryItemViewModel(ji.Id),
 						WorkItems = ji.HistoryItems.Select(wi => new WorkItemDetailsViewModel
 						{
 							Id = wi.Id,
@@ -210,6 +214,7 @@ namespace JobSystem.Mvc.Controllers
 					Name = a.Filename
 				}).ToList()
 			};
+
 			return View(viewModel);
 		}
 
@@ -363,6 +368,53 @@ namespace JobSystem.Mvc.Controllers
 					Quantity = pendingItem.Quantity.ToString(),
 					JobItemId = pendingItem.JobItem.Id,
 					SupplierName = pendingItem.Supplier.Name
+				};
+				return viewmodel;
+			}
+		}
+
+		private DeliveryIndexViewModel PopulateDeliveryItemViewModel(Guid id)
+		{
+			var pendingItem = _deliveryItemService.GetPendingDeliveryItemForJobItem(id);
+			if (pendingItem == null)
+			{
+				var item = _deliveryItemService.GetDeliveryItemForJobItem(id);
+				if (item != null)
+				{
+					if (item.Delivery != null)
+					{
+						var viewmodel = new DeliveryIndexViewModel()
+						{
+							CustomerName = item.Delivery.Customer.Name,
+							Fao = item.Delivery.Fao,
+							Id = item.Id,
+							Notes = item.Notes,
+							CreatedBy = item.Delivery.CreatedBy.Name,
+							DateCreated = item.Delivery.DateCreated.ToLongDateString() + ' ' + item.Delivery.DateCreated.ToShortTimeString(),
+						};
+						return viewmodel;
+					}
+					else
+					{
+						var viewmodel = new DeliveryIndexViewModel()
+						{
+							Id = item.Id,
+							Notes = item.Notes
+						};
+						return viewmodel;
+					}
+				}
+				else
+				{
+					return null;
+				}
+			}
+			else
+			{
+				var viewmodel = new DeliveryIndexViewModel()
+				{
+					Id = pendingItem.Id,
+					Notes = pendingItem.Notes
 				};
 				return viewmodel;
 			}

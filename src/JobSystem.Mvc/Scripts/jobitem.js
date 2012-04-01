@@ -19,7 +19,7 @@
 		return false;
 	});
 
-	//Create WORK ITEM modal form
+	//Create CONSIGNMENT ITEM modal form
 	$('.createConsignmentButton').click(function () {
 		var elemId = $(this).attr('id');
 		var Url = $('#createConsignmentUrl').val() + '/' + elemId;
@@ -27,6 +27,22 @@
 			modal: true,
 			width: 335,
 			title: 'Raise Consignment',
+			position: ['center', 100],
+			open: function (event, ui) {
+				$(this).load(Url);
+			}
+		});
+		return false;
+	});
+
+	//Create DELIVERY ITEM modal form
+	$('.createDeliveryButton').live('click', function () {
+		var elemId = $(this).attr('id');
+		var Url = $('#createDeliveryUrl').val() + '/' + elemId;
+		$("#create-delivery-container").dialog({
+			modal: true,
+			width: 335,
+			title: 'Raise Delivery',
 			position: ['center', 100],
 			open: function (event, ui) {
 				$(this).load(Url);

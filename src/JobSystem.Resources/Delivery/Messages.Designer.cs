@@ -77,5 +77,23 @@ namespace JobSystem.Resources.Delivery {
                 return ResourceManager.GetString("InvalidFao", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are currently no approved deliveries.
+        /// </summary>
+        public static string NoDeliveries {
+            get {
+                return ResourceManager.GetString("NoDeliveries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are currently no pending deliveries.
+        /// </summary>
+        public static string NoPendingDeliveries {
+            get {
+                return ResourceManager.GetString("NoPendingDeliveries", resourceCulture);
+            }
+        }
     }
 }
