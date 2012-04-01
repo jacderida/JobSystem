@@ -7,13 +7,6 @@ namespace JobSystem.Migrations
 	{
 		public override void Up()
 		{
-			Create.Table("CertificatesTestStandards")
-				.WithColumn("CertificateId").AsGuid().NotNullable()
-				.WithColumn("TestStandardId").AsGuid().NotNullable();
-			Create.ForeignKey("FK_CertificatesTestStandards_TestStandards")
-				.FromTable("CertificatesTestStandards").ForeignColumn("TestStandardId").ToTable("TestStandards").PrimaryColumn("Id");
-			Create.ForeignKey("FK_CertificatesTestStandards_Certificates")
-				.FromTable("CertificatesTestStandards").ForeignColumn("CertificateId").ToTable("Certificates").PrimaryColumn("Id");
 			Create.Table("Certificates")
 				.WithIdColumn()
 				.WithColumn("CertificateNumber").AsString(255).Unique()
@@ -24,6 +17,13 @@ namespace JobSystem.Migrations
 				.WithColumn("ProcedureList").AsString(255).Nullable();
 			Create.ForeignKey("FK_Certificates_JobItems").FromTable("Certificates").ForeignColumn("JobItemId").ToTable("JobItems").PrimaryColumn("Id");
 			Create.ForeignKey("FK_Certificates_ListItems").FromTable("Certificates").ForeignColumn("TypeId").ToTable("ListItems").PrimaryColumn("Id");
+			Create.Table("CertificatesTestStandards")
+				.WithColumn("CertificateId").AsGuid().NotNullable()
+				.WithColumn("TestStandardId").AsGuid().NotNullable();
+			Create.ForeignKey("FK_CertificatesTestStandards_TestStandards")
+				.FromTable("CertificatesTestStandards").ForeignColumn("TestStandardId").ToTable("TestStandards").PrimaryColumn("Id");
+			Create.ForeignKey("FK_CertificatesTestStandards_Certificates")
+				.FromTable("CertificatesTestStandards").ForeignColumn("CertificateId").ToTable("Certificates").PrimaryColumn("Id");
 		}
 
 		public override void Down()
