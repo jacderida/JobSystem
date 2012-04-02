@@ -37,7 +37,7 @@
 			//report.MainLogo.Height = new Telerik.Reporting.Drawing.Unit(logo.Height, Telerik.Reporting.Drawing.UnitType.Pixel);
 			var pageWidth = report.Width.Value;
 			//report.MainLogo.Location = new Telerik.Reporting.Drawing.PointU(new System.Drawing.Point((int)(pageWidth - logo.Width), 0));
-			//report.MainLogo.Value = logo;
+			report.MainLogo.Value = logo;
 			report.DataSource = dataSource;
 			ReportViewer1.Report = report;
 			base.OnLoad(e);

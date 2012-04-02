@@ -547,7 +547,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox15.Style.LineWidth = Telerik.Reporting.Drawing.Unit.Point(0D);
 			this.textBox15.Style.Padding.Top = Telerik.Reporting.Drawing.Unit.Pixel(5D);
 			this.textBox15.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center;
-			this.textBox15.Value = "RECIEVED BY";
+			this.textBox15.Value = "RECEIVED BY";
 			// 
 			// textBox11
 			// 
