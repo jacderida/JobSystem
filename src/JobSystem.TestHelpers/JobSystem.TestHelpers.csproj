@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttachmentServiceFactory.cs" />
+    <Compile Include="CertificateServiceFactory.cs" />
     <Compile Include="CompanyDetailsServiceFactory.cs" />
     <Compile Include="ConsignmentItemServiceFactory.cs" />
     <Compile Include="ConsignmentServiceFactory.cs" />

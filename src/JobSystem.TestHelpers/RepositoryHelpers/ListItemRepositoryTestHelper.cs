@@ -14,10 +14,10 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 			return listItemRepository;
 		}
 
-		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsNull(Guid currencyId)
+		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsNull(Guid itemId)
 		{
 			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
-			listItemRepository.Stub(x => x.GetById(currencyId)).Return(null);
+			listItemRepository.Stub(x => x.GetById(itemId)).Return(null);
 			return listItemRepository;
 		}
 
@@ -34,6 +34,20 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 			foreach (var type in types)
 				listItemRepositoryStub.Stub(x => x.GetByType(type)).Return(GetByType(type));
 			return listItemRepositoryStub;
+		}
+
+		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsCertificateType(Guid certificateTypeId)
+		{
+			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
+			listItemRepository.Stub(x => x.GetById(certificateTypeId)).Return(GetHouseCalibrationCertificateType(certificateTypeId));
+			return listItemRepository;
+		}
+
+		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsNonCertificateType(Guid certificateTypeId)
+		{
+			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
+			listItemRepository.Stub(x => x.GetById(certificateTypeId)).Return(GetCurrency(certificateTypeId));
+			return listItemRepository;
 		}
 
 		private static ListItem GetByType(ListItemType type)
@@ -65,6 +79,17 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 				Name = "GBP",
 				Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Job Item Category", Type = ListItemCategoryType.JobItemStatus },
 				Type = ListItemType.StatusOrdered
+			};
+		}
+
+		private static ListItem GetHouseCalibrationCertificateType(Guid certificateTypeId)
+		{
+			return new ListItem
+			{
+				Id = certificateTypeId,
+				Name = "House",
+				Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Certificate Category", Type = ListItemCategoryType.Certificate },
+				Type = ListItemType.CertificateTypeHouse
 			};
 		}
 	}
