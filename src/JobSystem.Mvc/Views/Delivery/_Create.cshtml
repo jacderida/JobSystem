@@ -18,16 +18,20 @@
 		<div class="editor-label">
 			@Html.LabelFor(model => model.IsIndividual)
 		</div>
-		<div class="editor-field">
-			@Html.CheckBoxFor(model => model.IsIndividual)
-			@Html.ValidationMessageFor(model => model.IsIndividual)
+		<div id="deliveryIndividualCheckbox">
+			<div class="editor-field">
+				@Html.CheckBoxFor(model => model.IsIndividual)
+				@Html.ValidationMessageFor(model => model.IsIndividual)
+			</div>
 		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Fao)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.Fao)
-			@Html.ValidationMessageFor(model => model.Fao)
+		<div id="deliveryFao">
+			<div class="editor-label">
+				@Html.LabelFor(model => model.Fao)
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(model => model.Fao)
+				@Html.ValidationMessageFor(model => model.Fao)
+			</div>
 		</div>
 		@Html.HiddenFor(model => model.JobItemId)
 	</fieldset>
