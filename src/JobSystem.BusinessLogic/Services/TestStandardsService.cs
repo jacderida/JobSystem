@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
@@ -49,6 +50,20 @@ namespace JobSystem.BusinessLogic.Services
 			ValidateAnnotatedObjectThrowOnFailure(testStandard);
 			_testStandardRepository.Update(testStandard);
 			return testStandard;
+		}
+
+		public TestStandard GetById(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			return _testStandardRepository.GetById(id);
+		}
+
+		public IEnumerable<TestStandard> GetTestStandards()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			return _testStandardRepository.GetTestStandards();
 		}
 	}
 }

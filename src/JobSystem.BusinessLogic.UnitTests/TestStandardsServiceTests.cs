@@ -319,5 +319,57 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		#endregion
+		#region GetById
+
+		[Test]
+		public void GetById_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			_userContext = TestUserContext.Create(
+				"graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public);
+			_testStandardsService = TestStandardServiceFactory.Create(_userContext, MockRepository.GenerateStub<ITestStandardRepository>());
+			GetById(id);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
+		}
+
+		private void GetById(Guid id)
+		{
+			try
+			{
+				_testStandardsService.GetById(id);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region GetTestStandards
+
+		[Test]
+		public void GetTestStandards_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			_userContext = TestUserContext.Create(
+				"graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public);
+			_testStandardsService = TestStandardServiceFactory.Create(_userContext, MockRepository.GenerateStub<ITestStandardRepository>());
+			GetTestStandards();
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
+		}
+
+		private void GetTestStandards()
+		{
+			try
+			{
+				_testStandardsService.GetTestStandards();
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
 	}
 }
