@@ -21,6 +21,7 @@
 <input type="hidden" id="createWorkItemUrl" value="@Url.Action("Create", "WorkItem")"/>
 <input type="hidden" id="createConsignmentUrl" value="@Url.Action("Create", "Consignment")"/>
 <input type="hidden" id="createDeliveryUrl" value="@Url.Action("Create", "Delivery")"/>
+<input type="hidden" id="createCertificateUrl" value="@Url.Action("Create", "Certificate")"/>
 
 <div id="item-tooltip">
 <!-- Content replaced by javascript -->
@@ -66,7 +67,7 @@
 	<div class="st_slide_container">
 		<ul class="st_tabs">
 			<li><a href="#st_content_1" rel="" class="st_tab st_first_tab st_tab_active">Work</a></li>
-			<li><a href="#st_content_2" rel="tab_2" class="st_tab">Certificate</a></li>
+			<li><a href="#st_content_2" rel="tab_2" class="st_tab">Certificates</a></li>
 			<li><a href="#st_content_3" rel="tab_3" class="st_tab">Quotes</a></li>
 			<li><a href="#st_content_4" rel="tab_4" class="st_tab">Consignments</a></li>
 			<li><a href="#st_content_5" rel="tab_5" class="st_tab">Orders</a></li>
@@ -93,9 +94,7 @@
 			</div>
 		</div>
 		<div id="st_content_2" class="st_tab_view">
-			<div class="text">
-				<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoCertificates</div>
-			</div>
+			@Html.Partial("_Certificates", Model)
 		</div>
 		<div id="st_content_3" class="st_tab_view">
 			<div class="text">	

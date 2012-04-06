@@ -35,6 +35,22 @@
 		return false;
 	});
 
+	//Create CERTIFICATE modal form
+	$('.createCertificateButton').click(function () {
+		var elemId = $(this).attr('id');
+		var Url = $('#createCertificateUrl').val() + '/' + elemId;
+		$("#create-certificate-container").dialog({
+			modal: true,
+			width: 335,
+			title: 'Create Certificate',
+			position: ['center', 100],
+			open: function (event, ui) {
+				$(this).load(Url);
+			}
+		});
+		return false;
+	});
+
 	//Create DELIVERY ITEM modal form
 	$('.createDeliveryButton').live('click', function () {
 		var elemId = $(this).attr('id');

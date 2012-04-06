@@ -79,6 +79,35 @@ $(document).ready(function () {
 			$("#create-job-container").dialog('open');
 		});
 
+		//Create TEST STANDARD modal form
+		$("#create-standard-container").dialog({
+			autoOpen: false,
+			modal: true,
+			width: 335,
+			title: 'Create Test Standard'
+		});
+
+		$('#createStandardButton').click(function () {
+			$("#create-standard-container").dialog('open');
+		});
+
+		$('.editStandardButton').click(function () {
+			var elemId = $(this).attr('id');
+			var editUrl = $('#editUrl').val() + '/' + elemId;
+			//Edit user modal form
+			$("#edit-standard-container").dialog({
+				modal: true,
+				width: 335,
+				title: 'Edit Test Standard',
+				position: ['center', 100],
+				open: function (event, ui) {
+					//Load the Edit action which will return 
+					// the partial view _Edit
+					$(this).load(editUrl);
+				}
+			});
+		});
+
 		//Create INSTRUMENT modal form
 		$("#create-instrument-container").dialog({
 			autoOpen: false,
