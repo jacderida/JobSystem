@@ -7,6 +7,36 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 {
 	public static class ListItemRepositoryTestHelper
 	{
+		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsGbpCurrencyAndPaymentTerm(Guid currencyId, Guid paymentTermId)
+		{
+			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
+			if (currencyId != Guid.Empty)
+				listItemRepository.Stub(x => x.GetById(currencyId)).Return(GetCurrency(currencyId));
+			else
+				listItemRepository.Stub(x => x.GetById(currencyId)).Return(null);
+			if (paymentTermId != Guid.Empty)
+				listItemRepository.Stub(x => x.GetById(paymentTermId)).Return(GetPaymentTerm(paymentTermId));
+			else
+				listItemRepository.Stub(x => x.GetById(paymentTermId)).Return(null);
+			return listItemRepository;
+		}
+
+		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsNonCurrency(Guid currencyId, Guid paymentTermId)
+		{
+			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
+			listItemRepository.Stub(x => x.GetById(currencyId)).Return(GetNonCurrencyListItem(currencyId));
+			listItemRepository.Stub(x => x.GetById(paymentTermId)).Return(GetPaymentTerm(paymentTermId));
+			return listItemRepository;
+		}
+
+		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsNonPaymentTerm(Guid currencyId, Guid paymentTermId)
+		{
+			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
+			listItemRepository.Stub(x => x.GetById(currencyId)).Return(GetCurrency(currencyId));
+			listItemRepository.Stub(x => x.GetById(paymentTermId)).Return(GetCurrency(paymentTermId));
+			return listItemRepository;
+		}
+
 		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsGbpCurrency(Guid currencyId)
 		{
 			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
@@ -90,6 +120,17 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 				Name = "House",
 				Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Certificate Category", Type = ListItemCategoryType.Certificate },
 				Type = ListItemType.CertificateTypeHouse
+			};
+		}
+
+		private static ListItem GetPaymentTerm(Guid paymentTermId)
+		{
+			return new ListItem
+			{
+				Id = paymentTermId,
+				Name = "30 days",
+				Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Certificate Category", Type = ListItemCategoryType.PaymentTerm },
+				Type = ListItemType.PaymentTerm30Days
 			};
 		}
 	}

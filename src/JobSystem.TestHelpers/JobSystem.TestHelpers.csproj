@@ -63,8 +63,11 @@
     <Compile Include="DomainValidationExtensions.cs" />
     <Compile Include="EntityIdProviderFactory.cs" />
     <Compile Include="InstrumentServiceFactory.cs" />
+    <Compile Include="InvoiceServiceFactory.cs" />
+    <Compile Include="RepositoryHelpers\BankDetailsRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\CustomerRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\DeliveryRepositoryTestHelper.cs" />
+    <Compile Include="RepositoryHelpers\InvoiceRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\JobItemRepositoryTestHelper.cs" />
     <Compile Include="JobItemServiceFactory.cs" />
     <Compile Include="JobServiceFactory.cs" />
@@ -76,6 +79,7 @@
     <Compile Include="RepositoryHelpers\OrderRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\QuoteItemRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\SupplierRepositoryTestHelper.cs" />
+    <Compile Include="RepositoryHelpers\TaxCodeRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\TestStandardRepositoryHelper.cs" />
     <Compile Include="SupplierServiceFactory.cs" />
     <Compile Include="TestStandardServiceFactory.cs" />

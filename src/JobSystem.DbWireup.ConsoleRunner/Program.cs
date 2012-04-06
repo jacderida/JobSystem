@@ -110,7 +110,8 @@ namespace JobSystem.DbWireup.ConsoleRunner
 					Tuple.Create<Type, int, string>(typeof(Consignment), 2000, "CR"),
 					Tuple.Create<Type, int, string>(typeof(Quote), 2000, "QR"),
 					Tuple.Create<Type, int, string>(typeof(Order), 2000, "OR"),
-					Tuple.Create<Type, int, string>(typeof(Certificate), 2000, "CERT"));
+					Tuple.Create<Type, int, string>(typeof(Certificate), 2000, "CERT"),
+					Tuple.Create<Type, int, string>(typeof(Invoice), 2000, "IR"));
 			var defaultData = builder.Build();
 			try
 			{

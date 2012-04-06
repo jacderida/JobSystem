@@ -57,6 +57,8 @@
     <Compile Include="Entities\Certificate.cs" />
     <Compile Include="Entities\Delivery.cs" />
     <Compile Include="Entities\DeliveryItem.cs" />
+    <Compile Include="Entities\Invoice.cs" />
+    <Compile Include="Entities\InvoiceItem.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderItem.cs" />
     <Compile Include="Entities\PendingDeliveryItem.cs" />
@@ -68,6 +70,8 @@
     <Compile Include="Repositories\ICertificateRepository.cs" />
     <Compile Include="Repositories\IDeliveryItemRepository.cs" />
     <Compile Include="Repositories\IDeliveryRepository.cs" />
+    <Compile Include="Repositories\IInvoiceItemRepository.cs" />
+    <Compile Include="Repositories\IInvoiceRepository.cs" />
     <Compile Include="Repositories\IOrderItemRepository.cs" />
     <Compile Include="Repositories\IOrderRepository.cs" />
     <Compile Include="Repositories\IQuoteItemRepository.cs" />
