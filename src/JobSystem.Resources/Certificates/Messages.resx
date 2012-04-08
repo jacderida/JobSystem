@@ -120,6 +120,9 @@
   <data name="InsufficientSecurityClearance" xml:space="preserve">
     <value>A member role is required for this operation</value>
   </data>
+  <data name="NoCertificates" xml:space="preserve">
+    <value>There are currently no certificates</value>
+  </data>
   <data name="ProcedureListTooLarge" xml:space="preserve">
     <value>The procedure list cannot exceed 255 characters</value>
   </data>
