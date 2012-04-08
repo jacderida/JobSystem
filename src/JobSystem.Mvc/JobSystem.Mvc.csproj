@@ -183,6 +183,7 @@
     <Compile Include="ViewModels\Account\LogOnViewModel.cs" />
     <Compile Include="ViewModels\Admin\CompanyDetailsViewModel.cs" />
     <Compile Include="ViewModels\Attachments\AttachmentViewModel.cs" />
+    <Compile Include="ViewModels\Certificates\CertificateIndexViewModel.cs" />
     <Compile Include="ViewModels\Certificates\CertificateViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentCreateViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentEditViewModel.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="ViewModels\WorkItems\WorkItemDetailsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\chosen.css" />
     <Content Include="Content\fileuploader.css" />
     <Content Include="Content\images\intertek.jpg" />
     <Content Include="Content\images\intertek_logon.gif" />
@@ -271,6 +273,7 @@
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\autocompletes.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\fileuploader.js" />
     <Content Include="Scripts\jobitem.js" />

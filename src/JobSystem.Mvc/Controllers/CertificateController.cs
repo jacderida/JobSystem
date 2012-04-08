@@ -6,6 +6,7 @@ using JobSystem.DataModel.Entities;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.Certificates;
 using System.Linq;
+using JobSystem.Mvc.ViewModels.TestStandards;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -24,7 +25,21 @@ namespace JobSystem.Mvc.Controllers
 
         public ActionResult Index()
         {
-			return View();
+			var items = _certificateService.GetCertificates().Select(i => new CertificateIndexViewModel(){
+				Id = i.Id,
+				CertificateNo = i.CertificateNumber,
+				DateCreated = i.DateCreated.ToLongDateString() + ' ' + i.DateCreated.ToShortTimeString(),
+				CreatedBy = i.CreatedBy.Name,
+				JobItemNo = i.JobItem.ItemNo.ToString(),
+				TypeName = i.Type.Name,
+				TestStandards = i.TestStandards.Select(ts => new TestStandardViewModel(){
+					CertificateNo = ts.CertificateNo,
+					Description = ts.Description,
+					SerialNo = ts.SerialNo
+				}).ToList()
+			}).ToList();
+			
+			return View(items);
         }
 
 		[HttpGet]
