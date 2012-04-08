@@ -155,6 +155,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AttachmentsController.cs" />
+    <Compile Include="Controllers\CertificateController.cs" />
     <Compile Include="Controllers\ConsignmentController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="Controllers\TestStandardController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Controllers\WorkItemController.cs" />
     <Compile Include="Core\Utilities\MenuItemHelper.cs" />
@@ -181,6 +183,7 @@
     <Compile Include="ViewModels\Account\LogOnViewModel.cs" />
     <Compile Include="ViewModels\Admin\CompanyDetailsViewModel.cs" />
     <Compile Include="ViewModels\Attachments\AttachmentViewModel.cs" />
+    <Compile Include="ViewModels\Certificates\CertificateViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentCreateViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentEditViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentIndexViewModel.cs" />
@@ -209,6 +212,8 @@
     <Compile Include="ViewModels\Quotes\QuotePendingListViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierIndexViewModel.cs" />
+    <Compile Include="ViewModels\TestStandards\TestStandardListViewModel.cs" />
+    <Compile Include="ViewModels\TestStandards\TestStandardViewModel.cs" />
     <Compile Include="ViewModels\WorkItems\WorkItemCreateViewModel.cs" />
     <Compile Include="ViewModels\Jobs\JobCreateViewModel.cs" />
     <Compile Include="ViewModels\Jobs\JobDetailsViewModel.cs" />
@@ -426,6 +431,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Consignment\ActiveConsignments.cshtml" />
+    <Content Include="Views\Certificate\_Create.cshtml" />
+    <Content Include="Views\Certificate\Index.cshtml" />
     <None Include="Views\Consignment\PendingConsignments.cshtml" />
     <Content Include="Views\WorkItem\_Details.cshtml" />
     <Content Include="Views\Order\PendingOrders.cshtml" />
@@ -443,6 +450,10 @@
     <Content Include="Views\Delivery\ApprovedDeliveries.cshtml" />
     <Content Include="Views\Delivery\_Create.cshtml" />
     <Content Include="Views\Delivery\_Details.cshtml" />
+    <Content Include="Views\TestStandard\_Create.cshtml" />
+    <Content Include="Views\TestStandard\Index.cshtml" />
+    <Content Include="Views\TestStandard\_Edit.cshtml" />
+    <Content Include="Views\Job\_Certificates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\PendingOrderItems.cshtml" />

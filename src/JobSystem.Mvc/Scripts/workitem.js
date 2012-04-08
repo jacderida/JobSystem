@@ -1,6 +1,8 @@
 ﻿$(document).ready(function () {
 	$(".primary-action").button();
 
+	$(".standardMultiSelect").chosen();
+
 	$("#supplier-autocomplete").autocomplete({
 		source: function (request, response) {
 			// define a function to call your Action (assuming UserController)
