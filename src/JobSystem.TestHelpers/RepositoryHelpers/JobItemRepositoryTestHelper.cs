@@ -28,6 +28,13 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 			return jobItemRepositoryStub;
 		}
 
+		public static IJobItemRepository GetJobItemRepository_StubsGetById_ReturnsJobItem(JobItem jobItem)
+		{
+			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
+			jobItemRepositoryStub.Stub(x => x.GetById(jobItem.Id)).Return(jobItem);
+			return jobItemRepositoryStub;
+		}
+
 		public static IJobItemRepository GetJobItemRepository_StubsGetById_ReturnsJobItemThatAlreadyHasPendingItem(Guid jobItemId)
 		{
 			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();

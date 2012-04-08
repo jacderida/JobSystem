@@ -28,7 +28,8 @@ namespace JobSystem.Migrations
 				.WithColumn("DefaultTaxCodeId").AsGuid().NotNullable()
 				.WithColumn("DefaultPaymentTermId").AsGuid().NotNullable()
 				.WithColumn("DefaultBankDetailsId").AsGuid().NotNullable()
-				.WithColumn("MainLogo").AsBinary(20000).Nullable();
+				.WithColumn("MainLogo").AsBinary(20000).Nullable()
+				.WithColumn("ApplyAllPrices").AsBoolean().NotNullable();
 			Create.ForeignKey("FK_CompanyDetails_Currencies")
 				.FromTable("CompanyDetails")
 				.ForeignColumn("DefaultCurrencyId")

@@ -28,5 +28,10 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		{
 			return CurrentSession.Query<CompanyDetails>().Single().MainLogo;
 		}
+
+		public bool ApplyAllPrices()
+		{
+			return CurrentSession.Query<CompanyDetails>().Single().ApplyAllPrices;
+		}
 	}
 }

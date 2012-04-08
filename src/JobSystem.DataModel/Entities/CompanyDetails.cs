@@ -45,5 +45,6 @@ namespace JobSystem.DataModel.Entities
 		public virtual ListItem DefaultPaymentTerm { get; set; }
 		public virtual BankDetails DefaultBankDetails { get; set; }
 		public virtual byte[] MainLogo { get; set; }
+		public virtual bool ApplyAllPrices { get; set; }
 	}
 }

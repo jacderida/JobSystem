@@ -68,5 +68,32 @@ namespace JobSystem.Resources.Invoices {
                 return ResourceManager.GetString("InsufficientSecurityClearance", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This job item cannot be marked for invoicing because its job is pending.
+        /// </summary>
+        public static string JobPending {
+            get {
+                return ResourceManager.GetString("JobPending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A quote item must be raised before the job item can be invoiced.
+        /// </summary>
+        public static string QuoteItemNull {
+            get {
+                return ResourceManager.GetString("QuoteItemNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The quote item for this job item must be marked accepted or rejected before it can be invoiced.
+        /// </summary>
+        public static string QuoteStatusInvalid {
+            get {
+                return ResourceManager.GetString("QuoteStatusInvalid", resourceCulture);
+            }
+        }
     }
 }

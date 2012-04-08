@@ -10,11 +10,18 @@ namespace JobSystem.TestHelpers
 	{
 		public static InvoiceItemService Create(
 			IUserContext userContext,
+			ICompanyDetailsRepository companyDetailsRepository,
 			IInvoiceItemRepository invoiceItemRepository,
 			IJobItemRepository jobItemRepository,
 			IQuoteItemRepository quoteItemRepository)
 		{
-			return new InvoiceItemService(userContext, invoiceItemRepository, jobItemRepository, quoteItemRepository, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+			return new InvoiceItemService(
+				userContext,
+				companyDetailsRepository,
+				invoiceItemRepository,
+				jobItemRepository,
+				quoteItemRepository,
+				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 	}
 }
