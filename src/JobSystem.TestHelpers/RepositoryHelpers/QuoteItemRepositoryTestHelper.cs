@@ -7,6 +7,13 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 {
 	public static class QuoteItemRepositoryTestHelper
 	{
+		public static IQuoteItemRepository GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItemWithOrderNoOnQuote(Guid jobItemId, QuoteItem quoteItem)
+		{
+			var quoteItemRepository = MockRepository.GenerateStub<IQuoteItemRepository>();
+			quoteItemRepository.Stub(x => x.GetQuoteItemForJobItem(jobItemId)).Return(quoteItem);
+			return quoteItemRepository;
+		}
+
 		public static IQuoteItemRepository GetQuoteItemRepository_StubsGetById_ReturnsQuoteItem(Guid quoteItemId)
 		{
 			var quoteItemRepository = MockRepository.GenerateStub<IQuoteItemRepository>();

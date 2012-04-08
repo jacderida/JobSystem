@@ -62,6 +62,7 @@
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderItem.cs" />
     <Compile Include="Entities\PendingDeliveryItem.cs" />
+    <Compile Include="Entities\PendingInvoiceItem.cs" />
     <Compile Include="Entities\PendingOrderItem.cs" />
     <Compile Include="Entities\PendingQuoteItem.cs" />
     <Compile Include="Entities\Quote.cs" />

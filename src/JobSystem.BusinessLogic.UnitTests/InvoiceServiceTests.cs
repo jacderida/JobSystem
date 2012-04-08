@@ -14,6 +14,7 @@ using JobSystem.Resources.Invoices;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {
+	[TestFixture]
 	public class InvoiceServiceTests
 	{
 		private InvoiceService _invoiceService;

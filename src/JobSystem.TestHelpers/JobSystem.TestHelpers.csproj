@@ -63,6 +63,7 @@
     <Compile Include="DomainValidationExtensions.cs" />
     <Compile Include="EntityIdProviderFactory.cs" />
     <Compile Include="InstrumentServiceFactory.cs" />
+    <Compile Include="InvoiceItemServiceFactory.cs" />
     <Compile Include="InvoiceServiceFactory.cs" />
     <Compile Include="RepositoryHelpers\BankDetailsRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\CustomerRepositoryTestHelper.cs" />

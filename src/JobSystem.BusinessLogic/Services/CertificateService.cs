@@ -54,6 +54,27 @@ namespace JobSystem.BusinessLogic.Services
 			return certificate;
 		}
 
+		public Certificate GetById(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			return _certificateRepository.GetById(id);
+		}
+
+		public IEnumerable<Certificate> GetCertificates()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			return _certificateRepository.GetCertificates();
+		}
+
+		public IEnumerable<Certificate> GetCertificatesForJobItem(Guid jobItemId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			return _certificateRepository.GetCertificatesForJobItem(jobItemId);
+		}
+
 		private JobItem GetJobItem(Guid jobItemId)
 		{
 			var jobItem = _jobItemRepository.GetById(jobItemId);

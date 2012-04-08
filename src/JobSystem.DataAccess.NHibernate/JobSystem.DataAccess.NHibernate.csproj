@@ -102,6 +102,7 @@
     <Compile Include="Repositories\DeliveryRepository.cs" />
     <Compile Include="Repositories\EntityIdLookupRepository.cs" />
     <Compile Include="Repositories\InstrumentRepository.cs" />
+    <Compile Include="Repositories\InvoiceItemRepository.cs" />
     <Compile Include="Repositories\JobItemRepository.cs" />
     <Compile Include="Repositories\JobRepository.cs" />
     <Compile Include="Repositories\ListItemRepository.cs" />
