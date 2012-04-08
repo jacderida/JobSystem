@@ -120,6 +120,9 @@
   <data name="InsufficientSecurityClearance" xml:space="preserve">
     <value>A manager role is required for this operation</value>
   </data>
+  <data name="JobItemHasPendingItem" xml:space="preserve">
+    <value>This job item has already been marked for invoicing</value>
+  </data>
   <data name="JobPending" xml:space="preserve">
     <value>This job item cannot be marked for invoicing because its job is pending</value>
   </data>

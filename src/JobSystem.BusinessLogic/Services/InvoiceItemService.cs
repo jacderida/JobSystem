@@ -31,8 +31,12 @@ namespace JobSystem.BusinessLogic.Services
 
 		public PendingInvoiceItem CreatePending(Guid id, Guid jobItemId)
 		{
+			if (_invoiceItemRepository.JobItemHasPendingInvoiceItem(jobItemId))
+				throw new DomainValidationException(Messages.JobItemHasPendingItem, "JobItemId");
 			if (id == Guid.Empty)
 				throw new ArgumentException("A value must be supplied for the ID");
+			if (!CurrentUser.HasRole(UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			ThrowIfJobItemInvalid(jobItemId);
 			var quoteItem = GetQuoteItem(jobItemId);
 			var jobItem = quoteItem.JobItem;
@@ -85,6 +89,8 @@ namespace JobSystem.BusinessLogic.Services
 			var jobItem = _jobItemRepository.GetById(jobItemId);
 			if (jobItem == null)
 				throw new ArgumentException("A valid ID must be supplied for the job item");
+			if (jobItem.Job.IsPending)
+				throw new DomainValidationException(Messages.JobPending, "JobItemId");
 		}
 
 		private QuoteItem GetQuoteItem(Guid jobItemId)

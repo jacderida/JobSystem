@@ -73,6 +73,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemId = _jobItemForCreatePendingId;
 
 			var invoiceItemRepositoryMock = MockRepository.GenerateMock<IInvoiceItemRepository>();
+			invoiceItemRepositoryMock.Stub(x => x.JobItemHasPendingInvoiceItem(jobItemId)).Return(false);
 			invoiceItemRepositoryMock.Expect(x => x.CreatePendingItem(null)).IgnoreArguments();
 			_invoiceItemService = InvoiceItemServiceFactory.Create(
 				_userContext,
@@ -102,6 +103,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_jobItemForCreatePending.Job.OrderNo = "OR1234";
 
 			var invoiceItemRepositoryMock = MockRepository.GenerateMock<IInvoiceItemRepository>();
+			invoiceItemRepositoryMock.Stub(x => x.JobItemHasPendingInvoiceItem(jobItemId)).Return(false);
 			invoiceItemRepositoryMock.Expect(x => x.CreatePendingItem(null)).IgnoreArguments();
 			_invoiceItemService = InvoiceItemServiceFactory.Create(
 				_userContext,
@@ -137,6 +139,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				};
 
 			var invoiceItemRepositoryMock = MockRepository.GenerateMock<IInvoiceItemRepository>();
+			invoiceItemRepositoryMock.Stub(x => x.JobItemHasPendingInvoiceItem(jobItemId)).Return(false);
 			invoiceItemRepositoryMock.Expect(x => x.CreatePendingItem(null)).IgnoreArguments();
 			_invoiceItemService = InvoiceItemServiceFactory.Create(
 				_userContext,
@@ -164,6 +167,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemId = _jobItemForCreatePendingId;
 
 			var invoiceItemRepositoryMock = MockRepository.GenerateMock<IInvoiceItemRepository>();
+			invoiceItemRepositoryMock.Stub(x => x.JobItemHasPendingInvoiceItem(jobItemId)).Return(false);
 			invoiceItemRepositoryMock.Expect(x => x.CreatePendingItem(null)).IgnoreArguments();
 			_invoiceItemService = InvoiceItemServiceFactory.Create(
 				_userContext,
@@ -189,12 +193,12 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void CreatePending_IdNotSupplied_ArgumentExceptionThrown()
 		{
 			var id = Guid.Empty;
-			var jobItemId = Guid.NewGuid();
+			var jobItemId = _jobItemForCreatePendingId;
 
 			_invoiceItemService = InvoiceItemServiceFactory.Create(
 				_userContext,
 				MockRepository.GenerateStub<ICompanyDetailsRepository>(),
-				MockRepository.GenerateStub<IInvoiceItemRepository>(),
+				InvoiceItemRepositoryTestHelper.GetJobItemRepository_StubsJobItemHasPendingInvoiceItem_ReturnsFalse(jobItemId),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemForCreatePending),
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId, _quoteItemForCreatePending));
 			CreatePending(id, jobItemId);
@@ -210,7 +214,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_invoiceItemService = InvoiceItemServiceFactory.Create(
 				_userContext,
 				MockRepository.GenerateStub<ICompanyDetailsRepository>(),
-				MockRepository.GenerateStub<IInvoiceItemRepository>(),
+				InvoiceItemRepositoryTestHelper.GetJobItemRepository_StubsJobItemHasPendingInvoiceItem_ReturnsFalse(jobItemId),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsNull(jobItemId),
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId, _quoteItemForCreatePending));
 			CreatePending(id, jobItemId);
@@ -233,7 +237,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_invoiceItemService = InvoiceItemServiceFactory.Create(
 				_userContext,
 				MockRepository.GenerateStub<ICompanyDetailsRepository>(),
-				MockRepository.GenerateStub<IInvoiceItemRepository>(),
+				InvoiceItemRepositoryTestHelper.GetJobItemRepository_StubsJobItemHasPendingInvoiceItem_ReturnsFalse(jobItemId),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemForCreatePending),
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId, _quoteItemForCreatePending));
 			CreatePending(id, jobItemId);
@@ -249,7 +253,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_invoiceItemService = InvoiceItemServiceFactory.Create(
 				_userContext,
 				MockRepository.GenerateStub<ICompanyDetailsRepository>(),
-				MockRepository.GenerateStub<IInvoiceItemRepository>(),
+				InvoiceItemRepositoryTestHelper.GetJobItemRepository_StubsJobItemHasPendingInvoiceItem_ReturnsFalse(jobItemId),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemForCreatePending),
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsNull(jobItemId));
 			CreatePending(id, jobItemId);
@@ -266,11 +270,43 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_invoiceItemService = InvoiceItemServiceFactory.Create(
 				_userContext,
 				MockRepository.GenerateStub<ICompanyDetailsRepository>(),
-				MockRepository.GenerateStub<IInvoiceItemRepository>(),
+				InvoiceItemRepositoryTestHelper.GetJobItemRepository_StubsJobItemHasPendingInvoiceItem_ReturnsFalse(jobItemId),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemForCreatePending),
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId, _quoteItemForCreatePending));
 			CreatePending(id, jobItemId);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.JobPending));
+		}
+
+		[Test]
+		public void CreatePending_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var jobItemId = _jobItemForCreatePendingId;
+
+			_invoiceItemService = InvoiceItemServiceFactory.Create(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<ICompanyDetailsRepository>(),
+				InvoiceItemRepositoryTestHelper.GetJobItemRepository_StubsJobItemHasPendingInvoiceItem_ReturnsFalse(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemForCreatePending),
+				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId, _quoteItemForCreatePending));
+			CreatePending(id, jobItemId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
+		}
+
+		[Test]
+		public void CreatePending_JobItemAlreadyHasPendingItem_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var jobItemId = _jobItemForCreatePendingId;
+
+			_invoiceItemService = InvoiceItemServiceFactory.Create(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<ICompanyDetailsRepository>(),
+				InvoiceItemRepositoryTestHelper.GetJobItemRepository_StubsJobItemHasPendingInvoiceItem_ReturnsTrue(jobItemId),
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemForCreatePending),
+				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId, _quoteItemForCreatePending));
+			CreatePending(id, jobItemId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.JobItemHasPendingItem));
 		}
 
 		private void CreatePending(Guid id, Guid jobItemId)

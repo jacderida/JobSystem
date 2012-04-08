@@ -70,6 +70,15 @@ namespace JobSystem.Resources.Invoices {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This job item has already been marked for invoicing.
+        /// </summary>
+        public static string JobItemHasPendingItem {
+            get {
+                return ResourceManager.GetString("JobItemHasPendingItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This job item cannot be marked for invoicing because its job is pending.
         /// </summary>
         public static string JobPending {

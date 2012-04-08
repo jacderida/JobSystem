@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using JobSystem.DataModel.Repositories;
 using JobSystem.DataModel.Entities;
+using JobSystem.DataModel.Repositories;
+using NHibernate.Linq;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 {
@@ -12,6 +11,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		public void CreatePendingItem(PendingInvoiceItem pendingItem)
 		{
 			CurrentSession.Save(pendingItem);
+		}
+
+		public bool JobItemHasPendingInvoiceItem(Guid jobItemId)
+		{
+			return CurrentSession.Query<PendingInvoiceItem>().Where(j => j.JobItem.Id == jobItemId).SingleOrDefault() != null;
 		}
 	}
 }

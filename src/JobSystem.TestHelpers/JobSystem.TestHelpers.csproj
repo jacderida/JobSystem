@@ -69,6 +69,7 @@
     <Compile Include="RepositoryHelpers\CompanyDetailsRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\CustomerRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\DeliveryRepositoryTestHelper.cs" />
+    <Compile Include="RepositoryHelpers\InvoiceItemRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\InvoiceRepositoryTestHelper.cs" />
     <Compile Include="RepositoryHelpers\JobItemRepositoryTestHelper.cs" />
     <Compile Include="JobItemServiceFactory.cs" />
