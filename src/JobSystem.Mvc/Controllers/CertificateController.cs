@@ -5,6 +5,7 @@ using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.DataModel.Entities;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.Certificates;
+using System.Linq;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -23,7 +24,7 @@ namespace JobSystem.Mvc.Controllers
 
         public ActionResult Index()
         {
-            return View();
+			return View();
         }
 
 		[HttpGet]
@@ -31,9 +32,13 @@ namespace JobSystem.Mvc.Controllers
 		{
 			var viewmodel = new CertificateViewModel(){
 				CertificateTypes = _listItemService.GetAllByCategory(ListItemCategoryType.Certificate).ToSelectList(),
-				TestStandards = _testStandardsService.GetTestStandards().ToSelectList(),
+				TestStandards = _testStandardsService.GetTestStandards().ToList().Select(x => new SelectListItem{
+						Text = x.CertificateNo,
+						Value = x.Id.ToString()
+					}),
 				JobItemId = id
 			};
+
 			return PartialView("_Create", viewmodel);
 		}
 

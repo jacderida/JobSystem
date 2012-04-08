@@ -1,10 +1,11 @@
 ﻿@model JobSystem.Mvc.ViewModels.Certificates.CertificateViewModel
 
+<script src="@Url.Content("~/Scripts/workitem.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
 <div id="create-certificate-container">
-@using (Ajax.BeginForm("Create", "Consignment", new AjaxOptions() { UpdateTargetId = "st_horizontal", OnSuccess = "app.closeModal('certificate-item')" }))
+@using (Ajax.BeginForm("Create", "Certificate", new AjaxOptions() { UpdateTargetId = "st_horizontal", OnSuccess = "app.closeModal('certificate-item')" }))
 {
 	@Html.ValidationSummary(true)
 	<fieldset class="fieldset-no-legend fieldset-float-left">
@@ -12,14 +13,14 @@
 			@Html.LabelFor(model => model.CertificateTypes)
 		</div>
 		<div class="editor-field">
-			@Html.DropDownListFor(model => model.CertificateTypeId, Model.CertificateTypes)
+			@Html.DropDownListFor(model => model.CertificateTypeId, Model.CertificateTypes, new { @class = "long-dropdown" })
 			@Html.ValidationMessageFor(model => model.CertificateTypeId)
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.TestStandards)
 		</div>
 		<div class="editor-field">
-			@Html.ListBoxFor(model => model.SelectedTestStandardIds, Model.TestStandards)
+			@Html.ListBoxFor(model => model.SelectedTestStandardIds, new MultiSelectList(Model.TestStandards, "Value", "Text"), new { @class = "long-dropdown standardMultiSelect" })
 			@Html.ValidationMessageFor(model => model.SelectedTestStandardIds)
 		</div>
 		@Html.HiddenFor(model => model.JobItemId)
