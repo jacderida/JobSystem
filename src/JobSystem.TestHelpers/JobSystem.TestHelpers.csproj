@@ -55,6 +55,7 @@
     <Compile Include="DeliveryServiceFactory.cs" />
     <Compile Include="IntegrationHelpers\CreateConsignmentsFromPendingItemsHelper.cs" />
     <Compile Include="IntegrationHelpers\CreateDeliveriesFromPendingItemsHelper.cs" />
+    <Compile Include="IntegrationHelpers\CreateInvoicesFromPendingItems.cs" />
     <Compile Include="IntegrationHelpers\CreateOrderFromConsignmentHelper.cs" />
     <Compile Include="IntegrationHelpers\CreateOrdersFromPendingItemsHelper.cs" />
     <Compile Include="IntegrationHelpers\CreateQuotesFromPendingItemsHelper.cs" />

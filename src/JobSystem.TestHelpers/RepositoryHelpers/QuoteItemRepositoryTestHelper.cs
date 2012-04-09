@@ -21,6 +21,20 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 			return quoteItemRepository;
 		}
 
+		public static IQuoteItemRepository GetQuoteItemRepository_StubsGetById_ReturnsNull(Guid quoteItemId)
+		{
+			var quoteItemRepository = MockRepository.GenerateStub<IQuoteItemRepository>();
+			quoteItemRepository.Stub(x => x.GetById(quoteItemId)).Return(null);
+			return quoteItemRepository;
+		}
+
+		public static IQuoteItemRepository GetQuoteItemRepository_StubsGetById_ReturnsQuoteItem(QuoteItem quoteItem)
+		{
+			var quoteItemRepository = MockRepository.GenerateStub<IQuoteItemRepository>();
+			quoteItemRepository.Stub(x => x.GetById(quoteItem.Id)).Return(quoteItem);
+			return quoteItemRepository;
+		}
+
 		public static IQuoteItemRepository GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(Guid jobItemId)
 		{
 			var quoteItemRepository = MockRepository.GenerateStub<IQuoteItemRepository>();

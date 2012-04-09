@@ -32,7 +32,7 @@ namespace JobSystem.TestHelpers.Context
 
 		public static IUserContext Create(string emailAddress, string userName, string jobTitle, UserRole roles)
 		{
-			return new TestUserContext(Guid.Empty, emailAddress, userName, jobTitle, roles);
+			return new TestUserContext(Guid.NewGuid(), emailAddress, userName, jobTitle, roles);
 		}
 
 		public static UserAccount CreateAdminUser()

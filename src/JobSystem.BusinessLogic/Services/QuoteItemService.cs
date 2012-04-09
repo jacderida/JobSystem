@@ -136,6 +136,34 @@ namespace JobSystem.BusinessLogic.Services
 			return pendingItem;
 		}
 
+		public QuoteItem Accept(Guid quoteItemId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			var quoteItem = _quoteItemRepository.GetById(quoteItemId);
+			if (quoteItem == null)
+				throw new ArgumentException("An invalid quote item ID was supplied");
+			quoteItem.Status = _listItemRepository.GetByType(ListItemType.StatusQuoteAccepted);
+			_jobItemRepository.EmitItemHistory(
+				CurrentUser, quoteItem.JobItem.Id, 0, 0, String.Format("Item accepted on quote {0}", quoteItem.Quote.QuoteNumber), ListItemType.StatusQuoteAccepted, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationQuoted);
+			_quoteItemRepository.Update(quoteItem);
+			return quoteItem;
+		}
+
+		public QuoteItem Reject(Guid quoteItemId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			var quoteItem = _quoteItemRepository.GetById(quoteItemId);
+			if (quoteItem == null)
+				throw new ArgumentException("An invalid quote item ID was supplied");
+			quoteItem.Status = _listItemRepository.GetByType(ListItemType.StatusQuoteRejected);
+			_jobItemRepository.EmitItemHistory(
+				CurrentUser, quoteItem.JobItem.Id, 0, 0, String.Format("Item rejected on quote {0}", quoteItem.Quote.QuoteNumber), ListItemType.StatusQuoteRejected, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationQuoted);
+			_quoteItemRepository.Update(quoteItem);
+			return quoteItem;
+		}
+
 		public QuoteItem GetById(Guid id)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
