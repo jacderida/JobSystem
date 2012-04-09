@@ -6,18 +6,18 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 {
 	public static class InvoiceItemRepositoryTestHelper
 	{
-		public static IInvoiceItemRepository GetJobItemRepository_StubsJobItemHasPendingInvoiceItem_ReturnsTrue(Guid jobItemId)
+		public static IInvoiceItemRepository GetInvoiceItemRepository_StubsJobItemHasPendingInvoiceItem_ReturnsTrue(Guid jobItemId)
 		{
-			var jobItemRepositoryStub = MockRepository.GenerateStub<IInvoiceItemRepository>();
-			jobItemRepositoryStub.Stub(x => x.JobItemHasPendingInvoiceItem(jobItemId)).Return(true);
-			return jobItemRepositoryStub;
+			var invoiceItemRepositoryStub = MockRepository.GenerateStub<IInvoiceItemRepository>();
+			invoiceItemRepositoryStub.Stub(x => x.JobItemHasPendingInvoiceItem(jobItemId)).Return(true);
+			return invoiceItemRepositoryStub;
 		}
 
-		public static IInvoiceItemRepository GetJobItemRepository_StubsJobItemHasPendingInvoiceItem_ReturnsFalse(Guid jobItemId)
+		public static IInvoiceItemRepository GetInvoiceItemRepository_StubsJobItemHasPendingInvoiceItem_ReturnsFalse(Guid jobItemId)
 		{
-			var jobItemRepositoryStub = MockRepository.GenerateStub<IInvoiceItemRepository>();
-			jobItemRepositoryStub.Stub(x => x.JobItemHasPendingInvoiceItem(jobItemId)).Return(false);
-			return jobItemRepositoryStub;
+			var invoiceItemRepositoryStub = MockRepository.GenerateStub<IInvoiceItemRepository>();
+			invoiceItemRepositoryStub.Stub(x => x.JobItemHasPendingInvoiceItem(jobItemId)).Return(false);
+			return invoiceItemRepositoryStub;
 		}
 	}
 }

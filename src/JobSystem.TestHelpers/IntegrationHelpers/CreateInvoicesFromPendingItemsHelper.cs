@@ -10,7 +10,7 @@ using Rhino.Mocks;
 
 namespace JobSystem.TestHelpers.IntegrationHelpers
 {
-	public class CreateInvoicesFromPendingItems
+	public class CreateInvoicesFromPendingItemsHelper
 	{
 		public static void CreateContextForPendingItemTests(
 			Guid customerId1, Guid customerId2,
@@ -23,6 +23,7 @@ namespace JobSystem.TestHelpers.IntegrationHelpers
 			var user = userRepository.GetByEmail("admin@intertek.com", false);
 			var userContext = new TestUserContext(user);
 
+			var companyDetailsRepository = new CompanyDetailsRepository();
 			var quoteRepository = new QuoteRepository();
 			var quoteItemRepository = new QuoteItemRepository();
 			var customerRepository = new CustomerRepository();
@@ -47,6 +48,8 @@ namespace JobSystem.TestHelpers.IntegrationHelpers
 			jobService.CreateJob(job3Id, "some instructions", "order no", "advice no", listItemService.GetAllByCategory(ListItemCategoryType.JobType).First().Id, customerId2, "notes", "contact");
 
 			var jobItemService = new JobItemService(userContext, jobRepository, jobItemRepository, listItemService, instrumentService, dispatcher);
+
+			#region Job 1
 			jobItemService.CreateJobItem(
 				job1Id, jobItem1Id, instrumentId, "12345", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
@@ -73,8 +76,64 @@ namespace JobSystem.TestHelpers.IntegrationHelpers
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobService.ApproveJob(job1Id);
 
-			//var quoteItemService = new QuoteItemService(userContext, quoteRepository, quoteItemRepository, jobItemRepository, listItemRepository, customerRepository, dispatcher);
-			//quoteItemService.CreatePending(Guid.NewGuid(), customerId1, jobItem1Id, 25, 35, 45, 25, 56, 
+			#endregion
+			#region Job2
+
+			jobItemService.CreateJobItem(
+				job2Id, jobItem5Id, instrumentId, "12345", String.Empty,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
+				12, "instructions", String.Empty, false, String.Empty, String.Empty);
+			jobItemService.CreateJobItem(
+				job2Id, jobItem6Id, instrumentId, "123456", String.Empty,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
+				12, "instructions", String.Empty, false, String.Empty, String.Empty);
+			jobItemService.CreateJobItem(
+				job2Id, jobItem7Id, instrumentId, "123457", String.Empty,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
+				12, "instructions", String.Empty, false, String.Empty, String.Empty);
+			jobService.ApproveJob(job2Id);
+
+			#endregion
+			#region Job 3
+
+			jobItemService.CreateJobItem(
+				job3Id, jobItem8Id, instrumentId, "12345", String.Empty,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
+				12, "instructions", String.Empty, false, String.Empty, String.Empty);
+			jobItemService.CreateJobItem(
+				job3Id, jobItem9Id, instrumentId, "123456", String.Empty,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
+				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
+				12, "instructions", String.Empty, false, String.Empty, String.Empty);
+			jobService.ApproveJob(job3Id);
+
+			#endregion
+
+			var quoteItemService = new QuoteItemService(userContext, quoteRepository, quoteItemRepository, jobItemRepository, listItemRepository, customerRepository, dispatcher);
+			var quoteService = new QuoteService(userContext, quoteRepository, customerRepository, entityIdProvider, listItemRepository, quoteItemService, companyDetailsRepository, dispatcher);
+			quoteItemService.CreatePending(Guid.NewGuid(), customerId1, jobItem1Id, 25, 35, 45, 25, 56, "calibrated", 30, false, "CALORDER", String.Empty);
+			quoteItemService.CreatePending(Guid.NewGuid(), customerId1, jobItem3Id, 45, 65, 35, 22, 87, "calibrated", 30, false, "CALORDER", String.Empty);
+			quoteItemService.CreatePending(Guid.NewGuid(), customerId1, jobItem2Id, 45, 60, 30, 26, 56, "repaired", 30, false, "REPAIRORDER", String.Empty);
+			quoteItemService.CreatePending(Guid.NewGuid(), customerId1, jobItem4Id, 45, 65, 35, 22, 87, "repaired", 30, false, "REPAIRORDER", String.Empty);
+			quoteItemService.CreatePending(Guid.NewGuid(), customerId1, jobItem5Id, 25, 35, 45, 25, 56, "calibrated", 30, false, "CALORDER", String.Empty);
+			quoteItemService.CreatePending(Guid.NewGuid(), customerId1, jobItem6Id, 25, 35, 45, 25, 56, "calibrated", 30, false, "CALORDER", String.Empty);
+			quoteItemService.CreatePending(Guid.NewGuid(), customerId1, jobItem7Id, 25, 35, 45, 25, 56, "calibrated", 30, false, "CALORDER", String.Empty);
+			quoteItemService.CreatePending(Guid.NewGuid(), customerId2, jobItem8Id, 25, 35, 45, 25, 56, "repaired", 30, false, "REPAIRORDER", String.Empty);
+			quoteItemService.CreatePending(Guid.NewGuid(), customerId2, jobItem9Id, 25, 35, 45, 25, 56, "repaired", 30, false, "REPAIRORDER", String.Empty);
+			quoteService.CreateQuotesFromPendingItems();
+
+			foreach (var quote in quoteService.GetQuotes())
+				foreach (var quoteItem in quoteItemService.GetQuoteItems(quote.Id))
+					quoteItemService.Accept(quoteItem.Id);
 		}
 	}
 }

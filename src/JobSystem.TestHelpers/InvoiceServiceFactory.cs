@@ -17,8 +17,17 @@ namespace JobSystem.TestHelpers
 			IBankDetailsRepository bankDetailsRepository,
 			ITaxCodeRepository taxCodeRepository)
 		{
+			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
 			return new InvoiceService(
 				userContext,
+				new InvoiceItemService(
+					userContext,
+					MockRepository.GenerateStub<ICompanyDetailsRepository>(),
+					MockRepository.GenerateStub<IInvoiceRepository>(),
+					MockRepository.GenerateStub<IInvoiceItemRepository>(),
+					MockRepository.GenerateStub<IJobItemRepository>(),
+					MockRepository.GenerateStub<IQuoteItemRepository>(),
+					dispatcher),
 				invoiceRepository,
 				EntityIdProviderFactory.GetEntityIdProviderFor<Invoice>("IR2000"),
 				listItemRepository,

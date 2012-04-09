@@ -11,6 +11,7 @@ namespace JobSystem.TestHelpers
 		public static InvoiceItemService Create(
 			IUserContext userContext,
 			ICompanyDetailsRepository companyDetailsRepository,
+			IInvoiceRepository invoiceRepository,
 			IInvoiceItemRepository invoiceItemRepository,
 			IJobItemRepository jobItemRepository,
 			IQuoteItemRepository quoteItemRepository)
@@ -18,6 +19,7 @@ namespace JobSystem.TestHelpers
 			return new InvoiceItemService(
 				userContext,
 				companyDetailsRepository,
+				invoiceRepository,
 				invoiceItemRepository,
 				jobItemRepository,
 				quoteItemRepository,

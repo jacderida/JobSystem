@@ -11,6 +11,7 @@ namespace JobSystem.BusinessLogic.Services
 	public class InvoiceItemService : ServiceBase
 	{
 		private readonly ICompanyDetailsRepository _companyDetailsRepository;
+		private readonly IInvoiceRepository _invoiceRepository;
 		private readonly IInvoiceItemRepository _invoiceItemRepository;
 		private readonly IJobItemRepository _jobItemRepository;
 		private readonly IQuoteItemRepository _quoteItemRepository;
@@ -18,12 +19,14 @@ namespace JobSystem.BusinessLogic.Services
 		public InvoiceItemService(
 			IUserContext userContext,
 			ICompanyDetailsRepository companyDetailsRepository,
+			IInvoiceRepository invoiceRepository,
 			IInvoiceItemRepository invoiceItemRepository,
 			IJobItemRepository jobItemRepository,
 			IQuoteItemRepository quoteItemRepository,
 			IQueueDispatcher<IMessage> dispatcher) : base(userContext, dispatcher)
 		{
 			_companyDetailsRepository = companyDetailsRepository;
+			_invoiceRepository = invoiceRepository;
 			_invoiceItemRepository = invoiceItemRepository;
 			_jobItemRepository = jobItemRepository;
 			_quoteItemRepository = quoteItemRepository;
@@ -48,6 +51,31 @@ namespace JobSystem.BusinessLogic.Services
 			AssignPrices(pendingItem, quoteItem);
 			_invoiceItemRepository.CreatePendingItem(pendingItem);
 			return pendingItem;
+		}
+
+		public InvoiceItem CreateFromPending(
+			Guid id, Guid invoiceId, string description, decimal calibrationPrice, decimal repairPrice, decimal partsPrice, decimal carriagePrice, decimal investigationPrice, JobItem jobItem)
+		{
+			var invoiceItem = new InvoiceItem();
+			invoiceItem.Id = id;
+			invoiceItem.Invoice = GetInvoice(invoiceId);
+			invoiceItem.Description = description;
+			invoiceItem.CalibrationPrice = calibrationPrice;
+			invoiceItem.RepairPrice = repairPrice;
+			invoiceItem.PartsPrice = partsPrice;
+			invoiceItem.CarriagePrice = carriagePrice;
+			invoiceItem.InvestigationPrice = investigationPrice;
+			invoiceItem.JobItem = jobItem;
+			_invoiceItemRepository.Create(invoiceItem);
+			return invoiceItem;
+		}
+
+		private Invoice GetInvoice(Guid invoiceId)
+		{
+			var invoice = _invoiceRepository.GetById(invoiceId);
+			if (invoice == null)
+				throw new ArgumentException("A valid invoice ID must be supplied");
+			return invoice;
 		}
 
 		private void AssignPrices(PendingInvoiceItem pendingItem, QuoteItem quoteItem)

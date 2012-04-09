@@ -1,16 +1,19 @@
 ﻿using System;
-using JobSystem.DataModel;
-using JobSystem.DataModel.Repositories;
-using JobSystem.Framework.Messaging;
-using JobSystem.DataModel.Entities;
-using JobSystem.Framework;
-using JobSystem.Resources.Invoices;
+using System.Collections.Generic;
+using System.Linq;
 using JobSystem.BusinessLogic.Validation.Core;
+using JobSystem.DataModel;
+using JobSystem.DataModel.Entities;
+using JobSystem.DataModel.Repositories;
+using JobSystem.Framework;
+using JobSystem.Framework.Messaging;
+using JobSystem.Resources.Invoices;
 
 namespace JobSystem.BusinessLogic.Services
 {
 	public class InvoiceService : ServiceBase
 	{
+		private readonly InvoiceItemService _invoiceService;
 		private readonly IInvoiceRepository _invoiceRepository;
 		private readonly IEntityIdProvider _entityIdProvider;
 		private readonly IListItemRepository _listItemRepository;
@@ -20,6 +23,7 @@ namespace JobSystem.BusinessLogic.Services
 
 		public InvoiceService(
 			IUserContext userContext,
+			InvoiceItemService invoiceService,
 			IInvoiceRepository invoiceRepository,
 			IEntityIdProvider entityIdProvider,
 			IListItemRepository listItemRepository,
@@ -28,12 +32,18 @@ namespace JobSystem.BusinessLogic.Services
 			ITaxCodeRepository taxCodeRepository,
 			IQueueDispatcher<IMessage> dispatcher) : base(userContext, dispatcher)
 		{
+			_invoiceService = invoiceService;
 			_invoiceRepository = invoiceRepository;
 			_entityIdProvider = entityIdProvider;
 			_listItemRepository = listItemRepository;
 			_customerRepository = customerRepository;
 			_bankDetailsRepository = bankDetailsRepository;
 			_taxCodeRepository = taxCodeRepository;
+		}
+
+		public void CreateInvoicesFromPendingItems()
+		{
+
 		}
 
 		public Invoice Create(Guid id, Guid currencyId, Guid customerId, Guid bankDetailsId, Guid paymentTermId, Guid taxCodeId)
@@ -53,6 +63,16 @@ namespace JobSystem.BusinessLogic.Services
 			invoice.TaxCode = GetTaxCode(taxCodeId);
 			_invoiceRepository.Create(invoice);
 			return invoice;
+		}
+
+		private void DoCreateInvoicesFromPendingItems(IEnumerable<PendingInvoiceItem> pendingItems)
+		{
+			var invoiceGroups = pendingItems.GroupBy(g => new { g.JobItem.Job.Id, g.OrderNo });
+			foreach (var group in invoiceGroups)
+			{
+				var i = 0;
+				var invoiceId = Guid.NewGuid();
+			}
 		}
 
 		private ListItem GetCurrency(Guid currencyId)

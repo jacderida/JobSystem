@@ -15,7 +15,8 @@ namespace JobSystem.Migrations.SqlLite
 				.WithColumn("PartsPrice").AsDecimal().NotNullable()
 				.WithColumn("CarriagePrice").AsDecimal().NotNullable()
 				.WithColumn("InvestigationPrice").AsDecimal().NotNullable()
-				.WithColumn("JobItemId").AsGuid().Nullable();
+				.WithColumn("JobItemId").AsGuid().Nullable()
+				.WithColumn("OrderNo").AsString(50).Nullable();
 			Create.ForeignKey("FK_PendingInvoiceItems_JobItems").FromTable("PendingInvoiceItems").ForeignColumn("JobItemId").ToTable("JobItems").PrimaryColumn("Id");
 		}
 
