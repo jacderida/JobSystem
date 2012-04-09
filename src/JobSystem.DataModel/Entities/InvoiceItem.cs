@@ -6,6 +6,7 @@ namespace JobSystem.DataModel.Entities
 	{
 		public virtual Guid Id { get; set; }
 		public virtual Invoice Invoice { get; set; }
+		public virtual int ItemNo { get; set; }
 		public virtual string Description { get; set; }
 		public virtual decimal Price { get; set; }
 		public virtual decimal CalibrationPrice { get; set; }

@@ -61,6 +61,7 @@ namespace JobSystem.DataModel.Entities
 		StatusItemWithSubContractor = 52,
 		StatusAwaitingParts = 53,
 		CertificateTypeHouse = 54,
-		CertificateTypeUkas = 55
+		CertificateTypeUkas = 55,
+		WorkLocationInvoiced = 56
 	}
 }

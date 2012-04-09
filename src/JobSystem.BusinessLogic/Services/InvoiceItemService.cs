@@ -5,6 +5,7 @@ using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
 using JobSystem.Resources.Invoices;
+using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -14,6 +15,7 @@ namespace JobSystem.BusinessLogic.Services
 		private readonly IInvoiceRepository _invoiceRepository;
 		private readonly IInvoiceItemRepository _invoiceItemRepository;
 		private readonly IJobItemRepository _jobItemRepository;
+		private readonly IListItemRepository _listItemRepository;
 		private readonly IQuoteItemRepository _quoteItemRepository;
 
 		public InvoiceItemService(
@@ -23,12 +25,14 @@ namespace JobSystem.BusinessLogic.Services
 			IInvoiceItemRepository invoiceItemRepository,
 			IJobItemRepository jobItemRepository,
 			IQuoteItemRepository quoteItemRepository,
+			IListItemRepository listItemRepository,
 			IQueueDispatcher<IMessage> dispatcher) : base(userContext, dispatcher)
 		{
 			_companyDetailsRepository = companyDetailsRepository;
 			_invoiceRepository = invoiceRepository;
 			_invoiceItemRepository = invoiceItemRepository;
 			_jobItemRepository = jobItemRepository;
+			_listItemRepository = listItemRepository;
 			_quoteItemRepository = quoteItemRepository;
 		}
 
@@ -56,9 +60,11 @@ namespace JobSystem.BusinessLogic.Services
 		public InvoiceItem CreateFromPending(
 			Guid id, Guid invoiceId, string description, decimal calibrationPrice, decimal repairPrice, decimal partsPrice, decimal carriagePrice, decimal investigationPrice, JobItem jobItem)
 		{
+			var invoice = GetInvoice(invoiceId);
 			var invoiceItem = new InvoiceItem();
 			invoiceItem.Id = id;
-			invoiceItem.Invoice = GetInvoice(invoiceId);
+			invoiceItem.ItemNo = _invoiceRepository.GetInvoiceItemCount(invoiceId) + 1;
+			invoiceItem.Invoice = invoice;
 			invoiceItem.Description = description;
 			invoiceItem.CalibrationPrice = calibrationPrice;
 			invoiceItem.RepairPrice = repairPrice;
@@ -66,8 +72,32 @@ namespace JobSystem.BusinessLogic.Services
 			invoiceItem.CarriagePrice = carriagePrice;
 			invoiceItem.InvestigationPrice = investigationPrice;
 			invoiceItem.JobItem = jobItem;
+			jobItem.Status = _listItemRepository.GetByType(ListItemType.StatusInvoiced);
+			jobItem.Location = _listItemRepository.GetByType(ListItemType.WorkLocationInvoiced);
+			_jobItemRepository.EmitItemHistory(
+				CurrentUser, jobItem.Id, 0, 0, String.Format("Item invoiced on {0}", invoice.InvoiceNumber), ListItemType.StatusInvoiced, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationInvoiced);
+			_jobItemRepository.Update(jobItem);
 			_invoiceItemRepository.Create(invoiceItem);
 			return invoiceItem;
+		}
+
+		public IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _invoiceItemRepository.GetInvoiceItems(invoiceId);
+		}
+
+		public IEnumerable<PendingInvoiceItem> GetPendingInvoiceItems()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _invoiceItemRepository.GetPendingInvoiceItems();
+		}
+
+		public void DeletePendingItem(Guid id)
+		{
+			_invoiceItemRepository.DeletePendingItem(id);
 		}
 
 		private Invoice GetInvoice(Guid invoiceId)

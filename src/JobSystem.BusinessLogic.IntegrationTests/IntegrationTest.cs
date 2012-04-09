@@ -86,7 +86,8 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 					Tuple.Create<string, ListItemType, Guid>("Repaired", ListItemType.WorkLocationRepaired, ListCategoryIds.LocationId),
 					Tuple.Create<string, ListItemType, Guid>("Sub Contract", ListItemType.WorkLocationSubContract, ListCategoryIds.LocationId),
 					Tuple.Create<string, ListItemType, Guid>("Quoted", ListItemType.WorkLocationQuoted, ListCategoryIds.LocationId),
-					Tuple.Create<string, ListItemType, Guid>("Investigated", ListItemType.WorkLocationInvestigated, ListCategoryIds.LocationId))
+					Tuple.Create<string, ListItemType, Guid>("Investigated", ListItemType.WorkLocationInvestigated, ListCategoryIds.LocationId),
+					Tuple.Create<string, ListItemType, Guid>("Invoiced", ListItemType.WorkLocationInvoiced, ListCategoryIds.LocationId))
 				.WithJobItemInitialLocations(
 					Tuple.Create<string, ListItemType, Guid>("House Calibration", ListItemType.InitialWorkLocationHouseCalibration, ListCategoryIds.InitialLocationId),
 					Tuple.Create<string, ListItemType, Guid>("UKAS Calibration", ListItemType.InitialWorkLocationUkasCalibration, ListCategoryIds.InitialLocationId),

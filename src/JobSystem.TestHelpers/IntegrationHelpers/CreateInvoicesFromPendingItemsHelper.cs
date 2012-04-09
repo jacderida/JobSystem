@@ -39,7 +39,7 @@ namespace JobSystem.TestHelpers.IntegrationHelpers
 
 			var customerService = new CustomerService(userContext, customerRepository, dispatcher);
 			customerService.Create(customerId1, "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo());
-			customerService.Create(customerId2, "EMIS (UK) Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo());
+			customerService.Create(customerId2, "EMIS (UK) Ltd", new Address(), new ContactInfo(), "EMIS (UK) Ltd", new Address(), new ContactInfo(), "EMIS (UK) Ltd", new Address(), new ContactInfo());
 
 			var listItemService = new ListItemService(userContext, listItemRepository, dispatcher);
 			var jobService = new JobService(userContext, null, jobRepository, listItemRepository, customerRepository, entityIdProvider, dispatcher);
@@ -50,6 +50,7 @@ namespace JobSystem.TestHelpers.IntegrationHelpers
 			var jobItemService = new JobItemService(userContext, jobRepository, jobItemRepository, listItemService, instrumentService, dispatcher);
 
 			#region Job 1
+
 			jobItemService.CreateJobItem(
 				job1Id, jobItem1Id, instrumentId, "12345", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,

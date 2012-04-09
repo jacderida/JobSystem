@@ -66,6 +66,7 @@ namespace JobSystem.BusinessLogic.Services
 			if (delivery == null)
 				throw new ArgumentException("An invalid ID was supplied for the delivery");
 			delivery.Fao = fao;
+			ValidateAnnotatedObjectThrowOnFailure(delivery);
 			_deliveryRepository.Update(delivery);
 			return delivery;
 		}

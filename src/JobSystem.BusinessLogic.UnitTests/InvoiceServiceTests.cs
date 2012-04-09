@@ -3,14 +3,14 @@ using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
+using JobSystem.DataModel.Repositories;
 using JobSystem.Framework;
+using JobSystem.Resources.Invoices;
+using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
+using JobSystem.TestHelpers.RepositoryHelpers;
 using NUnit.Framework;
 using Rhino.Mocks;
-using JobSystem.DataModel.Repositories;
-using JobSystem.TestHelpers;
-using JobSystem.TestHelpers.RepositoryHelpers;
-using JobSystem.Resources.Invoices;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {
@@ -29,8 +29,11 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_savedInvoice = null;
 			_domainValidationException = null;
 			AppDateTime.GetUtcNow = () => _dateCreated;
-			_userContext = TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Manager | UserRole.Member);
+			_userContext =
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Manager | UserRole.Member);
 		}
+
+		#region Create
 
 		[Test]
 		public void Create_ValidInvoiceDetails_InvoiceCreated()
@@ -263,5 +266,36 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_domainValidationException = dex;
 			}
 		}
+
+		#endregion
+		#region GetInvoices
+
+		[Test]
+		public void GetInvoices_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_invoiceService = InvoiceServiceFactory.Create(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<IInvoiceRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>(),
+				MockRepository.GenerateStub<IBankDetailsRepository>(),
+				MockRepository.GenerateStub<ITaxCodeRepository>());
+			GetInvoices();
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
+		}
+
+		private void GetInvoices()
+		{
+			try
+			{
+				_invoiceService.GetInvoices();
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
 	}
 }

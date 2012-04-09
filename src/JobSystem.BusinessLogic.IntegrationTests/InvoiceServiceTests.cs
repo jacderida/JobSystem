@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Linq;
+using JobSystem.BusinessLogic.Services;
 using JobSystem.DataAccess.NHibernate;
 using JobSystem.DataAccess.NHibernate.Repositories;
 using JobSystem.Framework.Messaging;
 using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
+using JobSystem.TestHelpers.IntegrationHelpers;
 using NUnit.Framework;
 using Rhino.Mocks;
-using JobSystem.TestHelpers.IntegrationHelpers;
-using JobSystem.BusinessLogic.Services;
 
 namespace JobSystem.BusinessLogic.IntegrationTests
 {
@@ -65,7 +66,7 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 
 			CreateInvoicesFromPendingItemsHelper.CreateContextForPendingItemTests(
 				customerId1, customerId2, job1Id, job2Id, job3Id, jobItem1Id, jobItem2Id, jobItem3Id, jobItem4Id, jobItem5Id, jobItem6Id, jobItem7Id, jobItem8Id, jobItem9Id);
-			var invoiceItemService = new InvoiceItemService(userContext, companyDetailsRepository, invoiceRepository, invoiceItemRepository, jobItemRepository, quoteItemRepository, dispatcher);
+			var invoiceItemService = new InvoiceItemService(userContext, companyDetailsRepository, invoiceRepository, invoiceItemRepository, jobItemRepository, quoteItemRepository, listItemRepository, dispatcher);
 			invoiceItemService.CreatePending(Guid.NewGuid(), jobItem1Id);
 			invoiceItemService.CreatePending(Guid.NewGuid(), jobItem2Id);
 			invoiceItemService.CreatePending(Guid.NewGuid(), jobItem3Id);
@@ -76,7 +77,21 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			invoiceItemService.CreatePending(Guid.NewGuid(), jobItem8Id);
 			invoiceItemService.CreatePending(Guid.NewGuid(), jobItem9Id);
 
-
+			var invoiceService = new InvoiceService(
+				userContext, invoiceItemService, invoiceRepository, new DirectEntityIdProvider(), listItemRepository, customerRepository, new BankDetailsRepository(), new TaxCodeRepository(), companyDetailsRepository, dispatcher);
+			invoiceService.CreateInvoicesFromPendingItems();
+			var invoices = invoiceService.GetInvoices().ToList();
+			Assert.AreEqual(4, invoices.Count);
+			var invoiceItems = invoiceItemService.GetInvoiceItems(invoices[0].Id).ToList();
+			Assert.AreEqual(2, invoiceItems.Count);
+			invoiceItems = invoiceItemService.GetInvoiceItems(invoices[1].Id).ToList();
+			Assert.AreEqual(2, invoiceItems.Count);
+			invoiceItems = invoiceItemService.GetInvoiceItems(invoices[2].Id).ToList();
+			Assert.AreEqual(3, invoiceItems.Count);
+			invoiceItems = invoiceItemService.GetInvoiceItems(invoices[3].Id).ToList();
+			Assert.AreEqual(2, invoiceItems.Count);
+			var pendingItems = invoiceItemService.GetPendingInvoiceItems().ToList();
+			Assert.AreEqual(0, pendingItems.Count);
 		}
 	}
 }

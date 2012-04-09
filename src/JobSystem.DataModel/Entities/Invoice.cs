@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace JobSystem.DataModel.Entities
 {
@@ -12,5 +13,11 @@ namespace JobSystem.DataModel.Entities
 		public virtual BankDetails BankDetails { get; set; }
 		public virtual ListItem PaymentTerm { get; set; }
 		public virtual TaxCode TaxCode { get; set; }
+		public virtual IList<InvoiceItem> InvoiceItems { get; set; }
+
+		public Invoice()
+		{
+			InvoiceItems = new List<InvoiceItem>();
+		}
 	}
 }

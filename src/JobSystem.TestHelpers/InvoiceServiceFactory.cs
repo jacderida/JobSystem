@@ -27,6 +27,7 @@ namespace JobSystem.TestHelpers
 					MockRepository.GenerateStub<IInvoiceItemRepository>(),
 					MockRepository.GenerateStub<IJobItemRepository>(),
 					MockRepository.GenerateStub<IQuoteItemRepository>(),
+					MockRepository.GenerateStub<IListItemRepository>(),
 					dispatcher),
 				invoiceRepository,
 				EntityIdProviderFactory.GetEntityIdProviderFor<Invoice>("IR2000"),
@@ -34,6 +35,7 @@ namespace JobSystem.TestHelpers
 				customerRepository,
 				bankDetailsRepository,
 				taxCodeRepository,
+				MockRepository.GenerateStub<ICompanyDetailsRepository>(),
 				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 	}

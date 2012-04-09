@@ -14,7 +14,8 @@ namespace JobSystem.TestHelpers
 			IInvoiceRepository invoiceRepository,
 			IInvoiceItemRepository invoiceItemRepository,
 			IJobItemRepository jobItemRepository,
-			IQuoteItemRepository quoteItemRepository)
+			IQuoteItemRepository quoteItemRepository,
+			IListItemRepository listItemRepository)
 		{
 			return new InvoiceItemService(
 				userContext,
@@ -23,6 +24,7 @@ namespace JobSystem.TestHelpers
 				invoiceItemRepository,
 				jobItemRepository,
 				quoteItemRepository,
+				listItemRepository,
 				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 	}

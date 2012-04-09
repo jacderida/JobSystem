@@ -10,6 +10,7 @@ namespace JobSystem.Migrations
 			Create.Table("InvoiceItems")
 				.WithIdColumn()
 				.WithColumn("InvoiceId").AsGuid().NotNullable()
+				.WithColumn("ItemNo").AsInt32().NotNullable()
 				.WithColumn("Description").AsString(255).NotNullable()
 				.WithColumn("Price").AsDecimal().NotNullable()
 				.WithColumn("CalibrationPrice").AsDecimal().NotNullable()

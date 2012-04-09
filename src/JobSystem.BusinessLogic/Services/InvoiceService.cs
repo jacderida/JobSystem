@@ -13,37 +13,40 @@ namespace JobSystem.BusinessLogic.Services
 {
 	public class InvoiceService : ServiceBase
 	{
-		private readonly InvoiceItemService _invoiceService;
+		private readonly InvoiceItemService _invoiceItemService;
 		private readonly IInvoiceRepository _invoiceRepository;
 		private readonly IEntityIdProvider _entityIdProvider;
 		private readonly IListItemRepository _listItemRepository;
 		private readonly ICustomerRepository _customerRepository;
 		private readonly IBankDetailsRepository _bankDetailsRepository;
 		private readonly ITaxCodeRepository _taxCodeRepository;
+		private readonly ICompanyDetailsRepository _companyDetailsRepository;
 
 		public InvoiceService(
 			IUserContext userContext,
-			InvoiceItemService invoiceService,
+			InvoiceItemService invoiceItemService,
 			IInvoiceRepository invoiceRepository,
 			IEntityIdProvider entityIdProvider,
 			IListItemRepository listItemRepository,
 			ICustomerRepository customerRepository,
 			IBankDetailsRepository bankDetailsRepository,
 			ITaxCodeRepository taxCodeRepository,
+			ICompanyDetailsRepository companyDetailsRepository,
 			IQueueDispatcher<IMessage> dispatcher) : base(userContext, dispatcher)
 		{
-			_invoiceService = invoiceService;
+			_invoiceItemService = invoiceItemService;
 			_invoiceRepository = invoiceRepository;
 			_entityIdProvider = entityIdProvider;
 			_listItemRepository = listItemRepository;
 			_customerRepository = customerRepository;
 			_bankDetailsRepository = bankDetailsRepository;
 			_taxCodeRepository = taxCodeRepository;
+			_companyDetailsRepository = companyDetailsRepository;
 		}
 
 		public void CreateInvoicesFromPendingItems()
 		{
-
+			DoCreateInvoicesFromPendingItems(_invoiceItemService.GetPendingInvoiceItems());
 		}
 
 		public Invoice Create(Guid id, Guid currencyId, Guid customerId, Guid bankDetailsId, Guid paymentTermId, Guid taxCodeId)
@@ -65,13 +68,28 @@ namespace JobSystem.BusinessLogic.Services
 			return invoice;
 		}
 
+		public IEnumerable<Invoice> GetInvoices()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _invoiceRepository.GetInvoices();
+		}
+
 		private void DoCreateInvoicesFromPendingItems(IEnumerable<PendingInvoiceItem> pendingItems)
 		{
+			var company = _companyDetailsRepository.GetCompany();
 			var invoiceGroups = pendingItems.GroupBy(g => new { g.JobItem.Job.Id, g.OrderNo });
 			foreach (var group in invoiceGroups)
 			{
 				var i = 0;
 				var invoiceId = Guid.NewGuid();
+				foreach (var item in group)
+				{
+					if (i++ == 0)
+						Create(invoiceId, company.DefaultCurrency.Id, item.JobItem.Job.Customer.Id, company.DefaultBankDetails.Id, company.DefaultPaymentTerm.Id, company.DefaultTaxCode.Id);
+					_invoiceItemService.CreateFromPending(Guid.NewGuid(), invoiceId, item.Description, item.CalibrationPrice, item.RepairPrice, item.PartsPrice, item.CarriagePrice, item.InvestigationPrice, item.JobItem);
+					_invoiceItemService.DeletePendingItem(item.Id);
+				}
 			}
 		}
 
