@@ -13,6 +13,9 @@
 			case 'delivery-item':
 				$("#create-delivery-container").dialog('close');
 				break;
+			case 'certificate-item':
+				$("#create-certificate-container").dialog('close');
+				break;
 		}
 	}
 }
@@ -416,6 +419,21 @@ $(document).ready(function () {
 		container.stop(true, true).fadeIn(200);
 
 		$('.work-item-list-item').live('mouseleave', function () {
+			container.stop(true, true).fadeOut(200);
+		});
+	});
+
+	$('.cert-item-list-item').live('mouseenter', function () {
+		var elem = $(this);
+		var elemToShow = $('#cert-item-' + elem.attr('id'));
+		var container = $('#item-tooltip');
+
+		container.html(elemToShow.clone());
+		container.css('top', (elem.offset().top - 366));
+		container.children('.cert-item-details').css('top', '20px');
+		container.stop(true, true).fadeIn(200);
+
+		$('.cert-item-list-item').live('mouseleave', function () {
 			container.stop(true, true).fadeOut(200);
 		});
 	});

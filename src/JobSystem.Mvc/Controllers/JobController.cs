@@ -1,22 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.DataModel.Entities;
-using JobSystem.DataModel.Storage;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
+using JobSystem.Mvc.ViewModels;
+using JobSystem.Mvc.ViewModels.Certificates;
 using JobSystem.Mvc.ViewModels.Consignments;
+using JobSystem.Mvc.ViewModels.Deliveries;
 using JobSystem.Mvc.ViewModels.JobItems;
 using JobSystem.Mvc.ViewModels.Jobs;
-using JobSystem.Mvc.ViewModels.WorkItems;
-using JobSystem.Mvc.ViewModels;
-using JobSystem.Mvc.ViewModels.Quotes;
 using JobSystem.Mvc.ViewModels.Orders;
-using JobSystem.Mvc.ViewModels.Deliveries;
+using JobSystem.Mvc.ViewModels.Quotes;
+using JobSystem.Mvc.ViewModels.TestStandards;
+using JobSystem.Mvc.ViewModels.WorkItems;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -29,8 +30,9 @@ namespace JobSystem.Mvc.Controllers
 		private readonly QuoteItemService _quoteItemService;
 		private readonly OrderItemService _orderItemService;
 		private readonly DeliveryItemService _deliveryItemService;
+		private readonly CertificateService _certificateService;
 
-		public JobController(JobService jobService, ListItemService listItemService, CustomerService customerService, JobItemService jobItemService, QuoteItemService quoteItemService, OrderItemService orderItemService, DeliveryItemService deliveryItemService)
+		public JobController(JobService jobService, ListItemService listItemService, CustomerService customerService, JobItemService jobItemService, QuoteItemService quoteItemService, OrderItemService orderItemService, DeliveryItemService deliveryItemService, CertificateService certificateService)
 		{
 			_jobService = jobService;
 			_listItemService = listItemService;
@@ -39,6 +41,7 @@ namespace JobSystem.Mvc.Controllers
 			_quoteItemService = quoteItemService;
 			_orderItemService = orderItemService;
 			_deliveryItemService = deliveryItemService;
+			_certificateService = certificateService;
 		}
 
 		[HttpGet]
@@ -194,6 +197,7 @@ namespace JobSystem.Mvc.Controllers
 						ConsignmentItem = PopulateConsignmentItemViewModel(ji.Id),
 						OrderItem = PopulateOrderItemViewModel(ji.Id),
 						Delivery = PopulateDeliveryItemViewModel(ji.Id),
+						Certificates = PopulateCertificateViewModel(ji.Id),
 						WorkItems = ji.HistoryItems.Select(wi => new WorkItemDetailsViewModel
 						{
 							Id = wi.Id,
@@ -418,6 +422,25 @@ namespace JobSystem.Mvc.Controllers
 				};
 				return viewmodel;
 			}
+		}
+
+		private List<CertificateIndexViewModel> PopulateCertificateViewModel(Guid id)
+		{
+			var items = _certificateService.GetCertificatesForJobItem(id).Select(i => new CertificateIndexViewModel()
+			{
+				CertificateNo = i.CertificateNumber,
+				CreatedBy = i.CreatedBy.Name,
+				DateCreated = i.DateCreated.ToLongDateString() + ' ' + i.DateCreated.ToShortTimeString(),
+				TypeName = i.Type.Name,
+				TestStandards = i.TestStandards.Select(ts => new TestStandardViewModel()
+				{
+					CertificateNo = ts.CertificateNo,
+					Description = ts.Description,
+					SerialNo = ts.SerialNo
+				}).ToList()
+			}).ToList();
+
+			return items;
 		}
 	}
 }

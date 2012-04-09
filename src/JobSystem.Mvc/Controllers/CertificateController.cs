@@ -30,6 +30,7 @@ namespace JobSystem.Mvc.Controllers
 				CertificateNo = i.CertificateNumber,
 				DateCreated = i.DateCreated.ToLongDateString() + ' ' + i.DateCreated.ToShortTimeString(),
 				CreatedBy = i.CreatedBy.Name,
+				JobNo = i.JobItem.Job.JobNo,
 				JobItemNo = i.JobItem.ItemNo.ToString(),
 				TypeName = i.Type.Name,
 				TestStandards = i.TestStandards.Select(ts => new TestStandardViewModel(){
@@ -48,7 +49,7 @@ namespace JobSystem.Mvc.Controllers
 			var viewmodel = new CertificateViewModel(){
 				CertificateTypes = _listItemService.GetAllByCategory(ListItemCategoryType.Certificate).ToSelectList(),
 				TestStandards = _testStandardsService.GetTestStandards().ToList().Select(x => new SelectListItem{
-						Text = x.CertificateNo,
+						Text = x.Description,
 						Value = x.Id.ToString()
 					}),
 				JobItemId = id

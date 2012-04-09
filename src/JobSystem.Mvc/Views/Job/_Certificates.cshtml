@@ -1,7 +1,21 @@
-﻿@model JobSystem.Mvc.ViewModels.JobItems.JobItemDetailsViewModel
-
-<a href="#" class="primary-action createCertificateButton" id="@Model.Id">Create Certificate</a>
-
-<div class="text">
-	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoCertificates</div>
-</div>
+﻿<ul id="cert-item-list">
+@for (int i = 0; i < Model.Certificates.Count; i++)
+{
+	var curCert = Model.Certificates[i];
+	<li class="cert-item-list-item" id="@i">
+		<h3>
+			@curCert.CertificateNo</h3>
+		<span class="smallText">@curCert.DateCreated</span>
+		<div class="cert-item-details" id="cert-item-@i">
+			<ul>
+				<li><span>Created by:</span> @curCert.CreatedBy</li>
+				<li><span>Type:</span> @curCert.TypeName</li>
+				<li><span>Test Standards:</span></li>
+				@foreach (var ts in curCert.TestStandards) {
+				<li>@ts.SerialNo - @ts.Description</li>
+				}
+			</ul>
+		</div>
+	</li>	
+	}
+</ul>

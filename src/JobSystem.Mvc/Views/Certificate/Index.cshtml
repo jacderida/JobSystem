@@ -10,7 +10,7 @@
 			<th>Certificate Number</th>
 			<th>Created By</th>
 			<th>Date Created</th>
-			<th>Job Item No</th>
+			<th>Job No</th>
 			<th>Type</th>
 			<th>Standards</th>
 		</tr>
@@ -27,7 +27,7 @@
 					@item.DateCreated
 				</td>
 				<td>
-					@item.JobItemNo
+					@item.JobNo (item @item.JobItemNo)
 				</td>
 				<td>
 					@item.TypeName
@@ -37,12 +37,10 @@
 					@item.TestStandards.Count items
 					<span>
 					@foreach (var ci in item.TestStandards) {
-						<span><strong>Certificate No:</strong></span><br />
-						<span>@ci.CertificateNo</span><br />
-						<span><strong>Serial No:</strong></span><br />
-						<span>@ci.SerialNo</span><br />
-						<span><strong>Description:</strong></span><br />
-						<span>@ci.Description</span><br />
+						<span>Certificate No: @ci.CertificateNo</span><br />
+						<span>Serial No: @ci.SerialNo</span><br />
+						<span>Description: @ci.Description</span><br />
+						if (item.TestStandards.Count > 1) {<br />}
 					}	
 					</span>
 				</span>
