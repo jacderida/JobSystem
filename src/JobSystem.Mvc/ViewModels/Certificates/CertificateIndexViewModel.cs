@@ -13,5 +13,6 @@ namespace JobSystem.Mvc.ViewModels.Certificates
 		public string DateCreated { get; set; }
 		public string CreatedBy { get; set; }
 		public string JobItemNo { get; set; }
+		public string JobNo { get; set; }
 	}
 }

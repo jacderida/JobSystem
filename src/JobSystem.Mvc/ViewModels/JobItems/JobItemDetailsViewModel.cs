@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JobSystem.Mvc.ViewModels.Certificates;
 using JobSystem.Mvc.ViewModels.Consignments;
 using JobSystem.Mvc.ViewModels.Deliveries;
 using JobSystem.Mvc.ViewModels.Orders;
@@ -22,6 +23,7 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 		public string Comments { get; set; }
 		public string InstrumentDetails { get; set; }
 		public IList<WorkItemDetailsViewModel> WorkItems { get; set; }
+		public IList<CertificateIndexViewModel> Certificates { get; set; }
 		public ConsignmentItemIndexViewModel ConsignmentItem { get; set; }
 		public ConsignmentIndexViewModel Consignment { get; set; }
 		public QuoteItemIndexViewModel QuoteItem { get; set; }

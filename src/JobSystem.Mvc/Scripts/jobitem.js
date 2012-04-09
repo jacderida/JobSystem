@@ -2,6 +2,7 @@
 	$(".primary-action").button();
 
 	$('.work-item-list-item').last().addClass('last');
+	$('.cert-item-list-item').last().addClass('last');
 
 	//Create WORK ITEM modal form
 	$('.createWorkButton').click(function () {

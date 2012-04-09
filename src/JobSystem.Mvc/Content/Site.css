@@ -925,19 +925,19 @@ div#title {
 	color: #081A58;
 }
 
-#work-item-list {
+#work-item-list, #cert-item-list {
 	float: left;
 	width: 200px;
 	padding: 1px 0 0 1px;
 	margin-top: 20px;
 }
 
-.work-item-list-item {
+.work-item-list-item, .cert-item-list-item {
 	position: relative;
 	padding: 10px;
 }
 
-.work-item-list-item:hover {
+.work-item-list-item:hover, .cert-item-list-item:hover {
 	cursor: pointer;
 	outline: 1px solid #DDD;
 	border: 1px solid #fff;
@@ -961,20 +961,20 @@ div#title {
 	z-index: 2000;
 }
 
-.work-item-details {
+.work-item-details, .cert-item-details {
 	position:absolute;
 	top: 100000px;
 }
 
-.work-item-details ul {
+.work-item-details ul, .cert-item-details ul {
 	margin-bottom: 0;
 }
 
-.work-item-details li {
+.work-item-details li, .cert-item-details li {
 	margin-bottom: 5px;
 }
 
-.work-item-details li span {
+.work-item-details li span, .cert-item-details li span {
 	font-weight: bold;
 }
 

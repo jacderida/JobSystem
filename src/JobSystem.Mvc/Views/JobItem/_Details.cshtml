@@ -94,7 +94,17 @@
 			</div>
 		</div>
 		<div id="st_content_2" class="st_tab_view">
-			@Html.Partial("~/Views/Job/_Certificates.cshtml", Model)
+			<a href="#" class="primary-action createCertificateButton" id="@Model.Id">Create Certificate</a>
+			<div class="text">
+			@if (Model.Certificates.Any())
+			{
+				@Html.Partial("~/Views/Job/_Certificates.cshtml")
+			}
+			else
+			{
+				<div id="empty-list">@JobSystem.Resources.Certificates.Messages.NoCertificates</div>
+			}
+			</div>
 		</div>
 		<div id="st_content_3" class="st_tab_view">
 			<div class="text">	
