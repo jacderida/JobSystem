@@ -1029,3 +1029,8 @@ div#title {
 #deliveryFao {
 	display: none;
 }
+
+#acceptQuoteItemButton {
+	margin-left: 20px;
+	margin-right: 5px;
+}

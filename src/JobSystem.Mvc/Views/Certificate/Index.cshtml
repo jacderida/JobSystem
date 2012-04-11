@@ -3,7 +3,6 @@
     ViewBag.Title = "Certificates";
 }
 
-<h2>Certificates</h2>
 @if (Model.Any()) {
 	<table>
 		<tr>
@@ -14,7 +13,7 @@
 			<th>Type</th>
 			<th>Standards</th>
 		</tr>
-	@foreach (var item in Model)
+	@foreach (var item in Model.OrderBy(g => g.JobNo))
 	 {
 			<tr>
 				<td>

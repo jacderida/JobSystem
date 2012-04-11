@@ -110,12 +110,13 @@
 			<div class="text">	
 				@if (Model.QuoteItem != null)
 				{
-					if (Model.QuoteItem.IsQuoted) {
-						@Html.ActionLink("Edit Quote", "Edit", "Quote", new { id = @Model.Id, fromJi = true, isQuoted = Model.QuoteItem.IsQuoted }, new { @class = "primary-action" })
-					} else {
-						@Html.ActionLink("Edit Quote", "Edit", "Quote", new { id = @Model.Id, fromJi = true, isQuoted = Model.QuoteItem.IsQuoted }, new { @class = "primary-action" })
-					}
+					@Html.ActionLink("Edit Quote", "Edit", "Quote", new { id = @Model.Id, fromJi = true, isQuoted = Model.QuoteItem.IsQuoted }, new { @class = "primary-action" })
+					@Ajax.ActionLink("Accept", "AcceptQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Accepted')" }, new { @class = "primary-action", id="acceptQuoteItemButton" })
+					@Ajax.ActionLink("Reject", "RejectQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Rejected')" },  new { @class = "primary-action" })
 					<div class="quote-item">
+						@if (Model.QuoteItem.IsQuoted) {
+							<h3 id="quoteItemStatusLabel">@Model.QuoteItem.Status</h3><br />
+						}
 						<div class="details-fields">
 							<span class="field-label">Order No.</span>
 							<span class="field">@Model.QuoteItem.OrderNo</span>

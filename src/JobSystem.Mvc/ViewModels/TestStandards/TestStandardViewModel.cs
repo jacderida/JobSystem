@@ -6,6 +6,7 @@ namespace JobSystem.Mvc.ViewModels.TestStandards
 	public class TestStandardViewModel
 	{
 		public Guid Id { get; set; }
+		[Required]
 		public string Description { get; set; }
 		[Required]
 		[Display(Name = "Serial Number")]

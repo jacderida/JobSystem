@@ -302,7 +302,8 @@ namespace JobSystem.Mvc.Controllers
 						Repair = item.Labour,
 						Report = item.Report,
 						IsQuoted = true,
-						JobItemNo = item.JobItem.ItemNo.ToString()
+						JobItemNo = item.JobItem.ItemNo.ToString(),
+						Status = item.Status.Name
 					};
 					return viewmodel;
 				}
