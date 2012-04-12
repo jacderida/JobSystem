@@ -95,6 +95,13 @@ namespace JobSystem.BusinessLogic.Services
 			return _invoiceItemRepository.GetPendingInvoiceItems();
 		}
 
+		public IEnumerable<PendingInvoiceItem> GetPendingInvoiceItems(IList<Guid> pendingItemIds)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _invoiceItemRepository.GetPendingInvoiceItems(pendingItemIds);
+		}
+
 		public void DeletePendingItem(Guid id)
 		{
 			_invoiceItemRepository.DeletePendingItem(id);

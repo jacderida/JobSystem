@@ -11,5 +11,6 @@ namespace JobSystem.DataModel.Repositories
 		bool JobItemHasPendingInvoiceItem(Guid jobItemId);
 		IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId);
 		IEnumerable<PendingInvoiceItem> GetPendingInvoiceItems();
+		IEnumerable<PendingInvoiceItem> GetPendingInvoiceItems(IList<Guid> pendingItemIds);
 	}
 }

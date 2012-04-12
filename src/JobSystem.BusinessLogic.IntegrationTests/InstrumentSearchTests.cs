@@ -142,5 +142,17 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			Assert.AreEqual(2, instruments.ToList().Count);
 			_instrumentRepository.DeleteAll();
 		}
+
+		public void FindInstrumentManufacturer_ManufacturerContains_1Result()
+		{
+			_instrumentService = InstrumentServiceFactory.CreateForSearch(_instrumentRepository);
+			_instrumentService.Create(Guid.NewGuid(), "Bird", "DPI601IS", "None", "Digital Pressure Indicator");
+			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI701IS", "None", "Digital Pressure Indicator");
+			_instrumentService.Create(Guid.NewGuid(), "Fluke", "DruckDPI601", "None", "Digital Pressure Indicator");
+
+			var instruments = _instrumentService.FindInstrumentManufacturer("dru").ToList();
+			Assert.AreEqual(1, instruments.Count);
+			_instrumentRepository.DeleteAll();
+		}
 	}
 }

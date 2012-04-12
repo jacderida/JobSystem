@@ -73,5 +73,10 @@ namespace JobSystem.BusinessLogic.Services
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			return _instrumentRepository.SearchByKeyword(keyword);
 		}
+
+		public IEnumerable<Instrument> FindInstrumentManufacturer(string manufacturer)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

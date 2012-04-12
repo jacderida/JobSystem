@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using NHibernate;
@@ -25,6 +26,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			keywordCriteria.Add(Restrictions.InsensitiveLike("ModelNo", "% " + keyword + "%"));
 			criteria.Add(keywordCriteria);
 			return criteria.List<Instrument>();
+		}
+
+		public IEnumerable<Instrument> FindManufacturer(string manufacturer)
+		{
+			return CurrentSession.Query<Instrument>().Where(i => i.Manufacturer.StartsWith(manufacturer, System.StringComparison.CurrentCultureIgnoreCase));
 		}
 
 		public void DeleteAll()

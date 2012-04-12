@@ -49,6 +49,11 @@ namespace JobSystem.BusinessLogic.Services
 			DoCreateInvoicesFromPendingItems(_invoiceItemService.GetPendingInvoiceItems());
 		}
 
+		public void CreateInvoicesFromPendingItems(IList<Guid> pendingItemIds)
+		{
+			DoCreateInvoicesFromPendingItems(_invoiceItemService.GetPendingInvoiceItems(pendingItemIds));
+		}
+
 		public Invoice Create(Guid id, Guid currencyId, Guid customerId, Guid bankDetailsId, Guid paymentTermId, Guid taxCodeId)
 		{
 			if (!CurrentUser.HasRole(UserRole.Manager))
