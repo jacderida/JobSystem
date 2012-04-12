@@ -17,6 +17,9 @@
 				$("#create-certificate-container").dialog('close');
 				break;
 		}
+	},
+	updateQuoteStatus: function (status) {
+		$("#quoteItemStatusLabel").text(status);
 	}
 }
 

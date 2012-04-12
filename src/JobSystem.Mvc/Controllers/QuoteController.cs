@@ -299,6 +299,24 @@ namespace JobSystem.Mvc.Controllers
 			return RedirectToAction("PendingConsignments");
 		}
 
+		[HttpPost]
+		[Transaction]
+		public ActionResult AcceptQuoteItem(Guid quoteItemId)
+		{
+			_quoteItemService.Accept(quoteItemId);
+
+			return Json(true);
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult RejectQuoteItem(Guid quoteItemId)
+		{
+			_quoteItemService.Reject(quoteItemId);
+
+			return Json(true);
+		}
+
 		public ActionResult GenerateQuoteReport(Guid id)
 		{
 			return View("RepQuoteNote", id);
