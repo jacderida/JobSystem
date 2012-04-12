@@ -143,14 +143,29 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			_instrumentRepository.DeleteAll();
 		}
 
-		public void FindInstrumentManufacturer_ManufacturerContains_1Result()
+		[Test]
+		public void SearchManufacturerByKeyword_ManufacturerContains_1Result()
 		{
 			_instrumentService = InstrumentServiceFactory.CreateForSearch(_instrumentRepository);
 			_instrumentService.Create(Guid.NewGuid(), "Bird", "DPI601IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI701IS", "None", "Digital Pressure Indicator");
+			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI701IS", "None", "Digital Pressure Indicator");
 			_instrumentService.Create(Guid.NewGuid(), "Fluke", "DruckDPI601", "None", "Digital Pressure Indicator");
 
-			var instruments = _instrumentService.FindInstrumentManufacturer("dru").ToList();
+			var instruments = _instrumentService.SearchManufacturerByKeyword("dru").ToList();
+			Assert.AreEqual(1, instruments.Count);
+			_instrumentRepository.DeleteAll();
+		}
+
+		[Test]
+		public void SearchModelNoByKeywordFilterByManufacturer_ModelNoContains_1Result()
+		{
+			_instrumentService = InstrumentServiceFactory.CreateForSearch(_instrumentRepository);
+			_instrumentService.Create(Guid.NewGuid(), "Bird", "DPI601IS", "None", "Digital Pressure Indicator");
+			_instrumentService.Create(Guid.NewGuid(), "Druck", "DPI601IS", "None", "Digital Pressure Indicator");
+			_instrumentService.Create(Guid.NewGuid(), "Fluke", "DruckDPI601", "None", "Digital Pressure Indicator");
+
+			var instruments = _instrumentService.SearchModelNoByKeywordFilterByManufacturer("dpi601", "Druck").ToList();
 			Assert.AreEqual(1, instruments.Count);
 			_instrumentRepository.DeleteAll();
 		}

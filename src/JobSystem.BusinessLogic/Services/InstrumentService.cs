@@ -74,9 +74,18 @@ namespace JobSystem.BusinessLogic.Services
 			return _instrumentRepository.SearchByKeyword(keyword);
 		}
 
-		public IEnumerable<Instrument> FindInstrumentManufacturer(string manufacturer)
+		public IEnumerable<string> SearchManufacturerByKeyword(string keyword)
 		{
-			throw new NotImplementedException();
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _instrumentRepository.SearchManufacturerByKeyword(keyword);
+		}
+
+		public IEnumerable<string> SearchModelNoByKeywordFilterByManufacturer(string keyword, string manufacturer)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _instrumentRepository.SearchModelNoByKeywordFilterByManufacturer(keyword, manufacturer);
 		}
 	}
 }

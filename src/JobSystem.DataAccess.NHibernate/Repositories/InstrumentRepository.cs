@@ -28,9 +28,15 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			return criteria.List<Instrument>();
 		}
 
-		public IEnumerable<Instrument> FindManufacturer(string manufacturer)
+		public IEnumerable<string> SearchManufacturerByKeyword(string keyword)
 		{
-			return CurrentSession.Query<Instrument>().Where(i => i.Manufacturer.StartsWith(manufacturer, System.StringComparison.CurrentCultureIgnoreCase));
+			return CurrentSession.Query<Instrument>().Where(i => i.Manufacturer.ToLower().Contains(keyword.ToLower())).Select(i => i.Manufacturer).Distinct();
+		}
+
+		public IEnumerable<string> SearchModelNoByKeywordFilterByManufacturer(string keyword, string manufacturer)
+		{
+			return CurrentSession.Query<Instrument>().Where(
+				i => i.Manufacturer == manufacturer && i.ModelNo.ToLower().Contains(keyword.ToLower())).Select(i => i.Manufacturer).Distinct();
 		}
 
 		public void DeleteAll()

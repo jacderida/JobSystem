@@ -8,6 +8,7 @@ namespace JobSystem.DataModel.Repositories
 	{
 		IEnumerable<Instrument> GetInstruments();
 		IEnumerable<Instrument> SearchByKeyword(string keyword);
-		IEnumerable<Instrument> FindManufacturer(string manufacturer);
+		IEnumerable<string> SearchManufacturerByKeyword(string keyword);
+		IEnumerable<string> SearchModelNoByKeywordFilterByManufacturer(string keyword, string manufacturer);
 	}
 }
