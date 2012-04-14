@@ -31,12 +31,23 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Create_ValidInstrumentDetails_InstrumentCreated()
 		{
 			var id = Guid.NewGuid();
+			var manufacturer = "Druck";
+			var modelNo = "DPI601IS";
+			var range = "Not Specified";
+			var description = "Digital Pressure Indicator";
+			var allocatedCalibrationTime = 20;
+
 			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
 			instrumentRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
 			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			CreateInstrument(id, "Druck", "DPI601IS", "None", "Digital Pressure Indicator");
+			CreateInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			instrumentRepositoryMock.VerifyAllExpectations();
 			Assert.AreEqual(id, _savedInstrument.Id);
+			Assert.AreEqual(manufacturer, _savedInstrument.Manufacturer);
+			Assert.AreEqual(modelNo, _savedInstrument.ModelNo);
+			Assert.AreEqual(range, _savedInstrument.Range);
+			Assert.AreEqual(description, _savedInstrument.Description);
+			Assert.AreEqual(allocatedCalibrationTime, _savedInstrument.AllocatedCalibrationTime);
 		}
 
 		[Test]
@@ -44,20 +55,28 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Create_InvalidIdSupplied_ArgumentExceptionThrown()
 		{
 			var id = Guid.Empty;
-			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
-			instrumentRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
-			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			CreateInstrument(id, new string('A', 51), "DPI601IS", "None", "Digital Pressure Indicator");
+			var manufacturer = "Druck";
+			var modelNo = "DPI601IS";
+			var range = "Not Specified";
+			var description = "Digital Pressure Indicator";
+			var allocatedCalibrationTime = 20;
+
+			_instrumentService = InstrumentServiceFactory.Create(MockRepository.GenerateStub<IInstrumentRepository>());
+			CreateInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 		}
 
 		[Test]
 		public void Create_ManufacturerGreaterThan50Characters_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
-			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
-			instrumentRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
-			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			CreateInstrument(id, new string('A', 51), "DPI601IS", "None", "Digital Pressure Indicator");
+			var manufacturer = new string('A', 51);
+			var modelNo = "DPI601IS";
+			var range = "Not Specified";
+			var description = "Digital Pressure Indicator";
+			var allocatedCalibrationTime = 20;
+
+			_instrumentService = InstrumentServiceFactory.Create(MockRepository.GenerateStub<IInstrumentRepository>());
+			CreateInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.ManufacturerTooLong));
 		}
 
@@ -65,10 +84,14 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Create_ManufacturerNotSupplied_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
-			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
-			instrumentRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
-			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			CreateInstrument(id, String.Empty, "DPI601IS", "None", "Digital Pressure Indicator");
+			var manufacturer = String.Empty;
+			var modelNo = "DPI601IS";
+			var range = "Not Specified";
+			var description = "Digital Pressure Indicator";
+			var allocatedCalibrationTime = 20;
+
+			_instrumentService = InstrumentServiceFactory.Create(MockRepository.GenerateStub<IInstrumentRepository>());
+			CreateInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.ManufacturerRequired));
 		}
 
@@ -76,10 +99,14 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Create_ModelNoGreaterThan50Characters_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
-			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
-			instrumentRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
-			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			CreateInstrument(id, "Druck", new string('A', 51), "None", "Digital Pressure Indicator");
+			var manufacturer = "Druck";
+			var modelNo = new string('A', 51);
+			var range = "Not Specified";
+			var description = "Digital Pressure Indicator";
+			var allocatedCalibrationTime = 20;
+
+			_instrumentService = InstrumentServiceFactory.Create(MockRepository.GenerateStub<IInstrumentRepository>());
+			CreateInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.ModelNoTooLong));
 		}
 
@@ -87,10 +114,14 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Create_ModelNoNotSupplied_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
-			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
-			instrumentRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
-			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			CreateInstrument(id, "Druck", String.Empty, "None", "Digital Pressure Indicator");
+			var manufacturer = "Druck";
+			var modelNo = String.Empty;
+			var range = "Not Specified";
+			var description = "Digital Pressure Indicator";
+			var allocatedCalibrationTime = 20;
+
+			_instrumentService = InstrumentServiceFactory.Create(MockRepository.GenerateStub<IInstrumentRepository>());
+			CreateInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.ModelNoRequired));
 		}
 
@@ -98,10 +129,14 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Create_RangeGreaterThan50Characters_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
-			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
-			instrumentRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
-			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			CreateInstrument(id, "Druck", "DPI601IS", new string('A', 51), "Digital Pressure Indicator");
+			var manufacturer = "Druck";
+			var modelNo = "DPI601IS";
+			var range = new string('A', 51);
+			var description = "Digital Pressure Indicator";
+			var allocatedCalibrationTime = 20;
+
+			_instrumentService = InstrumentServiceFactory.Create(MockRepository.GenerateStub<IInstrumentRepository>());
+			CreateInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.RangeTooLong));
 		}
 
@@ -109,19 +144,37 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Create_DescriptionGreaterThan50Characters_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
-			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
-			instrumentRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
-			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			CreateInstrument(id, "Druck", "DPI601IS", "None", new string('A', 51));
+			var manufacturer = "Druck";
+			var modelNo = "DPI601IS";
+			var range = "Not Specified";
+			var description = new string('A', 51);
+			var allocatedCalibrationTime = 20;
+
+			_instrumentService = InstrumentServiceFactory.Create(MockRepository.GenerateStub<IInstrumentRepository>());
+			CreateInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.DescriptionTooLong));
 		}
 
-		private void CreateInstrument(
-			Guid id, string manufacturer, string modelNo, string range, string description)
+		[Test]
+		public void Create_AllocatedCalibrationTimeLessThan0_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var manufacturer = "Druck";
+			var modelNo = "DPI601IS";
+			var range = "Not Specified";
+			var description = new string('A', 51);
+			var allocatedCalibrationTime = -1;
+
+			_instrumentService = InstrumentServiceFactory.Create(MockRepository.GenerateStub<IInstrumentRepository>());
+			CreateInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidAllocatedCalibrationTime));
+		}
+
+		private void CreateInstrument(Guid id, string manufacturer, string modelNo, string range, string description, int allocatedCalibrationTime)
 		{
 			try
 			{
-				_savedInstrument = _instrumentService.Create(id, manufacturer, modelNo, range, description);
+				_savedInstrument = _instrumentService.Create(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			}
 			catch (DomainValidationException dex)
 			{
@@ -148,6 +201,9 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Edit_ValidInstrumentDetails_InstrumentCreated()
 		{
 			var id = Guid.NewGuid();
+			var manufacturer = "Fluke";
+			var modelNo = "21";
+
 			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
 			instrumentRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
 			instrumentRepositoryMock.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));

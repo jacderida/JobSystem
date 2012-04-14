@@ -123,6 +123,9 @@
   <data name="InsufficientSecurityClearance" xml:space="preserve">
     <value>An internal member role is required for this view</value>
   </data>
+  <data name="InvalidAllocatedCalibrationTime" xml:space="preserve">
+    <value>The allocated calibration time must be greater than 0</value>
+  </data>
   <data name="ManufacturerRequired" xml:space="preserve">
     <value>A manufacturer is required for the instrument</value>
   </data>

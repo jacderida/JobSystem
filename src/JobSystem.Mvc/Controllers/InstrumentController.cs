@@ -47,7 +47,8 @@ namespace JobSystem.Mvc.Controllers
 				try
 				{
 					var id = Guid.NewGuid();
-					_instrumentService.Create(id, viewModel.Manufacturer, viewModel.ModelNo, viewModel.Range, viewModel.Description);
+					// IJ to fill in allocated calibration time - then remove comment!
+					_instrumentService.Create(id, viewModel.Manufacturer, viewModel.ModelNo, viewModel.Range, viewModel.Description, 0);
 					return RedirectToAction("Index");
 				}
 				catch (DomainValidationException dex)
