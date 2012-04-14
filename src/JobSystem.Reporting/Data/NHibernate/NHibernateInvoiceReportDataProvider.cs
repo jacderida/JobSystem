@@ -22,7 +22,16 @@ namespace JobSystem.Reporting.Data.NHibernate
 				PopulateCustomerInfo(customer, reportItem);
 				PopulateBankDetails(invoice.BankDetails, reportItem);
 				reportItem.PaymentTerms = invoice.PaymentTerm.Name;
-				//reportItem.OrderNo = invoice.order
+				reportItem.OrderNo = invoice.OrderNo;
+				var jobItem = invoiceItem.JobItem;
+				reportItem.JobRef = GetJobItemReference(jobItem);
+				reportItem.Description = GetInstrumentDescription(jobItem.Instrument);
+				reportItem.SerialNo = jobItem.SerialNo;
+				reportItem.Calibration = invoiceItem.CalibrationPrice;
+				reportItem.Repair = invoiceItem.RepairPrice;
+				reportItem.Parts = invoiceItem.PartsPrice;
+				reportItem.Carriage = invoiceItem.CarriagePrice;
+				reportItem.Investigation = invoiceItem.InvestigationPrice;
 				result.Add(reportItem);
 			}
 			return result;
