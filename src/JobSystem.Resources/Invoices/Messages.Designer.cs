@@ -88,6 +88,15 @@ namespace JobSystem.Resources.Invoices {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The order number cannot exceed 50 characters.
+        /// </summary>
+        public static string OrderNoTooLarge {
+            get {
+                return ResourceManager.GetString("OrderNoTooLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A quote item must be raised before the job item can be invoiced.
         /// </summary>
         public static string QuoteItemNull {

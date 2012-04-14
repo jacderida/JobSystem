@@ -126,6 +126,9 @@
   <data name="JobPending" xml:space="preserve">
     <value>This job item cannot be marked for invoicing because its job is pending</value>
   </data>
+  <data name="OrderNoTooLarge" xml:space="preserve">
+    <value>The order number cannot exceed 50 characters</value>
+  </data>
   <data name="QuoteItemNull" xml:space="preserve">
     <value>A quote item must be raised before the job item can be invoiced</value>
   </data>

@@ -110,6 +110,7 @@
     <Compile Include="M20120405211354_AddInvoicesTable.cs" />
     <Compile Include="M20120405212803_AddInvoicesItemsTable.cs" />
     <Compile Include="M20120407040730_AddPendingInvoiceItemsTable.cs" />
+    <Compile Include="M20120412204741_AddAllocatedCalibrationTimeColumnToInstrumentTable.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

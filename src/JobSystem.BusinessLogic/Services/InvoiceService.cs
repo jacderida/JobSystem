@@ -54,7 +54,7 @@ namespace JobSystem.BusinessLogic.Services
 			DoCreateInvoicesFromPendingItems(_invoiceItemService.GetPendingInvoiceItems(pendingItemIds));
 		}
 
-		public Invoice Create(Guid id, Guid currencyId, Guid customerId, Guid bankDetailsId, Guid paymentTermId, Guid taxCodeId)
+		public Invoice Create(Guid id, Guid currencyId, Guid customerId, Guid bankDetailsId, Guid paymentTermId, Guid taxCodeId, string orderNo)
 		{
 			if (!CurrentUser.HasRole(UserRole.Manager))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
@@ -64,11 +64,13 @@ namespace JobSystem.BusinessLogic.Services
 			invoice.Id = id;
 			invoice.InvoiceNumber = _entityIdProvider.GetIdFor<Invoice>();
 			invoice.DateCreated = AppDateTime.GetUtcNow();
+			invoice.OrderNo = orderNo;
 			invoice.Currency = GetCurrency(currencyId);
 			invoice.Customer = GetCustomer(customerId);
 			invoice.BankDetails = GetBankDetails(bankDetailsId);
 			invoice.PaymentTerm = GetPaymentTerm(paymentTermId);
 			invoice.TaxCode = GetTaxCode(taxCodeId);
+			ValidateAnnotatedObjectThrowOnFailure(invoice);
 			_invoiceRepository.Create(invoice);
 			return invoice;
 		}
@@ -91,7 +93,7 @@ namespace JobSystem.BusinessLogic.Services
 				foreach (var item in group)
 				{
 					if (i++ == 0)
-						Create(invoiceId, company.DefaultCurrency.Id, item.JobItem.Job.Customer.Id, company.DefaultBankDetails.Id, company.DefaultPaymentTerm.Id, company.DefaultTaxCode.Id);
+						Create(invoiceId, company.DefaultCurrency.Id, item.JobItem.Job.Customer.Id, company.DefaultBankDetails.Id, company.DefaultPaymentTerm.Id, company.DefaultTaxCode.Id, item.OrderNo);
 					_invoiceItemService.CreateFromPending(Guid.NewGuid(), invoiceId, item.Description, item.CalibrationPrice, item.RepairPrice, item.PartsPrice, item.CarriagePrice, item.InvestigationPrice, item.JobItem);
 					_invoiceItemService.DeletePendingItem(item.Id);
 				}

@@ -13,6 +13,7 @@ namespace JobSystem.Migrations.SqlLite
 				.WithIdColumn()
 				.WithColumn("InvoiceNumber").AsString(50).NotNullable()
 				.WithColumn("DateCreated").AsDateTime().NotNullable()
+				.WithColumn("OrderNo").AsString(50).Nullable()
 				.WithColumn("CurrencyId").AsGuid().NotNullable()
 				.WithColumn("CustomerId").AsGuid().NotNullable()
 				.WithColumn("BankDetailsId").AsGuid().NotNullable()
