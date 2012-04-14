@@ -203,17 +203,21 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var id = Guid.NewGuid();
 			var manufacturer = "Fluke";
 			var modelNo = "21";
+			var range = "Range";
+			var description = "Digital Multimeter";
+			var allocatedCalibrationTime = 20;
 
 			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
 			instrumentRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
 			instrumentRepositoryMock.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
 			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			EditInstrument(id, "Fluke", "21", "Range", "Digital Multimeter");
+			EditInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			instrumentRepositoryMock.VerifyAllExpectations();
-			Assert.AreEqual("Fluke", _savedInstrument.Manufacturer);
-			Assert.AreEqual("21", _savedInstrument.ModelNo);
-			Assert.AreEqual("Range", _savedInstrument.Range);
-			Assert.AreEqual("Digital Multimeter", _savedInstrument.Description);
+			Assert.AreEqual(manufacturer, _savedInstrument.Manufacturer);
+			Assert.AreEqual(modelNo, _savedInstrument.ModelNo);
+			Assert.AreEqual(range, _savedInstrument.Range);
+			Assert.AreEqual(description, _savedInstrument.Description);
+			Assert.AreEqual(allocatedCalibrationTime, _savedInstrument.AllocatedCalibrationTime);
 		}
 
 		[Test]
@@ -221,20 +225,32 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Edit_InvalidInstrumentId_ArgumentExceptionThrown()
 		{
 			var id = Guid.NewGuid();
-			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
-			instrumentRepositoryMock.Stub(x => x.GetById(id)).Return(null);
-			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			EditInstrument(id, "Fluke", "21", "Range", "Digital Multimeter");
+			var manufacturer = "Fluke";
+			var modelNo = "21";
+			var range = "Range";
+			var description = "Digital Multimeter";
+			var allocatedCalibrationTime = 20;
+
+			var instrumentRepositoryStub = MockRepository.GenerateStub<IInstrumentRepository>();
+			instrumentRepositoryStub.Stub(x => x.GetById(id)).Return(null);
+			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryStub);
+			EditInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 		}
 
 		[Test]
 		public void Edit_ManufacturerGreaterThan50Characters_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
-			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
-			instrumentRepositoryMock.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
-			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			EditInstrument(id, new string('A', 51), "21", "Range", "Digital Multimeter");
+			var manufacturer = new string('A', 51);
+			var modelNo = "21";
+			var range = "Range";
+			var description = "Digital Multimeter";
+			var allocatedCalibrationTime = 20;
+
+			var instrumentRepositoryStub = MockRepository.GenerateStub<IInstrumentRepository>();
+			instrumentRepositoryStub.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
+			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryStub);
+			EditInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.ManufacturerTooLong));
 		}
 
@@ -242,10 +258,16 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Edit_ManufacturerNotSupplied_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
-			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
-			instrumentRepositoryMock.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
-			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			EditInstrument(id, String.Empty, "21", "Range", "Digital Multimeter");
+			var manufacturer = String.Empty;
+			var modelNo = "21";
+			var range = "Range";
+			var description = "Digital Multimeter";
+			var allocatedCalibrationTime = 20;
+
+			var instrumentRepositoryStub = MockRepository.GenerateStub<IInstrumentRepository>();
+			instrumentRepositoryStub.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
+			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryStub);
+			EditInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.ManufacturerRequired));
 		}
 
@@ -253,10 +275,16 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Edit_ModelNoGreaterThan50Characters_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
-			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
+			var manufacturer = "Fluke";
+			var modelNo = new string('a', 51);
+			var range = "Range";
+			var description = "Digital Multimeter";
+			var allocatedCalibrationTime = 20;
+
+			var instrumentRepositoryMock = MockRepository.GenerateStub<IInstrumentRepository>();
 			instrumentRepositoryMock.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
 			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			EditInstrument(id, "Fluke", new string('a', 51), "Range", "Digital Multimeter");
+			EditInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.ModelNoTooLong));
 		}
 
@@ -264,10 +292,16 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Edit_ModelNoRequired_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
-			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
-			instrumentRepositoryMock.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
-			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			EditInstrument(id, "Fluke", String.Empty, "Range", "Digital Multimeter");
+			var manufacturer = "Fluke";
+			var modelNo = String.Empty;
+			var range = "Range";
+			var description = "Digital Multimeter";
+			var allocatedCalibrationTime = 20;
+
+			var instrumentRepositoryStub = MockRepository.GenerateStub<IInstrumentRepository>();
+			instrumentRepositoryStub.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
+			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryStub);
+			EditInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.ModelNoRequired));
 		}
 
@@ -275,10 +309,16 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Edit_RangeGreaterThan50Characters_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
-			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
-			instrumentRepositoryMock.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
-			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			EditInstrument(id, "Fluke", "21", new string('a', 51), "Digital Multimeter");
+			var manufacturer = "Fluke";
+			var modelNo = "DPI601IS";
+			var range = new string('a', 51);
+			var description = "Digital Multimeter";
+			var allocatedCalibrationTime = 20;
+
+			var instrumentRepositoryStub = MockRepository.GenerateStub<IInstrumentRepository>();
+			instrumentRepositoryStub.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
+			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryStub);
+			EditInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.RangeTooLong));
 		}
 
@@ -286,19 +326,42 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Edit_DescriptionGreaterThan50Characters_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
-			var instrumentRepositoryMock = MockRepository.GenerateMock<IInstrumentRepository>();
-			instrumentRepositoryMock.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
-			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryMock);
-			EditInstrument(id, "Fluke", "21", "Range", new string('a', 51));
+			var manufacturer = "Fluke";
+			var modelNo = "DPI601IS";
+			var range = "range";
+			var description = new string('a', 51);
+			var allocatedCalibrationTime = 20;
+
+			var instrumentRepositoryStub = MockRepository.GenerateStub<IInstrumentRepository>();
+			instrumentRepositoryStub.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
+			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryStub);
+			EditInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.DescriptionTooLong));
 		}
 
+		[Test]
+		public void Edit_AllocatedCalibrationTimeLessThan0_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var manufacturer = "Fluke";
+			var modelNo = "DPI601IS";
+			var range = "range";
+			var description = new string('a', 51);
+			var allocatedCalibrationTime = -1;
+
+			var instrumentRepositoryStub = MockRepository.GenerateStub<IInstrumentRepository>();
+			instrumentRepositoryStub.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
+			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryStub);
+			EditInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidAllocatedCalibrationTime));
+		}
+
 		private void EditInstrument(
-			Guid id, string manufacturer, string modelNo, string range, string description)
+			Guid id, string manufacturer, string modelNo, string range, string description, int allocatedCalibrationTime)
 		{
 			try
 			{
-				_savedInstrument = _instrumentService.Edit(id, manufacturer, modelNo, range, description);
+				_savedInstrument = _instrumentService.Edit(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
 			}
 			catch (DomainValidationException dex)
 			{

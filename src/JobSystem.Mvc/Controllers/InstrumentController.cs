@@ -80,7 +80,8 @@ namespace JobSystem.Mvc.Controllers
 			{
 				try
 				{
-					_instrumentService.Edit(viewModel.Id, viewModel.Manufacturer, viewModel.ModelNo, viewModel.Range, viewModel.Description);
+					// IJ to add allocated calibration time, then remove comment!
+					_instrumentService.Edit(viewModel.Id, viewModel.Manufacturer, viewModel.ModelNo, viewModel.Range, viewModel.Description, 0);
 					return RedirectToAction("Index");
 				}
 				catch (DomainValidationException dex)

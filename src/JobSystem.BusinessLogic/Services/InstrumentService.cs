@@ -46,6 +46,7 @@ namespace JobSystem.BusinessLogic.Services
 			instrument.ModelNo = modelNo;
 			instrument.Range = range;
 			instrument.Description = description;
+			instrument.AllocatedCalibrationTime = GetAllocatedCalibrationTime(allocatedCalibrationTime);
 			ValidateAnnotatedObjectThrowOnFailure(instrument);
 			_instrumentRepository.Update(instrument);
 			return instrument;
