@@ -24,6 +24,11 @@ namespace JobSystem.BusinessLogic.Services
 			return _listItemRepository.GetByName(name);
 		}
 
+		public ListItem GetByType(ListItemType type)
+		{
+			return _listItemRepository.GetByType(type);
+		}
+
 		public ListItem GetById(Guid id)
 		{
 			var listItem = _listItemRepository.GetById(id);

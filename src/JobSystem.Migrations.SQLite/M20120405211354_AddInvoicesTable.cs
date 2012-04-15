@@ -11,7 +11,7 @@ namespace JobSystem.Migrations.SqlLite
 		{
 			Create.Table("Invoices")
 				.WithIdColumn()
-				.WithColumn("InvoiceNumber").AsString(50).NotNullable()
+				.WithColumn("InvoiceNumber").AsString(50).Unique().NotNullable()
 				.WithColumn("DateCreated").AsDateTime().NotNullable()
 				.WithColumn("OrderNo").AsString(50).Nullable()
 				.WithColumn("CurrencyId").AsGuid().NotNullable()

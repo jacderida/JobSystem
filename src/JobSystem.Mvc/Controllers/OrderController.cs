@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
 using System.Linq;
+using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
+using JobSystem.BusinessLogic.Validation.Core;
+using JobSystem.DataAccess.NHibernate;
 using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.DataModel.Entities;
+using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.Orders;
 
 namespace JobSystem.Mvc.Controllers
 {
-    public class OrderController : Controller
-    {
+	public class OrderController : Controller
+	{
 		private readonly OrderService _orderService;
 		private readonly OrderItemService _orderItemService;
 		private readonly ListItemService _listItemService;
@@ -62,7 +65,8 @@ namespace JobSystem.Mvc.Controllers
 			foreach (var item in items)
 			{
 				var orderItems = _orderItemService.GetOrderItems(item.Id);
-				item.OrderItems = orderItems.Select(oi => new OrderItemIndexViewModel(){
+				item.OrderItems = orderItems.Select(oi => new OrderItemIndexViewModel()
+				{
 					DeliveryDays = oi.DeliveryDays.ToString(),
 					Description = oi.Description,
 					Instructions = oi.Instructions,
@@ -130,7 +134,7 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Create(Guid jobItemId, Guid jobId)
 		{
 			var viewmodel = new OrderCreateViewModel()
-			{ 
+			{
 				JobId = jobId,
 				JobItemId = jobItemId,
 				Currencies = _listItemService.GetAllByCategory(ListItemCategoryType.Currency).ToSelectList()
@@ -139,41 +143,42 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpPost]
-		[Transaction]
 		public ActionResult Create(OrderCreateViewModel viewmodel)
 		{
-			if (viewmodel.IsIndividual)
+			if (ModelState.IsValid)
 			{
-				var order =_orderService.Create(
-					Guid.NewGuid(),
-					viewmodel.SupplierId,
-					viewmodel.Instructions,
-					viewmodel.CurrencyId);
-				_orderItemService.Create(
-					Guid.NewGuid(),
-					order.Id,
-					viewmodel.Description,
-					viewmodel.Quantity,
-					viewmodel.PartNo,
-					viewmodel.Instructions,
-					viewmodel.DeliveryDays,
-					viewmodel.JobItemId,
-					viewmodel.Price);
+				var transaction = NHibernateSession.Current.BeginTransaction();
+				try
+				{
+					if (viewmodel.IsIndividual)
+					{
+						var order = _orderService.Create(Guid.NewGuid(), viewmodel.SupplierId, viewmodel.Instructions, viewmodel.CurrencyId);
+						_orderItemService.Create(
+							Guid.NewGuid(), order.Id, viewmodel.Description,
+							viewmodel.Quantity, viewmodel.PartNo, viewmodel.Instructions,
+							viewmodel.DeliveryDays, viewmodel.JobItemId, viewmodel.Price);
+					}
+					else
+					{
+						_orderItemService.CreatePending(
+							Guid.NewGuid(), viewmodel.SupplierId, viewmodel.Description,
+							viewmodel.Quantity, viewmodel.PartNo, viewmodel.Instructions,
+							viewmodel.DeliveryDays, viewmodel.JobItemId, viewmodel.Price);
+					}
+					transaction.Commit();
+					return RedirectToAction("Details", "Job", new { id = viewmodel.JobId, tabNo = "0" });
+				}
+				catch (DomainValidationException dex)
+				{
+					transaction.Rollback();
+					ModelState.UpdateFromDomain(dex.Result);
+				}
+				finally
+				{
+					transaction.Dispose();
+				}
 			}
-			else
-			{
-				_orderItemService.CreatePending(
-					Guid.NewGuid(),
-					viewmodel.SupplierId,
-					viewmodel.Description,
-					viewmodel.Quantity,
-					viewmodel.PartNo,
-					viewmodel.Instructions,
-					viewmodel.DeliveryDays,
-					viewmodel.JobItemId,
-					viewmodel.Price);
-			}
-			return RedirectToAction("Details", "Job", new { id = viewmodel.JobId, tabNo = "0" });
+			return View("Create", viewmodel);
 		}
 
 		[HttpGet]
@@ -218,7 +223,8 @@ namespace JobSystem.Mvc.Controllers
 				SupplierName = order.Supplier.Name,
 				DateCreated = order.DateCreated.ToLongDateString() + ' ' + order.DateCreated.ToShortTimeString(),
 				CreatedBy = order.CreatedBy.EmailAddress,
-				OrderItems = order.OrderItems.Select(o => new OrderItemIndexViewModel() {
+				OrderItems = order.OrderItems.Select(o => new OrderItemIndexViewModel()
+				{
 					DeliveryDays = o.DeliveryDays.ToString(),
 					Description = o.Description,
 					Instructions = o.Instructions,
@@ -278,20 +284,30 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpPost]
-		[Transaction]
 		public ActionResult OrderPending(Guid[] ToBeConvertedIds)
 		{
-			IList<Guid> idList = new List<Guid>();
-			if (ToBeConvertedIds.Length > 0)
+			if (ModelState.IsValid)
 			{
-				for (var i = 0; i < ToBeConvertedIds.Length; i++)
+				if (ToBeConvertedIds.Length > 0)
 				{
-					idList.Add(ToBeConvertedIds[i]);
+					var transaction = NHibernateSession.Current.BeginTransaction();
+					try
+					{
+						_orderService.CreateOrdersFromPendingItems(ToBeConvertedIds);
+						transaction.Commit();
+					}
+					catch (DomainValidationException dex)
+					{
+						transaction.Rollback();
+						ModelState.UpdateFromDomain(dex.Result);
+					}
+					finally
+					{
+						transaction.Dispose();
+					}
 				}
 			}
-			if (idList.Any()) _orderService.CreateOrdersFromPendingItems(idList);
-
 			return RedirectToAction("PendingOrders");
 		}
-    }
+	}
 }

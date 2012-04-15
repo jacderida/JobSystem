@@ -68,6 +68,7 @@
     <Compile Include="Entities\Quote.cs" />
     <Compile Include="Entities\QuoteItem.cs" />
     <Compile Include="Entities\TestStandard.cs" />
+    <Compile Include="EntityIdNotUniqueException.cs" />
     <Compile Include="Repositories\ICertificateRepository.cs" />
     <Compile Include="Repositories\IDeliveryItemRepository.cs" />
     <Compile Include="Repositories\IDeliveryRepository.cs" />

@@ -9,6 +9,8 @@ using global::FluentNHibernate.Cfg.Db;
 using global::NHibernate;
 using global::NHibernate.Cfg;
 using JobSystem.Framework.DesignByContract;
+using NHibernate.Exceptions;
+using JobSystem.DataModel;
 
 namespace JobSystem.DataAccess.NHibernate
 {
@@ -57,6 +59,26 @@ namespace JobSystem.DataAccess.NHibernate
 					"only communicating with one database.  Since you're configured communications " +
 					"with multiple databases, you should instead call CurrentFor(string factoryKey)");
 				return CurrentFor(DefaultFactoryKey);
+			}
+		}
+
+		/*
+		 * This is a major hack!
+		 * 
+		 * It's 
+		 * */
+		public static void TryCommitTransactionForEntityWithUniqueId()
+		{
+			try
+			{
+				if (Current.Transaction.IsActive)
+					Current.Transaction.Commit();
+			}
+			catch (StaleObjectStateException ex)
+			{
+				Current.Transaction.Rollback();
+				Current.Clear();
+				throw new EntityIdNotUniqueException(ex.Message);
 			}
 		}
 
