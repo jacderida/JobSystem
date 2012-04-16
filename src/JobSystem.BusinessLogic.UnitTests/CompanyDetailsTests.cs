@@ -651,7 +651,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var paymentTermId = Guid.NewGuid();
 
 			var companyDetailsRepositoryMock = MockRepository.GenerateMock<ICompanyDetailsRepository>();
-			companyDetailsRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			companyDetailsRepositoryMock.Expect(x => x.UpdateCompanyDetails(null)).IgnoreArguments();
 			_companyDetailsService = CompanyDetailsServiceFactory.CreateWithDefaultsSetupForEdit(companyDetailsRepositoryMock, bankDetailsId, currencyId, paymentTermId, taxCodeId);
 			EditCompanyDetails(
 				"EMIS (UK) Ltd", GetAddressDetails(),

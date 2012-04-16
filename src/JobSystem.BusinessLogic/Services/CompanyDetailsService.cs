@@ -82,7 +82,7 @@ namespace JobSystem.BusinessLogic.Services
 			AssignContactInfo(companyDetails, telephone, fax, email, www);
 			AssignRegNoInfo(companyDetails, regNo, vatRegNo);
 			ValidateAnnotatedObjectThrowOnFailure(companyDetails);
-			_companyDetailsRepository.Update(companyDetails);
+			_companyDetailsRepository.UpdateCompanyDetails(companyDetails);
 			return companyDetails;
 		}
 

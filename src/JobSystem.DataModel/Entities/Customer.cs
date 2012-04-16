@@ -10,6 +10,8 @@ namespace JobSystem.DataModel.Entities
 		[Required(ErrorMessageResourceName = "NameRequired", ErrorMessageResourceType = typeof(Messages))]
 		[StringLength(255, ErrorMessageResourceName = "NameTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string Name { get; set; }
+		[StringLength(255, ErrorMessageResourceName = "AssetLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		public virtual string AssetLine { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string Address1 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]

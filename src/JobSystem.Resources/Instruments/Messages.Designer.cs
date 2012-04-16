@@ -79,7 +79,7 @@ namespace JobSystem.Resources.Instruments {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The allocated calibration time must be greater than 0.
+        ///   Looks up a localized string similar to The allocated calibration time must be between 15 and 1000.
         /// </summary>
         public static string InvalidAllocatedCalibrationTime {
             get {

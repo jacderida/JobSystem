@@ -9,5 +9,6 @@ namespace JobSystem.DataModel.Repositories
 		CompanyDetails GetCompany();
 		byte[] GetLogoBytes();
 		bool ApplyAllPrices();
+		void UpdateCompanyDetails(CompanyDetails companyDetails);
 	}
 }

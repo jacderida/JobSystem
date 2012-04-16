@@ -62,7 +62,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			customerRepositoryMock.Stub(x => x.GetByName("Gael Ltd")).Return(null);
 			_customerService = CustomerServiceFactory.Create(customerRepositoryMock);
 			var customer = _customerService.Create(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			customerRepositoryMock.VerifyAllExpectations();
@@ -74,7 +74,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Create_IdNotSupplied_ArgumentExceptionThrown()
 		{
 			CreateCustomer(
-				Guid.Empty, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.Empty, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 		}
@@ -83,7 +83,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Create_NameNotSupplied_DomainValidationExceptionThrown()
 		{
 			CreateCustomer(
-				Guid.NewGuid(), String.Empty, GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), String.Empty, "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.NameRequired));
@@ -96,7 +96,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			customerRepositoryStub.Stub(x => x.GetByName("Gael Ltd")).Return(new Customer { Name = "Gael Ltd" });
 			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.DuplicateName));
@@ -109,10 +109,23 @@ namespace JobSystem.BusinessLogic.UnitTests
 			customerRepositoryStub.Stub(x => x.GetByName("Gael Ltd")).Return(null);
 			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
 			CreateCustomer(
-				Guid.NewGuid(), GreaterThan256Characters, GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), GreaterThan256Characters, "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.NameTooLarge));
+		}
+
+		[Test]
+		public void Create_AssetLineGreaterThan255Characters_DomainValidationExceptionThrown()
+		{
+			var customerRepositoryStub = MockRepository.GenerateMock<ICustomerRepository>();
+			customerRepositoryStub.Stub(x => x.GetByName("Gael Ltd")).Return(null);
+			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
+			CreateCustomer(
+				Guid.NewGuid(), "Gael Ltd", GreaterThan256Characters, GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
+				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AssetLineTooLarge));
 		}
 
 		[Test]
@@ -124,7 +137,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingAddressDetails = GetAddressDetails("Trading");
 			tradingAddressDetails.Line1 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", tradingAddressDetails, GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", tradingAddressDetails, GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -139,7 +152,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingAddressDetails = GetAddressDetails("Trading");
 			tradingAddressDetails.Line2 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", tradingAddressDetails, GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", tradingAddressDetails, GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -154,7 +167,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingAddressDetails = GetAddressDetails("Trading");
 			tradingAddressDetails.Line3 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", tradingAddressDetails, GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", tradingAddressDetails, GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -169,7 +182,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingAddressDetails = GetAddressDetails("Trading");
 			tradingAddressDetails.Line4 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", tradingAddressDetails, GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", tradingAddressDetails, GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -184,7 +197,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingAddressDetails = GetAddressDetails("Trading");
 			tradingAddressDetails.Line5 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", tradingAddressDetails, GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", tradingAddressDetails, GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -199,7 +212,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingContactInfo = GetContactInfo("Trading");
 			tradingContactInfo.Telephone = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), tradingContactInfo,
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), tradingContactInfo,
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -214,7 +227,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingContactInfo = GetContactInfo("Trading");
 			tradingContactInfo.Fax = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), tradingContactInfo,
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), tradingContactInfo,
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -229,7 +242,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingContactInfo = GetContactInfo("Trading");
 			tradingContactInfo.Email = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), tradingContactInfo,
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), tradingContactInfo,
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -244,7 +257,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingContactInfo = GetContactInfo("Trading");
 			tradingContactInfo.Contact1 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), tradingContactInfo,
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), tradingContactInfo,
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -259,7 +272,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingContactInfo = GetContactInfo("Trading");
 			tradingContactInfo.Contact2 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), tradingContactInfo,
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), tradingContactInfo,
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -272,7 +285,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			customerRepositoryStub.Stub(x => x.GetByName("Gael Ltd")).Return(null);
 			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				GreaterThan256Characters, GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.InvoiceTitleTooLarge));
@@ -287,7 +300,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceAddressDetails = GetAddressDetails("Invoicing");
 			invoiceAddressDetails.Line1 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", invoiceAddressDetails, GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -302,7 +315,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceAddressDetails = GetAddressDetails("Invoicing");
 			invoiceAddressDetails.Line2 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", invoiceAddressDetails, GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -317,7 +330,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceAddressDetails = GetAddressDetails("Invoicing");
 			invoiceAddressDetails.Line3 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", invoiceAddressDetails, GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -332,7 +345,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceAddressDetails = GetAddressDetails("Invoicing");
 			invoiceAddressDetails.Line4 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", invoiceAddressDetails, GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -347,7 +360,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceAddressDetails = GetAddressDetails("Invoicing");
 			invoiceAddressDetails.Line5 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", invoiceAddressDetails, GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -362,7 +375,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceContactInfo = GetContactInfo("Trading");
 			invoiceContactInfo.Telephone = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), invoiceContactInfo,
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -377,7 +390,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceContactInfo = GetContactInfo("Trading");
 			invoiceContactInfo.Fax = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), invoiceContactInfo,
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -392,7 +405,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceContactInfo = GetContactInfo("Trading");
 			invoiceContactInfo.Email = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), invoiceContactInfo,
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -407,7 +420,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceContactInfo = GetContactInfo("Trading");
 			invoiceContactInfo.Contact1 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), invoiceContactInfo,
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -422,7 +435,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceContactInfo = GetContactInfo("Trading");
 			invoiceContactInfo.Contact2 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), invoiceContactInfo,
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -435,7 +448,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			customerRepositoryStub.Stub(x => x.GetByName("Gael Ltd")).Return(null);
 			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Title", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				GreaterThan256Characters, GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.DeliveryTitleTooLarge));
@@ -450,7 +463,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryAddressDetails = GetAddressDetails("Invoicing");
 			deliveryAddressDetails.Line1 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", deliveryAddressDetails, GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -465,7 +478,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryAddressDetails = GetAddressDetails("Invoicing");
 			deliveryAddressDetails.Line2 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", deliveryAddressDetails, GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -480,7 +493,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryAddressDetails = GetAddressDetails("Invoicing");
 			deliveryAddressDetails.Line3 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", deliveryAddressDetails, GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -495,7 +508,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryAddressDetails = GetAddressDetails("Invoicing");
 			deliveryAddressDetails.Line4 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", deliveryAddressDetails, GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -510,7 +523,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryAddressDetails = GetAddressDetails("Invoicing");
 			deliveryAddressDetails.Line5 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", deliveryAddressDetails, GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -525,7 +538,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryContactInfo = GetContactInfo("Delivery");
 			deliveryContactInfo.Telephone = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), deliveryContactInfo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -540,7 +553,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryContactInfo = GetContactInfo("Delivery");
 			deliveryContactInfo.Fax = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), deliveryContactInfo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -555,7 +568,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryContactInfo = GetContactInfo("Delivery");
 			deliveryContactInfo.Email = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), deliveryContactInfo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -570,7 +583,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryContactInfo = GetContactInfo("Delivery");
 			deliveryContactInfo.Contact1 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), deliveryContactInfo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -585,21 +598,21 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryContactInfo = GetContactInfo("Delivery");
 			deliveryContactInfo.Contact2 = GreaterThan256Characters;
 			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), deliveryContactInfo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
 		}
 
 		private void CreateCustomer(
-			Guid id, string name, Address tradingAddressDetails, ContactInfo tradingContactInfo,
+			Guid id, string name, string assetLine, Address tradingAddressDetails, ContactInfo tradingContactInfo,
 			string invoiceTitle, Address invoiceAddressDetails, ContactInfo invoiceContactInfo,
 			string deliveryTitle, Address deliveryAddressDetails, ContactInfo deliveryContactInfo)
 		{
 			try
 			{
 				_customerService.Create(
-					id, name, tradingAddressDetails, tradingContactInfo, invoiceTitle, invoiceAddressDetails, invoiceContactInfo, deliveryTitle, deliveryAddressDetails, deliveryContactInfo);
+					id, name, assetLine, tradingAddressDetails, tradingContactInfo, invoiceTitle, invoiceAddressDetails, invoiceContactInfo, deliveryTitle, deliveryAddressDetails, deliveryContactInfo);
 			}
 			catch (DomainValidationException dex)
 			{
@@ -619,7 +632,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			customerRepositoryMock.Stub(x => x.GetById(customer.Id)).Return(customer);
 			_customerService = CustomerServiceFactory.Create(customerRepositoryMock);
 			_customerService.Edit(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			customerRepositoryMock.VerifyAllExpectations();
@@ -634,7 +647,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			customerRepositoryMock.Stub(x => x.GetById(Guid.NewGuid())).Return(null);
 			_customerService = CustomerServiceFactory.Create(customerRepositoryMock);
 			_customerService.Edit(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 		}
@@ -644,7 +657,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		public void Edit_IdNotSupplied_ArgumentExceptionThrown()
 		{
 			EditCustomer(
-				Guid.Empty, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				Guid.Empty, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 		}
@@ -656,8 +669,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var customerRepositoryStub = MockRepository.GenerateMock<ICustomerRepository>();
 			customerRepositoryStub.Stub(x => x.GetById(customer.Id)).Return(customer);
 			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
-			CreateCustomer(
-				customer.Id, String.Empty, GetAddressDetails("Trading"), GetContactInfo("Trading"),
+			EditCustomer(
+				customer.Id, String.Empty, "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.NameRequired));
@@ -672,8 +685,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 			customerRepositoryStub.Stub(x => x.GetById(customer.Id)).Return(customer);
 			customerRepositoryStub.Stub(x => x.GetByName(nonUniqueCustomer.Name)).Return(nonUniqueCustomer);
 			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
-			CreateCustomer(
-				customer.Id, nonUniqueCustomer.Name, GetAddressDetails("Trading"), GetContactInfo("Trading"),
+			EditCustomer(
+				customer.Id, nonUniqueCustomer.Name, "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.DuplicateName));
@@ -686,11 +699,25 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var customerRepositoryStub = MockRepository.GenerateMock<ICustomerRepository>();
 			customerRepositoryStub.Stub(x => x.GetById(customer.Id)).Return(customer);
 			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
-			CreateCustomer(
-				customer.Id, GreaterThan256Characters, GetAddressDetails("Trading"), GetContactInfo("Trading"),
+			EditCustomer(
+				customer.Id, GreaterThan256Characters, "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.NameTooLarge));
+		}
+
+		[Test]
+		public void Edit_AssetLineGreaterThan256Characters_DomainValidationExceptionThrown()
+		{
+			var customer = GetCustomerToEdit();
+			var customerRepositoryStub = MockRepository.GenerateMock<ICustomerRepository>();
+			customerRepositoryStub.Stub(x => x.GetById(customer.Id)).Return(customer);
+			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
+			EditCustomer(
+				customer.Id, "Gael Ltd", GreaterThan256Characters, GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
+				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AssetLineTooLarge ));
 		}
 
 		[Test]
@@ -703,7 +730,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingAddressDetails = GetAddressDetails("Trading");
 			tradingAddressDetails.Line1 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", tradingAddressDetails, GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", tradingAddressDetails, GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -719,7 +746,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingAddressDetails = GetAddressDetails("Trading");
 			tradingAddressDetails.Line2 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", tradingAddressDetails, GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", tradingAddressDetails, GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -735,7 +762,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingAddressDetails = GetAddressDetails("Trading");
 			tradingAddressDetails.Line3 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", tradingAddressDetails, GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", tradingAddressDetails, GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -751,7 +778,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingAddressDetails = GetAddressDetails("Trading");
 			tradingAddressDetails.Line4 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", tradingAddressDetails, GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", tradingAddressDetails, GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -767,7 +794,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingAddressDetails = GetAddressDetails("Trading");
 			tradingAddressDetails.Line5 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", tradingAddressDetails, GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", tradingAddressDetails, GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -783,7 +810,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingContactInfo = GetContactInfo("Trading");
 			tradingContactInfo.Telephone = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), tradingContactInfo,
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), tradingContactInfo,
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -799,7 +826,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingContactInfo = GetContactInfo("Trading");
 			tradingContactInfo.Fax = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), tradingContactInfo,
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), tradingContactInfo,
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -815,7 +842,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingContactInfo = GetContactInfo("Trading");
 			tradingContactInfo.Email = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), tradingContactInfo,
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), tradingContactInfo,
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -831,7 +858,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingContactInfo = GetContactInfo("Trading");
 			tradingContactInfo.Contact1 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), tradingContactInfo,
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), tradingContactInfo,
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -847,7 +874,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var tradingContactInfo = GetContactInfo("Trading");
 			tradingContactInfo.Contact2 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), tradingContactInfo,
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), tradingContactInfo,
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -861,7 +888,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			customerRepositoryStub.Stub(x => x.GetById(customer.Id)).Return(customer);
 			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				GreaterThan256Characters, GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.InvoiceTitleTooLarge));
@@ -877,7 +904,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceAddressDetails = GetAddressDetails("Invoicing");
 			invoiceAddressDetails.Line1 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", invoiceAddressDetails, GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -893,7 +920,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceAddressDetails = GetAddressDetails("Invoicing");
 			invoiceAddressDetails.Line2 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", invoiceAddressDetails, GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -909,7 +936,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceAddressDetails = GetAddressDetails("Invoicing");
 			invoiceAddressDetails.Line3 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", invoiceAddressDetails, GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -925,7 +952,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceAddressDetails = GetAddressDetails("Invoicing");
 			invoiceAddressDetails.Line4 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", invoiceAddressDetails, GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -941,7 +968,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceAddressDetails = GetAddressDetails("Invoicing");
 			invoiceAddressDetails.Line5 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", invoiceAddressDetails, GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -957,7 +984,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceContactInfo = GetContactInfo("Trading");
 			invoiceContactInfo.Telephone = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), invoiceContactInfo,
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -973,7 +1000,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceContactInfo = GetContactInfo("Trading");
 			invoiceContactInfo.Fax = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), invoiceContactInfo,
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -989,7 +1016,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceContactInfo = GetContactInfo("Trading");
 			invoiceContactInfo.Email = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), invoiceContactInfo,
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -1005,7 +1032,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceContactInfo = GetContactInfo("Trading");
 			invoiceContactInfo.Contact1 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), invoiceContactInfo,
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -1021,7 +1048,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceContactInfo = GetContactInfo("Trading");
 			invoiceContactInfo.Contact2 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), invoiceContactInfo,
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -1035,7 +1062,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			customerRepositoryStub.Stub(x => x.GetById(customer.Id)).Return(customer);
 			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Title", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				GreaterThan256Characters, GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.DeliveryTitleTooLarge));
@@ -1051,7 +1078,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryAddressDetails = GetAddressDetails("Invoicing");
 			deliveryAddressDetails.Line1 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", deliveryAddressDetails, GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -1067,7 +1094,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryAddressDetails = GetAddressDetails("Invoicing");
 			deliveryAddressDetails.Line2 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", deliveryAddressDetails, GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -1083,7 +1110,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryAddressDetails = GetAddressDetails("Invoicing");
 			deliveryAddressDetails.Line3 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", deliveryAddressDetails, GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -1099,7 +1126,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryAddressDetails = GetAddressDetails("Invoicing");
 			deliveryAddressDetails.Line4 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", deliveryAddressDetails, GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -1115,7 +1142,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryAddressDetails = GetAddressDetails("Invoicing");
 			deliveryAddressDetails.Line5 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", deliveryAddressDetails, GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
@@ -1131,7 +1158,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryContactInfo = GetContactInfo("Delivery");
 			deliveryContactInfo.Telephone = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), deliveryContactInfo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -1147,7 +1174,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryContactInfo = GetContactInfo("Delivery");
 			deliveryContactInfo.Fax = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), deliveryContactInfo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -1163,7 +1190,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryContactInfo = GetContactInfo("Delivery");
 			deliveryContactInfo.Email = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), deliveryContactInfo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -1179,7 +1206,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryContactInfo = GetContactInfo("Delivery");
 			deliveryContactInfo.Contact1 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), deliveryContactInfo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
@@ -1195,21 +1222,21 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var deliveryContactInfo = GetContactInfo("Delivery");
 			deliveryContactInfo.Contact2 = GreaterThan256Characters;
 			EditCustomer(
-				customer.Id, "Gael Ltd", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				customer.Id, "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), deliveryContactInfo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.ContactInfoTooLarge));
 		}
 
 		private void EditCustomer(
-			Guid id, string name, Address tradingAddressDetails, ContactInfo tradingContactInfo,
+			Guid id, string name, string assetLine, Address tradingAddressDetails, ContactInfo tradingContactInfo,
 			string invoiceTitle, Address invoiceAddressDetails, ContactInfo invoiceContactInfo,
 			string deliveryTitle, Address deliveryAddressDetails, ContactInfo deliveryContactInfo)
 		{
 			try
 			{
 				_customerService.Edit(
-					id, name, tradingAddressDetails, tradingContactInfo, invoiceTitle, invoiceAddressDetails, invoiceContactInfo, deliveryTitle, deliveryAddressDetails, deliveryContactInfo);
+					id, name, assetLine, tradingAddressDetails, tradingContactInfo, invoiceTitle, invoiceAddressDetails, invoiceContactInfo, deliveryTitle, deliveryAddressDetails, deliveryContactInfo);
 			}
 			catch (DomainValidationException dex)
 			{

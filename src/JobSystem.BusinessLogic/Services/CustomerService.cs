@@ -29,7 +29,7 @@ namespace JobSystem.BusinessLogic.Services
 		#region Public Implementation
 
 		public Customer Create(
-			Guid id, string name, Address tradingAddressDetails, ContactInfo tradingContactInfo,
+			Guid id, string name, string assetLine, Address tradingAddressDetails, ContactInfo tradingContactInfo,
 			string invoiceTitle, Address invoiceAddressDetails, ContactInfo invoiceContactInfo,
 			string deliveryTitle, Address deliveryAddressDetails, ContactInfo deliveryContactInfo)
 		{
@@ -38,6 +38,7 @@ namespace JobSystem.BusinessLogic.Services
 			var customer = new Customer();
 			customer.Id = id;
 			customer.Name = name;
+			customer.AssetLine = assetLine;
 			customer.InvoiceTitle = !String.IsNullOrEmpty(invoiceTitle) ? invoiceTitle : String.Empty;
 			customer.DeliveryTitle = !String.IsNullOrEmpty(deliveryTitle) ? deliveryTitle : String.Empty;
 			PopulateTradingAddressInfo(customer, tradingAddressDetails);
@@ -53,7 +54,7 @@ namespace JobSystem.BusinessLogic.Services
 		}
 
 		public Customer Edit(
-			Guid id, string name, Address tradingAddressDetails, ContactInfo tradingContactInfo,
+			Guid id, string name, string assetLine, Address tradingAddressDetails, ContactInfo tradingContactInfo,
 			string invoiceTitle, Address invoiceAddressDetails, ContactInfo invoiceContactInfo,
 			string deliveryTitle, Address deliveryAddressDetails, ContactInfo deliveryContactInfo)
 		{
@@ -63,6 +64,7 @@ namespace JobSystem.BusinessLogic.Services
 			if (customer == null)
 				throw new ArgumentException("An invalid ID was supplied for the customer", "id");
 			customer.Name = name;
+			customer.AssetLine = assetLine;
 			customer.InvoiceTitle = !String.IsNullOrEmpty(invoiceTitle) ? invoiceTitle : String.Empty;
 			customer.DeliveryTitle = !String.IsNullOrEmpty(deliveryTitle) ? deliveryTitle : String.Empty;
 			PopulateTradingAddressInfo(customer, tradingAddressDetails);

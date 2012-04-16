@@ -120,6 +120,9 @@
   <data name="AddressLineTooLarge" xml:space="preserve">
     <value>An address line cannot exceed 50 characters</value>
   </data>
+  <data name="AssetLineTooLarge" xml:space="preserve">
+    <value>The asset line cannot exceed 255 characters</value>
+  </data>
   <data name="ContactInfoTooLarge" xml:space="preserve">
     <value>The contact information cannot exceed 50 characters</value>
   </data>

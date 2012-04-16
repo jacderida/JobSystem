@@ -156,14 +156,29 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
-		public void Create_AllocatedCalibrationTimeLessThan0_DomainValidationExceptionThrown()
+		public void Create_AllocatedCalibrationTimeLessThan15_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
 			var manufacturer = "Druck";
 			var modelNo = "DPI601IS";
 			var range = "Not Specified";
-			var description = new string('A', 51);
-			var allocatedCalibrationTime = -1;
+			var description = "Digital Pressure Indicator";
+			var allocatedCalibrationTime = 14;
+
+			_instrumentService = InstrumentServiceFactory.Create(MockRepository.GenerateStub<IInstrumentRepository>());
+			CreateInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidAllocatedCalibrationTime));
+		}
+
+		[Test]
+		public void Create_AllocatedCalibrationTimeGreaterThan1000_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var manufacturer = "Druck";
+			var modelNo = "DPI601IS";
+			var range = "Not Specified";
+			var description = "Digital Pressure Indicator";
+			var allocatedCalibrationTime = 1001;
 
 			_instrumentService = InstrumentServiceFactory.Create(MockRepository.GenerateStub<IInstrumentRepository>());
 			CreateInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
@@ -340,14 +355,31 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
-		public void Edit_AllocatedCalibrationTimeLessThan0_DomainValidationExceptionThrown()
+		public void Edit_AllocatedCalibrationTimeLessThan15_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();
 			var manufacturer = "Fluke";
 			var modelNo = "DPI601IS";
 			var range = "range";
-			var description = new string('a', 51);
-			var allocatedCalibrationTime = -1;
+			var description = "Digital Pressure Indicator";
+			var allocatedCalibrationTime = 14;
+
+			var instrumentRepositoryStub = MockRepository.GenerateStub<IInstrumentRepository>();
+			instrumentRepositoryStub.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
+			_instrumentService = InstrumentServiceFactory.Create(instrumentRepositoryStub);
+			EditInstrument(id, manufacturer, modelNo, range, description, allocatedCalibrationTime);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InvalidAllocatedCalibrationTime));
+		}
+
+		[Test]
+		public void Edit_AllocatedCalibrationTimeGreaterThan1000_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var manufacturer = "Fluke";
+			var modelNo = "DPI601IS";
+			var range = "range";
+			var description = "Digital Pressure Indicator";
+			var allocatedCalibrationTime = 1001;
 
 			var instrumentRepositoryStub = MockRepository.GenerateStub<IInstrumentRepository>();
 			instrumentRepositoryStub.Stub(x => x.GetById(id)).Return(GetInstrumentForEdit(id));
