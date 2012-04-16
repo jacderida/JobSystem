@@ -17,7 +17,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 			get { return NHibernateSession.Current; }
 		}
 
-		public void PopulateCompanyDetails(ReportModelBase reportModel)
+		protected void PopulateCompanyDetails(ReportModelBase reportModel)
 		{
 			var companyDetails = CurrentSession.Query<CompanyDetails>().First();
 			reportModel.CompanyName = companyDetails.Name;
@@ -35,7 +35,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 			reportModel.CompanyTermsAndConditions = !String.IsNullOrEmpty(companyDetails.TermsAndConditions) ? companyDetails.TermsAndConditions : String.Empty;
 		}
 
-		public string GetInstrumentDescription(Instrument instrument)
+		protected string GetInstrumentDescription(Instrument instrument)
 		{
 			return String.Format("{0}, {1}, {2}, {3}",
 				instrument.Manufacturer, instrument.ModelNo,
@@ -43,7 +43,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				!String.IsNullOrEmpty(instrument.Description) ? instrument.Description : String.Empty);
 		}
 
-		public string GetJobItemReference(JobItem jobItem)
+		protected string GetJobItemReference(JobItem jobItem)
 		{
 			return String.Format("{0}/{1}", jobItem.Job.JobNo, jobItem.ItemNo);
 		}

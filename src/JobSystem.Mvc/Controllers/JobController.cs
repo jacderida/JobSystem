@@ -18,6 +18,7 @@ using JobSystem.Mvc.ViewModels.Orders;
 using JobSystem.Mvc.ViewModels.Quotes;
 using JobSystem.Mvc.ViewModels.TestStandards;
 using JobSystem.Mvc.ViewModels.WorkItems;
+using JobSystem.DataAccess.NHibernate;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -56,29 +57,29 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpPost]
-		[Transaction]
 		public ActionResult Create(JobCreateViewModel viewModel, Guid[] AttachmentId, string[] AttachmentName)
 		{
 			if (ModelState.IsValid)
 			{
+				var transaction = NHibernateSession.Current.BeginTransaction();
 				try
 				{
 					var id = Guid.NewGuid();
 					_jobService.CreateJob(id, viewModel.Instructions, viewModel.OrderNumber, viewModel.AdviceNumber, viewModel.TypeId, viewModel.CustomerId, viewModel.JobNote, viewModel.Contact);
-					
 					if (AttachmentId != null)
-					{
 						for (var i = 0; i < AttachmentId.Length; i++)
-						{
 							_jobService.AddAttachment(id, AttachmentId[i], AttachmentName[i]);
-						}
-					}
-					
+					transaction.Commit();
 					return RedirectToAction("PendingJobs");
 				}
 				catch (DomainValidationException dex)
 				{
+					transaction.Commit();
 					ModelState.UpdateFromDomain(dex.Result);
+				}
+				finally
+				{
+					transaction.Dispose();
 				}
 			}
 			return View(viewModel);

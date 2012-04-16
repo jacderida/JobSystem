@@ -79,11 +79,15 @@
     <Compile Include="Data\IQuoteReportDataProvider.cs" />
     <Compile Include="Data\IReportDataProvider.cs" />
     <Compile Include="Data\NHibernate\NHibernateConsignmentReportDataProvider.cs" />
+    <Compile Include="Data\NHibernate\NHibernateCustomerDataProviderBase.cs" />
     <Compile Include="Data\NHibernate\NHibernateDeliveryReportDataProvider.cs" />
+    <Compile Include="Data\NHibernate\NHibernateInvoiceReportDataProvider.cs" />
     <Compile Include="Data\NHibernate\NHibernateQuoteReportDataProvider.cs" />
     <Compile Include="Data\NHibernate\NHibernateReportDataProviderBase.cs" />
     <Compile Include="Models\ConsignmentReportModel.cs" />
+    <Compile Include="Models\CustomerReportModel.cs" />
     <Compile Include="Models\DeliveryReportModel.cs" />
+    <Compile Include="Models\InvoiceReportModel.cs" />
     <Compile Include="Models\QuoteReportModel.cs" />
     <Compile Include="Models\ReportModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

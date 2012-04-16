@@ -1,10 +1,13 @@
-﻿using System.Web.Mvc;
-using JobSystem.DataAccess.NHibernate.Web;
-using JobSystem.Mvc.ViewModels.Deliveries;
-using System;
-using System.Linq;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
+using JobSystem.BusinessLogic.Validation.Core;
+using JobSystem.DataAccess.NHibernate;
+using JobSystem.DataAccess.NHibernate.Web;
+using JobSystem.Mvc.Core.UIValidation;
+using JobSystem.Mvc.ViewModels.Deliveries;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -68,38 +71,51 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpPost]
-		[Transaction]
 		public ActionResult Create(DeliveryCreateViewModel viewmodel)
 		{
 			var customerId = _jobItemService.GetById(viewmodel.JobItemId).Job.Customer.Id;
-
-			if (viewmodel.IsIndividual)
+			var transaction = NHibernateSession.Current.BeginTransaction();
+			try
 			{
-				var delivery = _deliveryService.Create(viewmodel.Id, customerId, viewmodel.Fao);
-				_deliveryItemService.Create(Guid.NewGuid(), delivery.Id, viewmodel.JobItemId, viewmodel.Notes);
+				if (viewmodel.IsIndividual)
+				{
+					var delivery = _deliveryService.Create(viewmodel.Id, customerId, viewmodel.Fao);
+					_deliveryItemService.Create(Guid.NewGuid(), delivery.Id, viewmodel.JobItemId, viewmodel.Notes);
+				}
+				else
+					_deliveryItemService.CreatePending(viewmodel.Id, viewmodel.JobItemId, customerId, viewmodel.Notes);
+				transaction.Commit();
 			}
-			else
+			catch (DomainValidationException dex)
 			{
-				_deliveryItemService.CreatePending(viewmodel.Id, viewmodel.JobItemId, customerId, viewmodel.Notes);
+				if (transaction.IsActive)
+					transaction.Rollback();
+				ModelState.UpdateFromDomain(dex.Result);
 			}
-
+			finally
+			{
+				transaction.Dispose();
+			}
 			return PartialView("_Details", viewmodel);
 		}
 
 		[HttpPost]
-		[Transaction]
 		public ActionResult ConvertPending(Guid[] ToBeConvertedIds)
 		{
-			List<Guid> idList = new List<Guid>();
 			if (ToBeConvertedIds.Length > 0)
 			{
-				for (var i = 0; i < ToBeConvertedIds.Length; i++)
+				var transaction = NHibernateSession.Current.BeginTransaction();
+				try
 				{
-					idList.Add(ToBeConvertedIds[i]);
+					_deliveryService.CreateDeliveriesFromPendingItems(ToBeConvertedIds.Select(id => id).ToList());
+					transaction.Commit();
+				}
+				catch (DomainValidationException dex)
+				{
+					transaction.Rollback();
+					ModelState.UpdateFromDomain(dex.Result);
 				}
 			}
-			if (idList.Any()) _deliveryService.CreateDeliveriesFromPendingItems(idList);
-
 			return RedirectToAction("PendingDeliveries");
 		}
 

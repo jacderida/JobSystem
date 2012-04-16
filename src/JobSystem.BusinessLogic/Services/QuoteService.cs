@@ -65,7 +65,7 @@ namespace JobSystem.BusinessLogic.Services
 			DoCreateQuotesFromPendingItems(_quoteItemService.GetPendingQuoteItems());
 		}
 
-		public void CreateQuoteFromPendingItems(IList<Guid> pendingItemIds)
+		public void CreateQuotesFromPendingItems(IList<Guid> pendingItemIds)
 		{
 			DoCreateQuotesFromPendingItems(_quoteItemService.GetPendingQuoteItems(pendingItemIds));
 		}

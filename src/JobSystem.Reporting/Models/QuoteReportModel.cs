@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace JobSystem.Reporting.Models
+﻿namespace JobSystem.Reporting.Models
 {
 	public class QuoteReportModel : ReportModelBase
 	{

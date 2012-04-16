@@ -18,6 +18,7 @@ namespace JobSystem.DataModel.Entities
 		public virtual string Range { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "DescriptionTooLong", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string Description { get; set; }
+		public virtual int AllocatedCalibrationTime { get; set; }
 
 		public override string ToString()
 		{

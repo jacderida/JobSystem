@@ -21,7 +21,7 @@ namespace JobSystem.BusinessLogic.Services
 			_instrumentRepository = instrumentRepository;
 		}
 
-		public Instrument Create(Guid id, string manufacturer, string modelNo, string range, string description)
+		public Instrument Create(Guid id, string manufacturer, string modelNo, string range, string description, int allocatedCalibrationTime)
 		{
 			if (id == Guid.Empty)
 				throw new ArgumentException("An ID must be supplied for the instrument");
@@ -31,12 +31,13 @@ namespace JobSystem.BusinessLogic.Services
 			instrument.ModelNo = modelNo;
 			instrument.Range = range;
 			instrument.Description = description;
+			instrument.AllocatedCalibrationTime = GetAllocatedCalibrationTime(allocatedCalibrationTime);
 			ValidateAnnotatedObjectThrowOnFailure(instrument);
 			_instrumentRepository.Create(instrument);
 			return instrument;
 		}
 
-		public Instrument Edit(Guid id, string manufacturer, string modelNo, string range, string description)
+		public Instrument Edit(Guid id, string manufacturer, string modelNo, string range, string description, int allocatedCalibrationTime)
 		{
 			var instrument = _instrumentRepository.GetById(id);
 			if (instrument == null)
@@ -45,6 +46,7 @@ namespace JobSystem.BusinessLogic.Services
 			instrument.ModelNo = modelNo;
 			instrument.Range = range;
 			instrument.Description = description;
+			instrument.AllocatedCalibrationTime = GetAllocatedCalibrationTime(allocatedCalibrationTime);
 			ValidateAnnotatedObjectThrowOnFailure(instrument);
 			_instrumentRepository.Update(instrument);
 			return instrument;
@@ -86,6 +88,13 @@ namespace JobSystem.BusinessLogic.Services
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			return _instrumentRepository.SearchModelNoByKeywordFilterByManufacturer(keyword, manufacturer);
+		}
+
+		private int GetAllocatedCalibrationTime(int allocatedCalibrationTime)
+		{
+			if (allocatedCalibrationTime < 0)
+				throw new DomainValidationException(Messages.InvalidAllocatedCalibrationTime, "AllocatedCalibrationTime");
+			return allocatedCalibrationTime;
 		}
 	}
 }

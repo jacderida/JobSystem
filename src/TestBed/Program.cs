@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using FluentNHibernate.Cfg.Db;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.DataAccess.NHibernate;
@@ -10,11 +13,12 @@ using JobSystem.DataAccess.NHibernate.Repositories;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Dto;
 using JobSystem.DataModel.Entities;
+using JobSystem.DataModel.Repositories;
 using JobSystem.DbWireup;
 using JobSystem.Framework.Messaging;
+using JobSystem.Framework.Security;
 using JobSystem.Queueing.Msmq;
 using NHibernate.Connection;
-using JobSystem.Framework.Security;
 
 namespace TestBed
 {
@@ -51,24 +55,33 @@ namespace TestBed
 				new ListItemRepository(),
 				new SupplierRepository(),
 				queueDispatcher);
-
+			var directEntityIdProvider = new DirectEntityIdProvider();
+			var certificateService = new CertificateService(
+				testUserContext, new TestStandardRepository(), new JobItemRepository(), new CertificateRepository(), new ListItemRepository(), directEntityIdProvider, queueDispatcher);
+			var testStandardService = new TestStandardsService(testUserContext, new TestStandardRepository(), queueDispatcher);
 			var jobId = Guid.NewGuid();
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
 			var supplierId = Guid.NewGuid();
 			var instrumentId = Guid.NewGuid();
+			var testStandardId = Guid.NewGuid();
 
 			NHibernateSession.Current.BeginTransaction();
 			supplierService.Create(supplierId, "Gael Ltd", new Address(), new ContactInfo(), new Address(), new ContactInfo());
 			customerService.Create(customerId, "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo());
-			instrumentService.Create(instrumentId, "Druck", "DPI601IS", "None", "Digital Pressure Indicator");
+			instrumentService.Create(instrumentId, "Druck", "DPI601IS", "None", "Digital Pressure Indicator", 0);
 			jobService.CreateJob(jobId, "job instructions", "ORDER12345", "ADVICE12345", listItemService.GetAllByCategory(ListItemCategoryType.JobType).First().Id, customerId, "job notes", "job contact");
 			jobItemService.CreateJobItem(
 				jobId, jobItemId, instrumentId, "12345", "AST12345", listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemLocation).First().Id, listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id, 12,
 				"job instructions", "accessories", false, String.Empty, "comments");
 			jobService.ApproveJob(jobId);
-			consignmentItemRepository.CreatePending(Guid.NewGuid(), jobItemId, supplierId, null);
+			testStandardService.Create(testStandardId, "test standard", "sn899792", "CN790879");
+
+			NHibernateSession.Current.Transaction.Commit();
+			NHibernateSession.Current.BeginTransaction();
+			certificateService.Create(
+				Guid.NewGuid(), listItemService.GetByType(ListItemType.CertificateTypeHouse).Id, jobItemId, "001", new[] { testStandardId });
 			NHibernateSession.Current.Transaction.Commit();
 		}
 
@@ -83,7 +96,7 @@ namespace TestBed
 
 		private static void CreateDatabase()
 		{
-			var databaseService = new JobSystemDatabaseCreationService("InitialDatabase", "Development");
+			var databaseService = new JobSystemDatabaseCreationService("JobSystemDatabase", "Development");
 			databaseService.CreateDatabase(true);
 			databaseService.CreateJobSystemSchemaFromMigrations("JobSystem.Migrations.dll");
 			databaseService.InitHibernate();
@@ -104,10 +117,14 @@ namespace TestBed
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.WorkStatusId, "Status", ListItemCategoryType.JobItemWorkStatus),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.CurrencyId, "Currency", ListItemCategoryType.Currency),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.PaymentTermId, "Payment Term", ListItemCategoryType.PaymentTerm),
-					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.InitialLocationId, "Initial Location", ListItemCategoryType.JobItemInitialLocation))
+					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.InitialLocationId, "Initial Location", ListItemCategoryType.JobItemInitialLocation),
+					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.CertificateId, "Certificate", ListItemCategoryType.Certificate))
 				.WithJobTypes(
 					Tuple.Create<string, ListItemType, Guid>("Lab Service", ListItemType.JobTypeField, ListCategoryIds.JobTypeId),
 					Tuple.Create<string, ListItemType, Guid>("Field Service", ListItemType.JobTypeService, ListCategoryIds.JobTypeId))
+				.WithCertificateTypes(
+					Tuple.Create<string, ListItemType, Guid>("House", ListItemType.CertificateTypeHouse, ListCategoryIds.CertificateId),
+					Tuple.Create<string, ListItemType, Guid>("UKAS", ListItemType.CertificateTypeUkas, ListCategoryIds.CertificateId))
 				.WithJobItemCategories(
 					Tuple.Create<string, ListItemType, Guid>("T - Temperature", ListItemType.CategoryTemperature, ListCategoryIds.CategoryId),
 					Tuple.Create<string, ListItemType, Guid>("E - Electrical", ListItemType.CategoryElectrical, ListCategoryIds.CategoryId),
@@ -138,6 +155,8 @@ namespace TestBed
 					Tuple.Create<string, ListItemType, Guid>("Consigned", ListItemType.StatusConsigned, ListCategoryIds.StatusId),
 					Tuple.Create<string, ListItemType, Guid>("Order Reviewed", ListItemType.StatusOrderReviewed, ListCategoryIds.StatusId),
 					Tuple.Create<string, ListItemType, Guid>("Ordered", ListItemType.StatusOrdered, ListCategoryIds.StatusId),
+					Tuple.Create<string, ListItemType, Guid>("Item with Sub Contractor", ListItemType.StatusItemWithSubContractor, ListCategoryIds.StatusId),
+					Tuple.Create<string, ListItemType, Guid>("Awaiting Parts", ListItemType.StatusAwaitingParts, ListCategoryIds.StatusId),
 					Tuple.Create<string, ListItemType, Guid>("Delivery Note Produced", ListItemType.StatusDeliveryNoteProduced, ListCategoryIds.StatusId),
 					Tuple.Create<string, ListItemType, Guid>("Booked In", ListItemType.StatusBookedIn, ListCategoryIds.StatusId),
 					Tuple.Create<string, ListItemType, Guid>("Invoiced", ListItemType.StatusInvoiced, ListCategoryIds.StatusId))
@@ -152,7 +171,8 @@ namespace TestBed
 					Tuple.Create<string, ListItemType, Guid>("Repaired", ListItemType.WorkLocationRepaired, ListCategoryIds.LocationId),
 					Tuple.Create<string, ListItemType, Guid>("Sub Contract", ListItemType.WorkLocationSubContract, ListCategoryIds.LocationId),
 					Tuple.Create<string, ListItemType, Guid>("Quoted", ListItemType.WorkLocationQuoted, ListCategoryIds.LocationId),
-					Tuple.Create<string, ListItemType, Guid>("Investigated", ListItemType.WorkLocationInvestigated, ListCategoryIds.LocationId))
+					Tuple.Create<string, ListItemType, Guid>("Investigated", ListItemType.WorkLocationInvestigated, ListCategoryIds.LocationId),
+					Tuple.Create<string, ListItemType, Guid>("Invoiced", ListItemType.WorkLocationInvoiced, ListCategoryIds.LocationId))
 				.WithJobItemInitialLocations(
 					Tuple.Create<string, ListItemType, Guid>("House Calibration", ListItemType.InitialWorkLocationHouseCalibration, ListCategoryIds.InitialLocationId),
 					Tuple.Create<string, ListItemType, Guid>("UKAS Calibration", ListItemType.InitialWorkLocationUkasCalibration, ListCategoryIds.InitialLocationId),
@@ -173,7 +193,11 @@ namespace TestBed
 					new TaxCode { Id = defaultTaxCodeId, TaxCodeName = "T1", Rate = 0.20, Description = "VAT at 20%" })
 				.WithEntitySeeds(
 					Tuple.Create<Type, int, string>(typeof(Job), 2000, "JR"),
-					Tuple.Create<Type, int, string>(typeof(Consignment), 2000, "CR"));
+					Tuple.Create<Type, int, string>(typeof(Consignment), 2000, "CR"),
+					Tuple.Create<Type, int, string>(typeof(Quote), 2000, "QR"),
+					Tuple.Create<Type, int, string>(typeof(Order), 2000, "OR"),
+					Tuple.Create<Type, int, string>(typeof(Certificate), 2000, "CERT"),
+					Tuple.Create<Type, int, string>(typeof(Invoice), 2000, "IR"));
 			var defaultData = builder.Build();
 			try
 			{
@@ -186,12 +210,17 @@ namespace TestBed
 			catch (Exception)
 			{
 				databaseService.RollbackHibernateTransaction();
+				throw;
 			}
 		}
 
 		private static CompanyDetails GetCompanyDetails(
 			JobSystemDatabaseCreationService databaseService, Guid defaultBankDetailsId, Guid defaultCurrencyId, Guid defaultPaymentTermId, Guid defaultTaxCodeId)
 		{
+			var logoImage = Image.FromStream(
+				Assembly.GetExecutingAssembly().GetManifestResourceStream("TestBed.intertek_logon.gif"));
+			var ms = new MemoryStream();
+			logoImage.Save(ms, logoImage.RawFormat);
 			return new CompanyDetails
 			{
 				Id = Guid.NewGuid(),
@@ -211,7 +240,8 @@ namespace TestBed
 				DefaultBankDetails = databaseService.GetBankDetails(defaultBankDetailsId),
 				DefaultCurrency = databaseService.GetCurrency(defaultCurrencyId),
 				DefaultPaymentTerm = databaseService.GetPaymentTerm(defaultPaymentTermId),
-				DefaultTaxCode = databaseService.GetTaxCode(defaultTaxCodeId)
+				DefaultTaxCode = databaseService.GetTaxCode(defaultTaxCodeId),
+				MainLogo = ms.ToArray()
 			};
 		}
 	}
@@ -294,13 +324,24 @@ namespace TestBed
 	{
 		public static Guid JobTypeId = Guid.NewGuid();
 		public static Guid CategoryId = Guid.NewGuid();
-		public static Guid StatusId = Guid.NewGuid();
 		public static Guid InitialStatusId = Guid.NewGuid();
+		public static Guid StatusId = Guid.NewGuid();
 		public static Guid LocationId = Guid.NewGuid();
 		public static Guid WorkTypeId = Guid.NewGuid();
 		public static Guid WorkStatusId = Guid.NewGuid();
 		public static Guid CurrencyId = Guid.NewGuid();
 		public static Guid PaymentTermId = Guid.NewGuid();
 		public static Guid InitialLocationId = Guid.NewGuid();
+		public static Guid CertificateId = Guid.NewGuid();
+	}
+
+	public class DirectEntityIdProvider : IEntityIdProvider
+	{
+		private IEntityIdLookupRepository _entityIdLookupRepository = new EntityIdLookupRepository();
+
+		public string GetIdFor<T>()
+		{
+			return _entityIdLookupRepository.GetNextId(typeof(T).ToString());
+		}
 	}
 }

@@ -5,6 +5,9 @@ using JobSystem.DataModel.Queries;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
+using NHibernate.Exceptions;
+using System.Data.SqlClient;
+using JobSystem.DataModel;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 {

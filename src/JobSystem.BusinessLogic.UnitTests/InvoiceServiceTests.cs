@@ -41,6 +41,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var id = Guid.NewGuid();
 			var currencyId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "ORDER123454";
 			var bankDetailsId = Guid.NewGuid();
 			var paymentTermId = Guid.NewGuid();
 			var taxCodeId = Guid.NewGuid();
@@ -54,16 +55,41 @@ namespace JobSystem.BusinessLogic.UnitTests
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
 				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
-			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId);
+			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 			invoiceRepositoryMock.VerifyAllExpectations();
 			Assert.AreNotEqual(Guid.Empty, _savedInvoice.Id);
 			Assert.That(_savedInvoice.InvoiceNumber.StartsWith("IR"));
 			Assert.AreEqual(_dateCreated, _savedInvoice.DateCreated);
+			Assert.AreEqual(orderNo, _savedInvoice.OrderNo);
 			Assert.IsNotNull(_savedInvoice.Currency);
 			Assert.IsNotNull(_savedInvoice.Customer);
 			Assert.IsNotNull(_savedInvoice.BankDetails);
 			Assert.IsNotNull(_savedInvoice.PaymentTerm);
 			Assert.IsNotNull(_savedInvoice.TaxCode);
+		}
+
+		[Test]
+		public void Create_InvalidOrderNo_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var customerId = Guid.NewGuid();
+			var orderNo = new string('a', 51);
+			var bankDetailsId = Guid.NewGuid();
+			var paymentTermId = Guid.NewGuid();
+			var taxCodeId = Guid.NewGuid();
+
+			var invoiceRepositoryMock = MockRepository.GenerateMock<IInvoiceRepository>();
+			invoiceRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
+			_invoiceService = InvoiceServiceFactory.Create(
+				_userContext,
+				invoiceRepositoryMock,
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrencyAndPaymentTerm(currencyId, paymentTermId),
+				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
+				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
+				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
+			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.OrderNoTooLarge));
 		}
 
 		[Test]
@@ -73,6 +99,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var id = Guid.Empty;
 			var currencyId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
+			var orderNo = "ORDER123454";
 			var bankDetailsId = Guid.NewGuid();
 			var paymentTermId = Guid.NewGuid();
 			var taxCodeId = Guid.NewGuid();
@@ -84,7 +111,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
 				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
-			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId);
+			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
 		[Test]
@@ -93,6 +120,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			var id = Guid.NewGuid();
 			var currencyId = Guid.Empty;
+			var orderNo = "ORDER123454";
 			var customerId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
 			var paymentTermId = Guid.NewGuid();
@@ -105,7 +133,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
 				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
-			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId);
+			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
 		[Test]
@@ -114,6 +142,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			var id = Guid.NewGuid();
 			var currencyId = Guid.NewGuid();
+			var orderNo = "ORDER123454";
 			var customerId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
 			var paymentTermId = Guid.NewGuid();
@@ -126,7 +155,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
 				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
-			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId);
+			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
 		[Test]
@@ -135,6 +164,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			var id = Guid.NewGuid();
 			var currencyId = Guid.NewGuid();
+			var orderNo = "ORDER123454";
 			var customerId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
 			var paymentTermId = Guid.NewGuid();
@@ -147,7 +177,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsNull(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
 				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
-			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId);
+			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
 		[Test]
@@ -156,6 +186,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			var id = Guid.NewGuid();
 			var currencyId = Guid.NewGuid();
+			var orderNo = "ORDER123454";
 			var customerId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
 			var paymentTermId = Guid.NewGuid();
@@ -168,7 +199,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsNull(bankDetailsId),
 				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
-			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId);
+			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
 		[Test]
@@ -177,6 +208,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			var id = Guid.NewGuid();
 			var currencyId = Guid.NewGuid();
+			var orderNo = "ORDER123454";
 			var customerId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
 			var paymentTermId = Guid.Empty;
@@ -189,7 +221,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
 				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
-			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId);
+			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
 		[Test]
@@ -198,6 +230,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			var id = Guid.NewGuid();
 			var currencyId = Guid.NewGuid();
+			var orderNo = "ORDER123454";
 			var customerId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
 			var paymentTermId = Guid.NewGuid();
@@ -210,7 +243,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
 				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
-			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId);
+			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
 		[Test]
@@ -219,6 +252,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			var id = Guid.NewGuid();
 			var currencyId = Guid.NewGuid();
+			var orderNo = "ORDER123454";
 			var customerId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
 			var paymentTermId = Guid.NewGuid();
@@ -231,7 +265,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
 				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsNull(taxCodeId));
-			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId);
+			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
 		[Test]
@@ -239,6 +273,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			var id = Guid.NewGuid();
 			var currencyId = Guid.NewGuid();
+			var orderNo = "ORDER123454";
 			var customerId = Guid.NewGuid();
 			var bankDetailsId = Guid.NewGuid();
 			var paymentTermId = Guid.NewGuid();
@@ -251,15 +286,15 @@ namespace JobSystem.BusinessLogic.UnitTests
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
 				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
-			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId);
+			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
 		}
 
-		private void Create(Guid id, Guid currencyId, Guid customerId, Guid bankDetailsId, Guid paymentTermId, Guid taxCodeId)
+		private void Create(Guid id, Guid currencyId, Guid customerId, Guid bankDetailsId, Guid paymentTermId, Guid taxCodeId, string orderNo)
 		{
 			try
 			{
-				_savedInvoice = _invoiceService.Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId);
+				_savedInvoice = _invoiceService.Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 			}
 			catch (DomainValidationException dex)
 			{

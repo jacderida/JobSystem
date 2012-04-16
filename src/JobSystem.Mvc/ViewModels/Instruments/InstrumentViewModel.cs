@@ -13,5 +13,7 @@ namespace JobSystem.Mvc.ViewModels.Instruments
 		public string ModelNo { get; set; }
 		public string Range { get; set; }
 		public string Description { get; set; }
+		[Display(Name = "Allocated Calibration Time")]
+		public int CalibrationTime { get; set; }
 	}  
 }

@@ -11,7 +11,7 @@ namespace JobSystem.Migrations
 		{
 			Create.Table("Deliveries")
 				.WithIdColumn()
-				.WithColumn("DeliveryNoteNumber").AsString(255).NotNullable()
+				.WithColumn("DeliveryNoteNumber").AsString(255).Unique().NotNullable()
 				.WithColumn("DateCreated").AsDateTime().NotNullable()
 				.WithColumn("CustomerId").AsGuid().NotNullable()
 				.WithColumn("CreatedById").AsGuid().NotNullable()

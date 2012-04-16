@@ -47,7 +47,7 @@ namespace JobSystem.Mvc.Controllers
 				try
 				{
 					var id = Guid.NewGuid();
-					_instrumentService.Create(id, viewModel.Manufacturer, viewModel.ModelNo, viewModel.Range, viewModel.Description);
+					_instrumentService.Create(id, viewModel.Manufacturer, viewModel.ModelNo, viewModel.Range, viewModel.Description, viewModel.CalibrationTime);
 					return RedirectToAction("Index");
 				}
 				catch (DomainValidationException dex)
@@ -67,7 +67,8 @@ namespace JobSystem.Mvc.Controllers
 					Description = instrument.Description,
 					Manufacturer = instrument.Manufacturer,
 					ModelNo = instrument.ModelNo,
-					Range = instrument.Range
+					Range = instrument.Range,
+					CalibrationTime = instrument.AllocatedCalibrationTime
 				});
 		}
 
@@ -79,7 +80,7 @@ namespace JobSystem.Mvc.Controllers
 			{
 				try
 				{
-					_instrumentService.Edit(viewModel.Id, viewModel.Manufacturer, viewModel.ModelNo, viewModel.Range, viewModel.Description);
+					_instrumentService.Edit(viewModel.Id, viewModel.Manufacturer, viewModel.ModelNo, viewModel.Range, viewModel.Description, viewModel.CalibrationTime);
 					return RedirectToAction("Index");
 				}
 				catch (DomainValidationException dex)

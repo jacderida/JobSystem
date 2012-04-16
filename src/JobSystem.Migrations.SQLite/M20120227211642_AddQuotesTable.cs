@@ -11,7 +11,7 @@ namespace JobSystem.Migrations.SqlLite
 		{
 			Create.Table("Quotes")
 				.WithIdColumn()
-				.WithColumn("QuoteNumber").AsString(50).NotNullable()
+				.WithColumn("QuoteNumber").AsString(50).Unique().NotNullable()
 				.WithColumn("CustomerId").AsGuid().NotNullable()
 				.WithColumn("CreatedById").AsGuid().NotNullable()
 				.WithColumn("DateCreated").AsDateTime().NotNullable()

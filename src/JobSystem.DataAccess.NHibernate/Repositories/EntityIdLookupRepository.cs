@@ -9,8 +9,6 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 {
 	public class EntityIdLookupRepository : IEntityIdLookupRepository
 	{
-		private readonly static object Padlock = new object();
-
 		private ISession CurrentSession
 		{
 			get
@@ -22,21 +20,18 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		public string GetNextId(string typeName)
 		{
 			string result;
-			//lock (Padlock)
-			//{
-				var lookup = CurrentSession.Query<EntityIdLookup>().SingleOrDefault(lu => lu.EntityTypeName == typeName) ??
-					new EntityIdLookup
-					{
-						Id = Guid.NewGuid(),
-						EntityTypeName = typeName,
-						NextId = 1
-					};
-				result = lookup.NextId.ToString();
-				if (!String.IsNullOrEmpty(lookup.Prefix))
-					result = String.Format("{0}{1}", lookup.Prefix, result);
-				lookup.NextId++;
-				CurrentSession.SaveOrUpdate(lookup);
-			//}
+			var lookup = CurrentSession.Query<EntityIdLookup>().SingleOrDefault(lu => lu.EntityTypeName == typeName) ??
+				new EntityIdLookup
+				{
+					Id = Guid.NewGuid(),
+					EntityTypeName = typeName,
+					NextId = 1
+				};
+			result = lookup.NextId.ToString();
+			if (!String.IsNullOrEmpty(lookup.Prefix))
+				result = String.Format("{0}{1}", lookup.Prefix, result);
+			lookup.NextId++;
+			CurrentSession.SaveOrUpdate(lookup);
 			return result;
 		}
 	}

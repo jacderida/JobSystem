@@ -9,14 +9,15 @@ using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.Mvc.ViewModels.Consignments;
 using System.Collections;
 using System.Collections.Generic;
+using JobSystem.DataAccess.NHibernate;
 
 namespace JobSystem.Mvc.Controllers
 {
-    public class ConsignmentController : Controller
-    {
-        private readonly ConsignmentService _consignmentService;
+	public class ConsignmentController : Controller
+	{
+		private readonly ConsignmentService _consignmentService;
 		private readonly ConsignmentItemService _consignmentItemService;
-		
+
 		public ConsignmentController(ConsignmentService consignmentService, ConsignmentItemService consignmentItemService)
 		{
 			_consignmentService = consignmentService;
@@ -32,46 +33,41 @@ namespace JobSystem.Mvc.Controllers
 			return RedirectToAction("ActiveConsignments");
 		}
 
-        public ActionResult Create(Guid Id)
-        {
-            var viewmodel = new ConsignmentCreateViewModel(){
+		public ActionResult Create(Guid Id)
+		{
+			var viewmodel = new ConsignmentCreateViewModel()
+			{
 				JobItemId = Id
 			};
 			return PartialView("_Create", viewmodel);
-        }
+		}
 
 		[HttpPost]
-		[Transaction]
 		public ActionResult Create(ConsignmentCreateViewModel viewmodel)
 		{
 			if (ModelState.IsValid)
 			{
+				var transaction = NHibernateSession.Current.BeginTransaction();
 				try
 				{
-					if (viewmodel.IsIndividual) 
+					if (viewmodel.IsIndividual)
 					{
 						var consignment = _consignmentService.Create(System.Guid.NewGuid(), viewmodel.SupplierId);
-						_consignmentItemService.Create(
-							Guid.NewGuid(),
-							viewmodel.JobItemId,
-							consignment.Id,
-							viewmodel.Instructions
-						);
+						_consignmentItemService.Create(Guid.NewGuid(), viewmodel.JobItemId, consignment.Id, viewmodel.Instructions);
 					}
-					else 
-					{
-						_consignmentItemService.CreatePending(
-							Guid.NewGuid(),
-							viewmodel.JobItemId,
-							viewmodel.SupplierId,
-							viewmodel.Instructions
-						);
-					}
+					else
+						_consignmentItemService.CreatePending(Guid.NewGuid(), viewmodel.JobItemId, viewmodel.SupplierId, viewmodel.Instructions);
+					transaction.Commit();
 					return RedirectToAction("Details", "JobItem", new { Id = viewmodel.JobItemId });
 				}
 				catch (DomainValidationException dex)
 				{
+					transaction.Rollback();
 					ModelState.UpdateFromDomain(dex.Result);
+				}
+				finally
+				{
+					transaction.Dispose();
 				}
 			}
 			return PartialView("_Create", viewmodel);
@@ -81,7 +77,7 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult EditPending(Guid id)
 		{
 			var consignment = _consignmentItemService.GetPendingItem(id);
-			
+
 			var viewmodel = new ConsignmentEditViewModel()
 			{
 				Id = consignment.Id,
@@ -103,7 +99,7 @@ namespace JobSystem.Mvc.Controllers
 				viewmodel.SupplierId,
 				viewmodel.Instructions);
 
-				return RedirectToAction("PendingConsignments", "Consignment");
+			return RedirectToAction("PendingConsignments", "Consignment");
 		}
 
 		public ActionResult PendingConsignments()
@@ -116,7 +112,8 @@ namespace JobSystem.Mvc.Controllers
 					Instructions = c.Instructions,
 					SupplierName = c.Supplier.Name
 				}).ToList();
-			var viewmodel = new ConsignmentPendingListViewModel(){
+			var viewmodel = new ConsignmentPendingListViewModel()
+			{
 				ConsignmentItems = items
 			};
 			return View(viewmodel);
@@ -125,14 +122,14 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult ActiveConsignments()
 		{
 			var items = _consignmentService.GetConsignments().Select(
-			    c => new ConsignmentIndexViewModel
-			    {
-			        Id = c.Id,
-			        ConsignmentNo = c.ConsignmentNo,
-			        CreatedBy = c.CreatedBy.Name,
+				c => new ConsignmentIndexViewModel
+				{
+					Id = c.Id,
+					ConsignmentNo = c.ConsignmentNo,
+					CreatedBy = c.CreatedBy.Name,
 					DateCreated = c.DateCreated.ToLongDateString() + ' ' + c.DateCreated.ToShortTimeString(),
 					SupplierName = c.Supplier.Name
-			    }).ToList();
+				}).ToList();
 
 			foreach (var item in items)
 			{
@@ -141,33 +138,32 @@ namespace JobSystem.Mvc.Controllers
 						{
 							Instructions = ci.Instructions,
 							InstrumentDetails = String.Format("{0} - {1} : {2}", ci.JobItem.Instrument.ModelNo, ci.JobItem.Instrument.Manufacturer.ToString(), ci.JobItem.Instrument.Description),
-							}).ToList();
+						}).ToList();
 			}
 			return View(items);
 		}
 
-		[Transaction]
 		public ActionResult ConsignPending(Guid[] ToBeConvertedIds)
 		{
 			if (ModelState.IsValid)
 			{
-				try
+				if (ToBeConvertedIds.Length > 0)
 				{
-					IList<Guid> idList = new List<Guid>();
-					if (ToBeConvertedIds.Length > 0)
+					var transaction = NHibernateSession.Current.BeginTransaction();
+					try
 					{
-						for (var i = 0; i < ToBeConvertedIds.Length; i++)
-						{
-							idList.Add(ToBeConvertedIds[i]);
-						}
+						_consignmentService.CreateConsignmentsFromPendingItems(ToBeConvertedIds);
+						transaction.Commit();
 					}
-					if (idList.Any()) _consignmentService.CreateConsignmentsFromPendingItems(idList);
-
-					return RedirectToAction("PendingConsignments");
-				}
-				catch (DomainValidationException dex)
-				{
-					ModelState.UpdateFromDomain(dex.Result);
+					catch (DomainValidationException dex)
+					{
+						ModelState.UpdateFromDomain(dex.Result);
+						transaction.Rollback();
+					}
+					finally
+					{
+						transaction.Dispose();
+					}
 				}
 			}
 			return RedirectToAction("PendingConsignments");
@@ -177,5 +173,5 @@ namespace JobSystem.Mvc.Controllers
 		{
 			return View("RepConsignmentNote", id);
 		}
-    }
+	}
 }

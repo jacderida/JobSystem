@@ -11,8 +11,9 @@ namespace JobSystem.Migrations
 		{
 			Create.Table("Invoices")
 				.WithIdColumn()
-				.WithColumn("InvoiceNumber").AsString(50).NotNullable()
+				.WithColumn("InvoiceNumber").AsString(50).Unique().NotNullable()
 				.WithColumn("DateCreated").AsDateTime().NotNullable()
+				.WithColumn("OrderNo").AsString(50).Nullable()
 				.WithColumn("CurrencyId").AsGuid().NotNullable()
 				.WithColumn("CustomerId").AsGuid().NotNullable()
 				.WithColumn("BankDetailsId").AsGuid().NotNullable()

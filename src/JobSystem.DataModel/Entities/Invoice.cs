@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using JobSystem.Resources.Invoices;
 
 namespace JobSystem.DataModel.Entities
 {
@@ -7,6 +9,8 @@ namespace JobSystem.DataModel.Entities
 	{
 		public virtual Guid Id { get; set; }
 		public virtual string InvoiceNumber { get; set; }
+		[StringLength(50, ErrorMessageResourceName = "OrderNoTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		public virtual string OrderNo { get; set; }
 		public virtual DateTime DateCreated { get; set; }
 		public virtual ListItem Currency { get; set; }
 		public virtual Customer Customer { get; set; }

@@ -9,6 +9,7 @@ using JobSystem.DataModel.Entities;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.Quotes;
+using JobSystem.DataAccess.NHibernate;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -52,62 +53,42 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpPost]
-		[Transaction]
 		public ActionResult Create(QuoteCreateViewModel viewmodel)
 		{
 			if (ModelState.IsValid)
 			{
+				var transaction = NHibernateSession.Current.BeginTransaction();
 				try
 				{
 					var job = _jobService.GetJob(viewmodel.JobId);
-
 					if (viewmodel.IsIndividual)
 					{
-						var quote = _quoteService.Create(
-							Guid.NewGuid(),
-							job.Customer.Id,
-							viewmodel.OrderNo,
-							viewmodel.AdviceNo,
-							viewmodel.CurrencyId
-						);
-
+						var quote = _quoteService.Create(Guid.NewGuid(), job.Customer.Id, viewmodel.OrderNo, viewmodel.AdviceNo, viewmodel.CurrencyId);
 						_quoteItemService.Create(
-							Guid.NewGuid(),
-							quote.Id,
-							viewmodel.JobItemId,
-							viewmodel.Repair,
-							viewmodel.Calibration,
-							viewmodel.Parts,
-							viewmodel.Carriage,
-							viewmodel.Investigation,
-							viewmodel.Report,
-							viewmodel.Days,
-							viewmodel.ItemBER
-						);
+							Guid.NewGuid(), quote.Id, viewmodel.JobItemId,
+							viewmodel.Repair, viewmodel.Calibration, viewmodel.Parts,
+							viewmodel.Carriage, viewmodel.Investigation, viewmodel.Report,
+							viewmodel.Days, viewmodel.ItemBER);
 					}
 					else
 					{
 						_quoteItemService.CreatePending(
-							Guid.NewGuid(),
-							job.Customer.Id,
-							viewmodel.JobItemId,
-							viewmodel.Repair,
-							viewmodel.Calibration,
-							viewmodel.Parts,
-							viewmodel.Carriage,
-							viewmodel.Investigation,
-							viewmodel.Report,
-							viewmodel.Days,
-							viewmodel.ItemBER,
-							viewmodel.OrderNo,
-							viewmodel.AdviceNo
-						);
+							Guid.NewGuid(), job.Customer.Id, viewmodel.JobItemId,
+							viewmodel.Repair, viewmodel.Calibration, viewmodel.Parts,
+							viewmodel.Carriage, viewmodel.Investigation, viewmodel.Report,
+							viewmodel.Days, viewmodel.ItemBER, viewmodel.OrderNo, viewmodel.AdviceNo);
 					}
+					transaction.Commit();
 					return RedirectToAction("Details", "Job", new { id = viewmodel.JobId, TabNo = "#tab_3" });
 				}
 				catch (DomainValidationException dex)
 				{
+					transaction.Rollback();
 					ModelState.UpdateFromDomain(dex.Result);
+				}
+				finally
+				{
+					transaction.Dispose();
 				}
 			}
 			return View("Create", viewmodel);
@@ -272,31 +253,30 @@ namespace JobSystem.Mvc.Controllers
 			
 		}
 
-		[Transaction]
 		public ActionResult QuotePending(Guid[] ToBeConvertedIds)
 		{
 			if (ModelState.IsValid)
 			{
-				try
+				if (ToBeConvertedIds.Length > 0)
 				{
-					IList<Guid> idList = new List<Guid>();
-					if (ToBeConvertedIds.Length > 0)
+					var transaction = NHibernateSession.Current.BeginTransaction();
+					try
 					{
-						for (var i = 0; i < ToBeConvertedIds.Length; i++)
-						{
-							idList.Add(ToBeConvertedIds[i]);
-						}
+						_quoteService.CreateQuotesFromPendingItems(ToBeConvertedIds);
+						transaction.Commit();
 					}
-					if (idList.Any()) _quoteService.CreateQuoteFromPendingItems(idList);
-
-					return RedirectToAction("PendingQuotes");
-				}
-				catch (DomainValidationException dex)
-				{
-					ModelState.UpdateFromDomain(dex.Result);
+					catch (DomainValidationException dex)
+					{
+						transaction.Rollback();
+						ModelState.UpdateFromDomain(dex.Result);
+					}
+					finally
+					{
+						transaction.Dispose();
+					}
 				}
 			}
-			return RedirectToAction("PendingConsignments");
+			return RedirectToAction("PendingQuotes");
 		}
 
 		[HttpPost]

@@ -9,7 +9,7 @@ namespace JobSystem.Migrations
 		{
 			Create.Table("Certificates")
 				.WithIdColumn()
-				.WithColumn("CertificateNumber").AsString(255).Unique()
+				.WithColumn("CertificateNumber").AsString(255).Unique().NotNullable()
 				.WithColumn("CreatedById").AsGuid().NotNullable()
 				.WithColumn("DateCreated").AsDateTime().NotNullable()
 				.WithColumn("TypeId").AsGuid().NotNullable()

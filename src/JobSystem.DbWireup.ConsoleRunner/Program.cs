@@ -1,9 +1,8 @@
 ﻿using System;
-using JobSystem.DataModel.Entities;
 using System.Drawing;
-using System.Reflection;
 using System.IO;
-using System.Drawing.Imaging;
+using System.Reflection;
+using JobSystem.DataModel.Entities;
 
 namespace JobSystem.DbWireup.ConsoleRunner
 {
@@ -112,6 +111,7 @@ namespace JobSystem.DbWireup.ConsoleRunner
 					Tuple.Create<Type, int, string>(typeof(Quote), 2000, "QR"),
 					Tuple.Create<Type, int, string>(typeof(Order), 2000, "OR"),
 					Tuple.Create<Type, int, string>(typeof(Certificate), 2000, "CERT"),
+					Tuple.Create<Type, int, string>(typeof(Delivery), 2000, "DR"),
 					Tuple.Create<Type, int, string>(typeof(Invoice), 2000, "IR"));
 			var defaultData = builder.Build();
 			try

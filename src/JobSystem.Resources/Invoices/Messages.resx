@@ -129,8 +129,11 @@
   <data name="NoApprovedInvoices" xml:space="preserve">
     <value>There are currently no approved invoices</value>
   </data>
-  <data name="NoPendingInvoices" xml:space="preserve">
-    <value>There are currently no pending invoices</value>
+	<data name="NoPendingInvoices" xml:space="preserve">
+		<value>There are currently no pending invoices</value>
+	</data>
+  <data name="OrderNoTooLarge" xml:space="preserve">
+    <value>The order number cannot exceed 50 characters</value>
   </data>
   <data name="QuoteItemNull" xml:space="preserve">
     <value>A quote item must be raised before the job item can be invoiced</value>

@@ -14,7 +14,8 @@ namespace JobSystem.Migrations
 				.WithColumn("EntityTypeName").AsString(255).NotNullable()
 				.WithColumn("NextId").AsInt32().NotNullable()
 				.WithColumn("Suffix").AsString(255).Nullable()
-				.WithColumn("Prefix").AsString(255).Nullable();
+				.WithColumn("Prefix").AsString(255).Nullable()
+				.WithColumn("Version").AsInt32();
 		}
 
 		public override void Down()

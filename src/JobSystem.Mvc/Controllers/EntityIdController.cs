@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
-using JobSystem.DataAccess.NHibernate.Web;
+using JobSystem.DataAccess.NHibernate;
+using JobSystem.DataModel;
+using System;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -14,10 +16,38 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		[Transaction]
 		public string GetId(string id)
 		{
-			return _entityIdProviderService.GetIdFor(id);
+			var entityId = String.Empty;
+			try
+			{
+				NHibernateSession.Current.BeginTransaction();
+				entityId = _entityIdProviderService.GetIdFor(id);
+				NHibernateSession.TryCommitTransactionForEntityWithUniqueId();
+			}
+			catch (EntityIdNotUniqueException)
+			{
+				EntityIdNotUniqueException notUniqueEx = null;
+				do
+				{
+					try
+					{
+						NHibernateSession.Current.BeginTransaction();
+						entityId = _entityIdProviderService.GetIdFor(id);
+						NHibernateSession.TryCommitTransactionForEntityWithUniqueId();
+						notUniqueEx = null;
+					}
+					catch (EntityIdNotUniqueException ex)
+					{
+						notUniqueEx = ex;
+					}
+				} while (notUniqueEx != null);
+			}
+			finally
+			{
+				NHibernateSession.Current.Transaction.Dispose();
+			}
+			return entityId;
 		}
 	}
 }

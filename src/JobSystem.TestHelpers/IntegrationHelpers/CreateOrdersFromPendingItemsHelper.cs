@@ -33,7 +33,7 @@ namespace JobSystem.TestHelpers.IntegrationHelpers
 
 			var instrumentId = Guid.NewGuid();
 			var instrumentService = new InstrumentService(userContext, instrumentRepository, dispatcher);
-			instrumentService.Create(instrumentId, "Druck", "DPI601IS", "None", "Description");
+			instrumentService.Create(instrumentId, "Druck", "DPI601IS", "None", "Description", 0);
 
 			var customerId = Guid.NewGuid();
 			var customerService = new CustomerService(userContext, customerRepository, dispatcher);
