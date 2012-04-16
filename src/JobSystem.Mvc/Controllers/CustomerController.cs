@@ -55,6 +55,7 @@ namespace JobSystem.Mvc.Controllers
 					_customerService.Create(
 						id,
 						viewModel.Name,
+						String.Empty, // IJ to replace!
 						Address.GetAddressFromLineDetails(viewModel.Address1, viewModel.Address2, viewModel.Address3, viewModel.Address4, viewModel.Address5),
 						ContactInfo.GetContactInfoFromDetails(viewModel.Telephone, viewModel.Fax, viewModel.Email, viewModel.Contact1, viewModel.Contact2),
 						viewModel.InvoiceTitle,
@@ -90,6 +91,7 @@ namespace JobSystem.Mvc.Controllers
 					_customerService.Edit(
 						viewModel.Id,
 						viewModel.Name,
+						String.Empty, // IJ to replace!
 						Address.GetAddressFromLineDetails(viewModel.Address1, viewModel.Address2, viewModel.Address3, viewModel.Address4, viewModel.Address5),
 						ContactInfo.GetContactInfoFromDetails(viewModel.Telephone, viewModel.Fax, viewModel.Email, viewModel.Contact1, viewModel.Contact2),
 						viewModel.InvoiceTitle,

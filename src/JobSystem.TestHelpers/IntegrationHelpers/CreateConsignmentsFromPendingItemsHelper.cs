@@ -37,7 +37,7 @@ namespace JobSystem.TestHelpers.IntegrationHelpers
 
 			var customerId = Guid.NewGuid();
 			var customerService = new CustomerService(userContext, customerRepository, dispatcher);
-			customerService.Create(customerId, "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo());
+			customerService.Create(customerId, "Gael Ltd", String.Empty, new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo());
 			
 			var supplierService = new SupplierService(userContext, supplierRepository, dispatcher);
 			supplierService.Create(supplier1Id, "Supplier 1", new Address(), new ContactInfo(), new Address(), new ContactInfo());

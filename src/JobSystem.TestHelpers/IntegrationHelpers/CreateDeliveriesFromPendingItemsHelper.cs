@@ -37,8 +37,8 @@ namespace JobSystem.TestHelpers.IntegrationHelpers
 			instrumentService.Create(instrumentId, "Druck", "DPI601IS", "None", "Description", 0);
 
 			var customerService = new CustomerService(userContext, customerRepository, dispatcher);
-			customerService.Create(customerId1, "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo());
-			customerService.Create(customerId2, "EMIS (UK) Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo());
+			customerService.Create(customerId1, "Gael Ltd", String.Empty, new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo());
+			customerService.Create(customerId2, "EMIS (UK) Ltd", String.Empty, new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo(), "Gael Ltd", new Address(), new ContactInfo());
 
 			var listItemService = new ListItemService(userContext, listItemRepository, dispatcher);
 			var jobService = new JobService(userContext, null, jobRepository, listItemRepository, customerRepository, entityIdProvider, dispatcher);
