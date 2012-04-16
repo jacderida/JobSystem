@@ -1,0 +1,70 @@
+﻿@model IList<JobSystem.Mvc.ViewModels.Invoices.InvoiceIndexViewModel>
+
+@{
+    ViewBag.Title = "Approved Invoices";
+}
+
+<div id="toggle-container">
+	<span class="toggle toggle-left"><a href="@Url.Action("PendingInvoices")">Pending</a></span>
+	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedInvoices")">Invoiced</a></span>
+</div>
+
+@if (Model.Any()) {
+	<table>
+		<tr>
+			<th>Invoice No</th>
+			<th>Customer</th>
+			<th>Payment Term</th>
+			<th>Tax Code</th>
+			<th>Created By</th>
+			<th></th>
+			<th></th>
+		</tr>
+	@foreach (var item in Model.OrderBy(i => i.InvoiceNo))
+	 {
+		<tr>
+			<td>
+				@item.InvoiceNo
+			</td>
+			<td>
+				@item.CustomerName
+			</td>
+			<td>
+				@item.PaymentTerm
+			</td>
+			<td>
+				@item.TaxCode
+			</td>
+			<td>
+				@item.CreatedBy
+			</td>
+			<td>
+				@item.DateCreated
+			</td>
+			<td>
+				<span class="the-tooltip center top dark-midnight-blue itemCount">
+					@item.InvoiceItems.Count items
+					<span>
+					@foreach (var ci in item.InvoiceItems) {
+						<span>
+						Repair: @ci.RepairPrice
+						Calibration: @ci.CalibrationPrice
+						Parts: @ci.PartsPrice
+						Carriage: @ci.CarriagePrice
+						Investigation: @ci.InvestigationPrice
+						</span>
+					}	
+					</span>
+				</span>
+			</td>
+			<td>
+				@Html.ActionLink("Print Note", "GenerateConsignmentNote", new { Id = @item.Id }, new { target="_blank"})
+			</td>
+		</tr>
+	 }
+	</table>
+}
+else
+{
+	<div id="empty-list">@JobSystem.Resources.Invoices.Messages.NoApprovedInvoices</div>
+}

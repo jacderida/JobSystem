@@ -117,25 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InsufficientSecurityClearance" xml:space="preserve">
-    <value>A manager role is required for this operation</value>
-  </data>
-  <data name="JobItemHasPendingItem" xml:space="preserve">
-    <value>This job item has already been marked for invoicing</value>
-  </data>
-  <data name="JobPending" xml:space="preserve">
-    <value>This job item cannot be marked for invoicing because its job is pending</value>
-  </data>
-  <data name="NoApprovedInvoices" xml:space="preserve">
-    <value>There are currently no approved invoices</value>
-  </data>
-  <data name="NoPendingInvoices" xml:space="preserve">
-    <value>There are currently no pending invoices</value>
-  </data>
-  <data name="QuoteItemNull" xml:space="preserve">
-    <value>A quote item must be raised before the job item can be invoiced</value>
-  </data>
-  <data name="QuoteStatusInvalid" xml:space="preserve">
-    <value>The quote item for this job item must be marked accepted or rejected before it can be invoiced</value>
+  <data name="TypeaheadPlaceholder" xml:space="preserve">
+    <value>Start typing to look return existing values</value>
   </data>
 </root>

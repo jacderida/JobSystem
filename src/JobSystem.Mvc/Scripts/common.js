@@ -211,6 +211,54 @@ $(document).ready(function () {
 			});
 		});
 
+		$("#manufacturer-autocomplete").autocomplete({
+			source: function (request, response) {
+				// define a function to call your Action (assuming UserController)
+				$.ajax({
+					url: 'Instrument/SearchManufacturers', type: "POST", dataType: "json",
+
+					// query will be the param used by your action method
+					data: { query: request.term },
+					success: function (data) {
+						response($.map(data, function (item) {
+							return {
+								value: item
+							}
+						}))
+					}
+				})
+			},
+			select: function (e, ui) {
+				$("#ManufacturerValue").val(ui.item.value);
+			},
+			minLength: 1, // require at least one character from the user
+			dataType: 'json'
+		});
+
+		$("#model-autocomplete").autocomplete({
+			source: function (request, response) {
+				// define a function to call your Action (assuming UserController)
+				$.ajax({
+					url: 'Instrument/SearchModelNumber', type: "POST", dataType: "json",
+
+					// query will be the param used by your action method
+					data: { modelNo: request.term, manufacturer: $("#ManufacturerValue").val() },
+					success: function (data) {
+						response($.map(data, function (item) {
+							return {
+								value: item
+							}
+						}))
+					}
+				})
+			},
+			select: function (e, ui) {
+				$("#ModelNo").val(ui.item.value);
+			},
+			minLength: 1, // require at least one character from the user
+			dataType: 'json'
+		});
+
 		// Vertical Sliding Tabs
 		$('div.st_vertical_job').slideTabs({
 			// Options

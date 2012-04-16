@@ -59,6 +59,10 @@
 			<span class="field-label">Category</span>
 			<span class="field">@Model.Field</span>
 		</div>
+		<div class="details-fields">
+			<span class="field-label">Invoicing</span>
+			<span class="field">@Ajax.ActionLink("Mark for Invoicing", "CreatePending", "Invoice", new { jobItemId = Model.Id }, new AjaxOptions(){ HttpMethod = "POST" } , new { @class = "primary-action" })</span>
+		</div>
 	</div>
 </div>
 

@@ -162,6 +162,7 @@
     <Compile Include="Controllers\EntityIdController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstrumentController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\JobItemController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -197,6 +198,8 @@
     <Compile Include="ViewModels\Deliveries\DeliveryCreateViewModel.cs" />
     <Compile Include="ViewModels\Instruments\InstrumentViewModel.cs" />
     <Compile Include="ViewModels\Instruments\InstrumentListViewModel.cs" />
+    <Compile Include="ViewModels\Invoices\InvoiceIndexViewModel.cs" />
+    <Compile Include="ViewModels\Invoices\InvoiceItemIndexViewModel.cs" />
     <Compile Include="ViewModels\JobItems\JobItemDetailsViewModel.cs" />
     <Compile Include="ViewModels\JobItems\JobItemViewModel.cs" />
     <Compile Include="ViewModels\Jobs\JobEditViewModel.cs" />
@@ -457,6 +460,8 @@
     <Content Include="Views\TestStandard\Index.cshtml" />
     <Content Include="Views\TestStandard\_Edit.cshtml" />
     <Content Include="Views\Job\_Certificates.cshtml" />
+    <Content Include="Views\Invoice\PendingInvoices.cshtml" />
+    <Content Include="Views\Invoice\ApprovedInvoices.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\PendingOrderItems.cshtml" />

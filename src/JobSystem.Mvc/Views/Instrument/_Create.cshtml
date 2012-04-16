@@ -11,15 +11,15 @@
 			@Html.LabelFor(model => model.Manufacturer)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.Manufacturer)
-			@Html.ValidationMessageFor(model => model.Manufacturer)
+			@Html.TextBox("ManufacturerAutocomplete", "", new { id = "manufacturer-autocomplete", placeholder=JobSystem.Resources.Common.Labels.TypeaheadPlaceholder })
+			@Html.HiddenFor(m => m.Manufacturer, new { id = "ManufacturerValue" })
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.ModelNo)
 		</div>
 		<div class="editor-field">
-			@Html.EditorFor(model => model.ModelNo)
-			@Html.ValidationMessageFor(model => model.ModelNo)
+			@Html.TextBox("ModelNoAutocomplete", "", new { id = "model-autocomplete", placeholder = JobSystem.Resources.Common.Labels.TypeaheadPlaceholder })
+			@Html.HiddenFor(m => m.ModelNo, new { id = "ModelNo" })
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.Range)

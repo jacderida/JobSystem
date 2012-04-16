@@ -1,0 +1,66 @@
+﻿@model List<JobSystem.Mvc.ViewModels.Invoices.InvoiceItemIndexViewModel>
+@{
+    ViewBag.Title = "Pending Invoices";
+}
+
+<div id="toggle-container">
+	<span class="toggle toggle-active toggle-left"><a href="@Url.Action("PendingInvoices")">Pending</a></span>
+	<span class="toggle toggle-right"><a href="@Url.Action("ApprovedInvoices")">Invoiced</a></span>
+</div>
+
+@using (Html.BeginForm("ConvertPending", "Invoice", FormMethod.Post))
+{
+
+if (Model.Any()) {
+
+<input class="primary-action" type="submit" value="Invoice"/>
+	<table>
+		<tr>
+			<th></th>
+			<th>Job No</th>
+			<th>Job Item No</th>
+			<th>Order Number</th>
+			<th>Repair</th>
+			<th>Calibration</th>
+			<th>Parts</th>
+			<th>Carriage</th>
+			<th>Investigation</th>
+		</tr>
+	@foreach (var item in Model.OrderBy(i => i.OrderNo).ThenBy(i => i.JobItemNo))
+	 {
+			<tr>
+				<td>
+					<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>
+				</td>
+				<td>
+					@item.JobNo
+				</td>
+				<td>
+					@item.JobItemNo
+				</td>
+				<td>
+					@item.OrderNo
+				</td>
+				<td>
+					@item.RepairPrice
+				</td>
+				<td>
+					@item.CalibrationPrice
+				</td>
+				<td>
+					@item.PartsPrice
+				</td>
+				<td>
+					@item.CarriagePrice
+				</td>
+				<td>
+					@item.InvestigationPrice
+				</td>
+			</tr>
+	 }
+	</table>
+}else{
+	<div id="empty-list">@JobSystem.Resources.Invoices.Messages.NoPendingInvoices</div>
+}
+}
+

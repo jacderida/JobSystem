@@ -97,5 +97,21 @@ namespace JobSystem.Mvc.Controllers
 			
 			return Json(instruments); 
 		}
+
+		[HttpPost]
+		public ActionResult SearchManufacturers(string query)
+		{
+			IEnumerable<string> manufacturers = _instrumentService.SearchManufacturerByKeyword(query);
+
+			return Json(manufacturers);
+		}
+
+		[HttpPost]
+		public ActionResult SearchModelNumber(string modelNo, string manufacturer)
+		{
+			IEnumerable<string> returnedModelNo = _instrumentService.SearchModelNoByKeywordFilterByManufacturer(modelNo, manufacturer);
+
+			return Json(returnedModelNo);
+		}
 	}
 }
