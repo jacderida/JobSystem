@@ -228,9 +228,6 @@ $(document).ready(function () {
 					}
 				})
 			},
-			select: function (e, ui) {
-				$("#ManufacturerValue").val(ui.item.value);
-			},
 			minLength: 1, // require at least one character from the user
 			dataType: 'json'
 		});
@@ -242,7 +239,7 @@ $(document).ready(function () {
 					url: 'Instrument/SearchModelNumber', type: "POST", dataType: "json",
 
 					// query will be the param used by your action method
-					data: { modelNo: request.term, manufacturer: $("#ManufacturerValue").val() },
+					data: { modelNo: request.term, manufacturer: $("#manufacturer-autocomplete").val() },
 					success: function (data) {
 						response($.map(data, function (item) {
 							return {
@@ -251,9 +248,6 @@ $(document).ready(function () {
 						}))
 					}
 				})
-			},
-			select: function (e, ui) {
-				$("#ModelNo").val(ui.item.value);
 			},
 			minLength: 1, // require at least one character from the user
 			dataType: 'json'
