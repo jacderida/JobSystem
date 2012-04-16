@@ -33,5 +33,28 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		{
 			return CurrentSession.Query<CompanyDetails>().Single().ApplyAllPrices;
 		}
+
+		public void UpdateCompanyDetails(CompanyDetails companyDetails)
+		{
+			var companyDetailsToUpdate = CurrentSession.Get<CompanyDetails>(companyDetails.Id);
+			companyDetailsToUpdate.Name = companyDetails.Name;
+			companyDetailsToUpdate.TermsAndConditions = companyDetails.TermsAndConditions;
+			companyDetailsToUpdate.DefaultCurrency = companyDetails.DefaultCurrency;
+			companyDetailsToUpdate.DefaultPaymentTerm = companyDetails.DefaultPaymentTerm;
+			companyDetailsToUpdate.DefaultTaxCode = companyDetails.DefaultTaxCode;
+			companyDetailsToUpdate.DefaultBankDetails = companyDetails.DefaultBankDetails;
+			companyDetailsToUpdate.Address1 = companyDetails.Address1;
+			companyDetailsToUpdate.Address2 = companyDetails.Address2;
+			companyDetailsToUpdate.Address3 = companyDetails.Address3;
+			companyDetailsToUpdate.Address4 = companyDetails.Address4;
+			companyDetailsToUpdate.Address5 = companyDetails.Address5;
+			companyDetailsToUpdate.Telephone = companyDetails.Telephone;
+			companyDetailsToUpdate.Fax = companyDetails.Fax;
+			companyDetailsToUpdate.Email = companyDetails.Email;
+			companyDetailsToUpdate.Www = companyDetails.Www;
+			companyDetailsToUpdate.RegNo = companyDetails.RegNo;
+			companyDetailsToUpdate.VatRegNo = companyDetails.VatRegNo;
+			CurrentSession.Update(companyDetailsToUpdate);
+		}
 	}
 }
