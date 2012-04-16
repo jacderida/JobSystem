@@ -36,7 +36,7 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		public IEnumerable<string> SearchModelNoByKeywordFilterByManufacturer(string keyword, string manufacturer)
 		{
 			return CurrentSession.Query<Instrument>().Where(
-				i => i.Manufacturer == manufacturer && i.ModelNo.ToLower().Contains(keyword.ToLower())).Select(i => i.Manufacturer).Distinct();
+				i => i.Manufacturer == manufacturer && i.ModelNo.ToLower().Contains(keyword.ToLower())).Select(i => i.ModelNo).Distinct();
 		}
 
 		public void DeleteAll()
