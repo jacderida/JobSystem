@@ -30,7 +30,8 @@ namespace JobSystem.Mvc.Controllers
 					 Description = i.Description,
 					 Manufacturer = i.Manufacturer,
 					 ModelNo = i.ModelNo,
-					 Range = i.Range
+					 Range = i.Range,
+					 CalibrationTime = i.AllocatedCalibrationTime
 				 }).ToList();
 			var viewModel = new InstrumentListViewModel();
 			viewModel.Instruments = instruments;
