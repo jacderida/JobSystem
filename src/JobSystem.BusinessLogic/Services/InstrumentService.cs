@@ -92,7 +92,7 @@ namespace JobSystem.BusinessLogic.Services
 
 		private int GetAllocatedCalibrationTime(int allocatedCalibrationTime)
 		{
-			if (allocatedCalibrationTime < 0)
+			if (allocatedCalibrationTime < 15 || allocatedCalibrationTime > 1000)
 				throw new DomainValidationException(Messages.InvalidAllocatedCalibrationTime, "AllocatedCalibrationTime");
 			return allocatedCalibrationTime;
 		}

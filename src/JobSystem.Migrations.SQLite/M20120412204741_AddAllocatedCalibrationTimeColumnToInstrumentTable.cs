@@ -7,7 +7,7 @@ namespace JobSystem.Migrations.SqlLite
 	{
 		public override void Up()
 		{
-			Alter.Table("Instruments").AddColumn("AllocatedCalibrationTime").AsInt32();
+			Alter.Table("Instruments").AddColumn("AllocatedCalibrationTime").AsInt32().Nullable(); 
 		}
 
 		public override void Down()

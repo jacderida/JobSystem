@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CertificateSearchTests.cs" />
     <Compile Include="ConsignmentTests.cs" />
     <Compile Include="DeliveryServiceTests.cs" />
     <Compile Include="InstrumentSearchTests.cs" />
