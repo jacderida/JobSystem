@@ -15,6 +15,7 @@
 		public string Contact { get; set; }
 		public string Telephone { get; set; }
 		public string Fax { get; set; }
+		public string JobNo { get; set; }
 		public string ItemNo { get; set; }
 		public string Instrument { get; set; }
 		public string Report { get; set; }

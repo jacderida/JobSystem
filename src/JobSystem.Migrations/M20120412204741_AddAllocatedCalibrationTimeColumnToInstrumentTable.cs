@@ -7,7 +7,7 @@ namespace JobSystem.Migrations
 	{
 		public override void Up()
 		{
-			Alter.Table("Instruments").AddColumn("AllocatedCalibrationTime").AsInt32().NotNullable().WithDefault(0);
+			Alter.Table("Instruments").AddColumn("AllocatedCalibrationTime").AsInt32().NotNullable().WithDefaultValue(15);
 		}
 
 		public override void Down()

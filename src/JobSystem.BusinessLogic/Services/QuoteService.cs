@@ -70,6 +70,13 @@ namespace JobSystem.BusinessLogic.Services
 			DoCreateQuotesFromPendingItems(_quoteItemService.GetPendingQuoteItems(pendingItemIds));
 		}
 
+		public Quote GetById(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			return _quoteRepository.GetById(id);
+		}
+
 		public IEnumerable<Quote> GetQuotes()
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

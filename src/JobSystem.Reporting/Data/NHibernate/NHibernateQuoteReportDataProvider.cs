@@ -28,6 +28,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.CustomerAddress5 = !String.IsNullOrEmpty(customer.Address5) ? customer.Address5 : String.Empty;
 				reportItem.Telephone = !String.IsNullOrEmpty(customer.Telephone) ? customer.Telephone : String.Empty;
 				reportItem.Fax = !String.IsNullOrEmpty(customer.Fax) ? customer.Fax : String.Empty;
+				reportItem.JobNo = item.JobItem.Job.ToString();
 				reportItem.ItemNo = item.ItemNo.ToString();
 				reportItem.Calibration = item.Calibration;
 				reportItem.Repair = item.Labour;

@@ -198,6 +198,33 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		#endregion
+		#region GetById
+
+		[Test]
+		public void GetById_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
+			GetById(Guid.NewGuid());
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Quotes.Messages.InsufficientSecurity));
+		}
+
+		private void GetById(Guid id)
+		{
+			try
+			{
+				_quoteService.GetById(id);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
 		#region GetQuotes
 
 		[Test]

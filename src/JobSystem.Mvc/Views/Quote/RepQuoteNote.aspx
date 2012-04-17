@@ -33,12 +33,46 @@
 			var companyDetailsService = DependencyResolver.Current.GetService<CompanyDetailsService>();
 			var report = new JobSystem.Reporting.ReportDefinitions.TelerikQuoteReport();
 			var logo = companyDetailsService.GetCompanyLogo();
-			//report.MainLogo.Width = new Telerik.Reporting.Drawing.Unit(logo.Width, Telerik.Reporting.Drawing.UnitType.Pixel);
-			//report.MainLogo.Height = new Telerik.Reporting.Drawing.Unit(logo.Height, Telerik.Reporting.Drawing.UnitType.Pixel);
-			var pageWidth = report.Width.Value;
-			//report.MainLogo.Location = new Telerik.Reporting.Drawing.PointU(new System.Drawing.Point((int)(pageWidth - logo.Width), 0));
 			report.MainLogo.Value = logo;
 			report.DataSource = dataSource;
+
+			var quoteService = DependencyResolver.Current.GetService<QuoteService>();
+			var quote = quoteService.GetById(Model);
+			switch (quote.Currency.Type)
+			{
+				case JobSystem.DataModel.Entities.ListItemType.CurrencyGbp:
+					{
+						report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+						report.RepairTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+						report.PartsTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+						report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+						report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+						report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+						break;
+					}
+				case JobSystem.DataModel.Entities.ListItemType.CurrencyUsd:
+					{
+						report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+						report.RepairTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+						report.PartsTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+						report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+						report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+						report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+						break;
+					}
+				case JobSystem.DataModel.Entities.ListItemType.CurrencyEuro:
+					{
+						report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+						report.RepairTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+						report.PartsTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+						report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+						report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+						report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+						break;
+					}
+				default:
+					throw new InvalidOperationException();
+			}
 			ReportViewer1.Report = report;
 			base.OnLoad(e);
 		}

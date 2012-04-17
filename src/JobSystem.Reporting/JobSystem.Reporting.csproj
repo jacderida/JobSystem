@@ -78,18 +78,36 @@
     <Compile Include="Data\IConsignmentReportDataProvider.cs" />
     <Compile Include="Data\IQuoteReportDataProvider.cs" />
     <Compile Include="Data\IReportDataProvider.cs" />
-    <Compile Include="Data\NHibernate\NHibernateConsignmentReportDataProvider.cs" />
-    <Compile Include="Data\NHibernate\NHibernateCustomerDataProviderBase.cs" />
-    <Compile Include="Data\NHibernate\NHibernateDeliveryReportDataProvider.cs" />
-    <Compile Include="Data\NHibernate\NHibernateInvoiceReportDataProvider.cs" />
-    <Compile Include="Data\NHibernate\NHibernateQuoteReportDataProvider.cs" />
-    <Compile Include="Data\NHibernate\NHibernateReportDataProviderBase.cs" />
+    <Compile Include="Data\NHibernate\NHibernateConsignmentReportDataProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\NHibernate\NHibernateCustomerDataProviderBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\NHibernate\NHibernateDeliveryReportDataProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\NHibernate\NHibernateInvoiceReportDataProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\NHibernate\NHibernateOrderDataProvider.cs" />
+    <Compile Include="Data\NHibernate\NHibernateQuoteReportDataProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\NHibernate\NHibernateReportDataProviderBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\NHibernate\NHibernateSupplierDataProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\ConsignmentReportModel.cs" />
     <Compile Include="Models\CustomerReportModel.cs" />
     <Compile Include="Models\DeliveryReportModel.cs" />
     <Compile Include="Models\InvoiceReportModel.cs" />
+    <Compile Include="Models\OrderReportModel.cs" />
     <Compile Include="Models\QuoteReportModel.cs" />
     <Compile Include="Models\ReportModelBase.cs" />
+    <Compile Include="Models\SupplierReportModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportDefinitions\TelerikConsignmentReport.cs">
       <SubType>Component</SubType>
