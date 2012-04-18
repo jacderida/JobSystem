@@ -44,6 +44,13 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 			return listItemRepository;
 		}
 
+		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsUsdCurrency(Guid currencyId)
+		{
+			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
+			listItemRepository.Stub(x => x.GetById(currencyId)).Return(GetUsdCurrency(currencyId));
+			return listItemRepository;
+		}
+
 		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsNull(Guid itemId)
 		{
 			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
@@ -98,6 +105,17 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 				Name = "GBP",
 				Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Currency", Type = ListItemCategoryType.Currency },
 				Type = ListItemType.CurrencyGbp
+			};
+		}
+
+		private static ListItem GetUsdCurrency(Guid currencyId)
+		{
+			return new ListItem
+			{
+				Id = currencyId,
+				Name = "USD",
+				Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Currency", Type = ListItemCategoryType.Currency },
+				Type = ListItemType.CurrencyUsd
 			};
 		}
 

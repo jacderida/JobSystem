@@ -21,6 +21,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private DomainValidationException _domainValidationException;
 		private IUserContext _userContext;
 		private DateTime _dateCreated = new DateTime(2011, 12, 29);
+		private Guid _quoteForEditId;
+		private Quote _quoteForEdit;
 
 		[SetUp]
 		public void Setup()
@@ -29,6 +31,19 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_domainValidationException = null;
 			AppDateTime.GetUtcNow = () => _dateCreated;
 			_userContext = TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Manager | UserRole.Member);
+			_quoteForEditId = Guid.NewGuid();
+			_quoteForEdit = new Quote
+			{
+				Id = Guid.NewGuid(),
+				QuoteNumber = "QR2000",
+				CreatedBy = _userContext.GetCurrentUser(),
+				DateCreated = DateTime.Now,
+				OrderNumber = "INITIAL12345",
+				AdviceNumber = "INITIALAD12345",
+				Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" },
+				Currency = new ListItem { Id = Guid.NewGuid(), Name = "GBP", Type = ListItemType.CurrencyGbp, Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "", Type = ListItemCategoryType.Currency } },
+				Revision = 1
+			};
 		}
 
 		#region Create
@@ -190,6 +205,153 @@ namespace JobSystem.BusinessLogic.UnitTests
 			try
 			{
 				_savedQuote = _quoteService.Create(id, customerId, orderNumber, adviceNumber, currencyId);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region Edit
+
+		[Test]
+		public void Edit_ValidQuoteDetails_ItemEdited()
+		{
+			var orderNo = "ORDER12345";
+			var adviceNo = "ADV12345";
+			var currencyId = Guid.NewGuid();
+
+			var quoteRepositoryMock = MockRepository.GenerateMock<IQuoteRepository>();
+			quoteRepositoryMock.Stub(x => x.GetById(_quoteForEditId)).Return(_quoteForEdit);
+			quoteRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
+				quoteRepositoryMock,
+				MockRepository.GenerateStub<ICustomerRepository>(),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsUsdCurrency(currencyId),
+				_userContext);
+			Edit(_quoteForEditId, orderNo, adviceNo, currencyId);
+			quoteRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(orderNo, _quoteForEdit.OrderNumber);
+			Assert.AreEqual(adviceNo, _quoteForEdit.AdviceNumber);
+			Assert.AreEqual(ListItemType.CurrencyUsd, _quoteForEdit.Currency.Type);
+			Assert.AreEqual(2, _quoteForEdit.Revision);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidQuoteId_ArgumentExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var orderNo = "ORDER12345";
+			var adviceNo = "ADV12345";
+			var currencyId = Guid.NewGuid();
+
+			var quoteRepositoryStub = MockRepository.GenerateMock<IQuoteRepository>();
+			quoteRepositoryStub.Stub(x => x.GetById(id)).Return(null);
+			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
+				quoteRepositoryStub,
+				MockRepository.GenerateStub<ICustomerRepository>(),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsUsdCurrency(currencyId),
+				_userContext);
+			Edit(id, orderNo, adviceNo, currencyId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidCurrencyId_ArgumentExceptionThrown()
+		{
+			var orderNo = "ORDER12345";
+			var adviceNo = "ADV12345";
+			var currencyId = Guid.NewGuid();
+
+			var quoteRepositoryStub = MockRepository.GenerateMock<IQuoteRepository>();
+			quoteRepositoryStub.Stub(x => x.GetById(_quoteForEditId)).Return(_quoteForEdit);
+			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
+				quoteRepositoryStub,
+				MockRepository.GenerateStub<ICustomerRepository>(),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsNull(currencyId),
+				_userContext);
+			Edit(_quoteForEditId, orderNo, adviceNo, currencyId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_NonCurrencyListItemType_ArgumentExceptionThrown()
+		{
+			var orderNo = "ORDER12345";
+			var adviceNo = "ADV12345";
+			var currencyId = Guid.NewGuid();
+
+			var quoteRepositoryStub = MockRepository.GenerateMock<IQuoteRepository>();
+			quoteRepositoryStub.Stub(x => x.GetById(_quoteForEditId)).Return(_quoteForEdit);
+			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
+				quoteRepositoryStub,
+				MockRepository.GenerateStub<ICustomerRepository>(),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsNonCurrencyListItem(currencyId),
+				_userContext);
+			Edit(_quoteForEditId, orderNo, adviceNo, currencyId);
+		}
+
+		[Test]
+		public void Edit_OrderNoGreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var orderNo = new string('a', 51);
+			var adviceNo = "ADV12345";
+			var currencyId = Guid.NewGuid();
+
+			var quoteRepositoryStub = MockRepository.GenerateMock<IQuoteRepository>();
+			quoteRepositoryStub.Stub(x => x.GetById(_quoteForEditId)).Return(_quoteForEdit);
+			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
+				quoteRepositoryStub,
+				MockRepository.GenerateStub<ICustomerRepository>(),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsUsdCurrency(currencyId),
+				_userContext);
+			Edit(_quoteForEditId, orderNo, adviceNo, currencyId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Quotes.Messages.OrderNoTooLarge));
+		}
+
+		[Test]
+		public void Edit_AdviceNoGreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var orderNo = "ORDER12345";
+			var adviceNo = new string('a', 51);
+			var currencyId = Guid.NewGuid();
+
+			var quoteRepositoryStub = MockRepository.GenerateMock<IQuoteRepository>();
+			quoteRepositoryStub.Stub(x => x.GetById(_quoteForEditId)).Return(_quoteForEdit);
+			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
+				quoteRepositoryStub,
+				MockRepository.GenerateStub<ICustomerRepository>(),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsUsdCurrency(currencyId),
+				_userContext);
+			Edit(_quoteForEditId, orderNo, adviceNo, currencyId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Quotes.Messages.AdviceNoTooLarge));
+		}
+
+		[Test]
+		public void Edit_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var orderNo = "ORDER12345";
+			var adviceNo = "ADV12345";
+			var currencyId = Guid.NewGuid();
+
+			var quoteRepositoryStub = MockRepository.GenerateMock<IQuoteRepository>();
+			quoteRepositoryStub.Stub(x => x.GetById(_quoteForEditId)).Return(_quoteForEdit);
+			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
+				quoteRepositoryStub,
+				MockRepository.GenerateStub<ICustomerRepository>(),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsUsdCurrency(currencyId),
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member));
+			Edit(_quoteForEditId, orderNo, adviceNo, currencyId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Quotes.Messages.InsufficientSecurityClearance));
+		}
+
+		public void Edit(Guid id, string orderNo, string adviceNo, Guid currencyId)
+		{
+			try
+			{
+				_quoteForEdit = _quoteService.Edit(id, orderNo, adviceNo, currencyId);
 			}
 			catch (DomainValidationException dex)
 			{

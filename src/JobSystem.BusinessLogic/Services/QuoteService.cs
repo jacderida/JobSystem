@@ -70,6 +70,22 @@ namespace JobSystem.BusinessLogic.Services
 			DoCreateQuotesFromPendingItems(_quoteItemService.GetPendingQuoteItems(pendingItemIds));
 		}
 
+		public Quote Edit(Guid id, string orderNo, string adviceNo, Guid currencyId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			var quote = _quoteRepository.GetById(id);
+			if (quote == null)
+				throw new ArgumentException("A valid ID must be supplied for the quote item");
+			quote.OrderNumber = orderNo;
+			quote.AdviceNumber = adviceNo;
+			quote.Currency = GetCurrency(currencyId);
+			quote.Revision++;
+			ValidateAnnotatedObjectThrowOnFailure(quote);
+			_quoteRepository.Update(quote);
+			return quote;
+		}
+
 		public Quote GetById(Guid id)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
