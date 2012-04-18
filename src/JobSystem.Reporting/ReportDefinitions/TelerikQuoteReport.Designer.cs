@@ -528,6 +528,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// TotalTextBox
 			// 
+			this.TotalTextBox.Format = "{0:C2}";
 			this.TotalTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(12.900200843811035D), Telerik.Reporting.Drawing.Unit.Cm(0.29999944567680359D));
 			this.TotalTextBox.Name = "TotalTextBox";
 			this.TotalTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(2.8468821048736572D), Telerik.Reporting.Drawing.Unit.Cm(0.49919998645782471D));
@@ -999,8 +1000,8 @@ namespace JobSystem.Reporting.ReportDefinitions
 		public Telerik.Reporting.TextBox InvestigationTextBox;
 		public Telerik.Reporting.TextBox SubTotalTextBox;
 		private Telerik.Reporting.TextBox textBox9;
-		private Telerik.Reporting.TextBox TotalTextBox;
 		private Telerik.Reporting.TextBox textBox11;
+		public Telerik.Reporting.TextBox TotalTextBox;
 
 	}
 }

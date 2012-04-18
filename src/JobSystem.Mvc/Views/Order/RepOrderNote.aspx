@@ -43,16 +43,19 @@
 				case JobSystem.DataModel.Entities.ListItemType.CurrencyGbp:
 					{
 						report.PriceTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
 						break;
 					}
 				case JobSystem.DataModel.Entities.ListItemType.CurrencyUsd:
 					{
 						report.PriceTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
 						break;
 					}
 				case JobSystem.DataModel.Entities.ListItemType.CurrencyEuro:
 					{
 						report.PriceTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
 						break;
 					}
 				default:

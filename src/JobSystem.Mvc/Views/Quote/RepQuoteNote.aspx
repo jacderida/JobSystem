@@ -48,6 +48,7 @@
 						report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
 						report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
 						report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
 						break;
 					}
 				case JobSystem.DataModel.Entities.ListItemType.CurrencyUsd:
@@ -58,6 +59,7 @@
 						report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("en-US");
 						report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("en-US");
 						report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
 						break;
 					}
 				case JobSystem.DataModel.Entities.ListItemType.CurrencyEuro:
@@ -68,6 +70,7 @@
 						report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
 						report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
 						report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
 						break;
 					}
 				default:
