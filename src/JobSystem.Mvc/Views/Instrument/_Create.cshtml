@@ -29,7 +29,7 @@
 			@Html.LabelFor(model => model.CalibrationTime)
 		</div>
 		<div class="editor-field">
-			@Html.TextBoxFor(model => model.CalibrationTime, new { @class = "short-text" })
+			@Html.TextBoxFor(model => model.CalibrationTime, new { @class = "short-text", @Value="15" })
 			@Html.ValidationMessageFor(model => model.CalibrationTime)
 		</div>
 		<div class="editor-label">

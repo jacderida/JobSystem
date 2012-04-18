@@ -309,5 +309,10 @@ namespace JobSystem.Mvc.Controllers
 			}
 			return RedirectToAction("PendingOrders");
 		}
+
+		public ActionResult GenerateOrderReport(Guid id)
+		{
+			return View("RepOrderNote", id);
+		}
 	}
 }

@@ -230,7 +230,7 @@
 				}
 				else
 				{
-					@Html.ActionLink("Raise Order", "Create", "Order", new { jobItemId = @Model.Id }, new { @class = "primary-action" })
+					@Html.ActionLink("Raise Order", "Create", "Order", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action" })
 					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
 				}
 			</div>

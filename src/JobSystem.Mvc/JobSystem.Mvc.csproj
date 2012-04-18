@@ -279,6 +279,7 @@
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\fileuploader.js" />
+    <Content Include="Scripts\instrument.js" />
     <Content Include="Scripts\jobitem.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
     <Content Include="Scripts\jquery-1.5.1.min.js" />
@@ -297,6 +298,7 @@
     <Content Include="Scripts\workitem.js" />
     <Content Include="Views\Consignment\RepConsignmentNote.aspx" />
     <Content Include="Views\Delivery\RepDeliveryNote.aspx" />
+    <Content Include="Views\Order\RepOrderNote.aspx" />
     <Content Include="Views\Quote\RepQuoteNote.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
