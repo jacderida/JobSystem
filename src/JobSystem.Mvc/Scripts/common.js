@@ -249,6 +249,8 @@ $(document).ready(function () {
 			   });
 		});
 
+		if ($("#invoiceCheckbox").is(':checked')) $("#invoiceDetails").hide();
+
 		$("#invoiceCheckbox").click(function () {
 			if (!$(this).attr('checked')) {
 				$("#invoiceDetails").show(300);
@@ -257,6 +259,8 @@ $(document).ready(function () {
 				$("#invoiceDetails").hide(300);
 			}
 		});
+
+		if ($("#deliveryCheckbox").is(':checked')) $("#deliveryDetails").hide(300);
 
 		$("#deliveryCheckbox").click(function () {
 			if (!$(this).attr('checked')) {
@@ -398,17 +402,17 @@ $(document).ready(function () {
 			}
 		}
 
-		$('#deliveryCheckbox').click(function () {
-			populateAddressFields('delivery', $(this).is(':checked'));
-		});
+//		$('#deliveryCheckbox').click(function () {
+//			populateAddressFields('delivery', $(this).is(':checked'));
+//		});
 
-		$('#invoiceCheckbox').click(function () {
-			populateAddressFields('invoice', $(this).is(':checked'));
-		});
+//		$('#invoiceCheckbox').click(function () {
+//			populateAddressFields('invoice', $(this).is(':checked'));
+//		});
 
-		$('#salesCheckbox').click(function () {
-			populateAddressFields('sales', $(this).is(':checked'));
-		});
+//		$('#salesCheckbox').click(function () {
+//			populateAddressFields('sales', $(this).is(':checked'));
+//		});
 	});
 
 	$('.work-item-list-item').live('mouseenter', function () {

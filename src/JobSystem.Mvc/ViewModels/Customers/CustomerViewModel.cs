@@ -104,6 +104,16 @@ namespace JobSystem.Mvc.ViewModels.Customers
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		[Display(Name = "Second Contact Name")]
 		public string DeliveryContact2 { get; set; }
+		[Display(Name = "Asset Line")]
+		public string AssetLine { get; set; }
+		public bool InvoiceAddressSameAsMain { get; set; }
+		public bool DeliveryAddressSameAsMain { get; set; }
+
+		public CustomerViewModel()
+		{
+			InvoiceAddressSameAsMain = true;
+			DeliveryAddressSameAsMain = true;
+		}
 
 		public static CustomerViewModel GetCustomerViewModelFromCustomer(Customer customer)
 		{
@@ -143,6 +153,7 @@ namespace JobSystem.Mvc.ViewModels.Customers
 				DeliveryEmail = !String.IsNullOrEmpty(customer.DeliveryEmail) ? customer.DeliveryEmail : String.Empty,
 				DeliveryContact1 = !String.IsNullOrEmpty(customer.DeliveryContact1) ? customer.DeliveryContact1 : String.Empty,
 				DeliveryContact2 = !String.IsNullOrEmpty(customer.DeliveryContact2) ? customer.DeliveryContact2 : String.Empty,
+				AssetLine = !String.IsNullOrEmpty(customer.AssetLine) ? customer.AssetLine : String.Empty,
 			};
 		}
 	}
