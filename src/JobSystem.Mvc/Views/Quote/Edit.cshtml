@@ -1,4 +1,4 @@
-﻿@model JobSystem.Mvc.ViewModels.Quotes.QuoteItemEditViewModel
+﻿@model JobSystem.Mvc.ViewModels.Quotes.QuoteEditViewModel
 @{
 	ViewBag.Title = "Edit Quote";
 }
@@ -14,103 +14,31 @@
 		Details
 	</span>
 	<fieldset>
-		@if (Model.IsQuoted) {
-			<div class="editor-label">
-				@Html.LabelFor(model => model.OrderNo)
-			</div>
-			<div class="editor-field">
-				@Model.OrderNo
-			</div>
-			<div class="editor-label">
-				@Html.LabelFor(model => model.AdviceNo)
-			</div>
-			<div class="editor-field">
-				@Model.AdviceNo
-			</div>
-		} else {
-			<div class="editor-label">
-				@Html.LabelFor(model => model.OrderNo)
-			</div>
-			<div class="editor-field">
-				@Html.EditorFor(model => model.OrderNo)
-				@Html.ValidationMessageFor(model => model.OrderNo)
-			</div>
-			<div class="editor-label">
-				@Html.LabelFor(model => model.AdviceNo)
-			</div>
-			<div class="editor-field">
-				@Html.TextBoxFor(model => model.AdviceNo)
-				@Html.ValidationMessageFor(model => model.AdviceNo)
-			</div>
-		}
 		<div class="editor-label">
-			@Html.LabelFor(model => model.Report)
+			@Html.LabelFor(model => model.OrderNo)
 		</div>
 		<div class="editor-field">
-			@Html.TextAreaFor(model => model.Report)
-			@Html.ValidationMessageFor(model => model.Report)
+			@Html.TextBoxFor(model => model.OrderNo)
+			@Html.ValidationMessageFor(model => model.OrderNo)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.AdviceNo)
+		</div>
+		<div class="editor-field">
+			@Html.TextBoxFor(model => model.AdviceNo)
+			@Html.ValidationMessageFor(model => model.AdviceNo)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Currencies)
+		</div>
+		<div class="editor-field">
+			@Html.DropDownListFor(model => model.CurrencyId, Model.Currencies, new { @class = "long-dropdown" })
+			@Html.ValidationMessageFor(model => model.Currencies)
 		</div>
 	</fieldset>
-	<span class="form-section">
-		Quote Figures
-	</span>
-	<fieldset>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Repair)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.Repair, new { @class = "short-text" })
-			@Html.ValidationMessageFor(model => model.Repair)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Calibration)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.Calibration, new { @class = "short-text" })
-			@Html.ValidationMessageFor(model => model.Calibration)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Parts)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.Parts, new { @class = "short-text" })
-			@Html.ValidationMessageFor(model => model.Parts)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Carriage)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.Carriage, new { @class = "short-text" })
-			@Html.ValidationMessageFor(model => model.Carriage)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Investigation)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.Investigation, new { @class = "short-text" })
-			@Html.ValidationMessageFor(model => model.Investigation)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Days)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.Days, new { @class = "short-text" })
-			@Html.ValidationMessageFor(model => model.Days)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.ItemBER)
-		</div>
-		<div class="editor-field">
-			@Html.CheckBoxFor(model => model.ItemBER)
-			@Html.ValidationMessageFor(model => model.ItemBER)
-		</div>
 		@Html.HiddenFor(model => model.Id)
 		@Html.HiddenFor(model => model.JobId)
 		@Html.HiddenFor(model => model.JobItemId)
-		@Html.HiddenFor(model => model.EditedFromJobItem)
-		@Html.HiddenFor(model => model.IsQuoted)
-		@Html.HiddenFor(model => model.QuoteItemId)
-	</fieldset>
 	<input type="submit" class="primary-action" value="Save"/>
 }
 </div>

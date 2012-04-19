@@ -15,6 +15,7 @@
 			<th>Quote No.</th>
 			<th>Order No.</th>
 			<th>Advice No.</th>
+			<th>Currency</th>
 			<th>Customer</th>
 			<th>Created By</th>
 			<th>Date Created</th>
@@ -37,6 +38,9 @@
 				@item.AdviceNo
 			</td>
 			<td>
+				@item.CurrencyName
+			</td>
+			<td>
 				@item.CustomerName
 			</td>
 			<td>
@@ -46,10 +50,10 @@
 				@item.DateCreated
 			</td>
 			<td>
-				@Html.ActionLink("Edit", "Edit", "Quote", new { Id = @item.Id })
+				@Html.ActionLink("Edit", "Edit", new { Id = @item.Id })
 			</td>
 			<td>
-				@Html.ActionLink("Print Quote", "GenerateQuoteReport",  new { Id = @item.Id }, new { target="_blank"})
+				@Html.ActionLink("Print", "GenerateQuoteReport",  new { Id = @item.Id }, new { target="_blank"})
 			</td>
 		</tr>
 	 </table>
@@ -94,7 +98,7 @@
 				@qi.ItemBER
 			</td>
 			<td class="shortColumn">
-				@Html.ActionLink("Edit", "Edit", new { id = qi.JobItemId, fromJi = false, isQuoted = true })
+				@Html.ActionLink("Edit", "EditItem", new { id = qi.JobItemId, fromJi = false, isQuoted = true })
 			</td>
 		</tr>
 		

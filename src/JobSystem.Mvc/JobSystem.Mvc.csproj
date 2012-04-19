@@ -210,6 +210,7 @@
     <Compile Include="ViewModels\Orders\OrderItemEditViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderItemIndexViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteCreateViewModel.cs" />
+    <Compile Include="ViewModels\Quotes\QuoteEditViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteIndexViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteItemEditViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteItemIndexViewModel.cs" />
@@ -448,7 +449,7 @@
     <Content Include="Views\Quote\ApprovedQuotes.cshtml" />
     <Content Include="Views\Quote\Create.cshtml" />
     <Content Include="Views\Consignment\_Edit.cshtml" />
-    <Content Include="Views\Quote\Edit.cshtml" />
+    <Content Include="Views\Quote\EditItem.cshtml" />
     <Content Include="Views\Order\CreateIndividualOrder.cshtml" />
     <Content Include="Views\Order\Details.cshtml" />
     <Content Include="Views\Order\CreateItem.cshtml" />
@@ -464,6 +465,7 @@
     <Content Include="Views\Job\_Certificates.cshtml" />
     <Content Include="Views\Invoice\PendingInvoices.cshtml" />
     <Content Include="Views\Invoice\ApprovedInvoices.cshtml" />
+    <Content Include="Views\Quote\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\PendingOrderItems.cshtml" />

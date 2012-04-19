@@ -13,5 +13,6 @@ namespace JobSystem.Mvc.ViewModels.Quotes
 		public string OrderNo { get; set; }
 		public string AdviceNo { get; set; }
 		public List<QuoteItemIndexViewModel> QuoteItems { get; set; }
+		public string CurrencyName { get; set; }
 	}
 }

@@ -11,6 +11,7 @@ namespace JobSystem.Mvc.ViewModels.Quotes
 		public Guid Id { get; set; }
 		public Guid JobItemId { get; set; }
 		public Guid JobId { get; set; }
+		[DataType(DataType.Currency)]
 		public decimal Repair { get; set; }
 		public decimal Calibration { get; set; }
 		public decimal Parts { get; set; }

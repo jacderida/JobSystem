@@ -76,13 +76,25 @@ namespace JobSystem.Mvc.Controllers
 						viewModel.Www, viewModel.RegNo, viewModel.VatRegNo,
 						viewModel.TermsAndConditions, viewModel.CurrencyId, viewModel.TaxCodeId,
 						viewModel.PaymentTermId, viewModel.BankDetailsId);
-					return RedirectToAction("Index");	// Redirect somewhere else...
+
+					//Repopulate lists because MVC doesn't preserve them after post
+					viewModel.Currencies = _listItemService.GetAllByCategory(ListItemCategoryType.Currency).ToSelectList();
+					viewModel.PaymentTerms = _listItemService.GetAllByCategory(ListItemCategoryType.PaymentTerm).ToSelectList();
+					viewModel.TaxCodes = _companyDetailsService.GetTaxCodes().Select(t => new { Id = t.Id, Name = t.TaxCodeName }).ToSelectList();
+					viewModel.BankDetails = _companyDetailsService.GetBankDetails().Select(t => new { Id = t.Id, Name = t.ShortName }).ToSelectList();
+
+					return View("CompanyDetails", viewModel);
 				}
 				catch (DomainValidationException dex)
 				{
 					ModelState.UpdateFromDomain(dex.Result);
 				}
 			}
+			viewModel.Currencies = _listItemService.GetAllByCategory(ListItemCategoryType.Currency).ToSelectList();
+			viewModel.PaymentTerms = _listItemService.GetAllByCategory(ListItemCategoryType.PaymentTerm).ToSelectList();
+			viewModel.TaxCodes = _companyDetailsService.GetTaxCodes().Select(t => new { Id = t.Id, Name = t.TaxCodeName }).ToSelectList();
+			viewModel.BankDetails = _companyDetailsService.GetBankDetails().Select(t => new { Id = t.Id, Name = t.ShortName }).ToSelectList();
+
 			return View("CompanyDetails", viewModel);
 		}
 	}

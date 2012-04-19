@@ -131,9 +131,10 @@ namespace JobSystem.Mvc.Controllers
 					CustomerName = q.Customer.Name,
 					QuoteNo = q.QuoteNumber,
 					CreatedBy = q.CreatedBy.Name,
-					DateCreated = q.DateCreated.ToLongDateString() + ' ' + q.DateCreated.ToShortTimeString(),
+					DateCreated = q.DateCreated.ToLongDateString(),
 					OrderNo = q.OrderNumber,
-					AdviceNo = q.AdviceNumber
+					AdviceNo = q.AdviceNumber,
+					CurrencyName = q.Currency.Name
 			    }).ToList();
 
 			foreach (var quote in quotes)
@@ -159,7 +160,36 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Edit(Guid id, bool fromJi, bool isQuoted)
+		public ActionResult Edit(Guid id)
+		{
+			var quote = _quoteService.GetById(id);
+
+			var viewmodel = new QuoteEditViewModel()
+			{
+				Id = quote.Id,
+				AdviceNo = quote.AdviceNumber,
+				OrderNo = quote.OrderNumber,
+				Currencies = _listItemService.GetAllByCategory(ListItemCategoryType.Currency).ToSelectList(),
+				CurrencyId = quote.Currency.Id
+			};
+			return View("Edit", viewmodel);
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult Edit(QuoteEditViewModel viewmodel)
+		{
+			_quoteService.Edit(
+				viewmodel.Id,
+				viewmodel.OrderNo,
+				viewmodel.AdviceNo,
+				viewmodel.CurrencyId);
+
+			return RedirectToAction("ApprovedQuotes");
+		}
+
+		[HttpGet]
+		public ActionResult EditItem(Guid id, bool fromJi, bool isQuoted)
 		{
 			if (!isQuoted) 
 			{
@@ -183,7 +213,7 @@ namespace JobSystem.Mvc.Controllers
 					EditedFromJobItem = fromJi,
 					IsQuoted = isQuoted
 				};
-				return View("Edit", viewmodel);
+				return View("EditItem", viewmodel);
 			}
 			else
 			{
@@ -207,13 +237,13 @@ namespace JobSystem.Mvc.Controllers
 					EditedFromJobItem = fromJi,
 					IsQuoted = isQuoted
 				};
-				return View("Edit", viewmodel);
+				return View("EditItem", viewmodel);
 			}
 		}
 
 		[HttpPost]
 		[Transaction]
-		public ActionResult Edit(QuoteItemEditViewModel viewmodel)
+		public ActionResult EditItem(QuoteItemEditViewModel viewmodel)
 		{
 			if (!viewmodel.IsQuoted) 
 			{

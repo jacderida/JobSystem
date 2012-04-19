@@ -71,7 +71,7 @@ if (Model.QuoteItems.Any()) {
 				@item.ItemBER
 			</td>
 			<td>
-				@Html.ActionLink("Edit", "Edit", new { id = item.JobItemId, fromJi = false, isQuoted = false })
+				@Html.ActionLink("Edit", "EditItem", new { id = item.JobItemId, fromJi = false, isQuoted = false })
 			</td>
 		</tr>
 }

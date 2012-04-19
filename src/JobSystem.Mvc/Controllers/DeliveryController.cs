@@ -85,6 +85,7 @@ namespace JobSystem.Mvc.Controllers
 				else
 					_deliveryItemService.CreatePending(viewmodel.Id, viewmodel.JobItemId, customerId, viewmodel.Notes);
 				transaction.Commit();
+				return RedirectToAction("Details", "JobItem", new { Id = viewmodel.JobItemId });
 			}
 			catch (DomainValidationException dex)
 			{
