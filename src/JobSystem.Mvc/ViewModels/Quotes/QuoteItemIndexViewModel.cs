@@ -12,11 +12,11 @@ namespace JobSystem.Mvc.ViewModels.Quotes
 		public Guid JobItemId { get; set; }
 		public Guid JobId { get; set; }
 		[DataType(DataType.Currency)]
-		public decimal Repair { get; set; }
-		public decimal Calibration { get; set; }
-		public decimal Parts { get; set; }
-		public decimal Carriage { get; set; }
-		public decimal Investigation { get; set; }
+		public double Repair { get; set; }
+		public double Calibration { get; set; }
+		public double Parts { get; set; }
+		public double Carriage { get; set; }
+		public double Investigation { get; set; }
 		public int Days { get; set; }
 		[Display(Name = "Item BER")]
 		public bool ItemBER { get; set; }
