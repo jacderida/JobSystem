@@ -84,6 +84,7 @@
     <Compile Include="Data\NHibernate\NHibernateCustomerDataProviderBase.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Data\NHibernate\NHibernateEquipmentProgressReportDataProvider.cs" />
     <Compile Include="Data\NHibernate\NHibernateDeliveryReportDataProvider.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -103,6 +104,7 @@
     <Compile Include="Models\ConsignmentReportModel.cs" />
     <Compile Include="Models\CustomerReportModel.cs" />
     <Compile Include="Models\DeliveryReportModel.cs" />
+    <Compile Include="Models\EquipmentProgressReportModel.cs" />
     <Compile Include="Models\InvoiceReportModel.cs" />
     <Compile Include="Models\JobItemsByStatusReportModel.cs" />
     <Compile Include="Models\OrderReportModel.cs" />

@@ -53,6 +53,7 @@
     <Compile Include="Context\TestUserContext.cs" />
     <Compile Include="DeliveryItemServiceFactory.cs" />
     <Compile Include="DeliveryServiceFactory.cs" />
+    <Compile Include="IntegrationHelpers\CertificateRegisterSearchTestHelper.cs" />
     <Compile Include="IntegrationHelpers\CreateConsignmentsFromPendingItemsHelper.cs" />
     <Compile Include="IntegrationHelpers\CreateDeliveriesFromPendingItemsHelper.cs" />
     <Compile Include="IntegrationHelpers\CreateInvoicesFromPendingItemsHelper.cs" />

@@ -21,6 +21,9 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			NHibernateSession.Current.Transaction.Rollback();
 		}
 
-		//public void SearchByKeyword_CertNoExactMatch_1Result
+		public void SearchByKeyword_CertNoExactMatch_1Result()
+		{
+
+		}
 	}
 }
