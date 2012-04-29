@@ -18,7 +18,7 @@ namespace JobSystem.BusinessLogic.Services
 		private readonly ISupplierRepository _supplierRepository;
 		private readonly IListItemRepository _listItemRepository;
 		private readonly IEntityIdProvider _entityIdProvider;
-		private readonly OrderItemService _orderItemService;IAppDomainSetup 
+		private readonly OrderItemService _orderItemService;
 		private readonly ICompanyDetailsRepository _companyDetailsRepository;
 
 		public OrderService(
