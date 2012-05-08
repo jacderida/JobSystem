@@ -34,7 +34,6 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 		public DeliveryItemIndexViewModel DeliveryItem { get; set; }
 		public string Instrument { get; set; }
 		public string InitialStatus { get; set; }
-		public string Location { get; set; }
 		public string Field { get; set; }
 	}
 }

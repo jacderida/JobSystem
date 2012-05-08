@@ -49,7 +49,6 @@ namespace JobSystem.Mvc.Controllers
 			{
 				Fields = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).OrderBy(li => li.Name).ToSelectList(),
 				Instruments = _instrumentService.GetInstruments().ToSelectList(),
-				Locations =  _listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).OrderBy(li => li.Name).ToSelectList(),
 				Status = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).OrderBy(li => li.Name).ToSelectList(),
 				JobId = id
 			};
@@ -72,7 +71,6 @@ namespace JobSystem.Mvc.Controllers
 						viewmodel.SerialNo,
 						viewmodel.AssetNo,
 						viewmodel.InitialStatusId,
-						viewmodel.LocationId,
 						viewmodel.FieldId,
 						viewmodel.CalPeriod,
 						viewmodel.Instructions,
@@ -104,7 +102,6 @@ namespace JobSystem.Mvc.Controllers
 				Field = job.Field.Name.ToString(),
 				InitialStatus = job.Status.Name.ToString(),
 				SerialNo = job.SerialNo,
-				Location = job.Location.Name.ToString(),
 				Comments = job.Comments,
 				Instructions = job.Instructions,
 				IsReturned = job.IsReturned,
@@ -119,7 +116,6 @@ namespace JobSystem.Mvc.Controllers
 					OverTime = wi.OverTime,
 					Report = wi.Report,
 					Status = wi.Status.Name.ToString(),
-					WorkLocation = wi.WorkLocation.Name.ToString(),
 					WorkTime = wi.WorkTime,
 					WorkType = wi.WorkType.Name.ToString(),
 					WorkBy = wi.User.Name,

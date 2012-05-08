@@ -16,7 +16,6 @@ namespace JobSystem.DataModel.Repositories
 		/// <param name="report">A report for the action.</param>
 		/// <param name="workStatus">The status of the job item after the action was performed.</param>
 		/// <param name="workType">The type of work performed on the action.</param>
-		/// <param name="workLocation">The location of the job item after the action was performed.</param>
 		/// <remarks>
 		/// It is the responsibility of callers of this interface to ensure that valid and sensible values are passed in to the implementing repository.
 		/// 
@@ -35,7 +34,7 @@ namespace JobSystem.DataModel.Repositories
 		/// that there is a test to catch out the case when a bad job item ID gets passed in, and throw an exception at the calling level. Implementors
 		/// of this interface should be free to assume that no null reference exception will result. If it does, it's the fault of the caller.
 		/// </remarks>
-		void EmitItemHistory(UserAccount createdBy, Guid jobItemId, int workTime, int overTime, string report, ListItemType workStatus, ListItemType workType, ListItemType workLocation);
+		void EmitItemHistory(UserAccount createdBy, Guid jobItemId, int workTime, int overTime, string report, ListItemType workStatus, ListItemType workType);
 		ConsignmentItem GetLatestConsignmentItem(Guid jobItemId);
 		PendingConsignmentItem GetPendingConsignmentItem(Guid jobItemId);
 		IEnumerable<JobItem> GetJobItems(Guid jobId);

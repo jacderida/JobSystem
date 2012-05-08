@@ -31,13 +31,10 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 		public IEnumerable<SelectListItem> Instruments { get; set; }
 		[Display(Name = "Status")]
 		public IEnumerable<SelectListItem> Status { get; set; }
-		[Display(Name = "Location")]
-		public IEnumerable<SelectListItem> Locations { get; set; }
 		[Display(Name = "Category")]
 		public IEnumerable<SelectListItem> Fields { get; set; }
 		public Guid InstrumentId { get; set; }
 		public Guid InitialStatusId { get; set; }
-		public Guid LocationId { get; set; }
 		public Guid FieldId { get; set; }
 	}
 }

@@ -179,7 +179,7 @@ namespace JobSystem.BusinessLogic.Services
 				jobItem.Status = _listItemRepository.GetByType(jobItemStatusType);
 				_jobItemRepository.Update(jobItem);
 				_jobItemRepository.EmitItemHistory(
-					CurrentUser, jobItem.Id, 0, 0, "Item on order OR2000", jobItemStatusType, ListItemType.WorkTypeAdministration, jobItem.Location.Type);
+					CurrentUser, jobItem.Id, 0, 0, "Item on order OR2000", jobItemStatusType, ListItemType.WorkTypeAdministration);
 				orderItem.JobItem = jobItem;
 			}
 			_orderItemRepository.Create(orderItem);

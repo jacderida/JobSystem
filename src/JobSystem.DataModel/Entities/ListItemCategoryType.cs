@@ -14,8 +14,6 @@ namespace JobSystem.DataModel.Entities
 		JobItemInitialStatus = 3,
 		[Description("Status")]
 		JobItemStatus = 4,
-		[Description("Location")]
-		JobItemLocation = 5,
 		[Description("Work Type")]
 		JobItemWorkType = 6,
 		[Description("Status")]
@@ -24,8 +22,6 @@ namespace JobSystem.DataModel.Entities
 		Currency = 8,
 		[Description("Payment Term")]
 		PaymentTerm = 9,
-		[Description("Initial Location")]
-		JobItemInitialLocation = 10,
 		[Description("Certificate")]
 		Certificate = 11
 	}

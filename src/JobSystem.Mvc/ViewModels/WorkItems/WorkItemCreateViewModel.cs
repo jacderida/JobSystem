@@ -22,10 +22,7 @@ namespace JobSystem.Mvc.ViewModels.WorkItems
 		public IEnumerable<SelectListItem> Status { get; set; }
 		[Display(Name = "Work Type")]
 		public IEnumerable<SelectListItem> WorkType { get; set; }
-		[Display(Name = "Work Location")]
-		public IEnumerable<SelectListItem> WorkLocation { get; set; }
 		public Guid StatusId { get; set; }
 		public Guid WorkTypeId { get; set; }
-		public Guid WorkLocationId { get; set; }
 	}
 }

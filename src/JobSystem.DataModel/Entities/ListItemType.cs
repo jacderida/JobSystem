@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace JobSystem.DataModel.Entities
 {
 	public enum ListItemType
@@ -39,12 +35,6 @@ namespace JobSystem.DataModel.Entities
 		WorkTypeRepair = 30,
 		WorkTypeInvestigation = 31,
 		WorkTypeAdministration = 32,
-		WorkLocationCompleted = 33,
-		WorkLocationCalibrated = 34,
-		WorkLocationRepaired = 35,
-		WorkLocationSubContract = 36,
-		WorkLocationQuoted = 37,
-		WorkLocationInvestigated = 38,
 		CurrencyGbp = 39,
 		CurrencyUsd = 40,
 		CurrencyEuro = 41,
@@ -53,15 +43,9 @@ namespace JobSystem.DataModel.Entities
 		JobTypeField = 44,
 		JobTypeService = 45,
 		StatusBookedIn = 46,
-		InitialWorkLocationHouseCalibration = 47,
-		InitialWorkLocationUkasCalibration = 48,
-		InitialWorkLocationRepair = 49,
-		InitialWorkLocationSubContract = 50,
-		InitialWorkLocationSite = 51,
 		StatusItemWithSubContractor = 52,
 		StatusAwaitingParts = 53,
 		CertificateTypeHouse = 54,
-		CertificateTypeUkas = 55,
-		WorkLocationInvoiced = 56
+		CertificateTypeUkas = 55
 	}
 }

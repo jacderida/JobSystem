@@ -24,13 +24,6 @@
 			@Html.ValidationMessageFor(model => model.Status)
 		</div>
 		<div class="editor-label">
-			@Html.LabelFor(model => model.WorkLocation)
-		</div>
-		<div class="editor-field">
-			@Html.DropDownListFor(model => model.WorkLocationId, Model.WorkLocation, new { @class = "shortDropdown" })
-			@Html.ValidationMessageFor(model => model.WorkLocation)
-		</div>
-		<div class="editor-label">
 			@Html.LabelFor(model => model.WorkTime)
 		</div>
 		<div class="editor-field">

@@ -52,9 +52,8 @@ namespace JobSystem.BusinessLogic.Services
 			deliveryItem.QuoteItem = GetQuoteItem(jobItemId);
 			ValidateAnnotatedObjectThrowOnFailure(deliveryItem);
 			jobItem.Status = _listItemRepository.GetByType(ListItemType.StatusDeliveryNoteProduced);
-			jobItem.Location = _listItemRepository.GetByType(ListItemType.WorkLocationCompleted);
 			_jobItemRepository.EmitItemHistory(
-				CurrentUser, jobItem.Id, 0, 0, "Item added to delivery note DR2000", ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationCompleted);
+				CurrentUser, jobItem.Id, 0, 0, "Item added to delivery note DR2000", ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkTypeAdministration);
 			_jobItemRepository.Update(jobItem);
 			_deliveryItemRepository.Create(deliveryItem);
 			return deliveryItem;

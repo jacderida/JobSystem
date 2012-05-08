@@ -48,16 +48,5 @@ namespace JobSystem.TestHelpers
 				Category = new ListItemCategory { Id = Guid.NewGuid(), Type = ListItemCategoryType.JobItemStatus, Name = "Job Item Status" }
 			};
 		}
-
-		private static ListItem GetSubContractLocationListItem()
-		{
-			return new ListItem
-			{
-				Id = Guid.NewGuid(),
-				Name = "Sub Contract",
-				Type = ListItemType.WorkLocationSubContract,
-				Category = new ListItemCategory { Id = Guid.NewGuid(), Type = ListItemCategoryType.JobItemLocation, Name = "Job Item Location" }
-			};
-		}
 	}
 }

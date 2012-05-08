@@ -56,9 +56,8 @@ namespace JobSystem.BusinessLogic.Services
 			ValidateAnnotatedObjectThrowOnFailure(quoteItem);
 			var jobItem = GetJobItem(jobItemId);
 			jobItem.Status = _listItemRepository.GetByType(ListItemType.StatusQuotedPrepared);
-			jobItem.Location = _listItemRepository.GetByType(ListItemType.WorkLocationQuoted);
 			_jobItemRepository.EmitItemHistory(
-				CurrentUser, jobItemId, 0, 0, String.Format("Item quoted on {0}", quote.QuoteNumber), ListItemType.StatusQuotedPrepared, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationQuoted);
+				CurrentUser, jobItemId, 0, 0, String.Format("Item quoted on {0}", quote.QuoteNumber), ListItemType.StatusQuotedPrepared, ListItemType.WorkTypeAdministration);
 			quoteItem.JobItem = jobItem;
 			_quoteItemRepository.Create(quoteItem);
 			_jobItemRepository.Update(jobItem);
@@ -145,7 +144,7 @@ namespace JobSystem.BusinessLogic.Services
 				throw new ArgumentException("An invalid quote item ID was supplied");
 			quoteItem.Status = _listItemRepository.GetByType(ListItemType.StatusQuoteAccepted);
 			_jobItemRepository.EmitItemHistory(
-				CurrentUser, quoteItem.JobItem.Id, 0, 0, String.Format("Item accepted on quote {0}", quoteItem.Quote.QuoteNumber), ListItemType.StatusQuoteAccepted, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationQuoted);
+				CurrentUser, quoteItem.JobItem.Id, 0, 0, String.Format("Item accepted on quote {0}", quoteItem.Quote.QuoteNumber), ListItemType.StatusQuoteAccepted, ListItemType.WorkTypeAdministration);
 			_quoteItemRepository.Update(quoteItem);
 			return quoteItem;
 		}
@@ -159,7 +158,7 @@ namespace JobSystem.BusinessLogic.Services
 				throw new ArgumentException("An invalid quote item ID was supplied");
 			quoteItem.Status = _listItemRepository.GetByType(ListItemType.StatusQuoteRejected);
 			_jobItemRepository.EmitItemHistory(
-				CurrentUser, quoteItem.JobItem.Id, 0, 0, String.Format("Item rejected on quote {0}", quoteItem.Quote.QuoteNumber), ListItemType.StatusQuoteRejected, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationQuoted);
+				CurrentUser, quoteItem.JobItem.Id, 0, 0, String.Format("Item rejected on quote {0}", quoteItem.Quote.QuoteNumber), ListItemType.StatusQuoteRejected, ListItemType.WorkTypeAdministration);
 			_quoteItemRepository.Update(quoteItem);
 			return quoteItem;
 		}

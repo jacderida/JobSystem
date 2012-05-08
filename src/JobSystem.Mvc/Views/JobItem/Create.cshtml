@@ -58,13 +58,6 @@
 			@Html.DropDownListFor(model => model.InitialStatusId, Model.Status)
 			@Html.ValidationMessageFor(model => model.Status)
 		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Locations)
-		</div>
-		<div class="editor-field">
-			@Html.DropDownListFor(model => model.LocationId, Model.Locations)
-			@Html.ValidationMessageFor(model => model.Locations)
-		</div>
 	</fieldset>
 	<fieldset>
 		<div class="editor-label">

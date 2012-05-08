@@ -111,7 +111,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdate.Id)).Return(_jobItemToUpdate);
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdate.Id, 0, 0, String.Empty, ListItemType.StatusConsigned, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationSubContract));
+				_userContext.GetCurrentUser(), _jobItemToUpdate.Id, 0, 0, String.Empty, ListItemType.StatusConsigned, ListItemType.WorkTypeAdministration));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate)).IgnoreArguments();
 
 			_consignmentItemService = ConsignmentItemServiceFactory.Create(consignmentItemRepositoryMock, jobItemRepositoryMock, consignmentId, _userContext);
@@ -122,7 +122,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.AreNotEqual(Guid.Empty, _savedConsigmentItem.Id);
 			Assert.AreEqual(1, _savedConsigmentItem.ItemNo);
 			Assert.AreEqual(ListItemType.StatusConsigned, _jobItemToUpdate.Status.Type);
-			Assert.AreEqual(ListItemType.WorkLocationSubContract, _jobItemToUpdate.Location.Type);
 		}
 
 		[Test]
@@ -137,7 +136,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdate.Id)).Return(_jobItemToUpdate);
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdate.Id, 0, 0, String.Empty, ListItemType.StatusConsigned, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationSubContract));
+				_userContext.GetCurrentUser(), _jobItemToUpdate.Id, 0, 0, String.Empty, ListItemType.StatusConsigned, ListItemType.WorkTypeAdministration));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate)).IgnoreArguments();
 
 			_consignmentItemService = ConsignmentItemServiceFactory.Create(consignmentItemRepositoryMock, jobItemRepositoryMock, consignmentId, _userContext, 1);
@@ -148,7 +147,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.AreNotEqual(Guid.Empty, _savedConsigmentItem.Id);
 			Assert.AreEqual(2, _savedConsigmentItem.ItemNo);
 			Assert.AreEqual(ListItemType.StatusConsigned, _jobItemToUpdate.Status.Type);
-			Assert.AreEqual(ListItemType.WorkLocationSubContract, _jobItemToUpdate.Location.Type);
 		}
 
 		[Test]
