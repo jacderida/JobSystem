@@ -17,11 +17,13 @@ namespace JobSystem.Mvc.Controllers
 	{
 		private readonly ConsignmentService _consignmentService;
 		private readonly ConsignmentItemService _consignmentItemService;
+		private readonly OrderService _orderService;
 
-		public ConsignmentController(ConsignmentService consignmentService, ConsignmentItemService consignmentItemService)
+		public ConsignmentController(ConsignmentService consignmentService, ConsignmentItemService consignmentItemService, OrderService orderService)
 		{
 			_consignmentService = consignmentService;
 			_consignmentItemService = consignmentItemService;
+			_orderService = orderService;
 		}
 
 		public ActionResult Index()
@@ -100,6 +102,13 @@ namespace JobSystem.Mvc.Controllers
 				viewmodel.Instructions);
 
 			return RedirectToAction("PendingConsignments", "Consignment");
+		}
+
+		public ActionResult ConvertToOrder(Guid id)
+		{
+			_orderService.CreateOrderFromConsignment(id);
+
+			return RedirectToAction("ActiveConsignments", "Consignment");
 		}
 
 		public ActionResult PendingConsignments()

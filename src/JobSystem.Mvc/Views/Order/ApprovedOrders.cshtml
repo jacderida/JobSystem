@@ -48,7 +48,7 @@
 				</span>
 			</td>
 			<td>
-				@Html.ActionLink("Print Note", "GenerateOrderReport", new { id = @item.Id })
+				@Html.ActionLink("Print Note", "GenerateOrderReport", new { id = @item.Id }, new { target="blank"})
 			</td>
 		</tr>
 	 }

@@ -16,6 +16,7 @@
 			<th>Supplier Name</th>
 			<th>Created By</th>
 			<th>Date Created</th>
+			<th>Items</th>
 			<th></th>
 			<th></th>
 		</tr>
@@ -47,6 +48,9 @@
 					}	
 					</span>
 				</span>
+			</td>
+			<td>
+				@Html.ActionLink("Order", "ConvertToOrder", new { id = @item.Id })
 			</td>
 			<td>
 				@Html.ActionLink("Print Note", "GenerateConsignmentNote", new { Id = @item.Id }, new { target="_blank"})
