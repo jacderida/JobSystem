@@ -104,6 +104,7 @@ namespace JobSystem.Mvc.Controllers
 			return RedirectToAction("PendingConsignments", "Consignment");
 		}
 
+		[Transaction]
 		public ActionResult ConvertToOrder(Guid id)
 		{
 			_orderService.CreateOrderFromConsignment(id);
