@@ -15,7 +15,6 @@ namespace JobSystem.DataModel.Entities
 		public virtual string Report { get; set; }
 		public virtual ListItem Status { get; set; }
 		public virtual ListItem WorkType { get; set; }
-		public virtual ListItem WorkLocation { get; set; }
 		public virtual UserAccount User { get; set; }
 	}
 }

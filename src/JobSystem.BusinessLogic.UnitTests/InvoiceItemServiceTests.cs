@@ -48,7 +48,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 				CreatedUser = _userContext.GetCurrentUser(),
 				Created = DateTime.Now,
 				Field = new ListItem { Id = Guid.NewGuid(), Name = "Electrical", Type = ListItemType.CategoryElectrical, Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Job Item Category", Type = ListItemCategoryType.JobItemCategory } },
-				Location = new ListItem { Id = Guid.NewGuid(), Name = "House Calibration", Type = ListItemType.InitialWorkLocationHouseCalibration, Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Job Item Location", Type = ListItemCategoryType.JobItemLocation } },
 				InitialStatus = new ListItem { Id = Guid.NewGuid(), Name = "House Calibration", Type = ListItemType.InitialStatusHouseCalibration, Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Initial Status", Type = ListItemCategoryType.JobItemInitialStatus } },
 				Status = new ListItem { Id = Guid.NewGuid(), Name = "House Calibration", Type = ListItemType.InitialStatusHouseCalibration, Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Initial Status", Type = ListItemCategoryType.JobItemInitialStatus } },
 				Instrument = new Instrument { Id = Guid.NewGuid(), Manufacturer = "Druck", ModelNo = "DPI601IS", Range = "Not specified", Description = "Digital Pressure Gauge" },
@@ -390,11 +389,10 @@ namespace JobSystem.BusinessLogic.UnitTests
 			invoiceItemRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemForCreateFromPendingId, 0, 0, "Item invoiced on IR2000", ListItemType.StatusInvoiced, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationInvoiced));
+				_userContext.GetCurrentUser(), _jobItemForCreateFromPendingId, 0, 0, "Item invoiced on IR2000", ListItemType.StatusInvoiced, ListItemType.WorkTypeAdministration));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemForCreateFromPending)).IgnoreArguments();
 			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
 			listItemRepositoryStub.Stub(x => x.GetByType(ListItemType.StatusInvoiced)).Return(new ListItem { Id = Guid.NewGuid(), Name = "Invoiced", Type = ListItemType.StatusInvoiced });
-			listItemRepositoryStub.Stub(x => x.GetByType(ListItemType.WorkLocationInvoiced)).Return(new ListItem { Id = Guid.NewGuid(), Name = "Invoiced", Type = ListItemType.WorkLocationInvoiced });
 
 			_invoiceItemService = InvoiceItemServiceFactory.Create(
 				_userContext,
@@ -418,7 +416,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.IsNotNull(_savedInvoiceItemFromPending.Invoice);
 			Assert.IsNotNull(_savedInvoiceItemFromPending.JobItem);
 			Assert.AreEqual(ListItemType.StatusInvoiced, _jobItemForCreateFromPending.Status.Type);
-			Assert.AreEqual(ListItemType.WorkLocationInvoiced, _jobItemForCreateFromPending.Location.Type);
 		}
 
 		[Test]
@@ -440,11 +437,10 @@ namespace JobSystem.BusinessLogic.UnitTests
 			invoiceItemRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemForCreateFromPendingId, 0, 0, "Item invoiced on IR2000", ListItemType.StatusInvoiced, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationInvoiced));
+				_userContext.GetCurrentUser(), _jobItemForCreateFromPendingId, 0, 0, "Item invoiced on IR2000", ListItemType.StatusInvoiced, ListItemType.WorkTypeAdministration));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemForCreateFromPending)).IgnoreArguments();
 			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
 			listItemRepositoryStub.Stub(x => x.GetByType(ListItemType.StatusInvoiced)).Return(new ListItem { Id = Guid.NewGuid(), Name = "Invoiced", Type = ListItemType.StatusInvoiced });
-			listItemRepositoryStub.Stub(x => x.GetByType(ListItemType.WorkLocationInvoiced)).Return(new ListItem { Id = Guid.NewGuid(), Name = "Invoiced", Type = ListItemType.WorkLocationInvoiced });
 
 			_invoiceItemService = InvoiceItemServiceFactory.Create(
 				_userContext,
@@ -468,7 +464,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.IsNotNull(_savedInvoiceItemFromPending.Invoice);
 			Assert.IsNotNull(_savedInvoiceItemFromPending.JobItem);
 			Assert.AreEqual(ListItemType.StatusInvoiced, _jobItemForCreateFromPending.Status.Type);
-			Assert.AreEqual(ListItemType.WorkLocationInvoiced, _jobItemForCreateFromPending.Location.Type);
 		}
 
 		[Test]

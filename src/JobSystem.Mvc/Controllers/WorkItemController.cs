@@ -26,7 +26,6 @@ namespace JobSystem.Mvc.Controllers
 			var viewmodel = new WorkItemCreateViewModel()
 			{
 				WorkType = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemWorkType).ToSelectList(),
-				WorkLocation = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemLocation).ToSelectList(),
 				Status = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemWorkStatus).ToSelectList(),
 				JobItemId = id
 			};
@@ -47,8 +46,7 @@ namespace JobSystem.Mvc.Controllers
 						viewmodel.OverTime,
 						viewmodel.Report,
 						viewmodel.StatusId,
-						viewmodel.WorkTypeId,
-						viewmodel.WorkLocationId);
+						viewmodel.WorkTypeId);
 					return RedirectToAction("Details", "JobItem", new { Id = viewmodel.JobItemId });
 				}
 				catch (DomainValidationException dex)

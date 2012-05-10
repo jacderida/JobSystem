@@ -26,12 +26,10 @@ namespace JobSystem.DbWireup.ConsoleRunner
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.CategoryId, "Category", ListItemCategoryType.JobItemCategory),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.InitialStatusId, "Initial Status", ListItemCategoryType.JobItemInitialStatus),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.StatusId, "Status", ListItemCategoryType.JobItemStatus),
-					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.LocationId, "Location", ListItemCategoryType.JobItemLocation),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.WorkTypeId, "Work Type", ListItemCategoryType.JobItemWorkType),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.WorkStatusId, "Status", ListItemCategoryType.JobItemWorkStatus),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.CurrencyId, "Currency", ListItemCategoryType.Currency),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.PaymentTermId, "Payment Term", ListItemCategoryType.PaymentTerm),
-					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.InitialLocationId, "Initial Location", ListItemCategoryType.JobItemInitialLocation),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.CertificateId, "Certificate", ListItemCategoryType.Certificate))
 				.WithJobTypes(
 					Tuple.Create<string, ListItemType, Guid>("Lab Service", ListItemType.JobTypeField, ListCategoryIds.JobTypeId),
@@ -44,10 +42,10 @@ namespace JobSystem.DbWireup.ConsoleRunner
 					Tuple.Create<string, ListItemType, Guid>("E - Electrical", ListItemType.CategoryElectrical, ListCategoryIds.CategoryId),
 					Tuple.Create<string, ListItemType, Guid>("D - Density", ListItemType.CategoryDensity, ListCategoryIds.CategoryId),
 					Tuple.Create<string, ListItemType, Guid>("M - Mechanical", ListItemType.CategoryMechanical, ListCategoryIds.CategoryId),
-					Tuple.Create<string, ListItemType, Guid>("S - SubContract", ListItemType.CategorySubContract, ListCategoryIds.CategoryId),
+					Tuple.Create<string, ListItemType, Guid>("O - Outsource", ListItemType.CategorySubContract, ListCategoryIds.CategoryId),
 					Tuple.Create<string, ListItemType, Guid>("H - Hire", ListItemType.CategoryHire, ListCategoryIds.CategoryId),
 					Tuple.Create<string, ListItemType, Guid>("R - Resale", ListItemType.CategoryResale, ListCategoryIds.CategoryId),
-					Tuple.Create<string, ListItemType, Guid>("F - Field", ListItemType.CategoryField, ListCategoryIds.CategoryId),
+					Tuple.Create<string, ListItemType, Guid>("S - Site Services", ListItemType.CategoryField, ListCategoryIds.CategoryId),
 					Tuple.Create<string, ListItemType, Guid>("P - Pressure", ListItemType.CategoryPressure, ListCategoryIds.CategoryId))
 				.WithJobItemInitialStatusItems(
 					Tuple.Create<string, ListItemType, Guid>("UKAS Calibration", ListItemType.InitialStatusUkasCalibration, ListCategoryIds.InitialStatusId),
@@ -79,20 +77,6 @@ namespace JobSystem.DbWireup.ConsoleRunner
 					Tuple.Create<string, ListItemType, Guid>("Repair", ListItemType.WorkTypeRepair, ListCategoryIds.WorkTypeId),
 					Tuple.Create<string, ListItemType, Guid>("Investigation", ListItemType.WorkTypeInvestigation, ListCategoryIds.WorkTypeId),
 					Tuple.Create<string, ListItemType, Guid>("Administration", ListItemType.WorkTypeAdministration, ListCategoryIds.WorkTypeId))
-				.WithJobItemLocations(
-					Tuple.Create<string, ListItemType, Guid>("Completed", ListItemType.WorkLocationCompleted, ListCategoryIds.LocationId),
-					Tuple.Create<string, ListItemType, Guid>("Calibrated", ListItemType.WorkLocationCalibrated, ListCategoryIds.LocationId),
-					Tuple.Create<string, ListItemType, Guid>("Repaired", ListItemType.WorkLocationRepaired, ListCategoryIds.LocationId),
-					Tuple.Create<string, ListItemType, Guid>("Sub Contract", ListItemType.WorkLocationSubContract, ListCategoryIds.LocationId),
-					Tuple.Create<string, ListItemType, Guid>("Quoted", ListItemType.WorkLocationQuoted, ListCategoryIds.LocationId),
-					Tuple.Create<string, ListItemType, Guid>("Investigated", ListItemType.WorkLocationInvestigated, ListCategoryIds.LocationId),
-					Tuple.Create<string, ListItemType, Guid>("Invoiced", ListItemType.WorkLocationInvoiced, ListCategoryIds.LocationId))
-				.WithJobItemInitialLocations(
-					Tuple.Create<string, ListItemType, Guid>("House Calibration", ListItemType.InitialWorkLocationHouseCalibration, ListCategoryIds.InitialLocationId),
-					Tuple.Create<string, ListItemType, Guid>("UKAS Calibration", ListItemType.InitialWorkLocationUkasCalibration, ListCategoryIds.InitialLocationId),
-					Tuple.Create<string, ListItemType, Guid>("Repair", ListItemType.InitialWorkLocationRepair, ListCategoryIds.InitialLocationId),
-					Tuple.Create<string, ListItemType, Guid>("Sub Contract", ListItemType.InitialWorkLocationSubContract, ListCategoryIds.InitialLocationId),
-					Tuple.Create<string, ListItemType, Guid>("Site", ListItemType.InitialWorkLocationSite, ListCategoryIds.InitialLocationId))
 				.WithBankDetails(
 					new BankDetails { Id = defaultBankDetailsId, Name = "Bank of Scotland", ShortName = "BoS", AccountNo = "00131183", SortCode = "801653", Address1 = "High Street", Address2 = "Johnstone", Iban = "placeholder IBAN" })
 				.WithPaymentTerms(
@@ -167,12 +151,10 @@ namespace JobSystem.DbWireup.ConsoleRunner
 		public static Guid CategoryId = Guid.NewGuid();
 		public static Guid InitialStatusId = Guid.NewGuid();
 		public static Guid StatusId = Guid.NewGuid();
-		public static Guid LocationId = Guid.NewGuid();
 		public static Guid WorkTypeId = Guid.NewGuid(); 
 		public static Guid WorkStatusId = Guid.NewGuid();
 		public static Guid CurrencyId = Guid.NewGuid();
 		public static Guid PaymentTermId = Guid.NewGuid();
-		public static Guid InitialLocationId = Guid.NewGuid();
 		public static Guid CertificateId = Guid.NewGuid();
 	}
 }

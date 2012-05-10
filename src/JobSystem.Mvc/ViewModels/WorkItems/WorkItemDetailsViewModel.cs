@@ -16,7 +16,6 @@ namespace JobSystem.Mvc.ViewModels.WorkItems
 		public string Report { get; set; }
 		public string Status { get; set; }
 		public string WorkType { get; set; }
-		public string WorkLocation { get; set; }
 		public string WorkBy { get; set; }
 		public string DateCreated { get; set; }
 	}

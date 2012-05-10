@@ -87,7 +87,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item added to delivery note DR2000", ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationCompleted));
+				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item added to delivery note DR2000", ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkTypeAdministration));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate)).IgnoreArguments();
 
 			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
@@ -97,8 +97,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				deliveryRepositoryMock,
 				jobItemRepositoryMock,
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(
-					new ListItemType[] { ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkLocationCompleted}),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(new ListItemType[] { ListItemType.StatusDeliveryNoteProduced }),
 				MockRepository.GenerateStub<ICustomerRepository>());
 			CreateDeliveryItem(id, deliveryId, jobItemId, notes);
 			deliveryRepositoryMock.VerifyAllExpectations();
@@ -109,7 +108,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.IsNotNull(_savedDeliveryItem.JobItem);
 			Assert.IsNotNull(_savedDeliveryItem.QuoteItem);
 			Assert.AreEqual(ListItemType.StatusDeliveryNoteProduced, _jobItemToUpdate.Status.Type);
-			Assert.AreEqual(ListItemType.WorkLocationCompleted, _jobItemToUpdate.Location.Type);
 		}
 
 		[Test]
@@ -125,7 +123,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item added to delivery note DR2000", ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationCompleted));
+				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item added to delivery note DR2000", ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkTypeAdministration));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate)).IgnoreArguments();
 
 			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
@@ -135,8 +133,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				deliveryRepositoryMock,
 				jobItemRepositoryMock,
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(
-					new ListItemType[] { ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkLocationCompleted }),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(new ListItemType[] { ListItemType.StatusDeliveryNoteProduced }),
 				MockRepository.GenerateStub<ICustomerRepository>());
 			CreateDeliveryItem(id, deliveryId, jobItemId, notes);
 			deliveryRepositoryMock.VerifyAllExpectations();
@@ -147,7 +144,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.IsNotNull(_savedDeliveryItem.JobItem);
 			Assert.IsNotNull(_savedDeliveryItem.QuoteItem);
 			Assert.AreEqual(ListItemType.StatusDeliveryNoteProduced, _jobItemToUpdate.Status.Type);
-			Assert.AreEqual(ListItemType.WorkLocationCompleted, _jobItemToUpdate.Location.Type);
 		}
 
 		[Test]
@@ -163,7 +159,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item added to delivery note DR2000", ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationCompleted));
+				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item added to delivery note DR2000", ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkTypeAdministration));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate)).IgnoreArguments();
 
 			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
@@ -173,8 +169,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				deliveryRepositoryMock,
 				jobItemRepositoryMock,
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsNull(jobItemId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(
-					new ListItemType[] { ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkLocationCompleted }),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(new ListItemType[] { ListItemType.StatusDeliveryNoteProduced }),
 				MockRepository.GenerateStub<ICustomerRepository>());
 			CreateDeliveryItem(id, deliveryId, jobItemId, notes);
 			deliveryRepositoryMock.VerifyAllExpectations();
@@ -185,7 +180,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.IsNotNull(_savedDeliveryItem.JobItem);
 			Assert.IsNull(_savedDeliveryItem.QuoteItem);
 			Assert.AreEqual(ListItemType.StatusDeliveryNoteProduced, _jobItemToUpdate.Status.Type);
-			Assert.AreEqual(ListItemType.WorkLocationCompleted, _jobItemToUpdate.Location.Type);
 		}
 
 		[Test]
@@ -204,8 +198,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IDeliveryItemRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(
-					new ListItemType[] { ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkLocationCompleted }),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(new ListItemType[] { ListItemType.StatusDeliveryNoteProduced }),
 				MockRepository.GenerateStub<ICustomerRepository>());
 			CreateDeliveryItem(id, deliveryId, jobItemId, notes);
 		}
@@ -226,8 +219,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IDeliveryItemRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsNull(jobItemId),
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(
-					new ListItemType[] { ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkLocationCompleted }),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(new ListItemType[] { ListItemType.StatusDeliveryNoteProduced }),
 				MockRepository.GenerateStub<ICustomerRepository>());
 			CreateDeliveryItem(id, deliveryId, jobItemId, notes);
 		}
@@ -247,8 +239,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IDeliveryItemRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItemOnPendingJob(jobItemId),
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(
-					new ListItemType[] { ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkLocationCompleted }),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(new ListItemType[] { ListItemType.StatusDeliveryNoteProduced }),
 				MockRepository.GenerateStub<ICustomerRepository>());
 			CreateDeliveryItem(id, deliveryId, jobItemId, notes);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(DeliveryItemMessages.JobPending));
@@ -270,8 +261,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IDeliveryItemRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(
-					new ListItemType[] { ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkLocationCompleted }),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(new ListItemType[] { ListItemType.StatusDeliveryNoteProduced }),
 				MockRepository.GenerateStub<ICustomerRepository>());
 			CreateDeliveryItem(id, deliveryId, jobItemId, notes);
 		}
@@ -291,8 +281,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IDeliveryItemRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(
-					new ListItemType[] { ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkLocationCompleted }),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(new ListItemType[] { ListItemType.StatusDeliveryNoteProduced }),
 				MockRepository.GenerateStub<ICustomerRepository>());
 			CreateDeliveryItem(id, deliveryId, jobItemId, notes);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(DeliveryItemMessages.InvalidNotes));
@@ -313,8 +302,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IDeliveryItemRepository>(),
 				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(
-					new ListItemType[] { ListItemType.StatusDeliveryNoteProduced, ListItemType.WorkLocationCompleted }),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetByType_ReturnsListItem(new ListItemType[] { ListItemType.StatusDeliveryNoteProduced }),
 				MockRepository.GenerateStub<ICustomerRepository>());
 			CreateDeliveryItem(id, deliveryId, jobItemId, notes);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(DeliveryItemMessages.InsufficientSecurityClearance));

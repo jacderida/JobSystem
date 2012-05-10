@@ -9,8 +9,6 @@ namespace JobSystem.DbWireup
 		private List<ListItemCategory> _listItemCategories;
 		private List<Tuple<Guid, ListItem>> _jobTypes;
 		private List<Tuple<Guid, ListItem>> _cerificateTypes;
-		private List<Tuple<Guid, ListItem>> _jobItemLocations;
-		private List<Tuple<Guid, ListItem>> _jobItemInitialLocations;
 		private List<Tuple<Guid, ListItem>> _jobItemWorkStatusItems;
 		private List<Tuple<Guid, ListItem>> _jobItemInitialStatusItems;
 		private List<Tuple<Guid, ListItem>> _jobItemStatusItems;
@@ -28,8 +26,6 @@ namespace JobSystem.DbWireup
 			_listItemCategories = new List<ListItemCategory>();
 			_jobTypes = new List<Tuple<Guid, ListItem>>();
 			_cerificateTypes = new List<Tuple<Guid, ListItem>>();
-			_jobItemLocations = new List<Tuple<Guid, ListItem>>();
-			_jobItemInitialLocations = new List<Tuple<Guid, ListItem>>();
 			_jobItemWorkStatusItems = new List<Tuple<Guid, ListItem>>();
 			_jobItemInitialStatusItems = new List<Tuple<Guid, ListItem>>();
 			_jobItemStatusItems = new List<Tuple<Guid, ListItem>>();
@@ -48,8 +44,6 @@ namespace JobSystem.DbWireup
 			_listItemCategories.ForEach(c => defaultData.ListItemCategories.Add(c));
 			_jobTypes.ForEach(jt => defaultData.JobTypes.Add(jt));
 			_cerificateTypes.ForEach(ct => defaultData.CertificateTypes.Add(ct));
-			_jobItemLocations.ForEach(jil => defaultData.JobItemLocations.Add(jil));
-			_jobItemInitialLocations.ForEach(i => defaultData.JobItemInitialLocations.Add(i));
 			_jobItemWorkStatusItems.ForEach(si => defaultData.JobItemWorkStatusItems.Add(si));
 			_jobItemInitialStatusItems.ForEach(si => defaultData.JobItemInitialStatusItems.Add(si));
 			_jobItemStatusItems.ForEach(si => defaultData.JobItemStatusItems.Add(si));
@@ -83,22 +77,6 @@ namespace JobSystem.DbWireup
 			foreach (var type in jobTypes)
 				_jobTypes.Add(
 					Tuple.Create<Guid, ListItem>(type.Item3,  new ListItem { Id = Guid.NewGuid(), Name = type.Item1, Type = type.Item2 }));
-			return this;
-		}
-
-		public JobSystemDefaultDataBuilder WithJobItemInitialLocations(params Tuple<string, ListItemType, Guid>[] workLocations)
-		{
-			foreach (var location in workLocations)
-				_jobItemInitialLocations.Add(
-					Tuple.Create<Guid, ListItem>(location.Item3, new ListItem { Id = Guid.NewGuid(), Name = location.Item1, Type = location.Item2 }));
-			return this;
-		}
-
-		public JobSystemDefaultDataBuilder WithJobItemLocations(params Tuple<string, ListItemType, Guid>[] workLocations)
-		{
-			foreach (var location in workLocations)
-				_jobItemLocations.Add(
-					Tuple.Create<Guid, ListItem>(location.Item3, new ListItem { Id = Guid.NewGuid(), Name = location.Item1, Type = location.Item2 }));
 			return this;
 		}
 

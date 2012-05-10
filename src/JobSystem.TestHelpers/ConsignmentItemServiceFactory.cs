@@ -114,14 +114,6 @@ namespace JobSystem.TestHelpers
 					Type = ListItemType.StatusConsigned,
 					Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Status", Type = ListItemCategoryType.JobItemStatus }
 				});
-			listItemRepositoryStub.Stub(x => x.GetByType(ListItemType.WorkLocationSubContract)).Return(
-				new ListItem
-				{
-					Id = Guid.NewGuid(),
-					Name = "Sub Contract",
-					Type = ListItemType.WorkLocationSubContract,
-					Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Status", Type = ListItemCategoryType.JobItemLocation }
-				});
 			return listItemRepositoryStub;
 		}
 

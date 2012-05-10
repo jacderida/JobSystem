@@ -21,7 +21,6 @@ namespace JobSystem.DataModel.Entities
 		public virtual UserAccount CreatedUser { get; set; }
 		public virtual ListItem InitialStatus { get; set; }
 		public virtual ListItem Status { get; set; }
-		public virtual ListItem Location { get; set; }
 		public virtual ListItem Field { get; set; }
 		public virtual int CalPeriod { get; set; }
 		[StringLength(255, ErrorMessageResourceName = "InstructionsTooLarge", ErrorMessageResourceType = typeof(Messages))]

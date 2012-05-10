@@ -107,8 +107,14 @@ namespace JobSystem.Mvc.Controllers
 		[Transaction]
 		public ActionResult ConvertToOrder(Guid id)
 		{
-			_orderService.CreateOrderFromConsignment(id);
-
+			try
+			{
+				_orderService.CreateOrderFromConsignment(id);
+			}
+			catch (DomainValidationException dex)
+			{
+				ModelState.UpdateFromDomain(dex.Result);
+			}
 			return RedirectToAction("ActiveConsignments", "Consignment");
 		}
 

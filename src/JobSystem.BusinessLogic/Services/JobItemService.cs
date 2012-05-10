@@ -33,7 +33,7 @@ namespace JobSystem.BusinessLogic.Services
 		}
 
 		public JobItem CreateJobItem(
-			Guid jobId, Guid jobItemId, Guid instrumentId, string serialNo, string assetNo, Guid initialStatusId, Guid locationId, Guid fieldId, int calPeriod,
+			Guid jobId, Guid jobItemId, Guid instrumentId, string serialNo, string assetNo, Guid initialStatusId, Guid fieldId, int calPeriod,
 			string instructions, string accessories, bool isReturned, string returnReason, string comments)
 		{
 			if (jobItemId == Guid.Empty)
@@ -49,7 +49,6 @@ namespace JobSystem.BusinessLogic.Services
 				AssetNo = assetNo,
 				InitialStatus = _listItemService.GetById(initialStatusId),
 				Status = _listItemService.GetByName("Booked In"),
-				Location = _listItemService.GetById(locationId),
 				Field = _listItemService.GetById(fieldId),
 				CalPeriod = ValidateCalPeriod(calPeriod),
 				Instructions = instructions,
@@ -66,20 +65,18 @@ namespace JobSystem.BusinessLogic.Services
 			return jobItem;
 		}
 
-		public JobItem AddWorkItem(Guid jobItemId, int workTime, int overTime, string report, Guid workStatusId, Guid workTypeId, Guid workLocationId)
+		public JobItem AddWorkItem(Guid jobItemId, int workTime, int overTime, string report, Guid workStatusId, Guid workTypeId)
 		{
 			var jobItem = GetById(jobItemId);
 			if (jobItem == null)
 				throw new ArgumentException("A valid job item ID must be supplied.");
 			var status = ValidateWorkStatus(workStatusId);
 			var workType = ValidateWorkType(workTypeId);
-			var workLocation = ValidateWorkLocation(workLocationId);
 			workTime = ValidateWorkTime(workTime);
 			overTime = ValidateOverTime(overTime);
 			report = ValidateReport(report);
 			jobItem.Status = status;
-			jobItem.Location = workLocation;
-			_jobItemRepository.EmitItemHistory(CurrentUser, jobItemId, workTime, overTime, report, status.Type, workType.Type, workLocation.Type);
+			_jobItemRepository.EmitItemHistory(CurrentUser, jobItemId, workTime, overTime, report, status.Type, workType.Type);
 			_jobItemRepository.Update(jobItem);
 			return jobItem;
 		}
@@ -135,14 +132,6 @@ namespace JobSystem.BusinessLogic.Services
 			var workType = _listItemService.GetById(workTypeId);
 			if (workType.Category.Type != ListItemCategoryType.JobItemWorkType)
 				throw new DomainValidationException(Messages.InvalidWorkTypeCategory, "WorkTypeId");
-			return workType;
-		}
-
-		private ListItem ValidateWorkLocation(Guid workLocationId)
-		{
-			var workType = _listItemService.GetById(workLocationId);
-			if (workType.Category.Type != ListItemCategoryType.JobItemLocation)
-				throw new DomainValidationException(Messages.InvalidWorkLocationCategory, "WorkLocationId");
 			return workType;
 		}
 

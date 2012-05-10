@@ -49,57 +49,48 @@ namespace JobSystem.TestHelpers.IntegrationHelpers
 			jobItemService.CreateJobItem(
 				job1Id, jobItem1Id, instrumentId, "12345", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobItemService.CreateJobItem(
 				job1Id, jobItem2Id, instrumentId, "123456", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobItemService.CreateJobItem(
 				job1Id, jobItem3Id, instrumentId, "123457", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobItemService.CreateJobItem(
 				job1Id, jobItem4Id, instrumentId, "12345", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 
 			jobItemService.CreateJobItem(
 				job2Id, jobItem5Id, instrumentId, "12345", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobItemService.CreateJobItem(
 				job2Id, jobItem6Id, instrumentId, "123456", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobItemService.CreateJobItem(
 				job2Id, jobItem7Id, instrumentId, "123457", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 
 			jobItemService.CreateJobItem(
 				job3Id, jobItem8Id, instrumentId, "12345", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobItemService.CreateJobItem(
 				job3Id, jobItem9Id, instrumentId, "123456", String.Empty,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus).First().Id,
-				listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialLocation).First().Id,
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id,
 				12, "instructions", String.Empty, false, String.Empty, String.Empty);
 			jobService.ApproveJob(job1Id);

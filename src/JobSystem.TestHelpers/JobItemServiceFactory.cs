@@ -23,43 +23,42 @@ namespace JobSystem.TestHelpers
 				dispatcher);
 		}
 
-		public static JobItemService Create(
-			Guid jobId, Guid instrumentId, Guid initialStatusId, Guid locationId, Guid fieldId, int jobItemCount)
+		public static JobItemService Create(Guid jobId, Guid instrumentId, Guid initialStatusId, Guid fieldId, int jobItemCount)
 		{
 			return Create(
-				MockRepository.GenerateMock<IJobItemRepository>(), jobId, instrumentId, initialStatusId, locationId, fieldId, jobItemCount,
+				MockRepository.GenerateMock<IJobItemRepository>(), jobId, instrumentId, initialStatusId, fieldId, jobItemCount,
 				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
 		}
 
 		public static JobItemService Create(
-			IJobItemRepository jobItemRepository, Guid jobId, Guid instrumentId, Guid initialStatusId, Guid locationId, Guid fieldId, int jobItemCount)
+			IJobItemRepository jobItemRepository, Guid jobId, Guid instrumentId, Guid initialStatusId, Guid fieldId, int jobItemCount)
 		{
 			return Create(
-				jobItemRepository, jobId, instrumentId, initialStatusId, locationId, fieldId, jobItemCount,
+				jobItemRepository, jobId, instrumentId, initialStatusId, fieldId, jobItemCount,
 				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
 		}
 
 		public static JobItemService Create(
-			IJobItemRepository jobItemRepository, Guid jobId, Guid instrumentId, Guid initialStatusId, Guid locationId, Guid fieldId, int jobItemCount, IUserContext userContext)
+			IJobItemRepository jobItemRepository, Guid jobId, Guid instrumentId, Guid initialStatusId, Guid fieldId, int jobItemCount, IUserContext userContext)
 		{
 			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
 			return new JobItemService(
 				userContext,
 				GetJobRepository(jobId, jobItemCount),
 				jobItemRepository,
-				new ListItemService(userContext, GetListItemRepository(initialStatusId, locationId, fieldId), dispatcher),
+				new ListItemService(userContext, GetListItemRepository(initialStatusId, fieldId), dispatcher),
 				new InstrumentService(userContext, GetInstrumentRepository(instrumentId), dispatcher),
 				dispatcher);
 		}
 
-		public static JobItemService CreateForAddWorkItem(IJobItemRepository jobItemRepository, Guid workStatusId, Guid workLocationId, Guid workTypeId, IUserContext userContext)
+		public static JobItemService CreateForAddWorkItem(IJobItemRepository jobItemRepository, Guid workStatusId, Guid workTypeId, IUserContext userContext)
 		{
 			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
 			return new JobItemService(
 				userContext,
 				MockRepository.GenerateStub<IJobRepository>(),
 				jobItemRepository,
-				new ListItemService(userContext, GetListItemRepositoryForAddWorkItem(workStatusId, workTypeId, workLocationId), dispatcher),
+				new ListItemService(userContext, GetListItemRepositoryForAddWorkItem(workStatusId, workTypeId), dispatcher),
 				new InstrumentService(userContext, MockRepository.GenerateStub<IInstrumentRepository>(), dispatcher),
 				dispatcher);
 		}
@@ -118,7 +117,7 @@ namespace JobSystem.TestHelpers
 				dispatcher);
 		}
 
-		public static IListItemRepository GetListItemRepositoryForAddWorkItem(Guid workStatusId, Guid workTypeId, Guid workLocationId)
+		public static IListItemRepository GetListItemRepositoryForAddWorkItem(Guid workStatusId, Guid workTypeId)
 		{
 			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
 			if (workStatusId != Guid.Empty)
@@ -129,10 +128,6 @@ namespace JobSystem.TestHelpers
 				listItemRepositoryStub.Stub(x => x.GetById(workTypeId)).Return(GetAddWorkItemWorkType(workTypeId));
 			else
 				listItemRepositoryStub.Stub(x => x.GetById(workTypeId)).Return(null);
-			if (workLocationId != Guid.Empty)
-				listItemRepositoryStub.Stub(x => x.GetById(workLocationId)).Return(GetAddWorkItemWorkLocation(workLocationId));
-			else
-				listItemRepositoryStub.Stub(x => x.GetById(workLocationId)).Return(null);
 			return listItemRepositoryStub;
 		}
 
@@ -168,22 +163,6 @@ namespace JobSystem.TestHelpers
 			};
 		}
 
-		public static ListItem GetAddWorkItemWorkLocation(Guid workLocationId)
-		{
-			return new ListItem
-			{
-				Id = workLocationId,
-				Name = "Completed",
-				Type = ListItemType.WorkLocationCalibrated,
-				Category = new ListItemCategory
-				{
-					Id = Guid.NewGuid(),
-					Name = "Location",
-					Type = ListItemCategoryType.JobItemLocation
-				}
-			};
-		}
-
 		private static IJobRepository GetJobRepository(Guid jobId, int jobItemCount)
 		{
 			var jobRepository = MockRepository.GenerateStub<IJobRepository>();
@@ -205,17 +184,13 @@ namespace JobSystem.TestHelpers
 			return instrumentRepositoryStub;
 		}
 
-		private static IListItemRepository GetListItemRepository(Guid initialStatusId, Guid locationId, Guid fieldId)
+		private static IListItemRepository GetListItemRepository(Guid initialStatusId, Guid fieldId)
 		{
 			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
 			if (initialStatusId != Guid.Empty)
 				listItemRepositoryStub.Stub(x => x.GetById(initialStatusId)).Return(GetInitialStatus(initialStatusId));
 			else
 				listItemRepositoryStub.Stub(x => x.GetById(initialStatusId)).Return(null);
-			if (locationId != Guid.Empty)
-				listItemRepositoryStub.Stub(x => x.GetById(locationId)).Return(GetLocation(locationId));
-			else
-				listItemRepositoryStub.Stub(x => x.GetById(locationId)).Return(null);
 			if (fieldId != Guid.Empty)
 				listItemRepositoryStub.Stub(x => x.GetById(fieldId)).Return(GetField(fieldId));
 			else
@@ -301,16 +276,6 @@ namespace JobSystem.TestHelpers
 				Id = initialStatusId,
 				Name = "UKAS Calibration",
 				Type = ListItemType.InitialStatusUkasCalibration
-			};
-		}
-
-		private static ListItem GetLocation(Guid locationId)
-		{
-			return new ListItem
-			{
-				Id = locationId,
-				Name = "Calibrated",
-				Type = ListItemType.WorkLocationCalibrated
 			};
 		}
 

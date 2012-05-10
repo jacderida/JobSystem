@@ -56,9 +56,8 @@ namespace JobSystem.BusinessLogic.Services
 				Instructions = instructions
 			};
 			jobItem.Status = _listItemRepository.GetByType(ListItemType.StatusConsigned);
-			jobItem.Location = _listItemRepository.GetByType(ListItemType.WorkLocationSubContract);
 			ValidateAnnotatedObjectThrowOnFailure(consignmentItem);
-			_jobItemRepository.EmitItemHistory(CurrentUser, jobItemId, 0, 0, String.Empty, ListItemType.StatusConsigned, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationSubContract);
+			_jobItemRepository.EmitItemHistory(CurrentUser, jobItemId, 0, 0, String.Empty, ListItemType.StatusConsigned, ListItemType.WorkTypeAdministration);
 			_consignmentItemRepository.Create(consignmentItem);
 			_jobItemRepository.Update(jobItem);
 			return consignmentItem;

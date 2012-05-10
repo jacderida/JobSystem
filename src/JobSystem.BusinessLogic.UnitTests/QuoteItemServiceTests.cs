@@ -205,7 +205,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item quoted on QR2000", ListItemType.StatusQuotedPrepared, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationQuoted));
+				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item quoted on QR2000", ListItemType.StatusQuotedPrepared, ListItemType.WorkTypeAdministration));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate)).IgnoreArguments();
 
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
@@ -223,7 +223,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.AreEqual(1, _savedQuoteItem.ItemNo);
 			Assert.AreEqual(ListItemType.StatusQuotedPrepared, _savedQuoteItem.Status.Type);
 			Assert.AreEqual(ListItemType.StatusQuotedPrepared, _jobItemToUpdate.Status.Type);
-			Assert.AreEqual(ListItemType.WorkLocationQuoted, _jobItemToUpdate.Location.Type);
 		}
 
 		[Test]
@@ -245,7 +244,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item quoted on QR2000", ListItemType.StatusQuotedPrepared, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationQuoted));
+				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item quoted on QR2000", ListItemType.StatusQuotedPrepared, ListItemType.WorkTypeAdministration));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate)).IgnoreArguments();
 
 			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
@@ -263,7 +262,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.AreEqual(2, _savedQuoteItem.ItemNo);
 			Assert.AreEqual(ListItemType.StatusQuotedPrepared, _savedQuoteItem.Status.Type);
 			Assert.AreEqual(ListItemType.StatusQuotedPrepared, _jobItemToUpdate.Status.Type);
-			Assert.AreEqual(ListItemType.WorkLocationQuoted, _jobItemToUpdate.Location.Type);
 		}
 
 		[Test]
@@ -1868,7 +1866,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item accepted on quote QR2000", ListItemType.StatusQuoteAccepted, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationQuoted));
+				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item accepted on quote QR2000", ListItemType.StatusQuoteAccepted, ListItemType.WorkTypeAdministration));
 			var quoteItemRepositoryMock = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryMock.Stub(x => x.GetById(_quoteItemForAcceptId)).Return(_quoteItemForAccept);
 			quoteItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
@@ -1943,7 +1941,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item rejected on quote QR2000", ListItemType.StatusQuoteRejected, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationQuoted));
+				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item rejected on quote QR2000", ListItemType.StatusQuoteRejected, ListItemType.WorkTypeAdministration));
 			var quoteItemRepositoryMock = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryMock.Stub(x => x.GetById(_quoteItemForRejectId)).Return(_quoteItemForReject);
 			quoteItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();

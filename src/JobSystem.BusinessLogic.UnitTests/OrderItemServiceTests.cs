@@ -63,13 +63,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				},
 				CalPeriod = 12,
 				Created = DateTime.UtcNow,
-				CreatedUser = _userContext.GetCurrentUser(),
-				Location = new ListItem
-				{
-					Id = Guid.NewGuid(),
-					Name = "Calibrated",
-					Type = ListItemType.WorkLocationCalibrated
-				}
+				CreatedUser = _userContext.GetCurrentUser()
 			};
 			_orderItemForEditId = Guid.NewGuid();
 			_orderItemForEdit = new OrderItem
@@ -174,7 +168,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item on order OR2000", ListItemType.StatusAwaitingParts, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationCalibrated));
+				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item on order OR2000", ListItemType.StatusAwaitingParts, ListItemType.WorkTypeAdministration));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate)).IgnoreArguments();
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
@@ -211,7 +205,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item on order OR2000", ListItemType.StatusAwaitingParts, ListItemType.WorkTypeAdministration, ListItemType.WorkLocationCalibrated));
+				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item on order OR2000", ListItemType.StatusAwaitingParts, ListItemType.WorkTypeAdministration));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate)).IgnoreArguments();
 
 			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(

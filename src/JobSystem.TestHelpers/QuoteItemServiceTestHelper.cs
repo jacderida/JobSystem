@@ -58,7 +58,6 @@ namespace JobSystem.TestHelpers
 		{
 			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
 			listItemRepositoryStub.Stub(x => x.GetByType(ListItemType.StatusQuotedPrepared)).Return(GetQuotePreparedListItem());
-			listItemRepositoryStub.Stub(x => x.GetByType(ListItemType.WorkLocationQuoted)).Return(GetQuotedLocationListItem());
 			return listItemRepositoryStub;
 		}
 
@@ -124,17 +123,6 @@ namespace JobSystem.TestHelpers
 				Name = "Quote Prepared",
 				Type = ListItemType.StatusQuotedPrepared,
 				Category = new ListItemCategory { Id = Guid.NewGuid(), Type = ListItemCategoryType.JobItemStatus, Name = "Job Item Status" }
-			};
-		}
-
-		private static ListItem GetQuotedLocationListItem()
-		{
-			return new ListItem
-			{
-				Id = Guid.NewGuid(),
-				Name = "Quoted",
-				Type = ListItemType.WorkLocationQuoted,
-				Category = new ListItemCategory { Id = Guid.NewGuid(), Type = ListItemCategoryType.JobItemLocation, Name = "Job Item Location" }
 			};
 		}
 

@@ -59,7 +59,7 @@
 						report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("en-US");
 						report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("en-US");
 						report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("en-US");
-						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-US");
 						break;
 					}
 				case JobSystem.DataModel.Entities.ListItemType.CurrencyEuro:
@@ -70,7 +70,7 @@
 						report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
 						report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
 						report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
-						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
 						break;
 					}
 				default:
