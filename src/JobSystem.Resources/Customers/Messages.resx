@@ -132,6 +132,9 @@
   <data name="DuplicateName" xml:space="preserve">
     <value>A customer with this name already exists</value>
   </data>
+  <data name="InsufficientSecurityClearance" xml:space="preserve">
+    <value>A member role is required to perform this operation</value>
+  </data>
   <data name="InvoiceTitleTooLarge" xml:space="preserve">
     <value>The invoice title cannot exceed 255 characters</value>
   </data>

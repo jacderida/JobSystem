@@ -8,5 +8,6 @@ namespace JobSystem.DataModel.Repositories
 	{
 		Customer GetByName(string name);
 		IEnumerable<Customer> GetCustomers();
+		IEnumerable<Customer> SearchByKeyword(string keyword);
 	}
 }
