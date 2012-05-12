@@ -75,6 +75,13 @@ namespace JobSystem.BusinessLogic.Services
 			return _certificateRepository.GetCertificatesForJobItem(jobItemId);
 		}
 
+		public IEnumerable<Certificate> SearchByKeyword(string keyword)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			return _certificateRepository.SearchByKeyword(keyword);
+		}
+
 		private JobItem GetJobItem(Guid jobItemId)
 		{
 			var jobItem = _jobItemRepository.GetById(jobItemId);

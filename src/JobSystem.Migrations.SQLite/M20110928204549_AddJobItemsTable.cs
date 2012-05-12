@@ -20,7 +20,6 @@ namespace JobSystem.Migrations.SqlLite
 				.WithColumn("CreatedUserId").AsGuid().NotNullable()
 				.WithColumn("InitialStatusId").AsGuid().NotNullable()
 				.WithColumn("StatusId").AsGuid().NotNullable()
-				.WithColumn("LocationId").AsGuid().NotNullable()
 				.WithColumn("FieldId").AsGuid().NotNullable()
 				.WithColumn("CalPeriod").AsInt32().NotNullable()
 				.WithColumn("Instructions").AsString(255).Nullable()
@@ -57,11 +56,6 @@ namespace JobSystem.Migrations.SqlLite
 				.FromTable("JobItems")
 				.ForeignColumn("InstrumentId")
 				.ToTable("Instruments")
-				.PrimaryColumn("Id");
-			Create.ForeignKey("FK_JobItems_ItemLocation")
-				.FromTable("JobItems")
-				.ForeignColumn("LocationId")
-				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_JobItems_UserAccounts")
 				.FromTable("JobItems")
