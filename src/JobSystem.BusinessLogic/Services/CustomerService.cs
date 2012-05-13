@@ -96,6 +96,13 @@ namespace JobSystem.BusinessLogic.Services
 			return _customerRepository.GetCustomers();
 		}
 
+		public IEnumerable<Customer> SearchByKeyword(string keyword)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _customerRepository.SearchByKeyword(keyword);
+		}
+
 		#endregion
 		#region Private Implementation
 

@@ -34,10 +34,14 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.WorkTypeId, "Work Type", ListItemCategoryType.JobItemWorkType),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.WorkStatusId, "Status", ListItemCategoryType.JobItemWorkStatus),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.CurrencyId, "Currency", ListItemCategoryType.Currency),
-					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.PaymentTermId, "Payment Term", ListItemCategoryType.PaymentTerm))
+					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.PaymentTermId, "Payment Term", ListItemCategoryType.PaymentTerm),
+						Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.CertificateId, "Certificate", ListItemCategoryType.Certificate))
 				.WithJobTypes(
 					Tuple.Create<string, ListItemType, Guid>("Lab Service", ListItemType.JobTypeField, ListCategoryIds.JobTypeId),
 					Tuple.Create<string, ListItemType, Guid>("Field Service", ListItemType.JobTypeService, ListCategoryIds.JobTypeId))
+				.WithCertificateTypes(
+					Tuple.Create<string, ListItemType, Guid>("House", ListItemType.CertificateTypeHouse, ListCategoryIds.CertificateId),
+					Tuple.Create<string, ListItemType, Guid>("UKAS", ListItemType.CertificateTypeUkas, ListCategoryIds.CertificateId))
 				.WithJobItemCategories(
 					Tuple.Create<string, ListItemType, Guid>("T - Temperature", ListItemType.CategoryTemperature, ListCategoryIds.CategoryId),
 					Tuple.Create<string, ListItemType, Guid>("E - Electrical", ListItemType.CategoryElectrical, ListCategoryIds.CategoryId),
@@ -91,8 +95,8 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 					new TaxCode { Id = Guid.NewGuid(), TaxCodeName = "T0", Rate = 0, Description = "No VAT" },
 					new TaxCode { Id = defaultTaxCodeId, TaxCodeName = "T1", Rate = 0.20, Description = "VAT at 20%" })
 				.WithEntitySeeds(
-					Tuple.Create<Type, int, string>(typeof(Job), 2000, "JR"));
-					//Tuple.Create<Type, int, string>(typeof(Consignment), 2000, "CR"));
+					Tuple.Create<Type, int, string>(typeof(Job), 2000, "JR"),
+					Tuple.Create<Type, int, string>(typeof(Certificate), 2000, "CERT"));
 			var defaultData = builder.Build();
 			try
 			{
@@ -161,5 +165,6 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 		public static Guid CurrencyId = Guid.NewGuid();
 		public static Guid PaymentTermId = Guid.NewGuid();
 		public static Guid InitialLocationId = Guid.NewGuid();
+		public static Guid CertificateId = Guid.NewGuid();
 	}
 }

@@ -8,5 +8,6 @@ namespace JobSystem.DataModel.Repositories
 	{
 		IEnumerable<Certificate> GetCertificates();
 		IEnumerable<Certificate> GetCertificatesForJobItem(Guid jobItemId);
+		IEnumerable<Certificate> SearchByKeyword(string keyword);
 	}
 }

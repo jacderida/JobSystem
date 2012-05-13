@@ -18,7 +18,6 @@ namespace JobSystem.Migrations.SqlLite
 				.WithColumn("OverTime").AsInt32().NotNullable().WithDefaultValue(0)
 				.WithColumn("Report").AsString(255).Nullable()
 				.WithColumn("StatusId").AsGuid().NotNullable()
-				.WithColumn("WorkLocationId").AsGuid().NotNullable()
 				.WithColumn("UserId").AsGuid().NotNullable();
 			Create.ForeignKey("FK_ItemHistory_Status")
 				.FromTable("ItemHistories")
@@ -29,11 +28,6 @@ namespace JobSystem.Migrations.SqlLite
 				.FromTable("ItemHistories")
 				.ForeignColumn("JobItemId")
 				.ToTable("JobItems")
-				.PrimaryColumn("Id");
-			Create.ForeignKey("FK_ItemHistory_WorkLocation")
-				.FromTable("ItemHistories")
-				.ForeignColumn("WorkLocationId")
-				.ToTable("ListItems")
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_ItemHistory_WorkType")
 				.FromTable("ItemHistories")
