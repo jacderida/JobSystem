@@ -1,16 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
-using JobSystem.DataAccess.NHibernate.Web;
+using JobSystem.DataAccess.NHibernate;
 using JobSystem.DataModel.Entities;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.Certificates;
 using JobSystem.Mvc.ViewModels.TestStandards;
-using JobSystem.DataModel;
-using JobSystem.DataAccess.NHibernate;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -88,6 +87,29 @@ namespace JobSystem.Mvc.Controllers
 				}
 			}
 			return PartialView("_Create", viewmodel);
+		}
+
+		[HttpPost]
+		public ActionResult SearchByKeyword(string keyword)
+		{
+			IEnumerable<Certificate> certificates = _certificateService.SearchByKeyword(keyword);
+
+			var certificateViewModels = new List<CertificateIndexViewModel>();
+
+			foreach (var cert in certificates)
+			{
+				certificateViewModels.Add(new CertificateIndexViewModel(){
+					CertificateNo = cert.CertificateNumber,
+					CreatedBy = cert.CreatedBy.Name,
+					DateCreated = cert.DateCreated.ToLongDateString() + ' ' + cert.DateCreated.ToShortTimeString(),
+					Id = cert.Id,
+					JobItemNo = cert.JobItem.ItemNo.ToString(),
+					JobNo = cert.JobItem.Job.JobNo,
+					TypeName = cert.Type.Name
+				});
+			}
+
+			return PartialView("_SearchResults", certificateViewModels);
 		}
 	}
 }

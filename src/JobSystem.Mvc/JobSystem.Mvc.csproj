@@ -442,6 +442,7 @@
     <Content Include="Views\Consignment\ActiveConsignments.cshtml" />
     <Content Include="Views\Certificate\_Create.cshtml" />
     <Content Include="Views\Certificate\Index.cshtml" />
+    <Content Include="Views\Certificate\_SearchResults.cshtml" />
     <None Include="Views\Consignment\PendingConsignments.cshtml" />
     <Content Include="Views\WorkItem\_Details.cshtml" />
     <Content Include="Views\Order\PendingOrders.cshtml" />

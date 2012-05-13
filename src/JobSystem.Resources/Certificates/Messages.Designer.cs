@@ -79,6 +79,15 @@ namespace JobSystem.Resources.Certificates {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your search didn&apos;t match any Certificates.
+        /// </summary>
+        public static string NoCertResults {
+            get {
+                return ResourceManager.GetString("NoCertResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The procedure list cannot exceed 255 characters.
         /// </summary>
         public static string ProcedureListTooLarge {

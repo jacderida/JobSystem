@@ -3,7 +3,7 @@
  {
 	 var curItem = Model.WorkItems[i];
 		<li class="work-item-list-item" id="@i">
-			<h3>Work Item @i</h3>
+			<h3>@curItem.WorkType</h3>
 			<span>@curItem.Status</span><br />
 			<span class="smallText">@curItem.DateCreated</span>
 			<div class="work-item-details" id="work-item-@i">

@@ -123,6 +123,9 @@
   <data name="NoCertificates" xml:space="preserve">
     <value>There are currently no certificates</value>
   </data>
+  <data name="NoCertResults" xml:space="preserve">
+    <value>Your search didn't match any Certificates</value>
+  </data>
   <data name="ProcedureListTooLarge" xml:space="preserve">
     <value>The procedure list cannot exceed 255 characters</value>
   </data>

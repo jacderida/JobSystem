@@ -1,0 +1,54 @@
+﻿@model List<JobSystem.Mvc.ViewModels.Certificates.CertificateIndexViewModel>
+@{
+    ViewBag.Title = "Certificates";
+}
+
+@if (Model.Any()) {
+	<table>
+		<tr>
+			<th>Certificate Number</th>
+			<th>Created By</th>
+			<th>Date Created</th>
+			<th>Job No</th>
+			<th>Type</th>
+			@*<th>Standards</th>*@
+		</tr>
+	@foreach (var item in Model.OrderBy(g => g.JobNo))
+	 {
+			<tr>
+				<td>
+					@item.CertificateNo
+				</td>
+				<td>
+					@item.CreatedBy
+				</td>
+				<td>
+					@item.DateCreated
+				</td>
+				<td>
+					@item.JobNo (item @item.JobItemNo)
+				</td>
+				<td>
+					@item.TypeName
+				</td>
+@*				<td>
+					<span class="the-tooltip center top dark-midnight-blue itemCount">
+					@item.TestStandards.Count items
+					<span>
+					@foreach (var ci in item.TestStandards) {
+						<span>Certificate No: @ci.CertificateNo</span><br />
+						<span>Serial No: @ci.SerialNo</span><br />
+						<span>Description: @ci.Description</span><br />
+						if (item.TestStandards.Count > 1) {<br />}
+					}	
+					</span>
+				</span>
+				</td>*@
+			</tr>
+	 }
+	</table>
+}
+else
+{
+	<div id="empty-list">@JobSystem.Resources.Certificates.Messages.NoCertResults</div>
+}
