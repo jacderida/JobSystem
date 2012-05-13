@@ -26,7 +26,7 @@ namespace JobSystem.Mvc.Controllers
 		
 		public ActionResult Index()
         {
-            return RedirectToAction("PendingDeliveries");
+			return RedirectToAction("ApprovedDeliveries");
         }
 
 		public ActionResult PendingDeliveries()

@@ -106,10 +106,6 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult Index()
 		{
-			//Placeholder admin role check to see whether user should be shown pending or approved jobs by default
-			var isAdmin = true;
-			if (isAdmin)
-				return RedirectToAction("PendingJobs");
 			return RedirectToAction("ApprovedJobs");
 		}
 
@@ -302,7 +298,8 @@ namespace JobSystem.Mvc.Controllers
 						Report = item.Report,
 						IsQuoted = true,
 						JobItemNo = item.JobItem.ItemNo.ToString(),
-						Status = item.Status.Name
+						Status = item.Status.Name,
+						QuoteNo = item.Quote.QuoteNumber
 					};
 					return viewmodel;
 				}

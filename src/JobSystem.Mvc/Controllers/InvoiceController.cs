@@ -25,7 +25,7 @@ namespace JobSystem.Mvc.Controllers
 
         public ActionResult Index()
         {
-            return RedirectToAction("PendingInvoices");
+			return RedirectToAction("ApprovedInvoices");
         }
 
 		[HttpPost]

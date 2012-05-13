@@ -32,7 +32,7 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult Index()
 		{
-			return RedirectToAction("PendingQuotes");
+			return RedirectToAction("ApprovedQuotes");
 		}
 
 		[HttpGet]

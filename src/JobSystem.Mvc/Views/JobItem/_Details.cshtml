@@ -118,6 +118,7 @@
 					@Ajax.ActionLink("Reject", "RejectQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Rejected')" },  new { @class = "primary-action" })
 					<div class="quote-item">
 						@if (Model.QuoteItem.IsQuoted) {
+							<h3 id="quoteItemStatusLabel">@Model.QuoteItem.QuoteNo</h3><br />
 							<h3 id="quoteItemStatusLabel">@Model.QuoteItem.Status</h3><br />
 						}
 						<div class="details-fields">

@@ -194,7 +194,8 @@ namespace JobSystem.Mvc.Controllers
 						Report = item.Report,
 						IsQuoted = true,
 						JobItemNo = item.JobItem.ItemNo.ToString(),
-						Status = item.Status.Name
+						Status = item.Status.Name,
+						QuoteNo = item.Quote.QuoteNumber
 				    };
 				    return viewmodel;
 				}
