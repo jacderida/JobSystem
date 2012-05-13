@@ -13,6 +13,7 @@ namespace JobSystem.Mvc.ViewModels.Orders
 		[Display(Name = "Supplier")]
 		public Guid SupplierId { get; set; }
 		public string Instructions { get; set; }
+		[Required]
 		public string Description { get; set; }
 		[Display(Name = "Part Number")]
 		public string PartNo { get; set; }
