@@ -92,6 +92,7 @@
     <Compile Include="M20120416211401_AddAssetLineColumnToCustomersTable.cs" />
     <Compile Include="M20120509001459_RemoveLocationIdFromJobItemsTable.cs" />
     <Compile Include="M20120509001952_RemoveWorkLocationIdColumnFromItemHistoriesTable.cs" />
+    <Compile Include="M20120515223054_AddIsOrderedColumnToConsignmentTable.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

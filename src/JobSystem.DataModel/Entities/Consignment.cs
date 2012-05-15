@@ -12,6 +12,7 @@ namespace JobSystem.DataModel.Entities
 		public virtual Supplier Supplier { get; set; }
 		public virtual UserAccount CreatedBy { get; set; }
 		public virtual IList<ConsignmentItem> Items { get; set; }
+		public virtual bool IsOrdered { get; set; }
 
 		public Consignment()
 		{

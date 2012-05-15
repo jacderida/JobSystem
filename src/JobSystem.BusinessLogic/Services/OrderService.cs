@@ -73,6 +73,8 @@ namespace JobSystem.BusinessLogic.Services
 				_orderItemService.CreateFromConsignment(
 					Guid.NewGuid(), orderId, description, 1, String.Empty, item.Instructions ?? String.Empty, 30, item.JobItem.Id, 0);
 			}
+			consignment.IsOrdered = true;
+			_consignmentRepository.Update(consignment);
 			return orderId;
 		}
 
