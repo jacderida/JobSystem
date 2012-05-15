@@ -9,16 +9,16 @@ using NHibernate.Linq;
 namespace JobSystem.Reporting.Data.NHibernate
 {
 	[DataObject]
-	public class NHibernateEquipmentProgressReportDataProvider : NHibernateReportDataProviderBase, IEquipmentProgressReportDataProvider
+	public class NHibernateJobItemsAtStatusReportDataProvider : NHibernateReportDataProviderBase, IJobItemsAtStatusReportDataProvider
 	{
 		[DataObjectMethod(DataObjectMethodType.Select)]
-		public List<EquipmentProgressReportModel> GetEquipmentProgressReportData(Guid customerId)
+		public List<JobItemAtStatusReportModel> GetJobItemsAtStatusReportData(ListItemType status)
 		{
-			var result = new List<EquipmentProgressReportModel>();
-			var jobItemsNotInvoiced = CurrentSession.Query<JobItem>().Where(ji => ji.Job.Customer.Id == customerId &&  ji.Status.Type != ListItemType.StatusInvoiced);
+			var result = new List<JobItemAtStatusReportModel>();
+			var jobItemsNotInvoiced = CurrentSession.Query<JobItem>().Where(ji => ji.Status.Type == status);
 			foreach (var jobItem in jobItemsNotInvoiced)
 			{
-				var reportItem = new EquipmentProgressReportModel();
+				var reportItem = new JobItemAtStatusReportModel();
 				PopulateCompanyDetails(reportItem);
 				var job = jobItem.Job;
 				reportItem.CustomerName = job.Customer.Name;
@@ -35,14 +35,9 @@ namespace JobSystem.Reporting.Data.NHibernate
 				{
 					var quote = quoteItem.Quote;
 					if (!String.IsNullOrEmpty(quote.OrderNumber))
-						reportItem.OrderNo =  quote.QuoteNumber;
+						reportItem.OrderNo = quote.QuoteNumber;
 					if (!String.IsNullOrEmpty(quote.AdviceNumber))
-						reportItem.AdviceNo =  quote.AdviceNumber;
-					reportItem.Cost += quoteItem.Labour;
-					reportItem.Cost += quoteItem.Calibration;
-					reportItem.Cost += quoteItem.Parts;
-					reportItem.Cost += quoteItem.Carriage;
-					reportItem.DueDate = job.DateCreated.AddDays(quoteItem.Days);
+						reportItem.AdviceNo = quote.AdviceNumber;
 				}
 				result.Add(reportItem);
 			}

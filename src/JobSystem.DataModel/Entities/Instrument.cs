@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using JobSystem.Resources.Instruments;
 using System.Text;
+using JobSystem.Resources.Instruments;
 
 namespace JobSystem.DataModel.Entities
 {
