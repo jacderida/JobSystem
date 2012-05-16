@@ -194,6 +194,31 @@ $(document).ready(function () {
 			dataType: 'json'
 		});
 
+		$("#customer-autocomplete").autocomplete({
+			source: function (request, response) {
+				// define a function to call your Action (assuming UserController)
+				$.ajax({
+					url: '../Customer/SearchCustomers', type: "POST", dataType: "json",
+
+					// query will be the param used by your action method
+					data: { query: request.term },
+					success: function (data) {
+						response($.map(data, function (item) {
+							return {
+								value: item.Name + " - " + item.AssetLine,
+								key: item.Id
+							}
+						}))
+					}
+				})
+			},
+			select: function (e, ui) {
+				$("#CustomerId").val(ui.item.key);
+			},
+			minLength: 1, // require at least one character from the user
+			dataType: 'json'
+		});
+
 		$('.editConsignmentButton').live('click', function () {
 			var elemId = $(this).attr('id');
 			var editUrl = $('#editConsignmentItemUrl').val() + '/' + elemId;

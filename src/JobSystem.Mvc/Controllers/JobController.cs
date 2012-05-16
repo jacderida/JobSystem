@@ -127,7 +127,6 @@ namespace JobSystem.Mvc.Controllers
 				Jobs = jobs
 			};
 			jobList.CreateViewModel.JobTypes = _listItemService.GetAllByCategory(ListItemCategoryType.JobType).ToSelectList();
-			jobList.CreateViewModel.Customers = _customerServive.GetCustomers().ToSelectList();
 
 			return View(jobList);
 		}
@@ -150,7 +149,6 @@ namespace JobSystem.Mvc.Controllers
 				Jobs = jobs
 			};
 			jobList.CreateViewModel.JobTypes = _listItemService.GetAllByCategory(ListItemCategoryType.JobType).ToSelectList();
-			jobList.CreateViewModel.Customers = _customerServive.GetCustomers().ToSelectList();
 
 			return View(jobList);
 		}

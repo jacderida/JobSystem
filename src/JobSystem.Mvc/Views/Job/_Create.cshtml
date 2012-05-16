@@ -15,11 +15,11 @@
 			@Html.ValidationMessageFor(model => model.JobTypes)
 		</div>
 		<div class="editor-label">
-			@Html.LabelFor(model => model.Customers)
+			@Html.LabelFor(model => model.CustomerId)
 		</div>
 		<div class="editor-field">
-			@Html.DropDownListFor(model => model.CustomerId, Model.Customers, new { @class = "long-dropdown" })
-			@Html.ValidationMessageFor(model => model.Customers)
+			@Html.TextBox("CustomerAutocomplete", "", new { id = "customer-autocomplete", placeholder = "Start typing to search" })
+			@Html.HiddenFor(model => model.CustomerId, new { id = "CustomerId" })
 		</div>
 		<div class="editor-label">
 			@Html.LabelFor(model => model.OrderNumber)

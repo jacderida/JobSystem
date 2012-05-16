@@ -13,7 +13,7 @@
 			@Html.LabelFor(model => model.SupplierId)
 		</div>
 		<div class="editor-field">
-			@Html.TextBox("SupplierAutocomplete", "", new { id = "supplier-autocomplete" })
+			@Html.TextBox("SupplierAutocomplete", "", new { id = "supplier-autocomplete", placeholder = "Start typing to search" })
 			@Html.HiddenFor(model => model.SupplierId, new { id = "SupplierId" })
 		</div>
 		<div class="editor-label">

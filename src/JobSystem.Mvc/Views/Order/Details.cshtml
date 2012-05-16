@@ -40,7 +40,6 @@
 						var item = Model.OrderItems[i];
 						var href = String.Format("#stv_content_{0}", i);
 						<li>
-							
 							<a href="@href" rel="v_tab_0" class="st_tab @(i == 0 ? "st_tab_active" : "")" id="@item.Id">
 							<span class="jiStatus">@i</span>
 							<span>@item.Description</span></a>
@@ -61,7 +60,7 @@
 				 var item = Model.OrderItems[i];
 				 var divId = String.Format("stv_content_{0}", i);
 				 <div id="@divId" class="st_tab_view st_first_tab_view">
-					<h2>@i</h2>
+					<h2>@i <a class="primary-action" href="@Url.Action("EditPendingItem", "Order", new { itemId = @item.Id })" class="create-item-button">Edit Item</a></h2>
 					@item.Instructions
 					@item.Description
 					@item.Currency

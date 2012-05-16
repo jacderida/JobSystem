@@ -225,6 +225,7 @@ namespace JobSystem.Mvc.Controllers
 				CreatedBy = order.CreatedBy.EmailAddress,
 				OrderItems = order.OrderItems.Select(o => new OrderItemIndexViewModel()
 				{
+					Id = o.Id,
 					DeliveryDays = o.DeliveryDays.ToString(),
 					Description = o.Description,
 					Instructions = o.Instructions,
@@ -267,6 +268,30 @@ namespace JobSystem.Mvc.Controllers
 			return View("EditItem", viewmodel);
 		}
 
+		[HttpGet]
+		public ActionResult EditPendingItem(Guid itemId)
+		{
+			var item = _orderItemService.GetById(itemId);
+
+			var viewmodel = new OrderItemEditViewModel()
+			{
+				Id = item.Id,
+				DeliveryDays = item.DeliveryDays,
+				Description = item.Description,
+				Instructions = item.Instructions,
+				SupplierId = item.Order.Supplier.Id,
+				SupplierName = item.Order.Supplier.Name,
+				PartNo = item.PartNo,
+				Price = item.Price,
+				OrderId = item.Order.Id,
+				Quantity = item.Quantity,
+				JobItemId = item.JobItem.Id,
+				JobId = item.JobItem.Job.Id
+			};
+
+			return View("EditPendingItem", viewmodel);
+		}
+
 		[HttpPost]
 		[Transaction]
 		public ActionResult EditItem(OrderItemEditViewModel viewmodel)
@@ -281,6 +306,22 @@ namespace JobSystem.Mvc.Controllers
 				viewmodel.Price);
 
 			return RedirectToAction("Details", "Job", new { Id = viewmodel.JobId, tabNo = "0" });
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult EditPendingItem(OrderItemEditViewModel viewmodel)
+		{
+			_orderItemService.EditPending(viewmodel.Id,
+				viewmodel.SupplierId,
+				viewmodel.Description,
+				viewmodel.Quantity,
+				viewmodel.PartNo,
+				viewmodel.Instructions,
+				viewmodel.DeliveryDays,
+				viewmodel.Price);
+
+			return RedirectToAction("Details", "Order", new { id = viewmodel.OrderId, tabNo = "0" });
 		}
 
 		[HttpPost]
