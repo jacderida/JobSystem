@@ -75,6 +75,9 @@ namespace JobSystem.BusinessLogic.Services
 			var job = _jobRepository.GetById(jobId);
 			if (job == null)
 				throw new ArgumentException("A valid ID must be supplied by for job.");
+			var jobItemCount = _jobRepository.GetJobItemCount(jobId);
+			if (jobItemCount == 0)
+				throw new DomainValidationException(Messages.ApprovingJobHasNoItems, "JobId");
 			job.IsPending = false;
 			_jobRepository.Update(job);
 			return job;

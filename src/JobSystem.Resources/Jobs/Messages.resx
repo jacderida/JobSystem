@@ -120,6 +120,9 @@
   <data name="AdviceNoTooLarge" xml:space="preserve">
     <value>The advice number cannot exceed 50 characters</value>
   </data>
+  <data name="ApprovingJobHasNoItems" xml:space="preserve">
+    <value>A job must have at least 1 item before it can be approved</value>
+  </data>
   <data name="ContactTooLarge" xml:space="preserve">
     <value>The contact cannot exceed 50 characters</value>
   </data>

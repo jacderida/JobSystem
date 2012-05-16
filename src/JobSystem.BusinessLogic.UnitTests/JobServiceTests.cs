@@ -178,6 +178,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var typeId = Guid.NewGuid();
 
 			var jobRepository = MockRepository.GenerateMock<IJobRepository>();
+			jobRepository.Stub(x => x.GetJobItemCount(id)).Return(1);
 			jobRepository.Expect(x => x.Update(null)).IgnoreArguments();
 			_jobService = JobServiceFactory.CreateForApproval(jobRepository, id, typeId, customerId,
 				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.JobApprover));
@@ -212,6 +213,21 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_jobService = JobServiceFactory.CreateForApproval(jobRepository, id, typeId, customerId,
 				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.JobApprover));
 			ApproveJob(id);
+		}
+
+		[Test]
+		public void Approve_JobHasNoItems_DomainValidationExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var customerId = Guid.NewGuid();
+			var typeId = Guid.NewGuid();
+
+			var jobRepository = MockRepository.GenerateStub<IJobRepository>();
+			jobRepository.Stub(x => x.GetJobItemCount(id)).Return(0);
+			_jobService = JobServiceFactory.CreateForApproval(jobRepository, id, typeId, customerId,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.JobApprover));
+			ApproveJob(id);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.ApprovingJobHasNoItems));
 		}
 
 		private void ApproveJob(Guid id)
