@@ -22,5 +22,7 @@ namespace JobSystem.Mvc.ViewModels.Certificates
 		public Guid CertificateTypeId { get; set; }
 		[Display(Name="Type")]
 		public IEnumerable<SelectListItem> CertificateTypes { get; set; }
+
+		public AttachmentViewModel[] Attachments { get; set; }
 	}
 }

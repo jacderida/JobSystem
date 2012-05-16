@@ -27,4 +27,16 @@
 		minLength: 1, // require at least one character from the user
 		dataType: 'json'
 	});
+
+	var uploader = new qq.FileUploader({
+		// pass the dom node (ex. $(selector)[0] for jQuery users)
+		element: document.getElementById('file-uploader'),
+		// path to server-side upload script
+		action: "../Attachments/AddAttachment",
+		onComplete: function (id, fileName, responseJSON) {
+			var idHidden = '<input type="hidden" name="AttachmentId" value="' + responseJSON.Id + '"/>';
+			var nameHidden = '<input type="hidden" name="AttachmentName" value="' + responseJSON.Filename + '"/>';
+			$('#createJobForm').append(idHidden).append(nameHidden);
+		}
+	});
 });

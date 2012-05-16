@@ -7,6 +7,8 @@ using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.DataModel.Dto;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.ViewModels.Customers;
+using JobSystem.DataModel.Entities;
+using System.Collections.Generic;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -108,6 +110,14 @@ namespace JobSystem.Mvc.Controllers
 				}
 			}
 			return View(viewModel);
+		}
+
+		[HttpPost]
+		public ActionResult SearchCustomers(string query)
+		{
+			IEnumerable<Customer> customers = _customerService.SearchByKeyword(query);
+
+			return Json(customers);
 		}
 	}
 }
