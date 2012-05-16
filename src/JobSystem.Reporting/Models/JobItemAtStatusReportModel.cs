@@ -2,7 +2,7 @@
 
 namespace JobSystem.Reporting.Models
 {
-	public class EquipmentProgressReportModel : ReportModelBase
+	public class JobItemAtStatusReportModel : ReportModelBase
 	{
 		public string CustomerName { get; set; }
 		public string OrderNo { get; set; }
@@ -14,7 +14,5 @@ namespace JobSystem.Reporting.Models
 		public string SerialNo { get; set; }
 		public string AssetNo { get; set; }
 		public string Status { get; set; }
-		public decimal Cost { get; set; }
-		public DateTime? DueDate { get; set; }
 	}
 }

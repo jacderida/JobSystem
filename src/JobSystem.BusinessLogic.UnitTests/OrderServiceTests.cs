@@ -271,7 +271,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			}
 		}
 
-		#endregion
+		#endregion.
 		#region GetOrders
 
 		[Test]
