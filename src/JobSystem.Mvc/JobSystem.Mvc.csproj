@@ -299,6 +299,7 @@
     <Content Include="Scripts\workitem.js" />
     <Content Include="Views\Consignment\RepConsignmentNote.aspx" />
     <Content Include="Views\Delivery\RepDeliveryNote.aspx" />
+    <Content Include="Views\Invoice\RepInvoiceNote.aspx" />
     <Content Include="Views\Order\RepOrderNote.aspx" />
     <Content Include="Views\Quote\RepQuoteNote.aspx" />
     <Content Include="Web.config">

@@ -23,6 +23,16 @@
 			@Html.ListBoxFor(model => model.SelectedTestStandardIds, new MultiSelectList(Model.TestStandards, "Value", "Text"), new { @class = "long-dropdown standardMultiSelect" })
 			@Html.ValidationMessageFor(model => model.SelectedTestStandardIds)
 		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Attachments)
+		</div>
+		<div id="file-uploader">       
+			<noscript>          
+				<p>Please enable JavaScript to use file uploader.</p>
+				<!-- or put a simple form for upload here -->
+			</noscript>         
+		</div>
+		@Html.HiddenFor(model => model.Attachments)
 		@Html.HiddenFor(model => model.JobItemId)
 	</fieldset>
 		<div class="clear"></div>
