@@ -20,9 +20,10 @@ namespace JobSystem.Mvc.ViewModels.Users
 		[Display(Name = "Password")]
 		public string Password { get; set; }
 		[Display(Name = "Job Title")]
+		[Required]
 		public string JobTitle { get; set; }
 		[Display(Name = "Role")]
 		public IEnumerable<SelectListItem> Roles { get; set; }
-		public Guid RoleId { get; set; }
+		public int RoleId { get; set; }
 	}
 }

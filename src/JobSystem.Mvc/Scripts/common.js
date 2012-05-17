@@ -20,6 +20,10 @@
 	},
 	updateQuoteStatus: function (status) {
 		$("#quoteItemStatusLabel").text(status);
+	},
+	showMessage: function (message) {
+		$("#message-container").text(message);
+		$("#message-container").slideDown(200);
 	}
 }
 

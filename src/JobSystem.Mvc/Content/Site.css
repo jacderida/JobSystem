@@ -1038,3 +1038,15 @@ div#title {
 	margin-left: 20px;
 	margin-right: 5px;
 }
+
+#message-container {
+	display: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color: #468847;
+	font-weight: bold;
+	background-color: #DFF0D8;
+	border: 1px solid #D6E9C6;
+	text-align: center;
+	width: 100%;
+}
