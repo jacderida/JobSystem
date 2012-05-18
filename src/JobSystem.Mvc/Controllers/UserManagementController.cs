@@ -35,17 +35,25 @@ namespace JobSystem.Mvc.Controllers
 			var model = new UserAccountIndexViewModel();
 			model.Users = users;
 			model.CreateEditModel = new UserAccountViewModel();
+
+			var roles = from UserRole s in Enum.GetValues(typeof(UserRole))
+					   select new { RoleId = (int)s, Name = s.ToString() };
+			model.CreateEditModel.Roles = new SelectList(roles, "RoleId", "Name");
+
 			return View(model);
 		}
 
 		public ActionResult Create()
 		{
+			var roles = from UserRole s in Enum.GetValues(typeof(UserRole))
+					   select new { RoleId = (int)s, Name = s.ToString() };
+
 			var viewmodel = new UserAccountViewModel()
 			{
-				//Roles = _listItemService.GetAllByCategory(ListItemCategoryType.).ToSelectList(),
+				Roles = new SelectList(roles, "RoleId", "Name")
 			};
 			
-			return View();
+			return View(viewmodel);
 		}
 
 		[HttpPost]

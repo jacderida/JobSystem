@@ -4,6 +4,8 @@
     ViewBag.Title = "Approved Quotes";
 }
 
+<div id="message-container"></div>
+
 <div id="toggle-container">
 	<span class="toggle toggle-left"><a href="@Url.Action("PendingQuotes")">Pending</a></span>
 	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedQuotes")">Quoted</a></span>
@@ -68,6 +70,7 @@
 			<th class="shortColumn">Days</th>
 			<th>BER</th>
 			<th class="shortColumn"></th>
+			<th class=""></th>
 		</tr>	
 		 @foreach (var qi in item.QuoteItems)
 		 {
@@ -99,6 +102,10 @@
 			</td>
 			<td class="shortColumn">
 				@Html.ActionLink("Edit", "EditItem", new { id = qi.JobItemId, fromJi = false, isQuoted = true })
+			</td>
+			<td class="">
+				@Ajax.ActionLink("Accept", "AcceptQuoteItem", "Quote", new { quoteItemId = qi.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.showMessage('Quote Accepted')" }) |
+				@Ajax.ActionLink("Reject", "RejectQuoteItem", "Quote", new { quoteItemId = qi.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.showMessage('Quote Rejected')" })
 			</td>
 		</tr>
 		

@@ -39,7 +39,7 @@
 			@Html.LabelFor(model => model.Roles)
 		</div>
 		<div class="editor-field">
-			@Html.DropDownListFor(model => model.RoleId, Model.Roles, new { @class = "long-dropdown" })
+			@Html.DropDownList("RoleId", Model.Roles, new { @class = "long-dropdown" })
 			@Html.ValidationMessageFor(model => model.Roles)
 		</div>
 	</fieldset>
