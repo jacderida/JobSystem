@@ -15,6 +15,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox34 = new Telerik.Reporting.TextBox();
 			this.textBox35 = new Telerik.Reporting.TextBox();
 			this.textBox37 = new Telerik.Reporting.TextBox();
+			this.shape9 = new Telerik.Reporting.Shape();
 			this.shape7 = new Telerik.Reporting.Shape();
 			this.shape6 = new Telerik.Reporting.Shape();
 			this.shape8 = new Telerik.Reporting.Shape();
@@ -46,7 +47,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox4 = new Telerik.Reporting.TextBox();
 			this.textBox1 = new Telerik.Reporting.TextBox();
 			this.pageInfoTextBox = new Telerik.Reporting.TextBox();
-			this.currentTimeTextBox = new Telerik.Reporting.TextBox();
 			this.textBox24 = new Telerik.Reporting.TextBox();
 			this.textBox25 = new Telerik.Reporting.TextBox();
 			this.textBox26 = new Telerik.Reporting.TextBox();
@@ -63,7 +63,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.objectDataSource2 = new Telerik.Reporting.ObjectDataSource();
 			this.ReportData = new Telerik.Reporting.ObjectDataSource();
 			this.objectDataSource1 = new Telerik.Reporting.ObjectDataSource();
-			this.shape9 = new Telerik.Reporting.Shape();
 			((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
 			// 
 			// pageHeaderSection1
@@ -109,6 +108,16 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox37.Name = "textBox37";
 			this.textBox37.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(2.0198993682861328D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
 			this.textBox37.Value = "=Fields.OrderNo";
+			// 
+			// shape9
+			// 
+			this.shape9.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Pixel(3.7795257568359375D), Telerik.Reporting.Drawing.Unit.Pixel(30.236175537109375D));
+			this.shape9.Name = "shape9";
+			this.shape9.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.EW);
+			this.shape9.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Pixel(594.9962158203125D), Telerik.Reporting.Drawing.Unit.Pixel(11.334793090820313D));
+			this.shape9.Style.Color = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(212)))), ((int)(((byte)(212)))));
+			this.shape9.Style.Font.Bold = false;
+			this.shape9.Style.LineWidth = Telerik.Reporting.Drawing.Unit.Point(1D);
 			// 
 			// shape7
 			// 
@@ -314,8 +323,7 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.textBox3,
             this.textBox4,
             this.textBox1,
-            this.pageInfoTextBox,
-            this.currentTimeTextBox});
+            this.pageInfoTextBox});
 			this.pageFooterSection1.Name = "pageFooterSection1";
 			// 
 			// textBox22
@@ -452,18 +460,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.pageInfoTextBox.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Right;
 			this.pageInfoTextBox.StyleName = "PageInfo";
 			this.pageInfoTextBox.Value = "=PageNumber";
-			// 
-			// currentTimeTextBox
-			// 
-			this.currentTimeTextBox.Format = "{0:D}";
-			this.currentTimeTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0D), Telerik.Reporting.Drawing.Unit.Cm(2.5999963283538818D));
-			this.currentTimeTextBox.Name = "currentTimeTextBox";
-			this.currentTimeTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(2.9470834732055664D), Telerik.Reporting.Drawing.Unit.Cm(0.60000002384185791D));
-			this.currentTimeTextBox.Style.Color = System.Drawing.Color.Gray;
-			this.currentTimeTextBox.Style.Font.Name = "Arial";
-			this.currentTimeTextBox.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(8D);
-			this.currentTimeTextBox.StyleName = "PageInfo";
-			this.currentTimeTextBox.Value = "=NOW()";
 			// 
 			// textBox24
 			// 
@@ -627,16 +623,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.objectDataSource1.DataSource = typeof(JobSystem.Reporting.Data.NHibernate.NHibernateDeliveryReportDataProvider);
 			this.objectDataSource1.Name = "objectDataSource1";
 			// 
-			// shape9
-			// 
-			this.shape9.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Pixel(3.7795257568359375D), Telerik.Reporting.Drawing.Unit.Pixel(30.236175537109375D));
-			this.shape9.Name = "shape9";
-			this.shape9.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.EW);
-			this.shape9.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Pixel(594.9962158203125D), Telerik.Reporting.Drawing.Unit.Pixel(11.334793090820313D));
-			this.shape9.Style.Color = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(212)))), ((int)(((byte)(212)))));
-			this.shape9.Style.Font.Bold = false;
-			this.shape9.Style.LineWidth = Telerik.Reporting.Drawing.Unit.Point(1D);
-			// 
 			// TelerikDeliveryReport
 			// 
 			this.DataSource = this.objectDataSource2;
@@ -712,7 +698,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 		private Telerik.Reporting.TextBox textBox4;
 		private Telerik.Reporting.TextBox textBox1;
 		private Telerik.Reporting.TextBox pageInfoTextBox;
-		private Telerik.Reporting.TextBox currentTimeTextBox;
 		private Telerik.Reporting.Shape shape9;
 	}
 }

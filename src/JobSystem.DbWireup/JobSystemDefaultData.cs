@@ -19,7 +19,7 @@ namespace JobSystem.DbWireup
 
 		public List<Tuple<Guid, ListItem>> PaymentTerms { get; set; }
 		public List<TaxCode> TaxCodes { get; set; }
-		public List<Tuple<Guid, ListItem>> Currencies { get; set; }
+		public List<Currency> Currencies { get; set; }
 		public List<BankDetails> BankDetails { get; set; }
 		public List<EntityIdLookup> EntityIdLookups { get; set; }
 
@@ -37,7 +37,7 @@ namespace JobSystem.DbWireup
 			JobItemInitialLocations = new List<Tuple<Guid, ListItem>>();
 			PaymentTerms = new List<Tuple<Guid, ListItem>>();
 			TaxCodes = new List<TaxCode>();
-			Currencies = new List<Tuple<Guid, ListItem>>();
+			Currencies = new List<Currency>();
 			BankDetails = new List<BankDetails>();
 			EntityIdLookups = new List<EntityIdLookup>();
 		}

@@ -15,7 +15,7 @@ namespace JobSystem.DbWireup
 
 		BankDetails GetBankDetails(Guid id);
 		TaxCode GetTaxCode(Guid id);
-		ListItem GetCurrency(Guid id);
+		Currency GetCurrency(Guid id);
 		ListItem GetPaymentTerm(Guid id);
 	}
 }

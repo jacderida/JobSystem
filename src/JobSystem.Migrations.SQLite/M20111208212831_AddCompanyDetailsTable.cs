@@ -33,7 +33,7 @@ namespace JobSystem.Migrations.SqlLite
 			Create.ForeignKey("FK_CompanyDetails_Currencies")
 				.FromTable("CompanyDetails")
 				.ForeignColumn("DefaultCurrencyId")
-				.ToTable("ListItems")
+				.ToTable("Currencies")
 				.PrimaryColumn("Id");
 			Create.ForeignKey("FK_CompanyDetails_TaxCodes")
 				.FromTable("CompanyDetails")

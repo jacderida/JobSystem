@@ -17,7 +17,7 @@ namespace JobSystem.DbWireup
 
 		private List<Tuple<Guid, ListItem>> _paymentTerms;
 		private List<TaxCode> _taxCodes;
-		private List<Tuple<Guid, ListItem>> _currencies;
+		private List<Currency> _currencies;
 		private List<BankDetails> _bankDetails;
 		private List<EntityIdLookup> _entityIdLookups;
 
@@ -33,7 +33,7 @@ namespace JobSystem.DbWireup
 			_jobItemCategories = new List<Tuple<Guid, ListItem>>();
 			_paymentTerms = new List<Tuple<Guid, ListItem>>();
 			_taxCodes = new List<TaxCode>();
-			_currencies = new List<Tuple<Guid, ListItem>>();
+			_currencies = new List<Currency>();
 			_bankDetails = new List<BankDetails>();
 			_entityIdLookups = new List<EntityIdLookup>();
 		}
@@ -135,11 +135,10 @@ namespace JobSystem.DbWireup
 			return this;
 		}
 
-		public JobSystemDefaultDataBuilder WithCurrencies(params Tuple<Guid, string, ListItemType, Guid>[] currencies)
+		public JobSystemDefaultDataBuilder WithCurrencies(params Currency[] currencies)
 		{
 			foreach (var currency in currencies)
-				_currencies.Add(
-					Tuple.Create<Guid, ListItem>(currency.Item4, new ListItem { Id = currency.Item1, Name = currency.Item2, Type = currency.Item3 }));
+				_currencies.Add(new Currency { Id = currency.Id, Name = currency.Name, DisplayMessage = currency.DisplayMessage });
 			return this;
 		}
 

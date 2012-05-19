@@ -15,7 +15,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 			Telerik.Reporting.Drawing.StyleRule styleRule4 = new Telerik.Reporting.Drawing.StyleRule();
 			this.pageHeader = new Telerik.Reporting.PageHeaderSection();
 			this.pageFooter = new Telerik.Reporting.PageFooterSection();
-			this.currentTimeTextBox = new Telerik.Reporting.TextBox();
 			this.pageInfoTextBox = new Telerik.Reporting.TextBox();
 			this.textBox1 = new Telerik.Reporting.TextBox();
 			this.textBox4 = new Telerik.Reporting.TextBox();
@@ -75,7 +74,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			this.pageFooter.Height = Telerik.Reporting.Drawing.Unit.Cm(3.2682242393493652D);
 			this.pageFooter.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
-            this.currentTimeTextBox,
             this.pageInfoTextBox,
             this.textBox1,
             this.textBox4,
@@ -90,18 +88,6 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.textBox21,
             this.textBox22});
 			this.pageFooter.Name = "pageFooter";
-			// 
-			// currentTimeTextBox
-			// 
-			this.currentTimeTextBox.Format = "{0:D}";
-			this.currentTimeTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0D), Telerik.Reporting.Drawing.Unit.Cm(2.5682249069213867D));
-			this.currentTimeTextBox.Name = "currentTimeTextBox";
-			this.currentTimeTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(2.9470834732055664D), Telerik.Reporting.Drawing.Unit.Cm(0.60000002384185791D));
-			this.currentTimeTextBox.Style.Color = System.Drawing.Color.Gray;
-			this.currentTimeTextBox.Style.Font.Name = "Arial";
-			this.currentTimeTextBox.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(8D);
-			this.currentTimeTextBox.StyleName = "PageInfo";
-			this.currentTimeTextBox.Value = "=NOW()";
 			// 
 			// pageInfoTextBox
 			// 
@@ -691,7 +677,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 		private Telerik.Reporting.ObjectDataSource ReportData;
 		private Telerik.Reporting.PageHeaderSection pageHeader;
 		private Telerik.Reporting.PageFooterSection pageFooter;
-		private Telerik.Reporting.TextBox currentTimeTextBox;
 		private Telerik.Reporting.TextBox pageInfoTextBox;
 		private Telerik.Reporting.ReportHeaderSection reportHeader;
 		private Telerik.Reporting.TextBox titleTextBox;

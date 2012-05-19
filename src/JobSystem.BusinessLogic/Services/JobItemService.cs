@@ -70,6 +70,8 @@ namespace JobSystem.BusinessLogic.Services
 			var jobItem = GetById(jobItemId);
 			if (jobItem == null)
 				throw new ArgumentException("A valid job item ID must be supplied.");
+			if (jobItem.Job.IsPending)
+				throw new DomainValidationException(Messages.JobNotApproved, "Job");
 			var status = ValidateWorkStatus(workStatusId);
 			var workType = ValidateWorkType(workTypeId);
 			workTime = ValidateWorkTime(workTime);

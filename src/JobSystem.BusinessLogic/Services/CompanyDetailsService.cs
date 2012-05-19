@@ -16,6 +16,7 @@ namespace JobSystem.BusinessLogic.Services
 	{
 		private readonly ICompanyDetailsRepository _companyDetailsRepository;
 		private readonly IBankDetailsRepository _bankDetailsRepository;
+		private readonly ICurrencyRepository _currencyRepository;
 		private readonly IListItemRepository _listItemRepository;
 		private readonly ITaxCodeRepository _taxCodeRepository;
 
@@ -23,12 +24,14 @@ namespace JobSystem.BusinessLogic.Services
 			IUserContext applicationContext,
 			ICompanyDetailsRepository companyDetailsRepository,
 			IBankDetailsRepository bankDetailsRepository,
+			ICurrencyRepository currencyRepository,
 			IListItemRepository listItemRepository,
 			ITaxCodeRepository taxCodeRepository,
 			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
 		{
 			_companyDetailsRepository = companyDetailsRepository;
 			_bankDetailsRepository = bankDetailsRepository;
+			_currencyRepository = currencyRepository;
 			_listItemRepository = listItemRepository;
 			_taxCodeRepository = taxCodeRepository;
 		}
@@ -50,7 +53,7 @@ namespace JobSystem.BusinessLogic.Services
 			companyDetails.Id = id;
 			companyDetails.Name = name;
 			companyDetails.TermsAndConditions = termsAndConditions;
-			companyDetails.DefaultCurrency = GetListItem(defaultCurrencyId);
+			companyDetails.DefaultCurrency = GetDefaultCurrency(defaultCurrencyId);
 			companyDetails.DefaultPaymentTerm = GetListItem(defaultPaymentTermId);
 			companyDetails.DefaultTaxCode = GetDefaultTaxCode(defaultTaxCodeId);
 			companyDetails.DefaultBankDetails = GetDefaultBankDetails(defaultBankDetailsId);
@@ -74,7 +77,7 @@ namespace JobSystem.BusinessLogic.Services
 				throw new DomainValidationException(JobSystem.Resources.CompanyDetails.Messages.InsufficientSecurityClearance, "CurrentUser");
 			companyDetails.Name = name;
 			companyDetails.TermsAndConditions = termsAndConditions;
-			companyDetails.DefaultCurrency = GetListItem(defaultCurrencyId);
+			companyDetails.DefaultCurrency = GetDefaultCurrency(defaultCurrencyId);
 			companyDetails.DefaultPaymentTerm = GetListItem(defaultPaymentTermId);
 			companyDetails.DefaultTaxCode = GetDefaultTaxCode(defaultTaxCodeId);
 			companyDetails.DefaultBankDetails = GetDefaultBankDetails(defaultBankDetailsId);
@@ -145,6 +148,14 @@ namespace JobSystem.BusinessLogic.Services
 			if (listItem == null)
 				throw new ArgumentException(String.Format("There is no list item with ID {0}", listItemId));
 			return listItem;
+		}
+
+		private Currency GetDefaultCurrency(Guid defaultCurrencyId)
+		{
+			var currency = _currencyRepository.GetById(defaultCurrencyId);
+			if (currency == null)
+				throw new ArgumentException(String.Format("There is no currency with ID {0}", defaultCurrencyId));
+			return currency;
 		}
 
 		private TaxCode GetDefaultTaxCode(Guid defaultTaxCodeId)

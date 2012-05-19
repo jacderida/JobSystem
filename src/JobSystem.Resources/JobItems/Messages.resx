@@ -159,6 +159,9 @@
   <data name="ItemHistoryReportTooLarge" xml:space="preserve">
     <value>The report cannot exceed 255 characters</value>
   </data>
+  <data name="JobNotApproved" xml:space="preserve">
+    <value>The job must be approved for this operation</value>
+  </data>
   <data name="NoCertificates" xml:space="preserve">
     <value>There are currently no certificates.</value>
   </data>

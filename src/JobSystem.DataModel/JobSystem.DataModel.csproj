@@ -55,6 +55,7 @@
     <Compile Include="Dto\Address.cs" />
     <Compile Include="Entities\Attachment.cs" />
     <Compile Include="Entities\Certificate.cs" />
+    <Compile Include="Entities\Currency.cs" />
     <Compile Include="Entities\Delivery.cs" />
     <Compile Include="Entities\DeliveryItem.cs" />
     <Compile Include="Entities\Invoice.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Entities\TestStandard.cs" />
     <Compile Include="EntityIdNotUniqueException.cs" />
     <Compile Include="Repositories\ICertificateRepository.cs" />
+    <Compile Include="Repositories\ICurrencyRepository.cs" />
     <Compile Include="Repositories\IDeliveryItemRepository.cs" />
     <Compile Include="Repositories\IDeliveryRepository.cs" />
     <Compile Include="Repositories\IInvoiceItemRepository.cs" />

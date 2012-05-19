@@ -83,9 +83,9 @@ namespace JobSystem.DbWireup.ConsoleRunner
 					Tuple.Create<Guid, string, ListItemType, Guid>(defaultPaymentTermId, "30 Days", ListItemType.PaymentTerm30Days, ListCategoryIds.PaymentTermId),
 					Tuple.Create<Guid, string, ListItemType, Guid>(Guid.NewGuid(), "As Agreed", ListItemType.PaymentTermAsAgreed, ListCategoryIds.PaymentTermId))
 				.WithCurrencies(
-					Tuple.Create<Guid, string, ListItemType, Guid>(defaultCurrencyId, "GBP", ListItemType.CurrencyGbp, ListCategoryIds.CurrencyId),
-					Tuple.Create<Guid, string, ListItemType, Guid>(Guid.NewGuid(), "Euros", ListItemType.CurrencyUsd, ListCategoryIds.CurrencyId),
-					Tuple.Create<Guid, string, ListItemType, Guid>(Guid.NewGuid(), "Dollars", ListItemType.CurrencyEuro, ListCategoryIds.CurrencyId))
+					new Currency { Id = defaultCurrencyId, Name = "GBP", DisplayMessage = "All prices in GBP" },
+					new Currency { Id = Guid.NewGuid(), Name = "EUR", DisplayMessage = "All prices in Euros" },
+					new Currency { Id = Guid.NewGuid(), Name = "USD", DisplayMessage = "All prices in Dollars" })
 				.WithTaxCodes(
 					new TaxCode { Id = Guid.NewGuid(), TaxCodeName = "T0", Rate = 0, Description = "No VAT" },
 					new TaxCode { Id = defaultTaxCodeId, TaxCodeName = "T1", Rate = 0.20, Description = "VAT at 20%" })

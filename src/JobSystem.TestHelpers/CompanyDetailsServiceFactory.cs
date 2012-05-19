@@ -23,10 +23,11 @@ namespace JobSystem.TestHelpers
 		{
 			var bankDetailsRepositoryStub = GetBankDetailsRepository(defaultBankDetailsId);
 			var taxCodeRepositoryStub = GetTaxCodeRepository(defaultTaxCodeId);
-			var listItemsRepositoryStub = GetDefaultListItemRepository(defaultCurrencyId, defaultPaymentTermsId);
+			var currencyRepositoryStub = GetCurrencyRepository(defaultCurrencyId);
+			var listItemsRepositoryStub = GetDefaultListItemRepository(defaultPaymentTermsId);
 			return new CompanyDetailsService(
 				userContext,
-				companyDetailsRepository, bankDetailsRepositoryStub, listItemsRepositoryStub, taxCodeRepositoryStub, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+				companyDetailsRepository, bankDetailsRepositoryStub, currencyRepositoryStub, listItemsRepositoryStub, taxCodeRepositoryStub, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 
 		public static CompanyDetailsService CreateWithDefaultsSetupForEdit(
@@ -42,19 +43,16 @@ namespace JobSystem.TestHelpers
 			companyDetailsRepository.Stub(x => x.GetCompany()).Return(GetCompanyDetails(defaultBankDetailsId, defaultTaxCodeId, defaultCurrencyId, defaultPaymentTermsId));
 			var bankDetailsRepositoryStub = GetBankDetailsRepository(defaultBankDetailsId);
 			var taxCodeRepositoryStub = GetTaxCodeRepository(defaultTaxCodeId);
-			var listItemsRepositoryStub = GetDefaultListItemRepository(defaultCurrencyId, defaultPaymentTermsId);
+			var currencyRepositoryStub = GetCurrencyRepository(defaultCurrencyId);
+			var listItemsRepositoryStub = GetDefaultListItemRepository(defaultPaymentTermsId);
 			return new CompanyDetailsService(
 				userContext,
-				companyDetailsRepository, bankDetailsRepositoryStub, listItemsRepositoryStub, taxCodeRepositoryStub, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+				companyDetailsRepository, bankDetailsRepositoryStub, currencyRepositoryStub, listItemsRepositoryStub, taxCodeRepositoryStub, MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 
-		private static IListItemRepository GetDefaultListItemRepository(Guid defaultCurrencyId, Guid defaultPaymentTermsId)
+		private static IListItemRepository GetDefaultListItemRepository(Guid defaultPaymentTermsId)
 		{
 			var listItemsRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
-			if (defaultCurrencyId != Guid.Empty)
-				listItemsRepositoryStub.Stub(x => x.GetById(defaultCurrencyId)).Return(GetCurrency(defaultCurrencyId));
-			else
-				listItemsRepositoryStub.Stub(x => x.GetById(defaultCurrencyId)).Return(null);
 			if (defaultPaymentTermsId != Guid.Empty)
 				listItemsRepositoryStub.Stub(x => x.GetById(defaultPaymentTermsId)).Return(GetPaymentTerm(defaultPaymentTermsId));
 			else
@@ -79,6 +77,16 @@ namespace JobSystem.TestHelpers
 				taxCodeRepositoryStub.Stub(x => x.GetById(defaultTaxCodeId)).Return(GetTaxCode(defaultTaxCodeId));
 			else
 				taxCodeRepositoryStub.Stub(x => x.GetById(defaultTaxCodeId)).Return(null);
+			return taxCodeRepositoryStub;
+		}
+
+		private static ICurrencyRepository GetCurrencyRepository(Guid defaultCurrencyId)
+		{
+			var taxCodeRepositoryStub = MockRepository.GenerateStub<ICurrencyRepository>();
+			if (defaultCurrencyId != Guid.Empty)
+				taxCodeRepositoryStub.Stub(x => x.GetById(defaultCurrencyId)).Return(GetCurrency(defaultCurrencyId));
+			else
+				taxCodeRepositoryStub.Stub(x => x.GetById(defaultCurrencyId)).Return(null);
 			return taxCodeRepositoryStub;
 		}
 
@@ -123,13 +131,13 @@ namespace JobSystem.TestHelpers
 			};
 		}
 
-		private static ListItem GetCurrency(Guid id)
+		private static Currency GetCurrency(Guid id)
 		{
-			return new ListItem
+			return new Currency
 			{
 				Id = id,
 				Name = "GBP",
-				Type = ListItemType.CurrencyGbp
+				DisplayMessage = "All prices in GBP"
 			};
 		}
 

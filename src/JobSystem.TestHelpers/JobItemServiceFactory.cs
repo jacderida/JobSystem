@@ -63,6 +63,18 @@ namespace JobSystem.TestHelpers
 				dispatcher);
 		}
 
+		public static JobItemService CreateForAddWorkItem(IJobRepository jobRepository, IJobItemRepository jobItemRepository, Guid workStatusId, Guid workTypeId, IUserContext userContext)
+		{
+			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
+			return new JobItemService(
+				userContext,
+				jobRepository,
+				jobItemRepository,
+				new ListItemService(userContext, GetListItemRepositoryForAddWorkItem(workStatusId, workTypeId), dispatcher),
+				new InstrumentService(userContext, MockRepository.GenerateStub<IInstrumentRepository>(), dispatcher),
+				dispatcher);
+		}
+
 		public static JobItemService CreateForAddWorkItem(IJobItemRepository jobItemRepository, IListItemRepository listItemRepository, IUserContext userContext)
 		{
 			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();

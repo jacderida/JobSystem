@@ -167,11 +167,7 @@ namespace JobSystem.DbWireup
 			foreach (var taxCode in defaultData.TaxCodes)
 				session.Save(taxCode);
 			foreach (var currency in defaultData.Currencies)
-			{
-				var listItem = currency.Item2;
-				listItem.Category = session.Get<ListItemCategory>(currency.Item1);
-				session.Save(listItem);
-			}
+				session.Save(currency);
 			foreach (var bankDetails in defaultData.BankDetails)
 				session.Save(bankDetails);
 			foreach (var entityIdLookup in defaultData.EntityIdLookups)
@@ -218,9 +214,9 @@ namespace JobSystem.DbWireup
 			return NHibernateSession.Current.Get<TaxCode>(id);
 		}
 
-		public ListItem GetCurrency(Guid id)
+		public Currency GetCurrency(Guid id)
 		{
-			return NHibernateSession.Current.Get<ListItem>(id);
+			return NHibernateSession.Current.Get<Currency>(id);
 		}
 
 		public ListItem GetPaymentTerm(Guid id)

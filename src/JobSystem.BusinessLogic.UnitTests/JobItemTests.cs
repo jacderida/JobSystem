@@ -13,14 +13,16 @@ using Rhino.Mocks;
 namespace JobSystem.BusinessLogic.UnitTests
 {
 	[TestFixture]
-	public class JobItemTests
+	public class JobItemServiceTests
 	{
 		private JobItemService _jobItemService;
 		private DomainValidationException _domainValidationException;
 		private JobItem _savedJobItem;
 		private DateTime _dateCreated = new DateTime(2011, 12, 29);
-		private JobItem _jobItemToUpdate;
+		private JobItem _jobItemToUpdate;	
 		private Guid _jobItemToUpdateId;
+		private JobItem _jobItemToUpdateJobNotApproved;
+		private Guid _jobItemToUpdateJobNotApprovedId;
 		private IUserContext _userContext;
 
 		[TestFixtureSetUp]
@@ -37,9 +39,10 @@ namespace JobSystem.BusinessLogic.UnitTests
 			AppDateTime.GetUtcNow = () => _dateCreated;
 			_jobItemToUpdate = new JobItem
 			{
+				Id = _jobItemToUpdateId,
 				Job = new Job
 				{
-					Id = _jobItemToUpdateId,
+					Id = Guid.NewGuid(),
 					JobNo = "JR2000",
 					CreatedBy = _userContext.GetCurrentUser(),
 					OrderNo = "ORDER12345",
@@ -60,6 +63,34 @@ namespace JobSystem.BusinessLogic.UnitTests
 				Created = DateTime.UtcNow,
 				CreatedUser = _userContext.GetCurrentUser(),
 			};
+			_jobItemToUpdateJobNotApproved = new JobItem
+			{
+				Id = _jobItemToUpdateJobNotApprovedId,
+				Job = new Job
+				{
+					Id = Guid.NewGuid(),
+					JobNo = "JR2000",
+					CreatedBy = _userContext.GetCurrentUser(),
+					OrderNo = "ORDER12345",
+					DateCreated = DateTime.UtcNow,
+					Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" },
+					IsPending = true
+				},
+				ItemNo = 1,
+				SerialNo = "12345",
+				Instrument = new Instrument
+				{
+					Id = Guid.NewGuid(),
+					Manufacturer = "Druck",
+					ModelNo = "DPI601IS",
+					Range = "None",
+					Description = "Digital Pressure Indicator"
+				},
+				CalPeriod = 12,
+				Created = DateTime.UtcNow,
+				CreatedUser = _userContext.GetCurrentUser(),
+			};
+
 			_savedJobItem = null;
 		}
 
@@ -475,6 +506,22 @@ namespace JobSystem.BusinessLogic.UnitTests
 				jobItemRepositoryStub, workStatusId, workTypeId, TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
 			AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.InsufficientSecurityClearance));
+		}
+
+		[Test]
+		public void AddWorkItem_JobNotApproved_DomainValidationExceptionThrown()
+		{
+			var workStatusId = Guid.NewGuid();
+			var workTypeId = Guid.NewGuid();
+			var workTime = 25;
+			var overTime = 10;
+			var report = "Instrument calibrated OK";
+
+			var jobItemRepositoryStub = MockRepository.GenerateStub<IJobItemRepository>();
+			jobItemRepositoryStub.Stub(x => x.GetById(_jobItemToUpdateJobNotApprovedId)).Return(_jobItemToUpdateJobNotApproved);
+			_jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryStub, workStatusId, workTypeId, _userContext);
+			AddWorkItem(_jobItemToUpdateJobNotApprovedId, workTime, overTime, report, workStatusId, workTypeId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.JobNotApproved));
 		}
 
 		private void AddWorkItem(Guid jobItemId, int workTime, int overTime, string report, Guid workStatusId, Guid workTypeId)
