@@ -75,13 +75,13 @@
 					}
 				default:
 					{
-						report.CalibrationTextBox.Format = "{0}";
-						report.RepairTextBox.Format = "{0}";
-						report.PartsTextBox.Format = "{0}";
-						report.CarriageTextBox.Format = "{0}";
-						report.SubTotalTextBox.Format = "{0}";
-						report.InvestigationTextBox.Format = "{0}";
-						report.TotalTextBox.Format = "{0}";
+						report.CalibrationTextBox.Format = "{0:N2}";
+						report.RepairTextBox.Format = "{0:N2}";
+						report.PartsTextBox.Format = "{0:N2}";
+						report.CarriageTextBox.Format = "{0:N2}";
+						report.SubTotalTextBox.Format = "{0:N2}";
+						report.InvestigationTextBox.Format = "{0:N2}";
+						report.TotalTextBox.Format = "{0:N2}";
 						report.CurrencyMessageTextBox.Visible = true;
 						break;
 					}

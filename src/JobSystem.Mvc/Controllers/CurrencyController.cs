@@ -62,6 +62,8 @@ namespace JobSystem.Mvc.Controllers
 			});
 		}
 
+		[HttpPost]
+		[Transaction]
 		public ActionResult Edit(CurrencyViewModel model)
 		{
 			try

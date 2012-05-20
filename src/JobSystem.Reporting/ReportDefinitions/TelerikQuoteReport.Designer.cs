@@ -479,7 +479,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox9.Style.BorderStyle.Right = Telerik.Reporting.Drawing.BorderType.Solid;
 			this.textBox9.Style.BorderStyle.Top = Telerik.Reporting.Drawing.BorderType.Solid;
 			this.textBox9.Style.Font.Bold = true;
-			this.textBox9.Value = "=Fields.JobNo";
+			this.textBox9.Value = "= Fields.JobNo";
 			// 
 			// reportFooter
 			// 
@@ -539,7 +539,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.CurrencyMessageTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.42426350712776184D), Telerik.Reporting.Drawing.Unit.Cm(0.19919972121715546D));
 			this.CurrencyMessageTextBox.Name = "CurrencyMessageTextBox";
 			this.CurrencyMessageTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(9.0757360458374023D), Telerik.Reporting.Drawing.Unit.Cm(0.59999889135360718D));
-			this.CurrencyMessageTextBox.Value = "placeholder";
+			this.CurrencyMessageTextBox.Value = "= Fields.CurrencyMessage";
 			// 
 			// detail
 			// 

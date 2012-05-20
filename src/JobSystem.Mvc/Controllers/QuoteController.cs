@@ -18,6 +18,7 @@ namespace JobSystem.Mvc.Controllers
 		private readonly QuoteService _quoteService;
 		private readonly QuoteItemService _quoteItemService;
 		private readonly JobService _jobService;
+		private readonly JobItemService _jobItemService;
 		private readonly ListItemService _listItemService;
 		private readonly CompanyDetailsService _companyDetailsService;
 		private readonly CurrencyService _currencyService;
@@ -26,6 +27,7 @@ namespace JobSystem.Mvc.Controllers
 			QuoteService quoteService,
 			QuoteItemService quoteItemService,
 			JobService jobService,
+			JobItemService jobItemService,
 			ListItemService listItemService,
 			CompanyDetailsService companyDetailsService,
 			CurrencyService currencyService)
@@ -33,6 +35,7 @@ namespace JobSystem.Mvc.Controllers
 			_quoteService = quoteService;
 			_quoteItemService = quoteItemService;
 			_jobService = jobService;
+			_jobItemService = jobItemService;
 			_listItemService = listItemService;
 			_companyDetailsService = companyDetailsService;
 			_currencyService = currencyService;
@@ -48,14 +51,18 @@ namespace JobSystem.Mvc.Controllers
 		{
 			var job = _jobService.GetJob(jobId);
 			var company = _companyDetailsService.GetCompany();
-
-			var viewmodel = new QuoteCreateViewModel(){
+			var jobItem = _jobItemService.GetById(jobItemId);
+			var workTypeListItemId = _listItemService.GetByType(ListItemType.WorkTypeInvestigation).Id;
+			var investigationWorkItem = jobItem.HistoryItems.Where(i => i.WorkType.Id == workTypeListItemId).FirstOrDefault();
+			var viewmodel = new QuoteCreateViewModel()
+			{
 				JobItemId = jobItemId,
 				JobId = jobId,
 				OrderNo = job.OrderNo,
 				AdviceNo = job.AdviceNo,
 				Currencies = _currencyService.GetCurrencies().ToSelectList(),
-				CurrencyId = company.DefaultCurrency.Id
+				CurrencyId = company.DefaultCurrency.Id,
+				Report = investigationWorkItem != null ? investigationWorkItem.Report : String.Empty
 			};
 			return View("Create", viewmodel);
 		}

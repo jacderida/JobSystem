@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.DataModel.Dto;
+using JobSystem.DataModel.Entities;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.ViewModels.Customers;
-using JobSystem.DataModel.Entities;
-using System.Collections.Generic;
 
 namespace JobSystem.Mvc.Controllers
 {

@@ -94,6 +94,9 @@
     <Compile Include="M20120509001952_RemoveWorkLocationIdColumnFromItemHistoriesTable.cs" />
     <Compile Include="M20120515223054_AddIsOrderedColumnToConsignmentTable.cs" />
     <Compile Include="M20120519163128_AddCurrencyTable.cs" />
+    <Compile Include="M20120520162219_ChangeCurrencyForeignKeyOnQuotesTable.cs" />
+    <Compile Include="M20120520162728_ChangeCurrencyForeignKeyOnOrdersTable.cs" />
+    <Compile Include="M20120520162923_ChangeCurrencyForeignKeyOnInvoicesTable.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
