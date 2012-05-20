@@ -42,6 +42,7 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			var jobRepository = new JobRepository();
 			var jobItemRepository = new JobItemRepository();
 			var listItemRepository = new ListItemRepository();
+			var currencyRepository = new CurrencyRepository();
 			var entityIdProvider = new DirectEntityIdProvider();
 			var instrumentRepository = new InstrumentRepository();
 			var deliveryRepository = new DeliveryRepository();
@@ -78,7 +79,7 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			invoiceItemService.CreatePending(Guid.NewGuid(), jobItem9Id);
 
 			var invoiceService = new InvoiceService(
-				userContext, invoiceItemService, invoiceRepository, new DirectEntityIdProvider(), listItemRepository, customerRepository, new BankDetailsRepository(), new TaxCodeRepository(), companyDetailsRepository, dispatcher);
+				userContext, invoiceItemService, invoiceRepository, new DirectEntityIdProvider(), listItemRepository, customerRepository, new BankDetailsRepository(), new TaxCodeRepository(), companyDetailsRepository, currencyRepository, dispatcher);
 			invoiceService.CreateInvoicesFromPendingItems();
 			var invoices = invoiceService.GetInvoices().ToList();
 			Assert.AreEqual(4, invoices.Count);

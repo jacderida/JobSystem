@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using JobSystem.DataModel.Repositories;
-using Rhino.Mocks;
-using JobSystem.DataModel.Entities;
-using JobSystem.BusinessLogic.Services;
+﻿using JobSystem.BusinessLogic.Services;
 using JobSystem.DataModel;
+using JobSystem.DataModel.Entities;
+using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
+using Rhino.Mocks;
 
 namespace JobSystem.TestHelpers
 {
 	public static class OrderServiceTestHelper
 	{
 		public static OrderService CreateOrderService(
-			IOrderRepository orderRepository, ISupplierRepository supplierRepository, IListItemRepository listItemRepository, IUserContext userContext)
+			IOrderRepository orderRepository, ISupplierRepository supplierRepository, ICurrencyRepository currencyRepository, IUserContext userContext)
 		{
 			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
 			return new OrderService(
@@ -22,9 +18,9 @@ namespace JobSystem.TestHelpers
 				orderRepository,
 				MockRepository.GenerateStub<IConsignmentRepository>(),
 				supplierRepository,
-				listItemRepository,
+				currencyRepository,
 				EntityIdProviderFactory.GetEntityIdProviderFor<Order>("OR2000"),
-				new OrderItemService(userContext, orderRepository, MockRepository.GenerateStub<IOrderItemRepository>(), supplierRepository, MockRepository.GenerateStub<IJobItemRepository>(), listItemRepository, dispatcher), 
+				new OrderItemService(userContext, orderRepository, MockRepository.GenerateStub<IOrderItemRepository>(), supplierRepository, MockRepository.GenerateStub<IJobItemRepository>(), MockRepository.GenerateStub<IListItemRepository>(), dispatcher), 
 				MockRepository.GenerateStub<ICompanyDetailsRepository>(),
 				dispatcher);
 		}

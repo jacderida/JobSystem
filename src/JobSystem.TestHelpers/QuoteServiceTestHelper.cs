@@ -26,11 +26,11 @@ namespace JobSystem.TestHelpers
 		}
 
 		public static QuoteService CreateQuoteService(
-			IQuoteRepository quoteRepository, ICustomerRepository customerRepository, IListItemRepository listItemRepository, IUserContext userContext)
+			IQuoteRepository quoteRepository, ICustomerRepository customerRepository, ICurrencyRepository currencyRepository, IUserContext userContext)
 		{
 			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
 			return new QuoteService(
-				userContext, quoteRepository, customerRepository, EntityIdProviderFactory.GetEntityIdProviderFor<Quote>("QR2000"), listItemRepository,
+				userContext, quoteRepository, customerRepository, EntityIdProviderFactory.GetEntityIdProviderFor<Quote>("QR2000"), currencyRepository,
 				new QuoteItemService(
 					userContext, quoteRepository, MockRepository.GenerateStub<IQuoteItemRepository>(),
 					MockRepository.GenerateStub<IJobItemRepository>(), MockRepository.GenerateStub<IListItemRepository>(),

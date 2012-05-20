@@ -38,24 +38,24 @@
 
 			var orderService = DependencyResolver.Current.GetService<OrderService>();
 			var order = orderService.GetById(Model);
-			switch (order.Currency.Type)
+			switch (order.Currency.Name)
 			{
-				case JobSystem.DataModel.Entities.ListItemType.CurrencyGbp:
+				case "GBP":
 					{
 						report.PriceTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
 						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
 						break;
 					}
-				case JobSystem.DataModel.Entities.ListItemType.CurrencyUsd:
+				case "USD":
 					{
 						report.PriceTextBox.Culture = new System.Globalization.CultureInfo("en-US");
-						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-US");
 						break;
 					}
-				case JobSystem.DataModel.Entities.ListItemType.CurrencyEuro:
+				case "EUR":
 					{
 						report.PriceTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
-						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
 						break;
 					}
 				default:

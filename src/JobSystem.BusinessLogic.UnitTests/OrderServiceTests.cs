@@ -75,7 +75,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				orderRepositoryMock,
 				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
 			orderRepositoryMock.VerifyAllExpectations();
@@ -98,7 +98,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
 				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
 		}
@@ -115,7 +115,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
 				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsNull(supplierId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
 		}
@@ -131,7 +131,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
 				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InstructionsTooLarge));
@@ -149,24 +149,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
 				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsNull(currencyId),
-				_userContext);
-			CreateOrder(orderId, supplierId, instructions, currencyId);
-		}
-
-		[Test]
-		[ExpectedException(typeof(ArgumentException))]
-		public void Create_InvalidCurrencyNonCurrencyListItem_ArgumentExceptionThrown()
-		{
-			var orderId = Guid.NewGuid();
-			var supplierId = Guid.NewGuid();
-			var instructions = "some instructions";
-			var currencyId = Guid.NewGuid();
-
-			_orderService = OrderServiceTestHelper.CreateOrderService(
-				MockRepository.GenerateStub<IOrderRepository>(),
-				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsNonCurrencyListItem(currencyId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsNull(currencyId),
 				_userContext);
 			CreateOrder(orderId, supplierId, instructions, currencyId);
 		}
@@ -182,7 +165,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
 				SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
 			CreateOrder(orderId, supplierId, instructions, currencyId);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
@@ -212,7 +195,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				orderRepositoryMock,
 				MockRepository.GenerateStub<ISupplierRepository>(),
-				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICurrencyRepository>(),
 				_userContext);
 			Approve(_orderForApprovalId);
 			orderRepositoryMock.VerifyAllExpectations();
@@ -227,7 +210,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				orderRepositoryStub,
 				MockRepository.GenerateStub<ISupplierRepository>(),
-				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICurrencyRepository>(),
 				_userContext);
 			Approve(_orderForApprovalId);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.ApprovalWithZeroItems));
@@ -241,7 +224,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				orderRepositoryStub,
 				MockRepository.GenerateStub<ISupplierRepository>(),
-				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICurrencyRepository>(),
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member));
 			Approve(_orderForApprovalId);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
@@ -254,7 +237,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsNull(_orderForApprovalId),
 				MockRepository.GenerateStub<ISupplierRepository>(),
-				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICurrencyRepository>(),
 				_userContext);
 			Approve(_orderForApprovalId);
 		}
@@ -280,7 +263,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
 				MockRepository.GenerateStub<ISupplierRepository>(),
-				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICurrencyRepository>(),
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
 			GetOrders();
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
@@ -307,7 +290,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_orderService = OrderServiceTestHelper.CreateOrderService(
 				MockRepository.GenerateStub<IOrderRepository>(),
 				MockRepository.GenerateStub<ISupplierRepository>(),
-				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICurrencyRepository>(),
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
 			GetById(Guid.NewGuid());
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));

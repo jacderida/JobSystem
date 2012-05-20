@@ -21,6 +21,7 @@ namespace JobSystem.BusinessLogic.Services
 		private readonly IBankDetailsRepository _bankDetailsRepository;
 		private readonly ITaxCodeRepository _taxCodeRepository;
 		private readonly ICompanyDetailsRepository _companyDetailsRepository;
+		private readonly ICurrencyRepository _currencyRepository;
 
 		public InvoiceService(
 			IUserContext userContext,
@@ -32,6 +33,7 @@ namespace JobSystem.BusinessLogic.Services
 			IBankDetailsRepository bankDetailsRepository,
 			ITaxCodeRepository taxCodeRepository,
 			ICompanyDetailsRepository companyDetailsRepository,
+			ICurrencyRepository currencyRepository,
 			IQueueDispatcher<IMessage> dispatcher) : base(userContext, dispatcher)
 		{
 			_invoiceItemService = invoiceItemService;
@@ -42,6 +44,7 @@ namespace JobSystem.BusinessLogic.Services
 			_bankDetailsRepository = bankDetailsRepository;
 			_taxCodeRepository = taxCodeRepository;
 			_companyDetailsRepository = companyDetailsRepository;
+			_currencyRepository = currencyRepository;
 		}
 
 		public void CreateInvoicesFromPendingItems()
@@ -100,10 +103,10 @@ namespace JobSystem.BusinessLogic.Services
 			}
 		}
 
-		private ListItem GetCurrency(Guid currencyId)
+		private Currency GetCurrency(Guid currencyId)
 		{
-			var currency = _listItemRepository.GetById(currencyId);
-			if (currency == null || currency.Category.Type != ListItemCategoryType.Currency)
+			var currency = _currencyRepository.GetById(currencyId);
+			if (currency == null)
 				throw new ArgumentException("A valid ID must be supplied for the currency.");
 			return currency;
 		}

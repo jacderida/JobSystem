@@ -7,13 +7,9 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 {
 	public static class ListItemRepositoryTestHelper
 	{
-		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsGbpCurrencyAndPaymentTerm(Guid currencyId, Guid paymentTermId)
+		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsPaymentTerm(Guid paymentTermId)
 		{
 			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
-			if (currencyId != Guid.Empty)
-				listItemRepository.Stub(x => x.GetById(currencyId)).Return(GetCurrency(currencyId));
-			else
-				listItemRepository.Stub(x => x.GetById(currencyId)).Return(null);
 			if (paymentTermId != Guid.Empty)
 				listItemRepository.Stub(x => x.GetById(paymentTermId)).Return(GetPaymentTerm(paymentTermId));
 			else
@@ -21,33 +17,10 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 			return listItemRepository;
 		}
 
-		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsNonCurrency(Guid currencyId, Guid paymentTermId)
+		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsNonPaymentTerm(Guid paymentTermId)
 		{
 			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
-			listItemRepository.Stub(x => x.GetById(currencyId)).Return(GetNonCurrencyListItem(currencyId));
-			listItemRepository.Stub(x => x.GetById(paymentTermId)).Return(GetPaymentTerm(paymentTermId));
-			return listItemRepository;
-		}
-
-		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsNonPaymentTerm(Guid currencyId, Guid paymentTermId)
-		{
-			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
-			listItemRepository.Stub(x => x.GetById(currencyId)).Return(GetCurrency(currencyId));
-			listItemRepository.Stub(x => x.GetById(paymentTermId)).Return(GetCurrency(paymentTermId));
-			return listItemRepository;
-		}
-
-		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsGbpCurrency(Guid currencyId)
-		{
-			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
-			listItemRepository.Stub(x => x.GetById(currencyId)).Return(GetCurrency(currencyId));
-			return listItemRepository;
-		}
-
-		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsUsdCurrency(Guid currencyId)
-		{
-			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
-			listItemRepository.Stub(x => x.GetById(currencyId)).Return(GetUsdCurrency(currencyId));
+			listItemRepository.Stub(x => x.GetById(paymentTermId)).Return(GetHouseCalibrationCertificateType(paymentTermId));
 			return listItemRepository;
 		}
 
@@ -55,13 +28,6 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 		{
 			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
 			listItemRepository.Stub(x => x.GetById(itemId)).Return(null);
-			return listItemRepository;
-		}
-
-		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsNonCurrencyListItem(Guid currencyId)
-		{
-			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
-			listItemRepository.Stub(x => x.GetById(currencyId)).Return(GetNonCurrencyListItem(currencyId));
 			return listItemRepository;
 		}
 
@@ -83,7 +49,7 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 		public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsNonCertificateType(Guid certificateTypeId)
 		{
 			var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
-			listItemRepository.Stub(x => x.GetById(certificateTypeId)).Return(GetCurrency(certificateTypeId));
+			listItemRepository.Stub(x => x.GetById(certificateTypeId)).Return(GetPaymentTerm(certificateTypeId));
 			return listItemRepository;
 		}
 
@@ -94,39 +60,6 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 				Id = Guid.NewGuid(),
 				Name = type.ToString(),
 				Type = type
-			};
-		}
-
-		private static ListItem GetCurrency(Guid currencyId)
-		{
-			return new ListItem
-			{
-				Id = currencyId,
-				Name = "GBP",
-				Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Currency", Type = ListItemCategoryType.Currency },
-				Type = ListItemType.CurrencyGbp
-			};
-		}
-
-		private static ListItem GetUsdCurrency(Guid currencyId)
-		{
-			return new ListItem
-			{
-				Id = currencyId,
-				Name = "USD",
-				Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Currency", Type = ListItemCategoryType.Currency },
-				Type = ListItemType.CurrencyUsd
-			};
-		}
-
-		private static ListItem GetNonCurrencyListItem(Guid currencyId)
-		{
-			return new ListItem
-			{
-				Id = currencyId,
-				Name = "GBP",
-				Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Job Item Category", Type = ListItemCategoryType.JobItemStatus },
-				Type = ListItemType.StatusOrdered
 			};
 		}
 

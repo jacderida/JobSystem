@@ -14,9 +14,9 @@ namespace JobSystem.BusinessLogic.Services
 	public class QuoteService : ServiceBase
 	{
 		private readonly IQuoteRepository _quoteRepository;
+		private readonly ICurrencyRepository _currencyRepository;
 		private readonly ICustomerRepository _customerRepository;
 		private readonly IEntityIdProvider _entityIdProvider;
-		private readonly IListItemRepository _listItemRepository;
 		private readonly QuoteItemService _quoteItemService;
 		private readonly ICompanyDetailsRepository _companyDetailsRepository;
 
@@ -25,7 +25,7 @@ namespace JobSystem.BusinessLogic.Services
 			IQuoteRepository quoteRepository,
 			ICustomerRepository customerRepository,
 			IEntityIdProvider entityIdProvider,
-			IListItemRepository listItemRepository,
+			ICurrencyRepository currencyRepository,
 			QuoteItemService quoteItemService,
 			ICompanyDetailsRepository companyDetailsRepository,
 			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
@@ -34,7 +34,7 @@ namespace JobSystem.BusinessLogic.Services
 			_customerRepository = customerRepository;
 			_entityIdProvider = entityIdProvider;
 			_quoteItemService = quoteItemService;
-			_listItemRepository = listItemRepository;
+			_currencyRepository = currencyRepository;
 			_companyDetailsRepository = companyDetailsRepository;
 		}
 
@@ -125,13 +125,11 @@ namespace JobSystem.BusinessLogic.Services
 			return customer;
 		}
 
-		private ListItem GetCurrency(Guid currencyId)
+		private Currency GetCurrency(Guid currencyId)
 		{
-			var currency = _listItemRepository.GetById(currencyId);
+			var currency = _currencyRepository.GetById(currencyId);
 			if (currency == null)
 				throw new ArgumentException("A valid ID must be supplied for the currency");
-			if (currency.Category.Type != ListItemCategoryType.Currency)
-				throw new ArgumentException("The list item must be of type currency");
 			return currency;
 		}
 	}

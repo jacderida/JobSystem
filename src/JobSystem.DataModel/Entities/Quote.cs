@@ -17,7 +17,7 @@ namespace JobSystem.DataModel.Entities
 		public virtual string OrderNumber { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AdviceNoTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string AdviceNumber { get; set; }
-		public virtual ListItem Currency { get; set; }
+		public virtual Currency Currency { get; set; }
 		public virtual bool IsActive { get; set; }
 		public virtual int Revision { get; set; }
 		public virtual IList<QuoteItem> QuoteItems { get; set; }

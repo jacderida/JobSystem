@@ -17,13 +17,15 @@ namespace JobSystem.Mvc.Controllers
 	{
 		private readonly OrderService _orderService;
 		private readonly OrderItemService _orderItemService;
+		private readonly CurrencyService _currencyService;
 		private readonly ListItemService _listItemService;
 
-		public OrderController(OrderService orderService, OrderItemService orderItemService, ListItemService listItemService)
+		public OrderController(OrderService orderService, OrderItemService orderItemService, CurrencyService currencyService, ListItemService listItemService)
 		{
 			_orderService = orderService;
 			_orderItemService = orderItemService;
 			_listItemService = listItemService;
+			_currencyService = currencyService;
 		}
 
 		public ActionResult Index()
@@ -112,7 +114,7 @@ namespace JobSystem.Mvc.Controllers
 			var viewmodel = new OrderCreateViewModel()
 			{
 				JobItemId = Guid.Empty,
-				Currencies = _listItemService.GetAllByCategory(ListItemCategoryType.Currency).ToSelectList()
+				Currencies = _currencyService.GetCurrencies().ToSelectList()
 			};
 			return View(viewmodel);
 		}
@@ -137,7 +139,7 @@ namespace JobSystem.Mvc.Controllers
 			{
 				JobId = jobId,
 				JobItemId = jobItemId,
-				Currencies = _listItemService.GetAllByCategory(ListItemCategoryType.Currency).ToSelectList()
+				Currencies = _currencyService.GetCurrencies().ToSelectList()
 			};
 			return View(viewmodel);
 		}
@@ -187,7 +189,7 @@ namespace JobSystem.Mvc.Controllers
 			var viewmodel = new OrderItemCreateViewModel()
 			{
 				OrderId = orderId,
-				Currencies = _listItemService.GetAllByCategory(ListItemCategoryType.Currency).ToSelectList()
+				Currencies = _currencyService.GetCurrencies().ToSelectList()
 			};
 			return View(viewmodel);
 		}

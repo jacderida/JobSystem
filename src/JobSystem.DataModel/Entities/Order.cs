@@ -15,7 +15,7 @@ namespace JobSystem.DataModel.Entities
 		public virtual UserAccount CreatedBy { get; set; }
 		[StringLength(255, ErrorMessageResourceName = "InstructionsTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string Instructions { get; set; }
-		public virtual ListItem Currency { get; set; }
+		public virtual Currency Currency { get; set; }
 		public virtual bool IsApproved { get; set; }
 		public virtual IList<OrderItem> OrderItems { get; set; }
 

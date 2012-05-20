@@ -54,16 +54,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			};
 		}
 
-		private ListItem GetCurrency(Guid id)
-		{
-			return new ListItem
-			{
-				Id = id,
-				Name = "GBP",
-				Type = ListItemType.CurrencyGbp
-			};
-		}
-
 		private TaxCode GetTaxCode(Guid id)
 		{
 			return new TaxCode

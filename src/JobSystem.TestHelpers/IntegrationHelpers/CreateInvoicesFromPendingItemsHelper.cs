@@ -30,6 +30,7 @@ namespace JobSystem.TestHelpers.IntegrationHelpers
 			var jobRepository = new JobRepository();
 			var jobItemRepository = new JobItemRepository();
 			var listItemRepository = new ListItemRepository();
+			var currencyRepository = new CurrencyRepository();
 			var entityIdProvider = new DirectEntityIdProvider();
 			var instrumentRepository = new InstrumentRepository();
 
@@ -111,7 +112,7 @@ namespace JobSystem.TestHelpers.IntegrationHelpers
 			#endregion
 
 			var quoteItemService = new QuoteItemService(userContext, quoteRepository, quoteItemRepository, jobItemRepository, listItemRepository, customerRepository, dispatcher);
-			var quoteService = new QuoteService(userContext, quoteRepository, customerRepository, entityIdProvider, listItemRepository, quoteItemService, companyDetailsRepository, dispatcher);
+			var quoteService = new QuoteService(userContext, quoteRepository, customerRepository, entityIdProvider, currencyRepository, quoteItemService, companyDetailsRepository, dispatcher);
 			quoteItemService.CreatePending(Guid.NewGuid(), customerId1, jobItem1Id, 25, 35, 45, 25, 56, "calibrated", 30, false, "CALORDER", String.Empty);
 			quoteItemService.CreatePending(Guid.NewGuid(), customerId1, jobItem3Id, 45, 65, 35, 22, 87, "calibrated", 30, false, "CALORDER", String.Empty);
 			quoteItemService.CreatePending(Guid.NewGuid(), customerId1, jobItem2Id, 45, 60, 30, 26, 56, "repaired", 30, false, "REPAIRORDER", String.Empty);

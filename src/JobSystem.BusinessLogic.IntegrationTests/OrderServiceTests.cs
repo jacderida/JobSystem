@@ -42,6 +42,7 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			var jobRepository = new JobRepository();
 			var jobItemRepository = new JobItemRepository();
 			var listItemRepository = new ListItemRepository();
+			var currencyRepository = new CurrencyRepository();
 			var entityIdProvider = new DirectEntityIdProvider();
 			var instrumentRepository = new InstrumentRepository();
 			var companyDetailsRepository = new CompanyDetailsRepository();
@@ -80,7 +81,7 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			orderItemService.CreatePending(Guid.NewGuid(), supplier3Id, "some description", 1, "partno", "instructions", 30, jobItem7Id, 29.99m);
 
 			var orderService = new OrderService(
-				userContext, orderRepository, consignmentRepository, supplierRepository, listItemRepository, entityIdProvider, orderItemService, companyDetailsRepository, dispatcher);
+				userContext, orderRepository, consignmentRepository, supplierRepository, currencyRepository, entityIdProvider, orderItemService, companyDetailsRepository, dispatcher);
 			orderService.CreateOrdersFromPendingItems();
 
 			var orders = orderService.GetOrders().OrderBy(o => o.OrderNo).ToList();
@@ -123,6 +124,7 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			var orderItemRepository = new OrderItemRepository();
 			var supplierRepository = new SupplierRepository();
 			var listItemRepository = new ListItemRepository();
+			var currencyRepository = new CurrencyRepository();
 			var entityIdProvider = new DirectEntityIdProvider();
 			var jobItemRepository = new JobItemRepository();
 			var companyDetailsRepository = new CompanyDetailsRepository();
@@ -138,7 +140,7 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			CreateOrderFromConsignmentHelper.CreateContextForCreateOrderFromConsignmentTest(jobId, supplierId, consignmentId, jobItem1Id, jobItem2Id, jobItem3Id);
 			var orderItemService = new OrderItemService(userContext, orderRepository, orderItemRepository, supplierRepository, jobItemRepository, listItemRepository, dispatcher);
 			var orderService = new OrderService(
-				userContext, orderRepository, consignmentRepository, supplierRepository, listItemRepository, entityIdProvider,
+				userContext, orderRepository, consignmentRepository, supplierRepository, currencyRepository, entityIdProvider,
 				orderItemService, companyDetailsRepository, dispatcher);
 			var orderId = orderService.CreateOrderFromConsignment(consignmentId);
 			var order = orderService.GetById(orderId);

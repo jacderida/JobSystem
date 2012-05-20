@@ -40,6 +40,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.JobRef = GetJobItemReference(item.JobItem);
 				reportItem.PreparedBy = quote.CreatedBy.Name;
 				reportItem.Instrument = GetInstrumentDescription(item.JobItem.Instrument);
+				reportItem.CurrencyMessage = quote.Currency.DisplayMessage;
 				result.Add(reportItem);
 			}
 			return result;

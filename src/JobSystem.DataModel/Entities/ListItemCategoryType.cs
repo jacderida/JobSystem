@@ -18,8 +18,6 @@ namespace JobSystem.DataModel.Entities
 		JobItemWorkType = 6,
 		[Description("Status")]
 		JobItemWorkStatus = 7,
-		[Description("Currency")]
-		Currency = 8,
 		[Description("Payment Term")]
 		PaymentTerm = 9,
 		[Description("Certificate")]

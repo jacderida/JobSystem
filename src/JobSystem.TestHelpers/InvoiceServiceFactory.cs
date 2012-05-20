@@ -15,7 +15,8 @@ namespace JobSystem.TestHelpers
 			IListItemRepository listItemRepository,
 			ICustomerRepository customerRepository,
 			IBankDetailsRepository bankDetailsRepository,
-			ITaxCodeRepository taxCodeRepository)
+			ITaxCodeRepository taxCodeRepository,
+			ICurrencyRepository currencyRepository)
 		{
 			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
 			return new InvoiceService(
@@ -36,6 +37,7 @@ namespace JobSystem.TestHelpers
 				bankDetailsRepository,
 				taxCodeRepository,
 				MockRepository.GenerateStub<ICompanyDetailsRepository>(),
+				currencyRepository,
 				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 	}

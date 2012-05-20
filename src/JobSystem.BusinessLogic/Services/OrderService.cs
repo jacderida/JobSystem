@@ -16,17 +16,17 @@ namespace JobSystem.BusinessLogic.Services
 		private readonly IOrderRepository _orderRepository;
 		private readonly IConsignmentRepository _consignmentRepository;
 		private readonly ISupplierRepository _supplierRepository;
-		private readonly IListItemRepository _listItemRepository;
 		private readonly IEntityIdProvider _entityIdProvider;
 		private readonly OrderItemService _orderItemService;
 		private readonly ICompanyDetailsRepository _companyDetailsRepository;
+		private readonly ICurrencyRepository _currencyRepository;
 
 		public OrderService(
 			IUserContext applicationContext,
 			IOrderRepository orderRepository,
 			IConsignmentRepository consignmentRepository,
 			ISupplierRepository supplierRepository,
-			IListItemRepository listItemRepository,
+			ICurrencyRepository currencyRepository,
 			IEntityIdProvider entityIdProvider,
 			OrderItemService orderItemService,
 			ICompanyDetailsRepository companyDetailsRepository,
@@ -34,11 +34,11 @@ namespace JobSystem.BusinessLogic.Services
 		{
 			_orderRepository = orderRepository;
 			_supplierRepository = supplierRepository;
-			_listItemRepository = listItemRepository;
 			_entityIdProvider = entityIdProvider;
 			_orderItemService = orderItemService;
 			_companyDetailsRepository = companyDetailsRepository;
 			_consignmentRepository = consignmentRepository;
+			_currencyRepository = currencyRepository;
 		}
 
 		public Order Create(Guid id, Guid supplierId, string instructions, Guid currencyId)
@@ -146,13 +146,11 @@ namespace JobSystem.BusinessLogic.Services
 			return supplier;
 		}
 
-		private ListItem GetCurrency(Guid currencyId)
+		private Currency GetCurrency(Guid currencyId)
 		{
-			var currency = _listItemRepository.GetById(currencyId);
+			var currency = _currencyRepository.GetById(currencyId);
 			if (currency == null)
 				throw new ArgumentException("A valid currency ID must be supplied for the order");
-			if (currency.Category.Type != ListItemCategoryType.Currency)
-				throw new ArgumentException("A currency list item must be selected for the currency");
 			return currency;
 		}
 	}

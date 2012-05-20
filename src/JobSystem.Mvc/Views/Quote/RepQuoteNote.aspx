@@ -38,9 +38,9 @@
 
 			var quoteService = DependencyResolver.Current.GetService<QuoteService>();
 			var quote = quoteService.GetById(Model);
-			switch (quote.Currency.Type)
+			switch (quote.Currency.Name)
 			{
-				case JobSystem.DataModel.Entities.ListItemType.CurrencyGbp:
+				case "GBP":
 					{
 						report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
 						report.RepairTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
@@ -51,7 +51,7 @@
 						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
 						break;
 					}
-				case JobSystem.DataModel.Entities.ListItemType.CurrencyUsd:
+				case "USD":
 					{
 						report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("en-US");
 						report.RepairTextBox.Culture = new System.Globalization.CultureInfo("en-US");
@@ -62,7 +62,7 @@
 						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-US");
 						break;
 					}
-				case JobSystem.DataModel.Entities.ListItemType.CurrencyEuro:
+				case "EUR":
 					{
 						report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
 						report.RepairTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
@@ -74,7 +74,17 @@
 						break;
 					}
 				default:
-					throw new InvalidOperationException();
+					{
+						report.CalibrationTextBox.Format = "{0}";
+						report.RepairTextBox.Format = "{0}";
+						report.PartsTextBox.Format = "{0}";
+						report.CarriageTextBox.Format = "{0}";
+						report.SubTotalTextBox.Format = "{0}";
+						report.InvestigationTextBox.Format = "{0}";
+						report.TotalTextBox.Format = "{0}";
+						report.CurrencyMessageTextBox.Visible = true;
+						break;
+					}
 			}
 			ReportViewer1.Report = report;
 			base.OnLoad(e);

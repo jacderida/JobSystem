@@ -48,12 +48,11 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 				Supplier = new Supplier { Id = Guid.NewGuid(), Name = "Gael Ltd" },
 				Instructions = "blah blah",
 				OrderNo = "OR2000",
-				Currency = new ListItem
+				Currency = new Currency
 				{
 					Id = Guid.NewGuid(),
 					Name = "Gbp",
-					Type = ListItemType.CurrencyGbp,
-					Category = new ListItemCategory { Id = Guid.NewGuid(), Type = ListItemCategoryType.Currency, Name = "Currency" }
+					DisplayMessage = "All prices in GBP"
 				},
 				OrderItems = new List<OrderItem>()
 			};
@@ -78,12 +77,11 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 				Supplier = new Supplier { Id = Guid.NewGuid(), Name = "Gael Ltd" },
 				Instructions = "blah blah",
 				OrderNo = "OR2000",
-				Currency = new ListItem
+				Currency = new Currency
 				{
 					Id = Guid.NewGuid(),
 					Name = "Gbp",
-					Type = ListItemType.CurrencyGbp,
-					Category = new ListItemCategory { Id = Guid.NewGuid(), Type = ListItemCategoryType.Currency, Name = "Currency" }
+					DisplayMessage = "All prices in GBP"
 				},
 				OrderItems = new List<OrderItem>()
 				{

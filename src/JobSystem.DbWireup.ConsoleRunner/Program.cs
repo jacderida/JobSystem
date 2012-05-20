@@ -28,7 +28,6 @@ namespace JobSystem.DbWireup.ConsoleRunner
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.StatusId, "Status", ListItemCategoryType.JobItemStatus),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.WorkTypeId, "Work Type", ListItemCategoryType.JobItemWorkType),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.WorkStatusId, "Status", ListItemCategoryType.JobItemWorkStatus),
-					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.CurrencyId, "Currency", ListItemCategoryType.Currency),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.PaymentTermId, "Payment Term", ListItemCategoryType.PaymentTerm),
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.CertificateId, "Certificate", ListItemCategoryType.Certificate))
 				.WithJobTypes(
@@ -153,7 +152,6 @@ namespace JobSystem.DbWireup.ConsoleRunner
 		public static Guid StatusId = Guid.NewGuid();
 		public static Guid WorkTypeId = Guid.NewGuid(); 
 		public static Guid WorkStatusId = Guid.NewGuid();
-		public static Guid CurrencyId = Guid.NewGuid();
 		public static Guid PaymentTermId = Guid.NewGuid();
 		public static Guid CertificateId = Guid.NewGuid();
 	}

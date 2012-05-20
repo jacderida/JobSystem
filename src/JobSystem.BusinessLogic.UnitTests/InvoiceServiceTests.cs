@@ -51,10 +51,11 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_invoiceService = InvoiceServiceFactory.Create(
 				_userContext,
 				invoiceRepositoryMock,
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrencyAndPaymentTerm(currencyId, paymentTermId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsPaymentTerm(paymentTermId),
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
-				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
+				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId));
 			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 			invoiceRepositoryMock.VerifyAllExpectations();
 			Assert.AreNotEqual(Guid.Empty, _savedInvoice.Id);
@@ -84,10 +85,11 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_invoiceService = InvoiceServiceFactory.Create(
 				_userContext,
 				invoiceRepositoryMock,
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrencyAndPaymentTerm(currencyId, paymentTermId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsPaymentTerm(paymentTermId),
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
-				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
+				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId));
 			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.OrderNoTooLarge));
 		}
@@ -107,10 +109,11 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_invoiceService = InvoiceServiceFactory.Create(
 				_userContext,
 				MockRepository.GenerateStub<IInvoiceRepository>(),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrencyAndPaymentTerm(currencyId, paymentTermId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsPaymentTerm(paymentTermId),
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
-				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
+				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId));
 			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
@@ -129,32 +132,11 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_invoiceService = InvoiceServiceFactory.Create(
 				_userContext,
 				MockRepository.GenerateStub<IInvoiceRepository>(),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrencyAndPaymentTerm(currencyId, paymentTermId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsPaymentTerm(paymentTermId),
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
-				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
-			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
-		}
-
-		[Test]
-		[ExpectedException(typeof(ArgumentException))]
-		public void Create_NonCurrencyListItem_ArgumentExceptionThrown()
-		{
-			var id = Guid.NewGuid();
-			var currencyId = Guid.NewGuid();
-			var orderNo = "ORDER123454";
-			var customerId = Guid.NewGuid();
-			var bankDetailsId = Guid.NewGuid();
-			var paymentTermId = Guid.NewGuid();
-			var taxCodeId = Guid.NewGuid();
-
-			_invoiceService = InvoiceServiceFactory.Create(
-				_userContext,
-				MockRepository.GenerateStub<IInvoiceRepository>(),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsNonCurrency(currencyId, paymentTermId),
-				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
-				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
-				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
+				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsNull(currencyId));
 			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
@@ -173,10 +155,11 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_invoiceService = InvoiceServiceFactory.Create(
 				_userContext,
 				MockRepository.GenerateStub<IInvoiceRepository>(),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrencyAndPaymentTerm(currencyId, paymentTermId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsPaymentTerm(paymentTermId),
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsNull(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
-				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
+				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId));
 			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
@@ -195,10 +178,11 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_invoiceService = InvoiceServiceFactory.Create(
 				_userContext,
 				MockRepository.GenerateStub<IInvoiceRepository>(),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrencyAndPaymentTerm(currencyId, paymentTermId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsPaymentTerm(paymentTermId),
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsNull(bankDetailsId),
-				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
+				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId));
 			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
@@ -217,10 +201,11 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_invoiceService = InvoiceServiceFactory.Create(
 				_userContext,
 				MockRepository.GenerateStub<IInvoiceRepository>(),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrencyAndPaymentTerm(currencyId, paymentTermId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsPaymentTerm(paymentTermId),
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
-				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
+				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId));
 			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
@@ -239,10 +224,11 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_invoiceService = InvoiceServiceFactory.Create(
 				_userContext,
 				MockRepository.GenerateStub<IInvoiceRepository>(),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsNonPaymentTerm(currencyId, paymentTermId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsNonPaymentTerm(paymentTermId),
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
-				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
+				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId));
 			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
@@ -261,10 +247,11 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_invoiceService = InvoiceServiceFactory.Create(
 				_userContext,
 				MockRepository.GenerateStub<IInvoiceRepository>(),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrencyAndPaymentTerm(currencyId, paymentTermId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsPaymentTerm(paymentTermId),
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
-				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsNull(taxCodeId));
+				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsNull(taxCodeId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId));
 			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 		}
 
@@ -282,10 +269,11 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_invoiceService = InvoiceServiceFactory.Create(
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member),
 				MockRepository.GenerateStub<IInvoiceRepository>(),
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsGbpCurrencyAndPaymentTerm(currencyId, paymentTermId),
+				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsPaymentTerm(paymentTermId),
 				CustomerRepositoryTestHelper.GetCustomerRepository_StubsGetById_ReturnsCustomer(customerId),
 				BankDetailsRepositoryTestHelper.GetBankDetailsRepository_StubsGetById_ReturnsBankDetails(bankDetailsId),
-				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId));
+				TaxCodeRepositoryTestHelper.GetTaxCodeRepository_StubsGetById_ReturnsTaxCode(taxCodeId),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId));
 			Create(id, currencyId, customerId, bankDetailsId, paymentTermId, taxCodeId, orderNo);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
 		}
@@ -314,7 +302,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 				MockRepository.GenerateStub<IListItemRepository>(),
 				MockRepository.GenerateStub<ICustomerRepository>(),
 				MockRepository.GenerateStub<IBankDetailsRepository>(),
-				MockRepository.GenerateStub<ITaxCodeRepository>());
+				MockRepository.GenerateStub<ITaxCodeRepository>(),
+				MockRepository.GenerateStub<ICurrencyRepository>());
 			GetInvoices();
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
 		}

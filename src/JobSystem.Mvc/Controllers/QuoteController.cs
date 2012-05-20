@@ -20,14 +20,22 @@ namespace JobSystem.Mvc.Controllers
 		private readonly JobService _jobService;
 		private readonly ListItemService _listItemService;
 		private readonly CompanyDetailsService _companyDetailsService;
+		private readonly CurrencyService _currencyService;
 
-		public QuoteController(QuoteService quoteService, QuoteItemService quoteItemService, JobService jobService, ListItemService listItemService, CompanyDetailsService companyDetailsService)
+		public QuoteController(
+			QuoteService quoteService,
+			QuoteItemService quoteItemService,
+			JobService jobService,
+			ListItemService listItemService,
+			CompanyDetailsService companyDetailsService,
+			CurrencyService currencyService)
 		{
 			_quoteService = quoteService;
 			_quoteItemService = quoteItemService;
 			_jobService = jobService;
 			_listItemService = listItemService;
 			_companyDetailsService = companyDetailsService;
+			_currencyService = currencyService;
 		}
 
 		public ActionResult Index()
@@ -46,7 +54,7 @@ namespace JobSystem.Mvc.Controllers
 				JobId = jobId,
 				OrderNo = job.OrderNo,
 				AdviceNo = job.AdviceNo,
-				Currencies = _listItemService.GetAllByCategory(ListItemCategoryType.Currency).ToSelectList(),
+				Currencies = _currencyService.GetCurrencies().ToSelectList(),
 				CurrencyId = company.DefaultCurrency.Id
 			};
 			return View("Create", viewmodel);
@@ -169,7 +177,7 @@ namespace JobSystem.Mvc.Controllers
 				Id = quote.Id,
 				AdviceNo = quote.AdviceNumber,
 				OrderNo = quote.OrderNumber,
-				Currencies = _listItemService.GetAllByCategory(ListItemCategoryType.Currency).ToSelectList(),
+				Currencies = _currencyService.GetCurrencies().ToSelectList(),
 				CurrencyId = quote.Currency.Id
 			};
 			return View("Edit", viewmodel);
@@ -184,7 +192,6 @@ namespace JobSystem.Mvc.Controllers
 				viewmodel.OrderNo,
 				viewmodel.AdviceNo,
 				viewmodel.CurrencyId);
-
 			return RedirectToAction("ApprovedQuotes");
 		}
 

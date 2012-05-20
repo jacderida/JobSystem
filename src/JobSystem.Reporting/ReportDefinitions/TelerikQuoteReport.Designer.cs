@@ -56,6 +56,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox11 = new Telerik.Reporting.TextBox();
 			this.TotalTextBox = new Telerik.Reporting.TextBox();
 			this.textBox36 = new Telerik.Reporting.TextBox();
+			this.CurrencyMessageTextBox = new Telerik.Reporting.TextBox();
 			this.detail = new Telerik.Reporting.DetailSection();
 			this.CalibrationTextBox = new Telerik.Reporting.TextBox();
 			this.RepairTextBox = new Telerik.Reporting.TextBox();
@@ -486,7 +487,8 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.reportFooter.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
             this.textBox11,
             this.TotalTextBox,
-            this.textBox36});
+            this.textBox36,
+            this.CurrencyMessageTextBox});
 			this.reportFooter.Name = "reportFooter";
 			// 
 			// textBox11
@@ -531,6 +533,13 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox36.Name = "textBox36";
 			this.textBox36.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(15.322820663452148D), Telerik.Reporting.Drawing.Unit.Cm(1.7000011205673218D));
 			this.textBox36.Value = "=Fields.CompanyTermsAndConditions";
+			// 
+			// CurrencyMessageTextBox
+			// 
+			this.CurrencyMessageTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.42426350712776184D), Telerik.Reporting.Drawing.Unit.Cm(0.19919972121715546D));
+			this.CurrencyMessageTextBox.Name = "CurrencyMessageTextBox";
+			this.CurrencyMessageTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(9.0757360458374023D), Telerik.Reporting.Drawing.Unit.Cm(0.59999889135360718D));
+			this.CurrencyMessageTextBox.Value = "placeholder";
 			// 
 			// detail
 			// 
@@ -987,6 +996,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 		private Telerik.Reporting.TextBox textBox34;
 		private Telerik.Reporting.TextBox pageInfoTextBox;
 		private Telerik.Reporting.TextBox textBox36;
+		public Telerik.Reporting.TextBox CurrencyMessageTextBox;
 
 	}
 }

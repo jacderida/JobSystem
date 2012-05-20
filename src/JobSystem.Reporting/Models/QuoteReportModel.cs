@@ -27,5 +27,6 @@
 		public string Days { get; set; }
 		public string JobRef { get; set; }
 		public string PreparedBy { get; set; }
+		public string CurrencyMessage { get; set; }
 	}
 }

@@ -12,7 +12,7 @@ namespace JobSystem.DataModel.Entities
 		[StringLength(50, ErrorMessageResourceName = "OrderNoTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string OrderNo { get; set; }
 		public virtual DateTime DateCreated { get; set; }
-		public virtual ListItem Currency { get; set; }
+		public virtual Currency Currency { get; set; }
 		public virtual Customer Customer { get; set; }
 		public virtual BankDetails BankDetails { get; set; }
 		public virtual ListItem PaymentTerm { get; set; }
