@@ -1,0 +1,30 @@
+﻿@model JobSystem.Mvc.ViewModels.Currencies.CurrencyListViewModel
+
+@{
+	ViewBag.Title = "Currencies";
+}
+
+<h2>Currencies</h2>
+<a href="#" id="createCurrencyButton" class="primary-action">Create Currency</a>
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Display Message</th>
+		<th></th>
+	</tr>
+	@foreach (var item in Model.Currencies)
+	{
+		<tr>
+			<td>@item.Name</td>
+			<td>@item.DisplayMessage</td>
+			<td><a href="#" class="editCurrencyButton" id="@item.Id">Edit</a></td>
+		</tr>
+	}
+</table>
+
+@Html.Partial("_Create", Model.CreateViewModel)
+
+<div id="edit-currency-container">
+</div>
+
+<input type="hidden" id="editUrl" value="@Url.Action("Edit", "Currency")"/>

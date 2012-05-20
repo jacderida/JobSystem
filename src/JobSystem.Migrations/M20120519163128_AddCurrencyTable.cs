@@ -12,12 +12,25 @@ namespace JobSystem.Migrations
 			Create.Table("Currencies")
 				.WithIdColumn()
 				.WithColumn("Name").AsString(50).NotNullable()
-				.WithColumn("DisplayMessage").AsString(255).NotNullable();
+				.WithColumn("DisplayMessage").AsString(50).NotNullable();
+
+			Delete.ForeignKey("FK_CompanyDetails_Currencies").OnTable("CompanyDetails");
+			Create.ForeignKey("FK_CompanyDetails_Currencies")
+				.FromTable("CompanyDetails")
+				.ForeignColumn("DefaultCurrencyId")
+				.ToTable("Currencies")
+				.PrimaryColumn("Id");
 		}
 
 		public override void Down()
 		{
 			Delete.Table("Currencies");
+			Delete.ForeignKey("FK_CompanyDetails_Currencies").OnTable("CompanyDetails");
+			Create.ForeignKey("FK_CompanyDetails_Currencies")
+				.FromTable("CompanyDetails")
+				.ForeignColumn("DefaultCurrencyId")
+				.ToTable("ListItem")
+				.PrimaryColumn("Id");
 		}
 	}
 }

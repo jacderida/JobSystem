@@ -15,10 +15,12 @@ namespace JobSystem.Mvc.Controllers
 	public class AdminController : Controller
 	{
 		private readonly CompanyDetailsService _companyDetailsService;
+		private readonly CurrencyService _currencyService;
 		private readonly ListItemService _listItemService;
 
-		public AdminController(CompanyDetailsService companyDetailsService, ListItemService listItemService)
+		public AdminController(CompanyDetailsService companyDetailsService, CurrencyService currencyService, ListItemService listItemService)
 		{
+			_currencyService = currencyService;
 			_companyDetailsService = companyDetailsService;
 			_listItemService = listItemService;
 		}
@@ -53,7 +55,7 @@ namespace JobSystem.Mvc.Controllers
 				PaymentTermId = company.DefaultPaymentTerm.Id,
 				BankDetailsId = company.DefaultBankDetails.Id,
 				TaxCodeId = company.DefaultTaxCode.Id,
-				Currencies = _listItemService.GetAllByCategory(ListItemCategoryType.Currency).ToSelectList(),
+				Currencies = _currencyService.GetCurrencies().ToSelectList(),
 				PaymentTerms = _listItemService.GetAllByCategory(ListItemCategoryType.PaymentTerm).ToSelectList(),
 				TaxCodes = _companyDetailsService.GetTaxCodes().Select(t => new { Id = t.Id, Name = t.TaxCodeName }).ToSelectList(),
 				BankDetails = _companyDetailsService.GetBankDetails().Select(t => new { Id = t.Id, Name = t.ShortName }).ToSelectList()

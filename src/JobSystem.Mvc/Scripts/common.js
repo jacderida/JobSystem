@@ -101,6 +101,35 @@ $(document).ready(function () {
 			$("#create-standard-container").dialog('open');
 		});
 
+		//Create CURRENCY modal form
+		$("#create-currency-container").dialog({
+			autoOpen: false,
+			modal: true,
+			width: 335,
+			title: 'Create New Currency'
+		});
+
+		$('#createCurrencyButton').click(function () {
+			$("#create-currency-container").dialog('open');
+		});
+
+		$('.editCurrencyButton').click(function () {
+			var elemId = $(this).attr('id');
+			var editUrl = $('#editUrl').val() + '/' + elemId;
+			//Edit currency modal form
+			$("#edit-currency-container").dialog({
+				modal: true,
+				width: 335,
+				title: 'Edit Currency',
+				position: ['center', 100],
+				open: function (event, ui) {
+					//Load the Edit action which will return 
+					// the partial view _Edit
+					$(this).load(editUrl);
+				}
+			});
+		});
+
 		$('.editStandardButton').click(function () {
 			var elemId = $(this).attr('id');
 			var editUrl = $('#editUrl').val() + '/' + elemId;

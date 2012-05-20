@@ -157,6 +157,7 @@
     <Compile Include="Controllers\AttachmentsController.cs" />
     <Compile Include="Controllers\CertificateController.cs" />
     <Compile Include="Controllers\ConsignmentController.cs" />
+    <Compile Include="Controllers\CurrencyController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\EntityIdController.cs" />
@@ -191,6 +192,8 @@
     <Compile Include="ViewModels\Consignments\ConsignmentIndexViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentItemIndexViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentPendingListViewModel.cs" />
+    <Compile Include="ViewModels\Currencies\CurrencyListViewModel.cs" />
+    <Compile Include="ViewModels\Currencies\CurrencyViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerIndexViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerViewModel.cs" />
     <Compile Include="ViewModels\Deliveries\DeliveryIndexViewModel.cs" />
@@ -469,6 +472,9 @@
     <Content Include="Views\Invoice\ApprovedInvoices.cshtml" />
     <Content Include="Views\Quote\Edit.cshtml" />
     <Content Include="Views\Order\EditPendingItem.cshtml" />
+    <Content Include="Views\Currency\Index.cshtml" />
+    <Content Include="Views\Currency\_Create.cshtml" />
+    <Content Include="Views\Currency\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\PendingOrderItems.cshtml" />
