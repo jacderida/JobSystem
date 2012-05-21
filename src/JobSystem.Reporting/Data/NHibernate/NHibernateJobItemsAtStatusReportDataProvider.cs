@@ -12,10 +12,10 @@ namespace JobSystem.Reporting.Data.NHibernate
 	public class NHibernateJobItemsAtStatusReportDataProvider : NHibernateReportDataProviderBase, IJobItemsAtStatusReportDataProvider
 	{
 		[DataObjectMethod(DataObjectMethodType.Select)]
-		public List<JobItemAtStatusReportModel> GetJobItemsAtStatusReportData(ListItemType status)
+		public List<JobItemAtStatusReportModel> GetJobItemsAtStatusReportData(Guid statusId)
 		{
 			var result = new List<JobItemAtStatusReportModel>();
-			var jobItemsNotInvoiced = CurrentSession.Query<JobItem>().Where(ji => ji.Status.Type == status);
+			var jobItemsNotInvoiced = CurrentSession.Query<JobItem>().Where(ji => ji.Status.Id == statusId);
 			foreach (var jobItem in jobItemsNotInvoiced)
 			{
 				var reportItem = new JobItemAtStatusReportModel();

@@ -21,6 +21,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				var reportItem = new EquipmentProgressReportModel();
 				PopulateCompanyDetails(reportItem);
 				var job = jobItem.Job;
+				reportItem.JobRef = job.JobNo;
 				reportItem.CustomerName = job.Customer.Name;
 				reportItem.OrderNo = job.OrderNo;
 				reportItem.AdviceNo = job.AdviceNo;
@@ -28,7 +29,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.SerialNo = jobItem.SerialNo;
 				reportItem.AssetNo = jobItem.AssetNo;
 				reportItem.ItemNo = jobItem.ItemNo;
-				reportItem.Status = jobItem.Status.ToString();
+				reportItem.Status = jobItem.Status.Name;
 				reportItem.EquipmentDescription = jobItem.Instrument.ToString();
 				var quoteItem = CurrentSession.Query<QuoteItem>().Where(qi => qi.JobItem.Id == jobItem.Id).SingleOrDefault();
 				if (quoteItem != null)

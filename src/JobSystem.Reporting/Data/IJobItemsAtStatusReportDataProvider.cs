@@ -7,6 +7,6 @@ namespace JobSystem.Reporting.Data
 {
 	public interface IJobItemsAtStatusReportDataProvider
 	{
-		List<JobItemAtStatusReportModel> GetJobItemsAtStatusReportData(ListItemType status);
+		List<JobItemAtStatusReportModel> GetJobItemsAtStatusReportData(Guid statusId);
 	}
 }
