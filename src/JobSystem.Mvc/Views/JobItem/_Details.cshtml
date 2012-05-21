@@ -113,7 +113,7 @@
 			<div class="text">	
 				@if (Model.QuoteItem != null)
 				{
-					@Html.ActionLink("Edit Quote", "Edit", "Quote", new { id = @Model.Id, fromJi = true, isQuoted = Model.QuoteItem.IsQuoted }, new { @class = "primary-action" })
+					@Html.ActionLink("Edit Quote", "EditItem", "Quote", new { id = @Model.Id, fromJi = true, isQuoted = Model.QuoteItem.IsQuoted }, new { @class = "primary-action" })
 					if (Model.QuoteItem.IsQuoted) {
 						@Ajax.ActionLink("Accept", "AcceptQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Accepted')" }, new { @class = "primary-action", id="acceptQuoteItemButton" })
 						@Ajax.ActionLink("Reject", "RejectQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Rejected')" },  new { @class = "primary-action" })
