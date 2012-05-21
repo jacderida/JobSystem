@@ -111,5 +111,10 @@ namespace JobSystem.Mvc.Controllers
 
 			return View(items);
 		}
+
+		public ActionResult GenerateInvoiceNote(Guid id)
+		{
+			return View("RepInvoiceNote", id);
+		}
     }
 }
