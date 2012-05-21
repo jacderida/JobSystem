@@ -219,6 +219,7 @@
     <Compile Include="ViewModels\Quotes\QuoteItemEditViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteItemIndexViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuotePendingListViewModel.cs" />
+    <Compile Include="ViewModels\Reports\JobItemReportViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierIndexViewModel.cs" />
     <Compile Include="ViewModels\TestStandards\TestStandardListViewModel.cs" />
@@ -332,7 +333,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\Reports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -478,6 +478,7 @@
     <Content Include="Views\Currency\Index.cshtml" />
     <Content Include="Views\Currency\_Create.cshtml" />
     <Content Include="Views\Currency\_Edit.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\PendingOrderItems.cshtml" />
