@@ -501,7 +501,7 @@ namespace JobSystem.Reporting.ReportDefinitions
             styleRule2,
             styleRule3,
             styleRule4});
-			this.Width = Telerik.Reporting.Drawing.Unit.Cm(15.814167022705078D);
+			this.Width = Telerik.Reporting.Drawing.Unit.Pixel(842D);
 			((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
 		}

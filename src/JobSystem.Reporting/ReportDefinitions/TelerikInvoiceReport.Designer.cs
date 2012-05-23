@@ -11,8 +11,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 		{
 			this.pageHeaderSection1 = new Telerik.Reporting.PageHeaderSection();
 			this.detail = new Telerik.Reporting.DetailSection();
-			this.pageFooterSection1 = new Telerik.Reporting.PageFooterSection();
-			this.objectDataSource1 = new Telerik.Reporting.ObjectDataSource();
 			this.textBox52 = new Telerik.Reporting.TextBox();
 			this.textBox51 = new Telerik.Reporting.TextBox();
 			this.textBox50 = new Telerik.Reporting.TextBox();
@@ -33,6 +31,8 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.CarriageTextBox = new Telerik.Reporting.TextBox();
 			this.RepairTextBox = new Telerik.Reporting.TextBox();
 			this.CalibrationTextBox = new Telerik.Reporting.TextBox();
+			this.pageFooterSection1 = new Telerik.Reporting.PageFooterSection();
+			this.objectDataSource1 = new Telerik.Reporting.ObjectDataSource();
 			this.reportHeaderSection1 = new Telerik.Reporting.ReportHeaderSection();
 			this.textBox42 = new Telerik.Reporting.TextBox();
 			this.textBox43 = new Telerik.Reporting.TextBox();
@@ -86,19 +86,6 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.RepairTextBox,
             this.CalibrationTextBox});
 			this.detail.Name = "detail";
-			// 
-			// pageFooterSection1
-			// 
-			this.pageFooterSection1.Height = Telerik.Reporting.Drawing.Unit.Cm(3D);
-			this.pageFooterSection1.Name = "pageFooterSection1";
-			// 
-			// objectDataSource1
-			// 
-			this.objectDataSource1.DataMember = "GetReportData";
-			this.objectDataSource1.DataSource = typeof(JobSystem.Reporting.Data.NHibernate.NHibernateInvoiceReportDataProvider);
-			this.objectDataSource1.Name = "objectDataSource1";
-			this.objectDataSource1.Parameters.AddRange(new Telerik.Reporting.ObjectDataSourceParameter[] {
-            new Telerik.Reporting.ObjectDataSourceParameter("itemId", typeof(System.Guid), null)});
 			// 
 			// textBox52
 			// 
@@ -400,6 +387,19 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.CalibrationTextBox.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
 			this.CalibrationTextBox.Value = "=Fields.Calibration";
 			// 
+			// pageFooterSection1
+			// 
+			this.pageFooterSection1.Height = Telerik.Reporting.Drawing.Unit.Cm(3D);
+			this.pageFooterSection1.Name = "pageFooterSection1";
+			// 
+			// objectDataSource1
+			// 
+			this.objectDataSource1.DataMember = "GetReportData";
+			this.objectDataSource1.DataSource = typeof(JobSystem.Reporting.Data.NHibernate.NHibernateInvoiceReportDataProvider);
+			this.objectDataSource1.Name = "objectDataSource1";
+			this.objectDataSource1.Parameters.AddRange(new Telerik.Reporting.ObjectDataSourceParameter[] {
+            new Telerik.Reporting.ObjectDataSourceParameter("itemId", typeof(System.Guid), null)});
+			// 
 			// reportHeaderSection1
 			// 
 			this.reportHeaderSection1.Height = Telerik.Reporting.Drawing.Unit.Cm(7.6803717613220215D);
@@ -632,6 +632,7 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.pageFooterSection1,
             this.reportHeaderSection1});
 			this.Name = "TelerikInvoiceReport";
+			this.PageSettings.Landscape = true;
 			this.PageSettings.Margins.Bottom = Telerik.Reporting.Drawing.Unit.Mm(25.399999618530273D);
 			this.PageSettings.Margins.Left = Telerik.Reporting.Drawing.Unit.Mm(25.399999618530273D);
 			this.PageSettings.Margins.Right = Telerik.Reporting.Drawing.Unit.Mm(25.399999618530273D);
