@@ -307,6 +307,7 @@
     <Content Include="Views\Invoice\RepInvoiceNote.aspx" />
     <Content Include="Views\Order\RepOrderNote.aspx" />
     <Content Include="Views\Quote\RepQuoteNote.aspx" />
+    <Content Include="Views\Report\RepJobItemsAtStatus.aspx" />
     <Content Include="Views\Report\RepEquipmentProgress.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

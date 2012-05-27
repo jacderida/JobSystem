@@ -140,6 +140,12 @@
     <Compile Include="ReportDefinitions\TelerikInvoiceReport.Designer.cs">
       <DependentUpon>TelerikInvoiceReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReportDefinitions\TelerikJobItemsAtStatus.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportDefinitions\TelerikJobItemsAtStatus.Designer.cs">
+      <DependentUpon>TelerikJobItemsAtStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReportDefinitions\TelerikOrderReport.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -175,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ReportDefinitions\TelerikInvoiceReport.resx">
       <DependentUpon>TelerikInvoiceReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportDefinitions\TelerikJobItemsAtStatus.resx">
+      <DependentUpon>TelerikJobItemsAtStatus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportDefinitions\TelerikOrderReport.resx">
       <DependentUpon>TelerikOrderReport.cs</DependentUpon>

@@ -8,8 +8,12 @@
 {
 	@Html.DropDownListFor(model => model.StatusId, Model.Status, new { @class = "long-dropdown" })
 	@Html.ValidationMessageFor(model => model.Status)
-
 	<input type="submit" class="primary-action" value="Job Items" />
 }
 <h2></h2>
-@Html.ActionLink("Equipment Progress", "GenerateEquipmentProgressReport", "Report", new { }, new { @class="primary-action", target="_blank" })
+@using (Html.BeginForm("GenerateEquipmentProgressReport", "Report", FormMethod.Post))
+{
+	@Html.DropDownListFor(model => model.CustomerId, Model.Customer, new { @class = "long-dropdown" })
+	@Html.ValidationMessageFor(model => model.Customer)
+	<input type="submit" class="primary-action" value="Equipment Progress" />
+}

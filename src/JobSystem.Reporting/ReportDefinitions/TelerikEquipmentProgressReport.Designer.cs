@@ -49,18 +49,20 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.reportFooter = new Telerik.Reporting.ReportFooterSection();
 			this.detail = new Telerik.Reporting.DetailSection();
 			this.textBox10 = new Telerik.Reporting.TextBox();
-			this.textBox11 = new Telerik.Reporting.TextBox();
 			this.textBox12 = new Telerik.Reporting.TextBox();
-			this.textBox13 = new Telerik.Reporting.TextBox();
 			this.textBox14 = new Telerik.Reporting.TextBox();
 			this.textBox15 = new Telerik.Reporting.TextBox();
 			this.textBox16 = new Telerik.Reporting.TextBox();
+			this.textBox11 = new Telerik.Reporting.TextBox();
+			this.textBox13 = new Telerik.Reporting.TextBox();
+			this.textBox24 = new Telerik.Reporting.TextBox();
+			this.textBox25 = new Telerik.Reporting.TextBox();
 			this.ReportDataSource = new Telerik.Reporting.ObjectDataSource();
 			((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
 			// 
 			// labelsGroupHeader
 			// 
-			this.labelsGroupHeader.Height = Telerik.Reporting.Drawing.Unit.Cm(2.200000524520874D);
+			this.labelsGroupHeader.Height = Telerik.Reporting.Drawing.Unit.Cm(1.7999999523162842D);
 			this.labelsGroupHeader.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
             this.JobNoTextBox,
             this.JobNoFieldTextBox,
@@ -72,7 +74,9 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.textBox6,
             this.textBox8,
             this.textBox9,
-            this.textBox7});
+            this.textBox7,
+            this.textBox25,
+            this.textBox24});
 			this.labelsGroupHeader.Name = "labelsGroupHeader";
 			this.labelsGroupHeader.PrintOnEveryPage = true;
 			// 
@@ -96,7 +100,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox1
 			// 
-			this.textBox1.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(8.0537166595458984D), Telerik.Reporting.Drawing.Unit.Cm(0.00010012308484874666D));
+			this.textBox1.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(6.2604155540466309D), Telerik.Reporting.Drawing.Unit.Cm(0.00010012308484874666D));
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(2.2010753154754639D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
 			this.textBox1.Style.Font.Bold = true;
@@ -105,15 +109,15 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox2
 			// 
-			this.textBox2.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(10.292291641235352D), Telerik.Reporting.Drawing.Unit.Cm(0.00010012308484874666D));
+			this.textBox2.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(8.4616909027099609D), Telerik.Reporting.Drawing.Unit.Cm(0.00010012308484874666D));
 			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(2.9468832015991211D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
+			this.textBox2.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(5.5260491371154785D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
 			this.textBox2.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(12D);
 			this.textBox2.Value = "= Fields.OrderNo";
 			// 
 			// textBox3
 			// 
-			this.textBox3.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.052916664630174637D), Telerik.Reporting.Drawing.Unit.Cm(1.6000000238418579D));
+			this.textBox3.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.052916664630174637D), Telerik.Reporting.Drawing.Unit.Cm(1.1996990442276D));
 			this.textBox3.Name = "textBox3";
 			this.textBox3.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
 			this.textBox3.Style.Font.Bold = true;
@@ -121,7 +125,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox4
 			// 
-			this.textBox4.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(2.0531167984008789D), Telerik.Reporting.Drawing.Unit.Cm(1.6000000238418579D));
+			this.textBox4.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(2.0531167984008789D), Telerik.Reporting.Drawing.Unit.Cm(1.1996990442276D));
 			this.textBox4.Name = "textBox4";
 			this.textBox4.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
 			this.textBox4.Style.Font.Bold = true;
@@ -129,7 +133,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox5
 			// 
-			this.textBox5.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(4.053316593170166D), Telerik.Reporting.Drawing.Unit.Cm(1.6000000238418579D));
+			this.textBox5.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(4.053316593170166D), Telerik.Reporting.Drawing.Unit.Cm(1.1996990442276D));
 			this.textBox5.Name = "textBox5";
 			this.textBox5.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
 			this.textBox5.Style.Font.Bold = true;
@@ -137,7 +141,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox6
 			// 
-			this.textBox6.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(6.0535168647766113D), Telerik.Reporting.Drawing.Unit.Cm(1.6000000238418579D));
+			this.textBox6.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(10.800199508666992D), Telerik.Reporting.Drawing.Unit.Cm(1.1996990442276D));
 			this.textBox6.Name = "textBox6";
 			this.textBox6.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
 			this.textBox6.Style.Font.Bold = true;
@@ -145,7 +149,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox8
 			// 
-			this.textBox8.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(8.0537166595458984D), Telerik.Reporting.Drawing.Unit.Cm(1.6000000238418579D));
+			this.textBox8.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(15.100000381469727D), Telerik.Reporting.Drawing.Unit.Cm(1.1996990442276D));
 			this.textBox8.Name = "textBox8";
 			this.textBox8.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
 			this.textBox8.Style.Font.Bold = true;
@@ -153,7 +157,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox9
 			// 
-			this.textBox9.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(10.053916931152344D), Telerik.Reporting.Drawing.Unit.Cm(1.6000000238418579D));
+			this.textBox9.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(17.946884155273438D), Telerik.Reporting.Drawing.Unit.Cm(1.1996990442276D));
 			this.textBox9.Name = "textBox9";
 			this.textBox9.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
 			this.textBox9.Style.Font.Bold = true;
@@ -161,7 +165,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox7
 			// 
-			this.textBox7.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(12.054117202758789D), Telerik.Reporting.Drawing.Unit.Cm(1.6000000238418579D));
+			this.textBox7.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(19.94708251953125D), Telerik.Reporting.Drawing.Unit.Cm(1.1996990442276D));
 			this.textBox7.Name = "textBox7";
 			this.textBox7.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
 			this.textBox7.Style.Font.Bold = true;
@@ -207,7 +211,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// pageInfoTextBox
 			// 
-			this.pageInfoTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(13.571159362792969D), Telerik.Reporting.Drawing.Unit.Cm(2.6999006271362305D));
+			this.pageInfoTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(20.034908294677734D), Telerik.Reporting.Drawing.Unit.Cm(2.4342668056488037D));
 			this.pageInfoTextBox.Name = "pageInfoTextBox";
 			this.pageInfoTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(2.2429072856903076D), Telerik.Reporting.Drawing.Unit.Cm(0.60000002384185791D));
 			this.pageInfoTextBox.Style.Color = System.Drawing.Color.Gray;
@@ -219,7 +223,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox34
 			// 
-			this.textBox34.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(2.1695833206176758D), Telerik.Reporting.Drawing.Unit.Cm(0.23812499642372131D));
+			this.textBox34.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(5.3999996185302734D), Telerik.Reporting.Drawing.Unit.Cm(0.00010012308484874666D));
 			this.textBox34.Name = "textBox34";
 			this.textBox34.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(11.448139190673828D), Telerik.Reporting.Drawing.Unit.Cm(0.38452392816543579D));
 			this.textBox34.Style.Color = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(34)))), ((int)(((byte)(60)))));
@@ -230,7 +234,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// textBox33
 			// 
 			this.textBox33.CanShrink = true;
-			this.textBox33.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(2.1695833206176758D), Telerik.Reporting.Drawing.Unit.Cm(1.4816666841506958D));
+			this.textBox33.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(5.3999996185302734D), Telerik.Reporting.Drawing.Unit.Cm(1.24364173412323D));
 			this.textBox33.Name = "textBox33";
 			this.textBox33.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(11.448136329650879D), Telerik.Reporting.Drawing.Unit.Cm(0.38452315330505371D));
 			this.textBox33.Style.Color = System.Drawing.Color.Gray;
@@ -241,7 +245,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// textBox32
 			// 
 			this.textBox32.CanShrink = true;
-			this.textBox32.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(2.1695833206176758D), Telerik.Reporting.Drawing.Unit.Cm(1.0847916603088379D));
+			this.textBox32.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(5.3999996185302734D), Telerik.Reporting.Drawing.Unit.Cm(0.84676676988601685D));
 			this.textBox32.Name = "textBox32";
 			this.textBox32.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(11.448138236999512D), Telerik.Reporting.Drawing.Unit.Cm(0.38452315330505371D));
 			this.textBox32.Style.Color = System.Drawing.Color.Gray;
@@ -252,7 +256,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// textBox31
 			// 
 			this.textBox31.CanShrink = true;
-			this.textBox31.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(2.1695833206176758D), Telerik.Reporting.Drawing.Unit.Cm(0.71437495946884155D));
+			this.textBox31.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(5.3999996185302734D), Telerik.Reporting.Drawing.Unit.Cm(0.4763500988483429D));
 			this.textBox31.Name = "textBox31";
 			this.textBox31.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(11.448140144348145D), Telerik.Reporting.Drawing.Unit.Cm(0.38452392816543579D));
 			this.textBox31.Style.Color = System.Drawing.Color.Gray;
@@ -263,7 +267,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// textBox30
 			// 
 			this.textBox30.CanShrink = true;
-			this.textBox30.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(2.1695833206176758D), Telerik.Reporting.Drawing.Unit.Cm(1.8785415887832642D));
+			this.textBox30.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(5.3999996185302734D), Telerik.Reporting.Drawing.Unit.Cm(1.6405167579650879D));
 			this.textBox30.Name = "textBox30";
 			this.textBox30.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(11.448136329650879D), Telerik.Reporting.Drawing.Unit.Cm(0.38452392816543579D));
 			this.textBox30.Style.Color = System.Drawing.Color.Gray;
@@ -274,7 +278,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// textBox23
 			// 
 			this.textBox23.CanShrink = true;
-			this.textBox23.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(2.1695833206176758D), Telerik.Reporting.Drawing.Unit.Cm(2.2754166126251221D));
+			this.textBox23.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(5.3999996185302734D), Telerik.Reporting.Drawing.Unit.Cm(2.0373916625976562D));
 			this.textBox23.Name = "textBox23";
 			this.textBox23.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(11.448136329650879D), Telerik.Reporting.Drawing.Unit.Cm(0.38452315330505371D));
 			this.textBox23.Style.Color = System.Drawing.Color.Gray;
@@ -284,7 +288,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox17
 			// 
-			this.textBox17.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Pixel(253D), Telerik.Reporting.Drawing.Unit.Pixel(101D));
+			this.textBox17.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Pixel(375.094482421875D), Telerik.Reporting.Drawing.Unit.Pixel(92.0037841796875D));
 			this.textBox17.Name = "textBox17";
 			this.textBox17.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Pixel(119.4803466796875D), Telerik.Reporting.Drawing.Unit.Cm(0.38452315330505371D));
 			this.textBox17.Style.Color = System.Drawing.Color.Gray;
@@ -293,7 +297,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox18
 			// 
-			this.textBox18.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(2.8574998378753662D), Telerik.Reporting.Drawing.Unit.Cm(2.6722915172576904D));
+			this.textBox18.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(6.087916374206543D), Telerik.Reporting.Drawing.Unit.Cm(2.4342668056488037D));
 			this.textBox18.Name = "textBox18";
 			this.textBox18.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(0.43875086307525635D), Telerik.Reporting.Drawing.Unit.Cm(0.38452315330505371D));
 			this.textBox18.Style.Color = System.Drawing.Color.Gray;
@@ -304,7 +308,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// textBox19
 			// 
 			this.textBox19.CanShrink = true;
-			this.textBox19.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Pixel(126D), Telerik.Reporting.Drawing.Unit.Pixel(101D));
+			this.textBox19.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Pixel(248.094482421875D), Telerik.Reporting.Drawing.Unit.Pixel(92.0037841796875D));
 			this.textBox19.Name = "textBox19";
 			this.textBox19.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Pixel(110.6065673828125D), Telerik.Reporting.Drawing.Unit.Cm(0.38452315330505371D));
 			this.textBox19.Style.Color = System.Drawing.Color.Gray;
@@ -313,7 +317,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox20
 			// 
-			this.textBox20.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(6.2177081108093262D), Telerik.Reporting.Drawing.Unit.Cm(2.6722915172576904D));
+			this.textBox20.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(9.448124885559082D), Telerik.Reporting.Drawing.Unit.Cm(2.4342668056488037D));
 			this.textBox20.Name = "textBox20";
 			this.textBox20.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(0.43875086307525635D), Telerik.Reporting.Drawing.Unit.Cm(0.38452315330505371D));
 			this.textBox20.Style.Color = System.Drawing.Color.Gray;
@@ -323,7 +327,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox21
 			// 
-			this.textBox21.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(9.8160409927368164D), Telerik.Reporting.Drawing.Unit.Cm(2.6722915172576904D));
+			this.textBox21.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(13.046458244323731D), Telerik.Reporting.Drawing.Unit.Cm(2.4342668056488037D));
 			this.textBox21.Name = "textBox21";
 			this.textBox21.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(0.43875086307525635D), Telerik.Reporting.Drawing.Unit.Cm(0.38452315330505371D));
 			this.textBox21.Style.Color = System.Drawing.Color.Gray;
@@ -333,7 +337,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox22
 			// 
-			this.textBox22.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Pixel(389D), Telerik.Reporting.Drawing.Unit.Pixel(101D));
+			this.textBox22.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Pixel(511.094482421875D), Telerik.Reporting.Drawing.Unit.Pixel(92.0037841796875D));
 			this.textBox22.Name = "textBox22";
 			this.textBox22.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Pixel(96.15020751953125D), Telerik.Reporting.Drawing.Unit.Pixel(14.525634765625D));
 			this.textBox22.Style.Color = System.Drawing.Color.Gray;
@@ -361,13 +365,14 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			this.textBox43.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.052916664630174637D), Telerik.Reporting.Drawing.Unit.Cm(0.9858248233795166D));
 			this.textBox43.Name = "textBox43";
-			this.textBox43.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(9.4833335876464844D), Telerik.Reporting.Drawing.Unit.Cm(0.39919820427894592D));
+			this.textBox43.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(9.4833335876464844D), Telerik.Reporting.Drawing.Unit.Cm(0.699800431728363D));
 			this.textBox43.Style.Font.Bold = true;
+			this.textBox43.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(14D);
 			this.textBox43.Value = "=Fields.CustomerName";
 			// 
 			// MainLogo
 			// 
-			this.MainLogo.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Pixel(400.62994384765625D), Telerik.Reporting.Drawing.Unit.Pixel(0.0037841796875D));
+			this.MainLogo.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Pixel(650.0787353515625D), Telerik.Reporting.Drawing.Unit.Pixel(0.0037841796875D));
 			this.MainLogo.Name = "MainLogo";
 			this.MainLogo.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Pixel(179.41732788085938D), Telerik.Reporting.Drawing.Unit.Pixel(111.26771545410156D));
 			// 
@@ -381,52 +386,39 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.detail.Height = Telerik.Reporting.Drawing.Unit.Cm(0.69999927282333374D);
 			this.detail.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
             this.textBox10,
-            this.textBox11,
             this.textBox12,
-            this.textBox13,
             this.textBox14,
             this.textBox15,
-            this.textBox16});
+            this.textBox16,
+            this.textBox11,
+            this.textBox13});
 			this.detail.Name = "detail";
 			// 
 			// textBox10
 			// 
-			this.textBox10.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(12.054116249084473D), Telerik.Reporting.Drawing.Unit.Cm(0.00020024616969749332D));
+			this.textBox10.Format = "{0:d}";
+			this.textBox10.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(19.94708251953125D), Telerik.Reporting.Drawing.Unit.Cm(0.00020024616969749332D));
 			this.textBox10.Name = "textBox10";
 			this.textBox10.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
 			this.textBox10.Value = "= Fields.DueDate";
 			// 
-			// textBox11
-			// 
-			this.textBox11.Format = "{0:C2}";
-			this.textBox11.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(10.053916931152344D), Telerik.Reporting.Drawing.Unit.Cm(0.00020024616969749332D));
-			this.textBox11.Name = "textBox11";
-			this.textBox11.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
-			this.textBox11.Value = "= Fields.Cost";
-			// 
 			// textBox12
 			// 
-			this.textBox12.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(8.0537166595458984D), Telerik.Reporting.Drawing.Unit.Cm(0D));
+			this.textBox12.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(15.100000381469727D), Telerik.Reporting.Drawing.Unit.Cm(0D));
 			this.textBox12.Name = "textBox12";
-			this.textBox12.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
+			this.textBox12.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(2.8466825485229492D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
 			this.textBox12.Value = "= Fields.Status";
-			// 
-			// textBox13
-			// 
-			this.textBox13.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(6.0535168647766113D), Telerik.Reporting.Drawing.Unit.Cm(0.00020024616969749332D));
-			this.textBox13.Name = "textBox13";
-			this.textBox13.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
-			this.textBox13.Value = "= Fields.SerialNo";
 			// 
 			// textBox14
 			// 
 			this.textBox14.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(4.0533170700073242D), Telerik.Reporting.Drawing.Unit.Cm(0.00020024616969749332D));
 			this.textBox14.Name = "textBox14";
-			this.textBox14.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
+			this.textBox14.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(6.7466826438903809D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
 			this.textBox14.Value = "= Fields.EquipmentDescription";
 			// 
 			// textBox15
 			// 
+			this.textBox15.Format = "{0:d}";
 			this.textBox15.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(2.053117036819458D), Telerik.Reporting.Drawing.Unit.Cm(0.00020024616969749332D));
 			this.textBox15.Name = "textBox15";
 			this.textBox15.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
@@ -438,6 +430,38 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox16.Name = "textBox16";
 			this.textBox16.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
 			this.textBox16.Value = "= Fields.ItemNo";
+			// 
+			// textBox11
+			// 
+			this.textBox11.Format = "{0:C2}";
+			this.textBox11.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(17.946882247924805D), Telerik.Reporting.Drawing.Unit.Cm(0.00020024616969749332D));
+			this.textBox11.Name = "textBox11";
+			this.textBox11.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(1.9999997615814209D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
+			this.textBox11.Value = "= Fields.Cost";
+			// 
+			// textBox13
+			// 
+			this.textBox13.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(10.800199508666992D), Telerik.Reporting.Drawing.Unit.Cm(0.00020024616969749332D));
+			this.textBox13.Name = "textBox13";
+			this.textBox13.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(4.2995991706848145D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
+			this.textBox13.Value = "= Fields.SerialNo";
+			// 
+			// textBox24
+			// 
+			this.textBox24.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(16.400199890136719D), Telerik.Reporting.Drawing.Unit.Cm(0D));
+			this.textBox24.Name = "textBox24";
+			this.textBox24.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(5.5468826293945312D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
+			this.textBox24.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(12D);
+			this.textBox24.Value = "= Fields.AdviceNo";
+			// 
+			// textBox25
+			// 
+			this.textBox25.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(13.987940788269043D), Telerik.Reporting.Drawing.Unit.Cm(0D));
+			this.textBox25.Name = "textBox25";
+			this.textBox25.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(2.4120590686798096D), Telerik.Reporting.Drawing.Unit.Cm(0.60000050067901611D));
+			this.textBox25.Style.Font.Bold = true;
+			this.textBox25.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(12D);
+			this.textBox25.Value = "Advice No:";
 			// 
 			// ReportDataSource
 			// 
@@ -550,6 +574,8 @@ namespace JobSystem.Reporting.ReportDefinitions
 		private Telerik.Reporting.TextBox textBox20;
 		private Telerik.Reporting.TextBox textBox21;
 		private Telerik.Reporting.TextBox textBox22;
+		private Telerik.Reporting.TextBox textBox25;
+		private Telerik.Reporting.TextBox textBox24;
 
 	}
 }

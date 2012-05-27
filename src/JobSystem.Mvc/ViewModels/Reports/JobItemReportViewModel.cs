@@ -8,5 +8,7 @@ namespace JobSystem.Mvc.ViewModels.Reports
 	{
 		public Guid StatusId { get; set; }
 		public IEnumerable<SelectListItem> Status { get; set; }
+		public Guid CustomerId { get; set; }
+		public IEnumerable<SelectListItem> Customer { get; set; }
 	}
 }
