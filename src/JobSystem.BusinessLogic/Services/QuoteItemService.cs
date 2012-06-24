@@ -142,6 +142,8 @@ namespace JobSystem.BusinessLogic.Services
 			var quoteItem = _quoteItemRepository.GetById(quoteItemId);
 			if (quoteItem == null)
 				throw new ArgumentException("An invalid quote item ID was supplied");
+			if (quoteItem.Status.Type == ListItemType.StatusQuoteAccepted)
+				return quoteItem;
 			var quoteAcceptedStatus = _listItemRepository.GetByType(ListItemType.StatusQuoteAccepted);
 			quoteItem.Status = quoteAcceptedStatus;
 			var jobItem = quoteItem.JobItem;
@@ -160,6 +162,8 @@ namespace JobSystem.BusinessLogic.Services
 			var quoteItem = _quoteItemRepository.GetById(quoteItemId);
 			if (quoteItem == null)
 				throw new ArgumentException("An invalid quote item ID was supplied");
+			if (quoteItem.Status.Type == ListItemType.StatusQuoteRejected)
+				return quoteItem;
 			var quoteRejectedStatus = _listItemRepository.GetByType(ListItemType.StatusQuoteRejected);
 			quoteItem.Status = quoteRejectedStatus;
 			var jobItem = quoteItem.JobItem;

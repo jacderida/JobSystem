@@ -1956,6 +1956,26 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
+		public void Accept_ItemAlreadyAccepted_ItemNotUpdated()
+		{
+			_quoteItemForAccept.Status = new ListItem { Id = Guid.NewGuid(), Name = "Quote Accepted", Type = ListItemType.StatusQuoteAccepted };
+			var quoteItemRepositoryMock = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryMock.Stub(x => x.GetById(_quoteItemForAcceptId)).Return(_quoteItemForAccept);
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryMock,
+				jobItemRepositoryMock,
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Accept(_quoteItemForAcceptId);
+			quoteItemRepositoryMock.AssertWasNotCalled(x => x.Update(_quoteItemForAccept));
+			jobItemRepositoryMock.AssertWasNotCalled(x => x.Update(_jobItemForAccept));
+		}
+
+		[Test]
 		[ExpectedException(typeof(ArgumentException))]
 		public void Accept_InvalidQuoteItemId_ArgumentException()
 		{
@@ -2030,6 +2050,26 @@ namespace JobSystem.BusinessLogic.UnitTests
 			quoteItemRepositoryMock.VerifyAllExpectations();
 			Assert.AreEqual(ListItemType.StatusQuoteRejected, _quoteItemForReject.Status.Type);
 			Assert.AreEqual(ListItemType.StatusQuoteRejected, _jobItemForReject.Status.Type);
+		}
+
+		[Test]
+		public void Reject_ItemAlreadyRejected_ItemNotUpdated()
+		{
+			_quoteItemForReject.Status = new ListItem { Id = Guid.NewGuid(), Name = "Quote Rejected", Type = ListItemType.StatusQuoteRejected };
+			var quoteItemRepositoryMock = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryMock.Stub(x => x.GetById(_quoteItemForRejectId)).Return(_quoteItemForReject);
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryMock,
+				jobItemRepositoryMock,
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Reject(_quoteItemForRejectId);
+			quoteItemRepositoryMock.AssertWasNotCalled(x => x.Update(_quoteItemForReject));
+			jobItemRepositoryMock.AssertWasNotCalled(x => x.Update(_jobItemForReject));
 		}
 
 		[Test]
