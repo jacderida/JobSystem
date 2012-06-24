@@ -22,6 +22,7 @@ namespace JobSystem.Mvc.ViewModels.Jobs
 		public string AdviceNumber { get; set; }
 		public string Contact { get; set; }
 		public string CustomerName { get; set; }
+		public string CustomerAssetLine { get; set; }
 		public string CustomerAddress1 { get; set; }
 		public string CustomerAddress2 { get; set; }
 		public string CustomerAddress3 { get; set; }

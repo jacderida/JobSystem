@@ -169,6 +169,7 @@ namespace JobSystem.Mvc.Controllers
 				Note = job.Notes,
 				Contact = job.Contact,
 				CustomerName = job.Customer.Name,
+				CustomerAssetLine = job.Customer.AssetLine,
 				CustomerAddress1 = job.Customer.Address1,
 				CustomerAddress2 = job.Customer.Address2,
 				CustomerAddress3 = job.Customer.Address3,
