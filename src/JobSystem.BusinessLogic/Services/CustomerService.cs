@@ -15,7 +15,6 @@ namespace JobSystem.BusinessLogic.Services
 	public class CustomerService : ServiceBase
 	{
 		private ICustomerRepository _customerRepository;
-		private CustomerValidator _customerValidator;
 
 		public CustomerService(
 			IUserContext applicationContext,
@@ -23,7 +22,6 @@ namespace JobSystem.BusinessLogic.Services
 			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
 		{
 			_customerRepository = customerRepository;
-			_customerValidator = new CustomerValidator(customerRepository);
 		}
 
 		#region Public Implementation
@@ -48,7 +46,6 @@ namespace JobSystem.BusinessLogic.Services
 			PopulateDeliveryAddressInfo(customer, deliveryAddressDetails);
 			PopulateDeliveryContactInfo(customer, deliveryContactInfo);
 			ValidateAnnotatedObjectThrowOnFailure(customer);
-			_customerValidator.ValidateThrowOnFailure(customer);
 			_customerRepository.Create(customer);
 			return customer;
 		}
@@ -74,7 +71,6 @@ namespace JobSystem.BusinessLogic.Services
 			PopulateDeliveryAddressInfo(customer, deliveryAddressDetails);
 			PopulateDeliveryContactInfo(customer, deliveryContactInfo);
 			ValidateAnnotatedObjectThrowOnFailure(customer);
-			_customerValidator.ValidateThrowOnFailure(customer);
 			_customerRepository.Update(customer);
 			return customer;
 		}

@@ -86,7 +86,6 @@
     <Compile Include="Services\UserManagementService.cs" />
     <Compile Include="Validation\Core\DomainValidationException.cs" />
     <Compile Include="Validation\Core\IValidator.cs" />
-    <Compile Include="Validation\CustomerValidator.cs" />
     <Compile Include="Validation\Extensions\ValidationExtensions.cs" />
     <Compile Include="Validation\SupplierValidator.cs" />
     <Compile Include="Validation\UserAccountValidator.cs" />

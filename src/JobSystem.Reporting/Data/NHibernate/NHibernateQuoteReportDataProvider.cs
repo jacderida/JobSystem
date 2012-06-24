@@ -18,8 +18,10 @@ namespace JobSystem.Reporting.Data.NHibernate
 			foreach (var item in quote.QuoteItems)
 			{
 				var reportItem = new QuoteReportModel();
-				PopulateCompanyDetails(reportItem);
+				PopulateCompanyDetails(reportItem);				
 				reportItem.QuoteNo = quote.QuoteNumber;
+				reportItem.OrderNo = quote.OrderNumber;
+				reportItem.AdviceNo = quote.AdviceNumber;
 				reportItem.CustomerName = quote.Customer.Name;
 				reportItem.CustomerAddress1 = !String.IsNullOrEmpty(customer.Address1) ? customer.Address1 : String.Empty;
 				reportItem.CustomerAddress2 = !String.IsNullOrEmpty(customer.Address2) ? customer.Address2 : String.Empty;

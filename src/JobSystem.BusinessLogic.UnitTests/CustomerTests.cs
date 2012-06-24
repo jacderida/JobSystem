@@ -90,19 +90,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
-		public void Create_NonUniqueName_DomainValidationExceptionThrown()
-		{
-			var customerRepositoryStub = MockRepository.GenerateMock<ICustomerRepository>();
-			customerRepositoryStub.Stub(x => x.GetByName("Gael Ltd")).Return(new Customer { Name = "Gael Ltd" });
-			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
-			CreateCustomer(
-				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
-				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
-				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
-			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.DuplicateName));
-		}
-
-		[Test]
 		public void Create_NameGreaterThan256Characters_DomainValidationExceptionThrown()
 		{
 			var customerRepositoryStub = MockRepository.GenerateMock<ICustomerRepository>();
@@ -674,22 +661,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
 				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.NameRequired));
-		}
-
-		[Test]
-		public void Edit_NonUniqueName_DomainValidationExceptionThrown()
-		{
-			var nonUniqueCustomer = GetNonUniqueCustomerForEdit();
-			var customer = GetCustomerToEdit();
-			var customerRepositoryStub = MockRepository.GenerateMock<ICustomerRepository>();
-			customerRepositoryStub.Stub(x => x.GetById(customer.Id)).Return(customer);
-			customerRepositoryStub.Stub(x => x.GetByName(nonUniqueCustomer.Name)).Return(nonUniqueCustomer);
-			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
-			EditCustomer(
-				customer.Id, nonUniqueCustomer.Name, "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
-				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
-				"Gael Ltd Delivery Address", GetAddressDetails("Delivery"), GetContactInfo("Delivery"));
-			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.DuplicateName));
 		}
 
 		[Test]

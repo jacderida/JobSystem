@@ -32,7 +32,7 @@ namespace JobSystem.DbWireup.ConsoleRunner
 					Tuple.Create<Guid, string, ListItemCategoryType>(ListCategoryIds.CertificateId, "Certificate", ListItemCategoryType.Certificate))
 				.WithJobTypes(
 					Tuple.Create<string, ListItemType, Guid>("Lab Service", ListItemType.JobTypeField, ListCategoryIds.JobTypeId),
-					Tuple.Create<string, ListItemType, Guid>("Field Service", ListItemType.JobTypeService, ListCategoryIds.JobTypeId))
+					Tuple.Create<string, ListItemType, Guid>("Site Service", ListItemType.JobTypeService, ListCategoryIds.JobTypeId))
 				.WithCertificateTypes(
 					Tuple.Create<string, ListItemType, Guid>("House", ListItemType.CertificateTypeHouse, ListCategoryIds.CertificateId),
 					Tuple.Create<string, ListItemType, Guid>("UKAS", ListItemType.CertificateTypeUkas, ListCategoryIds.CertificateId))

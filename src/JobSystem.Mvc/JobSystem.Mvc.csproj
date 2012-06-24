@@ -117,26 +117,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\telerikreporting\Telerik.Reporting.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Reporting.Adomd, Version=6.0.12.215, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\telerikreporting\Telerik.Reporting.Adomd.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Reporting.DatabaseSession, Version=6.0.12.215, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\telerikreporting\Telerik.Reporting.DatabaseSession.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Reporting.OpenXmlRendering, Version=6.0.12.215, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\telerikreporting\Telerik.Reporting.OpenXmlRendering.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Reporting.Service, Version=6.0.12.215, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\telerikreporting\Telerik.Reporting.Service.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Reporting.XpsRendering, Version=6.0.12.215, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\telerikreporting\Telerik.Reporting.XpsRendering.dll</HintPath>
-    </Reference>
     <Reference Include="Telerik.ReportViewer.WebForms, Version=6.0.12.215, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\telerikreporting\Telerik.ReportViewer.WebForms.dll</HintPath>
