@@ -142,9 +142,13 @@ namespace JobSystem.BusinessLogic.Services
 			var quoteItem = _quoteItemRepository.GetById(quoteItemId);
 			if (quoteItem == null)
 				throw new ArgumentException("An invalid quote item ID was supplied");
-			quoteItem.Status = _listItemRepository.GetByType(ListItemType.StatusQuoteAccepted);
+			var quoteAcceptedStatus = _listItemRepository.GetByType(ListItemType.StatusQuoteAccepted);
+			quoteItem.Status = quoteAcceptedStatus;
+			var jobItem = quoteItem.JobItem;
+			jobItem.Status = quoteAcceptedStatus;
 			_jobItemRepository.EmitItemHistory(
-				CurrentUser, quoteItem.JobItem.Id, 0, 0, String.Format("Item accepted on quote {0}", quoteItem.Quote.QuoteNumber), ListItemType.StatusQuoteAccepted, ListItemType.WorkTypeAdministration);
+				CurrentUser, jobItem.Id, 0, 0, String.Format("Item accepted on quote {0}", quoteItem.Quote.QuoteNumber), ListItemType.StatusQuoteAccepted, ListItemType.WorkTypeAdministration);
+			_jobItemRepository.Update(jobItem);
 			_quoteItemRepository.Update(quoteItem);
 			return quoteItem;
 		}
@@ -156,9 +160,13 @@ namespace JobSystem.BusinessLogic.Services
 			var quoteItem = _quoteItemRepository.GetById(quoteItemId);
 			if (quoteItem == null)
 				throw new ArgumentException("An invalid quote item ID was supplied");
-			quoteItem.Status = _listItemRepository.GetByType(ListItemType.StatusQuoteRejected);
+			var quoteRejectedStatus = _listItemRepository.GetByType(ListItemType.StatusQuoteRejected);
+			quoteItem.Status = quoteRejectedStatus;
+			var jobItem = quoteItem.JobItem;
+			jobItem.Status = quoteRejectedStatus;
 			_jobItemRepository.EmitItemHistory(
-				CurrentUser, quoteItem.JobItem.Id, 0, 0, String.Format("Item rejected on quote {0}", quoteItem.Quote.QuoteNumber), ListItemType.StatusQuoteRejected, ListItemType.WorkTypeAdministration);
+				CurrentUser, jobItem.Id, 0, 0, String.Format("Item rejected on quote {0}", quoteItem.Quote.QuoteNumber), ListItemType.StatusQuoteRejected, ListItemType.WorkTypeAdministration);
+			_jobItemRepository.Update(jobItem);
 			_quoteItemRepository.Update(quoteItem);
 			return quoteItem;
 		}

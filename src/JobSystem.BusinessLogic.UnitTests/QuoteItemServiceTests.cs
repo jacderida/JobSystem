@@ -35,9 +35,13 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private Guid _quoteItemForEditId;
 
 		private Guid _quoteItemForAcceptId;
+		private Guid _jobItemForAcceptId;
+		private JobItem _jobItemForAccept;
 		private QuoteItem _quoteItemForAccept;
 
 		private Guid _quoteItemForRejectId;
+		private Guid _jobItemForRejectId;
+		private JobItem _jobItemForReject;
 		private QuoteItem _quoteItemForReject;
 
 		[SetUp]
@@ -155,6 +159,34 @@ namespace JobSystem.BusinessLogic.UnitTests
 				Quote = new Quote { Id = _quoteForEditId, QuoteNumber = "QR2000" },
 				JobItem = _jobItemToUpdate
 			};
+			_jobItemForAcceptId = Guid.NewGuid();
+			_jobItemForAccept = new JobItem
+			{
+				Id = _jobItemForAcceptId,
+				Job = new Job
+				{
+					Id = Guid.NewGuid(),
+					JobNo = "JR2000",
+					CreatedBy = _userContext.GetCurrentUser(),
+					OrderNo = "ORDER12345",
+					DateCreated = DateTime.UtcNow,
+					Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" }
+				},
+				ItemNo = 1,
+				SerialNo = "12345",
+				Instrument = new Instrument
+				{
+					Id = Guid.NewGuid(),
+					Manufacturer = "Druck",
+					ModelNo = "DPI601IS",
+					Range = "None",
+					Description = "Digital Pressure Indicator"
+				},
+				CalPeriod = 12,
+				Created = DateTime.UtcNow,
+				CreatedUser = _userContext.GetCurrentUser(),
+			};
+			_quoteItemForAccept.JobItem = _jobItemForAccept;
 
 			_quoteItemForRejectId = Guid.NewGuid();
 			_quoteItemForReject = new QuoteItem
@@ -182,6 +214,34 @@ namespace JobSystem.BusinessLogic.UnitTests
 				Quote = new Quote { Id = _quoteForEditId, QuoteNumber = "QR2000" },
 				JobItem = _jobItemToUpdate
 			};
+			_jobItemForRejectId = Guid.NewGuid();
+			_jobItemForReject = new JobItem
+			{
+				Id = _jobItemForRejectId,
+				Job = new Job
+				{
+					Id = Guid.NewGuid(),
+					JobNo = "JR2000",
+					CreatedBy = _userContext.GetCurrentUser(),
+					OrderNo = "ORDER12345",
+					DateCreated = DateTime.UtcNow,
+					Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" }
+				},
+				ItemNo = 1,
+				SerialNo = "12345",
+				Instrument = new Instrument
+				{
+					Id = Guid.NewGuid(),
+					Manufacturer = "Druck",
+					ModelNo = "DPI601IS",
+					Range = "None",
+					Description = "Digital Pressure Indicator"
+				},
+				CalPeriod = 12,
+				Created = DateTime.UtcNow,
+				CreatedUser = _userContext.GetCurrentUser(),
+			};
+			_quoteItemForReject.JobItem = _jobItemForReject;
 		}
 
 		#region Create
@@ -1866,7 +1926,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item accepted on quote QR2000", ListItemType.StatusQuoteAccepted, ListItemType.WorkTypeAdministration));
+				_userContext.GetCurrentUser(), _jobItemForAcceptId, 0, 0, "Item accepted on quote QR2000", ListItemType.StatusQuoteAccepted, ListItemType.WorkTypeAdministration));
+			jobItemRepositoryMock.Expect(x => x.Update(_jobItemForAccept));
 			var quoteItemRepositoryMock = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryMock.Stub(x => x.GetById(_quoteItemForAcceptId)).Return(_quoteItemForAccept);
 			quoteItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
@@ -1891,6 +1952,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			jobItemRepositoryMock.VerifyAllExpectations();
 			quoteItemRepositoryMock.VerifyAllExpectations();
 			Assert.AreEqual(ListItemType.StatusQuoteAccepted, _quoteItemForAccept.Status.Type);
+			Assert.AreEqual(ListItemType.StatusQuoteAccepted, _jobItemForAccept.Status.Type);
 		}
 
 		[Test]
@@ -1941,7 +2003,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdateId, 0, 0, "Item rejected on quote QR2000", ListItemType.StatusQuoteRejected, ListItemType.WorkTypeAdministration));
+				_userContext.GetCurrentUser(), _jobItemForRejectId, 0, 0, "Item rejected on quote QR2000", ListItemType.StatusQuoteRejected, ListItemType.WorkTypeAdministration));
+			jobItemRepositoryMock.Expect(x => x.Update(_jobItemForReject));
 			var quoteItemRepositoryMock = MockRepository.GenerateMock<IQuoteItemRepository>();
 			quoteItemRepositoryMock.Stub(x => x.GetById(_quoteItemForRejectId)).Return(_quoteItemForReject);
 			quoteItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
@@ -1966,6 +2029,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			jobItemRepositoryMock.VerifyAllExpectations();
 			quoteItemRepositoryMock.VerifyAllExpectations();
 			Assert.AreEqual(ListItemType.StatusQuoteRejected, _quoteItemForReject.Status.Type);
+			Assert.AreEqual(ListItemType.StatusQuoteRejected, _jobItemForReject.Status.Type);
 		}
 
 		[Test]
