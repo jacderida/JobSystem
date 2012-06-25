@@ -14,7 +14,6 @@ namespace JobSystem.DbWireup
 		private List<Tuple<Guid, ListItem>> _jobItemStatusItems;
 		private List<Tuple<Guid, ListItem>> _jobItemWorkTypes;
 		private List<Tuple<Guid, ListItem>> _jobItemCategories;
-
 		private List<Tuple<Guid, ListItem>> _paymentTerms;
 		private List<TaxCode> _taxCodes;
 		private List<Currency> _currencies;

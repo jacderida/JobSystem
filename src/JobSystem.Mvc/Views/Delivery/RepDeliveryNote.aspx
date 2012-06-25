@@ -33,10 +33,9 @@
 			var companyDetailsService = DependencyResolver.Current.GetService<CompanyDetailsService>();
 			var report = new JobSystem.Reporting.ReportDefinitions.TelerikDeliveryReport();
 			var logo = companyDetailsService.GetCompanyLogo();
-			//report.MainLogo.Width = new Telerik.Reporting.Drawing.Unit(logo.Width, Telerik.Reporting.Drawing.UnitType.Pixel);
-			//report.MainLogo.Height = new Telerik.Reporting.Drawing.Unit(logo.Height, Telerik.Reporting.Drawing.UnitType.Pixel);
 			var pageWidth = report.Width.Value;
-			//report.MainLogo.Location = new Telerik.Reporting.Drawing.PointU(new System.Drawing.Point((int)(pageWidth - logo.Width), 0));
+			var company = companyDetailsService.GetCompany();
+			System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(company.DefaultCultureCode);
 			report.MainLogo.Value = logo;
 			report.DataSource = dataSource;
 			ReportViewer1.Report = report;

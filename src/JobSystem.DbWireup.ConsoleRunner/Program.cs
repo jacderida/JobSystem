@@ -139,6 +139,7 @@ namespace JobSystem.DbWireup.ConsoleRunner
 				DefaultCurrency = databaseService.GetCurrency(defaultCurrencyId),
 				DefaultPaymentTerm = databaseService.GetPaymentTerm(defaultPaymentTermId),
 				DefaultTaxCode = databaseService.GetTaxCode(defaultTaxCodeId),
+				DefaultCultureCode = "en-GB",
 				MainLogo = ms.ToArray()
 			};
 		}

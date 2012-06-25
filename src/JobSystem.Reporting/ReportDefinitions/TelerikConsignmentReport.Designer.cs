@@ -688,7 +688,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 		private Telerik.Reporting.TextBox supplierAddress4DataTextBox;
 		private Telerik.Reporting.TextBox supplierAddress5DataTextBox;
 		private Telerik.Reporting.TextBox raisedByDataTextBox;
-		private Telerik.Reporting.TextBox dateCreatedDataTextBox;
+		public Telerik.Reporting.TextBox dateCreatedDataTextBox;
 		private Telerik.Reporting.ReportFooterSection reportFooter;
 		private Telerik.Reporting.DetailSection detail;
 		private Telerik.Reporting.TextBox jobRefDataTextBox1;

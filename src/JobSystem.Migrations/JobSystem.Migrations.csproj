@@ -97,6 +97,7 @@
     <Compile Include="M20120520162219_ChangeCurrencyForeignKeyOnQuotesTable.cs" />
     <Compile Include="M20120520162728_ChangeCurrencyForeignKeyOnOrdersTable.cs" />
     <Compile Include="M20120520162923_ChangeCurrencyForeignKeyOnInvoicesTable.cs" />
+    <Compile Include="M20120624223319_AddDefaultCultureColumn.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

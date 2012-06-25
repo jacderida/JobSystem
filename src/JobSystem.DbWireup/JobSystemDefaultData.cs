@@ -16,7 +16,6 @@ namespace JobSystem.DbWireup
 		public List<Tuple<Guid, ListItem>> JobItemCategories { get; private set; }
 		public List<Tuple<Guid, ListItem>> JobItemLocations { get; private set; }
 		public List<Tuple<Guid, ListItem>> JobItemInitialLocations { get; private set; }
-
 		public List<Tuple<Guid, ListItem>> PaymentTerms { get; set; }
 		public List<TaxCode> TaxCodes { get; set; }
 		public List<Currency> Currencies { get; set; }

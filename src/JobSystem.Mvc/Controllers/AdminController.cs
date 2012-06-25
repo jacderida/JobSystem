@@ -56,10 +56,12 @@ namespace JobSystem.Mvc.Controllers
 				PaymentTermId = company.DefaultPaymentTerm.Id,
 				BankDetailsId = company.DefaultBankDetails.Id,
 				TaxCodeId = company.DefaultTaxCode.Id,
+				CultureId = company.DefaultCultureCode,
 				Currencies = _currencyService.GetCurrencies().ToSelectList(),
 				PaymentTerms = _listItemService.GetAllByCategory(ListItemCategoryType.PaymentTerm).ToSelectList(),
 				TaxCodes = _companyDetailsService.GetTaxCodes().Select(t => new { Id = t.Id, Name = t.TaxCodeName }).ToSelectList(),
-				BankDetails = _companyDetailsService.GetBankDetails().Select(t => new { Id = t.Id, Name = t.ShortName }).ToSelectList()
+				BankDetails = _companyDetailsService.GetBankDetails().Select(t => new { Id = t.Id, Name = t.ShortName }).ToSelectList(),
+				Cultures = _companyDetailsService.GetSupportedCultures().Select(c => new { Id = c.Key, Name = c.Value }).ToSelectList()
 			};
 			return View("CompanyDetails", companyDetailsViewModel);
 		}
@@ -78,14 +80,13 @@ namespace JobSystem.Mvc.Controllers
 						viewModel.Telephone, viewModel.Fax, viewModel.Email,
 						viewModel.Www, viewModel.RegNo, viewModel.VatRegNo,
 						viewModel.TermsAndConditions, viewModel.CurrencyId, viewModel.TaxCodeId,
-						viewModel.PaymentTermId, viewModel.BankDetailsId);
-
+						viewModel.PaymentTermId, viewModel.BankDetailsId, viewModel.CultureId);
 					//Repopulate lists because MVC doesn't preserve them after post
 					viewModel.Currencies = _currencyService.GetCurrencies().ToSelectList();
 					viewModel.PaymentTerms = _listItemService.GetAllByCategory(ListItemCategoryType.PaymentTerm).ToSelectList();
 					viewModel.TaxCodes = _companyDetailsService.GetTaxCodes().Select(t => new { Id = t.Id, Name = t.TaxCodeName }).ToSelectList();
 					viewModel.BankDetails = _companyDetailsService.GetBankDetails().Select(t => new { Id = t.Id, Name = t.ShortName }).ToSelectList();
-
+					viewModel.Cultures = _companyDetailsService.GetSupportedCultures().Select(c => new { Id = c.Key, Name = c.Value }).ToSelectList();
 					return View("CompanyDetails", viewModel);
 				}
 				catch (DomainValidationException dex)
@@ -97,7 +98,7 @@ namespace JobSystem.Mvc.Controllers
 			viewModel.PaymentTerms = _listItemService.GetAllByCategory(ListItemCategoryType.PaymentTerm).ToSelectList();
 			viewModel.TaxCodes = _companyDetailsService.GetTaxCodes().Select(t => new { Id = t.Id, Name = t.TaxCodeName }).ToSelectList();
 			viewModel.BankDetails = _companyDetailsService.GetBankDetails().Select(t => new { Id = t.Id, Name = t.ShortName }).ToSelectList();
-
+			viewModel.Cultures = _companyDetailsService.GetSupportedCultures().Select(c => new { Id = c.Key, Name = c.Value }).ToSelectList();
 			return View("CompanyDetails", viewModel);
 		}
 	}

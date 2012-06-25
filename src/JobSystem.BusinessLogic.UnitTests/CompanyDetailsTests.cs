@@ -95,7 +95,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			companyDetailsRepositoryMock.VerifyAllExpectations();
 			Assert.That(_savedCompanyDetails.Id == id);
 		}
@@ -117,7 +117,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 		}
 
 		[Test]
@@ -137,7 +137,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 		}
 
 		[Test]
@@ -157,7 +157,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 		}
 
 		[Test]
@@ -177,7 +177,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 		}
 
 		[Test]
@@ -197,7 +197,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 		}
 
 		[Test]
@@ -216,7 +216,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.NameRequired));
 		}
 
@@ -236,7 +236,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.NameTooLarge));
 		}
 
@@ -258,7 +258,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
 		}
 
@@ -280,7 +280,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
 		}
 
@@ -302,7 +302,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
 		}
 
@@ -324,7 +324,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
 		}
 
@@ -346,7 +346,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
 		}
 
@@ -366,7 +366,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				new string('a', 56), "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TelephoneTooLarge));
 		}
 
@@ -386,7 +386,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				String.Empty, "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TelephoneRequired));
 		}
 
@@ -406,7 +406,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", new string('a', 56), "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.FaxTooLarge));
 		}
 
@@ -426,7 +426,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", String.Empty, "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.FaxRequired));
 		}
 
@@ -446,7 +446,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", new string('a', 56),
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.EmailTooLarge));
 		}
 
@@ -466,7 +466,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 8949229", String.Empty,
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.EmailRequired));
 		}
 
@@ -486,7 +486,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				new string('a', 256), "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.WwwTooLarge));
 		}
 
@@ -506,7 +506,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 8949229", "info@emis-uk.com",
 				String.Empty, "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.WwwRequired));
 		}
 
@@ -526,7 +526,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				new string('a', 2001), currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TermsAndConditionsTooLarge));
 		}
 
@@ -546,7 +546,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 8949229", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				String.Empty, currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TermsAndConditionsRequired));
 		}
 
@@ -566,7 +566,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", new string('a', 51), "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.RegNoTooLarge));
 		}
 
@@ -586,7 +586,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO", new string('a', 51),
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.VatRegNoTooLarge));
 		}
 
@@ -607,7 +607,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.InsufficientSecurityClearance));
 		}
 
@@ -616,12 +616,12 @@ namespace JobSystem.BusinessLogic.UnitTests
 			string telephone, string fax, string email,
 			string www, string regNo, string vatRegNo,
 			string termsAndConditions, Guid defaultCurrencyId,
-			Guid defaultTaxCodeId, Guid defaultPaymentTermsId, Guid defaultBankDetailsId)
+			Guid defaultTaxCodeId, Guid defaultPaymentTermsId, Guid defaultBankDetailsId, string cultureCode)
 		{
 			try
 			{
 				_savedCompanyDetails = _companyDetailsService.Create(
-					id, name, addressDetails, telephone, fax, email, www, regNo, vatRegNo, termsAndConditions, defaultCurrencyId, defaultTaxCodeId, defaultPaymentTermsId, defaultBankDetailsId);
+					id, name, addressDetails, telephone, fax, email, www, regNo, vatRegNo, termsAndConditions, defaultCurrencyId, defaultTaxCodeId, defaultPaymentTermsId, defaultBankDetailsId, cultureCode);
 			}
 			catch (DomainValidationException dex)
 			{
@@ -648,7 +648,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			companyDetailsRepositoryMock.VerifyAllExpectations();
 		}
 
@@ -668,7 +668,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 		}
 
 		[Test]
@@ -687,7 +687,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 		}
 
 		[Test]
@@ -706,7 +706,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 		}
 
 		[Test]
@@ -725,7 +725,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 		}
 
 		[Test]
@@ -743,7 +743,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.NameRequired));
 		}
 
@@ -762,7 +762,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.NameTooLarge));
 		}
 
@@ -783,7 +783,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
 		}
 
@@ -804,7 +804,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
 		}
 
@@ -825,7 +825,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
 		}
 
@@ -846,7 +846,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
 		}
 
@@ -867,7 +867,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.AddressLineTooLarge));
 		}
 
@@ -886,7 +886,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				new string('a', 56), "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TelephoneTooLarge));
 		}
 
@@ -905,7 +905,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				String.Empty, "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TelephoneRequired));
 		}
 
@@ -924,7 +924,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", new string('a', 56), "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.FaxTooLarge));
 		}
 
@@ -943,7 +943,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", String.Empty, "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.FaxRequired));
 		}
 
@@ -962,7 +962,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", new string('a', 56),
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.EmailTooLarge));
 		}
 
@@ -981,7 +981,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 8949229", String.Empty,
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.EmailRequired));
 		}
 
@@ -1000,7 +1000,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				new string('a', 256), "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.WwwTooLarge));
 		}
 
@@ -1019,7 +1019,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 8949229", "info@emis-uk.com",
 				String.Empty, "REGNO123456", "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.WwwRequired));
 		}
 
@@ -1038,7 +1038,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				new string('a', 2001), currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TermsAndConditionsTooLarge));
 		}
 
@@ -1057,7 +1057,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 8949229", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO123456", "VATNO123456",
 				String.Empty, currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.TermsAndConditionsRequired));
 		}
 
@@ -1076,7 +1076,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", new string('a', 51), "VATNO123456",
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.RegNoTooLarge));
 		}
 
@@ -1095,7 +1095,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO", new string('a', 51),
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.VatRegNoTooLarge));
 		}
 
@@ -1116,7 +1116,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				"01224 894494", "01224 894929", "info@emis-uk.com",
 				"www.emis-uk.com", "REGNO", new string('a', 51),
 				"terms and conditions", currencyId, taxCodeId,
-				paymentTermId, bankDetailsId);
+				paymentTermId, bankDetailsId, "en-GB");
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.CompanyDetails.Messages.InsufficientSecurityClearance));
 		}
 
@@ -1125,12 +1125,12 @@ namespace JobSystem.BusinessLogic.UnitTests
 			string telephone, string fax, string email,
 			string www, string regNo, string vatRegNo,
 			string termsAndConditions, Guid defaultCurrencyId,
-			Guid defaultTaxCodeId, Guid defaultPaymentTermsId, Guid defaultBankDetailsId)
+			Guid defaultTaxCodeId, Guid defaultPaymentTermsId, Guid defaultBankDetailsId, string cultureCode)
 		{
 			try
 			{
 				_savedCompanyDetails = _companyDetailsService.Edit(
-					name, addressDetails, telephone, fax, email, www, regNo, vatRegNo, termsAndConditions, defaultCurrencyId, defaultTaxCodeId, defaultPaymentTermsId, defaultBankDetailsId);
+					name, addressDetails, telephone, fax, email, www, regNo, vatRegNo, termsAndConditions, defaultCurrencyId, defaultTaxCodeId, defaultPaymentTermsId, defaultBankDetailsId, cultureCode);
 			}
 			catch (DomainValidationException dex)
 			{

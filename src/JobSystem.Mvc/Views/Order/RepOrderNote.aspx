@@ -32,6 +32,8 @@
 			dataSource.Parameters.Add(new Telerik.Reporting.ObjectDataSourceParameter("itemId", typeof(Guid), Model));
 			var companyDetailsService = DependencyResolver.Current.GetService<CompanyDetailsService>();
 			var report = new JobSystem.Reporting.ReportDefinitions.TelerikOrderReport();
+			var company = companyDetailsService.GetCompany();
+			System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(company.DefaultCultureCode);
 			var logo = companyDetailsService.GetCompanyLogo();
 			report.MainLogo.Value = logo;
 			report.DataSource = dataSource;

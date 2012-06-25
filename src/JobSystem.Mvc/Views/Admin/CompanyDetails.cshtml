@@ -136,6 +136,13 @@
 			@Html.ValidationMessageFor(model => model.PaymentTerms)
 		</div>
 		<div class="editor-label">
+			@Html.LabelFor(model => model.Cultures)
+		</div>
+		<div class="editor-field">
+			@Html.DropDownListFor(model => model.CultureId, Model.Cultures, new { @class = "long-dropdown" })
+			@Html.ValidationMessageFor(model => model.Cultures)
+		</div>
+		<div class="editor-label">
 			@Html.LabelFor(model => model.TermsAndConditions)
 		</div>
 		<div class="editor-field">

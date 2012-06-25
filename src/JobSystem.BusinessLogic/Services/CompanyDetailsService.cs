@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Dto;
@@ -7,8 +11,6 @@ using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
 using JobSystem.Resources.CompanyDetails;
-using System.Drawing;
-using System.IO;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -43,7 +45,7 @@ namespace JobSystem.BusinessLogic.Services
 			string telephone, string fax, string email,
 			string www, string regNo, string vatRegNo,
 			string termsAndConditions, Guid defaultCurrencyId, Guid defaultTaxCodeId,
-			Guid defaultPaymentTermId, Guid defaultBankDetailsId)
+			Guid defaultPaymentTermId, Guid defaultBankDetailsId, string cultureCode)
 		{
 			if (id == Guid.Empty)
 				throw new ArgumentException("A value must be provided for id");
@@ -57,6 +59,7 @@ namespace JobSystem.BusinessLogic.Services
 			companyDetails.DefaultPaymentTerm = GetListItem(defaultPaymentTermId);
 			companyDetails.DefaultTaxCode = GetDefaultTaxCode(defaultTaxCodeId);
 			companyDetails.DefaultBankDetails = GetDefaultBankDetails(defaultBankDetailsId);
+			companyDetails.DefaultCultureCode = cultureCode;
 			AssignAddressDetails(companyDetails, addressDetails);
 			AssignContactInfo(companyDetails, telephone, fax, email, www);
 			AssignRegNoInfo(companyDetails, regNo, vatRegNo);
@@ -70,7 +73,7 @@ namespace JobSystem.BusinessLogic.Services
 			string telephone, string fax, string email,
 			string www, string regNo, string vatRegNo,
 			string termsAndConditions, Guid defaultCurrencyId, Guid defaultTaxCodeId,
-			Guid defaultPaymentTermId, Guid defaultBankDetailsId)
+			Guid defaultPaymentTermId, Guid defaultBankDetailsId, string cultureCode)
 		{
 			var companyDetails = GetCompany();
 			if (!CurrentUser.HasRole(UserRole.Admin))
@@ -81,6 +84,7 @@ namespace JobSystem.BusinessLogic.Services
 			companyDetails.DefaultPaymentTerm = GetListItem(defaultPaymentTermId);
 			companyDetails.DefaultTaxCode = GetDefaultTaxCode(defaultTaxCodeId);
 			companyDetails.DefaultBankDetails = GetDefaultBankDetails(defaultBankDetailsId);
+			companyDetails.DefaultCultureCode = cultureCode;
 			AssignAddressDetails(companyDetails, addressDetails);
 			AssignContactInfo(companyDetails, telephone, fax, email, www);
 			AssignRegNoInfo(companyDetails, regNo, vatRegNo);
@@ -108,6 +112,11 @@ namespace JobSystem.BusinessLogic.Services
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.ViewBankDetailsInsufficientSecurityClearance);
 			return _bankDetailsRepository.GetBankDetails();
+		}
+
+		public Dictionary<string, string> GetSupportedCultures()
+		{
+			return CultureInfo.GetCultures(CultureTypes.SpecificCultures).OrderBy(c => c.DisplayName).ToDictionary(c => c.Name, c => c.DisplayName);
 		}
 
 		public Image GetCompanyLogo()

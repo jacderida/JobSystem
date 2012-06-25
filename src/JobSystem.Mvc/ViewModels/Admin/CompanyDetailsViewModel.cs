@@ -54,6 +54,7 @@ namespace JobSystem.Mvc.ViewModels.Admin
 		[Display(Name = "Terms & Conditions")]
 		public string TermsAndConditions { get; set; }
 
+		public string CultureId { get; set; }
 		public Guid CurrencyId { get; set; }
 		public Guid TaxCodeId { get; set; }
 		public Guid PaymentTermId { get; set; }
@@ -66,5 +67,7 @@ namespace JobSystem.Mvc.ViewModels.Admin
 		public IEnumerable<SelectListItem> PaymentTerms { get; set; }
 		[Display(Name = "Bank Details")]
 		public IEnumerable<SelectListItem> BankDetails { get; set; }
+		[Display(Name = "Regional Settings")]
+		public IEnumerable<SelectListItem> Cultures { get; set; }
 	}
 }
