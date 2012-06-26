@@ -115,12 +115,18 @@
 				{
 					@Html.ActionLink("Edit Quote", "EditItem", "Quote", new { id = @Model.Id, fromJi = true, isQuoted = Model.QuoteItem.IsQuoted }, new { @class = "primary-action" })
 					if (Model.QuoteItem.IsQuoted) {
-						@Ajax.ActionLink("Accept", "AcceptQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Accepted')" }, new { @class = "primary-action", id="acceptQuoteItemButton" })
-						@Ajax.ActionLink("Reject", "RejectQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Rejected')" },  new { @class = "primary-action" })
+						if (Model.QuoteItem.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuotedPrepared) {
+							@Ajax.ActionLink("Accept", "AcceptQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Accepted')" }, new { @class = "primary-action", id="acceptQuoteItemButton" })
+							@Ajax.ActionLink("Reject", "RejectQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Rejected')" },  new { @class = "primary-action" })
+						} else if (Model.QuoteItem.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuoteAccepted) {
+							@Ajax.ActionLink("Reject", "RejectQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Rejected')" },  new { @class = "primary-action" })
+						} else {
+							@Ajax.ActionLink("Accept", "AcceptQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Accepted')" }, new { @class = "primary-action", id="acceptQuoteItemButton" })
+						}
 					}
 					<div class="quote-item">
 						@if (Model.QuoteItem.IsQuoted) {
-							<h3 id="quoteItemStatusLabel">@Model.QuoteItem.QuoteNo</h3><br />
+							<h3>@Model.QuoteItem.QuoteNo</h3><br />
 							<h3 id="quoteItemStatusLabel">@Model.QuoteItem.Status</h3><br />
 						}
 						<div class="details-fields">

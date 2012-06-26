@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
+using JobSystem.DataModel.Entities;
 
 namespace JobSystem.Mvc.ViewModels.Quotes
 {
@@ -31,5 +29,6 @@ namespace JobSystem.Mvc.ViewModels.Quotes
 		public string JobItemNo { get; set; }
 		public string Status { get; set; }
 		public string QuoteNo { get; set; }
+		public ListItemType StatusType { get; set; }
 	}
 }

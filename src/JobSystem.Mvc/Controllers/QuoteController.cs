@@ -168,7 +168,9 @@ namespace JobSystem.Mvc.Controllers
 							Days = qi.Days,
 							ItemBER = qi.BeyondEconomicRepair,
 							ItemNo = qi.ItemNo.ToString(),
-							JobItemNo = qi.JobItem.ItemNo.ToString()
+							JobItemNo = qi.JobItem.ItemNo.ToString(),
+							Status = qi.Status.Name,
+							StatusType = qi.Status.Type
 							}).ToList();
 			}
 			return View(quotes);

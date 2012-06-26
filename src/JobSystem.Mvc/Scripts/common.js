@@ -18,6 +18,9 @@
 				break;
 		}
 	},
+	updateQuoteStatusListView: function (status, id) {
+		$('#' + id).find('.quoteItemStatus').text(status);
+	},
 	updateQuoteStatus: function (status) {
 		$("#quoteItemStatusLabel").text(status);
 	},
