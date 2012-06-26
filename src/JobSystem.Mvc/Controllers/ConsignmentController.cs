@@ -140,7 +140,8 @@ namespace JobSystem.Mvc.Controllers
 					ConsignmentNo = c.ConsignmentNo,
 					CreatedBy = c.CreatedBy.Name,
 					DateCreated = c.DateCreated.ToLongDateString() + ' ' + c.DateCreated.ToShortTimeString(),
-					SupplierName = c.Supplier.Name
+					SupplierName = c.Supplier.Name,
+					IsOrdered = c.IsOrdered
 				}).ToList();
 
 			foreach (var item in items)

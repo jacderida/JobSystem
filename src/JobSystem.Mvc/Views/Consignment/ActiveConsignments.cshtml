@@ -44,13 +44,16 @@
 							@ci.InstrumentDetails <br />
 							@ci.Instructions
 						</span><br />
-						
 					}	
 					</span>
 				</span>
 			</td>
 			<td>
-				@Html.ActionLink("Order", "ConvertToOrder", new { id = @item.Id })
+				@if (item.IsOrdered) {
+					@: Ordered
+				} else {
+					@Html.ActionLink("Order", "ConvertToOrder", new { id = item.Id })
+				}
 			</td>
 			<td>
 				@Html.ActionLink("Print Note", "GenerateConsignmentNote", new { Id = @item.Id }, new { target="_blank"})

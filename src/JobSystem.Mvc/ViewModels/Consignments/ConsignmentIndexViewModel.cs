@@ -13,5 +13,6 @@ namespace JobSystem.Mvc.ViewModels.Consignments
 		public string DateCreated { get; set; }
 		public string SupplierName { get; set; }
 		public List<ConsignmentItemIndexViewModel> ConsignmentItems { get; set; }
+		public bool IsOrdered { get; set; }
 	}
 }
