@@ -39,8 +39,12 @@
 			@Html.LabelFor(model => model.Roles)
 		</div>
 		<div class="editor-field">
-			@Html.DropDownList("RoleId", Model.Roles, new { @class = "long-dropdown" })
-			@Html.ValidationMessageFor(model => model.Roles)
+		@for (var i = 0; i < Model.Roles.Count();i++ )
+		{
+			@Html.HiddenFor(it => Model.Roles[i].Id)
+			@Html.CheckBoxFor(it => Model.Roles[i].IsChecked)
+			@Html.LabelFor(it => Model.Roles[i].IsChecked, Model.Roles[i].Name)<br />
+		}
 		</div>
 	</fieldset>
 	<div class="buttons-row">

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using JobSystem.Mvc.ViewModels.Shared;
 
 namespace JobSystem.Mvc.ViewModels.Users
 {
@@ -14,5 +16,6 @@ namespace JobSystem.Mvc.ViewModels.Users
 		public string EmailAddress { get; set; }
 		[Display(Name = "Job Title")]
 		public string JobTitle { get; set; }
+		public List<CheckboxViewModel> Roles { get; set; }
 	}
 }

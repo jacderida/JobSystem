@@ -7,6 +7,8 @@ using JobSystem.DataAccess.NHibernate.Web;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.ViewModels.Users;
 using JobSystem.DataModel.Entities;
+using JobSystem.Mvc.ViewModels.Shared;
+using System.Collections.Generic;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -37,8 +39,21 @@ namespace JobSystem.Mvc.Controllers
 			model.CreateEditModel = new UserAccountViewModel();
 
 			var roles = from UserRole s in Enum.GetValues(typeof(UserRole))
-					   select new { RoleId = (int)s, Name = s.ToString() };
-			model.CreateEditModel.Roles = new SelectList(roles, "RoleId", "Name");
+			           select new { RoleId = (int)s, Name = s.ToString() };
+
+			var roleVms = new List<CheckboxViewModel>();
+
+			foreach (var role in roles)
+			{
+				roleVms.Add(new CheckboxViewModel()
+				{
+					Id = role.RoleId,
+					IsChecked = false,
+					Name = role.Name
+				});
+			}
+
+			model.CreateEditModel.Roles = roleVms;
 
 			return View(model);
 		}
@@ -48,11 +63,21 @@ namespace JobSystem.Mvc.Controllers
 			var roles = from UserRole s in Enum.GetValues(typeof(UserRole))
 					   select new { RoleId = (int)s, Name = s.ToString() };
 
-			var viewmodel = new UserAccountViewModel()
+			var viewmodel = new UserAccountViewModel();
+
+			var roleVms = new List<CheckboxViewModel>();
+
+			foreach (var role in roles)
 			{
-				Roles = new SelectList(roles, "RoleId", "Name")
-			};
-			
+				roleVms.Add(new CheckboxViewModel() {
+					Id = role.RoleId,
+					IsChecked = false,
+					Name = role.Name
+				});
+			}
+
+			viewmodel.Roles = roleVms;
+
 			return View(viewmodel);
 		}
 
@@ -79,12 +104,29 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Edit(Guid id)
 		{
 			var user = _userManagementService.GetById(id);
+			
+			var roles = from UserRole s in Enum.GetValues(typeof(UserRole))
+						select new { RoleId = (int)s, Name = s.ToString() };
+
+			var roleVms = new List<CheckboxViewModel>();
+
+			foreach (var role in roles)
+			{
+				roleVms.Add(new CheckboxViewModel()
+				{
+					Id = role.RoleId,
+					//IsChecked = (user.Roles[index].SomeStuff) ? true : false,
+					Name = role.Name
+				});
+			}
+
 			return PartialView("_Edit", new UserAccountEditViewModel
 				{
 					Id = user.Id,
 					EmailAddress = user.EmailAddress,
 					Name =  user.Name,
-					JobTitle = user.JobTitle
+					JobTitle = user.JobTitle,
+					Roles = roleVms
 				});
 		}
 

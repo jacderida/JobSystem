@@ -200,6 +200,7 @@
     <Compile Include="ViewModels\Quotes\QuoteItemIndexViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuotePendingListViewModel.cs" />
     <Compile Include="ViewModels\Reports\JobItemReportViewModel.cs" />
+    <Compile Include="ViewModels\Shared\CheckboxViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierIndexViewModel.cs" />
     <Compile Include="ViewModels\TestStandards\TestStandardListViewModel.cs" />

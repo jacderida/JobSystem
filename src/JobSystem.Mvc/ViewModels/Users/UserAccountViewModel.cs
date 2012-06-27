@@ -1,8 +1,7 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using JobSystem.DataModel.Entities;
 using System.Collections.Generic;
-using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
+using JobSystem.Mvc.ViewModels.Shared;
 
 namespace JobSystem.Mvc.ViewModels.Users
 {
@@ -23,7 +22,6 @@ namespace JobSystem.Mvc.ViewModels.Users
 		[Required]
 		public string JobTitle { get; set; }
 		[Display(Name = "Role")]
-		public IEnumerable<SelectListItem> Roles { get; set; }
-		public int RoleId { get; set; }
+		public List<CheckboxViewModel> Roles { get; set; }
 	}
 }

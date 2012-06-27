@@ -29,6 +29,17 @@
 			@Html.EditorFor(model => model.JobTitle)
 			@Html.ValidationMessageFor(model => model.JobTitle)
 		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Roles)
+		</div>
+		<div class="editor-field">
+		@for (var i = 0; i < Model.Roles.Count();i++ )
+		{
+			@Html.HiddenFor(it => Model.Roles[i].Id)
+			@Html.CheckBoxFor(it => Model.Roles[i].IsChecked)
+			@Html.LabelFor(it => Model.Roles[i].IsChecked, Model.Roles[i].Name)<br />
+		}
+		</div>
 	</fieldset>
 	<div class="buttons-row">
 		<input type="submit" class="primary-action" value="Save"/>
