@@ -1,0 +1,44 @@
+﻿@model List<JobSystem.Mvc.ViewModels.BankDetails.BankDetailsIndexViewModel>
+@{
+    ViewBag.Title = "Bank Details List";
+}
+
+@Html.ActionLink("Create", "Create", null, new { @class = "primary-action" })
+
+@if (Model.Any()) {
+	<table>
+		<tr>
+			<th>Short Name</th>
+			<th>AccountNo</th>
+			<th>IBAN</th>
+			<th>Name</th>
+			<th>Sort Code</th>
+			<th>Address</th>
+			<th></th>
+		</tr>
+	@foreach (var item in Model)
+	 {
+			<tr>
+				<td>
+					@item.ShortName
+				</td>
+				<td>
+					@item.AccountNo
+				</td>
+				<td>
+					@item.Iban
+				</td>
+				<td>
+					@item.Name
+				</td>
+				<td>
+					@item.SortCode
+				</td>
+				<td>
+					@item.Address1
+				</td>
+				<td>@Html.ActionLink("Edit", "Edit")</td>
+			</tr>
+	 }
+	</table>
+}
