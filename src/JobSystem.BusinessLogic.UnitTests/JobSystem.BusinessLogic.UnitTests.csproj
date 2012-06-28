@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttachmentServiceTests.cs" />
+    <Compile Include="BankDetailsServiceTests.cs" />
     <Compile Include="CertificateServiceTests.cs" />
     <Compile Include="CompanyDetailsTests.cs" />
     <Compile Include="ConsignmentItemTests.cs" />

@@ -5,12 +5,12 @@ using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework;
+using JobSystem.Resources.TestStandards;
+using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
+using JobSystem.TestHelpers.RepositoryHelpers;
 using NUnit.Framework;
 using Rhino.Mocks;
-using JobSystem.TestHelpers;
-using JobSystem.Resources.TestStandards;
-using JobSystem.TestHelpers.RepositoryHelpers;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {

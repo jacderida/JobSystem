@@ -39,7 +39,7 @@ namespace JobSystem.Mvc.Controllers
 			model.CreateEditModel = new UserAccountViewModel();
 
 			var roles = from UserRole s in Enum.GetValues(typeof(UserRole))
-			           select new { RoleId = (int)s, Name = s.ToString() };
+						select new { RoleId = (int)s, Name = s.ToString() };
 
 			var roleVms = new List<CheckboxViewModel>();
 
@@ -60,24 +60,22 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult Create()
 		{
-			var roles = from UserRole s in Enum.GetValues(typeof(UserRole))
-					   select new { RoleId = (int)s, Name = s.ToString() };
-
+			var roles =
+				from UserRole s in Enum.GetValues(typeof(UserRole))
+				select new { RoleId = (int)s, Name = s.ToString() };
 			var viewmodel = new UserAccountViewModel();
-
 			var roleVms = new List<CheckboxViewModel>();
-
 			foreach (var role in roles)
 			{
-				roleVms.Add(new CheckboxViewModel() {
-					Id = role.RoleId,
-					IsChecked = false,
-					Name = role.Name
-				});
+				if (role.Name != "None")
+					roleVms.Add(new CheckboxViewModel
+					{
+						Id = role.RoleId,
+						IsChecked = false,
+						Name = role.Name
+					});
 			}
-
 			viewmodel.Roles = roleVms;
-
 			return View(viewmodel);
 		}
 
@@ -90,7 +88,8 @@ namespace JobSystem.Mvc.Controllers
 				try
 				{
 					var id = Guid.NewGuid();
-					_userManagementService.Create(id, viewModel.Name, viewModel.EmailAddress, viewModel.Password, viewModel.JobTitle, UserRole.Member);
+					var roles = GetRoles(viewModel);
+					_userManagementService.Create(id, viewModel.Name, viewModel.EmailAddress, viewModel.Password, viewModel.JobTitle, roles);
 					return RedirectToAction("Index");
 				}
 				catch (DomainValidationException dex)
@@ -101,10 +100,44 @@ namespace JobSystem.Mvc.Controllers
 			return View(viewModel);
 		}
 
+		private UserRole GetRoles(UserAccountViewModel viewModel)
+		{
+			var roles = UserRole.Member;
+			foreach (var checklist in viewModel.Roles)
+			{
+				switch (checklist.Id)
+				{
+					case (int)UserRole.Admin:
+						if (checklist.IsChecked)
+							roles |= UserRole.Admin;
+						break;
+					case (int)UserRole.Manager:
+						if (checklist.IsChecked)
+							roles |= UserRole.Manager;
+						break;
+					case (int)UserRole.JobApprover:
+						if (checklist.IsChecked)
+							roles |= UserRole.JobApprover;
+						break;
+					case (int)UserRole.OrderApprover:
+						if (checklist.IsChecked)
+							roles |= UserRole.OrderApprover;
+						break;
+					case (int)UserRole.Public:
+						if (checklist.IsChecked)
+							roles |= UserRole.Public;
+						break;
+					default:
+						break;
+				}
+			}
+			return roles;
+		}
+
 		public ActionResult Edit(Guid id)
 		{
 			var user = _userManagementService.GetById(id);
-			
+
 			var roles = from UserRole s in Enum.GetValues(typeof(UserRole))
 						select new { RoleId = (int)s, Name = s.ToString() };
 
@@ -124,7 +157,7 @@ namespace JobSystem.Mvc.Controllers
 				{
 					Id = user.Id,
 					EmailAddress = user.EmailAddress,
-					Name =  user.Name,
+					Name = user.Name,
 					JobTitle = user.JobTitle,
 					Roles = roleVms
 				});
