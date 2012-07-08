@@ -15,13 +15,15 @@ namespace JobSystem.Mvc.Controllers
 {
 	public class OrderController : Controller
 	{
+		private readonly CompanyDetailsService _companyDetailsService;
 		private readonly OrderService _orderService;
 		private readonly OrderItemService _orderItemService;
 		private readonly CurrencyService _currencyService;
 		private readonly ListItemService _listItemService;
 
-		public OrderController(OrderService orderService, OrderItemService orderItemService, CurrencyService currencyService, ListItemService listItemService)
+		public OrderController(CompanyDetailsService companyDetailsService, OrderService orderService, OrderItemService orderItemService, CurrencyService currencyService, ListItemService listItemService)
 		{
+			_companyDetailsService = companyDetailsService;
 			_orderService = orderService;
 			_orderItemService = orderItemService;
 			_listItemService = listItemService;
@@ -114,6 +116,7 @@ namespace JobSystem.Mvc.Controllers
 			var viewmodel = new OrderCreateViewModel()
 			{
 				JobItemId = Guid.Empty,
+				CurrencyId = _companyDetailsService.GetCompany().DefaultCurrency.Id,
 				Currencies = _currencyService.GetCurrencies().ToSelectList()
 			};
 			return View(viewmodel);

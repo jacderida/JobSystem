@@ -1,23 +1,25 @@
-﻿using System.Web.Mvc;
-using JobSystem.BusinessLogic.Services;
-using JobSystem.Mvc.ViewModels.BankDetails;
+﻿using System;
 using System.Collections.Generic;
-using JobSystem.DataAccess.NHibernate.Web;
-using JobSystem.DataAccess.NHibernate;
-using System;
+using System.Web.Mvc;
+using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
+using JobSystem.DataAccess.NHibernate.Web;
+using JobSystem.Mvc.Core.UIValidation;
+using JobSystem.Mvc.ViewModels.BankDetails;
 
 namespace JobSystem.Mvc.Controllers
 {
 	public class BankDetailsController : Controller
 	{
+		private readonly BankDetailsService _bankDetailsService;
 		private readonly CompanyDetailsService _companyDetailsService;
 		private readonly CurrencyService _currencyService;
 		private readonly ListItemService _listItemService;
 
 		public BankDetailsController(
-			CompanyDetailsService companyDetailsService, CurrencyService currencyService, ListItemService listItemService)
+			BankDetailsService bankDetailsService, CompanyDetailsService companyDetailsService, CurrencyService currencyService, ListItemService listItemService)
 		{
+			_bankDetailsService = bankDetailsService;
 			_currencyService = currencyService;
 			_companyDetailsService = companyDetailsService;
 			_listItemService = listItemService;
@@ -26,12 +28,11 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Index()
 		{
 			var banks = _companyDetailsService.GetBankDetails();
-
-			List<BankDetailsIndexViewModel> viewmodels = new List<BankDetailsIndexViewModel>();
-
+			var viewmodels = new List<BankDetailsIndexViewModel>();
 			foreach (var bank in banks)
 			{
-				viewmodels.Add(new BankDetailsIndexViewModel(){
+				viewmodels.Add(new BankDetailsIndexViewModel()
+				{
 					AccountNo = bank.AccountNo,
 					Address1 = bank.Address1,
 					Address2 = bank.Address2,
@@ -45,7 +46,6 @@ namespace JobSystem.Mvc.Controllers
 					SortCode = bank.SortCode
 				});
 			}
-
 			return View(viewmodels);
 		}
 
@@ -56,94 +56,85 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpPost]
+		[Transaction]
 		public ActionResult Create(BankDetailsCreateViewModel viewModel)
 		{
-			//if (ModelState.IsValid)
-			//{
-			//    var transaction = NHibernateSession.Current.BeginTransaction();
-			//    try
-			//    {
-			//        var id = Guid.NewGuid();
-			//        _bankDetailsService.Create(id, 
-			//            viewModel.AccountNo, 
-			//            viewModel.Address1, 
-			//            viewModel.Address2, 
-			//            viewModel.Address3, 
-			//            viewModel.Address4, 
-			//            viewModel.Address5, 
-			//            viewModel.Iban, 
-			//            viewModel.Name,
-			//            viewModel.ShortName);
-			//        transaction.Commit();
-			//        return RedirectToAction("Index");
-			//    }
-			//    catch (DomainValidationException dex)
-			//    {
-			//        transaction.Commit();
-			//        ModelState.UpdateFromDomain(dex.Result);
-			//    }
-			//    finally
-			//    {
-			//        transaction.Dispose();
-			//    }
-			//}
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					var id = Guid.NewGuid();
+					_bankDetailsService.Create(
+						id,
+						viewModel.Name,
+						viewModel.ShortName,
+						viewModel.AccountNo,
+						viewModel.SortCode,
+						viewModel.Address1,
+						viewModel.Address2,
+						viewModel.Address3,
+						viewModel.Address4,
+						viewModel.Address5,
+						viewModel.Iban);
+					return RedirectToAction("Index");
+				}
+				catch (DomainValidationException dex)
+				{
+					ModelState.UpdateFromDomain(dex.Result);
+				}
+			}
 			return View();
 		}
 
 		[HttpGet]
 		public ActionResult Edit(Guid id)
 		{
-			//var bank = _bankService.GetBank(id);
-
-			//var viewmodel = new BankDetailsCreateViewModel()
-			//{
-			//    AccountNo = bank.AccountNo,
-			//        Address1 = bank.Address1,
-			//        Address2 = bank.Address2,
-			//        Address3 = bank.Address3,
-			//        Address4 = bank.Address4,
-			//        Address5 = bank.Address5,
-			//        Iban = bank.Iban,
-			//        Id = bank.Id,
-			//        Name = bank.Name,
-			//        ShortName = bank.ShortName,
-			//        SortCode = bank.SortCode
-			//}
-			return View();
+			var bankDetails = _bankDetailsService.GetById(id);
+			var viewmodel = new BankDetailsCreateViewModel
+			{
+				Id = bankDetails.Id,
+				AccountNo = bankDetails.AccountNo,
+				Address1 = bankDetails.Address1,
+				Address2 = bankDetails.Address2,
+				Address3 = bankDetails.Address3,
+				Address4 = bankDetails.Address4,
+				Address5 = bankDetails.Address5,
+				Iban = bankDetails.Iban,
+				Name = bankDetails.Name,
+				ShortName = bankDetails.ShortName,
+				SortCode = bankDetails.SortCode
+			};
+			return View(bankDetails);
 		}
 
 		[HttpPost]
+		[Transaction]
 		public ActionResult Edit(BankDetailsCreateViewModel viewModel)
 		{
-			//if (ModelState.IsValid)
-			//{
-			//    var transaction = NHibernateSession.Current.BeginTransaction();
-			//    try
-			//    {
-			//        _bankDetailsService.Edit(viewModel.Id, 
-			//            viewModel.AccountNo, 
-			//            viewModel.Address1, 
-			//            viewModel.Address2, 
-			//            viewModel.Address3, 
-			//            viewModel.Address4, 
-			//            viewModel.Address5, 
-			//            viewModel.Iban, 
-			//            viewModel.Name,
-			//            viewModel.ShortName);
-			//        transaction.Commit();
-			//        return RedirectToAction("Index");
-			//    }
-			//    catch (DomainValidationException dex)
-			//    {
-			//        transaction.Commit();
-			//        ModelState.UpdateFromDomain(dex.Result);
-			//    }
-			//    finally
-			//    {
-			//        transaction.Dispose();
-			//    }
-			//}
-			return View();
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					_bankDetailsService.Edit(
+						viewModel.Id,
+						viewModel.Name,
+						viewModel.ShortName,
+						viewModel.AccountNo,
+						viewModel.SortCode,
+						viewModel.Address1,
+						viewModel.Address2,
+						viewModel.Address3,
+						viewModel.Address4,
+						viewModel.Address5,
+						viewModel.Iban);
+					return RedirectToAction("Index");
+				}
+				catch (DomainValidationException dex)
+				{
+					ModelState.UpdateFromDomain(dex.Result);
+				}
+			}
+			return View(viewModel);
 		}
 	}
 }

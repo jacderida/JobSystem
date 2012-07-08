@@ -60,6 +60,7 @@
     <Compile Include="IoC\ServiceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AttachmentService.cs" />
+    <Compile Include="Services\BankDetailsService.cs" />
     <Compile Include="Services\CertificateService.cs" />
     <Compile Include="Services\CompanyDetailsService.cs" />
     <Compile Include="Services\ConsignmentItemService.cs" />
