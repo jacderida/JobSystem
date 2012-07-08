@@ -44,7 +44,7 @@ namespace JobSystem.BusinessLogic.Services
 
 		public BankDetails GetById(Guid id)
 		{
-			if (CurrentUser.HasRole(UserRole.Member))
+			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(BankDetailsMessages.InsufficientSecurityClearance);
 			return _bankDetailsRepository.GetById(id);
 		}

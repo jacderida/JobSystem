@@ -37,7 +37,7 @@
 				<td>
 					@item.Address1
 				</td>
-				<td>@Html.ActionLink("Edit", "Edit")</td>
+				<td>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</td>
 			</tr>
 	 }
 	</table>

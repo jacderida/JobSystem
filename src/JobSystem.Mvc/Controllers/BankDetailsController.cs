@@ -104,7 +104,7 @@ namespace JobSystem.Mvc.Controllers
 				ShortName = bankDetails.ShortName,
 				SortCode = bankDetails.SortCode
 			};
-			return View(bankDetails);
+			return View(viewmodel);
 		}
 
 		[HttpPost]
