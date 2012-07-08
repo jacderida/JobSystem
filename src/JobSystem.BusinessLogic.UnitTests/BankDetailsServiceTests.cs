@@ -411,8 +411,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(BankDetailsMessages.IbanTooLarge));
 		}
 
-		#endregion
-
 		private void Create(
 			Guid id, string name, string shortName, string accountNo, string sortCode, string address1, string address2, string address3, string address4, string address5, string iban)
 		{
@@ -425,5 +423,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_domainValidationException = dex;
 			}
 		}
+
+		#endregion
+
 	}
 }

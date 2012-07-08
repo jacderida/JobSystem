@@ -129,6 +129,9 @@
   <data name="IbanTooLarge" xml:space="preserve">
     <value>The IBAN cannot exceed 50 characters</value>
   </data>
+  <data name="InsufficientSecurityClearance" xml:space="preserve">
+    <value>A member role is required for this operation</value>
+  </data>
   <data name="NameRequired" xml:space="preserve">
     <value>A name is required for the bank account</value>
   </data>

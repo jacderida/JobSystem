@@ -97,6 +97,15 @@ namespace JobSystem.Resources.CompanyDetails {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A member role is required for this operation.
+        /// </summary>
+        public static string InsufficientSecurityClearance {
+            get {
+                return ResourceManager.GetString("InsufficientSecurityClearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A name is required for the bank account.
         /// </summary>
         public static string NameRequired {
