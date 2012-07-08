@@ -525,7 +525,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.TotalTextBox.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Right;
 			this.TotalTextBox.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
 			this.TotalTextBox.Value = "= Sum(Fields.Calibration+Fields.Repair+Fields.Carriage+Fields.Parts+Fields.Invest" +
-    "igation)";
+				"igation)";
 			// 
 			// textBox36
 			// 
@@ -889,10 +889,10 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.reportFooter,
             this.detail});
 			this.Name = "TelerikQuoteReport";
-			this.PageSettings.Margins.Bottom = Telerik.Reporting.Drawing.Unit.Mm(25.399999618530273D);
-			this.PageSettings.Margins.Left = Telerik.Reporting.Drawing.Unit.Mm(25.399999618530273D);
-			this.PageSettings.Margins.Right = Telerik.Reporting.Drawing.Unit.Mm(25.399999618530273D);
-			this.PageSettings.Margins.Top = Telerik.Reporting.Drawing.Unit.Mm(25.399999618530273D);
+			this.PageSettings.Margins.Bottom = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
+			this.PageSettings.Margins.Left = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
+			this.PageSettings.Margins.Right = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
+			this.PageSettings.Margins.Top = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
 			this.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.A4;
 			this.Style.BackgroundColor = System.Drawing.Color.White;
 			styleRule1.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
