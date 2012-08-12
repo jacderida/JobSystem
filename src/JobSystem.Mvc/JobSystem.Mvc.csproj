@@ -226,7 +226,6 @@
   <ItemGroup>
     <Content Include="Content\chosen.css" />
     <Content Include="Content\fileuploader.css" />
-    <Content Include="Content\images\intertek.jpg" />
     <Content Include="Content\images\intertek_logon.gif" />
     <Content Include="Content\images\nav_bg.png" />
     <Content Include="Content\images\white_carbon.png" />
