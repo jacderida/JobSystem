@@ -25,9 +25,7 @@ namespace Saturn.Configuration.Service.Data
 {
 	public class SimpleDbConfigurationRepository : IConfigurationRepository
 	{
-
-		private const int CacheExpiryInMinutes = 5;
-		private const string ConfigurationDomainName = "SaturnConfigurations";
+		private const string ConfigurationDomainName = "JobSystemConfigurations";
 		private AmazonSimpleDB _db;
 
 		private AmazonSimpleDB SimpleDb
