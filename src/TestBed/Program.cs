@@ -17,7 +17,6 @@ using JobSystem.DataModel.Repositories;
 using JobSystem.DbWireup;
 using JobSystem.Framework.Messaging;
 using JobSystem.Framework.Security;
-using JobSystem.Queueing.Msmq;
 using NHibernate.Connection;
 
 namespace TestBed
@@ -28,8 +27,8 @@ namespace TestBed
 		{
 			CreateDatabase();
 			InitialiseNHibernateSessions();
-			
-			var queueDispatcher = new MsmqQueueGateway<IMessage>("", "");
+
+			var queueDispatcher = new NullQueueDispatcher();
 			var initialUserContext = new TestUserContext(TestUserContext.CreateAdminUser());
 			var userManagementService = new UserManagementService(initialUserContext, new UserAccountRepository(), new CryptographicService(), queueDispatcher);
 			var adminUser = userManagementService.GetUsers().Where(u => u.EmailAddress == "admin@intertek.com").Single();

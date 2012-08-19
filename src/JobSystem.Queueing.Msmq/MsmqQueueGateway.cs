@@ -13,19 +13,14 @@ namespace JobSystem.Queueing.Msmq
 	public class MsmqQueueGateway<T> : IQueueListener<T>, IQueueDispatcher<T> where T : IMessage
 	{
 		private readonly string _queuePath;
-		private readonly string _failedQueuePath;
 
 		private MessageQueue _queue;
 		private readonly object _lockObject = new object();
 		private Func<T, IEnumerable<T>> _callback;
 
-		/// <summary>
-		/// Initialises an instance of the QueueGateway class.
-		/// </summary>
-		public MsmqQueueGateway(string queuePath, string failedQueuePath)
+		public MsmqQueueGateway(string queuePath)
 		{
 			_queuePath = queuePath;
-			_failedQueuePath = failedQueuePath;
 		}
 
 		/// <summary>
@@ -71,15 +66,6 @@ namespace JobSystem.Queueing.Msmq
 			if (@event.DeliveryAttempts < int.Parse(ConfigurationManager.AppSettings["MaxDeliveryAttempts"]))
 			{
 				using (var queue = new MessageQueue(_queuePath))
-				{
-					queue.Formatter = new BinaryMessageFormatter();
-					queue.Send(msmqMessage);
-				}
-			}
-			else
-			{
-				@event.DeliveryAttempts = 0;
-				using (var queue = new MessageQueue(_failedQueuePath))
 				{
 					queue.Formatter = new BinaryMessageFormatter();
 					queue.Send(msmqMessage);

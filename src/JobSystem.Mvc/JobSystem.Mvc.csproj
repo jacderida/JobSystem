@@ -376,10 +376,6 @@
       <Project>{904034C0-4B56-4A2E-82BA-5D4B84195D99}</Project>
       <Name>JobSystem.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JobSystem.Queueing.Msmq\JobSystem.Queueing.Msmq.csproj">
-      <Project>{BDCF5B98-B407-4E13-974B-FBB19010C4F6}</Project>
-      <Name>JobSystem.Queueing.Msmq</Name>
-    </ProjectReference>
     <ProjectReference Include="..\JobSystem.Reporting\JobSystem.Reporting.csproj">
       <Project>{1BF82DDE-CF7D-48EC-B00E-29991FC2A14D}</Project>
       <Name>JobSystem.Reporting</Name>

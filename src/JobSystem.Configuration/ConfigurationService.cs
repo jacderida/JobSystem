@@ -1,4 +1,9 @@
-﻿namespace JobSystem.Configuration
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using JobSystem.Framework.Configuration;
+
+namespace JobSystem.Configuration
 {
 	/// <summary>
 	/// Service methods for accessing configuration values for tennants.
@@ -24,18 +29,42 @@
 			throw new HostConfigurationNotFoundException(hostname);
 		}
 
-		public string GetConnectionString(string hostName, string connectionStringName)
+		public ConnectionStringSettings GetConnectionString(string hostName, string connectionStringName)
 		{
 			if (_configurationRepository.ConfigurationExists(hostName))
 			{
 				var result =
-					_configurationRepository.GetConfigItem(hostName, connectionStringName) ??
-						_configurationRepository.GetConfigItem(ServiceConstants.CommonHostName, connectionStringName);
+					_configurationRepository.GetConfigItem(hostName, connectionStringName) ?? _configurationRepository.GetConfigItem(ServiceConstants.CommonHostName, connectionStringName);
 				if (result == null)
 					throw new ConnectionStringNotFoundException(hostName, connectionStringName);
-				return result;
+				return new ConnectionStringSettings(connectionStringName, result);
 			}
 			throw new HostConfigurationNotFoundException(hostName);
+		}
+
+		public List<string> GetHostList()
+		{
+			throw new NotImplementedException();
+		}
+
+		public Dictionary<string, string> GetHostConfiguration(string hostname)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public void Put(string hostname, string itemName, string value)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public void PutConnectionString(string hostname, System.Configuration.ConnectionStringSettings connectionStringSettings)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public void PutHostConfig(string hostname, System.Collections.Generic.Dictionary<string, string> configuration)
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }

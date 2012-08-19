@@ -13,23 +13,13 @@ namespace JobSystem.Mvc.Core
 		private const string CurrentUserKey = "current.user";
 		private readonly IUserAccountRepository _repository;
 		private readonly HttpContextBase _httpContext;
-		/// <summary>
-		/// Initializes a new instance of the <see cref="WebUserContext"/> class.
-		/// </summary>
-		/// <param name="repository">The user account repository used to fetch the account</param>
-		/// <param name="httpContext">The HTTP context.</param>
+
 		public WebUserContext(IUserAccountRepository repository, HttpContextBase httpContext)
 		{
 			_httpContext = httpContext;
 			_repository = repository;
 		}
 
-		#region IUserContext Members
-
-		/// <summary>
-		/// The user currently logged in. 
-		/// </summary>
-		/// <returns>The user account of the user currently logged ins</returns>
 		public UserAccount GetCurrentUser()
 		{
 			UserAccount user = CurrentUser;
@@ -41,8 +31,6 @@ namespace JobSystem.Mvc.Core
 			}
 			return user;
 		}
-
-		#endregion
 
 		private UserAccount GetUserAccountFromPrincipal()
 		{

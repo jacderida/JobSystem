@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using Autofac;
 using Autofac.Integration.Web;
 using JobSystem.DataAccess.NHibernate;
@@ -18,17 +19,11 @@ namespace JobSystem.WebUI.Configuration
 	/// </summary>
 	public class RequestContextConnectionProvider : ContextConnectionProviderBase
 	{
-		#region Methods
-
-		protected override IAppConfig GetConfigForContext()
+		protected override ITenantConfig GetConfigForContext()
 		{
-			// Get the Autofac container provider from which we'll retrieve an IAppConfig instance for the current request.
-			// This assumes that we are being used within an MVC app using Autofac as the IoC container.
 			var containerProviderAccessor = HttpContext.Current.ApplicationInstance as IContainerProviderAccessor;
 			if (containerProviderAccessor == null)
-				throw new System.InvalidOperationException("Cannot get connection string from configuration, current application is not an IContainerProviderAccessor");
-
-			// Get the scoped container for the current request.
+				throw new InvalidOperationException("Cannot get connection string from configuration, current application is not an IContainerProviderAccessor");
 			var lifetimeScope = containerProviderAccessor.ContainerProvider.RequestLifetime;
 			if (lifetimeScope == null)
 			{
@@ -36,13 +31,10 @@ namespace JobSystem.WebUI.Configuration
 				// we use the parent application container.
 				lifetimeScope = containerProviderAccessor.ContainerProvider.ApplicationContainer;
 			}
-
 			if (lifetimeScope == null)
 				throw new System.InvalidOperationException("Failed to get configuration from request or application container.");
-			var appConfig = lifetimeScope.Resolve<IAppConfig>();
+			var appConfig = lifetimeScope.Resolve<ITenantConfig>();
 			return appConfig;
 		}
-
-		#endregion Methods
 	}
 }

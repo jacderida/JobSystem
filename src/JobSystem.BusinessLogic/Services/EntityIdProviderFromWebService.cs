@@ -1,21 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Net;
 using JobSystem.DataModel;
 using JobSystem.Framework.Configuration;
-using System;
-using System.Configuration;
 
 namespace JobSystem.BusinessLogic.Services
 {
 	public class EntityIdProviderFromWebService : IEntityIdProvider
 	{
-		private IAppConfig _appConfig;
 		private IConfigDomainProvider _configDomainProvider;
 
-		public EntityIdProviderFromWebService(IAppConfig appConfig, IConfigDomainProvider configDomainProvider)
+		public EntityIdProviderFromWebService(IConfigDomainProvider configDomainProvider)
 		{
-			_appConfig = appConfig;
 			_configDomainProvider = configDomainProvider;
 		}
 
@@ -41,13 +37,13 @@ namespace JobSystem.BusinessLogic.Services
 
 		protected virtual string GetUrlForDomain(string domain)
 		{
-			var protocol = _appConfig.UseHttps ? "https://" : "http://";
+			var protocol = Config.UseHttps() ? "https://" : "http://";
 			var lower = domain.ToLowerInvariant();
 			if (lower.Contains("localhost:"))
 				return String.Format("{0}{1}/", protocol, lower);
 			else if (lower == "localhost")
 				return String.Format("{0}{1}/JobSystem.Mvc/", protocol, lower);
-			return String.Format("{0}{1}/JobSystem.Mvc/", protocol, lower);		// TODO: REMOVE THIS!
+			return String.Format("{0}{1}/", protocol, lower);
 		}
 	}
 }

@@ -49,7 +49,6 @@
     <Compile Include="CompanyDetailsServiceFactory.cs" />
     <Compile Include="ConsignmentItemServiceFactory.cs" />
     <Compile Include="ConsignmentServiceFactory.cs" />
-    <Compile Include="Context\TestAppConfig.cs" />
     <Compile Include="Context\TestUserContext.cs" />
     <Compile Include="DeliveryItemServiceFactory.cs" />
     <Compile Include="DeliveryServiceFactory.cs" />

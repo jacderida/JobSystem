@@ -36,12 +36,7 @@ namespace JobSystem.DataAccess.NHibernate
 		/// </summary>
 		public static string GetInitialConnectionString()
 		{
-			var csb = new SqlConnectionStringBuilder();
-			csb.DataSource = System.Configuration.ConfigurationManager.AppSettings["DatabaseServer"];
-			csb.InitialCatalog = System.Configuration.ConfigurationManager.AppSettings["DatabaseCatalogName"];
-			csb.UserID = System.Configuration.ConfigurationManager.AppSettings["DatabaseUsername"];
-			csb.Password = System.Configuration.ConfigurationManager.AppSettings["DatabasePassword"];
-			return csb.ToString();
+			return System.Configuration.ConfigurationManager.ConnectionStrings["JobSystem"].ConnectionString;
 		}
 
 		/// <summary>
