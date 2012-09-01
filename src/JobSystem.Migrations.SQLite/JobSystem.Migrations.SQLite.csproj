@@ -65,7 +65,7 @@
   <ItemGroup>
     <Reference Include="FluentMigrator, Version=0.9.0.42, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\fluentmigrator-x64\FluentMigrator.dll</HintPath>
+      <HintPath>..\..\lib\fluentmigrator\FluentMigrator.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
