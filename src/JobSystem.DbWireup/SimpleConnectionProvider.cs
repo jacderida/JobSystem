@@ -12,7 +12,7 @@ namespace JobSystem.DbWireup
 		{
 			get
 			{
-				var csb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["JobSystemDatabase"].ConnectionString);
+				var csb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["JobSystem"].ConnectionString);
 				csb.InitialCatalog = CatalogName;
 				return csb.ToString();
 			}
