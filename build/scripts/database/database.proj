@@ -16,6 +16,13 @@
 			Targets="CreateJobSystemDatabase" />
 	</Target>
 
+	<Target Name="DoRunMigrations" DependsOnTargets="BuildMigrations" >
+		<MSBuild
+			Projects="..\database.proj"
+			Properties="DatabaseServer=$(DevelopmentDatabaseServer);DatabaseName=$(DevelopmentDatabaseName);DatabaseUserName=$(DevelopmentDatabaseUserName);DatabasePassword=$(DevelopmentDatabasePassword)"
+			Targets="RunMigrations" />
+	</Target>
+
 	<Target Name="CreateDevelopmentJobSystemDatabaseWithDefaultUser" DependsOnTargets="BuildMigrations" >
 		<CallTarget Targets="BuildCustomTasksAssembly" />
 		<MSBuild

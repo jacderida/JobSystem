@@ -11,6 +11,7 @@
 @if (Model.Any()) {
 	<table>
 		<tr>
+			<th>Delivery No.</th>
 			<th>FAO</th>
 			<th>Created By</th>
 			<th>Date Created</th>
@@ -20,6 +21,9 @@
 	@foreach (var item in Model)
 	 {
 			<tr>
+				<td>
+					@item.DeliveryNo
+				</td>
 				<td>
 					@item.Fao
 				</td>

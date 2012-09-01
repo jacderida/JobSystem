@@ -47,12 +47,12 @@ namespace JobSystem.Mvc.Controllers
 				i => new DeliveryIndexViewModel
 				{
 					Id = i.Id,
+					DeliveryNo = i.DeliveryNoteNumber,
 					CustomerName = i.Customer.Name,
 					CreatedBy = i.CreatedBy.Name,
 					DateCreated = i.DateCreated.ToLongDateString() + ' ' + i.DateCreated.ToShortTimeString(),
 					Fao = i.Fao
 				}).ToList();
-
 			foreach (var item in items)
 			{
 				var deliveryItems = _deliveryItemService.GetDeliveryItems(item.Id);

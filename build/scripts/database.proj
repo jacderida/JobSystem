@@ -47,4 +47,15 @@
 			Properties="MigrateDBConnection=$(ConnectionString);MigrateAssembly=$(MigrationsAssembly)"
 			Targets="Migrate" />
 	</Target>
+
+	<Target Name="RunMigrations">
+		<PropertyGroup>
+			<ConnectionString>Server=$(DatabaseServer)%3B Initial Catalog=$(DatabaseName)%3BUser Id=$(DatabaseUsername)%3B password=$(DatabasePassword)</ConnectionString>
+			<MigrationsAssembly>$(ProjectRunDirectory)\JobSystem.Migrations.dll</MigrationsAssembly>
+		</PropertyGroup>
+		<MSBuild
+			Projects="$(ProjectBuildDirectory)\scripts\database\migrations\FluentMigrator.targets"
+			Properties="MigrateDBConnection=$(ConnectionString);MigrateAssembly=$(MigrationsAssembly)"
+			Targets="Migrate" />
+	</Target>
 </Project>

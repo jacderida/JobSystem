@@ -89,6 +89,12 @@ namespace JobSystem.Mvc.ViewModels.Customers
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		[Display(Name = "Post Code")]
 		public string DeliveryAddress5 { get; set; }
+		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Additional Line 1")]
+		public string DeliveryAddress6 { get; set; }
+		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		[Display(Name = "Additional Line 2")]
+		public string DeliveryAddress7 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		[Display(Name = "Telephone")]
 		public string DeliveryTelephone { get; set; }
@@ -148,6 +154,8 @@ namespace JobSystem.Mvc.ViewModels.Customers
 				DeliveryAddress3 = !String.IsNullOrEmpty(customer.DeliveryAddress3) ? customer.DeliveryAddress3 : String.Empty,
 				DeliveryAddress4 = !String.IsNullOrEmpty(customer.DeliveryAddress4) ? customer.DeliveryAddress4 : String.Empty,
 				DeliveryAddress5 = !String.IsNullOrEmpty(customer.DeliveryAddress5) ? customer.DeliveryAddress5 : String.Empty,
+				DeliveryAddress6 = !String.IsNullOrEmpty(customer.DeliveryAddress6) ? customer.DeliveryAddress6 : String.Empty,
+				DeliveryAddress7 = !String.IsNullOrEmpty(customer.DeliveryAddress7) ? customer.DeliveryAddress7 : String.Empty,
 				DeliveryTelephone = !String.IsNullOrEmpty(customer.DeliveryTelephone) ? customer.DeliveryTelephone : String.Empty,
 				DeliveryFax = !String.IsNullOrEmpty(customer.DeliveryFax) ? customer.DeliveryFax : String.Empty,
 				DeliveryEmail = !String.IsNullOrEmpty(customer.DeliveryEmail) ? customer.DeliveryEmail : String.Empty,

@@ -61,10 +61,14 @@ namespace JobSystem.Mvc.Controllers
 						Address.GetAddressFromLineDetails(viewModel.Address1, viewModel.Address2, viewModel.Address3, viewModel.Address4, viewModel.Address5),
 						ContactInfo.GetContactInfoFromDetails(viewModel.Telephone, viewModel.Fax, viewModel.Email, viewModel.Contact1, viewModel.Contact2),
 						viewModel.InvoiceTitle,
-						viewModel.InvoiceAddressSameAsMain ? Address.GetAddressFromLineDetails(viewModel.Address1, viewModel.Address2, viewModel.Address3, viewModel.Address4, viewModel.Address5) : Address.GetAddressFromLineDetails(viewModel.InvoiceAddress1, viewModel.InvoiceAddress2, viewModel.InvoiceAddress3, viewModel.InvoiceAddress4, viewModel.InvoiceAddress5),
+						viewModel.InvoiceAddressSameAsMain ?
+							Address.GetAddressFromLineDetails(viewModel.Address1, viewModel.Address2, viewModel.Address3, viewModel.Address4, viewModel.Address5) :
+							Address.GetAddressFromLineDetails(viewModel.InvoiceAddress1, viewModel.InvoiceAddress2, viewModel.InvoiceAddress3, viewModel.InvoiceAddress4, viewModel.InvoiceAddress5),
 						ContactInfo.GetContactInfoFromDetails(viewModel.SalesTelephone, viewModel.SalesFax, viewModel.SalesEmail, viewModel.SalesContact1, viewModel.SalesContact2),
 						viewModel.DeliveryTitle,
-						viewModel.DeliveryAddressSameAsMain ? Address.GetAddressFromLineDetails(viewModel.Address1, viewModel.Address2, viewModel.Address3, viewModel.Address4, viewModel.Address5) : Address.GetAddressFromLineDetails(viewModel.DeliveryAddress1, viewModel.DeliveryAddress2, viewModel.DeliveryAddress3, viewModel.DeliveryAddress4, viewModel.DeliveryAddress5),
+						viewModel.DeliveryAddressSameAsMain ?
+							Address.GetAddressFromLineDetails(viewModel.Address1, viewModel.Address2, viewModel.Address3, viewModel.Address4, viewModel.Address5) :
+							Address.GetDeliveryAddressFromLineDetails(viewModel.DeliveryAddress1, viewModel.DeliveryAddress2, viewModel.DeliveryAddress3, viewModel.DeliveryAddress4, viewModel.DeliveryAddress5, viewModel.DeliveryAddress6, viewModel.DeliveryAddress7),
 						ContactInfo.GetContactInfoFromDetails(viewModel.DeliveryTelephone, viewModel.DeliveryFax, viewModel.DeliveryEmail, viewModel.DeliveryContact1, viewModel.DeliveryContact2));
 					return RedirectToAction("Index");
 				}

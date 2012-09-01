@@ -66,6 +66,10 @@ namespace JobSystem.DataModel.Entities
 		public virtual string DeliveryAddress4 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string DeliveryAddress5 { get; set; }
+		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		public virtual string DeliveryAddress6 { get; set; }
+		[StringLength(50, ErrorMessageResourceName = "AddressLineTooLarge", ErrorMessageResourceType = typeof(Messages))]
+		public virtual string DeliveryAddress7 { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string DeliveryTelephone { get; set; }
 		[StringLength(50, ErrorMessageResourceName = "ContactInfoTooLarge", ErrorMessageResourceType = typeof(Messages))]

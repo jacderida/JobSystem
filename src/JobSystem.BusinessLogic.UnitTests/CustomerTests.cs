@@ -517,6 +517,36 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
+		public void Create_DeliveryAddress6GreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var customerRepositoryStub = MockRepository.GenerateMock<ICustomerRepository>();
+			customerRepositoryStub.Stub(x => x.GetByName("Gael Ltd")).Return(null);
+			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
+			var deliveryAddressDetails = GetAddressDetails("Invoicing");
+			deliveryAddressDetails.Line6 = GreaterThan256Characters;
+			CreateCustomer(
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
+				"Gael Ltd Delivery Address", deliveryAddressDetails, GetContactInfo("Delivery"));
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
+		}
+
+		[Test]
+		public void Create_DeliveryAddress7GreaterThan50Characters_DomainValidationExceptionThrown()
+		{
+			var customerRepositoryStub = MockRepository.GenerateMock<ICustomerRepository>();
+			customerRepositoryStub.Stub(x => x.GetByName("Gael Ltd")).Return(null);
+			_customerService = CustomerServiceFactory.Create(customerRepositoryStub);
+			var deliveryAddressDetails = GetAddressDetails("Invoicing");
+			deliveryAddressDetails.Line7 = GreaterThan256Characters;
+			CreateCustomer(
+				Guid.NewGuid(), "Gael Ltd", "Gael Ltd - asset line", GetAddressDetails("Trading"), GetContactInfo("Trading"),
+				"Gael Ltd Invoice Address", GetAddressDetails("Invoicing"), GetContactInfo("Invoicing"),
+				"Gael Ltd Delivery Address", deliveryAddressDetails, GetContactInfo("Delivery"));
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Customers.Messages.AddressLineTooLarge));
+		}
+
+		[Test]
 		public void Create_DeliveryTelephoneGreaterThan50Characters_DomainValidationExceptionThrown()
 		{
 			var customerRepositoryStub = MockRepository.GenerateMock<ICustomerRepository>();

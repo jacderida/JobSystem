@@ -145,6 +145,8 @@ namespace JobSystem.BusinessLogic.Services
 			customer.DeliveryAddress3 = !String.IsNullOrEmpty(deliveryAddressDetails.Line3) ? deliveryAddressDetails.Line3 : String.Empty;
 			customer.DeliveryAddress4 = !String.IsNullOrEmpty(deliveryAddressDetails.Line4) ? deliveryAddressDetails.Line4 : String.Empty;
 			customer.DeliveryAddress5 = !String.IsNullOrEmpty(deliveryAddressDetails.Line5) ? deliveryAddressDetails.Line5 : String.Empty;
+			customer.DeliveryAddress6 = !String.IsNullOrEmpty(deliveryAddressDetails.Line6) ? deliveryAddressDetails.Line6 : String.Empty;
+			customer.DeliveryAddress7 = !String.IsNullOrEmpty(deliveryAddressDetails.Line7) ? deliveryAddressDetails.Line7 : String.Empty;
 		}
 
 		private void PopulateDeliveryContactInfo(Customer customer, ContactInfo deliveryContactInfo)
