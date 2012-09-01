@@ -1,0 +1,85 @@
+﻿### Sample Deployment Config for use with the AWS Elastic Beanstalk service
+###
+### The configured KeyPair must already exist.
+###
+###   awsdeploy ElasticBeanstalkDeploymentSample.txt
+###
+
+########################
+### General Settings ###
+########################
+
+### Can be 'AWS Elastic Beanstalk', 'Elastic Beanstalk' or just ElasticBeanstalk, as here
+Template = ElasticBeanstalk
+
+### Name of the Elastic Beanstalk application to create
+Application.Name = AleaWebUI
+#Application.Description = My application in AWS Elastic Beanstalk
+
+### Region to deploy to
+Region = eu-west-1
+
+#######################################
+### Incremental Deployment Settings ###
+#######################################
+
+### If using incremental deployment, this points at a folder 
+### This setting enables incremental deployment and designates the folder where 
+### a Git repository can be created; the contents of the DeploymentPackage setting
+### will be committed to this location
+# IncrementalPushLocation = C:\Temp\VS2008App1
+
+### Points to an extracted webdeploy archive; the contents will be committed to
+### the folder specified in IncrementalPushLocation
+# DeploymentPackage = c:\mydeploymentarchive
+
+###########################################
+### Non-Incremental Deployment Settings ###
+###########################################
+
+### Application.Version is only used for non-incremental deployments
+Application.Version = v1
+
+### Points to a webdeploy deployment archive to be deployed
+DeploymentPackage = Alea.WebUI.zip
+
+### S3 bucket where the deployment materials will be stored. If this doesn't exist it will
+### be created (only needed for non-incremental deployments).
+UploadBucket = elasticbeanstalk-eu-west-1-429932257194
+
+### EC2 Keypair for logging into the instance
+KeyPair = EU-AWSKeyPair
+
+### AWS Access Key and Secret Key used to create and deploy the application instance
+AWSAccessKey = AKIAJUPUIPKPRH5NMALQ
+AWSSecretKey = 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
+
+############################
+### Environment Settings ###
+############################
+
+Environment.Name = AleaStaging
+Environment.CNAME = AleaStaging
+
+###########################################################
+### Container settings                                  ###
+###                                                     ###
+### Settings on the App Domain or for the host manager. ###
+###########################################################
+
+### Container.TargetRuntime (values 2.0 or 4.0) replaces the
+### Container.TargetV2Runtime option
+Container.TargetRuntime = 4.0
+
+Container.Enable32BitApplications = false
+Container.ApplicationHealhcheckPath = /ping/check2
+
+###
+### Additional Elastic Beanstalk Container options
+###
+
+Container.InstanceType = m1.small
+
+# Container.AmiID = 
+# Container.NotificationEmail = 
+

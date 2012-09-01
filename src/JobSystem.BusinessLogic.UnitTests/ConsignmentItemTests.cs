@@ -111,7 +111,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdate.Id)).Return(_jobItemToUpdate);
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdate.Id, 0, 0, String.Empty, ListItemType.StatusConsigned, ListItemType.WorkTypeAdministration));
+				_userContext.GetCurrentUser(), _jobItemToUpdate.Id, 0, 0, "Item consigned on CR2000", ListItemType.StatusConsigned, ListItemType.WorkTypeAdministration));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate)).IgnoreArguments();
 
 			_consignmentItemService = ConsignmentItemServiceFactory.Create(consignmentItemRepositoryMock, jobItemRepositoryMock, consignmentId, _userContext);
@@ -136,7 +136,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
 			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdate.Id)).Return(_jobItemToUpdate);
 			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
-				_userContext.GetCurrentUser(), _jobItemToUpdate.Id, 0, 0, String.Empty, ListItemType.StatusConsigned, ListItemType.WorkTypeAdministration));
+				_userContext.GetCurrentUser(), _jobItemToUpdate.Id, 0, 0, "Item consigned on CR2000", ListItemType.StatusConsigned, ListItemType.WorkTypeAdministration));
 			jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate)).IgnoreArguments();
 
 			_consignmentItemService = ConsignmentItemServiceFactory.Create(consignmentItemRepositoryMock, jobItemRepositoryMock, consignmentId, _userContext, 1);
