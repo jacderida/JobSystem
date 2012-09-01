@@ -57,7 +57,7 @@ namespace JobSystem.BusinessLogic.Services
 			};
 			jobItem.Status = _listItemRepository.GetByType(ListItemType.StatusConsigned);
 			ValidateAnnotatedObjectThrowOnFailure(consignmentItem);
-			_jobItemRepository.EmitItemHistory(CurrentUser, jobItemId, 0, 0, String.Empty, ListItemType.StatusConsigned, ListItemType.WorkTypeAdministration);
+			_jobItemRepository.EmitItemHistory(CurrentUser, jobItemId, 0, 0, String.Format("Item consigned on {0}", consignment.ConsignmentNo), ListItemType.StatusConsigned, ListItemType.WorkTypeAdministration);
 			_consignmentItemRepository.Create(consignmentItem);
 			_jobItemRepository.Update(jobItem);
 			return consignmentItem;
