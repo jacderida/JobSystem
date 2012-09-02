@@ -13,7 +13,7 @@
 Template = ElasticBeanstalk
 
 ### Name of the Elastic Beanstalk application to create
-Application.Name = AleaWebUI
+Application.Name = JobSystemRelease
 #Application.Description = My application in AWS Elastic Beanstalk
 
 ### Region to deploy to
@@ -41,25 +41,25 @@ Region = eu-west-1
 Application.Version = v1
 
 ### Points to a webdeploy deployment archive to be deployed
-DeploymentPackage = Alea.WebUI.zip
+DeploymentPackage = JobSystem.Mvc.zip
 
 ### S3 bucket where the deployment materials will be stored. If this doesn't exist it will
 ### be created (only needed for non-incremental deployments).
-UploadBucket = elasticbeanstalk-eu-west-1-429932257194
+UploadBucket = elasticbeanstalk-eu-west-1-770580977004
 
 ### EC2 Keypair for logging into the instance
 KeyPair = EU-AWSKeyPair
 
 ### AWS Access Key and Secret Key used to create and deploy the application instance
-AWSAccessKey = AKIAJUPUIPKPRH5NMALQ
-AWSSecretKey = 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
+AWSAccessKey = AKIAI3B4ZFGCXBELBWNQ
+AWSSecretKey = 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
 
 ############################
 ### Environment Settings ###
 ############################
 
-Environment.Name = AleaStaging
-Environment.CNAME = AleaStaging
+Environment.Name = JobSystemRelease 
+Environment.CNAME = JobSystemRelease
 
 ###########################################################
 ### Container settings                                  ###
