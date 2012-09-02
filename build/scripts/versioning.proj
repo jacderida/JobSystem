@@ -3,6 +3,10 @@
 	<Import Project="props\project-directory.props" />
 	<Import Project="$(MSBuildCommunityTasksTargetsPath)"/>
 
+	<UsingTask
+		TaskName="UpdateAwsVersionNumber"
+		AssemblyFile="$(ProjectCustomTasksAssemblyPath)" />
+
 	<Target Name="IncrementVersionNumber">
 		<Version VersionFile="$(ProjectVersioningDirectory)\build.number" RevisionType="Increment">
 			<Output TaskParameter="Major" PropertyName="Major" />
@@ -26,6 +30,12 @@
 			AssemblyDelaySign="false"
 			AssemblyVersion="$(ProjectVersion)"
 			AssemblyFileVersion="$(ProjectVersion)" />
+	</Target>
+
+	<Target Name="DoUpdateAwsVersionNumber">
+		<UpdateAwsVersionNumber
+			FilePath="$(ProjectBuildDirectory)\AwsReleaseConfig.txt" 
+			Version="$(ProjectVersion)" />
 	</Target>
 
 	<Target Name="PopulateVersionNumber">
