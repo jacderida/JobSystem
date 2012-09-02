@@ -9,7 +9,7 @@ using JobSystem.Framework.Security;
 using JobSystem.Mvc.Configuration;
 using JobSystem.Mvc.Core;
 using JobSystem.Storage.Jobs;
-using JobSystem.Storage.Providers.FileSystem;
+using JobSystem.Storage.Providers.S3;
 
 namespace JobSystem.Mvc.IoC
 {
@@ -27,9 +27,8 @@ namespace JobSystem.Mvc.IoC
 				.Where(t => t.Name.EndsWith("Repository"))
 				.AsImplementedInterfaces().SingleInstance();
 			builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>();
-			builder.RegisterType<HostRequestConfigDomainProvider>().As<IConfigDomainProvider>();
-			builder.RegisterType<FileSystemAttachmentStorage>().As<IJobAttachmentDataRepository>();
-
+			builder.RegisterType<HostRequestConfigDomainProvider>().As<IHostNameProvider>();
+			builder.RegisterType<S3JobAttachmentDataRepository>().As<IJobAttachmentDataRepository>();
 			if (Config.UseRemoteConfig())
 				builder.RegisterType<RemoteTenantConfig>().As<ITenantConfig>().InstancePerLifetimeScope();
 			else

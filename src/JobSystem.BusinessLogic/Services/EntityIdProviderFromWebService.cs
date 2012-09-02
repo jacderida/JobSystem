@@ -8,9 +8,9 @@ namespace JobSystem.BusinessLogic.Services
 {
 	public class EntityIdProviderFromWebService : IEntityIdProvider
 	{
-		private IConfigDomainProvider _configDomainProvider;
+		private IHostNameProvider _configDomainProvider;
 
-		public EntityIdProviderFromWebService(IConfigDomainProvider configDomainProvider)
+		public EntityIdProviderFromWebService(IHostNameProvider configDomainProvider)
 		{
 			_configDomainProvider = configDomainProvider;
 		}
@@ -18,7 +18,7 @@ namespace JobSystem.BusinessLogic.Services
 		public string GetIdFor<T>()
 		{
 			var typeName = typeof(T).ToString();
-			var domain = _configDomainProvider.GetConfigDomain();
+			var domain = _configDomainProvider.GetHostName();
 			var getIdUrl = GetUrlForDomain(domain);
 			getIdUrl = getIdUrl + @"EntityId/GetId/" + typeName;
 

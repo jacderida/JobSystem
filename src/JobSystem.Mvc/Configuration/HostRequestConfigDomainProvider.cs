@@ -3,17 +3,9 @@ using JobSystem.Framework.Configuration;
 
 namespace JobSystem.Mvc.Configuration
 {
-	/// <summary>
-	/// <see cref="IConfigDomainProvider"/> implementation that uses the host header of the current HTTP request
-	/// as the configuration domain.
-	/// </summary>
-	public class HostRequestConfigDomainProvider : IConfigDomainProvider
+	public class HostRequestConfigDomainProvider : IHostNameProvider
 	{
-		/// <summary>
-		/// Gets the configuration domain.
-		/// </summary>
-		/// <returns>current configuration domain</returns>
-		public string GetConfigDomain()
+		public string GetHostName()
 		{
 			var currentRequest = HttpContext.Current.Request;
 			if (currentRequest == null)

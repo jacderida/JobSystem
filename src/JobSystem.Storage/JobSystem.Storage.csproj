@@ -50,6 +50,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\FileSystem\FileSystemAttachmentStorage.cs" />
     <Compile Include="Providers\S3\S3ClientHelper.cs" />
+    <Compile Include="Providers\S3\S3JobAttachmentDataRepository.cs" />
+    <Compile Include="Providers\S3\S3StorageProvider.cs" />
+    <Compile Include="Providers\S3\S3Utilities.cs" />
     <Compile Include="Providers\StorageProviderNotAvailableException.cs" />
   </ItemGroup>
   <ItemGroup>
