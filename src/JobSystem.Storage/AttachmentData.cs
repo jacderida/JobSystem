@@ -1,12 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
-namespace JobSystem.DataModel.Storage
+namespace JobSystem.Storage
 {
 	public class AttachmentData
 	{
 		public Stream Content { get; set; }
 		public string ContentType { get; set; }
 		public string Filename { get; set; }
-		public System.Guid Id { get; set; }
+		public Guid Id { get; set; }
 	}
 }

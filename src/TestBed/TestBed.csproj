@@ -130,6 +130,10 @@
       <Project>{D9ABEB4E-A164-4DA4-AE77-BEC40A240BD5}</Project>
       <Name>JobSystem.Migrations</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JobSystem.Storage\JobSystem.Storage.csproj">
+      <Project>{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}</Project>
+      <Name>JobSystem.Storage</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

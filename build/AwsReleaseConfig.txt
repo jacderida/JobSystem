@@ -48,7 +48,7 @@ DeploymentPackage = JobSystem.Mvc.zip
 UploadBucket = elasticbeanstalk-eu-west-1-770580977004
 
 ### EC2 Keypair for logging into the instance
-KeyPair = EU-AWSKeyPair
+KeyPair = IntertekJobSystem
 
 ### AWS Access Key and Secret Key used to create and deploy the application instance
 AWSAccessKey = AKIAI3B4ZFGCXBELBWNQ
@@ -78,7 +78,7 @@ Container.ApplicationHealhcheckPath = /ping/check2
 ### Additional Elastic Beanstalk Container options
 ###
 
-Container.InstanceType = m1.small
+Container.InstanceType = t1.micro
 
 # Container.AmiID = 
 # Container.NotificationEmail = 

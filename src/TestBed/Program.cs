@@ -18,6 +18,7 @@ using JobSystem.DbWireup;
 using JobSystem.Framework.Messaging;
 using JobSystem.Framework.Security;
 using NHibernate.Connection;
+using JobSystem.Storage.Providers.FileSystem;
 
 namespace TestBed
 {
@@ -38,7 +39,7 @@ namespace TestBed
 			var listItemService = new ListItemService(testUserContext, new ListItemRepository(), queueDispatcher);
 			var customerService = new CustomerService(testUserContext, new CustomerRepository(), queueDispatcher);
 			var jobService = new JobService(
-				testUserContext, null, new JobRepository(), new ListItemRepository(), new CustomerRepository(), new EntityIdProvider(), queueDispatcher);
+				testUserContext, new FileSystemAttachmentStorage(), new JobRepository(), new ListItemRepository(), new CustomerRepository(), new EntityIdProvider(), queueDispatcher);
 			var jobItemService = new JobItemService(
 				testUserContext, new JobRepository(), new JobItemRepository(),
 				new ListItemService(testUserContext, new ListItemRepository(), queueDispatcher),

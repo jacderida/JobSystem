@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using JobSystem.BusinessLogic.Services;
-using JobSystem.DataModel.Storage;
-using System.IO;
+using JobSystem.Storage;
+using JobSystem.Storage.Jobs;
 
 namespace JobSystem.Mvc.Controllers
 {
 	public class AttachmentsController : Controller
 	{
-		private readonly AttachmentService _attachmentService;
+		private readonly JobAttachmentService _jobAttachmentService;
 
-		public AttachmentsController(AttachmentService attachmentService)
+		public AttachmentsController(JobAttachmentService attachmentService)
 		{
-			_attachmentService = attachmentService;
+			_jobAttachmentService = attachmentService;
 		}
 
 		public ActionResult AddAttachment(string qqfile)
@@ -28,7 +24,7 @@ namespace JobSystem.Mvc.Controllers
 				Filename = runningInIE ? Request.Files[0].FileName : qqfile,
 				Content = Request.InputStream
 			};
-			_attachmentService.Create(attachmentData);
+			_jobAttachmentService.Create(attachmentData);
 			return Json(new { success = true, Id = attachmentData.Id, Filename = attachmentData.Filename }, "text/html");
 		}
 	}

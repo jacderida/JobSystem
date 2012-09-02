@@ -81,7 +81,6 @@
     <Compile Include="Repositories\IQuoteItemRepository.cs" />
     <Compile Include="Repositories\IQuoteRepository.cs" />
     <Compile Include="Repositories\ITestStandardRepository.cs" />
-    <Compile Include="Storage\AttachmentData.cs" />
     <Compile Include="Dto\ContactInfo.cs" />
     <Compile Include="Entities\BankDetails.cs" />
     <Compile Include="Entities\CompanyDetails.cs" />
@@ -122,7 +121,6 @@
     <Compile Include="Repositories\ISupplierRepository.cs" />
     <Compile Include="Repositories\ITaxCodeRepository.cs" />
     <Compile Include="Repositories\IUserAccountRepository.cs" />
-    <Compile Include="Storage\IJobAttachmentDataRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JobSystem.DataAnnotations\JobSystem.DataAnnotations.csproj">

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JobSystem.DataModel.Storage
+namespace JobSystem.Storage.Jobs
 {
 	public interface IJobAttachmentDataRepository
 	{

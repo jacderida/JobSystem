@@ -132,6 +132,10 @@
       <Project>{1F5102EF-90BA-4300-9286-5BDE8A35C242}</Project>
       <Name>JobSystem.Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JobSystem.Storage\JobSystem.Storage.csproj">
+      <Project>{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}</Project>
+      <Name>JobSystem.Storage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JobSystem.TestHelpers\JobSystem.TestHelpers.csproj">
       <Project>{962577F3-201E-4512-B266-7B54EF3FB827}</Project>
       <Name>JobSystem.TestHelpers</Name>

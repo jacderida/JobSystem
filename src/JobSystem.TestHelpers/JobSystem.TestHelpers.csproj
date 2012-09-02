@@ -108,6 +108,10 @@
       <Project>{904034C0-4B56-4A2E-82BA-5D4B84195D99}</Project>
       <Name>JobSystem.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JobSystem.Storage\JobSystem.Storage.csproj">
+      <Project>{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}</Project>
+      <Name>JobSystem.Storage</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

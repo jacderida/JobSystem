@@ -3,8 +3,8 @@ using JobSystem.BusinessLogic.Services;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
-using JobSystem.DataModel.Storage;
 using JobSystem.Framework.Messaging;
+using JobSystem.Storage.Jobs;
 using JobSystem.TestHelpers.Context;
 using Rhino.Mocks;
 

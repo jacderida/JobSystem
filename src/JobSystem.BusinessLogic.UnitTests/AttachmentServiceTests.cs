@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel.Entities;
-using JobSystem.DataModel.Storage;
+using JobSystem.Storage;
+using JobSystem.Storage.Jobs;
 using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
 using NUnit.Framework;
@@ -14,7 +14,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 	public class AttachmentServiceTests
 	{
 		private DomainValidationException _domainValidationException;
-		private AttachmentService _attachmentService;
+		private JobAttachmentService _attachmentService;
 
 		[SetUp]
 		public void Setup()

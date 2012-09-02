@@ -5,10 +5,11 @@ using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
-using JobSystem.DataModel.Storage;
 using JobSystem.Framework;
 using JobSystem.Framework.Messaging;
 using JobSystem.Resources.Jobs;
+using JobSystem.Storage;
+using JobSystem.Storage.Jobs;
 
 namespace JobSystem.BusinessLogic.Services
 {

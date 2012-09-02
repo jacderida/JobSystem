@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSystem.TestHelpers", "Jo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSystem.Reporting", "JobSystem.Reporting\JobSystem.Reporting.csproj", "{1BF82DDE-CF7D-48EC-B00E-29991FC2A14D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSystem.Storage", "JobSystem.Storage\JobSystem.Storage.csproj", "{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -286,6 +288,18 @@ Global
 		{1BF82DDE-CF7D-48EC-B00E-29991FC2A14D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1BF82DDE-CF7D-48EC-B00E-29991FC2A14D}.Release|x64.ActiveCfg = Release|Any CPU
 		{1BF82DDE-CF7D-48EC-B00E-29991FC2A14D}.Release|x86.ActiveCfg = Release|Any CPU
+		{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}.Release|x64.ActiveCfg = Release|Any CPU
+		{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
