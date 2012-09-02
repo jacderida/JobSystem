@@ -29,6 +29,7 @@ namespace JobSystem.Mvc.IoC
 			builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>();
 			builder.RegisterType<HostRequestConfigDomainProvider>().As<IHostNameProvider>();
 			builder.RegisterType<S3JobAttachmentDataRepository>().As<IJobAttachmentDataRepository>();
+			builder.RegisterType<JobAttachmentService>().AsSelf();
 			if (Config.UseRemoteConfig())
 				builder.RegisterType<RemoteTenantConfig>().As<ITenantConfig>().InstancePerLifetimeScope();
 			else
