@@ -1,0 +1,118 @@
+﻿### Sample Deployment Config for the LoadBalanced CloudFormation template
+###
+### To get the sample application to deploy you will need to customize the credentials settings
+### (search for entries with values of YOUR_CREDENTIALS_HERE) then run the command. The configured 
+### KeyPair and SecurityGroup must already exist.
+###
+###   awsdeploy LoadBalancedDeploymentSample.txt
+###
+
+########################
+### General Settings ###
+########################
+
+### Name of the CloudFormation stack to create
+StackName = MyLoadBalancedStack
+
+### Location of the web deploy archive
+DeploymentPackage = AWSDeploymentSampleApp.zip
+
+### Region to deploy to
+Region = us-east-1
+
+### Template can be 'SingleInstance' or 'LoadBalanced'.
+Template = LoadBalanced
+
+### S3 bucket where the deployment materials will be stored. If this doesn't exist it will
+### be created.
+### NOTE: change the bucket name to be unique in S3 and owned by you.
+UploadBucket = awsdeployment-us-east-1-samples
+
+### EC2 Keypair for logging into the instance. Must exist before deployment. Must exist.
+KeyPair = default
+
+### AWS Access Key and Secret Key used to create the stack and deploy the application to S3
+AWSAccessKey = YOUR_CREDENTIALS_HERE
+AWSSecretKey = YOUR_CREDENTIALS_HERE
+
+###########################
+### Template Parameters ###
+###########################
+
+Template.InstanceType = t1.micro
+
+### This security group must exist and allow ingress on port 80.
+Template.SecurityGroup = default
+
+### Further customizable parameters for the LoadBalanced template are (defaults in [])
+###
+###   Template.AmazonMachineImage:    Custom AMI to Launch. Must have the AWS Deployment service installed.
+###   Template.AppDeploymentTimeout:  [900] The time, in seconds, for the stack to wait for the first successful 
+###                                         application deployment once the Auto Scaling group is created. 
+###   Template.MinSize: [1] The minimum size of the Auto Scaling group.
+###   Template.MaxSize: [4] The maximum size of the Auto Scaling group.
+###   Template.Cooldown: [300] The amount of time, in seconds, after a scaling activity completes before any further 
+###                            trigger-related scaling activities can start."
+###   Template.HealthyThreshold: [3] Specifies the number of consecutive health probe successes required before 
+###                                  moving the instance to the Healthy state.
+###   Template.UnhealthyThreshold: [5] Specifies the number of consecutive health probe failures required before
+###                                    moving the instance to the Unhealthy state.
+###   Template.Interval: [30] Specifies the approximate interval, in seconds, between health checks of an individual instance.
+###   Template.HealthCheckTimeout: [5] Specifies the amount of time, in seconds, during which no response means a failed 
+###                                    health probe.
+###   Template.MetricName: [NetworkOut] The CloudWatch measure used to determine when to trigger a scaling activity; 
+###                                     for example, CPU, network I/O, or disk I/O.
+###   Template.Statistic: [Average] The CloudWatch statistic used for a given measure to determine when to trigger 
+###                                 a scaling activity; for example Average, or Sum.
+###   Template.Period: [300] The period, in seconds, of the measure statistic over which a break is determined.
+###   Template.UpperBreachScaleIncrement: [1] The incremental number of EC2 instances to add (positive integer)/remove 
+###                                           (negative integer) when performing scaling activities when the upper threshold has been breached.
+###   Template.LowerBreachScaleIncrement: [-1] The incremental number of EC2 instances to add (positive integer)/remove 
+###                                            (negative integer) when performing scaling activities when the lower threshold has been breached.
+###   Template.BreachDuration: [300] The amount of time, in seconds, to wait while the trigger is firing before performing 
+###                                  scaling activities in response to the breach.
+###   Template.UpperThreshold: [6000000] The upper limit of the metric used.  
+###   Template.LowerThreshold: [2000000] The lower limit of the metric used.  
+
+#############################################################################################
+### Environment Settings                                                                  ###
+###                                                                                       ###
+### These are available to the deployed application through the web.config as appSettings ###
+#############################################################################################
+
+Environment.PARAM1 = testing
+Environment.PARAM2 = 123
+Environment.PARAM3 =
+Environment.PARAM4 =
+Environment.PARAM5 =
+
+### Access Key and Secret Key that your application uses to access AWS services.
+### Best practice is to create an IAM user with just enough permissions to run
+### your application, rather than use your root account credentials.
+
+Environment.AWSAccessKey = YOUR_CREDENTIALS_HERE
+Environment.AWSSecretKey = YOUR_CREDENTIALS_HERE
+
+###########################################################
+### Container settings                                  ###
+###                                                     ###
+### Settings on the App Domain or for the host manager. ###
+###########################################################
+
+Container.TargetV2Runtime = false
+Container.Enable32BitApplications = false
+Container.ApplicationHealhcheckPath = /
+
+#############################
+### Create Stack settings ###
+#############################
+
+### SNS Topic to send deployment messages to
+Settings.SNSTopic = 
+
+### Time to allow for creation of stack (default = 0 means no timeout)
+Settings.CreationTimeout = 0
+
+### If true, tear down the stack if deployment fails
+Settings.RollbackOnFailure = false
+

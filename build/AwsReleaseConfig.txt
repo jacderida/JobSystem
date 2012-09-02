@@ -38,14 +38,14 @@ Region = eu-west-1
 ###########################################
 
 ### Application.Version is only used for non-incremental deployments
-Application.Version = v1
+Application.Version = 0.0.0.11
 
 ### Points to a webdeploy deployment archive to be deployed
 DeploymentPackage = JobSystem.Mvc.zip
 
 ### S3 bucket where the deployment materials will be stored. If this doesn't exist it will
 ### be created (only needed for non-incremental deployments).
-UploadBucket = elasticbeanstalk-eu-west-1-770580977004
+UploadBucket = elasticbeanstalk-eu-west-1-akiai3b4zfgcxbelbwnq
 
 ### EC2 Keypair for logging into the instance
 KeyPair = IntertekJobSystem

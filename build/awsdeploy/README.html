@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <title>
+      AWS Standalone Deployment Tool (ReadMe)
+    </title>
+  </head>
+
+  <body style="font-family: Helvetica, Verdana, sans-serif; margin: 20px">
+
+    <h1>
+      AWS Standalone Deployment Tool
+    </h1>
+
+    <hr/>
+
+    <p>
+      This directory contains the AWS Standalone Deployment Tool which is
+      included with the <a href="http://aws.amazon.com/visualstudio/">AWS Toolkit for Visual Studio</a>
+    </p>
+
+    <p>
+    The deployment tool is a command line tool that provides the same functionality as the deployment
+    wizard in the AWS Toolkit. The deployment tool can be used in your build pipeline or in other
+    scripts to automate deployments to 
+    <a href="aws.amazon.com/cloudformation/">AWS CloudFormation</a> 
+    or 
+    <a href="http://aws.amazon.com/elasticbeanstalk/">AWS Elastic Beanstalk</a>. 
+    </p>
+
+  <p>
+    The deployment tool supports initial deployments, redeployments, and
+    updates. Redeployment enables you to quickly deploy a new version of your
+    application to an already-existing environment. The update
+    functionality enables you to make changes to your application
+    environment while your application is running. The update
+    functionality is available only for CloudFormation deployments.
+  </p>
+  
+  <p>
+    The deployment tool can be used in conjunction with the deployment wizard
+    in the AWS Toolkit. If you previously deployed your application using the deployment tool, you can
+    redeploy it using the deployment wizard from within Visual Studio. Similarly, if you
+    deployed using the wizard, you can redeploy using the deployment tool.
+  </p>
+
+
+  <p><b>Invocation Syntax</b></p>
+
+<code style="font-size:large">
+  awsdeploy [options] <i>configFile</i>
+</code>
+
+<p>
+The <b><i>Samples</i></b> directory located in the same directory as the deploy
+tool itself contains sample configuration files for both AWS CloudFormation and 
+AWS Elastic Beanstalk.
+</p>
+
+<p>
+For more information about the deploying to AWS using the deploy tool see the
+deploy tool documentation at the following URL.
+</p>
+
+<code style="font-size:large">
+  <a href="http://docs.amazonwebservices.com/AWSToolkitVS/latest/UserGuide/tkv-deployment-tool.html">
+    http://docs.amazonwebservices.com/AWSToolkitVS/latest/UserGuide/tkv-deployment-tool.html
+  </a>
+</code>
+
+<br/>
+<br/>
+
+
+  </body>
+</html>
+
+
+
+
+
+

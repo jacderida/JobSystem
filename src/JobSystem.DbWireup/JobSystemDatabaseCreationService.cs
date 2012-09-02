@@ -2,16 +2,14 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using FluentNHibernate.Cfg.Db;
 using JobSystem.DataAccess.NHibernate;
 using JobSystem.DataAccess.NHibernate.Mappings;
 using JobSystem.DataModel.Entities;
+using JobSystem.Framework;
 using JobSystem.Framework.Security;
 using NHibernate.Linq;
-using JobSystem.Framework;
 
 namespace JobSystem.DbWireup
 {
@@ -29,7 +27,7 @@ namespace JobSystem.DbWireup
 		public JobSystemDatabaseCreationService(string connectionName, string databaseName)
 		{
 			_connectionName = connectionName;
-			_databaseName = String.Format("JobSystem.{0}", databaseName);
+			_databaseName = String.Format("jobsystem.{0}", databaseName).ToLower();
 		}
 
 		public void CreateDatabase(bool dropExisting = false)

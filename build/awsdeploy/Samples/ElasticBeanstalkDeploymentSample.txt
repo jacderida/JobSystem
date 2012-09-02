@@ -1,0 +1,98 @@
+﻿### Sample Deployment Config for use with the AWS Elastic Beanstalk service
+###
+###   awsdeploy ElasticBeanstalkDeploymentSample.txt
+###
+
+########################
+### General Settings                ###
+########################
+
+### Can be 'AWS Elastic Beanstalk', 'Elastic Beanstalk' or just ElasticBeanstalk, as here
+Template = ElasticBeanstalk
+
+### Name and optional description of the Elastic Beanstalk application to create
+Application.Name = MyDeployedApplication
+Application.Description = My application in AWS Elastic Beanstalk
+
+### Region to deploy to; us-east-1 default if not specified
+Region = us-east-1
+
+### EC2 Keypair for logging into the instance; if you do not want to log into the instance
+### this can be skipped
+# KeyPair = default
+
+### AWS Access Key and Secret Key used to create and deploy the application instance
+AWSAccessKey = YOUR_CREDENTIALS_HERE
+AWSSecretKey = YOUR_CREDENTIALS_HERE
+
+#######################################
+### Incremental Deployment Settings                         ###
+#######################################
+
+### This setting enables incremental deployment and designates the folder where 
+### a Git repository can be created; the contents of the DeploymentPackage setting
+### will be committed to this location
+# IncrementalPushRepository = C:\Temp\VS2008App1
+
+### Points to an extracted webdeploy archive; the contents will be committed to
+### the folder specified in IncrementalPushRepository
+# DeploymentPackage = c:\mydeploymentarchive
+
+###########################################
+### Non-Incremental Deployment Settings                            ###
+###########################################
+
+### Application.Version is only used for non-incremental deployments
+### If not set, defaults to current date/time in the format 'vyyyyMMddHHmmss'
+# Application.Version = v1
+
+### Points to a webdeploy deployment archive to be deployed
+DeploymentPackage = AWSDeploymentSampleApp.zip
+
+### S3 bucket where the deployment materials will be stored. If this doesn't exist it will
+### be created (only needed for non-incremental deployments). 
+### NOTE: If not specified, the tool will request a default location from AWS Elastic Beanstalk 
+### that it can upload to otherwise if specified, the bucket name should be unique in S3 and 
+### owned by you.
+# UploadBucket = my_upload_bucket_name_here
+
+############################
+### Environment Settings                  ###
+############################
+
+### Name, CNAME and optional description of the environment to create
+Environment.Name = MyAppEnvironment
+Environment.Description = Environment for my Elastic Beanstalk application
+Environment.CNAME = MyAppEnv
+
+###########################################################
+### Container settings                                                                                            ###
+###                                                                                                                       ###
+### Settings on the App Domain or for the host manager.                                          ###
+###########################################################
+
+### Container.TargetRuntime (values 2.0 or 4.0) replaces the
+### Container.TargetV2Runtime option
+Container.TargetRuntime = 4.0
+
+Container.Enable32BitApplications = false
+Container.ApplicationHealhcheckPath = /
+
+###
+### Additional Elastic Beanstalk Container options
+###
+
+Container.InstanceType = t1.micro
+
+# Container.AmiID = 
+# Container.NotificationEmail = 
+
+
+##########################
+### Beanstalk Configuration Objects 
+###
+### Configuration options can be set by the <namespace>.<option-name>.  
+### For a list of all the possible options view http://docs.amazonwebservices.com/elasticbeanstalk/latest/dg/command-options.html
+##########################
+# aws:elasticbeanstalk:application:environment.AWS_ACCESS_KEY_ID = YOUR_CREDENTIALS_HERE
+# aws:elasticbeanstalk:application:environment.AWS_SECRET_KEY = YOUR_CREDENTIALS_HERE

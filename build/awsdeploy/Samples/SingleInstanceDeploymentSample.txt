@@ -1,0 +1,90 @@
+﻿### Sample Deployment Config for the SingleInstance CloudFormation template
+###
+### To get the sample application to deploy you will need to customize the credentials settings
+### (search for entries with values of YOUR_CREDENTIALS_HERE) then run the command. The configured 
+### KeyPair and SecurityGroup must already exist.
+###
+###   awsdeploy SingleInstanceDeploymentSample.txt
+###
+
+########################
+### General Settings ###
+########################
+
+### Name of the CloudFormation stack to create
+StackName = MySingleInstanceStack
+
+### Location of the web deploy archive
+DeploymentPackage = AWSDeploymentSampleApp.zip
+
+### Region to deploy to
+Region = us-east-1
+
+### Template can be 'SingleInstance' or 'LoadBalanced'.
+Template = SingleInstance
+
+### S3 bucket where the deployment materials will be stored. If this doesn't exist it will
+### be created.
+### NOTE: change the bucket name to be unique in S3 and owned by you.
+UploadBucket = awsdeployment-us-east-1-samples
+
+### EC2 Keypair for logging into the instance
+KeyPair = default
+
+### AWS Access Key and Secret Key used to create the stack and deploy the application to S3
+AWSAccessKey = YOUR_CREDENTIALS_HERE
+AWSSecretKey = YOUR_CREDENTIALS_HERE
+
+###########################
+### Template Parameters ###
+###########################
+
+Template.InstanceType = t1.micro
+
+### This security group must exist and allow ingress on port 80.
+Template.SecurityGroup = default
+
+###   Template.AmazonMachineImage:    Custom AMI to Launch. Must have the AWS Deployment service installed.
+
+#############################################################################################
+### Environment Settings                                                                  ###
+###                                                                                       ###
+### These are available to the deployed application through the web.config as appSettings ###
+#############################################################################################
+
+Environment.PARAM1 = testing
+Environment.PARAM2 = 123
+Environment.PARAM3 =
+Environment.PARAM4 =
+Environment.PARAM5 =
+
+### Access Key and Secret Key that your application uses to access AWS services.
+### Best practice is to create an IAM user with just enough permissions to run
+### your application, rather than use your root account credentials.
+
+Environment.AWSAccessKey = YOUR_CREDENTIALS_HERE
+Environment.AWSSecretKey = YOUR_CREDENTIALS_HERE
+
+###########################################################
+### Container settings                                  ###
+###                                                     ###
+### Settings on the App Domain or for the host manager. ###
+###########################################################
+
+Container.TargetV2Runtime = false
+Container.Enable32BitApplications = false
+Container.ApplicationHealhcheckPath = /
+
+#############################
+### Create Stack settings ###
+#############################
+
+### SNS Topic to send deployment messages to
+Settings.SNSTopic = 
+
+### Time to allow for creation of stack (default = 0 means no timeout)
+Settings.CreationTimeout = 0
+
+### If true, tear down the stack if deployment fails
+Settings.RollbackOnFailure = false
+
