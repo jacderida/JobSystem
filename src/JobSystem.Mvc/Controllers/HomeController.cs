@@ -11,7 +11,7 @@ namespace JobSystem.Mvc.Controllers
 		[Authorize]
 		public ActionResult Index()
 		{
-		return View();
+			return View();
 		}
 
 		[Authorize]
