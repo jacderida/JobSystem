@@ -62,7 +62,7 @@
     <Compile Include="AppSecurity.cs" />
     <Compile Include="Check.cs" />
     <Compile Include="Configuration\Config.cs" />
-    <Compile Include="Configuration\IConfigurationService.cs" />
+    <Compile Include="Configuration\IConnectionStringProviderRepository.cs" />
     <Compile Include="Configuration\IHostNameProvider.cs" />
     <Compile Include="Configuration\ITenantConfig.cs" />
     <Compile Include="Configuration\LocalTenantConfig.cs" />

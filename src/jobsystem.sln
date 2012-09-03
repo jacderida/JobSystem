@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSystem.DataAccess.NHiber
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSystem.Framework", "JobSystem.Framework\JobSystem.Framework.csproj", "{904034C0-4B56-4A2E-82BA-5D4B84195D99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSystem.Configuration", "JobSystem.Configuration\JobSystem.Configuration.csproj", "{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSystem.Mvc", "JobSystem.Mvc\JobSystem.Mvc.csproj", "{67F297D4-F131-4E2B-9DDB-6288417F36CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSystem.BusinessLogic", "JobSystem.BusinessLogic\JobSystem.BusinessLogic.csproj", "{D14C39B9-B192-43A7-ABE6-82789BB2CADB}"
@@ -111,20 +109,6 @@ Global
 		{904034C0-4B56-4A2E-82BA-5D4B84195D99}.Release|x64.ActiveCfg = Release|x64
 		{904034C0-4B56-4A2E-82BA-5D4B84195D99}.Release|x64.Build.0 = Release|x64
 		{904034C0-4B56-4A2E-82BA-5D4B84195D99}.Release|x86.ActiveCfg = Release|Any CPU
-		{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}.Debug|x64.ActiveCfg = Debug|x64
-		{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}.Debug|x64.Build.0 = Debug|x64
-		{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}.Release|x64.ActiveCfg = Release|x64
-		{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}.Release|x64.Build.0 = Release|x64
-		{D74BDB3D-7378-4E2F-B62D-81F0D6EF7047}.Release|x86.ActiveCfg = Release|Any CPU
 		{67F297D4-F131-4E2B-9DDB-6288417F36CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{67F297D4-F131-4E2B-9DDB-6288417F36CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67F297D4-F131-4E2B-9DDB-6288417F36CC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

@@ -10,6 +10,7 @@ using JobSystem.Mvc.Configuration;
 using JobSystem.Mvc.Core;
 using JobSystem.Storage.Jobs;
 using JobSystem.Storage.Providers.S3;
+using JobSystem.Storage.Providers.SimpleDb;
 
 namespace JobSystem.Mvc.IoC
 {
@@ -30,6 +31,7 @@ namespace JobSystem.Mvc.IoC
 			builder.RegisterType<HostRequestConfigDomainProvider>().As<IHostNameProvider>();
 			builder.RegisterType<S3JobAttachmentDataRepository>().As<IJobAttachmentDataRepository>();
 			builder.RegisterType<JobAttachmentService>().AsSelf();
+			builder.RegisterType<SimpleDbConnectionStringProviderRepository>().As<IConnectionStringProviderRepository>();
 			if (Config.UseRemoteConfig())
 				builder.RegisterType<RemoteTenantConfig>().As<ITenantConfig>().InstancePerLifetimeScope();
 			else

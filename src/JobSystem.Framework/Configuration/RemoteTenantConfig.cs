@@ -4,19 +4,20 @@ namespace JobSystem.Framework.Configuration
 {
 	public class RemoteTenantConfig : ITenantConfig
 	{
-		private readonly IConfigurationService _configurationService;
+		private readonly IConnectionStringProviderRepository _connectionStringProvider;
 		private readonly IHostNameProvider _hostNameProvider;
 
-		public RemoteTenantConfig(IConfigurationService configService, IHostNameProvider hostNameProvider)
+		public RemoteTenantConfig(IConnectionStringProviderRepository connectionStringProvider, IHostNameProvider hostNameProvider)
 		{
-			_configurationService = configService;
+			_connectionStringProvider = connectionStringProvider;
 			_hostNameProvider = hostNameProvider;
 		}
 
 		public ConnectionStringSettings GetConnectionString(string connectionName)
 		{
 			var hostName = _hostNameProvider.GetHostName();
-			return _configurationService.GetConnectionString(hostName, connectionName);
+			var connectionString = _connectionStringProvider.Get(hostName);
+			return new ConnectionStringSettings(hostName, connectionString);
 		}
 	}
 }
