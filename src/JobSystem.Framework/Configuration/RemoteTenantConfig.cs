@@ -16,9 +16,17 @@ namespace JobSystem.Framework.Configuration
 		public ConnectionStringSettings GetConnectionString(string connectionName)
 		{
 			var hostName = _hostNameProvider.GetHostName();
-			System.IO.File.WriteAllText(@"c:\temp\hostname.txt", hostName);
-			var connectionString = _connectionStringProvider.Get(hostName);
-			return new ConnectionStringSettings(hostName, connectionString);
+			var tenantName = GetTenantName(hostName);
+			var connectionString = _connectionStringProvider.Get(tenantName);
+			return new ConnectionStringSettings(tenantName, connectionString);
+		}
+
+		private string GetTenantName(string hostname)
+		{
+			if (hostname == "localhost")
+				return hostname;
+			var index = hostname.IndexOf('.');
+			return new string(hostname.ToCharArray(), 0, index);
 		}
 	}
 }
