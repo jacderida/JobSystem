@@ -302,6 +302,7 @@
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="index.html" />
     <Content Include="Scripts\autocompletes.js" />
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\common.js" />
