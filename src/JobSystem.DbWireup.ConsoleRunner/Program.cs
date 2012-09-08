@@ -10,7 +10,7 @@ namespace JobSystem.DbWireup.ConsoleRunner
 	{
 		static void Main(string[] args)
 		{
-			var databaseService = new JobSystemDatabaseCreationService("JobSystem", "Development");
+			var databaseService = new JobSystemDatabaseCreationService("JobSystem", "Aberdeen");
 			databaseService.CreateDatabase(true);
 			databaseService.CreateJobSystemSchemaFromMigrations("JobSystem.Migrations.dll");
 			databaseService.InitHibernate();

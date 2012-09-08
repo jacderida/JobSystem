@@ -4,6 +4,7 @@
 	<PropertyGroup>
     <ProjectName>JobSystem</ProjectName>
     <ProjectDirectory>$(teamcity_build_checkoutDir)</ProjectDirectory>
+    <ProjectLibDirectory>$(ProjectDirectory)\lib</ProjectLibDirectory>
     <ProjectBuildDirectory>$(ProjectDirectory)\build</ProjectBuildDirectory>
     <ProjectBuildCustomTasksDirectory>$(ProjectBuildDirectory)\buildtasks</ProjectBuildCustomTasksDirectory>
     <ProjectBuildBinDirectory>$(ProjectBuildDirectory)\bin</ProjectBuildBinDirectory>
