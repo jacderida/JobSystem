@@ -38,7 +38,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
-		public void AddAttachment_FilenameGreaterThan2000Characters_DomainValidationExceptionThrow()
+		[ExpectedException(typeof(ArgumentException))]
+		public void AddAttachment_FilenameGreaterThan2000Characters_ArgumentExceptionThrow()
 		{
 			var attachmentId = Guid.NewGuid();
 			var fileName = new string('a', 2001);
@@ -51,7 +52,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
-		public void AddAttachment_FilenameNotSupplied_DomainValidationExceptionThrow()
+		[ExpectedException(typeof(ArgumentException))]
+		public void AddAttachment_FilenameNotSupplied_ArgumentExceptionThrow()
 		{
 			var attachmentId = Guid.NewGuid();
 			var fileName = String.Empty;
@@ -64,7 +66,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
-		public void AddAttachment_ContentTypeNotSupplied_DomainValidationExceptionThrow()
+		[ExpectedException(typeof(ArgumentException))]
+		public void AddAttachment_ContentTypeNotSupplied_ArgumentExceptionThrow()
 		{
 			var attachmentId = Guid.NewGuid();
 			var fileName = "attachment.pdf";
@@ -77,7 +80,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
-		public void AddAttachment_ContentNotSupplied_DomainValidationExceptionThrow()
+		[ExpectedException(typeof(ArgumentException))]
+		public void AddAttachment_ContentNotSupplied_ArgumentExceptionThrow()
 		{
 			var attachmentId = Guid.NewGuid();
 			var fileName = "attachment.pdf";
@@ -103,7 +107,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
-		public void AddAttachment_UserDoesNotHaveMemberRole_DomainValidationExceptionThrow()
+		[ExpectedException(typeof(ArgumentException))]
+		public void AddAttachment_UserDoesNotHaveMemberRole_ArgumentExceptionThrow()
 		{
 			var attachmentId = Guid.NewGuid();
 			var fileName = "attachment.pdf";
