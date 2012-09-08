@@ -59,7 +59,7 @@
 			<TenantListDatabaseServer>jobsys.ca0li8yz4xun.eu-west-1.rds.amazonaws.com</TenantListDatabaseServer>
 			<TenantListDatabaseUserName>jobsysmaster</TenantListDatabaseUserName>
 			<TenantListDatabasePassword>jobsystem</TenantListDatabasePassword>
-			<TenantListDatabaseName>TenantList</TenantListDatabaseName>
+			<TenantListDatabaseName>jobsystem.tenantlist</TenantListDatabaseName>
 		</PropertyGroup>
 		<RunMigrations
 			MigratePath="$(MigratePath)"
