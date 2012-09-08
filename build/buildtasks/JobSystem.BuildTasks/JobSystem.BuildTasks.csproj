@@ -46,6 +46,7 @@
     <Compile Include="CreateJobSystemUser.cs" />
     <Compile Include="ModifyConfigFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RunMigrations.cs" />
     <Compile Include="SqlServerHelper.cs" />
     <Compile Include="UpdateAwsVersionNumber.cs" />
   </ItemGroup>

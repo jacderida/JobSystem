@@ -20,11 +20,11 @@ namespace JobSystem.BuildTasks
 		public override bool Execute()
 		{
 			if (String.IsNullOrEmpty(TenantListDatabaseName))
-				TenantListDatabaseName = "TenantList";
+				TenantListDatabaseName = "jobsystem.tenantlist";
 			try
 			{
 				GetTenantConnectionStrings();
-				RunMigrations();
+				DoRunMigrations();
 				return true;
 			}
 			catch (Exception ex)
@@ -59,11 +59,11 @@ namespace JobSystem.BuildTasks
 
 		private SqlCommand GetTenantConnectionStringsCommand(SqlConnection conn)
 		{
-			var cmd = new SqlCommand(String.Format("SELECT ConnectionString FROM {0}", TenantListDatabaseName), conn);
+			var cmd = new SqlCommand("SELECT ConnectionString FROM TenantList", conn);
 			return cmd;
 		}
 
-		private void RunMigrations()
+		private void DoRunMigrations()
 		{
 			foreach (var connectionString in _connectionStrings)
 			{
