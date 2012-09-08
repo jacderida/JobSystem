@@ -67,10 +67,12 @@ namespace JobSystem.BuildTasks
 		{
 			foreach (var connectionString in _connectionStrings)
 			{
+				Log.LogMessage("Running migrations on {0}", connectionString);
 				var process = new Process();
 				process.StartInfo.FileName = MigratePath;
 				process.StartInfo.Arguments = GetMigrateArguments(connectionString);
 				process.StartInfo.UseShellExecute = false;
+				process.StartInfo.RedirectStandardOutput = true;
 				process.Start();
 				process.WaitForExit();
 				if (process.ExitCode == -1)
