@@ -93,7 +93,7 @@ namespace TestBed
 
 		private static void CreateDatabase()
 		{
-			var databaseService = new JobSystemDatabaseCreationService("JobSystemDatabase", "Development");
+			var databaseService = new JobSystemDatabaseCreationService("Development");
 			databaseService.CreateDatabase(true);
 			databaseService.CreateJobSystemSchemaFromMigrations("JobSystem.Migrations.dll");
 			databaseService.InitHibernate();

@@ -16,7 +16,7 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 		{
 			File.Delete("JobSystem.Development.db3");
 			SQLiteConnection.CreateFile("JobSystem.Development.db3");
-			var databaseService = new JobSystemDatabaseCreationService("JobSystemDatabase", "Development");
+			var databaseService = new JobSystemDatabaseCreationService("Development");
 			databaseService.CreateJobSystemSchemaFromMigrations("JobSystem.Migrations.SQLite.dll", "Data Source=JobSystem.Development.db3", "sqlite");
 			databaseService.InitHibernate(
 				FluentNHibernate.Cfg.Db.SQLiteConfiguration.Standard.ConnectionString("Data Source=JobSystem.Development.db3").Provider<SimpleConnectionProvider>());

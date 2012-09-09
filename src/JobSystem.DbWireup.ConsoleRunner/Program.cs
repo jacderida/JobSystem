@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using JobSystem.DataModel.Entities;
+using System.Configuration;
 
 namespace JobSystem.DbWireup.ConsoleRunner
 {
@@ -10,8 +11,10 @@ namespace JobSystem.DbWireup.ConsoleRunner
 	{
 		static void Main(string[] args)
 		{
-			var databaseService = new JobSystemDatabaseCreationService("JobSystem", "development");
+			var databaseService = new JobSystemDatabaseCreationService(ConfigurationManager.AppSettings["TenantName"]);
 			databaseService.CreateDatabase(true);
+			databaseService.CreateServerLogin();
+			databaseService.CreateUserLogin();
 			databaseService.CreateJobSystemSchemaFromMigrations("JobSystem.Migrations.dll");
 			databaseService.InitHibernate();
 			
@@ -104,6 +107,9 @@ namespace JobSystem.DbWireup.ConsoleRunner
 				databaseService.InsertCompanyDetails(GetCompanyDetails(databaseService, defaultBankDetailsId, defaultCurrencyId, defaultPaymentTermId, defaultTaxCodeId));
 				databaseService.InsertAdminUser("admin@intertek.com", "Graham Robertson", "Laboratory Manager", "p'ssw0rd");
 				databaseService.CommitHibernateTransaction();
+				Console.WriteLine(databaseService.GetGeneratedPassword());
+				Console.WriteLine("Copy generated password then press any key to quit.");
+				Console.ReadKey();
 			}
 			catch (Exception)
 			{
