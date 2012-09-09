@@ -382,9 +382,24 @@ $(document).ready(function () {
 			// path to server-side upload script
 			action: uploadElement.getAttribute("data-upload-path"),
 			onComplete: function (id, fileName, responseJSON) {
-				var idHidden = '<input type="hidden" name="AttachmentId" value="' + responseJSON.Id + '"/>';
-				var nameHidden = '<input type="hidden" name="AttachmentName" value="' + responseJSON.Filename + '"/>';
-				$('#createJobForm').append(idHidden).append(nameHidden);
+				if (uploadElement.getAttribute("data-attachment-link") === "true") {
+					$.ajax({
+						type: "POST",
+						url: "../AttachAttachment",
+						data: { jobId: $('#hiddenJobId').val(), attachmentId: responseJSON.Id, attachmentName: responseJSON.Filename },
+						success: function (data) {
+							var html = '<span class="field-label">';
+							html += "<li><a href='../GetAttachment/" + $('#hiddenJobId').val() + "?attachmentId=" + responseJSON.Id + "'>" + responseJSON.Filename + "</a></li>";
+							html += '</span>';
+							$('#attachmentList').append(html);
+						}
+					})
+				}
+				else {
+					var idHidden = '<input type="hidden" name="AttachmentId" value="' + responseJSON.Id + '"/>';
+					var nameHidden = '<input type="hidden" name="AttachmentName" value="' + responseJSON.Filename + '"/>';
+					$('#createJobForm').append(idHidden).append(nameHidden);
+				}
 			}
 		});
 

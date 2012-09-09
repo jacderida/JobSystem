@@ -103,6 +103,16 @@ namespace JobSystem.Mvc.Controllers
 			return PartialView("_Edit", viewmodel);
 		}
 
+		[Transaction]
+		public ActionResult AttachAttachment(Guid jobId, Guid attachmentId, string attachmentName)
+		{
+			var job = _jobService.GetJob(jobId);
+
+			_jobService.AddAttachment(jobId, attachmentId, attachmentName);
+
+			return Json(true);
+		}
+
 		public ActionResult Index()
 		{
 			return RedirectToAction("ApprovedJobs");

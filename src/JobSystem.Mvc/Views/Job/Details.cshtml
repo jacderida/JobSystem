@@ -20,6 +20,8 @@
 	@*Content ajaxed in*@
 </div>
 
+@Html.HiddenFor(m => m.Id, new { id = "hiddenJobId" })
+
 <div id="job-top-section">
 	@if (Model.IsPending) {
 		<div id="pending-banner"></div>
@@ -46,16 +48,18 @@
 			</div>
 			<div id="job-details-notes">
 				<span class="details-header">Attachments</span>
-				<div id="file-uploader" data-upload-path="@Url.Action("AddAttachment", "Attachments")">       
+				<div id="file-uploader" data-upload-path="@Url.Action("AddAttachment", "Attachments")" data-attachment-link="true"}>       
 					<noscript>          
 						<p>Please enable JavaScript to use file uploader.</p>
 						<!-- or put a simple form for upload here -->
 					</noscript>         
 				</div>
-				@foreach (var attachment in Model.Attachments)
-				{
-					<span class="field-label">@Html.ActionLink(@attachment.Name, "GetAttachment", new { id = @Model.Id, attachmentId = @attachment.Id }) </span>
-				}
+				<ul id="attachmentList">
+					@foreach (var attachment in Model.Attachments)
+					{
+						<li><span class="field-label">@Html.ActionLink(@attachment.Name, "GetAttachment", new { id = @Model.Id, attachmentId = @attachment.Id }) </span></li>
+					}
+				</ul>
 			</div>
 			<div id="job-details-customer-info">
 				<span id="custname">Customer</span>
