@@ -12,7 +12,6 @@ namespace JobSystem.BusinessLogic.Services
 {
 	public class CertificateService : ServiceBase
 	{
-		private readonly ITestStandardRepository _testStandardRepository;
 		private readonly IJobItemRepository _jobItemRepository;
 		private readonly ICertificateRepository _certificateRepository;
 		private readonly IListItemRepository _listItemRepository;
@@ -20,21 +19,19 @@ namespace JobSystem.BusinessLogic.Services
 
 		public CertificateService(
 			IUserContext applicationContext,
-			ITestStandardRepository testStandardRepository,
 			IJobItemRepository jobItemRepository,
 			ICertificateRepository certificateRepository,
 			IListItemRepository listItemRepository,
 			IEntityIdProvider entityIdProvider,
 			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
 		{
-			_testStandardRepository = testStandardRepository;
 			_jobItemRepository = jobItemRepository;
 			_certificateRepository = certificateRepository;
 			_listItemRepository = listItemRepository;
 			_entityIdProvider = entityIdProvider;
 		}
 
-		public Certificate Create(Guid id, Guid certificateTypeId, Guid jobItemId, string procedureList, IList<Guid> testStanardIds)
+		public Certificate Create(Guid id, Guid certificateTypeId, Guid jobItemId, string procedureList)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
@@ -47,7 +44,6 @@ namespace JobSystem.BusinessLogic.Services
 			certificate.CreatedBy = CurrentUser;
 			certificate.JobItem = GetJobItem(jobItemId);
 			certificate.Type = GetCertificateType(certificateTypeId);
-			certificate.TestStandards = GetTestStandards(testStanardIds);
 			certificate.ProcedureList = procedureList;
 			ValidateAnnotatedObjectThrowOnFailure(certificate);
 			_certificateRepository.Create(certificate);
@@ -98,19 +94,6 @@ namespace JobSystem.BusinessLogic.Services
 			if (type.Category.Type != ListItemCategoryType.Certificate)
 				throw new ArgumentException("A certificate type list item must be supplied");
 			return type;
-		}
-
-		private List<TestStandard> GetTestStandards(IList<Guid> testStandardIds)
-		{
-			var result = new List<TestStandard>();
-			foreach (var testStandardId in testStandardIds)
-			{
-				var testStandard = _testStandardRepository.GetById(testStandardId);
-				if (testStandard == null)
-					throw new ArgumentException("An invalid test standard has been supplied");
-				result.Add(testStandard);
-			}
-			return result;
 		}
 	}
 }

@@ -12,13 +12,6 @@ namespace JobSystem.Mvc.ViewModels.Certificates
 	{
 		public Guid Id { get; set; }
 		public Guid JobItemId { get; set; }
-
-		[Display(Name = "Test Standard")]
-		[Required]
-		public Guid[] SelectedTestStandardIds { get; set; }
-		[Display(Name = "Test Standard")]
-		public IEnumerable<SelectListItem> TestStandards { get; set; }
-
 		public Guid CertificateTypeId { get; set; }
 		[Display(Name="Type")]
 		public IEnumerable<SelectListItem> CertificateTypes { get; set; }

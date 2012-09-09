@@ -14,7 +14,6 @@ using JobSystem.Mvc.ViewModels.Deliveries;
 using JobSystem.Mvc.ViewModels.JobItems;
 using JobSystem.Mvc.ViewModels.Orders;
 using JobSystem.Mvc.ViewModels.Quotes;
-using JobSystem.Mvc.ViewModels.TestStandards;
 using JobSystem.Mvc.ViewModels.WorkItems;
 
 namespace JobSystem.Mvc.Controllers
@@ -345,12 +344,13 @@ namespace JobSystem.Mvc.Controllers
 				CreatedBy = i.CreatedBy.Name,
 				DateCreated = i.DateCreated.ToLongDateString() + ' ' + i.DateCreated.ToShortTimeString(),
 				TypeName = i.Type.Name,
-				TestStandards = i.TestStandards.Select(ts => new TestStandardViewModel()
-				{
-					CertificateNo = ts.CertificateNo,
-					Description = ts.Description,
-					SerialNo = ts.SerialNo
-				}).ToList()
+				// IJ to remove
+				//TestStandards = i.TestStandards.Select(ts => new TestStandardViewModel()
+				//{
+				//    CertificateNo = ts.CertificateNo,
+				//    Description = ts.Description,
+				//    SerialNo = ts.SerialNo
+				//}).ToList()
 			}).ToList();
 
 			return items;

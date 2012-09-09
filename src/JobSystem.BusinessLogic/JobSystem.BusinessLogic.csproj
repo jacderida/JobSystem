@@ -82,7 +82,6 @@
     <Compile Include="Services\QuoteService.cs" />
     <Compile Include="Services\ServiceBase.cs" />
     <Compile Include="Services\SupplierService.cs" />
-    <Compile Include="Services\TestStandardsService.cs" />
     <Compile Include="Services\UserManagementService.cs" />
     <Compile Include="Validation\Core\DomainValidationException.cs" />
     <Compile Include="Validation\Core\IValidator.cs" />

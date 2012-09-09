@@ -82,7 +82,6 @@
     <Compile Include="INHibernateConfigurationCache.cs" />
     <Compile Include="ISessionStorage.cs" />
     <Compile Include="Mappings\AutoPersistanceModelGenerator.cs" />
-    <Compile Include="Mappings\CertificateMapping.cs" />
     <Compile Include="Mappings\Conventions\EnumConvention.cs" />
     <Compile Include="Mappings\Conventions\PrimaryKeyConvention.cs" />
     <Compile Include="Mappings\Conventions\TableNameConvention.cs" />
@@ -115,7 +114,6 @@
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\SupplierRepository.cs" />
     <Compile Include="Repositories\TaxCodeRepository.cs" />
-    <Compile Include="Repositories\TestStandardRepository.cs" />
     <Compile Include="Repositories\UserAccountRepository.cs" />
     <Compile Include="SimpleSessionStorage.cs" />
     <Compile Include="Web\TransactionAttribute.cs" />

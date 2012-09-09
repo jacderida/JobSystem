@@ -80,7 +80,6 @@
     <Compile Include="Repositories\IOrderRepository.cs" />
     <Compile Include="Repositories\IQuoteItemRepository.cs" />
     <Compile Include="Repositories\IQuoteRepository.cs" />
-    <Compile Include="Repositories\ITestStandardRepository.cs" />
     <Compile Include="Dto\ContactInfo.cs" />
     <Compile Include="Entities\BankDetails.cs" />
     <Compile Include="Entities\CompanyDetails.cs" />

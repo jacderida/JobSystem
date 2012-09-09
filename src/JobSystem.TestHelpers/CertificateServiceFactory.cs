@@ -9,11 +9,10 @@ namespace JobSystem.TestHelpers
 {
 	public static class CertificateServiceFactory
 	{
-		public static CertificateService Create(IUserContext userContext, IListItemRepository listItemRepository, ICertificateRepository certificateRepository, IJobItemRepository jobItemRepository, ITestStandardRepository testStandardRepository)
+		public static CertificateService Create(IUserContext userContext, IListItemRepository listItemRepository, ICertificateRepository certificateRepository, IJobItemRepository jobItemRepository)
 		{
 			return new CertificateService(
 				userContext,
-				testStandardRepository,
 				jobItemRepository,
 				certificateRepository,
 				listItemRepository,

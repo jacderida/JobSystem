@@ -16,11 +16,5 @@ namespace JobSystem.DataModel.Entities
 		public virtual JobItem JobItem { get; set; }
 		[StringLength(255, ErrorMessageResourceName = "ProcedureListTooLarge", ErrorMessageResourceType = typeof(Messages))]
 		public virtual string ProcedureList { get; set; }
-		public virtual IList<TestStandard> TestStandards { get; set; }
-
-		public Certificate()
-		{
-			TestStandards = new List<TestStandard>();
-		}
 	}
 }

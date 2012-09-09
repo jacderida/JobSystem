@@ -9,7 +9,6 @@ using JobSystem.DataModel.Entities;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.Certificates;
-using JobSystem.Mvc.ViewModels.TestStandards;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -17,18 +16,16 @@ namespace JobSystem.Mvc.Controllers
 	{
 		private readonly CertificateService _certificateService;
 		private readonly ListItemService _listItemService;
-		private readonly TestStandardsService _testStandardsService;
 
-		public CertificateController(CertificateService certificateService, ListItemService listItemService, TestStandardsService testStandardsService)
+		public CertificateController(CertificateService certificateService, ListItemService listItemService)
 		{
 			_certificateService = certificateService;
 			_listItemService = listItemService;
-			_testStandardsService = testStandardsService;
 		}
 
 		public ActionResult Index()
 		{
-			var items = _certificateService.GetCertificates().Select(i => new CertificateIndexViewModel()
+			var items = _certificateService.GetCertificates().Select(i => new CertificateIndexViewModel
 			{
 				Id = i.Id,
 				CertificateNo = i.CertificateNumber,
@@ -36,15 +33,8 @@ namespace JobSystem.Mvc.Controllers
 				CreatedBy = i.CreatedBy.Name,
 				JobNo = i.JobItem.Job.JobNo,
 				JobItemNo = i.JobItem.ItemNo.ToString(),
-				TypeName = i.Type.Name,
-				TestStandards = i.TestStandards.Select(ts => new TestStandardViewModel()
-				{
-					CertificateNo = ts.CertificateNo,
-					Description = ts.Description,
-					SerialNo = ts.SerialNo
-				}).ToList()
+				TypeName = i.Type.Name
 			}).ToList();
-
 			return View(items);
 		}
 
@@ -54,11 +44,6 @@ namespace JobSystem.Mvc.Controllers
 			var viewmodel = new CertificateViewModel()
 			{
 				CertificateTypes = _listItemService.GetAllByCategory(ListItemCategoryType.Certificate).ToSelectList(),
-				TestStandards = _testStandardsService.GetTestStandards().ToList().Select(x => new SelectListItem
-				{
-					Text = x.Description,
-					Value = x.Id.ToString()
-				}),
 				JobItemId = id
 			};
 			return PartialView("_Create", viewmodel);
@@ -72,7 +57,7 @@ namespace JobSystem.Mvc.Controllers
 				try
 				{
 					NHibernateSession.Current.BeginTransaction();
-					_certificateService.Create(Guid.NewGuid(), viewmodel.CertificateTypeId, viewmodel.JobItemId, null, viewmodel.SelectedTestStandardIds);
+					_certificateService.Create(Guid.NewGuid(), viewmodel.CertificateTypeId, viewmodel.JobItemId, null);
 					NHibernateSession.Current.Transaction.Commit();
 					return RedirectToAction("Details", "JobItem", new { id = viewmodel.JobItemId });
 				}
@@ -92,10 +77,8 @@ namespace JobSystem.Mvc.Controllers
 		[HttpPost]
 		public ActionResult SearchByKeyword(string keyword)
 		{
-			IEnumerable<Certificate> certificates = _certificateService.SearchByKeyword(keyword);
-
+			var certificates = _certificateService.SearchByKeyword(keyword);
 			var certificateViewModels = new List<CertificateIndexViewModel>();
-
 			foreach (var cert in certificates)
 			{
 				certificateViewModels.Add(new CertificateIndexViewModel(){
@@ -108,7 +91,6 @@ namespace JobSystem.Mvc.Controllers
 					TypeName = cert.Type.Name
 				});
 			}
-
 			return PartialView("_SearchResults", certificateViewModels);
 		}
 	}

@@ -57,14 +57,12 @@ namespace TestBed
 				queueDispatcher);
 			var directEntityIdProvider = new DirectEntityIdProvider();
 			var certificateService = new CertificateService(
-				testUserContext, new TestStandardRepository(), new JobItemRepository(), new CertificateRepository(), new ListItemRepository(), directEntityIdProvider, queueDispatcher);
-			var testStandardService = new TestStandardsService(testUserContext, new TestStandardRepository(), queueDispatcher);
+				testUserContext, new JobItemRepository(), new CertificateRepository(), new ListItemRepository(), directEntityIdProvider, queueDispatcher);
 			var jobId = Guid.NewGuid();
 			var jobItemId = Guid.NewGuid();
 			var customerId = Guid.NewGuid();
 			var supplierId = Guid.NewGuid();
 			var instrumentId = Guid.NewGuid();
-			var testStandardId = Guid.NewGuid();
 
 			NHibernateSession.Current.BeginTransaction();
 			supplierService.Create(supplierId, "Gael Ltd", new Address(), new ContactInfo(), new Address(), new ContactInfo());
@@ -76,12 +74,11 @@ namespace TestBed
 				listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).First().Id, 12,
 				"job instructions", "accessories", false, String.Empty, "comments");
 			jobService.ApproveJob(jobId);
-			testStandardService.Create(testStandardId, "test standard", "sn899792", "CN790879");
 
 			NHibernateSession.Current.Transaction.Commit();
 			NHibernateSession.Current.BeginTransaction();
 			certificateService.Create(
-				Guid.NewGuid(), listItemService.GetByType(ListItemType.CertificateTypeHouse).Id, jobItemId, "001", new[] { testStandardId });
+				Guid.NewGuid(), listItemService.GetByType(ListItemType.CertificateTypeHouse).Id, jobItemId, "001");
 			NHibernateSession.Current.Transaction.Commit();
 		}
 

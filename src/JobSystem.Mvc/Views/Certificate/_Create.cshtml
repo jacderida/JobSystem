@@ -17,13 +17,6 @@
 			@Html.ValidationMessageFor(model => model.CertificateTypeId)
 		</div>
 		<div class="editor-label">
-			@Html.LabelFor(model => model.TestStandards)
-		</div>
-		<div class="editor-field">
-			@Html.ListBoxFor(model => model.SelectedTestStandardIds, new MultiSelectList(Model.TestStandards, "Value", "Text"), new { @class = "long-dropdown standardMultiSelect" })
-			@Html.ValidationMessageFor(model => model.SelectedTestStandardIds)
-		</div>
-		<div class="editor-label">
 			@Html.LabelFor(model => model.Attachments)
 		</div>
 		<div id="file-uploader">       

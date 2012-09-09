@@ -154,7 +154,6 @@
     <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
-    <Compile Include="Controllers\TestStandardController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Controllers\WorkItemController.cs" />
     <Compile Include="Core\Utilities\MenuItemHelper.cs" />
@@ -209,8 +208,6 @@
     <Compile Include="ViewModels\Shared\CheckboxViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierIndexViewModel.cs" />
-    <Compile Include="ViewModels\TestStandards\TestStandardListViewModel.cs" />
-    <Compile Include="ViewModels\TestStandards\TestStandardViewModel.cs" />
     <Compile Include="ViewModels\WorkItems\WorkItemCreateViewModel.cs" />
     <Compile Include="ViewModels\Jobs\JobCreateViewModel.cs" />
     <Compile Include="ViewModels\Jobs\JobDetailsViewModel.cs" />
@@ -493,9 +490,6 @@
     <Content Include="Views\Delivery\ApprovedDeliveries.cshtml" />
     <Content Include="Views\Delivery\_Create.cshtml" />
     <Content Include="Views\Delivery\_Details.cshtml" />
-    <Content Include="Views\TestStandard\_Create.cshtml" />
-    <Content Include="Views\TestStandard\Index.cshtml" />
-    <Content Include="Views\TestStandard\_Edit.cshtml" />
     <Content Include="Views\Job\_Certificates.cshtml" />
     <Content Include="Views\Invoice\PendingInvoices.cshtml" />
     <Content Include="Views\Invoice\ApprovedInvoices.cshtml" />

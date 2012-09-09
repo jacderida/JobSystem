@@ -29,9 +29,6 @@ namespace JobSystem.TestHelpers.IntegrationHelpers
 			var entityIdProvider = new DirectEntityIdProvider();
 			var instrumentRepository = new InstrumentRepository();
 
-			var testStandardsService = new TestStandardsService(userContext, new TestStandardRepository(), dispatcher);
-			testStandardsService.Create(testStandardId, "Some test standard", "123456", "CN123456");
-
 			var instrumentId = Guid.NewGuid();
 			var instrumentService = new InstrumentService(userContext, instrumentRepository, dispatcher);
 			instrumentService.Create(instrumentId, "Druck", "DPI601IS", "None", "Description", 15);

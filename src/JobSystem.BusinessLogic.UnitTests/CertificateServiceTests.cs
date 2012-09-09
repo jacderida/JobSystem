@@ -39,7 +39,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var certificateTypeId = Guid.NewGuid();
 			var jobItemId = Guid.NewGuid();
 			var procedureList = "001; 002";
-			var testStandards = new List<Guid>() { Guid.NewGuid(), Guid.NewGuid() };
 
 			var certificateRepositoryMock = MockRepository.GenerateMock<ICertificateRepository>();
 			certificateRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
@@ -47,9 +46,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_userContext,
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsCertificateType(certificateTypeId),
 				certificateRepositoryMock,
-				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
-				TestStandardRepositoryHelper.GetTestStandardRepository_StubsGetById_ReturnsTestStandards(testStandards));
-			Create(id, certificateTypeId, jobItemId, procedureList, testStandards);
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId));
+			Create(id, certificateTypeId, jobItemId, procedureList);
 			certificateRepositoryMock.VerifyAllExpectations();
 			Assert.AreNotEqual(Guid.Empty, _savedCertificate.Id);
 			Assert.That(_savedCertificate.CertificateNumber.StartsWith("CERT"));
@@ -57,7 +55,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.AreEqual("graham.robertson@intertek.com", _savedCertificate.CreatedBy.EmailAddress);
 			Assert.IsNotNull(_savedCertificate.JobItem);
 			Assert.IsNotNull(_savedCertificate.Type);
-			Assert.That(_savedCertificate.TestStandards.Count > 0);
 		}
 
 		[Test]
@@ -68,15 +65,13 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var certificateTypeId = Guid.NewGuid();
 			var jobItemId = Guid.NewGuid();
 			var procedureList = "001; 002";
-			var testStandards = new List<Guid>() { Guid.NewGuid(), Guid.NewGuid() };
 
 			_certificateService = CertificateServiceFactory.Create(
 				_userContext,
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsCertificateType(certificateTypeId),
 				MockRepository.GenerateStub<ICertificateRepository>(),
-				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
-				TestStandardRepositoryHelper.GetTestStandardRepository_StubsGetById_ReturnsTestStandards(testStandards));
-			Create(id, certificateTypeId, jobItemId, procedureList, testStandards);
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId));
+			Create(id, certificateTypeId, jobItemId, procedureList);
 		}
 
 		[Test]
@@ -87,15 +82,13 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var certificateTypeId = Guid.NewGuid();
 			var jobItemId = Guid.NewGuid();
 			var procedureList = "001; 002";
-			var testStandards = new List<Guid>() { Guid.NewGuid(), Guid.NewGuid() };
 
 			_certificateService = CertificateServiceFactory.Create(
 				_userContext,
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsNull(certificateTypeId),
 				MockRepository.GenerateStub<ICertificateRepository>(),
-				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
-				TestStandardRepositoryHelper.GetTestStandardRepository_StubsGetById_ReturnsTestStandards(testStandards));
-			Create(id, certificateTypeId, jobItemId, procedureList, testStandards);
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId));
+			Create(id, certificateTypeId, jobItemId, procedureList);
 		}
 
 		[Test]
@@ -106,15 +99,13 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var certificateTypeId = Guid.NewGuid();
 			var jobItemId = Guid.NewGuid();
 			var procedureList = "001; 002";
-			var testStandards = new List<Guid>() { Guid.NewGuid(), Guid.NewGuid() };
 
 			_certificateService = CertificateServiceFactory.Create(
 				_userContext,
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsNonCertificateType(certificateTypeId),
 				MockRepository.GenerateStub<ICertificateRepository>(),
-				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
-				TestStandardRepositoryHelper.GetTestStandardRepository_StubsGetById_ReturnsTestStandards(testStandards));
-			Create(id, certificateTypeId, jobItemId, procedureList, testStandards);
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId));
+			Create(id, certificateTypeId, jobItemId, procedureList);
 		}
 
 		[Test]
@@ -125,15 +116,13 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var certificateTypeId = Guid.NewGuid();
 			var jobItemId = Guid.NewGuid();
 			var procedureList = "001; 002";
-			var testStandards = new List<Guid>() { Guid.NewGuid(), Guid.NewGuid() };
 
 			_certificateService = CertificateServiceFactory.Create(
 				_userContext,
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsCertificateType(certificateTypeId),
 				MockRepository.GenerateStub<ICertificateRepository>(),
-				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsNull(jobItemId),
-				TestStandardRepositoryHelper.GetTestStandardRepository_StubsGetById_ReturnsTestStandards(testStandards));
-			Create(id, certificateTypeId, jobItemId, procedureList, testStandards);
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsNull(jobItemId));
+			Create(id, certificateTypeId, jobItemId, procedureList);
 		}
 
 		[Test]
@@ -144,15 +133,13 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var certificateTypeId = Guid.NewGuid();
 			var jobItemId = Guid.NewGuid();
 			var procedureList = "001; 002";
-			var testStandards = new List<Guid>() { Guid.NewGuid(), Guid.Empty };
 
 			_certificateService = CertificateServiceFactory.Create(
 				_userContext,
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsCertificateType(certificateTypeId),
 				MockRepository.GenerateStub<ICertificateRepository>(),
-				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
-				TestStandardRepositoryHelper.GetTestStandardRepository_StubsGetById_ReturnsTestStandards(testStandards));
-			Create(id, certificateTypeId, jobItemId, procedureList, testStandards);
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId));
+			Create(id, certificateTypeId, jobItemId, procedureList);
 		}
 
 		[Test]
@@ -162,15 +149,13 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var certificateTypeId = Guid.NewGuid();
 			var jobItemId = Guid.NewGuid();
 			var procedureList = new string('a', 256);
-			var testStandards = new List<Guid>() { Guid.NewGuid(), Guid.NewGuid() };
 
 			_certificateService = CertificateServiceFactory.Create(
 				_userContext,
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsCertificateType(certificateTypeId),
 				MockRepository.GenerateStub<ICertificateRepository>(),
-				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
-				TestStandardRepositoryHelper.GetTestStandardRepository_StubsGetById_ReturnsTestStandards(testStandards));
-			Create(id, certificateTypeId, jobItemId, procedureList, testStandards);
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId));
+			Create(id, certificateTypeId, jobItemId, procedureList);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.ProcedureListTooLarge));
 		}
 
@@ -181,23 +166,21 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var certificateTypeId = Guid.NewGuid();
 			var jobItemId = Guid.NewGuid();
 			var procedureList = "001; 002";
-			var testStandards = new List<Guid>() { Guid.NewGuid(), Guid.NewGuid() };
 
 			_certificateService = CertificateServiceFactory.Create(
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
 				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsCertificateType(certificateTypeId),
 				MockRepository.GenerateStub<ICertificateRepository>(),
-				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
-				TestStandardRepositoryHelper.GetTestStandardRepository_StubsGetById_ReturnsTestStandards(testStandards));
-			Create(id, certificateTypeId, jobItemId, procedureList, testStandards);
+				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId));
+			Create(id, certificateTypeId, jobItemId, procedureList);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
 		}
 
-		public void Create(Guid id, Guid certificateTypeId, Guid jobItemId, string procedureList, List<Guid> testStandardIds)
+		public void Create(Guid id, Guid certificateTypeId, Guid jobItemId, string procedureList)
 		{
 			try
 			{
-				_savedCertificate = _certificateService.Create(id, certificateTypeId, jobItemId, procedureList, testStandardIds);
+				_savedCertificate = _certificateService.Create(id, certificateTypeId, jobItemId, procedureList);
 			}
 			catch (DomainValidationException dex)
 			{
@@ -214,8 +197,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				MockRepository.GenerateStub<ICertificateRepository>(),
-				MockRepository.GenerateStub<IJobItemRepository>(),
-				MockRepository.GenerateStub<ITestStandardRepository>());
+				MockRepository.GenerateStub<IJobItemRepository>());
 			GetCertificatesForJobItem(Guid.NewGuid());
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
 		}
@@ -242,8 +224,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				MockRepository.GenerateStub<ICertificateRepository>(),
-				MockRepository.GenerateStub<IJobItemRepository>(),
-				MockRepository.GenerateStub<ITestStandardRepository>());
+				MockRepository.GenerateStub<IJobItemRepository>());
 			GetById(Guid.NewGuid());
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
 		}
@@ -270,8 +251,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
 				MockRepository.GenerateStub<IListItemRepository>(),
 				MockRepository.GenerateStub<ICertificateRepository>(),
-				MockRepository.GenerateStub<IJobItemRepository>(),
-				MockRepository.GenerateStub<ITestStandardRepository>());
+				MockRepository.GenerateStub<IJobItemRepository>());
 			GetCertificates();
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
 		}
