@@ -11,6 +11,7 @@ using JobSystem.Mvc.Core;
 using JobSystem.Storage.Jobs;
 using JobSystem.Storage.Providers.S3;
 using JobSystem.Storage.Providers.SimpleDb;
+using JobSystem.Storage.Providers.FileSystem;
 
 namespace JobSystem.Mvc.IoC
 {
@@ -31,11 +32,24 @@ namespace JobSystem.Mvc.IoC
 			builder.RegisterType<HostRequestConfigDomainProvider>().As<IHostNameProvider>();
 			builder.RegisterType<S3JobAttachmentDataRepository>().As<IJobAttachmentDataRepository>();
 			builder.RegisterType<JobAttachmentService>().AsSelf();
-			builder.RegisterType<SimpleDbConnectionStringProviderRepository>().As<IConnectionStringProviderRepository>();
+			RegisterTenantConfig(builder);
+			RegisterAttachmentRepositories(builder);
+		}
+
+		private static void RegisterTenantConfig(ContainerBuilder builder)
+		{
 			if (Config.UseRemoteConfig())
 				builder.RegisterType<RemoteTenantConfig>().As<ITenantConfig>().InstancePerLifetimeScope();
 			else
 				builder.RegisterType<LocalTenantConfig>().As<ITenantConfig>().InstancePerLifetimeScope();
+		}
+
+		private static void RegisterAttachmentRepositories(ContainerBuilder builder)
+		{
+			if (Config.UseRemoteConfig())
+				builder.RegisterType<S3JobAttachmentDataRepository>().As<IJobAttachmentDataRepository>();
+			else
+				builder.RegisterType<FileSystemAttachmentStorage>().As<IJobAttachmentDataRepository>();
 		}
 	}
 }
