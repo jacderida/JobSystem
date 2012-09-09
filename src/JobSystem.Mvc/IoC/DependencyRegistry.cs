@@ -32,6 +32,7 @@ namespace JobSystem.Mvc.IoC
 			builder.RegisterType<HostRequestConfigDomainProvider>().As<IHostNameProvider>();
 			builder.RegisterType<S3JobAttachmentDataRepository>().As<IJobAttachmentDataRepository>();
 			builder.RegisterType<JobAttachmentService>().AsSelf();
+			builder.RegisterType<SimpleDbConnectionStringProviderRepository>().As<IConnectionStringProviderRepository>();
 			RegisterTenantConfig(builder);
 			RegisterAttachmentRepositories(builder);
 		}
