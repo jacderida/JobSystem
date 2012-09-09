@@ -31,7 +31,7 @@
 	<div class="item-details-fields">
 		<h3 id="job-item-number">@Model.InstrumentDetails</h3>
 		<div class="details-fields">
-			<span class="field-label">Location</span>
+			<!--<span class="field-label">Location</span>-->
 			<span class="field-label">Status</span>
 			<span class="field">@Model.InitialStatus</span>
 			@if (!@Model.SerialNo.IsEmpty()) {
@@ -51,6 +51,7 @@
 			}
 			else
 			{
+				<span class="field-label">Asset Number</span>
 				<span class="field">n/a</span>
 			}
 			<span class="field-label">Calibration Period</span>
@@ -60,7 +61,7 @@
 		</div>
 		<div class="details-fields">
 			<span class="field-label">Invoicing</span>
-			<span class="field">@Ajax.ActionLink("Mark for Invoicing", "CreatePending", "Invoice", new { jobItemId = Model.Id }, new AjaxOptions(){ HttpMethod = "POST" } , new { @class = "primary-action" })</span>
+			<span class="field">@Ajax.ActionLink("Mark for Invoicing", "CreatePending", "Invoice", new { jobItemId = Model.Id }, new AjaxOptions() { HttpMethod = "POST" }, new { @class = "primary-action" })</span>
 		</div>
 	</div>
 </div>
@@ -87,48 +88,55 @@
 			<a href="#" class="primary-action createWorkButton" id="@Model.Id">Create Work Item</a>
 			<div class="text">
 			@if (Model.WorkItems.Any())
-			{
+   {
 				@Html.Partial("~/Views/WorkItem/_Details.cshtml")
-			}
-			else
-			{
+   }
+   else
+   {
 				<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoWorkItems</div>
-			}
+   }
 			</div>
 		</div>
 		<div id="st_content_2" class="st_tab_view">
 			<a href="#" class="primary-action createCertificateButton" id="@Model.Id">Create Certificate</a>
 			<div class="text">
 			@if (Model.Certificates.Any())
-			{
+   {
 				@Html.Partial("~/Views/Job/_Certificates.cshtml")
-			}
-			else
-			{
+   }
+   else
+   {
 				<div id="empty-list">@JobSystem.Resources.Certificates.Messages.NoCertificates</div>
-			}
+   }
 			</div>
 		</div>
 		<div id="st_content_3" class="st_tab_view">
 			<div class="text">	
 				@if (Model.QuoteItem != null)
-				{
+	{
 					@Html.ActionLink("Edit Quote", "EditItem", "Quote", new { id = @Model.Id, fromJi = true, isQuoted = Model.QuoteItem.IsQuoted }, new { @class = "primary-action" })
-					if (Model.QuoteItem.IsQuoted) {
-						if (Model.QuoteItem.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuotedPrepared) {
-							@Ajax.ActionLink("Accept", "AcceptQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Accepted')" }, new { @class = "primary-action", id="acceptQuoteItemButton" })
-							@Ajax.ActionLink("Reject", "RejectQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Rejected')" },  new { @class = "primary-action" })
-						} else if (Model.QuoteItem.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuoteAccepted) {
-							@Ajax.ActionLink("Reject", "RejectQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Rejected')" },  new { @class = "primary-action" })
-						} else {
-							@Ajax.ActionLink("Accept", "AcceptQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Accepted')" }, new { @class = "primary-action", id="acceptQuoteItemButton" })
-						}
-					}
+if (Model.QuoteItem.IsQuoted)
+{
+	if (Model.QuoteItem.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuotedPrepared)
+	{
+							@Ajax.ActionLink("Accept", "AcceptQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Accepted')" }, new { @class = "primary-action", id = "acceptQuoteItemButton" })
+							@Ajax.ActionLink("Reject", "RejectQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Rejected')" }, new { @class = "primary-action" })
+	}
+	else if (Model.QuoteItem.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuoteAccepted)
+	{
+							@Ajax.ActionLink("Reject", "RejectQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Rejected')" }, new { @class = "primary-action" })
+	}
+	else
+	{
+							@Ajax.ActionLink("Accept", "AcceptQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Accepted')" }, new { @class = "primary-action", id = "acceptQuoteItemButton" })
+	}
+}
 					<div class="quote-item">
-						@if (Model.QuoteItem.IsQuoted) {
+						@if (Model.QuoteItem.IsQuoted)
+	  {
 							<h3>@Model.QuoteItem.QuoteNo</h3><br />
 							<h3 id="quoteItemStatusLabel">@Model.QuoteItem.Status</h3><br />
-						}
+	  }
 						<div class="details-fields">
 							<span class="field-label">Order No.</span>
 							<span class="field">@Model.QuoteItem.OrderNo</span>
@@ -152,12 +160,12 @@
 							<span class="field">@Model.QuoteItem.Days</span>
 						</div>
 					</div>
-				}
-				else
-				{
+	}
+	else
+	{
 					@Html.ActionLink("Raise Quote", "Create", "Quote", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action createQuoteButton" })
 					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
-				}
+	}
 			</div>
 		</div>
 		<div id="st_content_4" class="st_tab_view">
@@ -168,16 +176,16 @@
 				<div id="edit-consignment-container">@*Content ajaxed in*@</div>
 
 				@if (Model.ConsignmentItem != null)
-				{
+	{
 					<div class="consignment-item">
 						<h3>@Model.ConsignmentItem.SupplierName</h3>
 						@Model.ConsignmentItem.Instructions
 					</div>
 					<br />
 					<a href="#" class="primary-action editConsignmentButton" id="@Model.ConsignmentItem.Id">Edit</a>
-				}
-				else if (Model.Consignment != null)
-				{
+	}
+	else if (Model.Consignment != null)
+	{
 					<div class="consignment-item">
 						<h3>@Model.Consignment.SupplierName</h3>
 						@Model.Consignment.ConsignmentNo<br />
@@ -185,18 +193,18 @@
 							Created by <span class="strongText">@Model.Consignment.CreatedBy</span> on <span class="strongText">@Model.Consignment.DateCreated</span>
 						</span>
 					</div>
-				}
-				else
-				{
+	}
+	else
+	{
 					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
-				}
+	}
 			</div>
 		</div>
 		<div id="st_content_5" class="st_tab_view">
 			<div class="text">
 				@if (Model.OrderItem != null)
-				{
-					@Html.ActionLink("Edit Order Item", "EditItem", "Order", new { jobItemId = @Model.Id }, new { @class = "primary-action"})
+	{
+					@Html.ActionLink("Edit Order Item", "EditItem", "Order", new { jobItemId = @Model.Id }, new { @class = "primary-action" })
 					<div class="quote-item">
 						<div class="details-fields">
 							<span class="field-label">Order No.</span>
@@ -217,9 +225,9 @@
 							<span class="field">@Model.OrderItem.Quantity</span>
 						</div>
 					</div>
-				}
-				else if (Model.Order != null)
-				{
+	}
+	else if (Model.Order != null)
+	{
 					<span class="verySmallText">
 						Created by <span class="strongText">@Model.Order.CreatedBy</span> on <span class="strongText">@Model.Order.DateCreated</span>
 					</span>
@@ -235,18 +243,18 @@
 							<span class="field">@Model.Order.Currency</span>
 						</div>
 					</div>
-				}
-				else
-				{
+	}
+	else
+	{
 					@Html.ActionLink("Raise Order", "Create", "Order", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action" })
 					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
-				}
+	}
 			</div>
 		</div>
 		<div id="st_content_6" class="st_tab_view">
 			<div class="text">
 				@if (Model.Delivery != null)
-				{
+	{
 					<div class="details-fields">
 						<span class="field-label">Notes</span>
 						<span class="field">@Model.Delivery.Notes</span>
@@ -257,9 +265,11 @@
 						<span class="field-label">Created By</span>
 						<span class="field">@Model.Delivery.CreatedBy</span>
 					</div>
-				}else{
+	}
+	else
+	{
 					<a href="#" class="primary-action createDeliveryButton" id="@Model.Id">Raise Delivery</a>
-				}
+	}
 			</div>
 		</div>
 		<div id="st_content_7" class="st_tab_view">
