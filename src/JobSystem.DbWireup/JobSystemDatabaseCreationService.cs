@@ -16,17 +16,19 @@ namespace JobSystem.DbWireup
 	public class JobSystemDatabaseCreationService : IJobSystemDatabaseCreationService
 	{
 		private const string DatabaseExistsQuery = "USE master; SELECT COUNT(*) FROM sysdatabases WHERE name='{0}'";
+		private const string LoginExistsQuery = "USE master; SELECT COUNT(*) from master..syslogins WHERE name = '{0}'";
+		private const string CreateLoginQuery = "CREATE LOGIN [{0}] WITH PASSWORD=N'{1}', DEFAULT_DATABASE=[master], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF";
+		private const string ModifyLoginRoleQuery = "EXEC master..sp_addsrvrolemember @loginame = N'{0}', @rolename = N'sysadmin'";
+		private const string CreateUserQuery = "USE [{0}]; CREATE USER [{1}] FOR LOGIN [{2}];";
 		private readonly string _databaseName;
-		private readonly string _connectionName;
+		private string _loginPassword;
 
 		/// <summary>
 		/// Initialises an instance of the JobSystemDatabaseCreationService class.
 		/// </summary>
-		/// <param name="connectionName">The name of the initial connection (which should be configured to point to the master database).</param>
-		/// <param name="databaseName">The name of the database to create, which will be prefixed with "JobSystem."</param>
-		public JobSystemDatabaseCreationService(string connectionName, string databaseName)
+		/// <param name="databaseName">The name of the database to create, which will be prefixed with "jobsystem."</param>
+		public JobSystemDatabaseCreationService(string databaseName)
 		{
-			_connectionName = connectionName;
 			_databaseName = String.Format("jobsystem.{0}", databaseName).ToLower();
 		}
 
@@ -55,6 +57,56 @@ namespace JobSystem.DbWireup
 			{
 				conn.Close();
 			}
+		}
+
+		public void CreateServerLogin()
+		{
+			var conn = GetConnection();
+			try
+			{
+				conn.Open();
+				var cmd = conn.CreateCommand();
+				if (!LoginExists(conn, _databaseName))
+				{
+					_loginPassword = Guid.NewGuid().ToString();
+					cmd.CommandText = String.Format(CreateLoginQuery, _databaseName, _loginPassword);
+					cmd.ExecuteNonQuery();
+					cmd.CommandText = String.Format(ModifyLoginRoleQuery, _databaseName);
+					cmd.ExecuteNonQuery();
+				}
+			}
+			catch (SqlException)
+			{
+				throw;
+			}
+			finally
+			{
+				conn.Close();
+			}
+		}
+
+		public void CreateUserLogin()
+		{
+			var conn = GetConnection();
+			try
+			{
+				conn.Open();
+				ExecuteCreateUserLoginCommand(conn);
+				ExecuteAddRoleCommands(conn);
+			}
+			catch (SqlException)
+			{
+				throw;
+			}
+			finally
+			{
+				conn.Close();
+			}
+		}
+
+		public string GetGeneratedPassword()
+		{
+			return String.Format("Generated password for {0}: {1}", _databaseName, _loginPassword);
 		}
 
 		public void CreateJobSystemSchemaFromMigrations(string migrationsAssemblyPath)
@@ -224,21 +276,52 @@ namespace JobSystem.DbWireup
 
 		private SqlConnection GetConnection()
 		{
-			return new SqlConnection(ConfigurationManager.ConnectionStrings[_connectionName].ConnectionString);
+			return new SqlConnection(ConfigurationManager.ConnectionStrings["JobSystem"].ConnectionString);
 		}
 
 		private string GetConnectionStringForCatalog(string databaseName)
 		{
-			var csb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings[_connectionName].ConnectionString);
+			var csb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["JobSystem"].ConnectionString);
 			csb.InitialCatalog = databaseName;
 			return csb.ToString();
 		}
 
+		private void ExecuteCreateUserLoginCommand(SqlConnection conn)
+		{
+			var cmd = conn.CreateCommand();
+			if (!LoginExists(conn, _databaseName))
+				throw new InvalidOperationException(
+					String.Format("Cannot create a user for login {0}, because the login doesn't exist.", _databaseName));
+			cmd.CommandText = String.Format(CreateUserQuery, _databaseName, _databaseName, _databaseName);
+			cmd.ExecuteNonQuery();
+		}
+
+		private void ExecuteAddRoleCommands(SqlConnection conn)
+		{
+			var cmd = GetAddUserRoleCommand(conn, "db_datawriter");
+			cmd.ExecuteNonQuery();
+			cmd = GetAddUserRoleCommand(conn, "db_datareader");
+			cmd.ExecuteNonQuery();
+		}
+
+		private SqlCommand GetAddUserRoleCommand(SqlConnection conn, string role)
+		{
+			var cmd = new SqlCommand("sp_addrolemember", conn);
+			cmd.CommandType = CommandType.StoredProcedure;
+			cmd.Parameters.Add(new SqlParameter("@rolename", role));
+			cmd.Parameters.Add(new SqlParameter("@membername", _databaseName));
+			return cmd;
+		}
+
 		private bool DatabaseExists(SqlConnection conn, string databaseName)
 		{
-			if (conn.State != ConnectionState.Open)
-				throw new InvalidOperationException("The database connection must be open to query for an existing database");
 			var cmd = new SqlCommand(String.Format(DatabaseExistsQuery, databaseName), conn);
+			return (int)cmd.ExecuteScalar() == 1;
+		}
+
+		private bool LoginExists(SqlConnection conn, string loginName)
+		{
+			var cmd = new SqlCommand(String.Format(LoginExistsQuery, loginName), conn);
 			return (int)cmd.ExecuteScalar() == 1;
 		}
 	}
