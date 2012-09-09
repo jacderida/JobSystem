@@ -136,6 +136,7 @@ div.st_vertical ul.st_tabs a.st_tab_active { /* Tab active/highlighted state */
 	color:#021538;
 	padding-right:1px;
 	background:#fff;
+	border-left: 3px solid #021538;
 }
 
 /* Content

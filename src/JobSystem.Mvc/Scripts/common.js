@@ -375,11 +375,12 @@ $(document).ready(function () {
 			});
 		});
 
+		var uploadElement = document.getElementById('file-uploader');
 		var uploader = new qq.FileUploader({
 			// pass the dom node (ex. $(selector)[0] for jQuery users)
-			element: document.getElementById('file-uploader'),
+			element: uploadElement,
 			// path to server-side upload script
-			action: "../Attachments/AddAttachment",
+			action: uploadElement.getAttribute("data-upload-path"),
 			onComplete: function (id, fileName, responseJSON) {
 				var idHidden = '<input type="hidden" name="AttachmentId" value="' + responseJSON.Id + '"/>';
 				var nameHidden = '<input type="hidden" name="AttachmentName" value="' + responseJSON.Filename + '"/>';
@@ -463,17 +464,17 @@ $(document).ready(function () {
 			}
 		}
 
-//		$('#deliveryCheckbox').click(function () {
-//			populateAddressFields('delivery', $(this).is(':checked'));
-//		});
+		//		$('#deliveryCheckbox').click(function () {
+		//			populateAddressFields('delivery', $(this).is(':checked'));
+		//		});
 
-//		$('#invoiceCheckbox').click(function () {
-//			populateAddressFields('invoice', $(this).is(':checked'));
-//		});
+		//		$('#invoiceCheckbox').click(function () {
+		//			populateAddressFields('invoice', $(this).is(':checked'));
+		//		});
 
-//		$('#salesCheckbox').click(function () {
-//			populateAddressFields('sales', $(this).is(':checked'));
-//		});
+		//		$('#salesCheckbox').click(function () {
+		//			populateAddressFields('sales', $(this).is(':checked'));
+		//		});
 	});
 
 	$('.work-item-list-item').live('mouseenter', function () {

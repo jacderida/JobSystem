@@ -59,7 +59,7 @@
 		<div class="editor-label">
 			@Html.LabelFor(model => model.Attachments)
 		</div>
-		<div id="file-uploader">       
+		<div id="file-uploader" data-upload-path="@Url.Action("AddAttachment", "Attachments")">       
 			<noscript>          
 				<p>Please enable JavaScript to use file uploader.</p>
 				<!-- or put a simple form for upload here -->

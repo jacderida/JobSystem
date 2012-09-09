@@ -46,6 +46,12 @@
 			</div>
 			<div id="job-details-notes">
 				<span class="details-header">Attachments</span>
+				<div id="file-uploader" data-upload-path="@Url.Action("AddAttachment", "Attachments")">       
+					<noscript>          
+						<p>Please enable JavaScript to use file uploader.</p>
+						<!-- or put a simple form for upload here -->
+					</noscript>         
+				</div>
 				@foreach (var attachment in Model.Attachments)
 				{
 					<span class="field-label">@Html.ActionLink(@attachment.Name, "GetAttachment", new { id = @Model.Id, attachmentId = @attachment.Id }) </span>
