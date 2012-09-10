@@ -73,7 +73,7 @@ namespace JobSystem.Mvc.Controllers
 				}
 				catch (DomainValidationException dex)
 				{
-					transaction.Commit();
+					transaction.Rollback();
 					ModelState.UpdateFromDomain(dex.Result);
 				}
 				finally

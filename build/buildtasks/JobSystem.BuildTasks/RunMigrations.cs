@@ -71,10 +71,13 @@ namespace JobSystem.BuildTasks
 				var process = new Process();
 				process.StartInfo.FileName = MigratePath;
 				process.StartInfo.Arguments = GetMigrateArguments(connectionString);
+				Log.LogMessage("Args: {0}", process.StartInfo.Arguments);
 				process.StartInfo.UseShellExecute = false;
 				process.StartInfo.RedirectStandardOutput = true;
 				process.Start();
+				var output = process.StandardOutput.ReadToEnd();
 				process.WaitForExit();
+				Log.LogMessage(output);
 				if (process.ExitCode == -1)
 					throw new InvalidOperationException(String.Format("Migrations failed to run for {0}", connectionString));
 			}
