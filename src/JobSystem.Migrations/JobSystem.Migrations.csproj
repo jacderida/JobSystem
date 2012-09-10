@@ -101,6 +101,7 @@
     <Compile Include="M20120829204945_AddDeliveryLinesToCustomerTable.cs" />
     <Compile Include="M20120909045359_RemoveTestStandards.cs" />
     <Compile Include="M20120910033611_DebugMigration.cs" />
+    <Compile Include="M20120910042017_RemoveDebugMigration.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
