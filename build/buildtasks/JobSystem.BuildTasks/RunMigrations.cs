@@ -85,7 +85,7 @@ namespace JobSystem.BuildTasks
 
 		private string GetMigrateArguments(string connectionString)
 		{
-			return String.Format("-a {0} -db SqlServer2008 --conn \"{0}\"", MigrationsAssemblyPath, connectionString);
+			return String.Format("-a {0} -db SqlServer2008 --conn \"{1}\"", MigrationsAssemblyPath, connectionString);
 		}
 	}
 }
