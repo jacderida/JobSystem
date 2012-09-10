@@ -73,12 +73,18 @@ namespace JobSystem.BuildTasks
 				process.StartInfo.Arguments = GetMigrateArguments(connectionString);
 				process.StartInfo.UseShellExecute = false;
 				process.StartInfo.RedirectStandardOutput = true;
+				process.StartInfo.RedirectStandardError = true;
 				process.Start();
 				var output = process.StandardOutput.ReadToEnd();
+				var error = process.StandardError.ReadToEnd();
 				process.WaitForExit();
 				Log.LogMessage(output);
-				if (process.ExitCode == -1)
+				if (process.ExitCode == -1 || !String.IsNullOrEmpty(error))
+				{
+					process.Close();
 					throw new InvalidOperationException(String.Format("Migrations failed to run for {0}", connectionString));
+				}
+				process.Close();
 			}
 		}
 
