@@ -12,7 +12,7 @@ namespace JobSystem.Migrations
 
 		public override void Up()
 		{
-			Create.Table("DebuggingTable").WithColumn("Test");
+			Create.Table("DebuggingTable").WithColumn("Test").AsString(255).Nullable();
 		}
 
 		public override void Down()

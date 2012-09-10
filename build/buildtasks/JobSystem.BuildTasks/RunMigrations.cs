@@ -82,7 +82,7 @@ namespace JobSystem.BuildTasks
 				if (process.ExitCode == -1 || !String.IsNullOrEmpty(error))
 				{
 					process.Close();
-					throw new InvalidOperationException(String.Format("Migrations failed to run for {0}", connectionString));
+					throw new InvalidOperationException(String.Format("Migrations failed to run for {0}: {1}", connectionString, error));
 				}
 				process.Close();
 			}
