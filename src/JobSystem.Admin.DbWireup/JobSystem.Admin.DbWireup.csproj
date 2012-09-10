@@ -8,8 +8,8 @@
     <ProjectGuid>{DF20A53E-E26C-409C-B5CA-39200146AC30}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JobSystem.DbWireup</RootNamespace>
-    <AssemblyName>JobSystem.DbWireup</AssemblyName>
+    <RootNamespace>JobSystem.Admin.DbWireup</RootNamespace>
+    <AssemblyName>JobSystem.Admin.DbWireup</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

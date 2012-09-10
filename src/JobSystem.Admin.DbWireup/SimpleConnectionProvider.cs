@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Data.SqlClient;
 
-namespace JobSystem.DbWireup
+namespace JobSystem.Admin.DbWireup
 {
 	public class SimpleConnectionProvider : DriverConnectionProvider
 	{

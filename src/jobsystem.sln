@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSystem.BusinessLogic.Uni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSystem.DataAnnotations", "JobSystem.DataAnnotations\JobSystem.DataAnnotations.csproj", "{30BCF34C-155C-442B-BB52-C10535AAEBB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSystem.DbWireup", "JobSystem.DbWireup\JobSystem.DbWireup.csproj", "{DF20A53E-E26C-409C-B5CA-39200146AC30}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSystem.Admin.DbWireup", "JobSystem.Admin.DbWireup\JobSystem.Admin.DbWireup.csproj", "{DF20A53E-E26C-409C-B5CA-39200146AC30}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{CEDF1964-3DB2-4A0D-B2D5-6D936714C67C}"
 EndProject
@@ -40,6 +40,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSystem.Reporting", "JobSystem.Reporting\JobSystem.Reporting.csproj", "{1BF82DDE-CF7D-48EC-B00E-29991FC2A14D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSystem.Storage", "JobSystem.Storage\JobSystem.Storage.csproj", "{0C2DBC57-A6E6-4AA6-90B9-7DA9FA96F2E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "admin", "admin", "{EF737879-A9B5-40D4-8719-E1C982E7B569}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

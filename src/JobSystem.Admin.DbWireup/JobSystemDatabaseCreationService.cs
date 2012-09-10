@@ -11,7 +11,7 @@ using JobSystem.Framework;
 using JobSystem.Framework.Security;
 using NHibernate.Linq;
 
-namespace JobSystem.DbWireup
+namespace JobSystem.Admin.DbWireup
 {
 	public class JobSystemDatabaseCreationService : IJobSystemDatabaseCreationService
 	{

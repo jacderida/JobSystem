@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Data.SQLite;
 using System.IO;
+using JobSystem.Admin.DbWireup;
 using JobSystem.DataModel.Entities;
-using JobSystem.DbWireup;
 using NHibernate.Connection;
 using NUnit.Framework;
 

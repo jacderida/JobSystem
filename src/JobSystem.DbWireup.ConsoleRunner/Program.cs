@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using JobSystem.Admin.DbWireup;
 using JobSystem.DataModel.Entities;
-using System.Configuration;
 
 namespace JobSystem.DbWireup.ConsoleRunner
 {

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using FluentNHibernate.Cfg.Db;
+using JobSystem.Admin.DbWireup;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.DataAccess.NHibernate;
 using JobSystem.DataAccess.NHibernate.Mappings;
@@ -14,11 +15,10 @@ using JobSystem.DataModel;
 using JobSystem.DataModel.Dto;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
-using JobSystem.DbWireup;
 using JobSystem.Framework.Messaging;
 using JobSystem.Framework.Security;
-using NHibernate.Connection;
 using JobSystem.Storage.Providers.FileSystem;
+using NHibernate.Connection;
 
 namespace TestBed
 {

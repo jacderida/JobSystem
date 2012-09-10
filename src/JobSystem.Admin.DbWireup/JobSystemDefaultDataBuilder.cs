@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using JobSystem.DataModel.Entities;
 
-namespace JobSystem.DbWireup
+namespace JobSystem.Admin.DbWireup
 {
 	public class JobSystemDefaultDataBuilder
 	{

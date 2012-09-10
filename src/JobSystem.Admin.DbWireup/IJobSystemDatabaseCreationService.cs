@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using JobSystem.DataModel.Entities;
 
-namespace JobSystem.DbWireup
+namespace JobSystem.Admin.DbWireup
 {
 	public interface IJobSystemDatabaseCreationService
 	{
