@@ -55,7 +55,7 @@
 	<Target Name="DoRunMigrations">
 		<PropertyGroup>
 			<MigratePath>$(ProjectLibDirectory)\fluentmigrator\Migrate.exe</MigratePath>
-			<MigrationsAssemblyPath>$(ProjectRunDirectory)\JobSystem.Migrations.dll</MigrationsAssemblyPath>
+			<MigrationsAssemblyPath>$(ProjectBuildBinDirectory)\JobSystem.Migrations.dll</MigrationsAssemblyPath>
 			<TenantListDatabaseServer>jobsys.ca0li8yz4xun.eu-west-1.rds.amazonaws.com</TenantListDatabaseServer>
 			<TenantListDatabaseUserName>jobsysmaster</TenantListDatabaseUserName>
 			<TenantListDatabasePassword>jobsystem</TenantListDatabasePassword>
