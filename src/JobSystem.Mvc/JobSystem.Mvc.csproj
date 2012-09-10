@@ -324,7 +324,7 @@
     <Content Include="Views\Consignment\RepConsignmentNote.aspx" />
     <Content Include="Views\Delivery\RepDeliveryNote.aspx" />
     <Content Include="Views\Invoice\RepInvoiceNote.aspx" />
-    <Content Include="Views\Home\Order\RepOrderNote.aspx" />
+    <Content Include="Views\Order\RepOrderNote.aspx" />
     <Content Include="Views\Quote\RepQuoteNote.aspx" />
     <Content Include="Views\Report\RepJobItemsAtStatus.aspx" />
     <Content Include="Views\Report\RepEquipmentProgress.aspx" />
@@ -473,19 +473,19 @@
     <Content Include="Views\BankDetails\Index.cshtml" />
     <Content Include="Views\BankDetails\Create.cshtml" />
     <Content Include="Views\BankDetails\Edit.cshtml" />
-    <None Include="Views\Consignment\PendingConsignments.cshtml" />
+    <Content Include="Views\Consignment\PendingConsignments.cshtml" />
     <Content Include="Views\WorkItem\_Details.cshtml" />
-    <Content Include="Views\Home\Order\PendingOrders.cshtml" />
+    <Content Include="Views\Order\PendingOrders.cshtml" />
     <Content Include="Views\Quote\PendingQuotes.cshtml" />
     <Content Include="Views\Quote\ApprovedQuotes.cshtml" />
     <Content Include="Views\Quote\Create.cshtml" />
     <Content Include="Views\Consignment\_Edit.cshtml" />
     <Content Include="Views\Quote\EditItem.cshtml" />
-    <Content Include="Views\Home\Order\CreateIndividualOrder.cshtml" />
-    <Content Include="Views\Home\Order\Details.cshtml" />
-    <Content Include="Views\Home\Order\CreateItem.cshtml" />
-    <Content Include="Views\Home\Order\ApprovedOrders.cshtml" />
-    <Content Include="Views\Home\Order\EditItem.cshtml" />
+    <Content Include="Views\Order\CreateIndividualOrder.cshtml" />
+    <Content Include="Views\Order\Details.cshtml" />
+    <Content Include="Views\Order\CreateItem.cshtml" />
+    <Content Include="Views\Order\ApprovedOrders.cshtml" />
+    <Content Include="Views\Order\EditItem.cshtml" />
     <Content Include="Views\Delivery\PendingDeliveries.cshtml" />
     <Content Include="Views\Delivery\ApprovedDeliveries.cshtml" />
     <Content Include="Views\Delivery\_Create.cshtml" />
@@ -494,17 +494,17 @@
     <Content Include="Views\Invoice\PendingInvoices.cshtml" />
     <Content Include="Views\Invoice\ApprovedInvoices.cshtml" />
     <Content Include="Views\Quote\Edit.cshtml" />
-    <Content Include="Views\Home\Order\EditPendingItem.cshtml" />
+    <Content Include="Views\Order\EditPendingItem.cshtml" />
     <Content Include="Views\Currency\Index.cshtml" />
     <Content Include="Views\Currency\_Create.cshtml" />
     <Content Include="Views\Currency\_Edit.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Order\PendingOrderItems.cshtml" />
+    <Content Include="Views\Order\PendingOrderItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Order\Create.cshtml" />
+    <Content Include="Views\Order\Create.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -22,6 +22,10 @@ namespace JobSystem.BusinessLogic.Services
 			var getIdUrl = GetUrlForDomain(domain);
 			getIdUrl = getIdUrl + @"EntityId/GetId/" + typeName;
 
+			if (!Directory.Exists(@"c:\temp"))
+				Directory.CreateDirectory(@"c:\temp");
+			File.WriteAllText(@"c:\temp\getIdUrl.txt", getIdUrl);
+
 			var webRequest = (HttpWebRequest)WebRequest.Create(getIdUrl);
 			string entityId;
 			using (var response = webRequest.GetResponse())
