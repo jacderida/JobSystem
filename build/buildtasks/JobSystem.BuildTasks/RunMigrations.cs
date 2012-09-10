@@ -71,7 +71,6 @@ namespace JobSystem.BuildTasks
 				var process = new Process();
 				process.StartInfo.FileName = MigratePath;
 				process.StartInfo.Arguments = GetMigrateArguments(connectionString);
-				Log.LogMessage("Args: {0}", process.StartInfo.Arguments);
 				process.StartInfo.UseShellExecute = false;
 				process.StartInfo.RedirectStandardOutput = true;
 				process.Start();
@@ -85,7 +84,9 @@ namespace JobSystem.BuildTasks
 
 		private string GetMigrateArguments(string connectionString)
 		{
-			return String.Format("-a {0} -db SqlServer2008 --conn \"{1}\"", MigrationsAssemblyPath, connectionString);
+			var args = String.Format("-a {0} -db SqlServer2008 --conn \"{1}\"", MigrationsAssemblyPath, connectionString);
+			Log.LogMessage(args);
+			return args;
 		}
 	}
 }
