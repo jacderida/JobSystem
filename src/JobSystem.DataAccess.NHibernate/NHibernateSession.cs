@@ -57,11 +57,6 @@ namespace JobSystem.DataAccess.NHibernate
 			}
 		}
 
-		/*
-		 * This is a major hack!
-		 * 
-		 * It's 
-		 * */
 		public static void TryCommitTransactionForEntityWithUniqueId()
 		{
 			try

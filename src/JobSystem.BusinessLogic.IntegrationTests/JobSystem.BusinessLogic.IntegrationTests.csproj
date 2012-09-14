@@ -96,7 +96,7 @@
       <Project>{4F88F47B-AAE1-4E7D-AFF1-654C67A8A61C}</Project>
       <Name>JobSystem.DataModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JobSystem.DbWireup\JobSystem.Admin.DbWireup.csproj">
+    <ProjectReference Include="..\JobSystem.Admin.DbWireup\JobSystem.Admin.DbWireup.csproj">
       <Project>{DF20A53E-E26C-409C-B5CA-39200146AC30}</Project>
       <Name>JobSystem.Admin.DbWireup</Name>
     </ProjectReference>

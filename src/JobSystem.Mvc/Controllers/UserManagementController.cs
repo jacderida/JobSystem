@@ -137,30 +137,29 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Edit(Guid id)
 		{
 			var user = _userManagementService.GetById(id);
-
 			var roles = from UserRole s in Enum.GetValues(typeof(UserRole))
 						select new { RoleId = (int)s, Name = s.ToString() };
-
 			var roleVms = new List<CheckboxViewModel>();
-
 			foreach (var role in roles)
 			{
-				roleVms.Add(new CheckboxViewModel()
+				if (role.Name != "None")
 				{
-					Id = role.RoleId,
-					//IsChecked = (user.Roles[index].SomeStuff) ? true : false,
-					Name = role.Name
-				});
+					roleVms.Add(new CheckboxViewModel
+					{
+						Id = role.RoleId,
+						IsChecked = (int)((int)user.Roles & role.RoleId) == role.RoleId,
+						Name = role.Name
+					});
+				}
 			}
-
 			return PartialView("_Edit", new UserAccountEditViewModel
-				{
-					Id = user.Id,
-					EmailAddress = user.EmailAddress,
-					Name = user.Name,
-					JobTitle = user.JobTitle,
-					Roles = roleVms
-				});
+			{
+				Id = user.Id,
+				EmailAddress = user.EmailAddress,
+				Name = user.Name,
+				JobTitle = user.JobTitle,
+				Roles = roleVms
+			});
 		}
 
 		[HttpPost]
