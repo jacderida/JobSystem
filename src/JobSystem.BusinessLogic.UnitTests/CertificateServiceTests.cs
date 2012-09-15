@@ -126,23 +126,6 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
-		[ExpectedException(typeof(ArgumentException))]
-		public void Create_InvalidTestStandardId_ArgumentExceptionThrown()
-		{
-			var id = Guid.NewGuid();
-			var certificateTypeId = Guid.NewGuid();
-			var jobItemId = Guid.NewGuid();
-			var procedureList = "001; 002";
-
-			_certificateService = CertificateServiceFactory.Create(
-				_userContext,
-				ListItemRepositoryTestHelper.GetListItemRepository_StubsGetById_ReturnsCertificateType(certificateTypeId),
-				MockRepository.GenerateStub<ICertificateRepository>(),
-				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId));
-			Create(id, certificateTypeId, jobItemId, procedureList);
-		}
-
-		[Test]
 		public void Create_ProcedureListGreaterThan255Characters_DomainValidationExceptionThrown()
 		{
 			var id = Guid.NewGuid();

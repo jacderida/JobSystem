@@ -94,14 +94,14 @@ namespace JobSystem.BusinessLogic.Services
 
 		public Order GetById(Guid id)
 		{
-			if (!CurrentUser.HasRole(UserRole.Manager))
+			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			return _orderRepository.GetById(id);
 		}
 
 		public IEnumerable<Order> GetOrders()
 		{
-			if (!CurrentUser.HasRole(UserRole.Manager))
+			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			return _orderRepository.GetOrders();
 		}
