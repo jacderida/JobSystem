@@ -120,6 +120,11 @@
             Gets or sets the assembly qualified name of the rendered report.
             </summary>
         </member>
+        <member name="P:Telerik.Reporting.Service.RenderingSessionInfo.DocumentName">
+            <summary>
+            Gets or sets the report document name of the rendered report.
+            </summary>
+        </member>
         <member name="P:Telerik.Reporting.Service.RenderingSessionInfo.Parameters">
             <summary>
             Gets or sets a list of <see cref="T:Telerik.Reporting.Service.Parameter"/>s for the current report.
@@ -473,6 +478,56 @@
             Requires HTTP GET request.
             </remarks>
         </member>
+        <member name="T:Telerik.Reporting.Service.IReportResolver">
+            <summary>
+            Resolves IReportDocument
+            </summary>
+        </member>
+        <member name="M:Telerik.Reporting.Service.IReportResolver.Resolve(System.String)">
+            <summary>
+            Resolves IReportDocument based on the specified report description.
+            </summary>
+            <param name="report">The report.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Telerik.Reporting.Service.ReportTypeResolver">
+            <summary>
+            Resolves IReportDocument from assembly qualified name
+            </summary>
+        </member>
+        <member name="T:Telerik.Reporting.Service.ReportResolverBase">
+            <summary>
+            Base report resolver with fallback mechanism.
+            </summary>
+        </member>
+        <member name="M:Telerik.Reporting.Service.ReportTypeResolver.#ctor(Telerik.Reporting.Service.IReportResolver)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Reporting.Service.ReportTypeResolver"/> class.
+            </summary>
+            <param name="parentResolver">The fallback parent resolver.</param>
+        </member>
+        <member name="T:Telerik.Reporting.Service.ReportFileResolver">
+            <summary>
+            Resolves IReportDocument from physical path to trdx file
+            </summary>
+        </member>
+        <member name="M:Telerik.Reporting.Service.ReportFileResolver.#ctor(Telerik.Reporting.Service.IReportResolver)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Reporting.Service.ReportFileResolver"/> class.
+            </summary>
+            <param name="parentResolver">The fallback parent resolver.</param>
+        </member>
+        <member name="T:Telerik.Reporting.Service.ReportFileResolverWeb">
+            <summary>
+            Resolves IReportDocument from a relative path to trdx file.
+            </summary>
+        </member>
+        <member name="M:Telerik.Reporting.Service.ReportFileResolverWeb.#ctor(Telerik.Reporting.Service.IReportResolver)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Reporting.Service.ReportFileResolverWeb"/> class.
+            </summary>
+            <param name="parentResolver">The fallback parent resolver.</param>
+        </member>
         <member name="T:Telerik.Reporting.Service.ReportService">
             <summary>
             The top-level class of the Telerik Reporting Web service.
@@ -609,6 +664,21 @@
             When implemented, returns the base address of the Telerik ReportService
             that will be used as a base Uri for the resources
             </summary>
+        </member>
+        <member name="P:Telerik.Reporting.Service.ReportServiceBase.ApplicationPath">
+            <summary>
+            When implemented, returns the file system path of the current application's root directory.
+            It is used to resolve the relative paths of the <see cref="T:Telerik.Reporting.UriReportSource"/>s.
+            </summary>
+        </member>
+        <member name="P:Telerik.Reporting.Service.ReportService.ApplicationPath">
+            <summary>
+            Gets the physical file system path of the currently 
+            executing server application's root directory.
+            </summary>
+            <returns>
+            The file system path of the current application's root directory.
+            </returns>
         </member>
     </members>
 </doc>

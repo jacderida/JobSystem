@@ -31,7 +31,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox33 = new Telerik.Reporting.TextBox();
 			this.textBox34 = new Telerik.Reporting.TextBox();
 			this.pageInfoTextBox = new Telerik.Reporting.TextBox();
-			this.currentTimeTextBox = new Telerik.Reporting.TextBox();
 			this.reportHeader = new Telerik.Reporting.ReportHeaderSection();
 			this.MainLogo = new Telerik.Reporting.PictureBox();
 			this.titleTextBox = new Telerik.Reporting.TextBox();
@@ -52,6 +51,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox47 = new Telerik.Reporting.TextBox();
 			this.textBox42 = new Telerik.Reporting.TextBox();
 			this.textBox9 = new Telerik.Reporting.TextBox();
+			this.textBox35 = new Telerik.Reporting.TextBox();
 			this.reportFooter = new Telerik.Reporting.ReportFooterSection();
 			this.textBox11 = new Telerik.Reporting.TextBox();
 			this.TotalTextBox = new Telerik.Reporting.TextBox();
@@ -258,17 +258,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.pageInfoTextBox.StyleName = "PageInfo";
 			this.pageInfoTextBox.Value = "=PageNumber";
 			// 
-			// currentTimeTextBox
-			// 
-			this.currentTimeTextBox.Format = "{0:D}";
-			this.currentTimeTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.41666707396507263D), Telerik.Reporting.Drawing.Unit.Cm(5.1856250762939453D));
-			this.currentTimeTextBox.Name = "currentTimeTextBox";
-			this.currentTimeTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(7.8277082443237305D), Telerik.Reporting.Drawing.Unit.Cm(0.60000002384185791D));
-			this.currentTimeTextBox.Style.Font.Name = "Arial";
-			this.currentTimeTextBox.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(10D);
-			this.currentTimeTextBox.StyleName = "PageInfo";
-			this.currentTimeTextBox.Value = "=NOW()";
-			// 
 			// reportHeader
 			// 
 			this.reportHeader.Height = Telerik.Reporting.Drawing.Unit.Cm(7.48562479019165D);
@@ -277,7 +266,6 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.titleTextBox,
             this.textBox1,
             this.textBox2,
-            this.currentTimeTextBox,
             this.textBox14,
             this.textBox17,
             this.textBox8,
@@ -292,7 +280,8 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.textBox46,
             this.textBox47,
             this.textBox42,
-            this.textBox9});
+            this.textBox9,
+            this.textBox35});
 			this.reportHeader.Name = "reportHeader";
 			// 
 			// MainLogo
@@ -481,6 +470,13 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox9.Style.Font.Bold = true;
 			this.textBox9.Value = "= Fields.JobNo";
 			// 
+			// textBox35
+			// 
+			this.textBox35.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.41666707396507263D), Telerik.Reporting.Drawing.Unit.Cm(4.8858246803283691D));
+			this.textBox35.Name = "textBox35";
+			this.textBox35.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(2D), Telerik.Reporting.Drawing.Unit.Cm(0.599999725818634D));
+			this.textBox35.Value = "test";
+			// 
 			// reportFooter
 			// 
 			this.reportFooter.Height = Telerik.Reporting.Drawing.Unit.Cm(3.2029244899749756D);
@@ -539,6 +535,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.CurrencyMessageTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.42426350712776184D), Telerik.Reporting.Drawing.Unit.Cm(0.19919972121715546D));
 			this.CurrencyMessageTextBox.Name = "CurrencyMessageTextBox";
 			this.CurrencyMessageTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(9.0757360458374023D), Telerik.Reporting.Drawing.Unit.Cm(0.59999889135360718D));
+			this.CurrencyMessageTextBox.Style.Visible = false;
 			this.CurrencyMessageTextBox.Value = "= Fields.CurrencyMessage";
 			// 
 			// detail
@@ -937,7 +934,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 		private Telerik.Reporting.Group labelsGroup;
 		private Telerik.Reporting.PageHeaderSection pageHeader;
 		private Telerik.Reporting.PageFooterSection pageFooter;
-		private Telerik.Reporting.TextBox currentTimeTextBox;
 		private Telerik.Reporting.ReportHeaderSection reportHeader;
 		private Telerik.Reporting.ReportFooterSection reportFooter;
 		private Telerik.Reporting.DetailSection detail;
@@ -997,6 +993,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 		private Telerik.Reporting.TextBox pageInfoTextBox;
 		private Telerik.Reporting.TextBox textBox36;
 		public Telerik.Reporting.TextBox CurrencyMessageTextBox;
+		private Telerik.Reporting.TextBox textBox35;
 
 	}
 }

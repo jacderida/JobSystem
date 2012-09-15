@@ -26,5 +26,6 @@ namespace JobSystem.Reporting.Models
 		public string BankSortCode { get; set; }
 		public string BankIban { get; set; }
 		public string PaymentTerms { get; set; }
+		public string CurrencyMessage { get; set; }
 	}
 }

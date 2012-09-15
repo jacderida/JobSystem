@@ -78,6 +78,13 @@ namespace JobSystem.BusinessLogic.Services
 			return invoice;
 		}
 
+		public Invoice GetById(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _invoiceRepository.GetById(id);
+		}
+
 		public IEnumerable<Invoice> GetInvoices()
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

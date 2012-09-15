@@ -1,6 +1,8 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<Guid>" %>
-<%@ Register Assembly="Telerik.ReportViewer.WebForms, Version=6.0.12.215, Culture=neutral, PublicKeyToken=a9d7983dfcc261be"
+<%@ Register Assembly="Telerik.ReportViewer.WebForms, Version=6.1.12.820, Culture=neutral, PublicKeyToken=a9d7983dfcc261be"
 	Namespace="Telerik.ReportViewer.WebForms" TagPrefix="telerik" %>
+<%@ Register Assembly="Telerik.Reporting, Version=6.1.12.820, Culture=neutral, PublicKeyToken=a9d7983dfcc261be"
+	Namespace="Telerik.Reporting" TagPrefix="telerik" %>
 <%@ Import Namespace="System.Web.Mvc" %>
 <%@ Import Namespace="JobSystem.BusinessLogic.Services" %>
 <%@ Import Namespace="JobSystem.Reporting.Data.NHibernate" %>
@@ -11,10 +13,8 @@
 	<title>Consignment Note</title>
 </head>
 <body>
-	<form clientidmode="Static" id="frep" runat="server">
-		<telerik:ReportViewer ID="ReportViewer1" runat="server" 
-			Report="JobSystem.Reporting.ReportDefinitions.TelerikConsignmentReport, JobSystem.Reporting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" 
-			Height="842px" Width="650px">
+	<form id="main" method="post" action="">
+		<telerik:ReportViewer ID="ReportViewer1" Width="100%" Height="800px" runat="server">
 		</telerik:ReportViewer>
 	</form>
 	<script runat="server">
@@ -26,6 +26,7 @@
 
 		protected override void OnLoad(EventArgs e)
 		{
+			base.OnLoad(e);
 			var dataSource = new Telerik.Reporting.ObjectDataSource();
 			dataSource.DataSource = typeof(NHibernateConsignmentReportDataProvider);
 			dataSource.DataMember = "GetConsignmentReportData";
@@ -38,8 +39,10 @@
 			var pageWidth = report.Width.Value;
 			report.MainLogo.Value = logo;
 			report.DataSource = dataSource;
-			ReportViewer1.Report = report;
-			base.OnLoad(e);
+
+			var instanceReportSource = new Telerik.Reporting.InstanceReportSource();
+			instanceReportSource.ReportDocument = report;
+			ReportViewer1.ReportSource = instanceReportSource;
 		}
 	</script>
 </body>

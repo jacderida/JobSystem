@@ -230,6 +230,27 @@ Continue with print?</value>
     <value>Whole Page</value>
   </data>
   <data name="ReportParametersAreaValidationError" xml:space="preserve">
-    <value>Please input data for all parameters.</value>
+    <value>Missing or invalid parameter value. Please input valid data for all parameters.</value>
+  </data>
+  <data name="CancelPrintButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ReportParametersNullText" xml:space="preserve">
+    <value>Null</value>
+  </data>
+  <data name="PreviewButtonText" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="SaveButtonText" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="PrintButtonText" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="CancelExportButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="NoPageToDisplay" xml:space="preserve">
+    <value>No page to display.</value>
   </data>
 </root>

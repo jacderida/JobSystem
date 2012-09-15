@@ -1,6 +1,8 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<Guid>" %>
-<%@ Register Assembly="Telerik.ReportViewer.WebForms, Version=6.0.12.215, Culture=neutral, PublicKeyToken=a9d7983dfcc261be"
+<%@ Register Assembly="Telerik.ReportViewer.WebForms, Version=6.1.12.820, Culture=neutral, PublicKeyToken=a9d7983dfcc261be"
 	Namespace="Telerik.ReportViewer.WebForms" TagPrefix="telerik" %>
+<%@ Register Assembly="Telerik.Reporting, Version=6.1.12.820, Culture=neutral, PublicKeyToken=a9d7983dfcc261be"
+	Namespace="Telerik.Reporting" TagPrefix="telerik" %>
 <%@ Import Namespace="System.Web.Mvc" %>
 <%@ Import Namespace="JobSystem.BusinessLogic.Services" %>
 <%@ Import Namespace="JobSystem.Reporting.Data.NHibernate" %>
@@ -11,10 +13,8 @@
 	<title>Order Note</title>
 </head>
 <body>
-	<form clientidmode="Static" id="frep" runat="server">
-		<telerik:ReportViewer ID="ReportViewer1" runat="server" 
-			Report="JobSystem.Reporting.ReportDefinitions.TelerikOrderReport, JobSystem.Reporting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" 
-			Height="650px" Width="842px">
+	<form id="main" method="post" action="">
+		<telerik:ReportViewer ID="ReportViewer1" Width="100%" Height="800px" runat="server">
 		</telerik:ReportViewer>
 	</form>
 	<script runat="server">
@@ -26,6 +26,7 @@
 
 		protected override void OnLoad(EventArgs e)
 		{
+			base.OnLoad(e);
 			var dataSource = new Telerik.Reporting.ObjectDataSource();
 			dataSource.DataSource = typeof(NHibernateOrderDataProvider);
 			dataSource.DataMember = "GetReportData";
@@ -61,10 +62,15 @@
 						break;
 					}
 				default:
-					throw new InvalidOperationException();
+					{
+						report.PriceTextBox.Format = "{0:N2}";
+						report.TotalTextBox.Format = "{0:N2}";
+						break;
+					}
 			}
-			ReportViewer1.Report = report;
-			base.OnLoad(e);
+			var instanceReportSource = new Telerik.Reporting.InstanceReportSource();
+			instanceReportSource.ReportDocument = report;
+			ReportViewer1.ReportSource = instanceReportSource;
 		}
 	</script>
 </body>

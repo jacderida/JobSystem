@@ -184,7 +184,7 @@
     <value>of</value>
   </data>
   <data name="ReportParametersInputDataError" xml:space="preserve">
-    <value>Please input data for all parameters.</value>
+    <value>Missing or invalid parameter value. Please input valid data for all parameters.</value>
   </data>
   <data name="ReportParametersNoValueText" xml:space="preserve">
     <value>Value required.</value>
@@ -200,5 +200,17 @@
   </data>
   <data name="TogglePageLayoutToolTip" xml:space="preserve">
     <value>Switch to interactive view|Switch to print preview</value>
+  </data>
+  <data name="MissingReportSource" xml:space="preserve">
+    <value>The source of the report definition has not been specified.</value>
+  </data>
+  <data name="SessionHasExpiredError" xml:space="preserve">
+    <value>Session has expired.</value>
+  </data>
+  <data name="SessionHasExpiredMessage" xml:space="preserve">
+    <value>Please, refresh the page.</value>
+  </data>
+  <data name="NoPageToDisplay" xml:space="preserve">
+    <value>No page to display.</value>
   </data>
 </root>

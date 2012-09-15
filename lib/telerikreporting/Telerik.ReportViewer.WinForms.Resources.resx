@@ -211,7 +211,7 @@
     <value>Empty string value not allowed.</value>
   </data>
   <data name="ReportParametersInputDataError" xml:space="preserve">
-    <value>Please input data for all parameters.</value>
+    <value>Missing or invalid parameter value. Please input valid data for all parameters.</value>
   </data>
   <data name="ReportParametersPreviewButtonText" xml:space="preserve">
     <value>Preview</value>

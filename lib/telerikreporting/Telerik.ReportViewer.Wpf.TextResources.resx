@@ -199,12 +199,30 @@
     <value>One or more parameters are not set or have invalid values.</value>
   </data>
   <data name="ReportParametersAreaValidationError" xml:space="preserve">
-    <value>Please input data for all parameters.</value>
+    <value>Missing or invalid parameter value. Please input valid data for all parameters.</value>
   </data>
   <data name="UpdatingParametersMessage" xml:space="preserve">
     <value>Updating parameters...</value>
   </data>
   <data name="PageSetupToolTip" xml:space="preserve">
     <value>Page Setup...</value>
+  </data>
+  <data name="StopToolTip" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ReportParametersNullText" xml:space="preserve">
+    <value>Null</value>
+  </data>
+  <data name="PreviewButtonText" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="LabelOf" xml:space="preserve">
+    <value>of</value>
+  </data>
+  <data name="NoPageToDisplay" xml:space="preserve">
+    <value>No page to display.</value>
   </data>
 </root>

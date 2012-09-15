@@ -32,6 +32,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.Parts = invoiceItem.PartsPrice;
 				reportItem.Carriage = invoiceItem.CarriagePrice;
 				reportItem.Investigation = invoiceItem.InvestigationPrice;
+				reportItem.CurrencyMessage = invoice.Currency.DisplayMessage;
 				result.Add(reportItem);
 			}
 			return result;
