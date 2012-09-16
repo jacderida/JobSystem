@@ -9,14 +9,14 @@ namespace JobSystem.Admin.Mvc.Models
 	public class TenantModel
 	{
 		public Guid Id { get; set; }
-		[Required(ErrorMessage = "A name is required for the company.")]
+		[Required(ErrorMessage = "A name is required for the tenant.")]
 		[StringLength(50, ErrorMessage = "The company name cannot exceed 255 characters")]
 		public string TenantName { get; set; }
 
 		public Guid CompanyId { get; set; }
 		[Required(ErrorMessage = "A name is required for the company.")]
 		[StringLength(255, ErrorMessage = "The company name cannot exceed 255 characters")]
-		public string Name { get; set; }
+		public string CompanyName { get; set; }
 		[StringLength(255, ErrorMessage = "The address line cannot exceed 255 characters")]
 		public string Address1 { get; set; }
 		[StringLength(255, ErrorMessage = "The address line cannot exceed 255 characters")]
@@ -80,5 +80,17 @@ namespace JobSystem.Admin.Mvc.Models
 		public int CertificateSeed { get; set; }
 		public int DeliverySeed { get; set; }
 		public int InvoiceSeed { get; set; }
+
+		[Required(ErrorMessage = "An email address is required for the admin user.")]
+		[StringLength(255, ErrorMessage = "The email address cannot exceed 255 characters.")]
+		public string AdminUserEmailAddress { get; set; }
+		[Required(ErrorMessage = "A name is required for the admin user.")]
+		[StringLength(255, ErrorMessage = "The name cannot exceed 50 characters.")]
+		public string AdminName { get; set; }
+		[Required(ErrorMessage = "A job title is required for the admin user.")]
+		[StringLength(255, ErrorMessage = "The job title cannot exceed 50 characters.")]
+		public string AdminJobTitle { get; set; }
+		[Required(ErrorMessage = "A password is required for the admin user.")]
+		public string AdminPassword { get; set; }
 	}
 }

@@ -104,6 +104,14 @@ namespace JobSystem.Admin.DbWireup
 			}
 		}
 
+		public string GetTenantConnectionString()
+		{
+			var conn = GetConnection();
+			var connStringBuilder = new SqlConnectionStringBuilder(conn.ConnectionString);
+			connStringBuilder.InitialCatalog = _databaseName;
+			return connStringBuilder.ToString();
+		}
+
 		public string GetGeneratedPassword()
 		{
 			return String.Format("Generated password for {0}: {1}", _databaseName, _loginPassword);
@@ -121,15 +129,15 @@ namespace JobSystem.Admin.DbWireup
 
 		public void InitHibernate()
 		{
-			SimpleConnectionProvider.CatalogName = _databaseName;
-			var dbConfigurer = MsSqlConfiguration.MsSql2008.ConnectionString(NHibernateSession.GetInitialConnectionString()).Provider<SimpleConnectionProvider>();
-			InitHibernate(dbConfigurer);
+			InitHibernate("JobSystem.DataAccess.NHibernate.dll");
 		}
 
-		public void InitHibernate(IPersistenceConfigurer dbConfigurer)
+		public void InitHibernate(string nhibernateAssemblyPath)
 		{
+			SimpleConnectionProvider.CatalogName = _databaseName;
+			var dbConfigurer = MsSqlConfiguration.MsSql2008.ConnectionString(NHibernateSession.GetInitialConnectionString()).Provider<SimpleConnectionProvider>();
 			NHibernateSession.Init(
-				new SimpleSessionStorage(), new[] { "JobSystem.DataAccess.NHibernate.dll" }, new AutoPersistenceModelGenerator().Generate(), null, null, null, dbConfigurer);
+				new SimpleSessionStorage(), new[] { nhibernateAssemblyPath }, new AutoPersistenceModelGenerator().Generate(), null, null, null, dbConfigurer);
 		}
 
 		public void BeginHibernateTransaction()

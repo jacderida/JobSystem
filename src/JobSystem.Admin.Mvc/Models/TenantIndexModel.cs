@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace JobSystem.Admin.Mvc.Models
 {
@@ -9,5 +6,6 @@ namespace JobSystem.Admin.Mvc.Models
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }
+		public string CompanyName { get; set; }
 	}
 }

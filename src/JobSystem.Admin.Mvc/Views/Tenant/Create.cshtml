@@ -1,0 +1,279 @@
+﻿@model JobSystem.Admin.Mvc.Models.TenantModel
+@{
+	ViewBag.Title = "Create";
+}
+<h2>Create a New Tenant</h2>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+@using (Html.BeginForm())
+{
+	@Html.ValidationSummary(true)
+	<fieldset>
+		<legend>Tenant Details</legend>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.TenantName)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.TenantName)
+			@Html.ValidationMessageFor(model => model.TenantName)
+		</div>
+	</fieldset>
+	<fieldset>
+		<legend>Company Details</legend>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.CompanyName)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.CompanyName)
+			@Html.ValidationMessageFor(model => model.CompanyName)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Address1)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Address1)
+			@Html.ValidationMessageFor(model => model.Address1)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Address2)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Address2)
+			@Html.ValidationMessageFor(model => model.Address2)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Address3)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Address3)
+			@Html.ValidationMessageFor(model => model.Address3)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Address4)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Address4)
+			@Html.ValidationMessageFor(model => model.Address4)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Address5)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Address5)
+			@Html.ValidationMessageFor(model => model.Address5)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Telephone)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Telephone)
+			@Html.ValidationMessageFor(model => model.Telephone)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Fax)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Fax)
+			@Html.ValidationMessageFor(model => model.Fax)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.RegNo)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.RegNo)
+			@Html.ValidationMessageFor(model => model.RegNo)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.VatRegNo)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.VatRegNo)
+			@Html.ValidationMessageFor(model => model.VatRegNo)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Email)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Email)
+			@Html.ValidationMessageFor(model => model.Email)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Www)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Www)
+			@Html.ValidationMessageFor(model => model.Www)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.TermsAndConditions)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.TermsAndConditions)
+			@Html.ValidationMessageFor(model => model.TermsAndConditions)
+		</div>
+	</fieldset>
+	<fieldset>
+		<legend>Bank Details</legend>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.BankShortName)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.BankShortName)
+			@Html.ValidationMessageFor(model => model.BankShortName)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.AccountNo)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.AccountNo)
+			@Html.ValidationMessageFor(model => model.AccountNo)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.SortCode)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.SortCode)
+			@Html.ValidationMessageFor(model => model.SortCode)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.BankName)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.BankName)
+			@Html.ValidationMessageFor(model => model.BankName)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.BankAddress1)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.BankAddress1)
+			@Html.ValidationMessageFor(model => model.BankAddress1)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.BankAddress2)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.BankAddress2)
+			@Html.ValidationMessageFor(model => model.BankAddress2)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.BankAddress3)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.BankAddress3)
+			@Html.ValidationMessageFor(model => model.BankAddress3)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.BankAddress4)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.BankAddress4)
+			@Html.ValidationMessageFor(model => model.BankAddress4)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.BankAddress5)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.BankAddress5)
+			@Html.ValidationMessageFor(model => model.BankAddress5)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Iban)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.Iban)
+			@Html.ValidationMessageFor(model => model.Iban)
+		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend>Seed Values</legend>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.JobSeed)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.JobSeed)
+			@Html.ValidationMessageFor(model => model.JobSeed)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.ConsignmentSeed)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.ConsignmentSeed)
+			@Html.ValidationMessageFor(model => model.ConsignmentSeed)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.QuoteSeed)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.QuoteSeed)
+			@Html.ValidationMessageFor(model => model.QuoteSeed)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.OrderSeed)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.OrderSeed)
+			@Html.ValidationMessageFor(model => model.OrderSeed)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.CertificateSeed)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.CertificateSeed)
+			@Html.ValidationMessageFor(model => model.CertificateSeed)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.DeliverySeed)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.DeliverySeed)
+			@Html.ValidationMessageFor(model => model.DeliverySeed)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.InvoiceSeed)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.InvoiceSeed)
+			@Html.ValidationMessageFor(model => model.InvoiceSeed)
+		</div>
+	</fieldset>
+	
+	<fieldset>
+		<legend>Admin User Details</legend>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.AdminUserEmailAddress)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.AdminUserEmailAddress)
+			@Html.ValidationMessageFor(model => model.AdminUserEmailAddress)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.AdminPassword)
+		</div>
+		<div class="editor-field">
+			@Html.PasswordFor(model => model.AdminPassword)
+			@Html.ValidationMessageFor(model => model.AdminPassword)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.AdminName)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.AdminName)
+			@Html.ValidationMessageFor(model => model.AdminName)
+		</div>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.AdminJobTitle)
+		</div>
+		<div class="editor-field">
+			@Html.EditorFor(model => model.AdminJobTitle)
+			@Html.ValidationMessageFor(model => model.AdminJobTitle)
+		</div>
+	</fieldset>
+	<p>
+		Please note that this operation can take some moments to complete. Don't close the browser until there is some feedback.
+	</p>
+	<p>
+		<input type="submit" value="Create" />
+	</p>
+}

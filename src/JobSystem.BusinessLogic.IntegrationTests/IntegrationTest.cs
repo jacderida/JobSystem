@@ -18,8 +18,8 @@ namespace JobSystem.BusinessLogic.IntegrationTests
 			SQLiteConnection.CreateFile("JobSystem.Development.db3");
 			var databaseService = new JobSystemDatabaseCreationService("Development");
 			databaseService.CreateJobSystemSchemaFromMigrations("JobSystem.Migrations.SQLite.dll", "Data Source=JobSystem.Development.db3", "sqlite");
-			databaseService.InitHibernate(
-				FluentNHibernate.Cfg.Db.SQLiteConfiguration.Standard.ConnectionString("Data Source=JobSystem.Development.db3").Provider<SimpleConnectionProvider>());
+			//databaseService.InitHibernate(
+			//    FluentNHibernate.Cfg.Db.SQLiteConfiguration.Standard.ConnectionString("Data Source=JobSystem.Development.db3").Provider<SimpleConnectionProvider>());
 			var defaultCurrencyId = Guid.NewGuid();
 			var defaultBankDetailsId = Guid.NewGuid();
 			var defaultTaxCodeId = Guid.NewGuid();
