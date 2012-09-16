@@ -1,0 +1,17 @@
+﻿@model IEnumerable<JobSystem.Admin.Mvc.Models.TenantIndexModel>
+@{
+	ViewBag.Title = "Current Tenant List";
+}
+<h2>Current Tenant List</h2>
+<p>
+	@Html.ActionLink("Create New", "Create")
+</p>
+<table>
+	<tr><th>Name</th></tr>
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>@Html.DisplayFor(modelItem => item.Name)</td>
+		</tr>
+	}
+</table>

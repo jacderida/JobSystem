@@ -11,8 +11,7 @@ namespace JobSystem.Admin.Mvc.Controllers
 		[Authorize]
 		public ActionResult Index()
 		{
-			ViewBag.Message = "Welcome to ASP.NET MVC!";
-			return View();
+			return RedirectToAction("Index", "Tenant");
 		}
 
 		[Authorize]

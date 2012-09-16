@@ -59,7 +59,7 @@ namespace JobSystem.BuildTasks
 
 		private SqlCommand GetTenantConnectionStringsCommand(SqlConnection conn)
 		{
-			var cmd = new SqlCommand("SELECT ConnectionString FROM TenantList", conn);
+			var cmd = new SqlCommand("SELECT ConnectionString FROM TenantConnectionStrings", conn);
 			return cmd;
 		}
 

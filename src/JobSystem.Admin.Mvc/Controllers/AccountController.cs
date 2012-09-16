@@ -6,11 +6,22 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using JobSystem.Admin.Mvc.Models;
+using JobSystem.Admin.Mvc.Data;
+using JobSystem.Framework.Security;
 
 namespace JobSystem.Admin.Mvc.Controllers
 {
 	public class AccountController : Controller
 	{
+		private readonly IUserAccountRepository _userAccountRepository;
+		private readonly IFormsAuthenticationService _formsAuthenticationService;
+
+		public AccountController(IUserAccountRepository userAccountRepository, IFormsAuthenticationService formsAuthenticationService)
+		{
+			_userAccountRepository = userAccountRepository;
+			_formsAuthenticationService = formsAuthenticationService;
+		}
+
 		public ActionResult LogOn()
 		{
 			return View();
@@ -21,36 +32,27 @@ namespace JobSystem.Admin.Mvc.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				if (Membership.ValidateUser(model.UserName, model.Password))
+				try
 				{
-					FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-					if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-						&& !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+					if (_userAccountRepository.Login(model.UserName, model.Password))
 					{
-						return Redirect(returnUrl);
+						_formsAuthenticationService.SignIn(model.UserName, model.RememberMe);
+						return RedirectToAction("Index", "Tenant");
 					}
-					else
-					{
-						return RedirectToAction("Index", "Home");
-					}
-				}
-				else
-				{
 					ModelState.AddModelError("", "The user name or password provided is incorrect.");
+					return View(model);
+				}
+				catch (Exception ex)
+				{
+					ModelState.AddModelError("", ex.Message);
 				}
 			}
-
-			// If we got this far, something failed, redisplay form
 			return View(model);
 		}
 
-		//
-		// GET: /Account/LogOff
-
 		public ActionResult LogOff()
 		{
-			FormsAuthentication.SignOut();
-
+			_formsAuthenticationService.SignOut();
 			return RedirectToAction("Index", "Home");
 		}
 	}
