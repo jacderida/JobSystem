@@ -36,6 +36,8 @@
 			var logo = companyDetailsService.GetCompanyLogo();
 			report.MainLogo.Value = logo;
 			report.DataSource = dataSource;
+			var company = companyDetailsService.GetCompany();
+			System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(company.DefaultCultureCode);
 			var instanceReportSource = new Telerik.Reporting.InstanceReportSource();
 			instanceReportSource.ReportDocument = report;
 			ReportViewer1.ReportSource = instanceReportSource;

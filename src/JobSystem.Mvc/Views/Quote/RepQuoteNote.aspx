@@ -36,6 +36,8 @@
 			var logo = companyDetailsService.GetCompanyLogo();
 			report.MainLogo.Value = logo;
 			report.DataSource = dataSource;
+			var company = companyDetailsService.GetCompany();
+			System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(company.DefaultCultureCode);
 			var quoteService = DependencyResolver.Current.GetService<QuoteService>();
 			var quote = quoteService.GetById(Model);
 			switch (quote.Currency.Name)
