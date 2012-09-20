@@ -10,28 +10,31 @@
 
 @using (Html.BeginForm("ConvertPending", "Delivery", FormMethod.Post))
 {
-
-if (Model.Any()) {
-
-<input class="primary-action" type="submit" value="Deliver"/>
-	<table>
-		<tr>
-			<th></th>
-			<th>Notes</th>
-		</tr>
-	@foreach (var item in Model)
-	 {
-		<tr>
-			<td class="shortColumn">
-				<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>
-			</td>
-			<td>
-				@item.Notes
-			</td>
-		</tr>
-	 }
-	</table>
-}else{
-	<div id="empty-list">@JobSystem.Resources.Delivery.Messages.NoPendingDeliveries</div>
-}
+	if (Model.Any())
+	{
+		<input class="primary-action" type="submit" value="Deliver"/>
+		<table>
+			<tr>
+				<th></th>
+				<th>Job Item</th>
+				<th>Customer</th>
+				<th>Notes</th>
+			</tr>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td class="shortColumn">
+						<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>
+					</td>
+					<td>@item.JobRef</td>
+					<td>@item.Customer</td>
+					<td>@item.Notes</td>
+				</tr>
+			}
+		</table>
+	}
+	else
+	{
+		<div id="empty-list">@JobSystem.Resources.Delivery.Messages.NoPendingDeliveries</div>
+	}
 }

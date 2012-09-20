@@ -8,10 +8,12 @@
 	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedDeliveries")">Approved</a></span>
 </div>
 
-@if (Model.Any()) {
+@if (Model.Any())
+{
 	<table>
 		<tr>
 			<th>Delivery No.</th>
+			<th>Customer</th>
 			<th>FAO</th>
 			<th>Created By</th>
 			<th>Date Created</th>
@@ -20,29 +22,20 @@
 		</tr>
 	@foreach (var item in Model)
 	 {
-			<tr>
-				<td>
-					@item.DeliveryNo
-				</td>
-				<td>
-					@item.Fao
-				</td>
-				<td>
-					@item.CreatedBy
-				</td>
-				<td>
-					@item.DateCreated
-				</td>
-				<td>
+		<tr>
+			<td>@item.DeliveryNo</td>
+			<td>@item.CustomerName</td>
+			<td>@item.Fao</td>
+			<td>@item.CreatedBy</td>
+			<td>@item.DateCreated</td>
+			<td>
 				<span class="the-tooltip center top dark-midnight-blue itemCount">
 					@item.DeliveryItems.Count items
 					<span>
-					@foreach (var ci in item.DeliveryItems) {
-						<span>
-							@ci.Notes
-						</span>
-						
-					}	
+						@foreach (var ci in item.DeliveryItems)
+						{
+							<span>@ci.Notes</span>
+						}
 					</span>
 				</span>
 			</td>
@@ -50,7 +43,8 @@
 			</tr>
 	 }
 	</table>
-}else{
+}
+else
+{
 	<div id="empty-list">@JobSystem.Resources.Delivery.Messages.NoDeliveries</div>
 }
-

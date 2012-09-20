@@ -11,9 +11,9 @@ using JobSystem.Mvc.ViewModels.Deliveries;
 
 namespace JobSystem.Mvc.Controllers
 {
-    public class DeliveryController : Controller
-    {
-        private readonly DeliveryService _deliveryService;
+	public class DeliveryController : Controller
+	{
+		private readonly DeliveryService _deliveryService;
 		private readonly DeliveryItemService _deliveryItemService;
 		private readonly JobItemService _jobItemService;
 
@@ -23,21 +23,22 @@ namespace JobSystem.Mvc.Controllers
 			_deliveryItemService = deliveryItemService;
 			_jobItemService = jobItemService;
 		}
-		
+
 		public ActionResult Index()
-        {
+		{
 			return RedirectToAction("ApprovedDeliveries");
-        }
+		}
 
 		public ActionResult PendingDeliveries()
 		{
 			var items = _deliveryItemService.GetPendingDeliveryItems().Select(
-				i => new DeliveryItemIndexViewModel
+				di => new DeliveryItemIndexViewModel
 				{
-					Id = i.Id,
-					Notes = i.Notes
-				}).ToList();
-
+					Id = di.Id,
+					JobRef = String.Format("{0}/{1}", di.JobItem.Job.JobNo, di.JobItem.ItemNo),
+					Customer = di.Customer.Name,
+					Notes = di.Notes
+				}).OrderBy(di => di.JobRef).ToList();
 			return View(items);
 		}
 
@@ -67,7 +68,7 @@ namespace JobSystem.Mvc.Controllers
 		[HttpGet]
 		public ActionResult Create(Guid id)
 		{
-			return PartialView("_Create", new DeliveryCreateViewModel(){ JobItemId = id });
+			return PartialView("_Create", new DeliveryCreateViewModel() { JobItemId = id });
 		}
 
 		[HttpPost]
@@ -124,5 +125,5 @@ namespace JobSystem.Mvc.Controllers
 		{
 			return View("RepDeliveryNote", id);
 		}
-    }
+	}
 }
