@@ -24,8 +24,8 @@ namespace JobSystem.Mvc.ViewModels.Jobs
 		public string AdviceNumber { get; set; }
 		[Display(Name = "Contact")]
 		public string Contact { get; set; }
-		[Display(Name = "Job Note")]
-		public string JobNote { get; set; }
+		[Display(Name = "Notes")]
+		public string Notes { get; set; }
 		[Display(Name = "Instructions")]
 		public string Instructions { get; set; }
 		[Display(Name = "Customer")]

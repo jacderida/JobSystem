@@ -64,7 +64,7 @@ namespace JobSystem.Mvc.Controllers
 				try
 				{
 					var id = Guid.NewGuid();
-					_jobService.CreateJob(id, viewModel.Instructions, viewModel.OrderNumber, viewModel.AdviceNumber, viewModel.TypeId, viewModel.CustomerId, viewModel.JobNote, viewModel.Contact);
+					_jobService.CreateJob(id, viewModel.Instructions, viewModel.OrderNumber, viewModel.AdviceNumber, viewModel.TypeId, viewModel.CustomerId, viewModel.Notes, viewModel.Contact);
 					if (AttachmentId != null)
 						for (var i = 0; i < AttachmentId.Length; i++)
 							_jobService.AddAttachment(id, AttachmentId[i], AttachmentName[i]);
@@ -84,32 +84,31 @@ namespace JobSystem.Mvc.Controllers
 			return View(viewModel);
 		}
 
-		//Not yet in use
 		public ActionResult Edit(Guid id)
 		{
 			var job = _jobService.GetJob(id);
-
-			var viewmodel = new JobEditViewModel(){
-				JobTypes = _listItemService.GetAllByCategory(ListItemCategoryType.JobType).ToSelectList(),
-				//Customers = job.Customer,
+			var viewModel = new JobEditViewModel
+			{ 
+				Id = job.Id,
 				OrderNumber = job.OrderNo,
 				AdviceNumber = job.AdviceNo,
 				Contact = job.Contact,
 				Instructions = job.Instructions,
-				JobNote = job.Notes
-				//Attachments = job.Attachments
+				Notes = job.Notes
 			};
+			return View(viewModel);
+		}
 
-			return PartialView("_Edit", viewmodel);
+		public ActionResult Edit(JobEditViewModel model)
+		{
+			return null;
 		}
 
 		[Transaction]
 		public ActionResult AttachAttachment(Guid jobId, Guid attachmentId, string attachmentName)
 		{
 			var job = _jobService.GetJob(jobId);
-
 			_jobService.AddAttachment(jobId, attachmentId, attachmentName);
-
 			return Json(true);
 		}
 
@@ -129,14 +128,12 @@ namespace JobSystem.Mvc.Controllers
 					OrderNumber = j.OrderNo,
 					Id = j.Id.ToString()
 				}).ToList();
-
 			var jobList = new JobListViewModel()
 			{
 				CreateViewModel = new JobCreateViewModel(),
 				Jobs = jobs
 			};
 			jobList.CreateViewModel.JobTypes = _listItemService.GetAllByCategory(ListItemCategoryType.JobType).ToSelectList();
-
 			return View(jobList);
 		}
 
@@ -151,14 +148,12 @@ namespace JobSystem.Mvc.Controllers
 					OrderNumber = j.OrderNo,
 					Id = j.Id.ToString()
 				}).ToList();
-
 			var jobList = new JobListViewModel()
 			{
 				CreateViewModel = new JobCreateViewModel(),
 				Jobs = jobs
 			};
 			jobList.CreateViewModel.JobTypes = _listItemService.GetAllByCategory(ListItemCategoryType.JobType).ToSelectList();
-
 			return View(jobList);
 		}
 
@@ -219,18 +214,15 @@ namespace JobSystem.Mvc.Controllers
 							DateCreated = wi.DateCreated.ToLongDateString() + ' ' + wi.DateCreated.ToShortTimeString()
 							}).OrderByDescending(wi => wi.DateCreated).ToList()
 					}).ToList(),
-				Attachments = job.Attachments.Select(a => new AttachmentViewModel()
-				{
-					Id = a.Id,
-					Name = a.Filename
-				}).ToList()
+				Attachments = job.Attachments.Select(
+					a => new AttachmentViewModel
+					{
+						Id = a.Id,
+						Name = a.Filename
+					}).ToList()
 			};
-
 			foreach (var ji in viewModel.JobItems)
-			{
 				PopulateOrderItemViewModel(ji);
-			}
-
 			return View(viewModel);
 		}
 
@@ -268,7 +260,8 @@ namespace JobSystem.Mvc.Controllers
 			if (pendingItem == null)
 			{
 				var item = _jobItemService.GetLatestConsignmentItem(Id);
-				if (item != null) {
+				if (item != null)
+				{
 					var viewmodel = new ConsignmentItemIndexViewModel()
 					{
 						Id = item.Id,
@@ -276,9 +269,9 @@ namespace JobSystem.Mvc.Controllers
 						SupplierName = item.Consignment.Supplier.Name
 					};
 					return viewmodel;
-				} else {
-					return null;
 				}
+				else
+					return null;
 			}
 			else
 			{
