@@ -128,11 +128,9 @@ namespace JobSystem.Mvc.Controllers
 					Investigation = (double)q.Investigation,
 					Days = q.Days,
 					ItemBER = q.BeyondEconomicRepair,
-					JobItemNo = q.JobItem.ItemNo.ToString()
-				}).ToList();
-			var viewmodel = new QuotePendingListViewModel(){
-				QuoteItems = items
-			};
+					JobItemRef = String.Format("{0}/{1}", q.JobItem.Job.JobNo, q.JobItem.ItemNo),
+				}).OrderBy(qi => qi.JobItemRef).ToList();
+			var viewmodel = new QuotePendingListViewModel { QuoteItems = items };
 			return View(viewmodel);
 		}
 
@@ -140,9 +138,9 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult ApprovedQuotes()
 		{
 			var quotes = _quoteService.GetQuotes().Select(
-			    q => new QuoteIndexViewModel
-			    {
-			        Id = q.Id,
+				q => new QuoteIndexViewModel
+				{
+					Id = q.Id,
 					CustomerName = q.Customer.Name,
 					QuoteNo = q.QuoteNumber,
 					CreatedBy = q.CreatedBy.Name,
@@ -150,28 +148,27 @@ namespace JobSystem.Mvc.Controllers
 					OrderNo = q.OrderNumber,
 					AdviceNo = q.AdviceNumber,
 					CurrencyName = q.Currency.Name
-			    }).ToList();
-
+				}).ToList();
 			foreach (var quote in quotes)
 			{
 				var quoteItems = _quoteItemService.GetQuoteItems(quote.Id);
 				quote.QuoteItems = quoteItems.Select(qi => new QuoteItemIndexViewModel
-						{
-							Id = qi.Id,
-							JobItemId = qi.JobItem.Id,
-							Report = qi.Report,
-							Repair = (double)qi.Labour,
-							Calibration = (double)qi.Calibration,
-							Parts = (double)qi.Parts,
-							Carriage = (double)qi.Carriage,
-							Investigation = (double)qi.Investigation,
-							Days = qi.Days,
-							ItemBER = qi.BeyondEconomicRepair,
-							ItemNo = qi.ItemNo.ToString(),
-							JobItemNo = qi.JobItem.ItemNo.ToString(),
-							Status = qi.Status.Name,
-							StatusType = qi.Status.Type
-							}).ToList();
+				{
+					Id = qi.Id,
+					JobItemId = qi.JobItem.Id,
+					Report = qi.Report,
+					Repair = (double)qi.Labour,
+					Calibration = (double)qi.Calibration,
+					Parts = (double)qi.Parts,
+					Carriage = (double)qi.Carriage,
+					Investigation = (double)qi.Investigation,
+					Days = qi.Days,
+					ItemBER = qi.BeyondEconomicRepair,
+					ItemNo = qi.ItemNo.ToString(),
+					JobItemRef = String.Format("{0}/{1}", qi.JobItem.Job.JobNo, qi.JobItem.ItemNo),
+					Status = qi.Status.Name,
+					StatusType = qi.Status.Type
+				}).OrderBy(qi => qi.JobItemRef).ToList();
 			}
 			return View(quotes);
 		}
@@ -180,7 +177,6 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Edit(Guid id)
 		{
 			var quote = _quoteService.GetById(id);
-
 			var viewmodel = new QuoteEditViewModel()
 			{
 				Id = quote.Id,
@@ -234,7 +230,6 @@ namespace JobSystem.Mvc.Controllers
 			else
 			{
 				var item = _quoteItemService.GetQuoteItemForJobItem(id);
-
 				var viewmodel = new QuoteItemEditViewModel()
 				{
 					QuoteItemId = item.Id,
@@ -290,11 +285,16 @@ namespace JobSystem.Mvc.Controllers
 					viewmodel.ItemBER);
 			}
 			
-			if (viewmodel.EditedFromJobItem){
+			if (viewmodel.EditedFromJobItem)
+			{
 				return RedirectToAction("Details", "Job", new { id = viewmodel.JobId });
-			}else{
-				if (!viewmodel.IsQuoted) return RedirectToAction("PendingQuotes");
-					else return RedirectToAction("ApprovedQuotes");
+			}
+			else
+			{
+				if (!viewmodel.IsQuoted)
+					return RedirectToAction("PendingQuotes");
+				else
+					return RedirectToAction("ApprovedQuotes");
 			}
 			
 		}

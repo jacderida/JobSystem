@@ -192,7 +192,7 @@ namespace JobSystem.Mvc.Controllers
 						Repair = (double)item.Labour,
 						Report = item.Report,
 						IsQuoted = true,
-						JobItemNo = item.JobItem.ItemNo.ToString(),
+						JobItemRef = String.Format("{0}/{1}", item.JobItem.Job.JobNo, item.JobItem.ItemNo),
 						Status = item.Status.Name,
 						StatusType = item.Status.Type,
 						QuoteNo = item.Quote.QuoteNumber
@@ -221,7 +221,7 @@ namespace JobSystem.Mvc.Controllers
 					Repair = (double)pendingItem.Labour,
 					Report = pendingItem.Report,
 					IsQuoted = false,
-					JobItemNo = pendingItem.JobItem.ItemNo.ToString()
+					JobItemRef = String.Format("{0}/{1}", pendingItem.JobItem.Job.JobNo, pendingItem.JobItem.ItemNo),
 				};
 				return viewmodel;
 			}
