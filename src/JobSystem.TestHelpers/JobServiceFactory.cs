@@ -12,6 +12,18 @@ namespace JobSystem.TestHelpers
 {
 	public class JobServiceFactory
 	{
+		public static JobService Create(IJobRepository jobRepository)
+		{
+			return new JobService(
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member),
+				MockRepository.GenerateStub<IJobAttachmentDataRepository>(),
+				jobRepository,
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>(),
+				MockRepository.GenerateStub<IEntityIdProvider>(),
+				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+		}
+
 		public static JobService Create(IJobRepository jobRepository, IJobAttachmentDataRepository attachmentRepository)
 		{
 			return new JobService(

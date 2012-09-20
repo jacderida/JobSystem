@@ -24,6 +24,8 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private Guid _jobForAttachmentId = Guid.NewGuid();
 		private Job _jobForAttachment;
 		private IUserContext _userContext;
+		private Guid _jobForEditId;
+		private Job _jobForEdit;
 
 		[SetUp]
 		public void Setup()
@@ -46,6 +48,27 @@ namespace JobSystem.BusinessLogic.UnitTests
 				DateCreated = DateTime.Now,
 				CreatedBy = _userContext.GetCurrentUser(),
 				JobNo = "JR2000"
+			};
+			_jobForEditId = Guid.NewGuid();
+			_jobForEdit = new Job
+			{
+				Id = _jobForEditId,
+				Type = new ListItem
+				{
+					Id = Guid.NewGuid(),
+					Type = ListItemType.JobTypeField,
+					Name = "Field",
+					Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Job Type", Type = ListItemCategoryType.JobType }
+				},
+				Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" },
+				OrderNo = "orderno",
+				AdviceNo = "adviceno",
+				Notes = "notes",
+				Contact = "contact",
+				Instructions = "instructions",
+				DateCreated = DateTime.Now,
+				CreatedBy = _userContext.GetCurrentUser(),
+				JobNo = "JR2001"
 			};
 		}
 
@@ -396,6 +419,141 @@ namespace JobSystem.BusinessLogic.UnitTests
 				_domainValidationException = dex;
 			}
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.InsufficientSecurityClearance));
+		}
+
+		#endregion
+		#region Edit
+
+		[Test]
+		public void Edit_ValidJobDetails_SuccessfullyEditJob()
+		{
+			var orderNumber = "orderno-edited";
+			var adviceNumber = "adviceno-edited";
+			var contact = "contact-edited";
+			var notes = "notes-edited";
+			var instructions = "instructions-edited";
+
+			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryMock.Stub(x => x.GetById(_jobForEditId)).Return(_jobForEdit);
+			jobRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			_jobService = JobServiceFactory.Create(jobRepositoryMock);
+			Edit(_jobForEditId, orderNumber, adviceNumber, contact, notes, instructions);
+			
+			jobRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(_jobForEdit.Id, _jobForEditId);
+			Assert.AreEqual(_jobForEdit.OrderNo, orderNumber);
+			Assert.AreEqual(_jobForEdit.AdviceNo, adviceNumber);
+			Assert.AreEqual(_jobForEdit.Notes, notes);
+			Assert.AreEqual(_jobForEdit.Instructions, instructions);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidJobId_ThrowsArgumentException()
+		{
+			var id = Guid.NewGuid();
+			var orderNumber = "orderno-edited";
+			var adviceNumber = "adviceno-edited";
+			var contact = "contact-edited";
+			var notes = "notes-edited";
+			var instructions = "instructions-edited";
+
+			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryMock.Stub(x => x.GetById(id)).Return(null);
+			_jobService = JobServiceFactory.Create(jobRepositoryMock);
+			Edit(_jobForEditId, orderNumber, adviceNumber, contact, notes, instructions);
+		}
+
+		[Test]
+		public void Edit_OrderNoGreaterThan50Characters_ThrowsDomainValidationException()
+		{
+			var orderNumber = new String('a', 51);
+			var adviceNumber = "adviceno-edited";
+			var contact = "contact-edited";
+			var notes = "notes-edited";
+			var instructions = "instructions-edited";
+
+			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryMock.Stub(x => x.GetById(_jobForEditId)).Return(_jobForEdit);
+			_jobService = JobServiceFactory.Create(jobRepositoryMock);
+			Edit(_jobForEditId, orderNumber, adviceNumber, contact, notes, instructions);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.OrderNoTooLarge));
+		}
+
+		[Test]
+		public void Edit_AdviceNoGreaterThan50Characters_ThrowsDomainValidationException()
+		{
+			var orderNumber = "orderno-edited";
+			var adviceNumber = new String('a', 51);
+			var contact = "contact-edited";
+			var notes = "notes-edited";
+			var instructions = "instructions-edited";
+
+			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryMock.Stub(x => x.GetById(_jobForEditId)).Return(_jobForEdit);
+			_jobService = JobServiceFactory.Create(jobRepositoryMock);
+			Edit(_jobForEditId, orderNumber, adviceNumber, contact, notes, instructions);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.AdviceNoTooLarge));
+		}
+
+		[Test]
+		public void Edit_ContactGreaterThan50Characters_ThrowsDomainValidationException()
+		{
+			var orderNumber = "orderno-edited";
+			var adviceNumber = "adviceno-edited";
+			var contact = new String('a', 51);
+			var notes = "notes-edited";
+			var instructions = "instructions-edited";
+
+			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryMock.Stub(x => x.GetById(_jobForEditId)).Return(_jobForEdit);
+			_jobService = JobServiceFactory.Create(jobRepositoryMock);
+			Edit(_jobForEditId, orderNumber, adviceNumber, contact, notes, instructions);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.ContactTooLarge));
+		}
+
+		[Test]
+		public void Edit_NotesGreaterThan2000Characters_ThrowsDomainValidationException()
+		{
+			var orderNumber = "orderno-edited";
+			var adviceNumber = "adviceno-edited";
+			var contact = "contact-edited";
+			var notes = new String('a', 2001);
+			var instructions = "instructions-edited";
+
+			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryMock.Stub(x => x.GetById(_jobForEditId)).Return(_jobForEdit);
+			_jobService = JobServiceFactory.Create(jobRepositoryMock);
+			Edit(_jobForEditId, orderNumber, adviceNumber, contact, notes, instructions);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.NotesTooLarge));
+		}
+
+		[Test]
+		public void Edit_InstructionsGreaterThan2000Characters_ThrowsDomainValidationException()
+		{
+			var orderNumber = "orderno-edited";
+			var adviceNumber = "adviceno-edited";
+			var contact = "contact-edited";
+			var notes = "notes-edited";
+			var instructions = new String('a', 2001);
+
+			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryMock.Stub(x => x.GetById(_jobForEditId)).Return(_jobForEdit);
+			_jobService = JobServiceFactory.Create(jobRepositoryMock);
+			Edit(_jobForEditId, orderNumber, adviceNumber, contact, notes, instructions);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.InstructionsTooLarge));
+		}
+
+		private void Edit(Guid id, string orderNumber, string adviceNumber, string contact, string notes, string instructions)
+		{
+			try
+			{
+				_jobForEdit = _jobService.Edit(id, orderNumber, adviceNumber, contact, notes, instructions);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
 		}
 
 		#endregion

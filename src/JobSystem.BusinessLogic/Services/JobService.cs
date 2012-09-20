@@ -57,6 +57,19 @@ namespace JobSystem.BusinessLogic.Services
 			return job;
 		}
 
+		public Job Edit(Guid id, string orderNumber, string adviceNumber, string contact, string notes, string instructions)
+		{
+			var job = GetJob(id);
+			job.OrderNo = orderNumber;
+			job.AdviceNo = adviceNumber;
+			job.Contact = contact;
+			job.Notes = notes;
+			job.Instructions = instructions;
+			ValidateAnnotatedObjectThrowOnFailure(job);
+			_jobRepository.Update(job);
+			return job;
+		}
+
 		public Job AddAttachment(Guid jobId, Guid attachmentId, string fileName)
 		{
 			var job = GetJob(jobId);
