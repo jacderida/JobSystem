@@ -1,7 +1,7 @@
 ﻿@model JobSystem.Mvc.ViewModels.Jobs.JobDetailsViewModel
 @{
     
-	ViewBag.Title = String.Format("Job {0}", @Model.JobNumber);
+	ViewBag.Title = @Model.JobNumber;
 }
 
 <div id="create-work-item-container">
@@ -27,7 +27,7 @@
 		<div id="pending-banner"></div>
 	}
 	<div id="job-title-container">
-		<h2>Job @Model.JobNumber</h2>
+		<h2>@Model.JobNumber</h2>
 		<p id="job-created-by">Created on @Model.DateCreated by <a href="mailto:@Model.CreatedBy">@Model.CreatedBy</a></p>
 		<div id="job-details-container">
 			<div class="job-details-fields">
@@ -89,7 +89,7 @@
 					<li>@Model.CustomerTelephone</li>
 				</ul>
 			</div>
-			@Html.ActionLink("Edit", "Edit", new { Id = @Model.Id })
+			@Html.ActionLink("Edit Job Details", "Edit", new { Id = @Model.Id })
 		</div>
 	</div>	
 </div>

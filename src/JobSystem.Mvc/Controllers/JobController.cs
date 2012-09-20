@@ -99,9 +99,12 @@ namespace JobSystem.Mvc.Controllers
 			return View(viewModel);
 		}
 
+		[HttpPost]
+		[Transaction]
 		public ActionResult Edit(JobEditViewModel model)
 		{
-			return null;
+			_jobService.Edit(model.Id, model.OrderNumber, model.AdviceNumber, model.Contact, model.Notes, model.Instructions);
+			return RedirectToAction("Details", new { id = model.Id });
 		}
 
 		[Transaction]
