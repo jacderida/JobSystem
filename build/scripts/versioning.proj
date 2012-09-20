@@ -38,6 +38,12 @@
 			Version="$(ProjectVersion)" />
 	</Target>
 
+	<Target Name="DoUpdateAwsVersionNumberForAdmin">
+		<UpdateAwsVersionNumber
+			FilePath="$(ProjectBuildDirectory)\AwsAdminReleaseConfig.txt" 
+			Version="$(ProjectVersion)" />
+	</Target>
+
 	<Target Name="PopulateVersionNumber">
 		<FileUpdate
 			Files="$(ProjectVersioningDirectory)\VersionInfo.cs"
