@@ -32,27 +32,42 @@
 		<div id="job-details-container">
 			<div class="job-details-fields">
 				<span class="details-header">Details</span>
-				<span class="field-label">Order No</span>
-				<span class="field">@Model.OrderNumber</span>
-				<span class="field-label">Advice No</span>
-				<span class="field">@Model.AdviceNumber</span>
-				<span class="field-label">Contact</span>
-				<span class="field">@Model.Contact</span>
+				@if (!String.IsNullOrEmpty(Model.OrderNumber))
+				{
+					<span class="field-label">Order No</span>
+					<span class="field">@Model.OrderNumber</span>
+				}
+				@if (!String.IsNullOrEmpty(Model.AdviceNumber))
+				{
+					<span class="field-label">Advice No</span>
+					<span class="field">@Model.AdviceNumber</span>
+				}
+				@if (!String.IsNullOrEmpty(Model.Contact))
+				{
+					<span class="field-label">Contact</span>
+					<span class="field">@Model.Contact</span>
+				}
 			</div>
 			<div id="job-details-instruction">
 				<span class="details-header">Instructions & Notes</span>
-				<span class="field-label">Instructions</span>
-				<span class="field">@Model.Instruction</span>
-				<span class="field-label">Notes</span>
-				<span class="field">@Model.Note</span>
+				@if (!String.IsNullOrEmpty(Model.Instruction))
+				{
+					<span class="field-label">Instructions</span>
+					<span class="field">@Model.Instruction</span>
+				}
+				@if (!String.IsNullOrEmpty(Model.Note))
+				{
+					<span class="field-label">Notes</span>
+					<span class="field">@Model.Note</span>
+				}
 			</div>
 			<div id="job-details-notes">
 				<span class="details-header">Attachments</span>
 				<div id="file-uploader" data-upload-path="@Url.Action("AddAttachment", "Attachments")" data-attachment-link="true"}>       
-					<noscript>          
+					<noscript>
 						<p>Please enable JavaScript to use file uploader.</p>
 						<!-- or put a simple form for upload here -->
-					</noscript>         
+					</noscript>
 				</div>
 				<ul id="attachmentList">
 					@foreach (var attachment in Model.Attachments)
