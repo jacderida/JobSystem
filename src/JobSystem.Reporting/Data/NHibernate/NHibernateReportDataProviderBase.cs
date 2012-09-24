@@ -26,13 +26,33 @@ namespace JobSystem.Reporting.Data.NHibernate
 			reportModel.CompanyAddress3 = !String.IsNullOrEmpty(companyDetails.Address3) ? companyDetails.Address3 : String.Empty;
 			reportModel.CompanyAddress4 = !String.IsNullOrEmpty(companyDetails.Address4) ? companyDetails.Address4 : String.Empty;
 			reportModel.CompanyAddress5 = !String.IsNullOrEmpty(companyDetails.Address5) ? companyDetails.Address5 : String.Empty;
+			reportModel.CompanyAddress = AssignFullCompanyAddress(reportModel);
 			reportModel.CompanyTelephone = !String.IsNullOrEmpty(companyDetails.Telephone) ? companyDetails.Telephone : String.Empty;
 			reportModel.CompanyFax = !String.IsNullOrEmpty(companyDetails.Fax) ? companyDetails.Fax : String.Empty;
 			reportModel.CompanyRegNo = !String.IsNullOrEmpty(companyDetails.RegNo) ? companyDetails.RegNo : String.Empty;
 			reportModel.CompanyVatRegNo = !String.IsNullOrEmpty(companyDetails.VatRegNo) ? companyDetails.VatRegNo : String.Empty;
 			reportModel.CompanyEmail = !String.IsNullOrEmpty(companyDetails.Email) ? companyDetails.Email : String.Empty;
 			reportModel.CompanyWww = !String.IsNullOrEmpty(companyDetails.Www) ? companyDetails.Www : String.Empty;
+			reportModel.CompanyContactInfo = AssignCombinedContactInfo(reportModel);
 			reportModel.CompanyTermsAndConditions = !String.IsNullOrEmpty(companyDetails.TermsAndConditions) ? companyDetails.TermsAndConditions : String.Empty;
+		}
+
+		public string AssignFullCompanyAddress(ReportModelBase reportModel)
+		{
+			return String.Format(
+				"{0}, {1}, {2}, {3}, {4}",
+				reportModel.CompanyAddress1,
+				reportModel.CompanyAddress2,
+				reportModel.CompanyAddress3,
+				reportModel.CompanyAddress4,
+				reportModel.CompanyAddress5);
+		}
+
+		public string AssignCombinedContactInfo(ReportModelBase reportModel)
+		{
+			return String.Format(
+				"T: {0}, F: {1}, W: {2}",
+				reportModel.CompanyTelephone, reportModel.CompanyFax, reportModel.CompanyWww);
 		}
 
 		protected string GetInstrumentDescription(Instrument instrument)
