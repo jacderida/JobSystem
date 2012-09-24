@@ -85,9 +85,9 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox1
 			// 
-			this.textBox1.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(2.1000001430511475D), Telerik.Reporting.Drawing.Unit.Cm(1.3856251239776611D));
+			this.textBox1.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.00010012308484874666D), Telerik.Reporting.Drawing.Unit.Cm(1.3856251239776611D));
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(11.448139190673828D), Telerik.Reporting.Drawing.Unit.Cm(0.38452392816543579D));
+			this.textBox1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(16.799701690673828D), Telerik.Reporting.Drawing.Unit.Cm(0.38452392816543579D));
 			this.textBox1.Style.Color = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(34)))), ((int)(((byte)(60)))));
 			this.textBox1.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(10D);
 			this.textBox1.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center;
