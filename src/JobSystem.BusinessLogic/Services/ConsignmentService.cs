@@ -58,6 +58,16 @@ namespace JobSystem.BusinessLogic.Services
 			DoCreateConsignmentItems(_consignmentItemService.GetPendingItems(pendingItemIds));
 		}
 
+		public Consignment Edit(Guid consignmentId, Guid supplierId)
+		{
+			var consignment = GetById(consignmentId);
+			if (consignment == null)
+				throw new ArgumentException("A valid consignment ID must be supplied");
+			consignment.Supplier = GetSupplier(supplierId);
+			_consignmentRepository.Update(consignment);
+			return consignment;
+		}
+
 		public Consignment GetById(Guid id)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

@@ -9,6 +9,7 @@ using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
 using NUnit.Framework;
 using Rhino.Mocks;
+using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {
@@ -20,12 +21,27 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private DomainValidationException _domainValidationException;
 		private DateTime _dateCreated = new DateTime(2011, 12, 29);
 
+		private Consignment _consignmentForEdit;
+		private Guid _consignmentForEditId;
+
 		[SetUp]
 		public void Setup()
 		{
 			_domainValidationException = null;
 			AppDateTime.GetUtcNow = () => _dateCreated;
+			_consignmentForEditId = Guid.NewGuid();
+			_consignmentForEdit = new Consignment
+			{
+				Id = _consignmentForEditId,
+				ConsignmentNo = "CR2000",
+				DateCreated = DateTime.UtcNow,
+				CreatedBy = new UserAccount(),
+				Supplier = new Supplier { Id = Guid.NewGuid(), Name = "Supplier Name" },
+				IsOrdered = false
+			};
 		}
+
+		#region Create
 
 		[Test]
 		public void Create_ValidConsignmentDetails_SuccessfullyCreated()
@@ -90,6 +106,68 @@ namespace JobSystem.BusinessLogic.UnitTests
 			}
 		}
 
+		#endregion
+		#region Edit
+
+		[Test]
+		public void Edit_ValidDetails_SuccessfulEdit()
+		{
+			var supplierId = Guid.NewGuid();
+			var consignmentRepositoryMock = MockRepository.GenerateMock<IConsignmentRepository>();
+			consignmentRepositoryMock.Stub(x => x.GetById(_consignmentForEditId)).Return(_consignmentForEdit);
+			consignmentRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			var supplierRepositoryStub = MockRepository.GenerateStub<ISupplierRepository>();
+			supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(new Supplier { Id = supplierId, Name = "New Supplier" });
+			_consignmentService = ConsignmentServiceFactory.Create(consignmentRepositoryMock, supplierRepositoryStub);
+
+			Edit(_consignmentForEditId, supplierId);
+			consignmentRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(_consignmentForEditId, _consignmentForEdit.Id);
+			Assert.AreEqual(supplierId, _consignmentForEdit.Supplier.Id);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidConsignmentId_ArgumentExceptionThrown()
+		{
+			var consignmentId = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var consignmentRepositoryMock = MockRepository.GenerateMock<IConsignmentRepository>();
+			consignmentRepositoryMock.Stub(x => x.GetById(consignmentId)).Return(null);
+			var supplierRepositoryStub = MockRepository.GenerateStub<ISupplierRepository>();
+			supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(new Supplier { Id = supplierId, Name = "New Supplier" });
+			_consignmentService = ConsignmentServiceFactory.Create(consignmentRepositoryMock, supplierRepositoryStub);
+			Edit(consignmentId, supplierId);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidSupplierId_ArgumentExceptionThrown()
+		{
+			var supplierId = Guid.NewGuid();
+			var consignmentRepositoryMock = MockRepository.GenerateMock<IConsignmentRepository>();
+			consignmentRepositoryMock.Stub(x => x.GetById(_consignmentForEditId)).Return(_consignmentForEdit);
+			var supplierRepositoryStub = MockRepository.GenerateStub<ISupplierRepository>();
+			supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(null);
+			_consignmentService = ConsignmentServiceFactory.Create(consignmentRepositoryMock, supplierRepositoryStub);
+			Edit(_consignmentForEditId, supplierId);
+		}
+
+		private void Edit(Guid consignmentId, Guid supplierId)
+		{
+			try
+			{
+				_consignmentForEdit = _consignmentService.Edit(consignmentId, supplierId);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region GetById
+
 		[Test]
 		public void GetById_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
 		{
@@ -106,6 +184,9 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
 		}
 
+		#endregion
+		#region GetConsignments
+
 		[Test]
 		public void GetConsignments_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
 		{
@@ -121,5 +202,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			}
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
 		}
+
+		#endregion
 	}
 }
