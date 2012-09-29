@@ -80,6 +80,18 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 				CalPeriod = 12,
 				Created = DateTime.UtcNow,
 				CreatedUser = createdBy,
+				Field = new ListItem
+				{
+					Id = Guid.NewGuid(),
+					Name = "D - Density",
+					Type = ListItemType.CategoryDensity,
+					Category = new ListItemCategory
+					{
+						Id = Guid.NewGuid(),
+						Name = "Field",
+						Type = ListItemCategoryType.JobItemCategory
+					}
+				}
 			};
 		}
 	}

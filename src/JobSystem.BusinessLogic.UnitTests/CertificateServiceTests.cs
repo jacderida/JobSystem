@@ -50,7 +50,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Create(id, certificateTypeId, jobItemId, procedureList);
 			certificateRepositoryMock.VerifyAllExpectations();
 			Assert.AreNotEqual(Guid.Empty, _savedCertificate.Id);
-			Assert.That(_savedCertificate.CertificateNumber.StartsWith("CERT"));
+			Assert.AreEqual("D2000", _savedCertificate.CertificateNumber);
 			Assert.AreEqual(_dateCreated, _savedCertificate.DateCreated);
 			Assert.AreEqual("graham.robertson@intertek.com", _savedCertificate.CreatedBy.EmailAddress);
 			Assert.IsNotNull(_savedCertificate.JobItem);

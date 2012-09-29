@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
@@ -39,10 +40,10 @@ namespace JobSystem.BusinessLogic.Services
 				throw new ArgumentException("An ID must be supplied for the certificate");
 			var certificate = new Certificate();
 			certificate.Id = id;
-			certificate.CertificateNumber = _entityIdProvider.GetIdFor<Certificate>();
+			certificate.JobItem = GetJobItem(jobItemId);
+			certificate.CertificateNumber = GetCertificateNumber(certificate.JobItem);
 			certificate.DateCreated = AppDateTime.GetUtcNow();
 			certificate.CreatedBy = CurrentUser;
-			certificate.JobItem = GetJobItem(jobItemId);
 			certificate.Type = GetCertificateType(certificateTypeId);
 			certificate.ProcedureList = procedureList;
 			ValidateAnnotatedObjectThrowOnFailure(certificate);
@@ -94,6 +95,13 @@ namespace JobSystem.BusinessLogic.Services
 			if (type.Category.Type != ListItemCategoryType.Certificate)
 				throw new ArgumentException("A certificate type list item must be supplied");
 			return type;
+		}
+
+		private string GetCertificateNumber(JobItem jobItem)
+		{
+			var certificateNumber = _entityIdProvider.GetIdFor<Certificate>();
+			var number = new String(certificateNumber.Where(c => Char.IsDigit(c)).ToArray());
+			return String.Format("{0}{1}", jobItem.Field.Name[0], number);
 		}
 	}
 }
