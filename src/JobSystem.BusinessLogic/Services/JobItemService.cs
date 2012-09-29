@@ -65,6 +65,19 @@ namespace JobSystem.BusinessLogic.Services
 			return jobItem;
 		}
 
+		public JobItem EditInformation(Guid jobItemId, string instructions, string accessories, string comments)
+		{
+			var jobItem = GetById(jobItemId);
+			if (jobItem == null)
+				throw new ArgumentException("A valid job item ID must be supplied.");
+			jobItem.Instructions = instructions;
+			jobItem.Accessories = accessories;
+			jobItem.Comments = comments;
+			ValidateAnnotatedObjectThrowOnFailure(jobItem);
+			_jobItemRepository.Update(jobItem);
+			return jobItem;
+		}
+
 		public JobItem AddWorkItem(Guid jobItemId, int workTime, int overTime, string report, Guid workStatusId, Guid workTypeId)
 		{
 			var jobItem = GetById(jobItemId);

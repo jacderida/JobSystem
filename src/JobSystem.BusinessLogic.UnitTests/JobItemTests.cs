@@ -19,10 +19,16 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private DomainValidationException _domainValidationException;
 		private JobItem _savedJobItem;
 		private DateTime _dateCreated = new DateTime(2011, 12, 29);
-		private JobItem _jobItemToUpdate;	
+		
+		private JobItem _jobItemToUpdate;
 		private Guid _jobItemToUpdateId;
+		
 		private JobItem _jobItemToUpdateJobNotApproved;
 		private Guid _jobItemToUpdateJobNotApprovedId;
+
+		private JobItem _jobItemForEditInformation;
+		private Guid _jobItemForEditInformationId;
+
 		private IUserContext _userContext;
 
 		[TestFixtureSetUp]
@@ -66,6 +72,35 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_jobItemToUpdateJobNotApproved = new JobItem
 			{
 				Id = _jobItemToUpdateJobNotApprovedId,
+				Job = new Job
+				{
+					Id = Guid.NewGuid(),
+					JobNo = "JR2000",
+					CreatedBy = _userContext.GetCurrentUser(),
+					OrderNo = "ORDER12345",
+					DateCreated = DateTime.UtcNow,
+					Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" },
+					IsPending = true
+				},
+				ItemNo = 1,
+				SerialNo = "12345",
+				Instrument = new Instrument
+				{
+					Id = Guid.NewGuid(),
+					Manufacturer = "Druck",
+					ModelNo = "DPI601IS",
+					Range = "None",
+					Description = "Digital Pressure Indicator"
+				},
+				CalPeriod = 12,
+				Created = DateTime.UtcNow,
+				CreatedUser = _userContext.GetCurrentUser(),
+			};
+
+			_jobItemForEditInformationId = Guid.NewGuid();
+			_jobItemForEditInformation = new JobItem
+			{
+				Id = _jobItemForEditInformationId,
 				Job = new Job
 				{
 					Id = Guid.NewGuid(),
@@ -574,6 +609,98 @@ namespace JobSystem.BusinessLogic.UnitTests
 					}
 				});
 			return listItemRepositoryStub;
+		}
+
+		#endregion
+		#region EditInformation
+
+		[Test]
+		public void EditInformation_ValidInformation_JobItemEdited()
+		{
+			var instructions = "edited instructions";
+			var accessories = "edited accessories";
+			var comments = "edited comments";
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemForEditInformationId)).Return(_jobItemForEditInformation);
+			jobItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
+
+			EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
+			jobItemRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(_jobItemForEditInformationId, _jobItemForEditInformation.Id);
+			Assert.AreEqual(instructions, _jobItemForEditInformation.Instructions);
+			Assert.AreEqual(accessories, _jobItemForEditInformation.Accessories);
+			Assert.AreEqual(comments, _jobItemForEditInformation.Comments);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void EditInformation_InvalidJobId_ArgumentExceptionThrown()
+		{
+			var id = Guid.NewGuid();
+			var instructions = "edited instructions";
+			var accessories = "edited accessories";
+			var comments = "edited comments";
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Stub(x => x.GetById(id)).Return(null);
+			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
+			EditInformation(id, instructions, accessories, comments);
+		}
+
+		[Test]
+		public void EditInformation_InvalidInstructions_DomainValidationExceptionThrown()
+		{
+			var instructions = new String('a', 257);
+			var accessories = "edited accessories";
+			var comments = "edited comments";
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemForEditInformationId)).Return(_jobItemForEditInformation);
+			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
+			EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.InstructionsTooLarge));
+		}
+
+		[Test]
+		public void EditInformation_InvalidAccessories_DomainValidationExceptionThrown()
+		{
+			var instructions = "some instructions";
+			var accessories = new String('a', 256);
+			var comments = "edited comments";
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemForEditInformationId)).Return(_jobItemForEditInformation);
+			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
+			EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.AccessoriesTooLarge));
+		}
+
+		[Test]
+		public void EditInformation_InvalidComments_DomainValidationExceptionThrown()
+		{
+			var instructions = "some instructions";
+			var accessories = "some accessories";
+			var comments = new String('a', 256);
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemForEditInformationId)).Return(_jobItemForEditInformation);
+			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
+			EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.CommentsTooLarge));
+		}
+
+		private void EditInformation(Guid jobItemId, string instructions, string accessories, string comments)
+		{
+			try
+			{
+				_jobItemForEditInformation = _jobItemService.EditInformation(jobItemId, instructions, accessories, comments);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
 		}
 
 		#endregion
