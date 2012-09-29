@@ -12,6 +12,7 @@ namespace JobSystem.Mvc.ViewModels.Consignments
 		public string SupplierName { get; set; }
 		public string Instructions { get; set; }
 		public Guid JobItemId { get; set; }
+		public string JobItemRef { get; set; }
 		public bool ToBeConverted { get; set; }
 		public string InstrumentDetails { get; set; }
 	}

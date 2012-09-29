@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Web.Mvc;
 using System.Linq;
+using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
-using JobSystem.Mvc.Core.UIValidation;
-using JobSystem.Mvc.Core.Utilities;
-using JobSystem.DataAccess.NHibernate.Web;
-using JobSystem.Mvc.ViewModels.Consignments;
-using System.Collections;
-using System.Collections.Generic;
 using JobSystem.DataAccess.NHibernate;
+using JobSystem.DataAccess.NHibernate.Web;
+using JobSystem.Mvc.Core.UIValidation;
+using JobSystem.Mvc.ViewModels.Consignments;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -121,14 +118,12 @@ namespace JobSystem.Mvc.Controllers
 				{
 					Id = c.Id,
 					JobItemId = c.JobItem.Id,
+					JobItemRef = String.Format("{0}/{1}", c.JobItem.Job.JobNo, c.JobItem.ItemNo),
 					Instructions = c.Instructions,
 					SupplierName = c.Supplier.Name
-				}).ToList();
-			var viewmodel = new ConsignmentPendingListViewModel()
-			{
-				ConsignmentItems = items
-			};
-			return View(viewmodel);
+				}).OrderBy(c => c.JobItemRef).ToList();
+			var viewModel = new ConsignmentPendingListViewModel { ConsignmentItems = items };
+			return View(viewModel);
 		}
 
 		public ActionResult ActiveConsignments()
