@@ -72,6 +72,18 @@ namespace JobSystem.TestHelpers
 				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
 		}
 
+		public static ConsignmentItemService Create(IConsignmentItemRepository consignmentItemRepository, IUserContext userContext)
+		{
+			return new ConsignmentItemService(
+				userContext,
+				MockRepository.GenerateStub<IConsignmentRepository>(),
+				consignmentItemRepository,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+		}
+
 		private static IConsignmentItemRepository GetConsignmentItemRepository(PendingConsignmentItem pendingItem)
 		{
 			var consignmentItemRepositoryStub = MockRepository.GenerateStub<IConsignmentItemRepository>();

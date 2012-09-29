@@ -28,6 +28,9 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private Guid _pendingItemId;
 		private PendingConsignmentItem _pendingItemForEdit;
 
+		private Guid _consignmentItemForEditId;
+		private ConsignmentItem _consignmentItemForEdit;
+
 		[TestFixtureSetUp]
 		public void FixtureSetup()
 		{
@@ -94,6 +97,19 @@ namespace JobSystem.BusinessLogic.UnitTests
 				Supplier = new Supplier { Id = Guid.NewGuid(), Name = "Gael Ltd" },
 				JobItem = _jobItemForEditPending,
 				Instructions = "some instructions"
+			};
+			_consignmentItemForEditId = Guid.NewGuid();
+			_consignmentItemForEdit = new ConsignmentItem
+			{
+				Id = _consignmentItemForEditId,
+				ItemNo = 1,
+				Instructions = "some instructions",
+				Consignment = new Consignment
+				{
+					Id = Guid.NewGuid(),
+					ConsignmentNo = "CR2000",
+					IsOrdered = false
+				}
 			};
 		}
 
@@ -467,6 +483,71 @@ namespace JobSystem.BusinessLogic.UnitTests
 			try
 			{
 				_pendingItemForEdit = _consignmentItemService.EditPending(id, jobItemId, supplierId, instructions);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region Edit
+
+		[Test]
+		public void Edit_ValidEdit_ItemEdited()
+		{
+			var instructions = "edited instructions";
+			var consignmentItemRepository = MockRepository.GenerateMock<IConsignmentItemRepository>();
+			consignmentItemRepository.Stub(x => x.GetById(_consignmentItemForEditId)).Return(_consignmentItemForEdit);
+			consignmentItemRepository.Expect(x => x.Update(null)).IgnoreArguments();
+			_consignmentItemService = ConsignmentItemServiceFactory.Create(consignmentItemRepository, _userContext);
+
+			Edit(_consignmentItemForEditId, instructions);
+			consignmentItemRepository.VerifyAllExpectations();
+			Assert.AreEqual(_consignmentItemForEditId, _consignmentItemForEdit.Id);
+			Assert.AreEqual(instructions, _consignmentItemForEdit.Instructions);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidConsignmentItemId_ArgumentExceptionThrown()
+		{
+			var consignmentItemId = Guid.NewGuid();
+			var instructions = "edited instructions";
+			var consignmentItemRepository = MockRepository.GenerateMock<IConsignmentItemRepository>();
+			consignmentItemRepository.Stub(x => x.GetById(consignmentItemId)).Return(null);
+			_consignmentItemService = ConsignmentItemServiceFactory.Create(consignmentItemRepository, _userContext);
+			Edit(consignmentItemId, instructions);
+		}
+
+		[Test]
+		public void Edit_InvalidInstructions_DomainValidationExceptionThrown()
+		{
+			var instructions = new String('a', 256);
+			var consignmentItemRepository = MockRepository.GenerateMock<IConsignmentItemRepository>();
+			consignmentItemRepository.Stub(x => x.GetById(_consignmentItemForEditId)).Return(_consignmentItemForEdit);
+			_consignmentItemService = ConsignmentItemServiceFactory.Create(consignmentItemRepository, _userContext);
+			Edit(_consignmentItemForEditId, instructions);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InstructionsTooLarge));
+		}
+
+		[Test]
+		public void Edit_ConsignmentIsOrdered_DomainValidationExceptionThrown()
+		{
+			_consignmentItemForEdit.Consignment.IsOrdered = true;
+			var instructions = "edited instructions";
+			var consignmentItemRepository = MockRepository.GenerateMock<IConsignmentItemRepository>();
+			consignmentItemRepository.Stub(x => x.GetById(_consignmentItemForEditId)).Return(_consignmentItemForEdit);
+			_consignmentItemService = ConsignmentItemServiceFactory.Create(consignmentItemRepository, _userContext);
+			Edit(_consignmentItemForEditId, instructions);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.ConsignmentIsOrdered));
+		}
+
+		private void Edit(Guid consignmentItemId, string instructions)
+		{
+			try
+			{
+				_consignmentItemForEdit = _consignmentItemService.Edit(consignmentItemId, instructions);
 			}
 			catch (DomainValidationException dex)
 			{

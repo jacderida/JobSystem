@@ -110,6 +110,27 @@ namespace JobSystem.BusinessLogic.Services
 			return pendingItem;
 		}
 
+		public ConsignmentItem Edit(Guid consignmentItemId, string instructions)
+		{
+			var consignmentItem = GetById(consignmentItemId);
+			if (consignmentItem == null)
+				throw new ArgumentException("A valid ID must be supplied for the consignment item");
+			if (consignmentItem.Consignment.IsOrdered)
+				throw new DomainValidationException(Messages.ConsignmentIsOrdered);
+			consignmentItem.Instructions = instructions;
+			ValidateAnnotatedObjectThrowOnFailure(consignmentItem);
+			_consignmentItemRepository.Update(consignmentItem);
+			return consignmentItem;
+		}
+
+		public ConsignmentItem GetById(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			var consignmentItem = _consignmentItemRepository.GetById(id);
+			return consignmentItem;
+		}
+
 		public PendingConsignmentItem GetPendingItem(Guid id)
 		{
 			return _consignmentItemRepository.GetPendingItem(id);
