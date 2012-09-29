@@ -17,6 +17,7 @@ namespace JobSystem.Reporting.Models
 		public string JobRef { get; set; }
 		public string SerialNo { get; set; }
 		public string BankName { get; set; }
+		public string BankAddress { get; set; }
 		public string BankAddress1 { get; set; }
 		public string BankAddress2 { get; set; }
 		public string BankAddress3 { get; set; }

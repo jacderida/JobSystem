@@ -23,6 +23,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.OrderNo = order.OrderNo;
 				reportItem.OrderDate = order.DateCreated;
 				reportItem.Contact = supplier.Contact1;
+				reportItem.EquipmentDescription = orderItem.Description;
 				reportItem.OrderInstructions = order.Instructions;
 				reportItem.ItemInstructions = orderItem.Instructions;
 				reportItem.Price = orderItem.Price;

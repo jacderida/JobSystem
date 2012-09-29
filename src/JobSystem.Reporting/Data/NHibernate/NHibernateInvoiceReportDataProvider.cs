@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using JobSystem.Reporting.Models;
 using JobSystem.DataModel.Entities;
+using System.Text;
 
 namespace JobSystem.Reporting.Data.NHibernate
 {
@@ -41,14 +42,31 @@ namespace JobSystem.Reporting.Data.NHibernate
 		public void PopulateBankDetails(BankDetails bankDetails, InvoiceReportModel reportItem)
 		{
 			reportItem.BankName = bankDetails.Name;
-			reportItem.BankAddress1 = !String.IsNullOrEmpty(reportItem.BankAddress1) ? reportItem.BankAddress1 : String.Empty;
-			reportItem.BankAddress2 = !String.IsNullOrEmpty(reportItem.BankAddress2) ? reportItem.BankAddress2 : String.Empty;
-			reportItem.BankAddress3 = !String.IsNullOrEmpty(reportItem.BankAddress3) ? reportItem.BankAddress3 : String.Empty;
-			reportItem.BankAddress4 = !String.IsNullOrEmpty(reportItem.BankAddress4) ? reportItem.BankAddress4 : String.Empty;
-			reportItem.BankAddress5 = !String.IsNullOrEmpty(reportItem.BankAddress5) ? reportItem.BankAddress5 : String.Empty;
+			reportItem.BankAddress1 = !String.IsNullOrEmpty(bankDetails.Address1) ? bankDetails.Address1 : String.Empty;
+			reportItem.BankAddress2 = !String.IsNullOrEmpty(bankDetails.Address2) ? bankDetails.Address2 : String.Empty;
+			reportItem.BankAddress3 = !String.IsNullOrEmpty(bankDetails.Address3) ? bankDetails.Address3 : String.Empty;
+			reportItem.BankAddress4 = !String.IsNullOrEmpty(bankDetails.Address4) ? bankDetails.Address4 : String.Empty;
+			reportItem.BankAddress5 = !String.IsNullOrEmpty(bankDetails.Address5) ? bankDetails.Address5 : String.Empty;
 			reportItem.BankAccountNo = bankDetails.AccountNo;
 			reportItem.BankSortCode = bankDetails.SortCode;
 			reportItem.BankIban = bankDetails.Iban;
+			reportItem.BankAddress = GetFullBankAddress(reportItem);
+		}
+
+		public string GetFullBankAddress(InvoiceReportModel reportItem)
+		{
+			var sb = new StringBuilder();
+			if (!String.IsNullOrEmpty(reportItem.BankAddress1))
+				sb.AppendFormat("{0}, ", reportItem.BankAddress1);
+			if (!String.IsNullOrEmpty(reportItem.BankAddress2))
+				sb.AppendFormat("{0}, ", reportItem.BankAddress2);
+			if (!String.IsNullOrEmpty(reportItem.BankAddress3))
+				sb.AppendFormat("{0}, ", reportItem.BankAddress3);
+			if (!String.IsNullOrEmpty(reportItem.BankAddress4))
+				sb.AppendFormat("{0}, ", reportItem.BankAddress4);
+			if (!String.IsNullOrEmpty(reportItem.BankAddress5))
+				sb.AppendFormat("{0}, ", reportItem.BankAddress5);
+			return sb.ToString().Trim(", ".ToCharArray());
 		}
 	}
 }

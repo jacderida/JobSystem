@@ -37,42 +37,23 @@
 			System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(company.DefaultCultureCode);
 			var logo = companyDetailsService.GetCompanyLogo();
 			var pageWidth = report.Width.Value;
+			report.MainLogo.Value = logo;
 			report.DataSource = dataSource;
 			var invoiceService = DependencyResolver.Current.GetService<InvoiceService>();
 			var invoice = invoiceService.GetById(Model);
 			switch (invoice.Currency.Name)
 			{
 				case "GBP":
-					report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
-					report.RepairTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
-					report.PartsTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
-					report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
 					report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
-					report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
 					break;
 				case "USD":
-					report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("en-US");
-					report.RepairTextBox.Culture = new System.Globalization.CultureInfo("en-US");
-					report.PartsTextBox.Culture = new System.Globalization.CultureInfo("en-US");
-					report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("en-US");
 					report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("en-US");
-					report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("en-US");
 					break;
 				case "EUR":
-					report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
-					report.RepairTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
-					report.PartsTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
-					report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
 					report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
-					report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
 					break;
 				default:
-					report.CalibrationTextBox.Format = "{0:N2}";
-					report.RepairTextBox.Format = "{0:N2}";
-					report.PartsTextBox.Format = "{0:N2}";
-					report.CarriageTextBox.Format = "{0:N2}";
 					report.SubTotalTextBox.Format = "{0:N2}";
-					report.InvestigationTextBox.Format = "{0:N2}";
 					report.CurrencyMessageTextBox.Visible = true;
 					break;
 			}			
