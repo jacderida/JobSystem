@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConsignmentIsOrdered" xml:space="preserve">
+    <value>An order has already been placed for this consignment.</value>
+  </data>
   <data name="InstructionsTooLarge" xml:space="preserve">
     <value>The instructions for the item cannot exceed 255 characters.</value>
   </data>

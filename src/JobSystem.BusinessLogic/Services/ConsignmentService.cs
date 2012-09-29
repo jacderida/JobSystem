@@ -63,6 +63,8 @@ namespace JobSystem.BusinessLogic.Services
 			var consignment = GetById(consignmentId);
 			if (consignment == null)
 				throw new ArgumentException("A valid consignment ID must be supplied");
+			if (consignment.IsOrdered)
+				throw new DomainValidationException(Messages.ConsignmentIsOrdered);
 			consignment.Supplier = GetSupplier(supplierId);
 			_consignmentRepository.Update(consignment);
 			return consignment;

@@ -9,7 +9,6 @@ using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
 using NUnit.Framework;
 using Rhino.Mocks;
-using System.Collections.Generic;
 
 namespace JobSystem.BusinessLogic.UnitTests
 {
@@ -151,6 +150,21 @@ namespace JobSystem.BusinessLogic.UnitTests
 			supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(null);
 			_consignmentService = ConsignmentServiceFactory.Create(consignmentRepositoryMock, supplierRepositoryStub);
 			Edit(_consignmentForEditId, supplierId);
+		}
+
+		[Test]
+		public void Edit_ConsignmentIsOrdered_DomainValidationExceptionThrown()
+		{
+			_consignmentForEdit.IsOrdered = true;
+			var supplierId = Guid.NewGuid();
+			var consignmentRepositoryMock = MockRepository.GenerateMock<IConsignmentRepository>();
+			consignmentRepositoryMock.Stub(x => x.GetById(_consignmentForEditId)).Return(_consignmentForEdit);
+			var supplierRepositoryStub = MockRepository.GenerateStub<ISupplierRepository>();
+			supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(new Supplier { Id = supplierId, Name = "New Supplier" });
+			_consignmentService = ConsignmentServiceFactory.Create(consignmentRepositoryMock, supplierRepositoryStub);
+
+			Edit(_consignmentForEditId, supplierId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.ConsignmentIsOrdered));
 		}
 
 		private void Edit(Guid consignmentId, Guid supplierId)
