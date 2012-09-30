@@ -6,6 +6,7 @@ using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using JobSystem.Framework.Messaging;
 using JobSystem.Resources.Orders;
+using JobSystem.Framework;
 
 namespace JobSystem.BusinessLogic.Services
 {
@@ -100,6 +101,17 @@ namespace JobSystem.BusinessLogic.Services
 			ValidateAnnotatedObjectThrowOnFailure(pendingItem);
 			_orderItemRepository.UpdatePendingItem(pendingItem);
 			return pendingItem;
+		}
+
+		public OrderItem MarkReceived(Guid orderItemId)
+		{
+			var orderItem = GetById(orderItemId);
+			orderItem.DateReceived = AppDateTime.GetUtcNow();
+			var jobItem = orderItem.JobItem;
+			jobItem.Status = _listItemRepository.GetByType(ListItemType.StatusPartsReceived);
+			_orderItemRepository.Update(orderItem);
+			_jobItemRepository.Update(jobItem);
+			return orderItem;
 		}
 
 		public OrderItem GetById(Guid id)

@@ -5,6 +5,7 @@ using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
+using JobSystem.Framework;
 using JobSystem.Resources.Orders;
 using JobSystem.TestHelpers;
 using JobSystem.TestHelpers.Context;
@@ -29,6 +30,13 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private Guid _orderItemForEditId;
 		private PendingOrderItem _pendingItemForEdit;
 		private Guid _pendingItemForEditId;
+
+		private Guid _orderItemForMarkReceivedId;
+		private OrderItem _orderItemForMarkReceived;
+		private Guid _jobItemForMarkReceivedId;
+		private JobItem _jobItemForMarkReceived;
+		private DateTime _dateReceived = new DateTime(2011, 12, 29);
+		private ListItem _partsReceivedListItem;
 
 		[SetUp]
 		public void Setup()
@@ -90,6 +98,72 @@ namespace JobSystem.BusinessLogic.UnitTests
 				DeliveryDays = 20,
 				Description = "some description",
 				JobItem = new JobItem { Id = Guid.NewGuid() }
+			};
+
+			_jobItemForMarkReceived = new JobItem
+			{
+				Id = _jobItemForMarkReceivedId,
+				Job = new Job
+				{
+					Id = Guid.NewGuid(),
+					JobNo = "JR2000",
+					CreatedBy = _userContext.GetCurrentUser(),
+					OrderNo = "ORDER12345",
+					DateCreated = DateTime.UtcNow,
+					Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" }
+				},
+				ItemNo = 1,
+				SerialNo = "12345",
+				Instrument = new Instrument
+				{
+					Id = Guid.NewGuid(),
+					Manufacturer = "Druck",
+					ModelNo = "DPI601IS",
+					Range = "None",
+					Description = "Digital Pressure Indicator"
+				},
+				CalPeriod = 12,
+				Created = DateTime.UtcNow,
+				CreatedUser = _userContext.GetCurrentUser(),
+				Status = new ListItem
+				{
+					Id = Guid.NewGuid(),
+					Name = "Awaiting Parts",
+					Type = ListItemType.StatusAwaitingParts,
+					Category = new ListItemCategory
+					{
+						Id = Guid.NewGuid(),
+						Name = "JobItemStatus",
+						Type = ListItemCategoryType.JobItemStatus
+					}
+				}
+			};
+
+			AppDateTime.GetUtcNow = () => _dateReceived;
+			_orderItemForMarkReceivedId = Guid.NewGuid();
+			_orderItemForMarkReceived = new OrderItem
+			{
+				Id = _orderItemForMarkReceivedId,
+				ItemNo = 1,
+				Description = "ordered item",
+				Quantity = 2,
+				Price = 35.00m,
+				DeliveryDays = 30,
+				PartNo = "PART28979",
+				Instructions = "some instructions",
+				JobItem = _jobItemForMarkReceived
+			};
+			_partsReceivedListItem = new ListItem
+			{
+				Id = Guid.NewGuid(),
+				Name = "Parts Received",
+				Type = ListItemType.StatusPartsReceived,
+				Category = new ListItemCategory
+				{
+					Id = Guid.NewGuid(),
+					Name = "JobItemStatus",
+					Type = ListItemCategoryType.JobItemStatus
+				}
 			};
 		}
 
@@ -1623,6 +1697,48 @@ namespace JobSystem.BusinessLogic.UnitTests
 					_orderItemService.GetPendingOrderItems();
 				else
 					_orderItemService.GetPendingOrderItems(pendingItemIds);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region MarkReceived
+
+		[Test]
+		public void MarkReceived_ValidOrderItem_ItemMarkedReceived()
+		{
+			var orderItemRepositoryMock = MockRepository.GenerateMock<IOrderItemRepository>();
+			orderItemRepositoryMock.Stub(x => x.GetById(_orderItemForMarkReceivedId)).Return(_orderItemForMarkReceived);
+			orderItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemForMarkReceivedId)).Return(_jobItemForMarkReceived);
+			jobItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
+			listItemRepositoryStub.Stub(x => x.GetByType(ListItemType.StatusPartsReceived)).Return(_partsReceivedListItem);
+			_orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+				_userContext,
+				MockRepository.GenerateStub<IOrderRepository>(),
+				orderItemRepositoryMock,
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				jobItemRepositoryMock,
+				listItemRepositoryStub);
+
+			MarkReceived(_orderItemForMarkReceivedId);
+			orderItemRepositoryMock.VerifyAllExpectations();
+			jobItemRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(_orderItemForMarkReceivedId, _orderItemForMarkReceived.Id);
+			Assert.AreEqual(_dateReceived, _orderItemForMarkReceived.DateReceived.Value);
+			Assert.AreEqual(ListItemType.StatusPartsReceived, _jobItemForMarkReceived.Status.Type);
+		}
+
+		private void MarkReceived(Guid orderItemId)
+		{
+			try
+			{
+				_orderItemForMarkReceived = _orderItemService.MarkReceived(orderItemId);
 			}
 			catch (DomainValidationException dex)
 			{
