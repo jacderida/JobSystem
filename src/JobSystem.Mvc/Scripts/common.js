@@ -16,6 +16,11 @@
 			case 'certificate-item':
 				$("#create-certificate-container").dialog('close');
 				break;
+			case 'edit-job-item-information':
+				$("#edit-job-item-information").dialog('close');
+				$("#st_content_7").find(".primary-action").button();
+				break;
+				
 		}
 	},
 	updateQuoteStatusListView: function (status, id) {

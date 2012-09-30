@@ -88,6 +88,33 @@ namespace JobSystem.Mvc.Controllers
         }
 
 		[HttpGet]
+		public ActionResult EditInformation(Guid id)
+		{
+			var jobItem = _jobItemService.GetById(id);
+
+			var viewmodel = new JobItemViewModel()
+			{
+				Id = id,
+				Accessories = jobItem.Accessories,
+				Comments = jobItem.Comments,
+				Instructions = jobItem.Instructions,
+				IsReturned = jobItem.IsReturned,
+				ReturnReason = jobItem.ReturnReason,
+				JobId = jobItem.Job.Id
+			};
+			return PartialView("_EditInformation", viewmodel);
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult EditInformation(JobItemDetailsViewModel viewmodel)
+		{
+			_jobItemService.EditInformation(viewmodel.Id, viewmodel.Instructions, viewmodel.Accessories, viewmodel.Comments);
+
+			return PartialView("_InformationTab", viewmodel);
+		}
+
+		[HttpGet]
 		public ActionResult Details(Guid Id)
 		{
 			var job = _jobItemService.GetById(Id);

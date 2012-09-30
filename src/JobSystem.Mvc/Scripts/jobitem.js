@@ -67,4 +67,23 @@
 		});
 		return false;
 	});
+
+	//Edit Job item INFORMATION  form
+	$('#editJobItemInformationButton').live('click', function (e) {
+		e.preventDefault();
+
+		var editUrl = $('#editJobItemInformationUrl').val();
+		//Edit user modal form
+		$("#edit-job-item-information").dialog({
+			modal: true,
+			width: 335,
+			title: 'Edit Information',
+			position: ['center', 100],
+			open: function (event, ui) {
+				//Load the Edit action which will return 
+				// the partial view _Edit
+				$(this).load(editUrl);
+			}
+		});
+	});
 });

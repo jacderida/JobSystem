@@ -18,6 +18,11 @@
 	});
 </script>
 
+<div id="edit-job-item-information">
+	@*Content ajaxed in*@
+</div>
+
+<input type="hidden" id="editJobItemInformationUrl" value="@Url.Action("EditInformation", "JobItem", new { id = Model.Id })"/>
 <input type="hidden" id="createWorkItemUrl" value="@Url.Action("Create", "WorkItem")"/>
 <input type="hidden" id="createConsignmentUrl" value="@Url.Action("Create", "Consignment")"/>
 <input type="hidden" id="createDeliveryUrl" value="@Url.Action("Create", "Delivery")"/>
@@ -272,19 +277,8 @@ if (Model.QuoteItem.IsQuoted)
 	}
 			</div>
 		</div>
-		<div id="st_content_7" class="st_tab_view">
-			<div class="text">
-				<div class="details-fields">
-					<span class="field-label">Accessories</span>
-					<span class="field">@Model.Accessories</span>
-					<span class="field-label">Comments</span>
-					<span class="field">@Model.Comments</span>
-					<span class="field-label">Instructions</span>
-					<span class="field">@Model.Instructions</span>
-					<span class="field-label">Returned</span>
-					<span class="field">@Model.IsReturned , @Model.ReturnReason</span>
-				</div>
-			</div>
+		<div id="st_content_7" class="jobItemInformation st_tab_view">
+			@Html.Partial("~/Views/JobItem/_InformationTab.cshtml", Model)
 		</div>
 	</div>
 	<!-- /.st_view -->

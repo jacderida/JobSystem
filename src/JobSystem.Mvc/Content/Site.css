@@ -914,6 +914,7 @@ div#title {
 }
 
 #job-created-by {
+	float:left;
 	font-size: 0.8em;
 }
 
@@ -922,6 +923,8 @@ div#title {
 }
 
 #job-title-container h2 {
+	float:left; 
+	width: 80%;
 	margin-bottom: 10px;
 }
 
@@ -1049,4 +1052,8 @@ div#title {
 	border: 1px solid #D6E9C6;
 	text-align: center;
 	width: 100%;
+}
+
+#editJobButton {
+	float: right;
 }

@@ -28,6 +28,7 @@
 	}
 	<div id="job-title-container">
 		<h2>@Model.JobNumber</h2>
+		@Html.ActionLink("Edit Job Details", "Edit", new { Id = @Model.Id }, new { id = "editJobButton", @class = "primary-action" })
 		<p id="job-created-by">Created on @Model.DateCreated by <a href="mailto:@Model.CreatedBy">@Model.CreatedBy</a></p>
 		<div id="job-details-container">
 			<div class="job-details-fields">
@@ -89,7 +90,6 @@
 					<li>@Model.CustomerTelephone</li>
 				</ul>
 			</div>
-			@Html.ActionLink("Edit Job Details", "Edit", new { Id = @Model.Id })
 		</div>
 	</div>	
 </div>

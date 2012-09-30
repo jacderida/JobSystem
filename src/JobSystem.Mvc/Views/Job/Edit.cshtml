@@ -43,10 +43,9 @@
 		@Html.TextAreaFor(model => model.Instructions)
 		@Html.ValidationMessageFor(model => model.Instructions)
 	</div>
-	<p>
-		<input type="submit" value="Save" />
-	</p>
+	<br />
+	<div>
+		<input type="submit" class="primary-action" value="Save" />
+		@Html.ActionLink("Cancel", "Details", new { id = Model.Id, tabNo = "1" })
+	</div>
 }
-<div>
-	@Html.ActionLink("Back to List", "Index")
-</div>
