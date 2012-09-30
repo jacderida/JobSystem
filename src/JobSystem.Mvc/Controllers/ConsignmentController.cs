@@ -69,30 +69,57 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult EditPending(Guid id)
+		public ActionResult Edit(Guid id)
 		{
-			var consignment = _consignmentItemService.GetPendingItem(id);
+			var pendingConsignment = _consignmentItemService.GetPendingItem(id);
 
-			var viewmodel = new ConsignmentEditViewModel()
+			if (pendingConsignment == null) {
+				var activeConsignment = _consignmentItemService.GetById(id);
+
+				var viewmodel = new ConsignmentEditViewModel()
+				{
+					Id = activeConsignment.Id,
+					JobItemId = activeConsignment.JobItem.Id,
+					SupplierName = activeConsignment.Consignment.Supplier.Name,
+					SupplierId = activeConsignment.Consignment.Supplier.Id,
+					Instructions = activeConsignment.Instructions,
+					IsPending = false
+				};
+
+				return PartialView("_Edit", viewmodel);
+			} 
+			else
 			{
-				Id = consignment.Id,
-				JobItemId = consignment.JobItem.Id,
-				SupplierName = consignment.Supplier.Name,
-				SupplierId = consignment.Supplier.Id,
-				Instructions = consignment.Instructions
-			};
-			return PartialView("_Edit", viewmodel);
+				var viewmodel = new ConsignmentEditViewModel()
+				{
+					Id = pendingConsignment.Id,
+					JobItemId = pendingConsignment.JobItem.Id,
+					SupplierName = pendingConsignment.Supplier.Name,
+					SupplierId = pendingConsignment.Supplier.Id,
+					Instructions = pendingConsignment.Instructions,
+					IsPending = true
+				};
+
+				return PartialView("_Edit", viewmodel);
+			}
 		}
 
 		[HttpPost]
 		[Transaction]
-		public ActionResult EditPending(ConsignmentEditViewModel viewmodel)
+		public ActionResult Edit(ConsignmentEditViewModel viewmodel)
 		{
-			_consignmentItemService.EditPending(
-				viewmodel.Id,
-				viewmodel.JobItemId,
-				viewmodel.SupplierId,
-				viewmodel.Instructions);
+			if (viewmodel.IsPending) 
+				_consignmentItemService.EditPending(
+					viewmodel.Id,
+					viewmodel.JobItemId,
+					viewmodel.SupplierId,
+					viewmodel.Instructions);
+			else
+			{
+				_consignmentItemService.Edit(
+						viewmodel.Id,
+						viewmodel.Instructions);
+			}
 
 			return RedirectToAction("PendingConsignments", "Consignment");
 		}

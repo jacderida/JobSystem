@@ -166,7 +166,8 @@ namespace JobSystem.Mvc.Controllers
 							ConsignmentNo = item.Consignment.ConsignmentNo,
 							CreatedBy = item.Consignment.CreatedBy.Name,
 							DateCreated = item.Consignment.DateCreated.ToLongDateString() + ' ' + item.Consignment.DateCreated.ToShortTimeString(),
-							SupplierName = item.Consignment.Supplier.Name
+							SupplierName = item.Consignment.Supplier.Name,
+							IsOrdered = item.Consignment.IsOrdered
 						};
 					}
 					else
@@ -175,7 +176,8 @@ namespace JobSystem.Mvc.Controllers
 						{
 							Id = item.Id,
 							Instructions = item.Instructions,
-							SupplierName = item.Consignment.Supplier.Name
+							SupplierName = item.Consignment.Supplier.Name,
+							IsOrdered = item.Consignment.IsOrdered
 						};
 					}
 				} 

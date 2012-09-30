@@ -201,7 +201,6 @@ namespace JobSystem.Mvc.Controllers
 						ReturnReason = ji.ReturnReason,
 						InstrumentDetails = String.Format("{0} - {1} : {2}", ji.Instrument.ModelNo, ji.Instrument.Manufacturer.ToString(), ji.Instrument.Description),
 						QuoteItem = PopulateQuoteItemViewModel(ji.Id),
-						ConsignmentItem = PopulateConsignmentItemViewModel(ji.Id),
 						Delivery = PopulateDeliveryItemViewModel(ji.Id),
 						Certificates = PopulateCertificateViewModel(ji.Id),
 						WorkItems = ji.HistoryItems.Select(wi => new WorkItemDetailsViewModel
@@ -225,7 +224,11 @@ namespace JobSystem.Mvc.Controllers
 					}).ToList()
 			};
 			foreach (var ji in viewModel.JobItems)
+			{
 				PopulateOrderItemViewModel(ji);
+				PopulateConsignmentItemViewModel(ji);
+			}
+
 			return View(viewModel);
 		}
 
@@ -257,34 +260,48 @@ namespace JobSystem.Mvc.Controllers
 			return RedirectToAction("Details", new { id = id });
 		}
 
-		private ConsignmentItemIndexViewModel PopulateConsignmentItemViewModel(Guid Id)
+		private void PopulateConsignmentItemViewModel(JobItemDetailsViewModel jiViewmodel)
 		{
-			var pendingItem = _jobItemService.GetPendingConsignmentItem(Id);
+			var pendingItem = _jobItemService.GetPendingConsignmentItem(jiViewmodel.Id);
 			if (pendingItem == null)
 			{
-				var item = _jobItemService.GetLatestConsignmentItem(Id);
+				var item = _jobItemService.GetLatestConsignmentItem(jiViewmodel.Id);
 				if (item != null)
 				{
-					var viewmodel = new ConsignmentItemIndexViewModel()
+					if (item.Consignment != null)
+					{
+						jiViewmodel.Consignment = new ConsignmentIndexViewModel()
+						{
+							Id = item.Consignment.Id,
+							ConsignmentNo = item.Consignment.ConsignmentNo,
+							CreatedBy = item.Consignment.CreatedBy.Name,
+							DateCreated = item.Consignment.DateCreated.ToLongDateString() + ' ' + item.Consignment.DateCreated.ToShortTimeString(),
+							SupplierName = item.Consignment.Supplier.Name,
+							IsOrdered = item.Consignment.IsOrdered
+						};
+						return;
+					}
+					jiViewmodel.ConsignmentItem = new ConsignmentItemIndexViewModel()
 					{
 						Id = item.Id,
 						Instructions = item.Instructions,
-						SupplierName = item.Consignment.Supplier.Name
+						SupplierName = item.Consignment.Supplier.Name,
+						IsOrdered = item.Consignment.IsOrdered
 					};
-					return viewmodel;
+					return;
 				}
 				else
-					return null;
+					return;
 			}
 			else
 			{
-				var viewmodel = new ConsignmentItemIndexViewModel()
+				jiViewmodel.ConsignmentItem = new ConsignmentItemIndexViewModel()
 				{
 					Id = pendingItem.Id,
 					Instructions = pendingItem.Instructions,
 					SupplierName = pendingItem.Supplier.Name
 				};
-				return viewmodel;
+				return;
 			}
 		}
 

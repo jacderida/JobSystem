@@ -177,7 +177,7 @@ if (Model.QuoteItem.IsQuoted)
 			<div class="text">
 				<a href="#" class="primary-action createConsignmentButton" id="@Model.Id">Raise Consigment</a>
 
-				<input type="hidden" id="editConsignmentItemUrl" value="@Url.Action("EditPending", "Consignment")"/>
+				<input type="hidden" id="editConsignmentItemUrl" value="@Url.Action("Edit", "Consignment")"/>
 				<div id="edit-consignment-container">@*Content ajaxed in*@</div>
 
 				@if (Model.ConsignmentItem != null)
@@ -187,7 +187,7 @@ if (Model.QuoteItem.IsQuoted)
 						@Model.ConsignmentItem.Instructions
 					</div>
 					<br />
-					<a href="#" class="primary-action editConsignmentButton" id="@Model.ConsignmentItem.Id">Edit</a>
+					if (Model.ConsignmentItem.IsOrdered == false) { <a href="#" class="primary-action editConsignmentButton" id="@Model.ConsignmentItem.Id">Edit</a> }
 	}
 	else if (Model.Consignment != null)
 	{
