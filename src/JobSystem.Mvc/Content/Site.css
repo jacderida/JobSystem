@@ -680,6 +680,7 @@ div#title {
 
 #job-details-container {
 	float: left;
+	width: 100%;
 	/*width: 670px;*/
 	/*margin-right: 20px;*/
 }
