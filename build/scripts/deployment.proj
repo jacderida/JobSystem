@@ -10,7 +10,7 @@
 	<Target Name="ModifyWebConfig">
 		<ModifyConfigFile
 			ConfigFilePath="$(ProjectSourceDirectory)\JobSystem.Mvc\Web.config"
-			UseRemoteConnection="false"
+			UseRemoteConnection="true"
 			JobSystemConnectionString="Data Source=jobsys.ca0li8yz4xun.eu-west-1.rds.amazonaws.com;Initial Catalog=jobsystem.development;User ID=jobsysmaster;Password=jobsystem" />
 	</Target>
 </Project>
