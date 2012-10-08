@@ -5,18 +5,29 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
 <div id="edit-consignment-container">
-@using (Html.BeginForm("Edit", "Consignment", FormMethod.Post))
+@using (Html.BeginForm("EditItem", "Consignment", FormMethod.Post))
 {
 	@Html.ValidationSummary(true)
 	<fieldset class="fieldset-no-legend fieldset-float-left">
+		@if (Model.IsPending) {
+			<div class="editor-label">
+				@Html.LabelFor(model => model.SupplierId)
+			</div>
+			<div class="editor-field">
+				@Html.TextBox("SupplierAutocomplete", @Model.SupplierName, new { id = "supplier-autocomplete" })
+				@Html.HiddenFor(model => model.SupplierId, new { id = "SupplierId" })
+			</div>
+		}
 		<div class="editor-label">
-			@Html.LabelFor(model => model.SupplierId)
+			@Html.LabelFor(model => model.Instructions)
 		</div>
 		<div class="editor-field">
-			@Html.TextBox("SupplierAutocomplete", @Model.SupplierName, new { id = "supplier-autocomplete" })
-			@Html.HiddenFor(model => model.SupplierId, new { id = "SupplierId" })
+			@Html.TextAreaFor(model => model.Instructions)
+			@Html.ValidationMessageFor(model => model.Instructions)
 		</div>
+		@Html.HiddenFor(model => model.JobItemId)
 		@Html.HiddenFor(model => model.Id)
+		@Html.HiddenFor(model => model.IsPending)
 	</fieldset>
 	<div class="clear"></div>
 	<div class="buttons-row">

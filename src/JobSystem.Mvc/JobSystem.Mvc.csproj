@@ -481,7 +481,7 @@
     <Content Include="Views\Quote\PendingQuotes.cshtml" />
     <Content Include="Views\Quote\ApprovedQuotes.cshtml" />
     <Content Include="Views\Quote\Create.cshtml" />
-    <Content Include="Views\Consignment\_Edit.cshtml" />
+    <Content Include="Views\Consignment\_EditItem.cshtml" />
     <Content Include="Views\Quote\EditItem.cshtml" />
     <Content Include="Views\Order\CreateIndividualOrder.cshtml" />
     <Content Include="Views\Order\Details.cshtml" />
@@ -516,6 +516,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\JobItem\_InformationTab.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Consignment\_Edit.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

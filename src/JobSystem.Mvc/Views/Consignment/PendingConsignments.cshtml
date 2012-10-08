@@ -23,14 +23,14 @@
 				<th>Instructions</th>
 				<th></th>
 			</tr>
-		@foreach (var item in Model.ConsignmentItems.OrderBy(i => i.SupplierName))
+		@foreach (var item in Model.ConsignmentItems.OrderBy(i => i.JobItemRef))
 		 {
 			<tr>
 				<td><input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/></td>
 				<td>@item.JobItemRef</td>
 				<td>@item.SupplierName</td>
 				<td>@item.Instructions</td>
-				<td><a href="#" class="editConsignmentButton" id="@item.Id">Edit</a></td>
+				<td>@Html.ActionLink("Edit", "EditItem", new { id = item.Id })</td>
 			</tr>
 		 }
 		</table>

@@ -10,18 +10,19 @@
 </div>
 
 @if (Model.Any()) {
-	<table>
+	<table class="approvedQuoteTable" id="approvedQuoteTableHead">
 		<tr>
 			<th>Consignment No</th>
 			<th>Supplier Name</th>
 			<th>Created By</th>
 			<th>Date Created</th>
-			<th>Items</th>
 			<th></th>
 			<th></th>
 		</tr>
-	@foreach (var item in Model.OrderBy(i => i.SupplierName))
-	 {
+	</table>
+	foreach (var item in Model.OrderBy(i => i.ConsignmentNo))
+	{
+	<table class="approvedQuoteTable">
 		<tr>
 			<td>
 				@item.ConsignmentNo
@@ -35,23 +36,11 @@
 			<td>
 				@item.DateCreated
 			</td>
-			<td>
-				<span class="the-tooltip center top dark-midnight-blue itemCount">
-					@item.ConsignmentItems.Count items
-					<span>
-					@foreach (var ci in item.ConsignmentItems) {
-						<span>
-							@ci.InstrumentDetails <br />
-							@ci.Instructions
-						</span><br />
-					}	
-					</span>
-				</span>
-			</td>
-			<td>
+			<td id="consignmentEditHeader">
 				@if (item.IsOrdered) {
 					@: Ordered
 				} else {
+					@Html.ActionLink("Edit", "Edit", new { id = item.Id })
 					@Html.ActionLink("Order", "ConvertToOrder", new { id = item.Id })
 				}
 			</td>
@@ -59,8 +48,38 @@
 				@Html.ActionLink("Print Note", "GenerateConsignmentNote", new { Id = @item.Id }, new { target="_blank"})
 			</td>
 		</tr>
-	 }
 	</table>
+	<table class="approvedQuoteItemTable">
+		<tr>
+			<th>Job</th>
+			<th>Instrument</th>
+			<th>Instructions</th>
+			<th class="shortColumn"></th>
+		</tr>	
+		@foreach (var ci in item.ConsignmentItems)
+		{
+			<tr id="@ci.Id">
+				<td>
+					@ci.JobItemRef
+				</td>
+				<td>
+					@ci.InstrumentDetails
+				</td>
+				<td>
+					@ci.Instructions
+				</td>
+				<td class="shortColumn">
+					@if (item.IsOrdered) {
+						@: Ordered
+					} else {
+						@Html.ActionLink("Edit", "EditItem", new { id = ci.Id })
+					}	
+				</td>
+			</tr>
+		}
+	</table>
+	<div class="clear"></div>
+	}
 }
 else
 {

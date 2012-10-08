@@ -69,7 +69,7 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Edit(Guid id)
+		public ActionResult EditItem(Guid id)
 		{
 			var pendingConsignment = _consignmentItemService.GetPendingItem(id);
 
@@ -86,7 +86,7 @@ namespace JobSystem.Mvc.Controllers
 					IsPending = false
 				};
 
-				return PartialView("_Edit", viewmodel);
+				return View("_EditItem", viewmodel);
 			} 
 			else
 			{
@@ -100,28 +100,53 @@ namespace JobSystem.Mvc.Controllers
 					IsPending = true
 				};
 
-				return PartialView("_Edit", viewmodel);
+				return View("_EditItem", viewmodel);
 			}
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult EditItem(ConsignmentEditViewModel viewmodel)
+		{
+			if (viewmodel.IsPending) 
+			{
+				_consignmentItemService.EditPending(
+					viewmodel.Id,
+					viewmodel.JobItemId,
+					viewmodel.SupplierId,
+					viewmodel.Instructions);
+				return RedirectToAction("PendingConsignments", "Consignment");
+			}
+			else
+			{
+				_consignmentItemService.Edit(
+						viewmodel.Id,
+						viewmodel.Instructions);
+				return RedirectToAction("ActiveConsignments", "Consignment");
+			}
+		}
+
+		[HttpGet]
+		public ActionResult Edit(Guid id)
+		{
+			var activeConsignment = _consignmentService.GetById(id);
+
+			var viewmodel = new ConsignmentEditViewModel()
+			{
+				Id = activeConsignment.Id,
+				SupplierName = activeConsignment.Supplier.Name,
+				SupplierId = activeConsignment.Supplier.Id
+			};
+			return View("_Edit", viewmodel);
 		}
 
 		[HttpPost]
 		[Transaction]
 		public ActionResult Edit(ConsignmentEditViewModel viewmodel)
 		{
-			if (viewmodel.IsPending) 
-				_consignmentItemService.EditPending(
-					viewmodel.Id,
-					viewmodel.JobItemId,
-					viewmodel.SupplierId,
-					viewmodel.Instructions);
-			else
-			{
-				_consignmentItemService.Edit(
-						viewmodel.Id,
-						viewmodel.Instructions);
-			}
+			_consignmentService.Edit(viewmodel.Id, viewmodel.SupplierId);
 
-			return RedirectToAction("PendingConsignments", "Consignment");
+			return RedirectToAction("ActiveConsignments", "Consignment");
 		}
 
 		[Transaction]
@@ -173,6 +198,8 @@ namespace JobSystem.Mvc.Controllers
 						{
 							Instructions = ci.Instructions,
 							InstrumentDetails = String.Format("{0} - {1} : {2}", ci.JobItem.Instrument.ModelNo, ci.JobItem.Instrument.Manufacturer.ToString(), ci.JobItem.Instrument.Description),
+							Id = ci.Id,
+							JobItemRef = String.Format("{0}, item {1}", ci.JobItem.Job.JobNo, ci.JobItem.ItemNo)
 						}).ToList();
 			}
 			return View(items);

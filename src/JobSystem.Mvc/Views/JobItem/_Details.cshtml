@@ -198,6 +198,7 @@ if (Model.QuoteItem.IsQuoted)
 							Created by <span class="strongText">@Model.Consignment.CreatedBy</span> on <span class="strongText">@Model.Consignment.DateCreated</span>
 						</span>
 					</div>
+					if (Model.Consignment.IsOrdered == false) { <a href="#" class="primary-action editConsignmentButton" id="@Model.Consignment.Id">Edit</a> }
 	}
 	else
 	{
