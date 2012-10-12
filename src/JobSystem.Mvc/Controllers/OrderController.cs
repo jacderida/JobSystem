@@ -36,7 +36,7 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult PendingOrderItems()
+		public ActionResult PendingOrderItems(int page = 1)
 		{
 			var items = _orderItemService.GetPendingOrderItems().Select(
 				q => new OrderItemIndexViewModel
@@ -55,7 +55,7 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult PendingOrders()
+		public ActionResult PendingOrders(int page = 1)
 		{
 			var items = _orderService.GetOrders().Where(i => !i.IsApproved).Select(
 				q => new OrderIndexViewModel
@@ -83,7 +83,7 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult ApprovedOrders()
+		public ActionResult ApprovedOrders(int page = 1)
 		{
 			var items = _orderService.GetOrders().Where(i => i.IsApproved).Select(
 				q => new OrderIndexViewModel

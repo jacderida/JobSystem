@@ -1,7 +1,7 @@
 ﻿@model JobSystem.Mvc.ViewModels.Consignments.ConsignmentPendingListViewModel
 
 @{
-    ViewBag.Title = "Consignments";
+	ViewBag.Title = "Consignments";
 }
 
 <div id="toggle-container">
@@ -14,31 +14,23 @@
 
 	if (Model.ConsignmentItems.Any())
 	{
-		<input class="primary-action" type="submit" value="Consign"/>
-		<table>
-			<tr>
-				<th class="narrowHeader"></th>
-				<th>Job Item Ref.</th>
-				<th>Supplier Name</th>
-				<th>Instructions</th>
-				<th></th>
-			</tr>
-		@foreach (var item in Model.ConsignmentItems.OrderBy(i => i.JobItemRef))
-		 {
-			<tr>
-				<td><input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/></td>
-				<td>@item.JobItemRef</td>
-				<td>@item.SupplierName</td>
-				<td>@item.Instructions</td>
-				<td>@Html.ActionLink("Edit", "EditItem", new { id = item.Id })</td>
-			</tr>
-		 }
-		</table>
-	}
-	else
-	{
+	<input class="primary-action" type="submit" value="Consign"/>
+
+	var grid = new WebGrid(Model.ConsignmentItems, defaultSort: "JobItemRef", canSort: false, rowsPerPage: 15);
+	
+	@grid.GetHtml(columns: grid.Columns(
+		grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
+		grid.Column("JobItemRef", "Job Item Ref."),
+		grid.Column("SupplierName", "Supplier Name"),
+		grid.Column("Instructions", "Instructions"),
+		grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit", "EditItem", new { id = item.Id })</text>)
+	))
+
+}
+else
+{
 		<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
-	}
+}
 }
 
 <div id="edit-consignment-container">

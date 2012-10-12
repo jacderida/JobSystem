@@ -35,5 +35,7 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 		public string Instrument { get; set; }
 		public string InitialStatus { get; set; }
 		public string Field { get; set; }
+		public bool IsInvoiced { get; set; }
+		public bool IsMarkedForInvoicing { get; set; }
 	}
 }

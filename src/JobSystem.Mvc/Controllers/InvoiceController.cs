@@ -67,7 +67,7 @@ namespace JobSystem.Mvc.Controllers
 			}
 		}
 
-		public ActionResult PendingInvoices()
+		public ActionResult PendingInvoices(int page = 1)
 		{
 			var items = _invoiceItemService.GetPendingInvoiceItems().Select(i => new InvoiceItemIndexViewModel{
 				Id = i.Id,
@@ -85,7 +85,7 @@ namespace JobSystem.Mvc.Controllers
 			return View(items);
 		}
 
-		public ActionResult ApprovedInvoices()
+		public ActionResult ApprovedInvoices(int page = 1)
 		{
 			var items = _invoiceService.GetInvoices().Select(i => new InvoiceIndexViewModel
 			{

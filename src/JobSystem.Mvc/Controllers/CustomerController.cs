@@ -21,7 +21,7 @@ namespace JobSystem.Mvc.Controllers
 			_customerService = customerService;
 		}
 
-		public ActionResult Index()
+		public ActionResult Index(int page = 1)
 		{
 			var customerList = _customerService.GetCustomers().Select(
 				c => new CustomerIndexViewModel

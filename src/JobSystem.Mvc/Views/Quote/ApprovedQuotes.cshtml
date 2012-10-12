@@ -12,6 +12,43 @@
 </div>
 
 @if (Model.Any()) {
+
+
+
+@*	var grid = new WebGrid(Model, defaultSort:"QuoteNo", canSort: false, rowsPerPage: 15);
+	
+	@grid.GetHtml(columns: grid.Columns(
+		grid.Column("QuoteNo", "Quote No."),
+		grid.Column("OrderNo", "Order No."),
+		grid.Column("AdviceNo", "Advice No."),
+		grid.Column("CurrencyName", "Currency"),
+		grid.Column("CustomerName", "Customer"),
+		grid.Column("CreatedBy", "Created By"),
+		grid.Column("DateCreated", "Date Created"),
+		grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit", "Edit", new { Id = @item.Id })</text>),
+		grid.Column("Print", "", format: @<text>@Html.ActionLink("Print", "GenerateQuoteReport",  new { Id = @item.Id }, new { target="_blank"})</text>),
+		grid.Column("Print", "", format: (item) =>
+					{
+						var sub = new WebGrid(item.Cast);
+						sub.GetHtml(
+							columns: sub.Columns(
+								sub.Column("Name", "Name"),
+								sub.Column("Characters", "Characters", format: (subitem) =>
+								{
+									string temp2 = string.Empty;
+									foreach (var member in subitem.Characters)
+									{
+										temp2 += member + "<br />";
+									}
+									return new HtmlString(temp2);
+								})
+							));
+						return new HtmlString(temp);
+					})
+
+				))*@
+
+
 	<table class="approvedQuoteTable" id="approvedQuoteTableHead">
 		<tr>
 			<th>Quote No.</th>
@@ -26,8 +63,8 @@
 		</tr>
 	</table>
 	
-	foreach (var item in Model.OrderBy(i => i.QuoteNo))
-	 {
+foreach (var item in Model.OrderBy(i => i.QuoteNo))
+{
 	<table class="approvedQuoteTable">
 		<tr>
 			<td>
@@ -55,7 +92,7 @@
 				@Html.ActionLink("Edit", "Edit", new { Id = @item.Id })
 			</td>
 			<td>
-				@Html.ActionLink("Print", "GenerateQuoteReport",  new { Id = @item.Id }, new { target="_blank"})
+				@Html.ActionLink("Print", "GenerateQuoteReport", new { Id = @item.Id }, new { target = "_blank" })
 			</td>
 		</tr>
 	 </table>
@@ -73,7 +110,7 @@
 			<th class="shortColumn"></th>
 		</tr>	
 		 @foreach (var qi in item.QuoteItems)
-		 {
+   {
 		
 		<tr id="@qi.Id">
 			<td>
@@ -102,28 +139,29 @@
 			</td>
 			<td class="">
 				<span class="quoteItemStatus">@qi.Status</span>
-				@if (qi.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuotedPrepared) {
+				@if (qi.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuotedPrepared)
+	{
 					@Ajax.ActionLink("(Accept)", "AcceptQuoteItem", "Quote", new { quoteItemId = qi.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.showMessage('Quote Accepted'); app.updateQuoteStatusListView('Quote Accepted', '" + @qi.Id + "');" })
 					@Ajax.ActionLink("(Reject)", "RejectQuoteItem", "Quote", new { quoteItemId = qi.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.showMessage('Quote Rejected'); app.updateQuoteStatusListView('Quote Rejected', '" + @qi.Id + "');" })
-				}
-				else if (qi.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuoteAccepted)
-				{
+	}
+	else if (qi.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuoteAccepted)
+	{
 					@Ajax.ActionLink("(Reject)", "RejectQuoteItem", "Quote", new { quoteItemId = qi.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.showMessage('Quote Rejected'); app.updateQuoteStatusListView('Quote Rejected', '" + @qi.Id + "');" })
-				}
-				else
-				{
+	}
+	else
+	{
 					@Ajax.ActionLink("(Accept)", "AcceptQuoteItem", "Quote", new { quoteItemId = qi.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.showMessage('Quote Accepted'); app.updateQuoteStatusListView('Quote Accepted', '" + @qi.Id + "');" })
-				}
+	}
 			</td>
 			<td class="shortColumn">
 				@Html.ActionLink("Edit", "EditItem", new { id = qi.JobItemId, fromJi = false, isQuoted = true })
 			</td>
 		</tr>
 		
-		 }
+   }
 	 </table>
 	 <div class="clear"></div>
-	 }
+}
 
 }
 else

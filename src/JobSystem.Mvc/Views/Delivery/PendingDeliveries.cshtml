@@ -13,25 +13,15 @@
 	if (Model.Any())
 	{
 		<input class="primary-action" type="submit" value="Deliver"/>
-		<table>
-			<tr>
-				<th></th>
-				<th>Job Item</th>
-				<th>Customer</th>
-				<th>Notes</th>
-			</tr>
-			@foreach (var item in Model)
-			{
-				<tr>
-					<td class="shortColumn">
-						<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>
-					</td>
-					<td>@item.JobRef</td>
-					<td>@item.Customer</td>
-					<td>@item.Notes</td>
-				</tr>
-			}
-		</table>
+
+		var grid = new WebGrid(Model, defaultSort:"JobRef", canSort: false, rowsPerPage: 15);
+	
+		@grid.GetHtml(columns: grid.Columns(
+			grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
+			grid.Column("JobRef", "Job Item"),
+			grid.Column("Customer", "Customer"),
+			grid.Column("Notes", "Notes")
+		))
 	}
 	else
 	{

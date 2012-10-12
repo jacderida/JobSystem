@@ -6,35 +6,15 @@
 @Html.ActionLink("Create Supplier", "Create", new { }, new { @class = "primary-action" })
 @if (Model.Any())
 {
-	<table>
-		<tr>
-			<th>Name</th>
-			<th>Email</th>
-			<th>Telephone</th>
-			<th>Primary Contact</th>
-			<th></th>
-		</tr>
-		@foreach (var item in Model)
-	 {
-			<tr>
-				<td>
-					@Html.ActionLink(item.Name, "Details", new { id = item.Id })
-				</td>
-				<td>
-					@item.TradingEmail
-				</td>
-				<td>
-					@item.TradingTelephone
-				</td>
-				<td>
-					@item.TradingContact1
-				</td>
-				<td>
-					@Html.ActionLink("Edit", "Edit", new { id = item.Id })
-				</td>
-			</tr>
-	 }
-	</table>
+	var grid = new WebGrid(Model, defaultSort: "Manufacturer", canSort: false, rowsPerPage: 15);
+	
+	@grid.GetHtml(columns: grid.Columns(
+		grid.Column("Name", "Name", format: @<text>@Html.ActionLink((string)item.Name, "Details", new { id = item.Id })</text>),
+		grid.Column("TradingEmail", "Email"),
+		grid.Column("TradingTelephone", "Telephone"),
+		grid.Column("TradingContact1", "Primary Contact"),
+		grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</text>)
+	))
 }
 else
 {

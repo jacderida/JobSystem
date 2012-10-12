@@ -163,7 +163,7 @@ namespace JobSystem.Mvc.Controllers
 			return RedirectToAction("ActiveConsignments", "Consignment");
 		}
 
-		public ActionResult PendingConsignments()
+		public ActionResult PendingConsignments(int page = 1)
 		{
 			var items = _consignmentItemService.GetPendingItems().Select(
 				c => new ConsignmentItemIndexViewModel

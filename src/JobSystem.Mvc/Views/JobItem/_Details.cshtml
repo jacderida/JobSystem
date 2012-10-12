@@ -66,7 +66,17 @@
 		</div>
 		<div class="details-fields">
 			<span class="field-label">Invoicing</span>
-			<span class="field">@Ajax.ActionLink("Mark for Invoicing", "CreatePending", "Invoice", new { jobItemId = Model.Id }, new AjaxOptions() { HttpMethod = "POST" }, new { @class = "primary-action" })</span>
+			@if (Model.IsInvoiced) {
+				<span class="field">Invoiced</span>
+			} else if (Model.IsMarkedForInvoicing) {
+				<span class="field">Marked For Invoicing</span>
+			} else {
+				if (Model.QuoteItem != null || Model.Quote != null) {
+					<span class="field" id="markForInvoicingButton">@Ajax.ActionLink("Mark for Invoicing", "CreatePending", "Invoice", new { jobItemId = Model.Id }, new AjaxOptions() { HttpMethod = "POST", OnSuccess = "app.showMessage('Successfully Marked for Invoicing');" }, new { @class = "primary-action" })</span>
+				} else {
+					<span class="field">Raise a quote item before invoicing</span>
+				}
+			}
 		</div>
 	</div>
 </div>
@@ -187,7 +197,8 @@ if (Model.QuoteItem.IsQuoted)
 						@Model.ConsignmentItem.Instructions
 					</div>
 					<br />
-					if (Model.ConsignmentItem.IsOrdered == false) { <a href="#" class="primary-action editConsignmentButton" id="@Model.ConsignmentItem.Id">Edit</a> }
+ if (Model.ConsignmentItem.IsOrdered == false)
+ { <a href="#" class="primary-action editConsignmentButton" id="@Model.ConsignmentItem.Id">Edit</a> }
 	}
 	else if (Model.Consignment != null)
 	{
@@ -198,7 +209,8 @@ if (Model.QuoteItem.IsQuoted)
 							Created by <span class="strongText">@Model.Consignment.CreatedBy</span> on <span class="strongText">@Model.Consignment.DateCreated</span>
 						</span>
 					</div>
-					if (Model.Consignment.IsOrdered == false) { <a href="#" class="primary-action editConsignmentButton" id="@Model.Consignment.Id">Edit</a> }
+																									  if (Model.Consignment.IsOrdered == false)
+																									  { <a href="#" class="primary-action editConsignmentButton" id="@Model.Consignment.Id">Edit</a> }
 	}
 	else
 	{

@@ -110,7 +110,7 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult PendingQuotes()
+		public ActionResult PendingQuotes(int page = 1)
 		{
 			var items = _quoteItemService.GetPendingQuoteItems().Select(
 				q => new QuoteItemIndexViewModel

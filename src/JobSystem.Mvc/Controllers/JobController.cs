@@ -120,7 +120,7 @@ namespace JobSystem.Mvc.Controllers
 			return RedirectToAction("ApprovedJobs");
 		}
 
-		public ActionResult PendingJobs()
+		public ActionResult PendingJobs(int page = 1)
 		{
 			var jobs = _jobService.GetPendingJobs().Select(
 				j => new JobIndexViewModel
@@ -199,6 +199,8 @@ namespace JobSystem.Mvc.Controllers
 						Instructions = ji.Instructions,
 						IsReturned = ji.IsReturned,
 						ReturnReason = ji.ReturnReason,
+						IsInvoiced = ji.IsInvoiced,
+						IsMarkedForInvoicing = ji.IsMarkedForInvoicing,
 						InstrumentDetails = String.Format("{0} - {1} : {2}", ji.Instrument.ModelNo, ji.Instrument.Manufacturer.ToString(), ji.Instrument.Description),
 						QuoteItem = PopulateQuoteItemViewModel(ji.Id),
 						Delivery = PopulateDeliveryItemViewModel(ji.Id),

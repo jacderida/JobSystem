@@ -21,7 +21,7 @@ namespace JobSystem.Mvc.Controllers
 			_instrumentService = instrumentService;
 		}
 
-		public ActionResult Index()
+		public ActionResult Index(int page = 1)
 		{
 			var instruments = _instrumentService.GetInstruments().Select(
 				 i => new InstrumentViewModel

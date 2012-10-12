@@ -13,49 +13,22 @@
 @using (Html.BeginForm("OrderPending", "Order", FormMethod.Post))
 {
 
-if (Model.Any()) {
+	if (Model.Any()) {
 
 	<input class="primary-action" type="submit" value="Order"/>
-	<table>
-		<tr>
-			<th></th>
-			<th>Supplier</th>
-			<th>Instructions</th>
-			<th>Description</th>
-			<th>Part No.</th>
-			<th>Delivery Days</th>
-			<th>Price</th>
-			<th>Quantity</th>
-		</tr>
-	@foreach (var item in Model.OrderBy(i => i.SupplierName))
-	 {
-		<tr>
-			<td>
-				<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>
-			<td>
-				@item.SupplierName
-			</td>
-			<td>
-				@item.Instructions
-			</td>
-			<td>
-				@item.Description
-			</td>
-			<td>
-				@item.PartNo
-			</td>
-			<td>
-				@item.DeliveryDays
-			</td>
-			<td>
-				@item.Price
-			</td>
-			<td>
-				@item.Quantity
-			</td>
-		</tr>
-	 }
-	</table>
+
+	var grid = new WebGrid(Model, defaultSort: "SupplierName", canSort: false, rowsPerPage: 15);
+	
+	@grid.GetHtml(columns: grid.Columns(
+		grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
+		grid.Column("SupplierName", "Supplier Name"),
+		grid.Column("Instructions", "Instructions"),
+		grid.Column("Description", "Description"),
+		grid.Column("PartNo", "Part No."),
+		grid.Column("DeliveryDays", "Delivery Days"),
+		grid.Column("Price", "Price"),
+		grid.Column("Quantity", "Quantity")
+	))
 }else{
 	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
 }

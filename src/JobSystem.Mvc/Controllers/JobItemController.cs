@@ -132,6 +132,8 @@ namespace JobSystem.Mvc.Controllers
 				Instructions = job.Instructions,
 				IsReturned = job.IsReturned,
 				ReturnReason = job.ReturnReason,
+				IsInvoiced = job.IsInvoiced,
+				IsMarkedForInvoicing = job.IsMarkedForInvoicing,
 				QuoteItem = PopulateQuoteItemViewModel(job.Id),
 				Delivery = PopulateDeliveryItemViewModel(job.Id),
 				Certificates = PopulateCertificateViewModel(job.Id),

@@ -10,39 +10,25 @@
 
 @if (Model.Any())
 {
-	<table>
-		<tr>
-			<th>Delivery No.</th>
-			<th>Customer</th>
-			<th>FAO</th>
-			<th>Created By</th>
-			<th>Date Created</th>
-			<th></th>
-			<th></th>
-		</tr>
-	@foreach (var item in Model)
-	 {
-		<tr>
-			<td>@item.DeliveryNo</td>
-			<td>@item.CustomerName</td>
-			<td>@item.Fao</td>
-			<td>@item.CreatedBy</td>
-			<td>@item.DateCreated</td>
-			<td>
-				<span class="the-tooltip center top dark-midnight-blue itemCount">
-					@item.DeliveryItems.Count items
-					<span>
-						@foreach (var ci in item.DeliveryItems)
-						{
-							<span>@ci.Notes</span>
-						}
-					</span>
+	var grid = new WebGrid(Model, defaultSort:"DeliveryNo", canSort: false, rowsPerPage: 15);
+	
+	@grid.GetHtml(columns: grid.Columns(
+		grid.Column("DeliveryNo", "Delivery No."),
+		grid.Column("CustomerName", "Customer"),
+		grid.Column("Fao", "FAO"),
+		grid.Column("CreatedBy", "Created By"),
+		grid.Column("DateCreated", "Date Created"),
+		grid.Column("", "", format: @<span class="the-tooltip center top dark-midnight-blue itemCount">
+				@item.DeliveryItems.Count items
+				<span>
+					@foreach (var ci in item.DeliveryItems)
+					{
+						<span>@ci.Notes</span>
+					}
 				</span>
-			</td>
-				<td>@Html.ActionLink("Print Note", "GenerateDeliveryNote", "Delivery", new { id = item.Id }, new { target = "_blank" })</td>
-			</tr>
-	 }
-	</table>
+			</span>),
+		grid.Column("", "", format: @<text>@Html.ActionLink("Print Note", "GenerateDeliveryNote", "Delivery", new { id = item.Id }, new { target = "_blank" })</text>)
+	))
 }
 else
 {

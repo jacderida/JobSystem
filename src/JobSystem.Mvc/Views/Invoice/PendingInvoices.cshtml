@@ -13,52 +13,21 @@
 
 if (Model.Any()) {
 
-<input class="primary-action" type="submit" value="Invoice"/>
-	<table>
-		<tr>
-			<th></th>
-			<th>Job No</th>
-			<th>Job Item No</th>
-			<th>Order Number</th>
-			<th>Repair</th>
-			<th>Calibration</th>
-			<th>Parts</th>
-			<th>Carriage</th>
-			<th>Investigation</th>
-		</tr>
-	@foreach (var item in Model.OrderBy(i => i.OrderNo).ThenBy(i => i.JobItemNo))
-	 {
-			<tr>
-				<td>
-					<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>
-				</td>
-				<td>
-					@item.JobNo
-				</td>
-				<td>
-					@item.JobItemNo
-				</td>
-				<td>
-					@item.OrderNo
-				</td>
-				<td>
-					@item.RepairPrice
-				</td>
-				<td>
-					@item.CalibrationPrice
-				</td>
-				<td>
-					@item.PartsPrice
-				</td>
-				<td>
-					@item.CarriagePrice
-				</td>
-				<td>
-					@item.InvestigationPrice
-				</td>
-			</tr>
-	 }
-	</table>
+	<input class="primary-action" type="submit" value="Invoice"/>
+
+	var grid = new WebGrid(Model, defaultSort:"OrderNo", canSort: false, rowsPerPage: 15);
+	
+	@grid.GetHtml(columns: grid.Columns(
+		grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
+		grid.Column("JobNo", "Job"),
+		grid.Column("JobItemNo", "Job Item No"),
+		grid.Column("OrderNo", "Order No."),
+		grid.Column("RepairPrice", "Repair", format: @<text>@item.RepairPrice.ToString("N2")</text>),
+		grid.Column("CalibrationPrice", "Calibration", format: @<text>@item.CalibrationPrice.ToString("N2")</text>),
+		grid.Column("PartsPrice", "Parts", format: @<text>@item.PartsPrice.ToString("N2")</text>),
+		grid.Column("CarriagePrice", "Carriage", format: @<text>@item.CarriagePrice.ToString("N2")</text>),
+		grid.Column("InvestigationPrice", "Investigation", format: @<text>@item.InvestigationPrice.ToString("N2")</text>)
+	))
 }else{
 	<div id="empty-list">@JobSystem.Resources.Invoices.Messages.NoPendingInvoices</div>
 }

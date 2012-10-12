@@ -12,72 +12,28 @@
 @using (Html.BeginForm("QuotePending", "Quote", FormMethod.Post))
 {
 
-if (Model.QuoteItems.Any()) {
-
 <input class="primary-action" type="submit" value="Quote"/>
 	<br /><br />
-	foreach (var grp in Model.QuoteItems.GroupBy(g => g.JobNo)) { 
-		<h3>@Html.Encode(grp.Key)</h3>
-		<table id="quoteTable">
-		<tr>
-			<th class="shortColumn"></th>
-			<th class="shortColumn">Job Item</th>
-			<th class="shortColumn">Order No.</th>
-			<th class="shortColumn">Advice No.</th>
-			<th class="shortColumn">Repair</th>
-			<th class="shortColumn">Calibration</th>
-			<th class="shortColumn">Parts</th>
-			<th class="shortColumn">Carriage</th>
-			<th class="shortColumn">Investigation</th>
-			<th class="shortColumn">Days</th>
-			<th class="shortColumn">Item BER</th>
-			<th></th>
-		</tr>
-	@foreach (var item in grp.OrderBy(i => i.OrderNo))
-	{
-		
-		<tr>
-			<td class="shortColumn">
-				<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>
-			</td>
-			<td class="shortColumn">
-				@item.JobItemRef
-			</td>
-			<td class="shortColumn">
-				@item.OrderNo
-			</td>
-			<td class="shortColumn">
-				@item.AdviceNo
-			</td>
-			<td class="shortColumn">
-				@item.Repair.ToString("N2")
-			</td>
-			<td class="shortColumn">
-				@item.Calibration.ToString("N2")
-			</td>
-			<td class="shortColumn">
-				@item.Parts.ToString("N2")
-			</td>
-			<td class="shortColumn">
-				@item.Carriage.ToString("N2")
-			</td>
-			<td class="shortColumn">
-				@item.Investigation.ToString("N2")
-			</td>
-			<td class="shortColumn">
-				@item.Days
-			</td>
-			<td class="shortColumn">
-				@item.ItemBER
-			</td>
-			<td>
-				@Html.ActionLink("Edit", "EditItem", new { id = item.JobItemId, fromJi = false, isQuoted = false })
-			</td>
-		</tr>
-}
-</table>
- }
+
+
+if (Model.QuoteItems.Any()) {
+	var grid = new WebGrid(Model.QuoteItems, defaultSort:"JobNo", canSort: false, rowsPerPage: 15);
 	
+	@grid.GetHtml(columns: grid.Columns(
+		grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
+		grid.Column("JobNo", "Job"),
+		grid.Column("JobItemRef", "Job Item"),
+		grid.Column("OrderNo", "Order No."),
+		grid.Column("AdviceNo", "Advice No."),
+		grid.Column("Repair", "Repair", format: @<text>@item.Repair.ToString("N2")</text>),
+		grid.Column("Calibration", "Calibration", format: @<text>@item.Calibration.ToString("N2")</text>),
+		grid.Column("Parts", "Parts", format: @<text>@item.Parts.ToString("N2")</text>),
+		grid.Column("Carriage", "Carriage", format: @<text>@item.Carriage.ToString("N2")</text>),
+		grid.Column("Investigation", "Investigation", format: @<text>@item.Investigation.ToString("N2")</text>),
+		grid.Column("Days", "Days"),
+		grid.Column("ItemBER", "BER"),
+		grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit", "EditItem", new { id = item.JobItemId, fromJi = false, isQuoted = false })</text>)
+	))
 }
 else
 {

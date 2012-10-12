@@ -4,28 +4,19 @@
 }
 <h2>Customer List</h2>
 @Html.ActionLink("Create Customer", "Create", new { }, new { @class = "primary-action" })
-<table>
-	<tr>
-		<th>Name</th>
-		<th>Email</th>
-		<th>Primary Contact</th>
-		<th></th>
-	</tr>
-	@foreach (var item in Model)
- {
-		<tr>
-			<td>
-				@Html.ActionLink(item.Name, "Details", new { id = item.Id })
-			</td>
-			<td>
-				<a href="mailto:@item.Email">@item.Email</a>
-			</td>
-			<td>
-				@item.Contact1
-			</td>
-			<td>
-				@Html.ActionLink("Edit", "Edit", new { id = item.Id })
-			</td>
-		</tr>
- }
-</table>
+
+@if (Model.Any()) {
+
+	var grid = new WebGrid(Model, defaultSort:"Name", canSort: false, rowsPerPage: 15);
+	
+	@grid.GetHtml(columns: grid.Columns(
+		grid.Column("Name", "Name", format: @<text>@Html.ActionLink((string)item.Name, "Details", new { id = item.Id })</text>),
+		grid.Column("Email", "Email", format: @<a href="mailto:@item.Email">@item.Email</a>),
+		grid.Column("Contact1", "Primary Contact"),
+		grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</text>)
+	))
+}
+else
+{
+	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoCustomers</div>
+}

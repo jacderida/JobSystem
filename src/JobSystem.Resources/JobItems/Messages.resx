@@ -168,6 +168,9 @@
   <data name="NoConsignments" xml:space="preserve">
     <value>There are currently no consignments.</value>
   </data>
+  <data name="NoCustomers" xml:space="preserve">
+    <value>There are currently no customers.</value>
+  </data>
   <data name="NoDelivery" xml:space="preserve">
     <value>There are currently no deliveries.</value>
   </data>

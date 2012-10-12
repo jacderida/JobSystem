@@ -18,7 +18,7 @@
 			@Html.LabelFor(model => model.SupplierId)
 		</div>
 		<div class="editor-field">
-			@Html.TextBox("SupplierAutocomplete", "", new { id = "supplier-autocomplete" })
+			@Html.TextBox("SupplierAutocomplete", "", new { id = "supplier-autocomplete-orders" })
 			@Html.ValidationMessageFor(model => model.SupplierId)
 			@Html.HiddenFor(model => model.SupplierId, new { id = "SupplierId" })
 		</div>
