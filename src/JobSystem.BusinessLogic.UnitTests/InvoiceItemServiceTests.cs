@@ -436,6 +436,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.IsNotNull(_savedInvoiceItemFromPending.Invoice);
 			Assert.IsNotNull(_savedInvoiceItemFromPending.JobItem);
 			Assert.AreEqual(ListItemType.StatusInvoiced, _jobItemForCreateFromPending.Status.Type);
+			Assert.IsTrue(_jobItemForCreateFromPending.IsInvoiced);
 		}
 
 		[Test]
@@ -484,6 +485,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.IsNotNull(_savedInvoiceItemFromPending.Invoice);
 			Assert.IsNotNull(_savedInvoiceItemFromPending.JobItem);
 			Assert.AreEqual(ListItemType.StatusInvoiced, _jobItemForCreateFromPending.Status.Type);
+			Assert.IsTrue(_jobItemForCreateFromPending.IsInvoiced);
 		}
 
 		[Test]

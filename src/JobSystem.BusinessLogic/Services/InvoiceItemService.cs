@@ -74,6 +74,7 @@ namespace JobSystem.BusinessLogic.Services
 			invoiceItem.InvestigationPrice = investigationPrice;
 			invoiceItem.JobItem = jobItem;
 			jobItem.Status = _listItemRepository.GetByType(ListItemType.StatusInvoiced);
+			jobItem.IsInvoiced = true;
 			_jobItemRepository.EmitItemHistory(
 				CurrentUser, jobItem.Id, 0, 0, String.Format("Item invoiced on {0}", invoice.InvoiceNumber), ListItemType.StatusInvoiced, ListItemType.WorkTypeAdministration);
 			_jobItemRepository.Update(jobItem);
