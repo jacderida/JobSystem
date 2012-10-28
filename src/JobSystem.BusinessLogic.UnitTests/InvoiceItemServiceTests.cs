@@ -50,8 +50,16 @@ namespace JobSystem.BusinessLogic.UnitTests
 				Field = new ListItem { Id = Guid.NewGuid(), Name = "Electrical", Type = ListItemType.CategoryElectrical, Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Job Item Category", Type = ListItemCategoryType.JobItemCategory } },
 				InitialStatus = new ListItem { Id = Guid.NewGuid(), Name = "House Calibration", Type = ListItemType.InitialStatusHouseCalibration, Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Initial Status", Type = ListItemCategoryType.JobItemInitialStatus } },
 				Status = new ListItem { Id = Guid.NewGuid(), Name = "House Calibration", Type = ListItemType.InitialStatusHouseCalibration, Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Initial Status", Type = ListItemCategoryType.JobItemInitialStatus } },
-				Instrument = new Instrument { Id = Guid.NewGuid(), Manufacturer = "Druck", ModelNo = "DPI601IS", Range = "Not specified", Description = "Digital Pressure Gauge" },
+				//Instrument = new Instrument { Id = Guid.NewGuid(), Manufacturer = "Druck", ModelNo = "DPI601IS", Range = "Not specified", Description = "Digital Pressure Gauge" },
 				Job = new Job { Id = Guid.NewGuid(), JobNo = "JR2000", IsPending = false, Customer = customer },
+				Instrument = new Instrument
+				{
+					Id = Guid.NewGuid(),
+					Manufacturer = "Druck",
+					ModelNo = "DPI601IS",
+					Range = "Not Specified",
+					Description = "Digital Pressure Gauge"
+				}
 			};
 			_quoteItemForCreatePending = new QuoteItem
 			{
@@ -76,7 +84,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				ItemNo = 1,
 				SerialNo = "12345",
 				CreatedUser = _userContext.GetCurrentUser(),
-				Created = DateTime.Now,
+				Created = DateTime.Now
 			};
 			_invoiceForCreateFromPendingId = Guid.NewGuid();
 			_invoiceForCreateFromPending = new Invoice
@@ -99,16 +107,21 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceItemRepositoryMock = MockRepository.GenerateMock<IInvoiceItemRepository>();
 			invoiceItemRepositoryMock.Stub(x => x.JobItemHasPendingInvoiceItem(jobItemId)).Return(false);
 			invoiceItemRepositoryMock.Expect(x => x.CreatePendingItem(null)).IgnoreArguments();
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Stub(x => x.GetById(jobItemId)).Return(_jobItemForCreatePending);
+			jobItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+
 			_invoiceItemService = InvoiceItemServiceFactory.Create(
 				_userContext,
 				CompanyDetailsRepositoryTestHelper.GetCompanyDetailsRepository_StubsApplyAllPrices_ReturnsFalse(),
 				MockRepository.GenerateStub<IInvoiceRepository>(),
 				invoiceItemRepositoryMock,
-				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemForCreatePending),
+				jobItemRepositoryMock,
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId, _quoteItemForCreatePending),
 				MockRepository.GenerateStub<IListItemRepository>());
 			CreatePending(id, jobItemId);
 			invoiceItemRepositoryMock.VerifyAllExpectations();
+			jobItemRepositoryMock.VerifyAllExpectations();
 			Assert.AreNotEqual(Guid.Empty, _savedPendingItem.Id);
 			Assert.IsNotNull(_savedPendingItem.JobItem);
 			Assert.AreEqual(_quoteItemForCreatePending.JobItem.Instrument.ToString(), _savedPendingItem.Description);
@@ -118,6 +131,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.AreEqual(_quoteItemForCreatePending.Parts, _savedPendingItem.PartsPrice);
 			Assert.AreEqual(_quoteItemForCreatePending.Carriage, _savedPendingItem.CarriagePrice);
 			Assert.AreEqual(0, _savedPendingItem.InvestigationPrice);
+			Assert.IsTrue(_jobItemForCreatePending.IsMarkedForInvoicing);
 		}
 
 		[Test]
@@ -131,16 +145,21 @@ namespace JobSystem.BusinessLogic.UnitTests
 			var invoiceItemRepositoryMock = MockRepository.GenerateMock<IInvoiceItemRepository>();
 			invoiceItemRepositoryMock.Stub(x => x.JobItemHasPendingInvoiceItem(jobItemId)).Return(false);
 			invoiceItemRepositoryMock.Expect(x => x.CreatePendingItem(null)).IgnoreArguments();
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Stub(x => x.GetById(jobItemId)).Return(_jobItemForCreatePending);
+			jobItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+
 			_invoiceItemService = InvoiceItemServiceFactory.Create(
 				_userContext,
 				CompanyDetailsRepositoryTestHelper.GetCompanyDetailsRepository_StubsApplyAllPrices_ReturnsFalse(),
 				MockRepository.GenerateStub<IInvoiceRepository>(),
 				invoiceItemRepositoryMock,
-				JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemForCreatePending),
+				jobItemRepositoryMock,
 				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(jobItemId, _quoteItemForCreatePending),
 				MockRepository.GenerateStub<IListItemRepository>());
 			CreatePending(id, jobItemId);
 			invoiceItemRepositoryMock.VerifyAllExpectations();
+			jobItemRepositoryMock.VerifyAllExpectations();
 			Assert.AreNotEqual(Guid.Empty, _savedPendingItem.Id);
 			Assert.IsNotNull(_savedPendingItem.JobItem);
 			Assert.AreEqual(_quoteItemForCreatePending.JobItem.Instrument.ToString(), _savedPendingItem.Description);
@@ -150,6 +169,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			Assert.AreEqual(_quoteItemForCreatePending.Parts, _savedPendingItem.PartsPrice);
 			Assert.AreEqual(_quoteItemForCreatePending.Carriage, _savedPendingItem.CarriagePrice);
 			Assert.AreEqual(0, _savedPendingItem.InvestigationPrice);
+			Assert.IsTrue(_jobItemForCreatePending.IsMarkedForInvoicing);
 		}
 
 		[Test]

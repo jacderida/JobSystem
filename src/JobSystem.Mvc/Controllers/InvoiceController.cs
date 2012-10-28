@@ -10,9 +10,9 @@ using JobSystem.BusinessLogic.Validation.Core;
 
 namespace JobSystem.Mvc.Controllers
 {
-    public class InvoiceController : Controller
-    {
-        private readonly InvoiceItemService _invoiceItemService;
+	public class InvoiceController : Controller
+	{
+		private readonly InvoiceItemService _invoiceItemService;
 		private readonly InvoiceService _invoiceService;
 
 		public InvoiceController(InvoiceItemService invoiceItemService, InvoiceService invoiceService)
@@ -20,13 +20,11 @@ namespace JobSystem.Mvc.Controllers
 			_invoiceItemService = invoiceItemService;
 			_invoiceService = invoiceService;
 		}
-		//
-        // GET: /Invoice/
 
-        public ActionResult Index()
-        {
+		public ActionResult Index()
+		{
 			return RedirectToAction("ApprovedInvoices");
-        }
+		}
 
 		[HttpPost]
 		[Transaction]
@@ -40,7 +38,7 @@ namespace JobSystem.Mvc.Controllers
 			catch (DomainValidationException dex)
 			{
 				return Json(dex.Result);
-			}			
+			}
 		}
 
 		[HttpPost]
@@ -69,7 +67,8 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult PendingInvoices(int page = 1)
 		{
-			var items = _invoiceItemService.GetPendingInvoiceItems().Select(i => new InvoiceItemIndexViewModel{
+			var items = _invoiceItemService.GetPendingInvoiceItems().Select(i => new InvoiceItemIndexViewModel
+			{
 				Id = i.Id,
 				JobNo = i.JobItem.Job.JobNo,
 				CalibrationPrice = (double)i.CalibrationPrice,
@@ -96,7 +95,8 @@ namespace JobSystem.Mvc.Controllers
 				InvoiceNo = i.InvoiceNumber,
 				PaymentTerm = i.PaymentTerm.Name,
 				TaxCode = i.TaxCode.TaxCodeName,
-				InvoiceItems = i.InvoiceItems.Select(item => new InvoiceItemIndexViewModel{
+				InvoiceItems = i.InvoiceItems.Select(item => new InvoiceItemIndexViewModel
+				{
 					Id = item.Id,
 					JobNo = item.JobItem.Job.JobNo,
 					CalibrationPrice = (double)item.CalibrationPrice,
@@ -116,5 +116,5 @@ namespace JobSystem.Mvc.Controllers
 		{
 			return View("RepInvoiceNote", id);
 		}
-    }
+	}
 }

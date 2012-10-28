@@ -44,9 +44,8 @@ namespace JobSystem.BusinessLogic.Services
 				throw new ArgumentException("A value must be supplied for the ID");
 			if (!CurrentUser.HasRole(UserRole.Manager))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
-			ThrowIfJobItemInvalid(jobItemId);
+			var jobItem = GetJobItem(jobItemId);
 			var quoteItem = GetQuoteItem(jobItemId);
-			var jobItem = quoteItem.JobItem;
 			var pendingItem = new PendingInvoiceItem();
 			pendingItem.Id = id;
 			pendingItem.Description = jobItem.Instrument.ToString();
@@ -54,6 +53,8 @@ namespace JobSystem.BusinessLogic.Services
 			pendingItem.OrderNo = GetOrderNo(quoteItem);
 			AssignPrices(pendingItem, quoteItem);
 			_invoiceItemRepository.CreatePendingItem(pendingItem);
+			jobItem.IsMarkedForInvoicing = true;
+			_jobItemRepository.Update(jobItem);
 			return pendingItem;
 		}
 
@@ -148,13 +149,14 @@ namespace JobSystem.BusinessLogic.Services
 			return !String.IsNullOrEmpty(quoteItem.Quote.OrderNumber) ? quoteItem.Quote.OrderNumber : quoteItem.JobItem.Job.OrderNo;
 		}
 
-		private void ThrowIfJobItemInvalid(Guid jobItemId)
+		private JobItem GetJobItem(Guid jobItemId)
 		{
 			var jobItem = _jobItemRepository.GetById(jobItemId);
 			if (jobItem == null)
 				throw new ArgumentException("A valid ID must be supplied for the job item");
 			if (jobItem.Job.IsPending)
 				throw new DomainValidationException(Messages.JobPending, "JobItemId");
+			return jobItem;
 		}
 
 		private QuoteItem GetQuoteItem(Guid jobItemId)
