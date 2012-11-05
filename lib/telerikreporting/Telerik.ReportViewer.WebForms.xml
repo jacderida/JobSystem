@@ -15,11 +15,6 @@
             Summary description for ReportDataOperation.
             </summary>
         </member>
-        <member name="T:Telerik.ReportViewer.WebForms.HandlerOperation">
-            <summary>
-            Summary description for HandlerOperation.
-            </summary>
-        </member>
         <member name="M:Telerik.ReportViewer.WebForms.AjaxHelper.IsUpdatedByAjaxManager(System.Web.UI.Control)">
             <summary>
             Checks whether the control is being updated by the Telerik AjaxManager.
@@ -44,11 +39,6 @@
         <member name="T:Telerik.ReportViewer.WebForms.ToolbarGroup">
             <summary>
             
-            </summary>
-        </member>
-        <member name="T:Telerik.ReportViewer.WebForms.EmbeddedResourceOperation">
-            <summary>
-            Summary description for EmbeddedResourceOperation.
             </summary>
         </member>
         <member name="T:Telerik.ReportViewer.WebForms.EmbeddedResources">

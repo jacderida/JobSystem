@@ -467,6 +467,16 @@
             Gets the report viewer model.
             </summary>
         </member>
+        <member name="T:Telerik.ReportViewer.Silverlight.DialogBox">
+            <summary>
+            Represents a dialog box control.
+            </summary>
+        </member>
+        <member name="M:Telerik.ReportViewer.Silverlight.DialogBox.#ctor">
+            <summary>
+            Creates a new instance of the DialogBox class.
+            </summary>
+        </member>
         <member name="T:Telerik.ReportViewer.Silverlight.ExtensionInfoModel">
             <summary>
             ExtensionInfo wrapper for data-binding
@@ -565,6 +575,11 @@
         <member name="P:Telerik.ReportViewer.Silverlight.ITextResources.ForwardToolTip">
             <summary>
             Specifies the tooltip for the Forward button.
+            </summary>
+        </member>
+        <member name="P:Telerik.ReportViewer.Silverlight.ITextResources.LabelOf">
+            <summary>
+            Specifies the label 'of' in the viewer toolbar.
             </summary>
         </member>
         <member name="P:Telerik.ReportViewer.Silverlight.ITextResources.LastPageToolTip">
@@ -851,6 +866,11 @@
         <member name="P:Telerik.ReportViewer.Silverlight.TextResources.ForwardToolTip">
             <summary>
             Specifies the tooltip for the Forward button.
+            </summary>
+        </member>
+        <member name="P:Telerik.ReportViewer.Silverlight.TextResources.LabelOf">
+            <summary>
+            Specifies the label 'of' in the viewer toolbar.
             </summary>
         </member>
         <member name="P:Telerik.ReportViewer.Silverlight.TextResources.LastPageToolTip">
@@ -1558,14 +1578,9 @@
             Specifies the name of the layout root template part.
             </summary>
         </member>
-        <member name="T:Telerik.ReportViewer.Silverlight.DialogBox">
+        <member name="F:Telerik.ReportViewer.Silverlight.ReportViewer.TemplateParts.PageContentControl">
             <summary>
-            Represents a dialog box control.
-            </summary>
-        </member>
-        <member name="M:Telerik.ReportViewer.Silverlight.DialogBox.#ctor">
-            <summary>
-            Creates a new instance of the DialogBox class.
+            Specifies the name of the page content template part.
             </summary>
         </member>
         <member name="T:Telerik.ReportViewer.Silverlight.ViewMode">
@@ -1741,31 +1756,6 @@
         <member name="M:Telerik.ReportViewer.Silverlight.MultivalueParameterConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
             <summary>
             Converts a single string value to multi-value.
-            </summary>
-            <param name="value"></param>
-            <param name="targetType"></param>
-            <param name="parameter"></param>
-            <param name="culture"></param>
-            <returns></returns>
-        </member>
-        <member name="T:Telerik.ReportViewer.Silverlight.FormatedNumberConverter">
-            <summary>
-            Converts a number to string according to a given format
-            </summary>
-        </member>
-        <member name="M:Telerik.ReportViewer.Silverlight.FormatedNumberConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            Converts a number to string according to a given format.
-            </summary>
-            <param name="value"></param>
-            <param name="targetType"></param>
-            <param name="parameter"></param>
-            <param name="culture"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Telerik.ReportViewer.Silverlight.FormatedNumberConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            Converts a number to string according to a given format.
             </summary>
             <param name="value"></param>
             <param name="targetType"></param>

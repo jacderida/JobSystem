@@ -173,11 +173,6 @@
             the contents of this method with the code editor.
             </summary>
         </member>
-        <member name="T:Telerik.ReportViewer.WinForms.ReportViewerBase">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="M:Telerik.ReportViewer.WinForms.ReportViewerBase.#ctor(Telerik.ReportViewer.WinForms.ReportViewerAreaBase)">
             <param name="viewerArea">
             This object will be disposed by the ReportViewerBase.Dispose() method.
@@ -669,11 +664,6 @@
         <member name="P:Telerik.ReportViewer.WinForms.Resources.ZoomToWholePage">
             <summary>
             Specifies the name for the WholePage zoom mode.
-            </summary>
-        </member>
-        <member name="T:Telerik.ReportViewer.WinForms.ToggleToolStripButton">
-            <summary>
-            Tooltip is one string or two strings separated with '|'
             </summary>
         </member>
         <member name="T:Telerik.ReportViewer.WinForms.ViewMode">
