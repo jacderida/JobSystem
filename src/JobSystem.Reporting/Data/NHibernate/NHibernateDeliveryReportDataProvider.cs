@@ -5,6 +5,7 @@ using System.Linq;
 using JobSystem.Reporting.Models;
 using JobSystem.DataModel.Entities;
 using NHibernate.Linq;
+using System.Text;
 
 namespace JobSystem.Reporting.Data.NHibernate
 {
@@ -32,14 +33,14 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.DateCreated = delivery.DateCreated.ToShortDateString();
 				var jobItem = deliveryItem.JobItem;
 				reportItem.JobItemReference = GetJobItemReference(jobItem);
-				reportItem.Instrument = GetInstrumentDescription(jobItem.Instrument);
+				reportItem.Instrument = GetDescription(jobItem);
 				reportItem.Notes = !String.IsNullOrEmpty(deliveryItem.Notes) ? deliveryItem.Notes : String.Empty;
 				reportItem.Accessories = !String.IsNullOrEmpty(jobItem.Accessories) ? jobItem.Accessories : String.Empty;
 				reportItem.CertificateAttached = GetCertificateAttached(jobItem.Id);
 				reportItem.OrderNo = GetOrderNumber(deliveryItem);
 				result.Add(reportItem);
 			}
-			return result;
+			return result.OrderBy(i => i.JobItemReference).ToList();
 		}
 
 		public string GetCertificateAttached(Guid jobItemId)
@@ -53,6 +54,19 @@ namespace JobSystem.Reporting.Data.NHibernate
 			if (quoteItem != null)
 				return !String.IsNullOrEmpty(quoteItem.Quote.OrderNumber) ? quoteItem.Quote.OrderNumber : String.Empty;
 			return !String.IsNullOrEmpty(deliveryItem.JobItem.Job.OrderNo) ? deliveryItem.JobItem.Job.OrderNo : String.Empty;
+		}
+
+		public string GetDescription(JobItem jobItem)
+		{
+			var sb = new StringBuilder();
+			sb.Append(GetInstrumentDescription(jobItem.Instrument));
+			if (!String.IsNullOrEmpty(jobItem.Accessories))
+			{
+				sb.Append(Environment.NewLine);
+				sb.AppendLine("Accessories:");
+				sb.Append(jobItem.Accessories);
+			}
+			return sb.ToString();
 		}
 	}
 }
