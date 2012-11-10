@@ -28,5 +28,7 @@
 		public string JobRef { get; set; }
 		public string PreparedBy { get; set; }
 		public string CurrencyMessage { get; set; }
+		public decimal Total { get; set; }
+		public string OrderEmailLabel { get; set; }
 	}
 }
