@@ -30,7 +30,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 			reportModel.CompanyTelephone = !String.IsNullOrEmpty(companyDetails.Telephone) ? companyDetails.Telephone : String.Empty;
 			reportModel.CompanyFax = !String.IsNullOrEmpty(companyDetails.Fax) ? companyDetails.Fax : String.Empty;
 			reportModel.CompanyRegNo = !String.IsNullOrEmpty(companyDetails.RegNo) ? companyDetails.RegNo : String.Empty;
-			reportModel.CompanyVatRegNo = !String.IsNullOrEmpty(companyDetails.VatRegNo) ? companyDetails.VatRegNo : String.Empty;
+			reportModel.CompanyVatRegNo = !String.IsNullOrEmpty(companyDetails.VatRegNo) ? String.Format("VAT No: {0}", companyDetails.VatRegNo) : String.Empty;
 			reportModel.CompanyEmail = !String.IsNullOrEmpty(companyDetails.Email) ? companyDetails.Email : String.Empty;
 			reportModel.CompanyWww = !String.IsNullOrEmpty(companyDetails.Www) ? companyDetails.Www : String.Empty;
 			reportModel.CompanyContactInfo = AssignCombinedContactInfo(reportModel);

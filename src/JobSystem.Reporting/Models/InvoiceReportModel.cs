@@ -28,5 +28,10 @@ namespace JobSystem.Reporting.Models
 		public string BankIban { get; set; }
 		public string PaymentTerms { get; set; }
 		public string CurrencyMessage { get; set; }
+		public string Currency { get; set; }
+		public decimal Total { get; set; }
+		public decimal SubTotal { get; set; }
+		public decimal VatTotal { get; set; }
+		public string VatLabel { get; set; }
 	}
 }
