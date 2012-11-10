@@ -9,7 +9,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.pageHeaderSection1 = new Telerik.Reporting.PageHeaderSection();
 			this.detail = new Telerik.Reporting.DetailSection();
 			this.textBox33 = new Telerik.Reporting.TextBox();
 			this.textBox34 = new Telerik.Reporting.TextBox();
@@ -55,11 +54,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.ReportData = new Telerik.Reporting.ObjectDataSource();
 			this.objectDataSource1 = new Telerik.Reporting.ObjectDataSource();
 			((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
-			// 
-			// pageHeaderSection1
-			// 
-			this.pageHeaderSection1.Height = Telerik.Reporting.Drawing.Unit.Cm(0.70000004768371582D);
-			this.pageHeaderSection1.Name = "pageHeaderSection1";
 			// 
 			// detail
 			// 
@@ -519,7 +513,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			this.DataSource = this.objectDataSource2;
 			this.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
-            this.pageHeaderSection1,
             this.detail,
             this.pageFooterSection1,
             this.reportHeaderSection1,
@@ -528,7 +521,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.PageSettings.Margins.Bottom = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
 			this.PageSettings.Margins.Left = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
 			this.PageSettings.Margins.Right = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
-			this.PageSettings.Margins.Top = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
+			this.PageSettings.Margins.Top = Telerik.Reporting.Drawing.Unit.Mm(0D);
 			this.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.A4;
 			this.Style.BackgroundColor = System.Drawing.Color.White;
 			this.Width = Telerik.Reporting.Drawing.Unit.Pixel(677.3902587890625D);
@@ -537,7 +530,6 @@ namespace JobSystem.Reporting.ReportDefinitions
 		}
 		#endregion
 
-		private Telerik.Reporting.PageHeaderSection pageHeaderSection1;
 		private Telerik.Reporting.DetailSection detail;
 		private Telerik.Reporting.PageFooterSection pageFooterSection1;
 		private Telerik.Reporting.ObjectDataSource ReportData;

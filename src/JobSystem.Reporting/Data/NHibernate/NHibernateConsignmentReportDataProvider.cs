@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using JobSystem.DataModel.Entities;
 using JobSystem.Reporting.Models;
 
@@ -39,7 +40,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.Instructions = !String.IsNullOrEmpty(item.Instructions) ? item.Instructions : String.Empty;
 				result.Add(reportItem);
 			}
-			return result;
+			return result.OrderBy(i => i.JobRef).ToList();
 		}
 	}
 }
