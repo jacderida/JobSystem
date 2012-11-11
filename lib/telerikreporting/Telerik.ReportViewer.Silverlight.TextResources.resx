@@ -253,4 +253,7 @@ Continue with print?</value>
   <data name="NoPageToDisplay" xml:space="preserve">
     <value>No page to display.</value>
   </data>
+  <data name="LabelOf" xml:space="preserve">
+    <value>of</value>
+  </data>
 </root>

@@ -30,7 +30,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 			reportModel.CompanyTelephone = !String.IsNullOrEmpty(companyDetails.Telephone) ? companyDetails.Telephone : String.Empty;
 			reportModel.CompanyFax = !String.IsNullOrEmpty(companyDetails.Fax) ? companyDetails.Fax : String.Empty;
 			reportModel.CompanyRegNo = !String.IsNullOrEmpty(companyDetails.RegNo) ? companyDetails.RegNo : String.Empty;
-			reportModel.CompanyVatRegNo = !String.IsNullOrEmpty(companyDetails.VatRegNo) ? companyDetails.VatRegNo : String.Empty;
+			reportModel.CompanyVatRegNo = !String.IsNullOrEmpty(companyDetails.VatRegNo) ? String.Format("VAT No: {0}", companyDetails.VatRegNo) : String.Empty;
 			reportModel.CompanyEmail = !String.IsNullOrEmpty(companyDetails.Email) ? companyDetails.Email : String.Empty;
 			reportModel.CompanyWww = !String.IsNullOrEmpty(companyDetails.Www) ? companyDetails.Www : String.Empty;
 			reportModel.CompanyContactInfo = AssignCombinedContactInfo(reportModel);
@@ -57,10 +57,14 @@ namespace JobSystem.Reporting.Data.NHibernate
 
 		protected string GetInstrumentDescription(Instrument instrument)
 		{
-			return String.Format("{0}, {1}, {2}, {3}",
-				instrument.Manufacturer, instrument.ModelNo,
-				!String.IsNullOrEmpty(instrument.Range) ? instrument.Range : String.Empty,
-				!String.IsNullOrEmpty(instrument.Description) ? instrument.Description : String.Empty);
+			var sb = new StringBuilder();
+			sb.AppendFormat("{0}, ", instrument.Manufacturer);
+			sb.AppendFormat("{0}, ", instrument.ModelNo);
+			if (!String.IsNullOrEmpty(instrument.Range) || instrument.Range.Trim() != "Not Specified")
+				sb.AppendFormat("{0}, ", instrument.Range);
+			if (!String.IsNullOrEmpty(instrument.Description) || instrument.Description.Trim() != "Not Specified")
+				sb.AppendFormat("{0}, ", instrument.Description);
+			return sb.ToString().Trim(", ".ToCharArray());
 		}
 
 		protected string GetJobItemReference(JobItem jobItem)

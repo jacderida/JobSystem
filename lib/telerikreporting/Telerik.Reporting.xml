@@ -30987,6 +30987,70 @@
             </summary>
             <returns>Signal</returns>
         </member>
+        <member name="T:Telerik.Reporting.Cache.Interfaces.ICache">
+            <summary>
+            Provides a mechanism for managing the internal cache used by the reporting engine and the viewers.
+            </summary>
+        </member>
+        <member name="M:Telerik.Reporting.Cache.Interfaces.ICache.HasValue(System.String)">
+            <summary>
+            Determines if a value with the specified key exists in the cache.
+            </summary>
+            <param name="key">
+            Specifies the key used to identify the value in the cache.
+            </param>
+            <returns>
+            True - if a value with the specified key exists, False - otherwise.
+            </returns>
+        </member>
+        <member name="M:Telerik.Reporting.Cache.Interfaces.ICache.GetValue(System.String)">
+            <summary>
+            Retrieves the value with the specified key from the cache.
+            </summary>
+            <param name="key">
+            Specifies the key used to identify the value in the cache.
+            </param>
+            <returns>
+            The value with the specified key, or null if no such value exists.
+            </returns>
+        </member>
+        <member name="M:Telerik.Reporting.Cache.Interfaces.ICache.SetValue(System.String,System.Byte[])">
+            <summary>
+            Stores the specified value with the given key in the cache.
+            </summary>
+            <param name="key">
+            Specifies the key used to identify the value in the cache.
+            </param>
+            <param name="value">
+            Specifies the value to store in the cache with the given key.
+            </param>
+        </member>
+        <member name="M:Telerik.Reporting.Cache.Interfaces.ICache.Clear">
+            <summary>
+            Clears all values and their corresponding keys from the cache.
+            </summary>
+        </member>
+        <member name="T:Telerik.Reporting.Cache.Interfaces.ICacheProvider">
+            <summary>
+            Provides a mechanism for creating a specific instance of a cache.
+            </summary>
+        </member>
+        <member name="M:Telerik.Reporting.Cache.Interfaces.ICacheProvider.CreateCache(System.Collections.IDictionary)">
+            <summary>
+            Creates a new cache using the specified cache information.
+            </summary>
+            <param name="parameters">
+            Specifies the parameters used to create the cache.
+            </param>
+            <returns>
+            The newly created instance of the cache.
+            </returns>
+        </member>
+        <member name="P:Telerik.Reporting.Configuration.ExtensionsSection.All">
+            <summary>
+            Returns all the extensions in the config file(Render, Delivery, ...)
+            </summary>
+        </member>
         <member name="P:Telerik.Reporting.Data.DataConnection.Name">
             <summary>
             Gets or sets the name of the DataConnection component. 
@@ -32860,11 +32924,6 @@
             
             </summary>
         </member>
-        <member name="P:Telerik.Reporting.Processing.Config.ExtensionsSection.All">
-            <summary>
-            Returns all the extensions in the config file(Render, Delivery, ...)
-            </summary>
-        </member>
         <member name="M:Telerik.Reporting.Processing.ExtensionManagerBase.Load(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             Returns a list of core(Telerik provided) IExtension types.
@@ -32899,65 +32958,6 @@
         </member>
         <member name="P:Telerik.Reporting.Processing.ExtensionInfoCollection.Item(System.String)">
             <param name="name">Case insensitive name</param>
-        </member>
-        <member name="T:Telerik.Reporting.Processing.Session.ISessionProvider">
-            <summary>
-            Provides a mechanism for creating a specific instance of a session state.
-            </summary>
-        </member>
-        <member name="M:Telerik.Reporting.Processing.Session.ISessionProvider.CreateSessionState(System.Collections.IDictionary)">
-            <summary>
-            Creates a new session state using the specified session information.
-            </summary>
-            <param name="sessionInfo">
-            Specifies an information and parameters used to create the session state.
-            </param>
-            <returns>
-            The newly created instance of the session state.
-            </returns>
-        </member>
-        <member name="T:Telerik.Reporting.Processing.Session.ISessionState">
-            <summary>
-            Provides a mechanism for managing the internal session state of the report.
-            </summary>
-        </member>
-        <member name="M:Telerik.Reporting.Processing.Session.ISessionState.HasValue(System.String)">
-            <summary>
-            Determines if a value with the specified key exists in the session state.
-            </summary>
-            <param name="key">
-            Specifies the key used to identify the value in the session state.
-            </param>
-            <returns>
-            True - if a value with the specified key exists, False - otherwise.
-            </returns>
-        </member>
-        <member name="M:Telerik.Reporting.Processing.Session.ISessionState.GetValue(System.String)">
-            <summary>
-            Retrieves the value with the specified key from the session state.
-            </summary>
-            <param name="key">
-            Specifies the key used to identify the value in the session state.
-            </param>
-            <returns>
-            The value with the specified key, or null if no such value exists.
-            </returns>
-        </member>
-        <member name="M:Telerik.Reporting.Processing.Session.ISessionState.SetValue(System.String,System.Byte[])">
-            <summary>
-            Stores the specified value with the given key in the session state.
-            </summary>
-            <param name="key">
-            Specifies the key used to identify the value in the session state.
-            </param>
-            <param name="value">
-            Specifies the value to store in the session state with the given key.
-            </param>
-        </member>
-        <member name="M:Telerik.Reporting.Processing.Session.ISessionState.Clear">
-            <summary>
-            Clears all values and their corresponding keys from the session state.
-            </summary>
         </member>
         <member name="M:Telerik.Reporting.Processing.AbsolutePositionLayout.MeasureHorizontalContent">
             <summary>
@@ -33717,18 +33717,16 @@
             
             </summary>
         </member>
-        <member name="M:Telerik.Reporting.Processing.ReportExpressionContext.#ctor(Telerik.Reporting.Expressions.IDynamicObject,System.Type)">
-            <summary>
-            Used to evaluate expressions before the processing stage (like parameters).
-            </summary>
-            <param name="parent"></param>
-            <param name="reportType"></param>
-        </member>
         <member name="M:Telerik.Reporting.Processing.ReportExpressionContext.#ctor(System.Type)">
             <summary>
             Used to evaluate expressions before the processing stage (like parameters).
             </summary>
             <param name="reportType"></param>
+        </member>
+        <member name="T:Telerik.Reporting.Processing.ReportFunctionLoader">
+            <summary>
+            Functions defined in the current report should not be visible at design time
+            </summary>
         </member>
         <member name="T:Telerik.Reporting.Processing.ReportProcessor">
             <summary>
@@ -42850,8 +42848,8 @@
         </member>
         <member name="T:Telerik.Reporting.XmlSerialization.ReportXmlSerializer">
             <summary>
-            Serializes and deserializes objects into and from XML. 
-            This class is dedicated for serializing and deserializing objects 
+            Serializes and deserializes objects into and from XML.
+            This class is dedicated for serializing and deserializing objects
             only from the <see cref="N:Telerik.Reporting"/> namespace.
             </summary>
             <example>
@@ -42873,7 +42871,7 @@
             </para>
             <para>
             <title>Serialized Report Definition in XML </title>
-            <code lang="XML" source="CodeSnippets\CS\API\Telerik\Reporting\SampleReport1.trdx"/>
+            <code lang="XML" source="CodeSnippets\CS\Report1.xml"/>
             </para>
             </example>
         </member>

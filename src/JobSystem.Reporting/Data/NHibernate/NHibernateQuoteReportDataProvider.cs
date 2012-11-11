@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using JobSystem.DataModel.Entities;
 using JobSystem.Reporting.Models;
 
@@ -18,7 +19,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 			foreach (var item in quote.QuoteItems)
 			{
 				var reportItem = new QuoteReportModel();
-				PopulateCompanyDetails(reportItem);				
+				PopulateCompanyDetails(reportItem);
 				reportItem.QuoteNo = quote.QuoteNumber;
 				reportItem.OrderNo = quote.OrderNumber;
 				reportItem.AdviceNo = quote.AdviceNumber;
@@ -41,11 +42,26 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.Days = item.Days.ToString();
 				reportItem.JobRef = GetJobItemReference(item.JobItem);
 				reportItem.PreparedBy = quote.CreatedBy.Name;
-				reportItem.Instrument = GetInstrumentDescription(item.JobItem.Instrument);
+				reportItem.Instrument = GetDescription(item.JobItem);
 				reportItem.CurrencyMessage = quote.Currency.DisplayMessage;
+				reportItem.OrderEmailLabel =
+					String.Format("If orders are being sent by email, please use the following address: {0}", reportItem.CompanyEmail);
 				result.Add(reportItem);
 			}
-			return result;
+			ApplyTotal(result);
+			return result.OrderBy(i => i.JobRef).ToList();
+		}
+
+		private void ApplyTotal(List<QuoteReportModel> items)
+		{
+			var total = items.Sum(i => i.Calibration + i.Repair + i.Carriage + i.Parts);
+			foreach (var item in items)
+				item.Total = total;
+		}
+
+		private string GetDescription(JobItem jobItem)
+		{
+			return String.Format("{0}, Serial No: {1}", GetInstrumentDescription(jobItem.Instrument), jobItem.SerialNo);
 		}
 	}
 }

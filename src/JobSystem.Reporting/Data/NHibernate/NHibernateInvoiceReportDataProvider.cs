@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using JobSystem.Reporting.Models;
 using JobSystem.DataModel.Entities;
 using System.Text;
@@ -22,6 +23,8 @@ namespace JobSystem.Reporting.Data.NHibernate
 				PopulateCompanyDetails(reportItem);
 				PopulateCustomerInfo(customer, reportItem);
 				PopulateBankDetails(invoice.BankDetails, reportItem);
+				reportItem.InvoiceNo = invoice.InvoiceNumber;
+				reportItem.InvoiceDate = invoice.DateCreated;
 				reportItem.PaymentTerms = invoice.PaymentTerm.Name;
 				reportItem.OrderNo = invoice.OrderNo;
 				var jobItem = invoiceItem.JobItem;
@@ -34,12 +37,14 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.Carriage = invoiceItem.CarriagePrice;
 				reportItem.Investigation = invoiceItem.InvestigationPrice;
 				reportItem.CurrencyMessage = invoice.Currency.DisplayMessage;
+				reportItem.Currency = invoice.Currency.Name;
 				result.Add(reportItem);
 			}
-			return result;
+			ApplyTotals(result, invoice);
+			return result.OrderBy(i => i.JobRef).ToList();
 		}
 
-		public void PopulateBankDetails(BankDetails bankDetails, InvoiceReportModel reportItem)
+		private void PopulateBankDetails(BankDetails bankDetails, InvoiceReportModel reportItem)
 		{
 			reportItem.BankName = bankDetails.Name;
 			reportItem.BankAddress1 = !String.IsNullOrEmpty(bankDetails.Address1) ? bankDetails.Address1 : String.Empty;
@@ -53,7 +58,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 			reportItem.BankAddress = GetFullBankAddress(reportItem);
 		}
 
-		public string GetFullBankAddress(InvoiceReportModel reportItem)
+		private string GetFullBankAddress(InvoiceReportModel reportItem)
 		{
 			var sb = new StringBuilder();
 			if (!String.IsNullOrEmpty(reportItem.BankAddress1))
@@ -67,6 +72,20 @@ namespace JobSystem.Reporting.Data.NHibernate
 			if (!String.IsNullOrEmpty(reportItem.BankAddress5))
 				sb.AppendFormat("{0}, ", reportItem.BankAddress5);
 			return sb.ToString().Trim(", ".ToCharArray());
+		}
+
+		private void ApplyTotals(List<InvoiceReportModel> items, Invoice invoice)
+		{
+			var subTotal = items.Sum(i => i.Calibration + i.Repair + i.Parts + i.Carriage + i.Investigation);
+			var vatTotal = subTotal * (decimal)invoice.TaxCode.Rate;
+			var total = subTotal + vatTotal;
+			foreach (var item in items)
+			{
+				item.SubTotal = subTotal;
+				item.VatTotal = vatTotal;
+				item.VatLabel = invoice.TaxCode.Description;
+				item.Total = total;
+			}
 		}
 	}
 }

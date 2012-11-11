@@ -326,7 +326,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox26.Style.Padding.Right = Telerik.Reporting.Drawing.Unit.Cm(0.10000000149011612D);
 			this.textBox26.Style.Padding.Top = Telerik.Reporting.Drawing.Unit.Cm(0.10000000149011612D);
 			this.textBox26.Value = "Can you acknowledge this order and advise of a delivery date as soon as is practi" +
-				"cal?  The delivery address is as stated below unless you are advised otherwise.";
+    "cal?  The delivery address is as stated below unless you are advised otherwise.";
 			// 
 			// textBox27
 			// 
@@ -625,7 +625,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.PageSettings.Margins.Bottom = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
 			this.PageSettings.Margins.Left = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
 			this.PageSettings.Margins.Right = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
-			this.PageSettings.Margins.Top = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
+			this.PageSettings.Margins.Top = Telerik.Reporting.Drawing.Unit.Mm(0D);
 			this.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.A4;
 			this.Style.BackgroundColor = System.Drawing.Color.White;
 			this.Width = Telerik.Reporting.Drawing.Unit.Pixel(678.3074951171875D);
