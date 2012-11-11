@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
@@ -83,7 +84,8 @@ namespace JobSystem.Mvc.Controllers
 					SupplierName = activeConsignment.Consignment.Supplier.Name,
 					SupplierId = activeConsignment.Consignment.Supplier.Id,
 					Instructions = activeConsignment.Instructions,
-					IsPending = false
+					IsPending = false,
+					ConsignmentId = activeConsignment.Consignment.Id
 				};
 
 				return View("_EditItem", viewmodel);
@@ -122,7 +124,7 @@ namespace JobSystem.Mvc.Controllers
 				_consignmentItemService.Edit(
 						viewmodel.Id,
 						viewmodel.Instructions);
-				return RedirectToAction("ActiveConsignments", "Consignment");
+				return RedirectToAction("ConsignmentItems", "Consignment", new { consignmentId = viewmodel.ConsignmentId });
 			}
 		}
 
@@ -178,7 +180,7 @@ namespace JobSystem.Mvc.Controllers
 			return View(viewModel);
 		}
 
-		public ActionResult ActiveConsignments()
+		public ActionResult ActiveConsignments(int page = 1)
 		{
 			var items = _consignmentService.GetConsignments().Select(
 				c => new ConsignmentIndexViewModel
@@ -203,6 +205,22 @@ namespace JobSystem.Mvc.Controllers
 						}).ToList();
 			}
 			return View(items);
+		}
+
+		public ActionResult ConsignmentItems(Guid consignmentId)
+		{
+			var consignmentItemViewModels = new List<ConsignmentItemIndexViewModel>();
+			foreach (var item in _consignmentItemService.GetConsignmentItems(consignmentId))
+			{
+				consignmentItemViewModels.Add(new ConsignmentItemIndexViewModel
+				{
+					Instructions = item.Instructions,
+					InstrumentDetails = String.Format("{0} - {1} : {2}", item.JobItem.Instrument.ModelNo, item.JobItem.Instrument.Manufacturer.ToString(), item.JobItem.Instrument.Description),
+					Id = item.Id,
+					JobItemRef = String.Format("{0}, item {1}", item.JobItem.Job.JobNo, item.JobItem.ItemNo)
+				});
+			}
+			return View(consignmentItemViewModels);
 		}
 
 		public ActionResult ConsignPending(Guid[] ToBeConvertedIds)

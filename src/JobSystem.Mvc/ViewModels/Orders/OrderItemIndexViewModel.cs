@@ -8,6 +8,7 @@ namespace JobSystem.Mvc.ViewModels.Orders
 	public class OrderItemIndexViewModel
 	{
 		public Guid Id { get; set; }
+		public Guid OrderId { get; set; }
 		public string SupplierName { get; set; }
 		public string Instructions { get; set; }
 		public string Description { get; set; }
@@ -18,5 +19,7 @@ namespace JobSystem.Mvc.ViewModels.Orders
 		public Guid JobItemId { get; set; }
 		public bool IsIndividual { get; set; }
 		public string Currency { get; set; }
+		public bool IsMarkedReceived { get; set; }
+		public string DateReceived { get; set; }
 	}
 }

@@ -18,5 +18,6 @@ namespace JobSystem.Mvc.ViewModels.Consignments
 		public Guid JobItemId { get; set; }
 		public bool IsFromList { get; set; }
 		public bool IsPending { get; set; }
+		public Guid ConsignmentId { get; set; }
 	}
 }

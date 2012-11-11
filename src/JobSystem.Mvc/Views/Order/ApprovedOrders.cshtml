@@ -19,21 +19,7 @@
 		grid.Column("OrderNo", "Order No."),
 		grid.Column("SupplierName", "Supplier Name"),
 		grid.Column("Instructions", "Instructions"),
-		grid.Column("", "Items", format: @<span class="the-tooltip center top dark-midnight-blue itemCount">
-					@item.OrderItems.Count items
-					<span>
-					@foreach (var oi in item.OrderItems)
-	 {
-						<span>
-							Delivery: @oi.DeliveryDays<br />
-							Description: @oi.Description<br />
-							Part No.: @oi.PartNo<br />
-							Price: @oi.Price<br />
-							Quantity: @oi.Quantity
-						</span><br />
-	 }	
-					</span>
-				</span>),
+		grid.Column("", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.OrderItems.Count), "ApprovedOrderItems", new { orderId = item.Id })</text>),
 		grid.Column("Print", "", format: @<text>@Html.ActionLink("Print Note", "GenerateOrderReport", new { id = @item.Id }, new { target = "blank" })</text>)
 	))
 }

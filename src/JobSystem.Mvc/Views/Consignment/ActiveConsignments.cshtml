@@ -10,76 +10,24 @@
 </div>
 
 @if (Model.Any()) {
-	<table class="approvedQuoteTable" id="approvedQuoteTableHead">
-		<tr>
-			<th>Consignment No</th>
-			<th>Supplier Name</th>
-			<th>Created By</th>
-			<th>Date Created</th>
-			<th></th>
-			<th></th>
-		</tr>
-	</table>
-	foreach (var item in Model.OrderBy(i => i.ConsignmentNo))
-	{
-	<table class="approvedQuoteTable">
-		<tr>
-			<td>
-				@item.ConsignmentNo
-			</td>
-			<td>
-				@item.SupplierName
-			</td>
-			<td>
-				@item.CreatedBy
-			</td>
-			<td>
-				@item.DateCreated
-			</td>
-			<td id="consignmentEditHeader">
-				@if (item.IsOrdered) {
+
+    var grid = new WebGrid(Model.OrderBy(i => i.ConsignmentNo), defaultSort: "ConsignmentNo", canSort: false, rowsPerPage: 15);
+	
+	@grid.GetHtml(columns: grid.Columns(
+		grid.Column("ConsignmentNo", "Consignemnt No."),
+		grid.Column("SupplierName", "Supplier Name"),
+		grid.Column("CreatedBy", "Created By"),
+        grid.Column("DateCreated", "Date Created"),
+        grid.Column("", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.ConsignmentItems.Count), "ConsignmentItems", new { consignmentId = item.Id })</text>),
+		grid.Column("Edit", "", format: @<text>@if (item.IsOrdered) {
 					@: Ordered
 				} else {
-					@Html.ActionLink("Edit", "Edit", new { id = item.Id })
+					@Html.ActionLink("Edit", "Edit", new { id = item.Id })@:&nbsp
 					@Html.ActionLink("Order", "ConvertToOrder", new { id = item.Id })
-				}
-			</td>
-			<td>
-				@Html.ActionLink("Print Note", "GenerateConsignmentNote", new { Id = @item.Id }, new { target="_blank"})
-			</td>
-		</tr>
-	</table>
-	<table class="approvedQuoteItemTable">
-		<tr>
-			<th>Job</th>
-			<th>Instrument</th>
-			<th>Instructions</th>
-			<th class="shortColumn"></th>
-		</tr>	
-		@foreach (var ci in item.ConsignmentItems)
-		{
-			<tr id="@ci.Id">
-				<td>
-					@ci.JobItemRef
-				</td>
-				<td>
-					@ci.InstrumentDetails
-				</td>
-				<td>
-					@ci.Instructions
-				</td>
-				<td class="shortColumn">
-					@if (item.IsOrdered) {
-						@: Ordered
-					} else {
-						@Html.ActionLink("Edit", "EditItem", new { id = ci.Id })
-					}	
-				</td>
-			</tr>
-		}
-	</table>
+				}</text>),
+        grid.Column("Print", "", format: @<text>@Html.ActionLink("Print Note", "GenerateConsignmentNote", new { Id = @item.Id }, new { target="_blank"})</text>)
+	))
 	<div class="clear"></div>
-	}
 }
 else
 {

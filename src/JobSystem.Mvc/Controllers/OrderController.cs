@@ -11,6 +11,17 @@ using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.Orders;
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using JobSystem.BusinessLogic.Services;
+using JobSystem.BusinessLogic.Validation.Core;
+using JobSystem.DataAccess.NHibernate;
+using JobSystem.DataAccess.NHibernate.Web;
+using JobSystem.Mvc.Core.UIValidation;
+using JobSystem.Mvc.ViewModels.Consignments;
+
 namespace JobSystem.Mvc.Controllers
 {
 	public class OrderController : Controller
@@ -108,6 +119,33 @@ namespace JobSystem.Mvc.Controllers
 				}).ToList();
 			}
 			return View(items);
+		}
+
+		[HttpGet]
+		public ActionResult ApprovedOrderItems(Guid orderId)
+		{
+			var orderItemViewModels = new List<OrderItemIndexViewModel>();
+			foreach (var oi in _orderItemService.GetOrderItems(orderId))
+			{
+				var dateReceived = new DateTime();
+				if (oi.DateReceived != null) { 
+					dateReceived = (DateTime)oi.DateReceived; 
+				}
+				orderItemViewModels.Add(new OrderItemIndexViewModel()
+				{
+					Id = oi.Id,
+					DeliveryDays = oi.DeliveryDays.ToString(),
+					Description = oi.Description,
+					Instructions = oi.Instructions,
+					PartNo = oi.PartNo,
+					Price = oi.Price.ToString(),
+					Quantity = oi.Quantity.ToString(),
+					DateReceived = dateReceived.ToLongDateString(),
+					IsMarkedReceived = (oi.DateReceived != null) ? true : false,
+					OrderId = orderId
+				});
+			}
+			return View(orderItemViewModels);
 		}
 
 		[HttpGet]
@@ -354,6 +392,13 @@ namespace JobSystem.Mvc.Controllers
 				}
 			}
 			return RedirectToAction("PendingOrders");
+		}
+
+		[Transaction]
+		public ActionResult MarkOrderReceived(Guid itemId, Guid orderId)
+		{
+			_orderItemService.MarkReceived(itemId);
+			return RedirectToAction("ApprovedOrderItems", new { orderId = orderId });
 		}
 
 		public ActionResult GenerateOrderReport(Guid id)

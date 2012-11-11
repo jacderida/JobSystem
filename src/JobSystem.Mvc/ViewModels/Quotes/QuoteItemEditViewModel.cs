@@ -31,5 +31,6 @@ namespace JobSystem.Mvc.ViewModels.Quotes
 		public bool EditedFromJobItem { get; set; }
 		public bool IsQuoted { get; set; }
 		public Guid QuoteItemId { get; set; }
+		public Guid QuoteId { get; set; }
 	}
 }
