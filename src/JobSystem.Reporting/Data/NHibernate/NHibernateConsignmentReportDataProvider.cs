@@ -32,11 +32,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.DateCreated = consignment.DateCreated.ToShortDateString();
 				reportItem.RaisedBy = consignment.CreatedBy.Name;
 				reportItem.JobRef = String.Format("{0}/{1}", item.JobItem.Job.JobNo, item.JobItem.ItemNo);
-				var instrument = item.JobItem.Instrument;
-				reportItem.Description = String.Format("{0}, {1}, {2}, {3}",
-					instrument.Manufacturer, instrument.ModelNo,
-					!String.IsNullOrEmpty(instrument.Range) ? instrument.Range : String.Empty,
-					!String.IsNullOrEmpty(instrument.Description) ? instrument.Description : String.Empty);
+				reportItem.Description = GetInstrumentDescription(item.JobItem.Instrument);
 				reportItem.Instructions = !String.IsNullOrEmpty(item.Instructions) ? item.Instructions : String.Empty;
 				result.Add(reportItem);
 			}
