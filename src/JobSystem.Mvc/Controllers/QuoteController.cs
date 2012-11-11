@@ -135,7 +135,7 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult ApprovedQuotes()
+		public ActionResult ApprovedQuotes(int page = 1)
 		{
 			var quotes = _quoteService.GetQuotes().Select(
 				q => new QuoteIndexViewModel
@@ -171,6 +171,34 @@ namespace JobSystem.Mvc.Controllers
 				}).OrderBy(qi => qi.JobItemRef).ToList();
 			}
 			return View(quotes);
+		}
+
+		[HttpGet]
+		public ActionResult QuoteItems(Guid quoteId)
+		{
+			var quotes = _quoteService.GetById(quoteId);
+			var quoteItemsViewModels = new List<QuoteItemIndexViewModel>();
+			foreach (var qi in _quoteService.GetById(quoteId).QuoteItems)
+			{
+				quoteItemsViewModels.Add(new QuoteItemIndexViewModel
+				{
+					Id = qi.Id,
+					JobItemId = qi.JobItem.Id,
+					Report = qi.Report,
+					Repair = (double)qi.Labour,
+					Calibration = (double)qi.Calibration,
+					Parts = (double)qi.Parts,
+					Carriage = (double)qi.Carriage,
+					Investigation = (double)qi.Investigation,
+					Days = qi.Days,
+					ItemBER = qi.BeyondEconomicRepair,
+					ItemNo = qi.ItemNo.ToString(),
+					JobItemRef = String.Format("{0}/{1}", qi.JobItem.Job.JobNo, qi.JobItem.ItemNo),
+					Status = qi.Status.Name,
+					StatusType = qi.Status.Type
+				});
+			}
+			return View(quoteItemsViewModels);
 		}
 
 		[HttpGet]
@@ -233,6 +261,7 @@ namespace JobSystem.Mvc.Controllers
 				var viewmodel = new QuoteItemEditViewModel()
 				{
 					QuoteItemId = item.Id,
+					QuoteId = item.Quote.Id,
 					JobId = item.JobItem.Job.Id,
 					JobItemId = item.JobItem.Id,
 					AdviceNo = item.Quote.AdviceNumber,
@@ -294,7 +323,7 @@ namespace JobSystem.Mvc.Controllers
 				if (!viewmodel.IsQuoted)
 					return RedirectToAction("PendingQuotes");
 				else
-					return RedirectToAction("ApprovedQuotes");
+					return RedirectToAction("QuoteItems", new { quoteId = viewmodel.QuoteId });
 			}
 			
 		}

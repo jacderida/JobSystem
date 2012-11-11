@@ -356,6 +356,22 @@ namespace JobSystem.Mvc.Controllers
 			return RedirectToAction("PendingOrders");
 		}
 
+		public ActionResult MarkOrderReceived(Guid id)
+		{
+			var transaction = NHibernateSession.Current.BeginTransaction();
+			try
+			{
+				_orderItemService.MarkReceived(id);
+				transaction.Commit();
+			}
+			catch (DomainValidationException dex)
+			{
+				transaction.Rollback();
+				ModelState.UpdateFromDomain(dex.Result);
+			}
+			return RedirectToAction("PendingOrderItems", new { page = 1 });
+		}
+
 		public ActionResult GenerateOrderReport(Guid id)
 		{
 			return View("RepOrderNote", id);
