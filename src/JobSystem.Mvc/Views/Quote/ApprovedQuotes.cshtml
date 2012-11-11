@@ -13,7 +13,7 @@
 
 @if (Model.Any()) {
 
-    var grid = new WebGrid(Model, defaultSort:"QuoteNo", canSort: false, rowsPerPage: 15);
+    var grid = new WebGrid(Model.OrderBy(i => i.QuoteNo), defaultSort:"QuoteNo", canSort: false, rowsPerPage: 15);
 	
 	@grid.GetHtml(columns: grid.Columns(
 		grid.Column("QuoteNo", "Quote No."),
