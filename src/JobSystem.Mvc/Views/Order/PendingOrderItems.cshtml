@@ -27,7 +27,8 @@
 		grid.Column("PartNo", "Part No."),
 		grid.Column("DeliveryDays", "Delivery Days"),
 		grid.Column("Price", "Price"),
-		grid.Column("Quantity", "Quantity")
+		grid.Column("Quantity", "Quantity"),
+		grid.Column("", "", format: @<text>@if (item.IsMarkedReceived) @Html.ActionLink("Order Received", "MarkOrderReceived", new { id = @item.Id })</text>)
 	))
 }else{
 	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>

@@ -18,5 +18,6 @@ namespace JobSystem.Mvc.ViewModels.Orders
 		public Guid JobItemId { get; set; }
 		public bool IsIndividual { get; set; }
 		public string Currency { get; set; }
+		public bool IsMarkedReceived { get; set; }
 	}
 }
