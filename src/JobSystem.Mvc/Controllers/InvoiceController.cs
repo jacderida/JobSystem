@@ -33,11 +33,11 @@ namespace JobSystem.Mvc.Controllers
 			try
 			{
 				_invoiceItemService.CreatePending(Guid.NewGuid(), jobItemId);
-				return Json(true);
+				return Json(new { Success = true, Message = "Successfully Marked for Invoicing" });
 			}
 			catch (DomainValidationException dex)
 			{
-				return Json(dex.Result);
+				return Json(new { Success = false, Message = dex.Result.ToString() });
 			}
 		}
 

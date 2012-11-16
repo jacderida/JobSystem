@@ -1046,10 +1046,10 @@ div#title {
 	display: none;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	color: #468847;
+	margin-bottom: 10px;
 	font-weight: bold;
-	background-color: #DFF0D8;
-	border: 1px solid #D6E9C6;
+	background-color: #D8E5FF;
+	border: 1px solid #6699FF;
 	text-align: center;
 	width: 100%;
 }

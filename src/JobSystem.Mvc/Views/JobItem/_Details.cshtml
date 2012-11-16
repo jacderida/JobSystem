@@ -15,6 +15,17 @@
 			autoHeight: true,
 			totalWidth: '774'
 		});
+
+		$('#markForInvoicingButton').click(function (e) {
+		    e.preventDefault();
+
+		    $.post("@Url.Action("CreatePending", "Invoice", new { jobItemId = Model.Id })", function(data) {
+		        app.showMessage(data.Message);
+		        if (data.Success == true) {
+		            $('#markForInvoicingButton').replaceWith('<span class="field">Marked For Invoicing</span>')
+		        }
+		    });
+		});
 	});
 </script>
 
@@ -31,6 +42,8 @@
 <div id="item-tooltip">
 <!-- Content replaced by javascript -->
 </div>
+
+<div id="message-container"></div>
 
 <div id="item-details-container">
 	<div class="item-details-fields">
@@ -72,7 +85,9 @@
 				<span class="field">Marked For Invoicing</span>
 			} else {
 				if (Model.QuoteItem != null || Model.Quote != null) {
-					<span class="field" id="markForInvoicingButton">@Ajax.ActionLink("Mark for Invoicing", "CreatePending", "Invoice", new { jobItemId = Model.Id }, new AjaxOptions() { HttpMethod = "POST", OnSuccess = "app.showMessage('Successfully Marked for Invoicing');" }, new { @class = "primary-action" })</span>
+					<span class="field primary-action" id="markForInvoicingButton">
+                        Mark for Invoicing
+					</span>
 				} else {
 					<span class="field">Raise a quote item before invoicing</span>
 				}
