@@ -49,14 +49,10 @@ namespace JobSystem.Mvc.Controllers
 			{
 				IList<Guid> idList = new List<Guid>();
 				if (ToBeConvertedIds.Length > 0)
-				{
 					for (var i = 0; i < ToBeConvertedIds.Length; i++)
-					{
 						idList.Add(ToBeConvertedIds[i]);
-					}
-				}
-				if (idList.Any()) _invoiceService.CreateInvoicesFromPendingItems(idList);
-
+				if (idList.Any())
+					_invoiceService.CreateInvoicesFromPendingItems(idList);
 				return RedirectToAction("PendingInvoices");
 			}
 			catch (DomainValidationException dex)
@@ -80,7 +76,6 @@ namespace JobSystem.Mvc.Controllers
 				PartsPrice = (double)i.PartsPrice,
 				RepairPrice = (double)i.RepairPrice
 			}).ToList();
-
 			return View(items);
 		}
 
@@ -107,8 +102,7 @@ namespace JobSystem.Mvc.Controllers
 					PartsPrice = (double)item.PartsPrice,
 					RepairPrice = (double)item.RepairPrice
 				}).ToList()
-			}).ToList();
-
+			}).OrderBy(i => i.InvoiceNo).ToList();
 			return View(items);
 		}
 

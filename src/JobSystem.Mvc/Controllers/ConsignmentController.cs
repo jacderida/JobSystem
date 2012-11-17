@@ -147,7 +147,6 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Edit(ConsignmentEditViewModel viewmodel)
 		{
 			_consignmentService.Edit(viewmodel.Id, viewmodel.SupplierId);
-
 			return RedirectToAction("ActiveConsignments", "Consignment");
 		}
 
@@ -191,8 +190,7 @@ namespace JobSystem.Mvc.Controllers
 					DateCreated = c.DateCreated.ToLongDateString() + ' ' + c.DateCreated.ToShortTimeString(),
 					SupplierName = c.Supplier.Name,
 					IsOrdered = c.IsOrdered
-				}).ToList();
-
+				}).OrderBy(c => c.ConsignmentNo).ToList();
 			foreach (var item in items)
 			{
 				var consignmentItems = _consignmentItemService.GetConsignmentItems(item.Id);

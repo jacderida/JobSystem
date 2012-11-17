@@ -148,7 +148,7 @@ namespace JobSystem.Mvc.Controllers
 					OrderNo = q.OrderNumber,
 					AdviceNo = q.AdviceNumber,
 					CurrencyName = q.Currency.Name
-				}).ToList();
+				}).OrderBy(q => q.QuoteNo).ToList();
 			foreach (var quote in quotes)
 			{
 				var quoteItems = _quoteItemService.GetQuoteItems(quote.Id);

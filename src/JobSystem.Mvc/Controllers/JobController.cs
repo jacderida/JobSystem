@@ -130,7 +130,7 @@ namespace JobSystem.Mvc.Controllers
 					JobNumber = j.JobNo,
 					OrderNumber = j.OrderNo,
 					Id = j.Id.ToString()
-				}).ToList();
+				}).OrderBy(j => j.JobNumber).ToList();
 			var jobList = new JobListViewModel()
 			{
 				CreateViewModel = new JobCreateViewModel(),
@@ -150,7 +150,7 @@ namespace JobSystem.Mvc.Controllers
 					JobNumber = j.JobNo,
 					OrderNumber = j.OrderNo,
 					Id = j.Id.ToString()
-				}).ToList();
+				}).OrderBy(j => j.JobNumber).ToList();
 			var jobList = new JobListViewModel()
 			{
 				CreateViewModel = new JobCreateViewModel(),

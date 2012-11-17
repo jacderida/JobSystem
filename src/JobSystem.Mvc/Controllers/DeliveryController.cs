@@ -53,7 +53,7 @@ namespace JobSystem.Mvc.Controllers
 					CreatedBy = i.CreatedBy.Name,
 					DateCreated = i.DateCreated.ToLongDateString() + ' ' + i.DateCreated.ToShortTimeString(),
 					Fao = i.Fao
-				}).ToList();
+				}).OrderBy(d => d.DeliveryNo).ToList();
 			foreach (var item in items)
 			{
 				var deliveryItems = _deliveryItemService.GetDeliveryItems(item.Id);

@@ -75,8 +75,7 @@ namespace JobSystem.Mvc.Controllers
 					Instructions = q.Instructions,
 					SupplierName = q.Supplier.Name,
 					OrderNo = q.OrderNo
-				}).ToList();
-
+				}).OrderBy(o => o.OrderNo).ToList();
 			foreach (var item in items)
 			{
 				var orderItems = _orderItemService.GetOrderItems(item.Id);
@@ -103,8 +102,7 @@ namespace JobSystem.Mvc.Controllers
 					Instructions = q.Instructions,
 					SupplierName = q.Supplier.Name,
 					OrderNo = q.OrderNo
-				}).ToList();
-
+				}).OrderBy(o => o.OrderNo).ToList();
 			foreach (var item in items)
 			{
 				var orderItems = _orderItemService.GetOrderItems(item.Id);
@@ -128,9 +126,8 @@ namespace JobSystem.Mvc.Controllers
 			foreach (var oi in _orderItemService.GetOrderItems(orderId))
 			{
 				var dateReceived = new DateTime();
-				if (oi.DateReceived != null) { 
-					dateReceived = (DateTime)oi.DateReceived; 
-				}
+				if (oi.DateReceived != null)
+					dateReceived = (DateTime)oi.DateReceived;
 				orderItemViewModels.Add(new OrderItemIndexViewModel()
 				{
 					Id = oi.Id,
@@ -169,7 +166,6 @@ namespace JobSystem.Mvc.Controllers
 				viewmodel.SupplierId,
 				viewmodel.Instructions,
 				viewmodel.CurrencyId);
-
 			return RedirectToAction("PendingOrders");
 		}
 
@@ -249,7 +245,6 @@ namespace JobSystem.Mvc.Controllers
 				viewmodel.DeliveryDays,
 				Guid.Empty,
 				viewmodel.Price);
-
 			return RedirectToAction("Details", new { id = viewmodel.OrderId });
 		}
 
@@ -257,7 +252,6 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Details(Guid id)
 		{
 			var order = _orderService.GetById(id);
-
 			var viewmodel = new OrderDetailsViewModel()
 			{
 				Id = order.Id,
@@ -292,7 +286,6 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult EditItem(Guid jobItemId)
 		{
 			var item = _orderItemService.GetPendingOrderItemForJobItem(jobItemId);
-
 			var viewmodel = new OrderItemEditViewModel()
 			{
 				Id = item.Id,
@@ -307,7 +300,6 @@ namespace JobSystem.Mvc.Controllers
 				JobItemId = item.JobItem.Id,
 				JobId = item.JobItem.Job.Id
 			};
-
 			return View("EditItem", viewmodel);
 		}
 
@@ -315,7 +307,6 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult EditPendingItem(Guid itemId)
 		{
 			var item = _orderItemService.GetById(itemId);
-
 			var viewmodel = new OrderItemEditViewModel()
 			{
 				Id = item.Id,
@@ -331,7 +322,6 @@ namespace JobSystem.Mvc.Controllers
 				JobItemId = item.JobItem.Id,
 				JobId = item.JobItem.Job.Id
 			};
-
 			return View("EditPendingItem", viewmodel);
 		}
 
@@ -347,7 +337,6 @@ namespace JobSystem.Mvc.Controllers
 				viewmodel.Instructions,
 				viewmodel.DeliveryDays,
 				viewmodel.Price);
-
 			return RedirectToAction("Details", "Job", new { Id = viewmodel.JobId, tabNo = "0" });
 		}
 
@@ -363,7 +352,6 @@ namespace JobSystem.Mvc.Controllers
 				viewmodel.Instructions,
 				viewmodel.DeliveryDays,
 				viewmodel.Price);
-
 			return RedirectToAction("Details", "Order", new { id = viewmodel.OrderId, tabNo = "0" });
 		}
 
