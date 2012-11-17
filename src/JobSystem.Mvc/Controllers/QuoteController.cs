@@ -372,8 +372,12 @@ namespace JobSystem.Mvc.Controllers
 			return Json(true);
 		}
 
+		[Transaction]
 		public ActionResult GenerateQuoteReport(Guid id)
 		{
+			var quote = _quoteService.GetById(id);
+			foreach (var item in quote.QuoteItems)
+				_quoteItemService.SetQuoted(item.Id);
 			return View("RepQuoteNote", id);
 		}
 	}
