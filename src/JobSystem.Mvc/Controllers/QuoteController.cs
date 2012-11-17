@@ -198,7 +198,7 @@ namespace JobSystem.Mvc.Controllers
 					StatusType = qi.Status.Type
 				});
 			}
-			return View(quoteItemsViewModels);
+			return View(quoteItemsViewModels.OrderBy(q => q.JobItemRef));
 		}
 
 		[HttpGet]

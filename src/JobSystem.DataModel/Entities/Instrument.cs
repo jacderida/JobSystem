@@ -23,11 +23,13 @@ namespace JobSystem.DataModel.Entities
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
-			sb.AppendFormat("{0}, {1},", Manufacturer, ModelNo);
-			if (Range != "Not Specified")
+			sb.AppendFormat("{0}, ", Manufacturer);
+			sb.AppendFormat("{0}, ", ModelNo);
+			if (!String.IsNullOrEmpty(Range) && Range.Trim() != "Not Specified")
 				sb.AppendFormat("{0}, ", Range);
-			sb.Append(Description);
-			return sb.ToString();
+			if (!String.IsNullOrEmpty(Description) && Description.Trim() != "Not Specified")
+				sb.AppendFormat("{0}, ", Description);
+			return sb.ToString().Trim(", ".ToCharArray());
 		}
 	}
 }

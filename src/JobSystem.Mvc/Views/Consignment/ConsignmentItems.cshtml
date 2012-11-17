@@ -1,22 +1,21 @@
 ﻿@model IList<JobSystem.Mvc.ViewModels.Consignments.ConsignmentItemIndexViewModel>
-
 @{
     ViewBag.Title = "Consignments";
 }
 
-@if (Model.Any()) {
-
-    var grid = new WebGrid(Model.OrderBy(i => i.JobItemRef), defaultSort: "JobItemRef", canSort: false, rowsPerPage: 15);
-	
+@if (Model.Any())
+{
+    var grid = new WebGrid(Model.OrderBy(i => i.JobItemRef), defaultSort: "JobItemRef", canSort: false, rowsPerPage: 15);	
 	@grid.GetHtml(columns: grid.Columns(
 		grid.Column("JobItemRef", "Job"),
+		grid.Column("InstrumentDetails", "Instrument"),
 		grid.Column("Instructions", "Instructions"),
         grid.Column("", "", format: @<text>
-                    @if (item.IsOrdered) {
-						@: Ordered
-					} else {
-						@Html.ActionLink("Edit", "EditItem", new { id = item.Id })
-					}	</text>)
+			@if (item.IsOrdered) {
+				@: Ordered
+			} else {
+				@Html.ActionLink("Edit", "EditItem", new { id = item.Id })
+			}	</text>)
 	))
 	<div class="clear"></div>
 }

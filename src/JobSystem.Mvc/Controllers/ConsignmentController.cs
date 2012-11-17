@@ -73,10 +73,9 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult EditItem(Guid id)
 		{
 			var pendingConsignment = _consignmentItemService.GetPendingItem(id);
-
-			if (pendingConsignment == null) {
+			if (pendingConsignment == null)
+			{
 				var activeConsignment = _consignmentItemService.GetById(id);
-
 				var viewmodel = new ConsignmentEditViewModel()
 				{
 					Id = activeConsignment.Id,
@@ -87,7 +86,6 @@ namespace JobSystem.Mvc.Controllers
 					IsPending = false,
 					ConsignmentId = activeConsignment.Consignment.Id
 				};
-
 				return View("_EditItem", viewmodel);
 			} 
 			else
@@ -101,7 +99,6 @@ namespace JobSystem.Mvc.Controllers
 					Instructions = pendingConsignment.Instructions,
 					IsPending = true
 				};
-
 				return View("_EditItem", viewmodel);
 			}
 		}
@@ -122,8 +119,8 @@ namespace JobSystem.Mvc.Controllers
 			else
 			{
 				_consignmentItemService.Edit(
-						viewmodel.Id,
-						viewmodel.Instructions);
+					viewmodel.Id,
+					viewmodel.Instructions);
 				return RedirectToAction("ConsignmentItems", "Consignment", new { consignmentId = viewmodel.ConsignmentId });
 			}
 		}
@@ -132,7 +129,6 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult Edit(Guid id)
 		{
 			var activeConsignment = _consignmentService.GetById(id);
-
 			var viewmodel = new ConsignmentEditViewModel()
 			{
 				Id = activeConsignment.Id,
@@ -195,12 +191,12 @@ namespace JobSystem.Mvc.Controllers
 			{
 				var consignmentItems = _consignmentItemService.GetConsignmentItems(item.Id);
 				item.ConsignmentItems = consignmentItems.Select(ci => new ConsignmentItemIndexViewModel
-						{
-							Instructions = ci.Instructions,
-							InstrumentDetails = String.Format("{0} - {1} : {2}", ci.JobItem.Instrument.ModelNo, ci.JobItem.Instrument.Manufacturer.ToString(), ci.JobItem.Instrument.Description),
-							Id = ci.Id,
-							JobItemRef = String.Format("{0}, item {1}", ci.JobItem.Job.JobNo, ci.JobItem.ItemNo)
-						}).ToList();
+					{
+						Instructions = ci.Instructions,
+						InstrumentDetails = ci.JobItem.Instrument.ToString(),
+						Id = ci.Id,
+						JobItemRef = String.Format("{0}/{1}", ci.JobItem.Job.JobNo, ci.JobItem.ItemNo)
+					}).ToList();
 			}
 			return View(items);
 		}
@@ -213,12 +209,12 @@ namespace JobSystem.Mvc.Controllers
 				consignmentItemViewModels.Add(new ConsignmentItemIndexViewModel
 				{
 					Instructions = item.Instructions,
-					InstrumentDetails = String.Format("{0} - {1} : {2}", item.JobItem.Instrument.ModelNo, item.JobItem.Instrument.Manufacturer.ToString(), item.JobItem.Instrument.Description),
+					InstrumentDetails = item.JobItem.Instrument.ToString(),
 					Id = item.Id,
-					JobItemRef = String.Format("{0}, item {1}", item.JobItem.Job.JobNo, item.JobItem.ItemNo)
+					JobItemRef = String.Format("{0}/{1}", item.JobItem.Job.JobNo, item.JobItem.ItemNo)
 				});
 			}
-			return View(consignmentItemViewModels);
+			return View(consignmentItemViewModels.OrderBy(c => c.JobItemRef).ToList());
 		}
 
 		public ActionResult ConsignPending(Guid[] ToBeConvertedIds)
