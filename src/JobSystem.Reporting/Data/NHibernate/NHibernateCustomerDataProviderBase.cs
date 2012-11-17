@@ -9,11 +9,28 @@ namespace JobSystem.Reporting.Data.NHibernate
 		public void PopulateCustomerInfo(Customer customer, CustomerReportModel reportModel)
 		{
 			reportModel.CustomerName = customer.Name;
-			reportModel.CustomerAddress1 = !String.IsNullOrEmpty(customer.Address1) ? customer.Address1 : String.Empty;
-			reportModel.CustomerAddress2 = !String.IsNullOrEmpty(customer.Address2) ? customer.Address2 : String.Empty;
-			reportModel.CustomerAddress3 = !String.IsNullOrEmpty(customer.Address3) ? customer.Address3 : String.Empty;
-			reportModel.CustomerAddress4 = !String.IsNullOrEmpty(customer.Address4) ? customer.Address4 : String.Empty;
-			reportModel.CustomerAddress5 = !String.IsNullOrEmpty(customer.Address5) ? customer.Address5 : String.Empty;
+			var addressLines = new string[5];
+			addressLines[0] = customer.Address1.Trim();
+			addressLines[1] = customer.Address2.Trim();
+			addressLines[2] = customer.Address3.Trim();
+			addressLines[3] = customer.Address4.Trim();
+			addressLines[4] = customer.Address5.Trim();
+			var i = 0;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.CustomerAddress1 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.CustomerAddress2 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.CustomerAddress3 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.CustomerAddress4 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.CustomerAddress5 = i < addressLines.Length ? addressLines[i++] : String.Empty;
 		}
 	}
 }

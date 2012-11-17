@@ -625,7 +625,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.PageSettings.Margins.Bottom = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
 			this.PageSettings.Margins.Left = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
 			this.PageSettings.Margins.Right = Telerik.Reporting.Drawing.Unit.Mm(15.399999618530273D);
-			this.PageSettings.Margins.Top = Telerik.Reporting.Drawing.Unit.Mm(0D);
+			this.PageSettings.Margins.Top = Telerik.Reporting.Drawing.Unit.Mm(10D);
 			this.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.A4;
 			this.Style.BackgroundColor = System.Drawing.Color.White;
 			this.Width = Telerik.Reporting.Drawing.Unit.Pixel(678.3074951171875D);

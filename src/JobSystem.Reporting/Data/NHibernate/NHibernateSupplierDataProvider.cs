@@ -9,11 +9,28 @@ namespace JobSystem.Reporting.Data.NHibernate
 		public void PopulateSupplierInfo(Supplier supplier, SupplierReportModel reportModel)
 		{
 			reportModel.SupplierName = supplier.Name;
-			reportModel.SupplierAddress1 = !String.IsNullOrEmpty(supplier.Address1) ? supplier.Address1 : String.Empty;
-			reportModel.SupplierAddress2 = !String.IsNullOrEmpty(supplier.Address2) ? supplier.Address2 : String.Empty;
-			reportModel.SupplierAddress3 = !String.IsNullOrEmpty(supplier.Address3) ? supplier.Address3 : String.Empty;
-			reportModel.SupplierAddress4 = !String.IsNullOrEmpty(supplier.Address4) ? supplier.Address4 : String.Empty;
-			reportModel.SupplierAddress5 = !String.IsNullOrEmpty(supplier.Address5) ? supplier.Address5 : String.Empty;
+			var addressLines = new string[5];
+			addressLines[0] = supplier.Address1.Trim();
+			addressLines[1] = supplier.Address2.Trim();
+			addressLines[2] = supplier.Address3.Trim();
+			addressLines[3] = supplier.Address4.Trim();
+			addressLines[4] = supplier.Address5.Trim();
+			var i = 0;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.SupplierAddress1 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.SupplierAddress2 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.SupplierAddress3 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.SupplierAddress4 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.SupplierAddress5 = i < addressLines.Length ? addressLines[i++] : String.Empty;
 		}
 	}
 }
