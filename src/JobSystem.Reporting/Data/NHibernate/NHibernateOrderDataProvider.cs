@@ -28,6 +28,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.ItemInstructions = orderItem.Instructions;
 				reportItem.Price = orderItem.Price;
 				reportItem.Quantity = orderItem.Quantity;
+				reportItem.TotalPrice = orderItem.Price * orderItem.Quantity;
 				reportItem.Days = orderItem.DeliveryDays;
 				reportItem.JobRef = GetJobItemReference(orderItem.JobItem);
 				reportItem.PreparedBy = order.CreatedBy.Name;

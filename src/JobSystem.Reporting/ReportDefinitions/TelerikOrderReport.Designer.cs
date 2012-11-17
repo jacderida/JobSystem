@@ -250,7 +250,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.TotalTextBox.Style.Padding.Right = Telerik.Reporting.Drawing.Unit.Cm(0.10000000149011612D);
 			this.TotalTextBox.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Right;
 			this.TotalTextBox.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
-			this.TotalTextBox.Value = "= Sum(Fields.Price)";
+			this.TotalTextBox.Value = "=Fields.TotalPrice";
 			// 
 			// textBox25
 			// 

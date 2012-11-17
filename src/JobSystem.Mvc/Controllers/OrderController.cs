@@ -111,24 +111,27 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult ApprovedOrderItems(Guid orderId)
 		{
 			var orderItemViewModels = new List<OrderItemIndexViewModel>();
-			foreach (var oi in _orderItemService.GetOrderItems(orderId))
+			foreach (var item in _orderItemService.GetOrderItems(orderId))
 			{
 				var dateReceived = new DateTime();
-				if (oi.DateReceived != null)
-					dateReceived = (DateTime)oi.DateReceived;
-				orderItemViewModels.Add(new OrderItemIndexViewModel()
+				if (item.DateReceived != null)
+					dateReceived = (DateTime)item.DateReceived;
+				var viewModel = new OrderItemIndexViewModel
 				{
-					Id = oi.Id,
-					DeliveryDays = oi.DeliveryDays.ToString(),
-					Description = oi.Description,
-					Instructions = oi.Instructions,
-					PartNo = oi.PartNo,
-					Price = oi.Price.ToString(),
-					Quantity = oi.Quantity.ToString(),
+					Id = item.Id,
+					DeliveryDays = item.DeliveryDays.ToString(),
+					Description = item.Description,
+					Instructions = item.Instructions,
+					PartNo = item.PartNo,
+					Price = item.Price.ToString(),
+					Quantity = item.Quantity.ToString(),
 					DateReceived = dateReceived.ToLongDateString(),
-					IsMarkedReceived = (oi.DateReceived != null) ? true : false,
+					IsMarkedReceived = (item.DateReceived != null) ? true : false,
 					OrderId = orderId
-				});
+				};
+				if (item.JobItem != null)
+					viewModel.JobItemRef = String.Format("{0}/{1}", item.JobItem.Job.JobNo, item.JobItem.ItemNo);
+				orderItemViewModels.Add(viewModel);
 			}
 			return View(orderItemViewModels);
 		}

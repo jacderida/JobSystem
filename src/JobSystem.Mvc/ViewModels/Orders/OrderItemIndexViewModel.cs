@@ -10,6 +10,7 @@ namespace JobSystem.Mvc.ViewModels.Orders
 		public Guid Id { get; set; }
 		public Guid OrderId { get; set; }
 		public int ItemNo { get; set; }
+		public string JobItemRef { get; set; }
 		public string SupplierName { get; set; }
 		public string Instructions { get; set; }
 		public string Description { get; set; }

@@ -28,6 +28,7 @@ namespace JobSystem.Mvc.Controllers
 				{
 					Id = c.Id,
 					Name = c.Name,
+					AssetLine = c.AssetLine,
 					Email = c.Email,
 					Contact1 = c.Contact1
 				}).ToList();
@@ -120,7 +121,6 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult SearchCustomers(string query)
 		{
 			IEnumerable<Customer> customers = _customerService.SearchByKeyword(query);
-
 			return Json(customers);
 		}
 	}
