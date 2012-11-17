@@ -23,6 +23,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.QuoteNo = quote.QuoteNumber;
 				reportItem.OrderNo = quote.OrderNumber;
 				reportItem.AdviceNo = quote.AdviceNumber;
+				reportItem.Contact = quote.Customer.Contact1;
 				reportItem.CustomerName = quote.Customer.Name;
 				reportItem.CustomerAddress1 = !String.IsNullOrEmpty(customer.Address1) ? customer.Address1 : String.Empty;
 				reportItem.CustomerAddress2 = !String.IsNullOrEmpty(customer.Address2) ? customer.Address2 : String.Empty;

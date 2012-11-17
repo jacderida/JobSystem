@@ -22,8 +22,6 @@ namespace JobSystem.Reporting.Data.NHibernate
 				PopulateCompanyDetails(reportItem);
 				PopulateSupplierInfo(supplier, reportItem);
 				reportItem.ConsignmentNo = consignment.ConsignmentNo;
-				reportItem.SupplierTel = !String.IsNullOrEmpty(supplier.Telephone) ? supplier.Telephone : String.Empty;
-				reportItem.SupplierFax = !String.IsNullOrEmpty(supplier.Fax) ? supplier.Fax : String.Empty;
 				reportItem.DateCreated = consignment.DateCreated.ToShortDateString();
 				reportItem.RaisedBy = consignment.CreatedBy.Name;
 				reportItem.JobRef = String.Format("{0}/{1}", item.JobItem.Job.JobNo, item.JobItem.ItemNo);
@@ -59,6 +57,8 @@ namespace JobSystem.Reporting.Data.NHibernate
 			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
 				i++;
 			reportModel.SupplierAddress5 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			reportModel.SupplierTel = String.Format("Tel: {0}", supplier.Telephone);
+			reportModel.SupplierFax = String.Format("Fax: {0}", supplier.Fax);
 		}
 	}
 }

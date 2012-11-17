@@ -84,7 +84,6 @@
 						report.SubTotalTextBox.Format = "{0:N2}";
 						report.InvestigationTextBox.Format = "{0:N2}";
 						report.TotalTextBox.Format = "{0:N2}";
-						report.CurrencyMessageTextBox.Visible = true;
 						break;
 					}
 			}
