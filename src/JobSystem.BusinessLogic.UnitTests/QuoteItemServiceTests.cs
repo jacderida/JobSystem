@@ -44,6 +44,11 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private JobItem _jobItemForReject;
 		private QuoteItem _quoteItemForReject;
 
+		private Guid _quoteItemForSetQuotedId;
+		private Guid _jobItemForSetQuotedId;
+		private JobItem _jobItemForSetQuoted;
+		private QuoteItem _quoteItemForSetQuoted;
+
 		[SetUp]
 		public void Setup()
 		{
@@ -242,6 +247,60 @@ namespace JobSystem.BusinessLogic.UnitTests
 				CreatedUser = _userContext.GetCurrentUser(),
 			};
 			_quoteItemForReject.JobItem = _jobItemForReject;
+
+			_jobItemForSetQuotedId = Guid.NewGuid();
+			_jobItemForSetQuoted = new JobItem
+			{
+				Id = _jobItemForSetQuotedId,
+				Job = new Job
+				{
+					Id = Guid.NewGuid(),
+					JobNo = "JR2000",
+					CreatedBy = _userContext.GetCurrentUser(),
+					OrderNo = "ORDER12345",
+					DateCreated = DateTime.UtcNow,
+					Customer = new Customer { Id = Guid.NewGuid(), Name = "Gael Ltd" }
+				},
+				ItemNo = 1,
+				SerialNo = "12345",
+				Instrument = new Instrument
+				{
+					Id = Guid.NewGuid(),
+					Manufacturer = "Druck",
+					ModelNo = "DPI601IS",
+					Range = "None",
+					Description = "Digital Pressure Indicator"
+				},
+				CalPeriod = 12,
+				Created = DateTime.UtcNow,
+				CreatedUser = _userContext.GetCurrentUser(),
+			};
+			_quoteItemForSetQuotedId = Guid.NewGuid();
+			_quoteItemForSetQuoted = new QuoteItem
+			{
+				Id = _quoteItemForAcceptId,
+				ItemNo = 1,
+				Labour = 45,
+				Calibration = 55,
+				Parts = 23,
+				Carriage = 14,
+				Investigation = 45,
+				Days = 30,
+				Status = new ListItem
+				{
+					Id = Guid.NewGuid(),
+					Category = new ListItemCategory
+					{
+						Id = Guid.NewGuid(),
+						Name = "Job Item Status",
+						Type = ListItemCategoryType.JobItemStatus
+					},
+					Name = "Quote Prepared",
+					Type = ListItemType.StatusQuotedPrepared
+				},
+				Quote = new Quote { Id = _quoteForEditId, QuoteNumber = "QR2000" },
+				JobItem = _jobItemForSetQuoted
+			};
 		}
 
 		#region Create
@@ -2105,6 +2164,116 @@ namespace JobSystem.BusinessLogic.UnitTests
 			try
 			{
 				_quoteItemForReject = _quoteItemService.Reject(quoteItemId);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region SetQuoted
+
+		[Test]
+		public void SetQuoted_ValidItemDetails_ItemSetQuoted()
+		{
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
+				_userContext.GetCurrentUser(), _jobItemForSetQuotedId, 0, 0, "Quote QR2000 was printed", ListItemType.StatusQuoted, ListItemType.WorkTypeAdministration));
+			jobItemRepositoryMock.Expect(x => x.Update(_jobItemForSetQuoted));
+			var quoteItemRepositoryMock = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryMock.Stub(x => x.GetById(_quoteItemForSetQuotedId)).Return(_quoteItemForSetQuoted);
+			quoteItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
+			listItemRepositoryStub.Stub(x => x.GetByType(ListItemType.StatusQuoted)).Return(
+				new ListItem
+				{
+					Id = Guid.NewGuid(),
+					Name = "Quoted",
+					Type = ListItemType.StatusQuoted,
+					Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Job Item Status", Type = ListItemCategoryType.JobItemStatus }
+				});
+
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryMock,
+				jobItemRepositoryMock,
+				listItemRepositoryStub,
+				MockRepository.GenerateStub<ICustomerRepository>());
+			SetQuoted(_quoteItemForSetQuotedId);
+			jobItemRepositoryMock.VerifyAllExpectations();
+			quoteItemRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(ListItemType.StatusQuoted, _quoteItemForSetQuoted.Status.Type);
+			Assert.AreEqual(ListItemType.StatusQuoted, _jobItemForSetQuoted.Status.Type);
+		}
+
+		[Test]
+		public void SetQuoted_QuoteNotAtQuotePreparedStatus_ItemNotSetQuoted()
+		{
+			_quoteItemForSetQuoted.Status = new ListItem
+			{
+				Id = Guid.NewGuid(),
+				Category = new ListItemCategory
+				{
+					Id = Guid.NewGuid(),
+					Name = "Job Item Status",
+					Type = ListItemCategoryType.JobItemStatus
+				},
+				Name = "Quote Accepted",
+				Type = ListItemType.StatusQuoteAccepted
+			};
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			var quoteItemRepositoryMock = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryMock.Stub(x => x.GetById(_quoteItemForSetQuotedId)).Return(_quoteItemForSetQuoted);
+
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				quoteItemRepositoryMock,
+				jobItemRepositoryMock,
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			SetQuoted(_quoteItemForSetQuotedId);
+			jobItemRepositoryMock.AssertWasNotCalled(
+				x => x.EmitItemHistory(null, Guid.Empty, 0, 0, String.Empty, ListItemType.StatusQuoted, ListItemType.WorkTypeAdministration));
+			jobItemRepositoryMock.AssertWasNotCalled(x => x.Update(_jobItemForSetQuoted));
+			quoteItemRepositoryMock.AssertWasNotCalled(x => x.Update(_quoteItemForSetQuoted));
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void SetQuoted_InvalidQuoteItemId_ThrowsArgumentException()
+		{
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				_userContext,
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				QuoteItemRepositoryTestHelper.GetQuoteItemRepository_StubsGetById_ReturnsNull(_quoteItemForSetQuotedId),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			SetQuoted(_quoteItemForSetQuotedId);
+		}
+
+		[Test]
+		public void SetQuoted_UserHasInsufficientSecurityClearance_ThrowsDomainValidationException()
+		{
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
+				MockRepository.GenerateStub<IQuoteRepository>(),
+				MockRepository.GenerateStub<IQuoteItemRepository>(),
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			SetQuoted(_quoteItemForSetQuotedId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurity));
+		}
+
+		private void SetQuoted(Guid quoteItemId)
+		{
+			try
+			{
+				_quoteItemForSetQuoted = _quoteItemService.SetQuoted(quoteItemId);
 			}
 			catch (DomainValidationException dex)
 			{

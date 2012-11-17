@@ -44,6 +44,7 @@ namespace JobSystem.DataModel.Entities
 		StatusAwaitingParts = 53,
 		CertificateTypeHouse = 54,
 		CertificateTypeUkas = 55,
-		StatusPartsReceived = 56
+		StatusPartsReceived = 56,
+		StatusQuoted = 57
 	}
 }

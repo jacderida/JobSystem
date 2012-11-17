@@ -175,6 +175,27 @@ namespace JobSystem.BusinessLogic.Services
 			return quoteItem;
 		}
 
+		public QuoteItem SetQuoted(Guid quoteItemId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			var quoteItem = _quoteItemRepository.GetById(quoteItemId);
+			if (quoteItem == null)
+				throw new ArgumentException("An invalid quote item ID was supplied");
+			if (quoteItem.Status.Type == ListItemType.StatusQuotedPrepared)
+			{
+				var quotedStatus = _listItemRepository.GetByType(ListItemType.StatusQuoted);
+				quoteItem.Status = quotedStatus;
+				var jobItem = quoteItem.JobItem;
+				jobItem.Status = quotedStatus;
+				_jobItemRepository.EmitItemHistory(
+					CurrentUser, jobItem.Id, 0, 0, String.Format("Quote {0} was printed", quoteItem.Quote.QuoteNumber), ListItemType.StatusQuoted, ListItemType.WorkTypeAdministration);
+				_jobItemRepository.Update(jobItem);
+				_quoteItemRepository.Update(quoteItem);
+			}
+			return quoteItem;
+		}
+
 		public QuoteItem GetById(Guid id)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

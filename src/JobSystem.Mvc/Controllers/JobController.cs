@@ -231,7 +231,6 @@ namespace JobSystem.Mvc.Controllers
 				PopulateOrderItemViewModel(ji);
 				PopulateConsignmentItemViewModel(ji);
 			}
-
 			return View(viewModel);
 		}
 
