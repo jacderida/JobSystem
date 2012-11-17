@@ -26,8 +26,5 @@ namespace JobSystem.Mvc.ViewModels.Orders
 		[Min(1, ErrorMessage = "Please enter a quantity of at least 1.")]
 		[Required]
 		public int Quantity { get; set; }
-		[Display(Name = "Currency")]
-		public IEnumerable<SelectListItem> Currencies { get; set; }
-		public Guid CurrencyId { get; set; }
 	}
 }

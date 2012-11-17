@@ -29,13 +29,6 @@
 			@Html.ValidationMessageFor(model => model.Description)
 		</div>
 		<div class="editor-label">
-			@Html.LabelFor(model => model.Currencies)
-		</div>
-		<div class="editor-field">
-			@Html.DropDownListFor(model => model.CurrencyId, Model.Currencies, new { @class = "long-dropdown" })
-			@Html.ValidationMessageFor(model => model.Currencies)
-		</div>
-		<div class="editor-label">
 			@Html.LabelFor(model => model.PartNo)
 		</div>
 		<div class="editor-field">

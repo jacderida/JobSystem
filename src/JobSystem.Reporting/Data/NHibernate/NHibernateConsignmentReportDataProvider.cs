@@ -20,13 +20,8 @@ namespace JobSystem.Reporting.Data.NHibernate
 			{
 				var reportItem = new ConsignmentReportModel();
 				PopulateCompanyDetails(reportItem);
+				PopulateSupplierInfo(supplier, reportItem);
 				reportItem.ConsignmentNo = consignment.ConsignmentNo;
-				reportItem.SupplierName = supplier.Name;
-				reportItem.SupplierAddress1 = !String.IsNullOrEmpty(supplier.Address1) ? supplier.Address1 : String.Empty;
-				reportItem.SupplierAddress2 = !String.IsNullOrEmpty(supplier.Address2) ? supplier.Address2 : String.Empty;
-				reportItem.SupplierAddress3 = !String.IsNullOrEmpty(supplier.Address3) ? supplier.Address3 : String.Empty;
-				reportItem.SupplierAddress4 = !String.IsNullOrEmpty(supplier.Address4) ? supplier.Address4 : String.Empty;
-				reportItem.SupplierAddress5 = !String.IsNullOrEmpty(supplier.Address5) ? supplier.Address5 : String.Empty;
 				reportItem.SupplierTel = !String.IsNullOrEmpty(supplier.Telephone) ? supplier.Telephone : String.Empty;
 				reportItem.SupplierFax = !String.IsNullOrEmpty(supplier.Fax) ? supplier.Fax : String.Empty;
 				reportItem.DateCreated = consignment.DateCreated.ToShortDateString();
@@ -37,6 +32,33 @@ namespace JobSystem.Reporting.Data.NHibernate
 				result.Add(reportItem);
 			}
 			return result.OrderBy(i => i.JobRef).ToList();
+		}
+
+		private void PopulateSupplierInfo(Supplier supplier, ConsignmentReportModel reportModel)
+		{
+			reportModel.SupplierName = supplier.Name;
+			var addressLines = new string[5];
+			addressLines[0] = supplier.Address1.Trim();
+			addressLines[1] = supplier.Address2.Trim();
+			addressLines[2] = supplier.Address3.Trim();
+			addressLines[3] = supplier.Address4.Trim();
+			addressLines[4] = supplier.Address5.Trim();
+			var i = 0;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.SupplierAddress1 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.SupplierAddress2 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.SupplierAddress3 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.SupplierAddress4 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
+				i++;
+			reportModel.SupplierAddress5 = i < addressLines.Length ? addressLines[i++] : String.Empty;
 		}
 	}
 }

@@ -6,21 +6,9 @@ using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataAccess.NHibernate;
 using JobSystem.DataAccess.NHibernate.Web;
-using JobSystem.DataModel.Entities;
 using JobSystem.Mvc.Core.UIValidation;
 using JobSystem.Mvc.Core.Utilities;
 using JobSystem.Mvc.ViewModels.Orders;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using JobSystem.BusinessLogic.Services;
-using JobSystem.BusinessLogic.Validation.Core;
-using JobSystem.DataAccess.NHibernate;
-using JobSystem.DataAccess.NHibernate.Web;
-using JobSystem.Mvc.Core.UIValidation;
-using JobSystem.Mvc.ViewModels.Consignments;
 
 namespace JobSystem.Mvc.Controllers
 {
@@ -148,13 +136,13 @@ namespace JobSystem.Mvc.Controllers
 		[HttpGet]
 		public ActionResult CreateIndividualOrder()
 		{
-			var viewmodel = new OrderCreateViewModel()
+			var viewModel = new OrderCreateViewModel()
 			{
 				JobItemId = Guid.Empty,
 				CurrencyId = _companyDetailsService.GetCompany().DefaultCurrency.Id,
 				Currencies = _currencyService.GetCurrencies().ToSelectList()
 			};
-			return View(viewmodel);
+			return View(viewModel);
 		}
 
 		[HttpPost]
@@ -223,36 +211,32 @@ namespace JobSystem.Mvc.Controllers
 		[HttpGet]
 		public ActionResult CreateItem(Guid orderId)
 		{
-			var viewmodel = new OrderItemCreateViewModel()
-			{
-				OrderId = orderId,
-				Currencies = _currencyService.GetCurrencies().ToSelectList()
-			};
-			return View(viewmodel);
+			var viewModel = new OrderItemCreateViewModel { OrderId = orderId };
+			return View(viewModel);
 		}
 
 		[HttpPost]
 		[Transaction]
-		public ActionResult CreateItem(OrderItemCreateViewModel viewmodel)
+		public ActionResult CreateItem(OrderItemCreateViewModel viewModel)
 		{
 			_orderItemService.Create(
 				Guid.NewGuid(),
-				viewmodel.OrderId,
-				viewmodel.Description,
-				viewmodel.Quantity,
-				viewmodel.PartNo,
-				viewmodel.Instructions,
-				viewmodel.DeliveryDays,
+				viewModel.OrderId,
+				viewModel.Description,
+				viewModel.Quantity,
+				viewModel.PartNo,
+				viewModel.Instructions,
+				viewModel.DeliveryDays,
 				Guid.Empty,
-				viewmodel.Price);
-			return RedirectToAction("Details", new { id = viewmodel.OrderId });
+				viewModel.Price);
+			return RedirectToAction("Details", new { id = viewModel.OrderId });
 		}
 
 		[HttpGet]
 		public ActionResult Details(Guid id)
 		{
 			var order = _orderService.GetById(id);
-			var viewmodel = new OrderDetailsViewModel()
+			var viewmodel = new OrderDetailsViewModel
 			{
 				Id = order.Id,
 				Instructions = order.Instructions,
@@ -260,16 +244,17 @@ namespace JobSystem.Mvc.Controllers
 				SupplierName = order.Supplier.Name,
 				DateCreated = order.DateCreated.ToLongDateString() + ' ' + order.DateCreated.ToShortTimeString(),
 				CreatedBy = order.CreatedBy.EmailAddress,
-				OrderItems = order.OrderItems.Select(o => new OrderItemIndexViewModel()
+				OrderItems = order.OrderItems.Select(o => new OrderItemIndexViewModel
 				{
 					Id = o.Id,
+					ItemNo = o.ItemNo,
 					DeliveryDays = o.DeliveryDays.ToString(),
 					Description = o.Description,
 					Instructions = o.Instructions,
 					PartNo = o.PartNo,
 					Price = o.Price.ToString(),
 					Quantity = o.Quantity.ToString()
-				}).ToList()
+				}).OrderBy(o => o.ItemNo).ToList()
 			};
 			return View(viewmodel);
 		}
@@ -278,7 +263,6 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult ApproveOrder(Guid id)
 		{
 			_orderService.ApproveOrder(id);
-
 			return RedirectToAction("PendingOrders");
 		}
 
@@ -286,7 +270,7 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult EditItem(Guid jobItemId)
 		{
 			var item = _orderItemService.GetPendingOrderItemForJobItem(jobItemId);
-			var viewmodel = new OrderItemEditViewModel()
+			var viewModel = new OrderItemEditViewModel()
 			{
 				Id = item.Id,
 				DeliveryDays = item.DeliveryDays,
@@ -300,14 +284,14 @@ namespace JobSystem.Mvc.Controllers
 				JobItemId = item.JobItem.Id,
 				JobId = item.JobItem.Job.Id
 			};
-			return View("EditItem", viewmodel);
+			return View("EditItem", viewModel);
 		}
 
 		[HttpGet]
 		public ActionResult EditPendingItem(Guid itemId)
 		{
 			var item = _orderItemService.GetById(itemId);
-			var viewmodel = new OrderItemEditViewModel()
+			var viewModel = new OrderItemEditViewModel
 			{
 				Id = item.Id,
 				DeliveryDays = item.DeliveryDays,
@@ -318,54 +302,57 @@ namespace JobSystem.Mvc.Controllers
 				PartNo = item.PartNo,
 				Price = item.Price,
 				OrderId = item.Order.Id,
-				Quantity = item.Quantity,
-				JobItemId = item.JobItem.Id,
-				JobId = item.JobItem.Job.Id
+				Quantity = item.Quantity
 			};
-			return View("EditPendingItem", viewmodel);
+			if (item.JobItem != null)
+			{
+				viewModel.JobItemId = item.JobItem.Id;
+				viewModel.JobId = item.JobItem.Job.Id;
+			}
+			return View("EditPendingItem", viewModel);
 		}
 
 		[HttpPost]
 		[Transaction]
-		public ActionResult EditItem(OrderItemEditViewModel viewmodel)
+		public ActionResult EditItem(OrderItemEditViewModel viewModel)
 		{
-			_orderItemService.EditPending(viewmodel.Id,
-				viewmodel.SupplierId,
-				viewmodel.Description,
-				viewmodel.Quantity,
-				viewmodel.PartNo,
-				viewmodel.Instructions,
-				viewmodel.DeliveryDays,
-				viewmodel.Price);
-			return RedirectToAction("Details", "Job", new { Id = viewmodel.JobId, tabNo = "0" });
+			_orderItemService.EditPending(viewModel.Id,
+				viewModel.SupplierId,
+				viewModel.Description,
+				viewModel.Quantity,
+				viewModel.PartNo,
+				viewModel.Instructions,
+				viewModel.DeliveryDays,
+				viewModel.Price);
+			return RedirectToAction("Details", "Job", new { Id = viewModel.JobId, tabNo = "0" });
 		}
 
 		[HttpPost]
 		[Transaction]
-		public ActionResult EditPendingItem(OrderItemEditViewModel viewmodel)
+		public ActionResult EditPendingItem(OrderItemEditViewModel viewModel)
 		{
-			_orderItemService.EditPending(viewmodel.Id,
-				viewmodel.SupplierId,
-				viewmodel.Description,
-				viewmodel.Quantity,
-				viewmodel.PartNo,
-				viewmodel.Instructions,
-				viewmodel.DeliveryDays,
-				viewmodel.Price);
-			return RedirectToAction("Details", "Order", new { id = viewmodel.OrderId, tabNo = "0" });
+			_orderItemService.Edit(
+				viewModel.Id,
+				viewModel.Description,
+				viewModel.Quantity,
+				viewModel.PartNo,
+				viewModel.Instructions,
+				viewModel.DeliveryDays,
+				viewModel.Price);
+			return RedirectToAction("Details", "Order", new { id = viewModel.OrderId, tabNo = "0" });
 		}
 
 		[HttpPost]
-		public ActionResult OrderPending(Guid[] ToBeConvertedIds)
+		public ActionResult OrderPending(Guid[] toBeConvertedIds)
 		{
 			if (ModelState.IsValid)
 			{
-				if (ToBeConvertedIds.Length > 0)
+				if (toBeConvertedIds.Length > 0)
 				{
 					var transaction = NHibernateSession.Current.BeginTransaction();
 					try
 					{
-						_orderService.CreateOrdersFromPendingItems(ToBeConvertedIds);
+						_orderService.CreateOrdersFromPendingItems(toBeConvertedIds);
 						transaction.Commit();
 					}
 					catch (DomainValidationException dex)
