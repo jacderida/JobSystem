@@ -43,5 +43,10 @@ namespace JobSystem.DataModel.Entities
 		{
 			HistoryItems = new List<ItemHistory>();
 		}
+
+		public virtual string GetJobItemRef()
+		{
+			return String.Format("{0}/{1}", Job.JobNo, ItemNo);
+		}
 	}
 }

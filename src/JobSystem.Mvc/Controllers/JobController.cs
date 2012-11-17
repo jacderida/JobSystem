@@ -189,9 +189,10 @@ namespace JobSystem.Mvc.Controllers
 					{
 						Id = ji.Id,
 						JobId = id,
+						JobItemRef = ji.GetJobItemRef(),
 						AssetNo = ji.AssetNo,
 						SerialNo = ji.SerialNo,
-						InitialStatus = ji.Status.Name.ToString(),
+						Status = ji.Status.Name.ToString(),
 						CalPeriod = ji.CalPeriod,
 						Field = ji.Field.Name.ToString(),
 						Accessories = ji.Accessories,
@@ -201,7 +202,7 @@ namespace JobSystem.Mvc.Controllers
 						ReturnReason = ji.ReturnReason,
 						IsInvoiced = ji.IsInvoiced,
 						IsMarkedForInvoicing = ji.IsMarkedForInvoicing,
-						InstrumentDetails = String.Format("{0} - {1} : {2}", ji.Instrument.ModelNo, ji.Instrument.Manufacturer.ToString(), ji.Instrument.Description),
+						InstrumentDetails = ji.Instrument.ToString(),
 						QuoteItem = PopulateQuoteItemViewModel(ji.Id),
 						Delivery = PopulateDeliveryItemViewModel(ji.Id),
 						Certificates = PopulateCertificateViewModel(ji.Id),
@@ -217,7 +218,7 @@ namespace JobSystem.Mvc.Controllers
 							WorkBy = wi.User.Name.ToString(),
 							DateCreated = wi.DateCreated.ToLongDateString() + ' ' + wi.DateCreated.ToShortTimeString()
 							}).OrderByDescending(wi => wi.DateCreated).ToList()
-					}).ToList(),
+					}).OrderBy(ji => ji.JobItemRef).ToList(),
 				Attachments = job.Attachments.Select(
 					a => new AttachmentViewModel
 					{

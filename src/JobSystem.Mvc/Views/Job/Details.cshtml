@@ -93,32 +93,28 @@
 		</div>
 	</div>	
 </div>
- <!-- Start HTML - Vertical tabs -->
-    <div id="st_vertical" class="st_vertical st_vertical_job">
-                        
-        <div class="st_tabs_container">
-                                                   
-            <a href="#prev" class="st_prev"></a>
-            <a href="#next" class="st_next"></a>
-                                                                                                 
-            <div class="st_slide_container">
-            
-                <ul class="st_tabs">
-                    <li><a href="@Url.Action("Create", "JobItem", new { id = @Model.Id })" id="@Model.Id" class="create-item-button">Add a new Job Item</a></li>
+<!-- Start HTML - Vertical tabs -->
+<div id="st_vertical" class="st_vertical st_vertical_job">
+		<div class="st_tabs_container">
+			<a href="#prev" class="st_prev"></a>
+			<a href="#next" class="st_next"></a>
+			<div class="st_slide_container">
+				<ul class="st_tabs">
+					<li><a href="@Url.Action("Create", "JobItem", new { id = @Model.Id })" id="@Model.Id" class="create-item-button">Add a new Job Item</a></li>
 					@for (int i = 0; i < Model.JobItems.Count(); i++)
-	 {
-		 var jobItem = Model.JobItems[i];
+					{
+						var jobItem = Model.JobItems[i];
 						<li>
 							<a href="#stv_content_1" rel="v_tab_0" class="st_tab getJobItem @(i == 0 ? "st_tab_active" : "")" id="@jobItem.Id">
-							<span class="jiStatus">@jobItem.InitialStatus</span>
-							<span>@jobItem.InstrumentDetails</span></a>
+							<span class="jiStatus">@jobItem.Status</span>
+							<span>@jobItem.JobItemRef</span></a>
 						</li>
-	 }                                                      
-                </ul>
-            </div> <!-- /.st_slide_container -->
-        </div> <!-- /.st_tabs_container -->
-    </div> <!-- /#st_vertical -->
-    <!-- End HTML - Vertical tabs -->
+					}
+				</ul>
+			</div> <!-- /.st_slide_container -->
+		</div> <!-- /.st_tabs_container -->
+	</div> <!-- /#st_vertical -->
+	<!-- End HTML - Vertical tabs -->
 	<div id="horz_tabs_container"> 
 	<!-- Start HTML - Horizontal tabs -->
 		<div id="st_horizontal" class="st_horizontal">

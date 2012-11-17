@@ -7,7 +7,7 @@
 {
     var grid = new WebGrid(Model.OrderBy(i => i.JobItemRef), defaultSort: "JobItemRef", canSort: false, rowsPerPage: 15);	
 	@grid.GetHtml(columns: grid.Columns(
-		grid.Column("JobItemRef", "Job"),
+		grid.Column("JobItemRef", "Job Item"),
 		grid.Column("InstrumentDetails", "Instrument"),
 		grid.Column("Instructions", "Instructions"),
         grid.Column("", "", format: @<text>

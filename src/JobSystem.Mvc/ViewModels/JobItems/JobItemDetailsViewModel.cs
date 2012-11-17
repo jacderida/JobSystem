@@ -13,6 +13,7 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 	{
 		public Guid Id { get; set; }
 		public Guid JobId { get; set; }
+		public string JobItemRef { get; set; }
 		public string SerialNo { get; set; }
 		public string AssetNo { get; set; }
 		public int CalPeriod { get; set; }
@@ -33,7 +34,7 @@ namespace JobSystem.Mvc.ViewModels.JobItems
 		public DeliveryIndexViewModel Delivery { get; set; }
 		public DeliveryItemIndexViewModel DeliveryItem { get; set; }
 		public string Instrument { get; set; }
-		public string InitialStatus { get; set; }
+		public string Status { get; set; }
 		public string Field { get; set; }
 		public bool IsInvoiced { get; set; }
 		public bool IsMarkedForInvoicing { get; set; }

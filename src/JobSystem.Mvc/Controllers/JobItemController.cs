@@ -117,27 +117,28 @@ namespace JobSystem.Mvc.Controllers
 		[HttpGet]
 		public ActionResult Details(Guid Id)
 		{
-			var job = _jobItemService.GetById(Id);
-			var viewmodel = new JobItemDetailsViewModel()
+			var jobItem = _jobItemService.GetById(Id);
+			var viewModel = new JobItemDetailsViewModel
 			{
-				Id = job.Id,
-				JobId = job.Job.Id,
-				Accessories = job.Accessories,
-				AssetNo = job.AssetNo,
-				CalPeriod = job.CalPeriod,
-				Field = job.Field.Name.ToString(),
-				InitialStatus = job.Status.Name.ToString(),
-				SerialNo = job.SerialNo,
-				Comments = job.Comments,
-				Instructions = job.Instructions,
-				IsReturned = job.IsReturned,
-				ReturnReason = job.ReturnReason,
-				IsInvoiced = job.IsInvoiced,
-				IsMarkedForInvoicing = job.IsMarkedForInvoicing,
-				QuoteItem = PopulateQuoteItemViewModel(job.Id),
-				Delivery = PopulateDeliveryItemViewModel(job.Id),
-				Certificates = PopulateCertificateViewModel(job.Id),
-				WorkItems = job.HistoryItems.Select(wi => new WorkItemDetailsViewModel
+				Id = jobItem.Id,
+				JobId = jobItem.Job.Id,
+				Accessories = jobItem.Accessories,
+				AssetNo = jobItem.AssetNo,
+				CalPeriod = jobItem.CalPeriod,
+				Field = jobItem.Field.Name.ToString(),
+				Status = jobItem.Status.Name.ToString(),
+				SerialNo = jobItem.SerialNo,
+				Comments = jobItem.Comments,
+				Instructions = jobItem.Instructions,
+				IsReturned = jobItem.IsReturned,
+				ReturnReason = jobItem.ReturnReason,
+				IsInvoiced = jobItem.IsInvoiced,
+				IsMarkedForInvoicing = jobItem.IsMarkedForInvoicing,
+				QuoteItem = PopulateQuoteItemViewModel(jobItem.Id),
+				Delivery = PopulateDeliveryItemViewModel(jobItem.Id),
+				Certificates = PopulateCertificateViewModel(jobItem.Id),
+				InstrumentDetails = jobItem.Instrument.ToString(),
+				WorkItems = jobItem.HistoryItems.Select(wi => new WorkItemDetailsViewModel
 				{
 					Id = wi.Id,
 					JobItemId = wi.JobItem.Id,
@@ -150,9 +151,7 @@ namespace JobSystem.Mvc.Controllers
 					DateCreated = wi.DateCreated.ToLongDateString() + ' ' + wi.DateCreated.ToShortTimeString()
 				}).OrderByDescending(wi => wi.DateCreated).ToList()
 			};
-			viewmodel.InstrumentDetails = String.Format("{0} - {1} : {2}", job.Instrument.ModelNo, job.Instrument.Manufacturer.ToString(), job.Instrument.Description);
-
-			PopulateOrderItemViewModel(viewmodel);
+			PopulateOrderItemViewModel(viewModel);
 
 			var pendingItem = _jobItemService.GetPendingConsignmentItem(Id);
 			if (pendingItem == null)
@@ -162,7 +161,7 @@ namespace JobSystem.Mvc.Controllers
 				{
 					if (item.Consignment != null)
 					{
-						viewmodel.Consignment = new ConsignmentIndexViewModel()
+						viewModel.Consignment = new ConsignmentIndexViewModel
 						{
 							Id = item.Consignment.Id,
 							ConsignmentNo = item.Consignment.ConsignmentNo,
@@ -174,7 +173,7 @@ namespace JobSystem.Mvc.Controllers
 					}
 					else
 					{
-						viewmodel.ConsignmentItem = new ConsignmentItemIndexViewModel()
+						viewModel.ConsignmentItem = new ConsignmentItemIndexViewModel
 						{
 							Id = item.Id,
 							Instructions = item.Instructions,
@@ -185,19 +184,19 @@ namespace JobSystem.Mvc.Controllers
 				} 
 				else 
 				{
-					viewmodel.ConsignmentItem = null;
+					viewModel.ConsignmentItem = null;
 				}
 			}
 			else
 			{
-				viewmodel.ConsignmentItem = new ConsignmentItemIndexViewModel()
+				viewModel.ConsignmentItem = new ConsignmentItemIndexViewModel()
 				{
 					Id = pendingItem.Id,
 					Instructions = pendingItem.Instructions,
 					SupplierName = pendingItem.Supplier.Name
 				};
 			}
-			return PartialView("_Details", viewmodel);
+			return PartialView("_Details", viewModel);
 		}
 
 		private QuoteItemIndexViewModel PopulateQuoteItemViewModel(Guid Id)
@@ -227,12 +226,12 @@ namespace JobSystem.Mvc.Controllers
 						Status = item.Status.Name,
 						StatusType = item.Status.Type,
 						QuoteNo = item.Quote.QuoteNumber
-				    };
-				    return viewmodel;
+					};
+					return viewmodel;
 				}
 				else
 				{
-				    return null;
+					return null;
 				}
 			}
 			else
