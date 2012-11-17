@@ -68,6 +68,8 @@
 						break;
 					}
 			}
+
+			report.DocumentName = order.OrderNo;
 			var instanceReportSource = new Telerik.Reporting.InstanceReportSource();
 			instanceReportSource.ReportDocument = report;
 			ReportViewer1.ReportSource = instanceReportSource;

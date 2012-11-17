@@ -62,12 +62,24 @@ namespace JobSystem.BusinessLogic.Services
 
 		public Delivery Edit(Guid deliveryId, string fao)
 		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
 			var delivery = _deliveryRepository.GetById(deliveryId);
 			if (delivery == null)
 				throw new ArgumentException("An invalid ID was supplied for the delivery");
 			delivery.Fao = fao;
 			ValidateAnnotatedObjectThrowOnFailure(delivery);
 			_deliveryRepository.Update(delivery);
+			return delivery;
+		}
+
+		public Delivery GetById(Guid id)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			var delivery = _deliveryRepository.GetById(id);
+			if (delivery == null)
+				throw new ArgumentException("An invalid ID was supplied for the delivery");
 			return delivery;
 		}
 

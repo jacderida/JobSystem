@@ -31,6 +31,8 @@ namespace JobSystem.Reporting.Data.NHibernate
 			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
 				i++;
 			reportModel.SupplierAddress5 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			reportModel.SupplierTel = supplier.Telephone;
+			reportModel.SupplierFax = supplier.Fax;
 		}
 	}
 }

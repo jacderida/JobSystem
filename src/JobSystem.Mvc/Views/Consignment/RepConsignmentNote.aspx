@@ -40,6 +40,10 @@
 			report.MainLogo.Value = logo;
 			report.DataSource = dataSource;
 
+
+			var consignmentService = DependencyResolver.Current.GetService<ConsignmentService>();
+			var consignment = consignmentService.GetById(Model);
+			report.DocumentName = consignment.ConsignmentNo;
 			var instanceReportSource = new Telerik.Reporting.InstanceReportSource();
 			instanceReportSource.ReportDocument = report;
 			ReportViewer1.ReportSource = instanceReportSource;

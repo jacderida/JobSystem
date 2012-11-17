@@ -40,6 +40,9 @@
 			report.MainLogo.Value = logo;
 			report.DataSource = dataSource;
 
+			var deliveryService = DependencyResolver.Current.GetService<DeliveryService>();
+			var delivery = deliveryService.GetById(Model);
+			report.DocumentName = delivery.DeliveryNoteNumber;
 			var instanceReportSource = new Telerik.Reporting.InstanceReportSource();
 			instanceReportSource.ReportDocument = report;
 			ReportViewer1.ReportSource = instanceReportSource;

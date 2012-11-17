@@ -89,6 +89,7 @@
 					}
 			}
 
+			report.DocumentName = quote.QuoteNumber;
 			var instanceReportSource = new Telerik.Reporting.InstanceReportSource();
 			instanceReportSource.ReportDocument = report;
 			ReportViewer1.ReportSource = instanceReportSource;

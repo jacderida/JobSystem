@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using JobSystem.DataModel.Entities;
 using JobSystem.Reporting.Models;
 
@@ -20,6 +21,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				var reportItem = new OrderReportModel();
 				PopulateCompanyDetails(reportItem);
 				PopulateSupplierInfo(supplier, reportItem);
+				reportItem.ItemNo = orderItem.ItemNo;
 				reportItem.OrderNo = order.OrderNo;
 				reportItem.OrderDate = order.DateCreated;
 				reportItem.Contact = supplier.Contact1;
@@ -34,7 +36,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.PreparedBy = order.CreatedBy.Name;
 				result.Add(reportItem);
 			}
-			return result;
+			return result.OrderBy(o => o.ItemNo).ToList();
 		}
 	}
 }

@@ -417,7 +417,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// reportHeaderSection1
 			// 
-			this.reportHeaderSection1.Height = Telerik.Reporting.Drawing.Unit.Cm(3.7999997138977051D);
+			this.reportHeaderSection1.Height = Telerik.Reporting.Drawing.Unit.Cm(4.2995991706848145D);
 			this.reportHeaderSection1.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
             this.textBox43,
             this.textBox3,
@@ -500,7 +500,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox1.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(12.973742485046387D), Telerik.Reporting.Drawing.Unit.Cm(1.1000000238418579D));
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(4.9462590217590332D), Telerik.Reporting.Drawing.Unit.Cm(2.395390510559082D));
-			this.textBox1.Style.Font.Bold = true;
+			this.textBox1.Style.Font.Bold = false;
 			this.textBox1.Style.Padding.Left = Telerik.Reporting.Drawing.Unit.Cm(0.10000000149011612D);
 			this.textBox1.Style.Padding.Top = Telerik.Reporting.Drawing.Unit.Cm(0.10000000149011612D);
 			this.textBox1.Value = "=Fields.OrderInstructions";
@@ -514,6 +514,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			// textBox9
 			// 
+			this.textBox9.Format = "{0:d}";
 			this.textBox9.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(7.6999998092651367D), Telerik.Reporting.Drawing.Unit.Cm(1.5020071268081665D));
 			this.textBox9.Name = "textBox9";
 			this.textBox9.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(5.2735419273376465D), Telerik.Reporting.Drawing.Unit.Cm(0.39939743280410767D));

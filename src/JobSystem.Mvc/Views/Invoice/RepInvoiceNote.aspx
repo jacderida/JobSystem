@@ -67,7 +67,9 @@
 					report.VatTotalTextBox.Format = "{0:N2}";
 					report.TotalTextBox.Format = "{0:N2}";
 					break;
-			}			
+			}
+
+			report.DocumentName = invoice.InvoiceNumber;
 			var instanceReportSource = new Telerik.Reporting.InstanceReportSource();
 			instanceReportSource.ReportDocument = report;
 			ReportViewer1.ReportSource = instanceReportSource;
