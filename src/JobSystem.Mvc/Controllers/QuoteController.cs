@@ -220,11 +220,7 @@ namespace JobSystem.Mvc.Controllers
 		[Transaction]
 		public ActionResult Edit(QuoteEditViewModel viewmodel)
 		{
-			_quoteService.Edit(
-				viewmodel.Id,
-				viewmodel.OrderNo,
-				viewmodel.AdviceNo,
-				viewmodel.CurrencyId);
+			_quoteService.Edit(viewmodel.Id, viewmodel.OrderNo, viewmodel.AdviceNo, viewmodel.CurrencyId);
 			return RedirectToAction("ApprovedQuotes");
 		}
 
@@ -234,7 +230,6 @@ namespace JobSystem.Mvc.Controllers
 			if (!isQuoted) 
 			{
 				var pendingItem = _quoteItemService.GetPendingQuoteItemForJobItem(id);
-
 				var viewmodel = new QuoteItemEditViewModel()
 				{
 					QuoteItemId = pendingItem.Id,
@@ -315,9 +310,7 @@ namespace JobSystem.Mvc.Controllers
 			}
 			
 			if (viewmodel.EditedFromJobItem)
-			{
 				return RedirectToAction("Details", "Job", new { id = viewmodel.JobId });
-			}
 			else
 			{
 				if (!viewmodel.IsQuoted)
@@ -328,16 +321,16 @@ namespace JobSystem.Mvc.Controllers
 			
 		}
 
-		public ActionResult QuotePending(Guid[] ToBeConvertedIds)
+		public ActionResult QuotePending(Guid[] toBeConvertedIds)
 		{
 			if (ModelState.IsValid)
 			{
-				if (ToBeConvertedIds.Length > 0)
+				if (toBeConvertedIds.Length > 0)
 				{
 					var transaction = NHibernateSession.Current.BeginTransaction();
 					try
 					{
-						_quoteService.CreateQuotesFromPendingItems(ToBeConvertedIds);
+						_quoteService.CreateQuotesFromPendingItems(toBeConvertedIds);
 						transaction.Commit();
 					}
 					catch (DomainValidationException dex)
@@ -359,7 +352,6 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult AcceptQuoteItem(Guid quoteItemId)
 		{
 			_quoteItemService.Accept(quoteItemId);
-
 			return Json(true);
 		}
 
@@ -368,7 +360,6 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult RejectQuoteItem(Guid quoteItemId)
 		{
 			_quoteItemService.Reject(quoteItemId);
-
 			return Json(true);
 		}
 
