@@ -17,9 +17,9 @@ var grid = new WebGrid(Model, defaultSort: "PartNo", canSort: false, rowsPerPage
 	grid.Column("Quantity", "Quantity"),
 	grid.Column("", "", format: @<text>
         @if (!item.IsMarkedReceived) { 
-            @Html.ActionLink("Mark Invoice Received", "MarkOrderReceived", new { itemId = @item.Id, orderId = item.OrderId }) 
+            @Html.ActionLink("Mark Received", "MarkOrderReceived", new { itemId = @item.Id, orderId = item.OrderId }) 
         } else {
-            <span>Invoice Received @item.DateReceived</span>
+            <span>Received @item.DateReceived</span>
         }</text>)
     ))
 }else{
