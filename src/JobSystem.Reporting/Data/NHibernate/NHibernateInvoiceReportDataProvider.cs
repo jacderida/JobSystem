@@ -29,7 +29,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.OrderNo = invoice.OrderNo;
 				var jobItem = invoiceItem.JobItem;
 				reportItem.JobRef = GetJobItemReference(jobItem);
-				reportItem.Description = GetInstrumentDescription(jobItem.Instrument);
+				reportItem.Description = GetDescription(jobItem);
 				reportItem.SerialNo = jobItem.SerialNo;
 				reportItem.Calibration = invoiceItem.CalibrationPrice;
 				reportItem.Repair = invoiceItem.RepairPrice;
@@ -72,6 +72,11 @@ namespace JobSystem.Reporting.Data.NHibernate
 			if (!String.IsNullOrEmpty(reportItem.BankAddress5))
 				sb.AppendFormat("{0}, ", reportItem.BankAddress5);
 			return sb.ToString().Trim(", ".ToCharArray());
+		}
+
+		private string GetDescription(JobItem jobItem)
+		{
+			return String.Format("{0}, Serial No: {1}", GetInstrumentDescription(jobItem.Instrument), jobItem.SerialNo);
 		}
 
 		private void ApplyTotals(List<InvoiceReportModel> items, Invoice invoice)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using JobSystem.DataModel.Entities;
 using JobSystem.Reporting.Models;
 using NHibernate.Linq;
@@ -22,7 +23,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				PopulateCompanyDetails(reportItem);
 				var job = jobItem.Job;
 				reportItem.JobRef = job.JobNo;
-				reportItem.CustomerName = job.Customer.Name;
+				reportItem.CustomerName = GetCustomerName(job.Customer);
 				reportItem.OrderNo = job.OrderNo;
 				reportItem.AdviceNo = job.AdviceNo;
 				reportItem.DateReceived = job.DateCreated;
@@ -43,6 +44,15 @@ namespace JobSystem.Reporting.Data.NHibernate
 				result.Add(reportItem);
 			}
 			return result.OrderBy(r => r.JobRef).ThenBy(r => r.ItemNo).ToList();
+		}
+
+		private string GetCustomerName(Customer customer)
+		{
+			var sb = new StringBuilder();
+			sb.Append(customer.Name);
+			if (!String.IsNullOrEmpty(customer.AssetLine))
+				sb.AppendFormat(" - {0}", customer.AssetLine);
+			return sb.ToString();
 		}
 	}
 }

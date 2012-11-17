@@ -138,7 +138,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.customerNameDataTextBox.CanGrow = true;
 			this.customerNameDataTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.052916664630174637D), Telerik.Reporting.Drawing.Unit.Cm(0.052916664630174637D));
 			this.customerNameDataTextBox.Name = "customerNameDataTextBox";
-			this.customerNameDataTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(7.8277082443237305D), Telerik.Reporting.Drawing.Unit.Cm(0.60000002384185791D));
+			this.customerNameDataTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(13.769173622131348D), Telerik.Reporting.Drawing.Unit.Cm(0.60000002384185791D));
 			this.customerNameDataTextBox.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(14D);
 			this.customerNameDataTextBox.StyleName = "Data";
 			this.customerNameDataTextBox.Value = "=Fields.CustomerName";
@@ -152,8 +152,8 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			this.customerNameGroup.GroupFooter = this.customerNameGroupFooter;
 			this.customerNameGroup.GroupHeader = this.customerNameGroupHeader;
-			this.customerNameGroup.Groupings.AddRange(new Telerik.Reporting.Data.Grouping[] {
-            new Telerik.Reporting.Data.Grouping("=Fields.CustomerName")});
+			this.customerNameGroup.Groupings.AddRange(new Telerik.Reporting.Grouping[] {
+            new Telerik.Reporting.Grouping("=Fields.CustomerName")});
 			this.customerNameGroup.Name = "customerNameGroup";
 			// 
 			// jobRefGroupHeader
@@ -219,8 +219,8 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			this.jobRefGroup.GroupFooter = this.jobRefGroupFooter;
 			this.jobRefGroup.GroupHeader = this.jobRefGroupHeader;
-			this.jobRefGroup.Groupings.AddRange(new Telerik.Reporting.Data.Grouping[] {
-            new Telerik.Reporting.Data.Grouping("=Fields.JobRef")});
+			this.jobRefGroup.Groupings.AddRange(new Telerik.Reporting.Grouping[] {
+            new Telerik.Reporting.Grouping("=Fields.JobRef")});
 			this.jobRefGroup.Name = "jobRefGroup";
 			// 
 			// pageHeader
@@ -499,10 +499,10 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.PageSettings.Margins.Right = Telerik.Reporting.Drawing.Unit.Mm(25.399999618530273D);
 			this.PageSettings.Margins.Top = Telerik.Reporting.Drawing.Unit.Mm(25.399999618530273D);
 			this.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.A4;
-			this.Sortings.AddRange(new Telerik.Reporting.Data.Sorting[] {
-            new Telerik.Reporting.Data.Sorting("=Fields.CustomerName", Telerik.Reporting.Data.SortDirection.Asc),
-            new Telerik.Reporting.Data.Sorting("=Fields.JobRef", Telerik.Reporting.Data.SortDirection.Asc),
-            new Telerik.Reporting.Data.Sorting("=Fields.ItemNo", Telerik.Reporting.Data.SortDirection.Asc)});
+			this.Sortings.AddRange(new Telerik.Reporting.Sorting[] {
+            new Telerik.Reporting.Sorting("=Fields.CustomerName", Telerik.Reporting.SortDirection.Asc),
+            new Telerik.Reporting.Sorting("=Fields.JobRef", Telerik.Reporting.SortDirection.Asc),
+            new Telerik.Reporting.Sorting("=Fields.ItemNo", Telerik.Reporting.SortDirection.Asc)});
 			this.Style.BackgroundColor = System.Drawing.Color.White;
 			styleRule1.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
             new Telerik.Reporting.Drawing.StyleSelector("Title")});

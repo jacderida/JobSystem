@@ -57,14 +57,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 
 		protected string GetInstrumentDescription(Instrument instrument)
 		{
-			var sb = new StringBuilder();
-			sb.AppendFormat("{0}, ", instrument.Manufacturer);
-			sb.AppendFormat("{0}, ", instrument.ModelNo);
-			if (!String.IsNullOrEmpty(instrument.Range) && instrument.Range.Trim() != "Not Specified")
-				sb.AppendFormat("{0}, ", instrument.Range);
-			if (!String.IsNullOrEmpty(instrument.Description) && instrument.Description.Trim() != "Not Specified")
-				sb.AppendFormat("{0}, ", instrument.Description);
-			return sb.ToString().Trim(", ".ToCharArray());
+			return instrument.ToString();
 		}
 
 		protected string GetJobItemReference(JobItem jobItem)
