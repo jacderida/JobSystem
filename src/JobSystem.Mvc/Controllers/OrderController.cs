@@ -133,7 +133,7 @@ namespace JobSystem.Mvc.Controllers
 					viewModel.JobItemRef = String.Format("{0}/{1}", item.JobItem.Job.JobNo, item.JobItem.ItemNo);
 				orderItemViewModels.Add(viewModel);
 			}
-			return View(orderItemViewModels);
+			return View(orderItemViewModels.OrderBy(o => o.ItemNo).ToList());
 		}
 
 		[HttpGet]

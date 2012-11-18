@@ -23,11 +23,16 @@ namespace JobSystem.BusinessLogic.UnitTests
 		private DomainValidationException _domainValidationException;
 		private IUserContext _userContext;
 		private DateTime _dateCreated = new DateTime(2011, 12, 29);
+
 		private Guid _orderForApprovalId;
 		private Order _orderForApproval;
+
 		private Order _orderForMarkReceived;
 		private Guid _orderForMarkReceivedId;
 		private DateTime _markReceivedDate = new DateTime(2012, 12, 29);
+
+		private Order _orderForEdit;
+		private Guid _orderForEditId;
 
 		[SetUp]
 		public void Setup()
@@ -36,6 +41,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_domainValidationException = null;
 			AppDateTime.GetUtcNow = () => _dateCreated;
 			_userContext = TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Manager | UserRole.Member);
+
 			_orderForApprovalId = Guid.NewGuid();
 			_orderForApproval = new Order
 			{
@@ -47,6 +53,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 				Instructions = "blah",
 				OrderItems = new List<OrderItem>() { new OrderItem { Id = Guid.NewGuid() }}
 			};
+
 			_orderForMarkReceivedId = Guid.NewGuid();
 			_orderForMarkReceived = new Order
 			{
@@ -54,6 +61,19 @@ namespace JobSystem.BusinessLogic.UnitTests
 				OrderNo = "OR2000",
 				CreatedBy = _userContext.GetCurrentUser(),
 				Supplier = new Supplier { Id = Guid.NewGuid(), Name = "Gael Ltd" },
+				DateCreated = DateTime.Now,
+				Instructions = "blah",
+				OrderItems = new List<OrderItem>() { new OrderItem { Id = Guid.NewGuid() } }
+			};
+
+			_orderForEditId = Guid.NewGuid();
+			_orderForEdit = new Order
+			{
+				Id = _orderForEditId,
+				OrderNo = "OR2000",
+				CreatedBy = _userContext.GetCurrentUser(),
+				Supplier = new Supplier { Id = Guid.NewGuid(), Name = "Gael Ltd" },
+				Currency = new Currency { Id = Guid.NewGuid(), Name = "GBP", DisplayMessage = "Prices in GBP" },
 				DateCreated = DateTime.Now,
 				Instructions = "blah",
 				OrderItems = new List<OrderItem>() { new OrderItem { Id = Guid.NewGuid() } }
@@ -301,6 +321,149 @@ namespace JobSystem.BusinessLogic.UnitTests
 			try
 			{
 				_orderService.GetById(id);
+			}
+			catch (DomainValidationException dex)
+			{
+				_domainValidationException = dex;
+			}
+		}
+
+		#endregion
+		#region Edit
+
+		[Test]
+		public void Edit_ValidOrderDetails_EditSuccessful()
+		{
+			var supplierId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var instructions = "some edited instructions";
+
+			var orderRepositoryMock = MockRepository.GenerateMock<IOrderRepository>();
+			orderRepositoryMock.Stub(x => x.GetById(_orderForEditId)).Return(_orderForEdit);
+			orderRepositoryMock.Expect(x => x.Update(_orderForEdit)).IgnoreArguments();
+			var supplierRepositoryStub = MockRepository.GenerateMock<ISupplierRepository>();
+			supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(new Supplier { Id = supplierId, Name = "Supplier for edit" });
+			var currencyRepositoryStub = MockRepository.GenerateMock<ICurrencyRepository>();
+			currencyRepositoryStub.Stub(x => x.GetById(currencyId)).Return(new Currency { Id = currencyId, Name = "USD" });
+			_orderService = OrderServiceTestHelper.CreateOrderService(
+				orderRepositoryMock, supplierRepositoryStub, currencyRepositoryStub, _userContext);
+
+			Edit(_orderForEditId, supplierId, currencyId, instructions);
+			orderRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(_orderForEdit.Id, _orderForEditId);
+			Assert.AreEqual(_orderForEdit.Supplier.Id, supplierId);
+			Assert.AreEqual(_orderForEdit.Currency.Id, currencyId);
+			Assert.AreEqual(_orderForEdit.Instructions, instructions);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidOrderId_ThrowsArgumentException()
+		{
+			_orderForEditId = Guid.NewGuid();
+			var supplierId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var instructions = "some edited instructions";
+
+			var orderRepositoryStub = MockRepository.GenerateMock<IOrderRepository>();
+			orderRepositoryStub.Stub(x => x.GetById(_orderForEditId)).Return(null);
+			_orderService = OrderServiceTestHelper.CreateOrderService(
+				orderRepositoryStub,
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				MockRepository.GenerateStub<ICurrencyRepository>(),
+				_userContext);
+			Edit(_orderForEditId, supplierId, currencyId, instructions);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidSupplierId_ThrowsArgumentException()
+		{
+			var supplierId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var instructions = "some edited instructions";
+
+			var orderRepositoryStub = MockRepository.GenerateStub<IOrderRepository>();
+			orderRepositoryStub.Stub(x => x.GetById(_orderForEditId)).Return(_orderForEdit);
+			var supplierRepositoryStub = MockRepository.GenerateStub<ISupplierRepository>();
+			supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(null);
+			_orderService = OrderServiceTestHelper.CreateOrderService(
+				orderRepositoryStub,
+				supplierRepositoryStub,
+				MockRepository.GenerateStub<ICurrencyRepository>(),
+				_userContext);
+			Edit(_orderForEditId, supplierId, currencyId, instructions);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidCurrencyId_ThrowsArgumentException()
+		{
+			var supplierId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var instructions = "some edited instructions";
+
+			var orderRepositoryStub = MockRepository.GenerateStub<IOrderRepository>();
+			orderRepositoryStub.Stub(x => x.GetById(_orderForEditId)).Return(_orderForEdit);
+			var currencyRepositoryStub = MockRepository.GenerateStub<ICurrencyRepository>();
+			currencyRepositoryStub.Stub(x => x.GetById(currencyId)).Return(null);
+			_orderService = OrderServiceTestHelper.CreateOrderService(
+				orderRepositoryStub,
+				MockRepository.GenerateStub<ISupplierRepository>(),
+				currencyRepositoryStub,
+				_userContext);
+			Edit(_orderForEditId, supplierId, currencyId, instructions);
+		}
+
+		[Test]
+		public void Edit_InstructionsTooLarge_ThrowsDomainValidationException()
+		{
+			var supplierId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var instructions = new string('a', 256);
+
+			var orderRepositoryStub = MockRepository.GenerateStub<IOrderRepository>();
+			orderRepositoryStub.Stub(x => x.GetById(_orderForEditId)).Return(_orderForEdit);
+			var supplierRepositoryStub = MockRepository.GenerateStub<ISupplierRepository>();
+			supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(new Supplier { Id = supplierId, Name = "Supplier for edit" });
+			var currencyRepositoryStub = MockRepository.GenerateStub<ICurrencyRepository>();
+			currencyRepositoryStub.Stub(x => x.GetById(currencyId)).Return(new Currency { Id = currencyId, Name = "USD" });
+			_orderService = OrderServiceTestHelper.CreateOrderService(
+				orderRepositoryStub,
+				supplierRepositoryStub,
+				currencyRepositoryStub,
+				_userContext);
+			Edit(_orderForEditId, supplierId, currencyId, instructions);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InstructionsTooLarge));
+		}
+
+		[Test]
+		public void Edit_UserHasInsufficientSecurityClearance_ThrowsDomainValidationException()
+		{
+			var supplierId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var instructions = "some edited instructions";
+
+			var orderRepositoryStub = MockRepository.GenerateStub<IOrderRepository>();
+			orderRepositoryStub.Stub(x => x.GetById(_orderForEditId)).Return(_orderForEdit);
+			var supplierRepositoryStub = MockRepository.GenerateStub<ISupplierRepository>();
+			supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(new Supplier { Id = supplierId, Name = "Supplier for edit" });
+			var currencyRepositoryStub = MockRepository.GenerateStub<ICurrencyRepository>();
+			currencyRepositoryStub.Stub(x => x.GetById(currencyId)).Return(new Currency { Id = currencyId, Name = "USD" });
+			_orderService = OrderServiceTestHelper.CreateOrderService(
+				orderRepositoryStub,
+				supplierRepositoryStub,
+				currencyRepositoryStub,
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public));
+			Edit(_orderForEditId, supplierId, currencyId, instructions);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
+		}
+
+		private void Edit(Guid orderId, Guid supplierId, Guid currencyId, string instructions)
+		{
+			try
+			{
+				_orderForEdit = _orderService.Edit(orderId, supplierId, currencyId, instructions);
 			}
 			catch (DomainValidationException dex)
 			{

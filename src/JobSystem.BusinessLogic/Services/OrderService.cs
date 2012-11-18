@@ -78,6 +78,17 @@ namespace JobSystem.BusinessLogic.Services
 			return orderId;
 		}
 
+		public Order Edit(Guid id, Guid supplierId, Guid currencyId, string instructions)
+		{
+			var order = GetById(id);
+			order.Supplier = GetSupplier(supplierId);
+			order.Currency = GetCurrency(currencyId);
+			order.Instructions = instructions;
+			ValidateAnnotatedObjectThrowOnFailure(order);
+			_orderRepository.Update(order);
+			return order;
+		}
+
 		public Order ApproveOrder(Guid id)
 		{
 			if (!CurrentUser.HasRole(UserRole.Manager))
