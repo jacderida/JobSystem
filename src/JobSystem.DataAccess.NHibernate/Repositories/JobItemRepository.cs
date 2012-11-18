@@ -44,5 +44,12 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		{
 			return CurrentSession.Query<PendingConsignmentItem>().Where(pi => pi.JobItem.Id == jobItemId).SingleOrDefault();
 		}
+
+		public IEnumerable<JobItem> SearchByKeyword(string keyword)
+		{
+			var lowerKeyword = keyword.ToLower();
+			return CurrentSession.Query<JobItem>().Where(
+				ji => ji.SerialNo.ToLower().Contains(lowerKeyword) || ji.Instrument.ModelNo.ToLower().Contains(lowerKeyword));
+		}
 	}
 }

@@ -42,6 +42,28 @@ namespace JobSystem.Mvc.Controllers
 		}
 
 		[HttpGet]
+		public ActionResult Search()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult SearchByKeyword(string keyword)
+		{
+			var results = _jobItemService.SearchByKeyword(keyword).Select(
+				ji => new JobItemSearchResultsViewModel
+				{
+					ItemNo = ji.ItemNo,
+					JobItemRef = ji.GetJobItemRef(),
+					Instrument = ji.Instrument.ToString(),
+					JobNumber = ji.Job.JobNo,
+					JobId = ji.Job.Id,
+					SerialNo = ji.SerialNo
+				}).OrderBy(ji => ji.JobItemRef);
+			return PartialView("_SearchResults", results);
+		}
+
+		[HttpGet]
 		public ActionResult Create(Guid id)
 		{
 			var viewmodel = new JobItemViewModel()
@@ -91,7 +113,6 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult EditInformation(Guid id)
 		{
 			var jobItem = _jobItemService.GetById(id);
-
 			var viewmodel = new JobItemViewModel()
 			{
 				Id = id,
@@ -110,7 +131,6 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult EditInformation(JobItemDetailsViewModel viewmodel)
 		{
 			_jobItemService.EditInformation(viewmodel.Id, viewmodel.Instructions, viewmodel.Accessories, viewmodel.Comments);
-
 			return PartialView("_InformationTab", viewmodel);
 		}
 

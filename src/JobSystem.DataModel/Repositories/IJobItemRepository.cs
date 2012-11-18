@@ -38,5 +38,6 @@ namespace JobSystem.DataModel.Repositories
 		ConsignmentItem GetLatestConsignmentItem(Guid jobItemId);
 		PendingConsignmentItem GetPendingConsignmentItem(Guid jobItemId);
 		IEnumerable<JobItem> GetJobItems(Guid jobId);
+		IEnumerable<JobItem> SearchByKeyword(string keyword);
 	}
 }

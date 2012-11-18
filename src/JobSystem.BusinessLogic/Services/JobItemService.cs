@@ -124,6 +124,13 @@ namespace JobSystem.BusinessLogic.Services
 			return _jobItemRepository.GetPendingConsignmentItem(jobItemId);
 		}
 
+		public IEnumerable<JobItem> SearchByKeyword(string keyword)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _jobItemRepository.SearchByKeyword(keyword);
+		}
+
 		private Job GetJob(Guid jobId)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

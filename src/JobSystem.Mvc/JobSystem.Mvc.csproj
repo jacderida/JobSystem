@@ -202,6 +202,7 @@
     <Compile Include="ViewModels\Invoices\InvoiceIndexViewModel.cs" />
     <Compile Include="ViewModels\Invoices\InvoiceItemIndexViewModel.cs" />
     <Compile Include="ViewModels\JobItems\JobItemDetailsViewModel.cs" />
+    <Compile Include="ViewModels\JobItems\JobItemSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\JobItems\JobItemViewModel.cs" />
     <Compile Include="ViewModels\Jobs\JobEditViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderCreateViewModel.cs" />
@@ -538,6 +539,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Order\ApprovedOrderItems.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\JobItem\Search.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\JobItem\_SearchResults.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
