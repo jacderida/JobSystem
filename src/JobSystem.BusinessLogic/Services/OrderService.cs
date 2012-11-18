@@ -81,6 +81,10 @@ namespace JobSystem.BusinessLogic.Services
 		public Order Edit(Guid id, Guid supplierId, Guid currencyId, string instructions)
 		{
 			var order = GetById(id);
+			if (order == null)
+				throw new ArgumentException("A valid ID must be supplied for the order");
+			if (order.IsApproved)
+				throw new DomainValidationException(Messages.EditApprovedOrder);
 			order.Supplier = GetSupplier(supplierId);
 			order.Currency = GetCurrency(currencyId);
 			order.Instructions = instructions;

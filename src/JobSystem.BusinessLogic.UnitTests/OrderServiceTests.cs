@@ -438,6 +438,29 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
+		public void Edit_IsApprovedOrder_ThrowsDomainValidationException()
+		{
+			_orderForEdit.IsApproved = true;
+			var supplierId = Guid.NewGuid();
+			var currencyId = Guid.NewGuid();
+			var instructions = "some edited instructions";
+
+			var orderRepositoryStub = MockRepository.GenerateStub<IOrderRepository>();
+			orderRepositoryStub.Stub(x => x.GetById(_orderForEditId)).Return(_orderForEdit);
+			var supplierRepositoryStub = MockRepository.GenerateStub<ISupplierRepository>();
+			supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(new Supplier { Id = supplierId, Name = "Supplier for edit" });
+			var currencyRepositoryStub = MockRepository.GenerateStub<ICurrencyRepository>();
+			currencyRepositoryStub.Stub(x => x.GetById(currencyId)).Return(new Currency { Id = currencyId, Name = "USD" });
+			_orderService = OrderServiceTestHelper.CreateOrderService(
+				orderRepositoryStub,
+				supplierRepositoryStub,
+				currencyRepositoryStub,
+				_userContext);
+			Edit(_orderForEditId, supplierId, currencyId, instructions);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.EditApprovedOrder));
+		}
+
+		[Test]
 		public void Edit_UserHasInsufficientSecurityClearance_ThrowsDomainValidationException()
 		{
 			var supplierId = Guid.NewGuid();

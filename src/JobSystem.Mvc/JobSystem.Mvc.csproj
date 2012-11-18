@@ -207,6 +207,7 @@
     <Compile Include="ViewModels\Jobs\JobEditViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrderEditViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderIndexViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderItemCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderItemEditViewModel.cs" />
@@ -545,6 +546,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\JobItem\_SearchResults.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Order\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

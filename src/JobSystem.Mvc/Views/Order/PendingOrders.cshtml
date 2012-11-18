@@ -35,6 +35,7 @@
 					}	
 					</span>
 				</span>),
+		grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit", "Edit", new { id = @item.Id })</text>),
 		grid.Column("Approval", "", format: @<text>@Html.ActionLink("Approve", "ApproveOrder", new { id = @item.Id })</text>)
 	))
 }

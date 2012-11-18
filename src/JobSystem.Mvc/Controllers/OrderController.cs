@@ -160,6 +160,32 @@ namespace JobSystem.Mvc.Controllers
 			return RedirectToAction("PendingOrders");
 		}
 
+		public ActionResult Edit(Guid id)
+		{
+			var order = _orderService.GetById(id);
+			return View(new OrderEditViewModel
+			{
+				Id = order.Id,
+				SupplierId = order.Supplier.Id,
+				SupplierName = order.Supplier.Name,
+				Instructions = order.Instructions,
+				CurrencyId = order.Currency.Id,
+				Currencies = _currencyService.GetCurrencies().ToSelectList()
+			});
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult Edit(OrderEditViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				_orderService.Edit(model.Id, model.SupplierId, model.CurrencyId, model.Instructions);
+				return RedirectToAction("Index");
+			}
+			return View(model);
+		}
+
 		[HttpGet]
 		public ActionResult Create(Guid jobItemId, Guid jobId)
 		{

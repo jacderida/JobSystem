@@ -120,6 +120,9 @@
   <data name="ApprovalWithZeroItems" xml:space="preserve">
     <value>An must have at least one item before it can be approved.</value>
   </data>
+  <data name="EditApprovedOrder" xml:space="preserve">
+    <value>An approved order cannot be edited</value>
+  </data>
   <data name="InstructionsTooLarge" xml:space="preserve">
     <value>The instructions cannot exceed 255 characters</value>
   </data>
