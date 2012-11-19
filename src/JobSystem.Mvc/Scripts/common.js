@@ -329,15 +329,16 @@ $(document).ready(function () {
 
 		//Get Job Item Details
 		$('.getJobItem').click(function () {
-			//			$('html, body').animate({
-			//				scrollTop: $("#horz_tabs_container").offset().top
-			//			}, 50);
-			$.get("../../JobItem/Details/" + $(this).attr('id'),
-			   function (data) {
-			   	$('#st_horizontal').hide();
-			   	$('#st_horizontal').fadeIn(300);
-			   	$('#st_horizontal').html(data);
-			   });
+		    var elem = $('#st_horizontal');
+		    var jobId = $(this).attr('id');
+		    elem.fadeOut(50, function () { elem.html('<div id="loading-div-visible"></div>') }).fadeIn(100, function () {
+		        $.get("../../JobItem/Details/" + jobId,
+			       function (data) {
+			           elem.hide();
+			           elem.fadeIn(300);
+			           elem.html(data);
+			       });
+		    });
 		});
 
 		if ($("#invoiceCheckbox").is(':checked')) $("#invoiceDetails").hide();
