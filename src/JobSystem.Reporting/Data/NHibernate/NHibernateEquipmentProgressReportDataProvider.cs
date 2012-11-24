@@ -32,7 +32,8 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.ItemNo = jobItem.ItemNo;
 				reportItem.Status = jobItem.Status.Name;
 				reportItem.EquipmentDescription = jobItem.Instrument.ToString();
-				var quoteItem = CurrentSession.Query<QuoteItem>().Where(qi => qi.JobItem.Id == jobItem.Id).SingleOrDefault();
+				var quoteItem = CurrentSession.Query<QuoteItem>().Where(
+					qi => qi.JobItem.Id == jobItem.Id).OrderByDescending(qi => qi.Quote.DateCreated).FirstOrDefault();
 				if (quoteItem != null)
 				{
 					var quote = quoteItem.Quote;

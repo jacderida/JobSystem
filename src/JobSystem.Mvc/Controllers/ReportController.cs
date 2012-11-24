@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.DataModel.Entities;
@@ -23,7 +24,14 @@ namespace JobSystem.Mvc.Controllers
 			var viewmodel = new JobItemReportViewModel
 			{
 				Status = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemStatus).ToSelectList(),
-				Customer = _customerService.GetCustomers().ToSelectList()
+				Customer = _customerService.GetCustomers().Select(
+					c =>
+					{
+						var name = c.Name;
+						if (!String.IsNullOrEmpty(c.AssetLine))
+							name += " - " + c.AssetLine;
+						return new { Id = c.Id, Name = name };
+					}).OrderBy(c => c.Name).ToSelectList()
 			};
 			return View(viewmodel);
 		}
