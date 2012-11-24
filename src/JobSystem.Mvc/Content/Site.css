@@ -879,6 +879,12 @@ div#title {
 	display: none;
 }
 
+#loading-div-visible {
+	background: transparent url('../Content/images/ajax-loader.gif') no-repeat 50%;
+	width: 100%;
+	height: 50px;
+}
+
 #search {
 	display: inline-block;
 	position: relative;
