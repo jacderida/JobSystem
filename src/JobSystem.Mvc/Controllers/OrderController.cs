@@ -16,13 +16,15 @@ namespace JobSystem.Mvc.Controllers
 	{
 		private readonly CompanyDetailsService _companyDetailsService;
 		private readonly OrderService _orderService;
+		private readonly JobItemService _jobItemService;
 		private readonly OrderItemService _orderItemService;
 		private readonly CurrencyService _currencyService;
 		private readonly ListItemService _listItemService;
 
-		public OrderController(CompanyDetailsService companyDetailsService, OrderService orderService, OrderItemService orderItemService, CurrencyService currencyService, ListItemService listItemService)
+		public OrderController(CompanyDetailsService companyDetailsService, JobItemService jobItemService, OrderService orderService, OrderItemService orderItemService, CurrencyService currencyService, ListItemService listItemService)
 		{
 			_companyDetailsService = companyDetailsService;
+			_jobItemService = jobItemService;
 			_orderService = orderService;
 			_orderItemService = orderItemService;
 			_listItemService = listItemService;
@@ -189,13 +191,14 @@ namespace JobSystem.Mvc.Controllers
 		[HttpGet]
 		public ActionResult Create(Guid jobItemId, Guid jobId)
 		{
-			var viewmodel = new OrderCreateViewModel()
+			var jobItem = _jobItemService.GetById(jobItemId);
+			return View(new OrderCreateViewModel
 			{
 				JobId = jobId,
 				JobItemId = jobItemId,
-				Currencies = _currencyService.GetCurrencies().ToSelectList()
-			};
-			return View(viewmodel);
+				Currencies = _currencyService.GetCurrencies().ToSelectList(),
+				Description = jobItem.Instrument.ToString()
+			});
 		}
 
 		[HttpPost]
