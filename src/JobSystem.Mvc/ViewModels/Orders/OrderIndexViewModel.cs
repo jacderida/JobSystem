@@ -18,5 +18,6 @@ namespace JobSystem.Mvc.ViewModels.Orders
 		public string CreatedBy { get; set; }
 		public string Currency { get; set; }
 		public IList<OrderItemIndexViewModel> OrderItems { get; set; }
+		public bool IsApproved { get; set; }
 	}
 }

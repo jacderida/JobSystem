@@ -52,26 +52,27 @@
 			<!--<span class="field-label">Location</span>-->
 			<span class="field-label">Status</span>
 			<span class="field">@Model.Status</span>
-			@if (!@Model.SerialNo.IsEmpty()) {
+			@if (!@Model.SerialNo.IsEmpty())
+   {
 				<span class="field-label">Serial Number</span>
 				<span class="field">@Model.SerialNo</span>
-			}
-			else
-			{
+   }
+   else
+   {
 				<span class="field">n/a</span>
-			}
+   }
 		</div>
 		<div class="details-fields">
 			@if (!@Model.AssetNo.IsEmpty())
-			{
+   {
 				<span class="field-label">Asset Number</span>
 				<span class="field">@Model.AssetNo</span>
-			}
-			else
-			{
+   }
+   else
+   {
 				<span class="field-label">Asset Number</span>
 				<span class="field">n/a</span>
-			}
+   }
 			<span class="field-label">Calibration Period</span>
 			<span class="field">@Model.CalPeriod</span>
 			<span class="field-label">Category</span>
@@ -79,19 +80,27 @@
 		</div>
 		<div class="details-fields">
 			<span class="field-label">Invoicing</span>
-			@if (Model.IsInvoiced) {
+			@if (Model.IsInvoiced)
+   {
 				<span class="field">Invoiced</span>
-			} else if (Model.IsMarkedForInvoicing) {
+   }
+   else if (Model.IsMarkedForInvoicing)
+   {
 				<span class="field">Marked For Invoicing</span>
-			} else {
-				if (Model.QuoteItem != null || Model.Quote != null) {
+   }
+   else
+   {
+	   if (Model.QuoteItem != null || Model.Quote != null)
+	   {
 					<span class="field primary-action" id="markForInvoicingButton">
                         Mark for Invoicing
 					</span>
-				} else {
+	   }
+	   else
+	   {
 					<span class="field">Raise a quote item before invoicing</span>
-				}
-			}
+	   }
+   }
 		</div>
 	</div>
 </div>
@@ -217,8 +226,8 @@
 						@Model.ConsignmentItem.Instructions
 					</div>
 					<br />
- if (Model.ConsignmentItem.IsOrdered == false)
- { <a href="#" class="primary-action editConsignmentButton" id="@Model.ConsignmentItem.Id">Edit</a> }
+		if (Model.ConsignmentItem.IsOrdered == false)
+		{ <a href="#" class="primary-action editConsignmentButton" id="@Model.ConsignmentItem.Id">Edit</a> }
 	}
 	else if (Model.Consignment != null)
 	{
@@ -229,8 +238,8 @@
 							Created by <span class="strongText">@Model.Consignment.CreatedBy</span> on <span class="strongText">@Model.Consignment.DateCreated</span>
 						</span>
 					</div>
-																									  if (Model.Consignment.IsOrdered == false)
-																									  { <a href="#" class="primary-action editConsignmentButton" id="@Model.Consignment.Id">Edit</a> }
+		if (Model.Consignment.IsOrdered == false)
+		{ <a href="#" class="primary-action editConsignmentButton" id="@Model.Consignment.Id">Edit</a> }
 	}
 	else
 	{
@@ -241,12 +250,47 @@
 		<div id="st_content_5" class="st_tab_view">
 			<div class="text">
 				@if (Model.OrderItem != null)
-	{
-					@Html.ActionLink("Edit Order Item", "EditItem", "Order", new { jobItemId = @Model.Id }, new { @class = "primary-action" })
+				{
+					if (Model.OrderItem.IsPending)
+					{
+						@Html.ActionLink("Edit Order Item", "EditItem", "Order", new { jobItemId = @Model.Id }, new { @class = "primary-action" })
+					}
+					else
+					{
+						if (@Model.Order.IsApproved)
+						{
+							@Html.ActionLink("Raise Order", "Create", "Order", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action" })
+						}
+						else
+						{
+							@Html.ActionLink("Edit Order Item", "EditPendingItem", "Order", new { itemId = @Model.OrderItem.Id }, new { @class = "primary-action" })
+						}
+					}
+					if (Model.Order != null)
+					{
+						<span class="verySmallText">
+							Created by <span class="strongText">@Model.Order.CreatedBy</span> on <span class="strongText">@Model.Order.DateCreated</span>
+						</span>
+						<div class="quote-item">
+							<div class="details-fields">
+								<span class="field-label">Order No.</span>
+								<span class="field">@Model.Order.OrderNo</span>
+								<span class="field-label">Instructions</span>
+								<span class="field">@Model.Order.Instructions</span>
+								<span class="field-label">Supplier</span>
+								<span class="field">@Model.Order.SupplierName</span>
+								<span class="field-label">Currency</span>
+								<span class="field">@Model.Order.Currency</span>
+							</div>
+						</div>
+					}
 					<div class="quote-item">
 						<div class="details-fields">
-							<span class="field-label">Order No.</span>
-							<span class="field">@Model.OrderItem.SupplierName</span>
+							@if (Model.OrderItem.IsPending)
+							{
+								<span class="field-label">Supplier</span>
+								<span class="field">@Model.OrderItem.SupplierName</span>
+							}
 							<span class="field-label">Instructions</span>
 							<span class="field">@Model.OrderItem.Instructions</span>
 							<span class="field-label">Description</span>
@@ -263,30 +307,12 @@
 							<span class="field">@Model.OrderItem.Quantity</span>
 						</div>
 					</div>
-	}
-	else if (Model.Order != null)
-	{
-					<span class="verySmallText">
-						Created by <span class="strongText">@Model.Order.CreatedBy</span> on <span class="strongText">@Model.Order.DateCreated</span>
-					</span>
-					<div class="quote-item">
-						<div class="details-fields">
-							<span class="field-label">Order No.</span>
-							<span class="field">@Model.Order.OrderNo</span>
-							<span class="field-label">Instructions</span>
-							<span class="field">@Model.Order.Instructions</span>
-							<span class="field-label">Supplier</span>
-							<span class="field">@Model.Order.SupplierName</span>
-							<span class="field-label">Currency</span>
-							<span class="field">@Model.Order.Currency</span>
-						</div>
-					</div>
-	}
-	else
-	{
+				}
+				else
+				{
 					@Html.ActionLink("Raise Order", "Create", "Order", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action" })
 					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
-	}
+				}
 			</div>
 		</div>
 		<div id="st_content_6" class="st_tab_view">

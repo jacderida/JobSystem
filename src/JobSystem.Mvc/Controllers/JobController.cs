@@ -362,53 +362,37 @@ namespace JobSystem.Mvc.Controllers
 			}
 		}
 
-		private void PopulateOrderItemViewModel(JobItemDetailsViewModel jiViewmodel)
+		private void PopulateOrderItemViewModel(JobItemDetailsViewModel jobItemViewModel)
 		{
-			var pendingItem = _orderItemService.GetPendingOrderItemForJobItem(jiViewmodel.Id);
+			var pendingItem = _orderItemService.GetPendingOrderItemForJobItem(jobItemViewModel.Id);
 			if (pendingItem == null)
 			{
-				var item = _orderItemService.GetOrderItemsForJobItem(jiViewmodel.Id).FirstOrDefault();
-				if (item != null)
+				var item = _orderItemService.GetOrderItemsForJobItem(jobItemViewModel.Id).OrderByDescending(oi => oi.Order.DateCreated).First();
+				jobItemViewModel.Order = new OrderIndexViewModel
 				{
-					if (item.Order != null)
-					{
-						var viewmodel = new OrderIndexViewModel()
-						{
-							Instructions = item.Order.Instructions,
-							OrderNo = item.Order.OrderNo,
-							SupplierName = item.Order.Supplier.Name,
-							CreatedBy = item.Order.CreatedBy.Name,
-							DateCreated = item.Order.DateCreated.ToLongDateString() + ' ' + item.Order.DateCreated.ToShortTimeString(),
-							Currency = item.Order.Currency.Name
-						};
-						jiViewmodel.Order = viewmodel;
-						return;
-					}
-					else
-					{
-						var viewmodel = new OrderItemIndexViewModel()
-						{
-							Id = item.Id,
-							DeliveryDays = item.DeliveryDays.ToString(),
-							Description = item.Description,
-							Instructions = item.Instructions,
-							PartNo = item.PartNo,
-							Price = item.Price.ToString(),
-							Quantity = item.Quantity.ToString(),
-							JobItemId = item.JobItem.Id
-						};
-						jiViewmodel.OrderItem = viewmodel;
-						return;
-					}
-				}
-				else
+					Instructions = item.Order.Instructions,
+					OrderNo = item.Order.OrderNo,
+					SupplierName = item.Order.Supplier.Name,
+					CreatedBy = item.Order.CreatedBy.Name,
+					DateCreated = item.Order.DateCreated.ToLongDateString() + ' ' + item.Order.DateCreated.ToShortTimeString(),
+					Currency = item.Order.Currency.Name,
+					IsApproved = item.Order.IsApproved
+				};
+				jobItemViewModel.OrderItem = new OrderItemIndexViewModel
 				{
-					return;
-				}
+					Id = item.Id,
+					DeliveryDays = item.DeliveryDays.ToString(),
+					Description = item.Description,
+					Instructions = item.Instructions,
+					PartNo = item.PartNo,
+					Price = item.Price.ToString(),
+					Quantity = item.Quantity.ToString(),
+					JobItemId = item.JobItem.Id
+				};
 			}
 			else
 			{
-				var viewmodel = new OrderItemIndexViewModel()
+				jobItemViewModel.OrderItem = new OrderItemIndexViewModel
 				{
 					Id = pendingItem.Id,
 					DeliveryDays = pendingItem.DeliveryDays.ToString(),
@@ -418,10 +402,9 @@ namespace JobSystem.Mvc.Controllers
 					Price = pendingItem.Price.ToString(),
 					Quantity = pendingItem.Quantity.ToString(),
 					JobItemId = pendingItem.JobItem.Id,
-					SupplierName = pendingItem.Supplier.Name
+					SupplierName = pendingItem.Supplier.Name,
+					IsPending = true
 				};
-				jiViewmodel.OrderItem = viewmodel;
-				return;
 			}
 		}
 

@@ -23,5 +23,6 @@ namespace JobSystem.Mvc.ViewModels.Orders
 		public string Currency { get; set; }
 		public bool IsMarkedReceived { get; set; }
 		public string DateReceived { get; set; }
+		public bool IsPending { get; set; }
 	}
 }
