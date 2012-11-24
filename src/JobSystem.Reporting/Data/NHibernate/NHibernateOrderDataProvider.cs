@@ -34,6 +34,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.Days = orderItem.DeliveryDays;
 				reportItem.JobRef = GetJobItemReference(orderItem.JobItem);
 				reportItem.PreparedBy = order.CreatedBy.Name;
+				reportItem.PartNo = orderItem.PartNo;
 				result.Add(reportItem);
 			}
 			return result.OrderBy(o => o.ItemNo).ToList();

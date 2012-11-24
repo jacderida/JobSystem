@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using JobSystem.DataModel.Entities;
 using JobSystem.Reporting.Models;
 
@@ -62,7 +63,11 @@ namespace JobSystem.Reporting.Data.NHibernate
 
 		private string GetDescription(JobItem jobItem)
 		{
-			return String.Format("{0}, Serial No: {1}", GetInstrumentDescription(jobItem.Instrument), jobItem.SerialNo);
+			var sb = new StringBuilder();
+			sb.AppendFormat("{0}, Serial No: {1}", GetInstrumentDescription(jobItem.Instrument), jobItem.SerialNo);
+			if (!String.IsNullOrEmpty(jobItem.AssetNo))
+				sb.AppendFormat(", Asset No: {0}", jobItem.AssetNo);
+			return sb.ToString();
 		}
 	}
 }

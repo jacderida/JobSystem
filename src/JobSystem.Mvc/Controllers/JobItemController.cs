@@ -224,10 +224,9 @@ namespace JobSystem.Mvc.Controllers
 			var pendingItem = _quoteItemService.GetPendingQuoteItemForJobItem(id);
 			if (pendingItem == null)
 			{
-				var items = _quoteItemService.GetQuoteItemsForJobItem(id).OrderByDescending(qi => qi.Quote.DateCreated);
-				if (items.Any())
+				var item = _quoteItemService.GetQuoteItemsForJobItem(id).OrderByDescending(qi => qi.Quote.DateCreated).FirstOrDefault();
+				if (item != null)
 				{
-					var item = items.First();
 					return new QuoteItemIndexViewModel
 					{
 						Id = item.Id,
@@ -279,28 +278,31 @@ namespace JobSystem.Mvc.Controllers
 			var pendingItem = _orderItemService.GetPendingOrderItemForJobItem(jobItemViewModel.Id);
 			if (pendingItem == null)
 			{
-				var item = _orderItemService.GetOrderItemsForJobItem(jobItemViewModel.Id).OrderByDescending(oi => oi.Order.DateCreated).First();
-				jobItemViewModel.Order = new OrderIndexViewModel
+				var item = _orderItemService.GetOrderItemsForJobItem(jobItemViewModel.Id).OrderByDescending(oi => oi.Order.DateCreated).FirstOrDefault();
+				if (item != null)
 				{
-					Instructions = item.Order.Instructions,
-					OrderNo = item.Order.OrderNo,
-					SupplierName = item.Order.Supplier.Name,
-					CreatedBy = item.Order.CreatedBy.Name,
-					DateCreated = item.Order.DateCreated.ToLongDateString() + ' ' + item.Order.DateCreated.ToShortTimeString(),
-					Currency = item.Order.Currency.Name,
-					IsApproved = item.Order.IsApproved
-				};
-				jobItemViewModel.OrderItem = new OrderItemIndexViewModel
-				{
-					Id = item.Id,
-					DeliveryDays = item.DeliveryDays.ToString(),
-					Description = item.Description,
-					Instructions = item.Instructions,
-					PartNo = item.PartNo,
-					Price = item.Price.ToString(),
-					Quantity = item.Quantity.ToString(),
-					JobItemId = item.JobItem.Id
-				};
+					jobItemViewModel.Order = new OrderIndexViewModel
+					{
+						Instructions = item.Order.Instructions,
+						OrderNo = item.Order.OrderNo,
+						SupplierName = item.Order.Supplier.Name,
+						CreatedBy = item.Order.CreatedBy.Name,
+						DateCreated = item.Order.DateCreated.ToLongDateString() + ' ' + item.Order.DateCreated.ToShortTimeString(),
+						Currency = item.Order.Currency.Name,
+						IsApproved = item.Order.IsApproved
+					};
+					jobItemViewModel.OrderItem = new OrderItemIndexViewModel
+					{
+						Id = item.Id,
+						DeliveryDays = item.DeliveryDays.ToString(),
+						Description = item.Description,
+						Instructions = item.Instructions,
+						PartNo = item.PartNo,
+						Price = item.Price.ToString(),
+						Quantity = item.Quantity.ToString(),
+						JobItemId = item.JobItem.Id
+					};
+				}
 			}
 			else
 			{
