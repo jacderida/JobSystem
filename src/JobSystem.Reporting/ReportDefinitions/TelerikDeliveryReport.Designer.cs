@@ -50,6 +50,8 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.shape4 = new Telerik.Reporting.Shape();
 			this.textBox36 = new Telerik.Reporting.TextBox();
 			this.textBox3 = new Telerik.Reporting.TextBox();
+			this.textBox4 = new Telerik.Reporting.TextBox();
+			this.textBox5 = new Telerik.Reporting.TextBox();
 			this.reportFooterSection1 = new Telerik.Reporting.ReportFooterSection();
 			this.objectDataSource2 = new Telerik.Reporting.ObjectDataSource();
 			this.ReportData = new Telerik.Reporting.ObjectDataSource();
@@ -351,7 +353,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			this.textBox24.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.20959071815013886D), Telerik.Reporting.Drawing.Unit.Cm(1.8999992609024048D));
 			this.textBox24.Name = "textBox24";
-			this.textBox24.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(10.040210723876953D), Telerik.Reporting.Drawing.Unit.Cm(0.4994397759437561D));
+			this.textBox24.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(8.5902090072631836D), Telerik.Reporting.Drawing.Unit.Cm(0.4994397759437561D));
 			this.textBox24.Style.Font.Bold = false;
 			this.textBox24.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(9D);
 			this.textBox24.Value = "=Fields.CustomerAddress1";
@@ -378,7 +380,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			this.textBox27.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.18010729551315308D), Telerik.Reporting.Drawing.Unit.Cm(1.4005594253540039D));
 			this.textBox27.Name = "textBox27";
-			this.textBox27.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(10.036667823791504D), Telerik.Reporting.Drawing.Unit.Cm(0.4994397759437561D));
+			this.textBox27.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(8.6196928024292D), Telerik.Reporting.Drawing.Unit.Cm(0.4994397759437561D));
 			this.textBox27.Style.Font.Bold = true;
 			this.textBox27.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(9D);
 			this.textBox27.Value = "=Fields.CustomerName";
@@ -447,7 +449,9 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.textBox30,
             this.shape4,
             this.textBox36,
-            this.textBox3});
+            this.textBox3,
+            this.textBox4,
+            this.textBox5});
 			this.reportHeaderSection1.Name = "reportHeaderSection1";
 			// 
 			// shape4
@@ -478,6 +482,30 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.textBox3.Style.Font.Bold = false;
 			this.textBox3.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(9D);
 			this.textBox3.Value = "=Fields.AdditionalLine2";
+			// 
+			// textBox4
+			// 
+			this.textBox4.CanGrow = true;
+			this.textBox4.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(8.8000001907348633D), Telerik.Reporting.Drawing.Unit.Cm(1.900199294090271D));
+			this.textBox4.Name = "textBox4";
+			this.textBox4.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(4.59280252456665D), Telerik.Reporting.Drawing.Unit.Cm(0.50420725345611572D));
+			this.textBox4.Style.Font.Bold = false;
+			this.textBox4.Style.Font.Name = "Arial";
+			this.textBox4.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(9D);
+			this.textBox4.StyleName = "Data";
+			this.textBox4.Value = "=Fields.Contact2";
+			// 
+			// textBox5
+			// 
+			this.textBox5.CanGrow = true;
+			this.textBox5.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(8.8000001907348633D), Telerik.Reporting.Drawing.Unit.Cm(1.3957921266555786D));
+			this.textBox5.Name = "textBox5";
+			this.textBox5.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(4.59280252456665D), Telerik.Reporting.Drawing.Unit.Cm(0.50420725345611572D));
+			this.textBox5.Style.Font.Bold = false;
+			this.textBox5.Style.Font.Name = "Arial";
+			this.textBox5.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(9D);
+			this.textBox5.StyleName = "Data";
+			this.textBox5.Value = "=Fields.Contact1";
 			// 
 			// reportFooterSection1
 			// 
@@ -586,5 +614,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 		private Telerik.Reporting.TextBox textBox2;
 		private Telerik.Reporting.TextBox CompanyAddressTextBox;
 		private Telerik.Reporting.TextBox textBox3;
+		private Telerik.Reporting.TextBox textBox4;
+		private Telerik.Reporting.TextBox textBox5;
 	}
 }

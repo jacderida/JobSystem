@@ -31,7 +31,7 @@ namespace JobSystem.Mvc.Controllers
 					AssetLine = c.AssetLine,
 					Email = c.Email,
 					Contact1 = c.Contact1
-				}).ToList();
+				}).OrderBy(c => c.Name);
 			return View(customerList);
 		}
 

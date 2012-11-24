@@ -105,6 +105,8 @@ namespace JobSystem.Reporting.Data.NHibernate
 			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
 				i++;
 			reportItem.AdditionalLine2 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			reportItem.Contact1 = String.Format("Contact 1: {0}", customer.DeliveryContact1);
+			reportItem.Contact2 = String.Format("Contact 2: {0}", customer.DeliveryContact2);
 		}
 
 		private void GetCustomerDetails(DeliveryReportModel reportItem, Customer customer)
@@ -132,6 +134,8 @@ namespace JobSystem.Reporting.Data.NHibernate
 			while (i < addressLines.Length - 1 && String.IsNullOrEmpty(addressLines[i]))
 				i++;
 			reportItem.CustomerAddress5 = i < addressLines.Length ? addressLines[i++] : String.Empty;
+			reportItem.Contact1 = String.Format("Contact 1: {0}", customer.Contact1);
+			reportItem.Contact2 = String.Format("Contact 2: {0}", customer.Contact2);
 		}
 	}
 }

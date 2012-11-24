@@ -4,6 +4,8 @@
 	{
 		public string AdditionalLine1 { get; set; }
 		public string AdditionalLine2 { get; set; }
+		public string Contact1 { get; set; }
+		public string Contact2 { get; set; }
 		public string DeliveryNumber { get; set; }
 		public string PreparedBy { get; set; }
 		public string DateCreated { get; set; }
