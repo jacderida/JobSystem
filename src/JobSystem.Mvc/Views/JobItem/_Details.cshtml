@@ -144,7 +144,10 @@
 			<div class="text">	
 				@if (Model.QuoteItem != null)
 				{
-					@Html.ActionLink("Raise Quote", "Create", "Quote", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action createQuoteButton" })
+					if (Model.QuoteItem.IsQuoted)
+					{
+						@Html.ActionLink("Raise Quote", "Create", "Quote", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action createQuoteButton" })
+					}
 					@Html.ActionLink("Edit Quote", "EditItem", "Quote", new { id = @Model.Id, fromJi = true, isQuoted = Model.QuoteItem.IsQuoted }, new { @class = "primary-action" })
 					if (Model.QuoteItem.IsQuoted)
 					{
