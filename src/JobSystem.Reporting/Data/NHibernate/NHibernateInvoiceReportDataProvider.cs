@@ -29,7 +29,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.OrderNo = invoice.OrderNo;
 				var jobItem = invoiceItem.JobItem;
 				reportItem.JobRef = GetJobItemReference(jobItem);
-				reportItem.Description = GetDescription(jobItem);
+				reportItem.Description = GetDescription(jobItem, invoice.Currency, invoiceItem.CarriagePrice);
 				reportItem.SerialNo = jobItem.SerialNo;
 				reportItem.Calibration = invoiceItem.CalibrationPrice;
 				reportItem.Repair = invoiceItem.RepairPrice;
@@ -74,9 +74,28 @@ namespace JobSystem.Reporting.Data.NHibernate
 			return sb.ToString().Trim(", ".ToCharArray());
 		}
 
-		private string GetDescription(JobItem jobItem)
+		private string GetDescription(JobItem jobItem, Currency currency, decimal carriage)
 		{
-			return String.Format("{0}, Serial No: {1}", GetInstrumentDescription(jobItem.Instrument), jobItem.SerialNo);
+			var sb = new StringBuilder();
+			sb.AppendFormat("{0}, Serial No: {1}", GetInstrumentDescription(jobItem.Instrument), jobItem.SerialNo);
+			if (carriage > 0)
+			{
+				var currencySymbol = String.Empty;
+				switch (currency.Name)
+				{
+					case "GBP":
+						currencySymbol = "£";
+						break;
+					case "USD":
+						currencySymbol = "$";
+						break;
+					default:
+						currencySymbol = currency.Name;
+						break;
+				}
+				sb.AppendFormat(" (includes {0}{1} for carriage)", currencySymbol, String.Format("{0:0.00}", carriage));
+			}
+			return sb.ToString();
 		}
 
 		private void ApplyTotals(List<InvoiceReportModel> items, Invoice invoice)
