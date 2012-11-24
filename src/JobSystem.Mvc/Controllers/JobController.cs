@@ -307,17 +307,19 @@ namespace JobSystem.Mvc.Controllers
 			}
 		}
 
-		private QuoteItemIndexViewModel PopulateQuoteItemViewModel(Guid Id)
+		private QuoteItemIndexViewModel PopulateQuoteItemViewModel(Guid id)
 		{
-			var pendingItem = _quoteItemService.GetPendingQuoteItemForJobItem(Id);
+			var pendingItem = _quoteItemService.GetPendingQuoteItemForJobItem(id);
 			if (pendingItem == null)
 			{
-				var item = _quoteItemService.GetQuoteItemForJobItem(Id);
-				if (item != null)
+				var items = _quoteItemService.GetQuoteItemsForJobItem(id).OrderByDescending(qi => qi.Quote.DateCreated);
+				if (items.Any())
 				{
-					var viewmodel = new QuoteItemIndexViewModel()
+					var item = items.First();
+					return new QuoteItemIndexViewModel
 					{
 						Id = item.Id,
+						JobItemId = item.JobItem.Id,
 						AdviceNo = item.Quote.AdviceNumber,
 						Calibration = (double)item.Calibration,
 						Carriage = (double)item.Carriage,
@@ -334,18 +336,16 @@ namespace JobSystem.Mvc.Controllers
 						StatusType = item.Status.Type,
 						QuoteNo = item.Quote.QuoteNumber
 					};
-					return viewmodel;
 				}
 				else
-				{
 					return null;
-				}
 			}
 			else
 			{
-				var viewmodel = new QuoteItemIndexViewModel()
+				return new QuoteItemIndexViewModel
 				{
 					Id = pendingItem.Id,
+					JobItemId = pendingItem.JobItem.Id,
 					AdviceNo = pendingItem.AdviceNo,
 					Calibration = (double)pendingItem.Calibration,
 					Carriage = (double)pendingItem.Carriage,
@@ -359,7 +359,6 @@ namespace JobSystem.Mvc.Controllers
 					IsQuoted = false,
 					JobItemRef = String.Format("{0}/{1}", pendingItem.JobItem.Job.JobNo, pendingItem.JobItem.ItemNo),
 				};
-				return viewmodel;
 			}
 		}
 

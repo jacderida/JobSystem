@@ -213,11 +213,11 @@ namespace JobSystem.BusinessLogic.Services
 			return _quoteItemRepository.GetQuoteItems(quoteId);
 		}
 
-		public QuoteItem GetQuoteItemForJobItem(Guid jobItemId)
+		public IEnumerable<QuoteItem> GetQuoteItemsForJobItem(Guid jobItemId)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
-			return _quoteItemRepository.GetQuoteItemForJobItem(jobItemId);
+			return _quoteItemRepository.GetQuoteItemsForJobItem(jobItemId);
 		}
 
 		public PendingQuoteItem GetPendingQuoteItemForJobItem(Guid jobItemId)

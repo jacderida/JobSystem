@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using JobSystem.BusinessLogic.Validation.Core;
 using JobSystem.DataModel;
 using JobSystem.DataModel.Entities;
@@ -178,7 +179,7 @@ namespace JobSystem.BusinessLogic.Services
 
 		private QuoteItem GetQuoteItem(Guid jobItemId)
 		{
-			return _quoteItemRepository.GetQuoteItemForJobItem(jobItemId);
+			return _quoteItemRepository.GetQuoteItemsForJobItem(jobItemId).OrderByDescending(qi => qi.Quote.DateCreated).FirstOrDefault();
 		}
 	}
 }

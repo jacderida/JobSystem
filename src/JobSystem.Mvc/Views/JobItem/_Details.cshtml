@@ -143,30 +143,32 @@
 		<div id="st_content_3" class="st_tab_view">
 			<div class="text">	
 				@if (Model.QuoteItem != null)
-	{
+				{
+					@Html.ActionLink("Raise Quote", "Create", "Quote", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action createQuoteButton" })
 					@Html.ActionLink("Edit Quote", "EditItem", "Quote", new { id = @Model.Id, fromJi = true, isQuoted = Model.QuoteItem.IsQuoted }, new { @class = "primary-action" })
-if (Model.QuoteItem.IsQuoted)
-{
-	if (Model.QuoteItem.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuotedPrepared)
-	{
+					if (Model.QuoteItem.IsQuoted)
+					{
+						if (Model.QuoteItem.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuotedPrepared)
+						{
 							@Ajax.ActionLink("Accept", "AcceptQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Accepted')" }, new { @class = "primary-action", id = "acceptQuoteItemButton" })
 							@Ajax.ActionLink("Reject", "RejectQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Rejected')" }, new { @class = "primary-action" })
-	}
-	else if (Model.QuoteItem.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuoteAccepted)
-	{
+						}
+						else if (Model.QuoteItem.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuoteAccepted)
+						{
 							@Ajax.ActionLink("Reject", "RejectQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Rejected')" }, new { @class = "primary-action" })
-	}
-	else
-	{
+						}
+						else
+						{
 							@Ajax.ActionLink("Accept", "AcceptQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Accepted')" }, new { @class = "primary-action", id = "acceptQuoteItemButton" })
-	}
-}
+							@Ajax.ActionLink("Reject", "RejectQuoteItem", "Quote", new { quoteItemId = Model.QuoteItem.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.updateQuoteStatus('Quote Rejected')" }, new { @class = "primary-action" })
+						}
+					}
 					<div class="quote-item">
 						@if (Model.QuoteItem.IsQuoted)
-	  {
+						{
 							<h3>@Model.QuoteItem.QuoteNo</h3><br />
 							<h3 id="quoteItemStatusLabel">@Model.QuoteItem.Status</h3><br />
-	  }
+						}
 						<div class="details-fields">
 							<span class="field-label">Order No.</span>
 							<span class="field">@Model.QuoteItem.OrderNo</span>
@@ -190,12 +192,12 @@ if (Model.QuoteItem.IsQuoted)
 							<span class="field">@Model.QuoteItem.Days</span>
 						</div>
 					</div>
-	}
-	else
-	{
+				}
+				else
+				{
 					@Html.ActionLink("Raise Quote", "Create", "Quote", new { jobItemId = @Model.Id, jobId = @Model.JobId }, new { @class = "primary-action createQuoteButton" })
 					<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
-	}
+				}
 			</div>
 		</div>
 		<div id="st_content_4" class="st_tab_view">

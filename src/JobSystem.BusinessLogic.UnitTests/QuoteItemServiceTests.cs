@@ -1940,7 +1940,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			try
 			{
-				_quoteItemService.GetQuoteItemForJobItem(jobItemId);
+				_quoteItemService.GetQuoteItemsForJobItem(jobItemId);
 			}
 			catch (DomainValidationException dex)
 			{

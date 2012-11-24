@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
 using Rhino.Mocks;
@@ -10,7 +11,7 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 		public static IQuoteItemRepository GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(Guid jobItemId, QuoteItem quoteItem)
 		{
 			var quoteItemRepository = MockRepository.GenerateStub<IQuoteItemRepository>();
-			quoteItemRepository.Stub(x => x.GetQuoteItemForJobItem(jobItemId)).Return(quoteItem);
+			quoteItemRepository.Stub(x => x.GetQuoteItemsForJobItem(jobItemId)).Return(new List<QuoteItem> { quoteItem });
 			return quoteItemRepository;
 		}
 
@@ -38,14 +39,14 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
 		public static IQuoteItemRepository GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsQuoteItem(Guid jobItemId)
 		{
 			var quoteItemRepository = MockRepository.GenerateStub<IQuoteItemRepository>();
-			quoteItemRepository.Stub(x => x.GetQuoteItemForJobItem(jobItemId)).Return(GetQuoteItemForJobItem(jobItemId));
+			quoteItemRepository.Stub(x => x.GetQuoteItemsForJobItem(jobItemId)).Return(new List<QuoteItem> { GetQuoteItemForJobItem(jobItemId) });
 			return quoteItemRepository;
 		}
 
 		public static IQuoteItemRepository GetQuoteItemRepository_StubsGetQuoteItemForJobItem_ReturnsNull(Guid jobItemId)
 		{
 			var quoteItemRepository = MockRepository.GenerateStub<IQuoteItemRepository>();
-			quoteItemRepository.Stub(x => x.GetQuoteItemForJobItem(jobItemId)).Return(null);
+			quoteItemRepository.Stub(x => x.GetQuoteItemsForJobItem(jobItemId)).Return(new List<QuoteItem> { });
 			return quoteItemRepository;
 		}
 

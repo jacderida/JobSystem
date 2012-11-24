@@ -230,7 +230,7 @@ namespace JobSystem.Mvc.Controllers
 			if (!isQuoted) 
 			{
 				var pendingItem = _quoteItemService.GetPendingQuoteItemForJobItem(id);
-				var viewmodel = new QuoteItemEditViewModel()
+				var viewModel = new QuoteItemEditViewModel
 				{
 					QuoteItemId = pendingItem.Id,
 					JobId = pendingItem.JobItem.Job.Id,
@@ -248,12 +248,12 @@ namespace JobSystem.Mvc.Controllers
 					EditedFromJobItem = fromJi,
 					IsQuoted = isQuoted
 				};
-				return View("EditItem", viewmodel);
+				return View("EditItem", viewModel);
 			}
 			else
 			{
-				var item = _quoteItemService.GetQuoteItemForJobItem(id);
-				var viewmodel = new QuoteItemEditViewModel()
+				var item = _quoteItemService.GetQuoteItemsForJobItem(id).OrderByDescending(qi => qi.Quote.DateCreated).First();
+				var viewModel = new QuoteItemEditViewModel
 				{
 					QuoteItemId = item.Id,
 					QuoteId = item.Quote.Id,
@@ -272,7 +272,7 @@ namespace JobSystem.Mvc.Controllers
 					EditedFromJobItem = fromJi,
 					IsQuoted = isQuoted
 				};
-				return View("EditItem", viewmodel);
+				return View("EditItem", viewModel);
 			}
 		}
 
