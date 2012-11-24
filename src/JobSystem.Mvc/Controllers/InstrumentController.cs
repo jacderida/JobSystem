@@ -32,7 +32,7 @@ namespace JobSystem.Mvc.Controllers
 					 ModelNo = i.ModelNo,
 					 Range = i.Range,
 					 CalibrationTime = i.AllocatedCalibrationTime
-				 }).ToList();
+				 }).OrderBy(i => i.Manufacturer);
 			var viewModel = new InstrumentListViewModel();
 			viewModel.Instruments = instruments;
 			viewModel.CreateViewModel = new InstrumentViewModel();
