@@ -11,6 +11,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 {
 	public class InstrumentRepository : RepositoryBase<Instrument>, IInstrumentRepository
 	{
+		public int GetInstrumentsCount()
+		{
+			return CurrentSession.Query<Instrument>().Count();
+		}
+
 		public IEnumerable<Instrument> GetInstruments()
 		{
 			return CurrentSession.Query<Instrument>();

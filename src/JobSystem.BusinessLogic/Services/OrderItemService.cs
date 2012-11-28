@@ -131,6 +131,13 @@ namespace JobSystem.BusinessLogic.Services
 			return _orderItemRepository.GetOrderItems(orderId);
 		}
 
+		public int GetOrderItemsCount(Guid orderId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
+			return _orderItemRepository.GetOrderItemsCount(orderId);
+		}
+
 		public IEnumerable<OrderItem> GetOrderItemsForJobItem(Guid jobItemId)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

@@ -85,6 +85,13 @@ namespace JobSystem.BusinessLogic.Services
 			return customer;
 		}
 
+		public int GetCustomersCount()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.ViewCustomerListInsufficientSecurityClearance);
+			return _customerRepository.GetCustomersCount();
+		}
+
 		public IEnumerable<Customer> GetCustomers()
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

@@ -1,4 +1,4 @@
-﻿@model IList<JobSystem.Mvc.ViewModels.Invoices.InvoiceIndexViewModel>
+﻿@model JobSystem.Mvc.ViewModels.Invoices.InvoiceListViewModel
 
 @{
     ViewBag.Title = "Approved Invoices";
@@ -9,29 +9,17 @@
 	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedInvoices")">Invoiced</a></span>
 </div>
 
-@if (Model.Any()) {
-	var grid = new WebGrid(Model, defaultSort:"InvoiceNo", canSort: false, rowsPerPage: 15);
-	
+@if (Model.Invoices.Any())
+{
+	var grid = new WebGrid(null, defaultSort:"InvoiceNo", canSort: false, rowsPerPage: Model.PageSize);
+	grid.Bind(Model.Invoices, autoSortAndPage: false, rowCount: Model.Total);
 	@grid.GetHtml(columns: grid.Columns(
 		grid.Column("InvoiceNo", "Invoice No"),
 		grid.Column("CustomerName", "Customer"),
 		grid.Column("PaymentTerm", "Payment Term"),
 		grid.Column("TaxCode", "Tax Code"),
 		grid.Column("DateCreated", "Date Created"),
-		grid.Column("", "", format: @<span class="the-tooltip center top dark-midnight-blue itemCount">
-									@item.InvoiceItems.Count items
-									<span>
-									@foreach (var ci in item.InvoiceItems) {
-										<span>
-										Repair: @ci.RepairPrice
-										Calibration: @ci.CalibrationPrice
-										Parts: @ci.PartsPrice
-										Carriage: @ci.CarriagePrice
-										Investigation: @ci.InvestigationPrice
-										</span>
-									}	
-									</span>
-								</span>),
+		grid.Column("Items", "Items", format: @<text>@String.Format("{0} items", (int)item.ItemCount)</text>),
 		grid.Column("", "", format: @<text>@Html.ActionLink("Print Note", "GenerateInvoiceNote", new { Id = @item.Id }, new { target="_blank"})</text>)
 	))
 }

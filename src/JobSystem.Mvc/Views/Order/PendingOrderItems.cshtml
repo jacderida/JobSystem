@@ -1,4 +1,4 @@
-﻿@model IList<JobSystem.Mvc.ViewModels.Orders.OrderItemIndexViewModel>
+﻿@model JobSystem.Mvc.ViewModels.Orders.OrderListViewModel
 
 @{
     ViewBag.Title = "Items";
@@ -12,26 +12,26 @@
 
 @using (Html.BeginForm("OrderPending", "Order", FormMethod.Post))
 {
-
-	if (Model.Any()) {
-
-	<input class="primary-action" type="submit" value="Order"/>
-
-	var grid = new WebGrid(Model, defaultSort: "SupplierName", canSort: false, rowsPerPage: 15);
-	
-	@grid.GetHtml(columns: grid.Columns(
-		grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
-		grid.Column("SupplierName", "Supplier Name"),
-		grid.Column("Instructions", "Instructions"),
-		grid.Column("Description", "Description"),
-		grid.Column("PartNo", "Part No."),
-		grid.Column("DeliveryDays", "Delivery Days"),
-		grid.Column("Price", "Price"),
-		grid.Column("Quantity", "Quantity")
-	))
-}else{
-	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
-}
+	if (Model.Items.Any())
+	{
+		<input class="primary-action" type="submit" value="Order"/>
+		var grid = new WebGrid(null, defaultSort: "SupplierName", canSort: false, rowsPerPage: Model.PageSize);
+		grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
+		@grid.GetHtml(columns: grid.Columns(
+			grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
+			grid.Column("SupplierName", "Supplier Name"),
+			grid.Column("Instructions", "Instructions"),
+			grid.Column("Description", "Description"),
+			grid.Column("PartNo", "Part No."),
+			grid.Column("DeliveryDays", "Delivery Days"),
+			grid.Column("Price", "Price"),
+			grid.Column("Quantity", "Quantity")
+		))
+	}
+	else
+	{
+		<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
+	}
 }
 
 <div id="edit-order-container">

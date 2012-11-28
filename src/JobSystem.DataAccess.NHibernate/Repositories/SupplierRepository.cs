@@ -2,8 +2,8 @@
 using System.Linq;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
-using NHibernate.Linq;
 using NHibernate.Criterion;
+using NHibernate.Linq;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 { 
@@ -12,6 +12,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		public Supplier GetByName(string name)
 		{
 			return CurrentSession.Query<Supplier>().Where(s => s.Name == name).SingleOrDefault();
+		}
+
+		public int GetSuppliersCount()
+		{
+			return CurrentSession.Query<Supplier>().Count();
 		}
 
 		public IEnumerable<Supplier> GetSuppliers()

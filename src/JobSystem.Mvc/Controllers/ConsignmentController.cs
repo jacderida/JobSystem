@@ -162,6 +162,7 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult PendingConsignments(int page = 1)
 		{
+			var pageSize = 15;
 			var items = _consignmentItemService.GetPendingItems().Select(
 				c => new ConsignmentItemIndexViewModel
 				{
@@ -170,14 +171,21 @@ namespace JobSystem.Mvc.Controllers
 					JobItemRef = String.Format("{0}/{1}", c.JobItem.Job.JobNo, c.JobItem.ItemNo),
 					Instructions = c.Instructions,
 					SupplierName = c.Supplier.Name
-				}).OrderBy(c => c.JobItemRef).ToList();
-			var viewModel = new ConsignmentPendingListViewModel { ConsignmentItems = items };
+				}).OrderBy(c => c.JobItemRef).Skip((page - 1) * pageSize).Take(pageSize);
+			var viewModel = new ConsignmentPendingListViewModel
+			{ 
+				ConsignmentItems = items,
+				Page = page,
+				PageSize = pageSize,
+				Total = _consignmentItemService.GetPendingItemsCount()
+			};
 			return View(viewModel);
 		}
 
 		public ActionResult ActiveConsignments(int page = 1)
 		{
-			var items = _consignmentService.GetConsignments().Select(
+			var pageSize = 15;
+			var consignments = _consignmentService.GetConsignments().Select(
 				c => new ConsignmentIndexViewModel
 				{
 					Id = c.Id,
@@ -185,20 +193,17 @@ namespace JobSystem.Mvc.Controllers
 					CreatedBy = c.CreatedBy.Name,
 					DateCreated = c.DateCreated.ToLongDateString() + ' ' + c.DateCreated.ToShortTimeString(),
 					SupplierName = c.Supplier.Name,
-					IsOrdered = c.IsOrdered
-				}).OrderBy(c => c.ConsignmentNo).ToList();
-			foreach (var item in items)
+					IsOrdered = c.IsOrdered,
+					ItemCount = _consignmentItemService.GetConsignmentItems(c.Id).Count()
+				}).OrderBy(c => c.ConsignmentNo).Skip((page - 1) * pageSize).Take(pageSize);
+			var viewModel = new ConsignmentActiveListViewModel
 			{
-				var consignmentItems = _consignmentItemService.GetConsignmentItems(item.Id);
-				item.ConsignmentItems = consignmentItems.Select(ci => new ConsignmentItemIndexViewModel
-					{
-						Instructions = ci.Instructions,
-						InstrumentDetails = ci.JobItem.Instrument.ToString(),
-						Id = ci.Id,
-						JobItemRef = String.Format("{0}/{1}", ci.JobItem.Job.JobNo, ci.JobItem.ItemNo)
-					}).ToList();
-			}
-			return View(items);
+				Consignments = consignments,
+				Page = page,
+				PageSize = pageSize,
+				Total = _consignmentService.GetConsignmentsCount()
+			};
+			return View(viewModel);
 		}
 
 		public ActionResult ConsignmentItems(Guid consignmentId)

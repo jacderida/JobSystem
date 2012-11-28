@@ -9,5 +9,6 @@ namespace JobSystem.DataModel.Repositories
 		int GetJobItemCount(Guid jobId);
 		IEnumerable<Job> GetApprovedJobs();
 		IEnumerable<Job> GetPendingJobs();
+		int GetApprovedJobsCount();
 	}
 }

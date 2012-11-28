@@ -1,13 +1,14 @@
-﻿@model IEnumerable<JobSystem.Mvc.ViewModels.Customers.CustomerIndexViewModel>
+﻿@model JobSystem.Mvc.ViewModels.Customers.CustomerListViewModel
 @{
 	ViewBag.Title = "Customer List";
 }
 <h2>Customer List</h2>
 @Html.ActionLink("Create Customer", "Create", new { }, new { @class = "primary-action" })
 
-@if (Model.Any()) {
-
-	var grid = new WebGrid(Model, defaultSort:"Name", canSort: false, rowsPerPage: 15);
+@if (Model.Customers.Any())
+{
+	var grid = new WebGrid(null, defaultSort:"Name", canSort: false, rowsPerPage: Model.PageSize);
+	grid.Bind(Model.Customers, autoSortAndPage: false, rowCount: Model.Total);
 	@grid.GetHtml(columns: grid.Columns(
 		grid.Column("Name", "Name", format: @<text>@Html.ActionLink((string)item.Name, "Details", new { id = item.Id })</text>),
 		grid.Column("AssetLine", "Asset Line"),

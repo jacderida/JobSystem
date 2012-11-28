@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace JobSystem.Mvc.ViewModels.Quotes
 {
-	public class QuotePendingListViewModel
+	public class QuotePendingListViewModel : PageViewModel
 	{
-		public List<QuoteItemIndexViewModel> QuoteItems;
+		public IEnumerable<QuoteItemIndexViewModel> QuoteItems;
 		public Guid[] ToBeConvertedIds;
 	}
 }

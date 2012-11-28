@@ -122,6 +122,7 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult PendingJobs(int page = 1)
 		{
+			var pageSize = 15;
 			var jobs = _jobService.GetPendingJobs().Select(
 				j => new JobIndexViewModel
 				{
@@ -130,11 +131,14 @@ namespace JobSystem.Mvc.Controllers
 					JobNumber = j.JobNo,
 					OrderNumber = j.OrderNo,
 					Id = j.Id.ToString()
-				}).OrderBy(j => j.JobNumber).ToList();
-			var jobList = new JobListViewModel()
+				}).OrderBy(j => j.JobNumber).Skip((page - 1) * pageSize).Take(pageSize);
+			var jobList = new JobListViewModel
 			{
 				CreateViewModel = new JobCreateViewModel(),
-				Jobs = jobs
+				Jobs = jobs,
+				Page = page,
+				PageSize = pageSize,
+				Total = _jobService.GetApprovedJobsCount()
 			};
 			jobList.CreateViewModel.JobTypes = _listItemService.GetAllByCategory(ListItemCategoryType.JobType).ToSelectList();
 			return View(jobList);
@@ -142,6 +146,7 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult ApprovedJobs(int page = 1)
 		{
+			var pageSize = 15;
 			var jobs = _jobService.GetApprovedJobs().Select(
 				j => new JobIndexViewModel
 				{
@@ -150,11 +155,14 @@ namespace JobSystem.Mvc.Controllers
 					JobNumber = j.JobNo,
 					OrderNumber = j.OrderNo,
 					Id = j.Id.ToString()
-				}).OrderBy(j => j.JobNumber).ToList();
-			var jobList = new JobListViewModel()
+				}).OrderBy(j => j.JobNumber).Skip((page - 1) * pageSize).Take(pageSize);
+			var jobList = new JobListViewModel
 			{
 				CreateViewModel = new JobCreateViewModel(),
-				Jobs = jobs
+				Jobs = jobs,
+				Page = page,
+				PageSize = pageSize,
+				Total = _jobService.GetApprovedJobsCount()
 			};
 			jobList.CreateViewModel.JobTypes = _listItemService.GetAllByCategory(ListItemCategoryType.JobType).ToSelectList();
 			return View(jobList);

@@ -11,7 +11,9 @@ namespace JobSystem.DataModel.Repositories
 		IEnumerable<QuoteItem> GetQuoteItemsForJobItem(Guid jobItemId);
 		PendingQuoteItem GetPendingQuoteItem(Guid id);
 		PendingQuoteItem GetPendingQuoteItemForJobItem(Guid jobItemId);
+		int GetQuoteItemsCount(Guid quoteId);
 		IEnumerable<QuoteItem> GetQuoteItems(Guid quoteId);
+		int GetPendingQuoteItemsCount();
 		IEnumerable<PendingQuoteItem> GetPendingQuoteItems();
 		IEnumerable<PendingQuoteItem> GetPendingQuoteItems(IList<Guid> pendingItemIds);
 		bool JobItemHasPendingQuoteItem(Guid jobItemId);

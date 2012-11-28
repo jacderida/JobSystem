@@ -25,6 +25,16 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			return CurrentSession.Query<PendingInvoiceItem>().Where(j => j.JobItem.Id == jobItemId).SingleOrDefault() != null;
 		}
 
+		public int GetInvoiceItemsCount(Guid invoiceId)
+		{
+			return CurrentSession.Query<InvoiceItem>().Where(i => i.Invoice.Id == invoiceId).Count();
+		}
+
+		public int GetPendingInvoiceItemsCount()
+		{
+			return CurrentSession.Query<PendingInvoiceItem>().Count();
+		}
+
 		public IEnumerable<PendingInvoiceItem> GetPendingInvoiceItems()
 		{
 			return CurrentSession.Query<PendingInvoiceItem>();

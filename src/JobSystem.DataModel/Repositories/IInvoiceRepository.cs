@@ -6,7 +6,8 @@ namespace JobSystem.DataModel.Repositories
 {
 	public interface IInvoiceRepository : IReadWriteRepository<Invoice, Guid>
 	{
-		int GetInvoiceItemCount(Guid invoiceId);
+		int GetInvoicesCount();
 		IEnumerable<Invoice> GetInvoices();
+		int GetInvoiceItemCount(Guid invoiceId);
 	}
 }

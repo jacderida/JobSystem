@@ -19,6 +19,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			return job;
 		}
 
+		public int GetApprovedJobsCount()
+		{
+			return CurrentSession.Query<Job>().Where(j => !j.IsPending).Count();
+		}
+
 		public int GetJobItemCount(Guid jobId)
 		{
 			return CurrentSession.Query<JobItem>().Where(ji => ji.Job.Id == jobId).Count();

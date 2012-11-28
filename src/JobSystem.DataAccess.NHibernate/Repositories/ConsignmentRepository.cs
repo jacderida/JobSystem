@@ -14,6 +14,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			return CurrentSession.Query<ConsignmentItem>().Where(ci => ci.Consignment.Id == consignmentId).Count();
 		}
 
+		public int GetConsigmentsCount()
+		{
+			return CurrentSession.Query<Consignment>().Count();
+		}
+
 		public IEnumerable<Consignment> GetConsignments()
 		{
 			return CurrentSession.Query<Consignment>();

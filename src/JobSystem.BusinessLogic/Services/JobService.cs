@@ -116,6 +116,13 @@ namespace JobSystem.BusinessLogic.Services
 			return job;
 		}
 
+		public int GetApprovedJobsCount()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _jobRepository.GetApprovedJobsCount();
+		}
+
 		public IEnumerable<Job> GetApprovedJobs()
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

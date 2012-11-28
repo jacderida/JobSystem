@@ -8,6 +8,7 @@ namespace JobSystem.Mvc.ViewModels.Invoices
 	public class InvoiceItemIndexViewModel
 	{
 		public Guid Id { get; set; }
+		public string JobItemRef { get; set; }
 		public double CalibrationPrice { get; set; }
 		public double CarriagePrice { get; set; }
 		public double PartsPrice { get; set; }
@@ -15,7 +16,5 @@ namespace JobSystem.Mvc.ViewModels.Invoices
 		public double InvestigationPrice { get; set; }
 		public string Description { get; set; }
 		public string OrderNo { get; set; }
-		public string JobItemNo { get; set; }
-		public string JobNo { get; set; }
 	}
 }

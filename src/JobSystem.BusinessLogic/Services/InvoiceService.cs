@@ -85,6 +85,13 @@ namespace JobSystem.BusinessLogic.Services
 			return _invoiceRepository.GetById(id);
 		}
 
+		public int GetInvoicesCount()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _invoiceRepository.GetInvoicesCount();
+		}
+
 		public IEnumerable<Invoice> GetInvoices()
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

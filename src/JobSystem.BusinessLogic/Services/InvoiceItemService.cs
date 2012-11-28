@@ -83,11 +83,25 @@ namespace JobSystem.BusinessLogic.Services
 			return invoiceItem;
 		}
 
+		public int GetInvoiceItemsCount(Guid invoiceId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _invoiceItemRepository.GetInvoiceItemsCount(invoiceId);
+		}
+
 		public IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			return _invoiceItemRepository.GetInvoiceItems(invoiceId);
+		}
+
+		public int GetPendingInvoiceItemsCount()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _invoiceItemRepository.GetPendingInvoiceItemsCount();
 		}
 
 		public IEnumerable<PendingInvoiceItem> GetPendingInvoiceItems()

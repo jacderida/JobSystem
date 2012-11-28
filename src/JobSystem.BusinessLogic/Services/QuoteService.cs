@@ -93,6 +93,13 @@ namespace JobSystem.BusinessLogic.Services
 			return _quoteRepository.GetById(id);
 		}
 
+		public int GetQuotesCount()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			return _quoteRepository.GetQuotesCount();
+		}
+
 		public IEnumerable<Quote> GetQuotes()
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

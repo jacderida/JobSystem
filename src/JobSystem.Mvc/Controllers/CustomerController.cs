@@ -23,6 +23,7 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult Index(int page = 1)
 		{
+			var pageSize = 15;
 			var customerList = _customerService.GetCustomers().Select(
 				c => new CustomerIndexViewModel
 				{
@@ -31,8 +32,14 @@ namespace JobSystem.Mvc.Controllers
 					AssetLine = c.AssetLine,
 					Email = c.Email,
 					Contact1 = c.Contact1
-				}).OrderBy(c => c.Name);
-			return View(customerList);
+				}).OrderBy(c => c.Name).Skip((page - 1) * pageSize).Take(pageSize);
+			return View(new CustomerListViewModel
+			{
+				Customers = customerList,
+				Page = page,
+				PageSize = pageSize,
+				Total = _customerService.GetCustomersCount()
+			});
 		}
 
 		public ActionResult Details(Guid id)

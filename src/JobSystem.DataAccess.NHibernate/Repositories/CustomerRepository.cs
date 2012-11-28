@@ -14,6 +14,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			return CurrentSession.Query<Customer>().Where(c => c.Name == name).SingleOrDefault();
 		}
 
+		public int GetCustomersCount()
+		{
+			return CurrentSession.Query<Customer>().Count();
+		}
+
 		public IEnumerable<Customer> GetCustomers()
 		{
 			return CurrentSession.Query<Customer>();

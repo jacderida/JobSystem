@@ -1,13 +1,13 @@
-﻿@model IEnumerable<JobSystem.Mvc.ViewModels.Suppliers.SupplierIndexViewModel>
+﻿@model JobSystem.Mvc.ViewModels.Suppliers.SupplierListViewModel
 @{
 	ViewBag.Title = "Supplier List";
 }
 <h2>Supplier List</h2>
 @Html.ActionLink("Create Supplier", "Create", new { }, new { @class = "primary-action" })
-@if (Model.Any())
+@if (Model.Suppliers.Any())
 {
-	var grid = new WebGrid(Model, defaultSort: "Manufacturer", canSort: false, rowsPerPage: 15);
-	
+	var grid = new WebGrid(null, defaultSort: "Manufacturer", canSort: false, rowsPerPage: Model.PageSize);
+	grid.Bind(Model.Suppliers, autoSortAndPage: false, rowCount: Model.Total);
 	@grid.GetHtml(columns: grid.Columns(
 		grid.Column("Name", "Name", format: @<text>@Html.ActionLink((string)item.Name, "Details", new { id = item.Id })</text>),
 		grid.Column("TradingEmail", "Email"),

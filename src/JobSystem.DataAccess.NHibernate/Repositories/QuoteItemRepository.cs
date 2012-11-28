@@ -35,6 +35,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			return CurrentSession.Query<QuoteItem>().Where(qi => qi.Quote.Id == quoteId);
 		}
 
+		public int GetQuoteItemsCount(Guid quoteId)
+		{
+			return CurrentSession.Query<QuoteItem>().Where(qi => qi.Quote.Id == quoteId).Count();
+		}
+
 		public void DeletePendingQuoteItem(Guid id)
 		{
 			CurrentSession.Delete(CurrentSession.Get<PendingQuoteItem>(id));
@@ -48,6 +53,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		public void UpdatePendingItem(PendingQuoteItem pendingItem)
 		{
 			CurrentSession.Update(pendingItem);
+		}
+
+		public int GetPendingQuoteItemsCount()
+		{
+			return CurrentSession.Query<PendingQuoteItem>().Count();
 		}
 
 		public IEnumerable<PendingQuoteItem> GetPendingQuoteItems()

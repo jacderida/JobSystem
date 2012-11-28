@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace JobSystem.Mvc.ViewModels.Consignments
 {
-	public class ConsignmentPendingListViewModel
+	public class ConsignmentPendingListViewModel : PageViewModel
 	{
-		public List<ConsignmentItemIndexViewModel> ConsignmentItems;
+		public IEnumerable<ConsignmentItemIndexViewModel> ConsignmentItems;
 		public Guid[] ToBeConvertedIds;
 	}
 }

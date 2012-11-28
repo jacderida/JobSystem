@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using JobSystem.DataModel.Entities;
 using JobSystem.DataModel.Repositories;
-using NHibernate.Linq;
 using NHibernate.Criterion;
+using NHibernate.Linq;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 {
@@ -18,6 +18,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 		public bool JobItemHasPendingOrderItem(Guid jobItemId)
 		{
 			return CurrentSession.Query<PendingOrderItem>().SingleOrDefault(p => p.JobItem.Id == jobItemId) != null;
+		}
+
+		public int GetOrderItemsCount(Guid orderId)
+		{
+			return CurrentSession.Query<OrderItem>().Where(oi => oi.Order.Id == orderId).Count();
 		}
 
 		public IEnumerable<OrderItem> GetOrderItems(Guid orderId)

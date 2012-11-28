@@ -23,6 +23,7 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult Index(int page = 1)
 		{
+			var pageSize = 15;
 			var instruments = _instrumentService.GetInstruments().Select(
 				 i => new InstrumentViewModel
 				 {
@@ -32,10 +33,15 @@ namespace JobSystem.Mvc.Controllers
 					 ModelNo = i.ModelNo,
 					 Range = i.Range,
 					 CalibrationTime = i.AllocatedCalibrationTime
-				 }).OrderBy(i => i.Manufacturer);
-			var viewModel = new InstrumentListViewModel();
-			viewModel.Instruments = instruments;
-			viewModel.CreateViewModel = new InstrumentViewModel();
+				 }).OrderBy(i => i.Manufacturer).Skip((page - 1) * pageSize).Take(pageSize);
+			var viewModel = new InstrumentListViewModel
+			{
+				Instruments = instruments,
+				CreateViewModel = new InstrumentViewModel(),
+				Page = page,
+				PageSize = pageSize,
+				Total = _instrumentService.GetInstrumentsCount()
+			};
 			return View(viewModel);
 		}
 

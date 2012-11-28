@@ -84,6 +84,13 @@ namespace JobSystem.BusinessLogic.Services
 			return _consignmentRepository.GetConsignments();
 		}
 
+		public int GetConsignmentsCount()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _consignmentRepository.GetConsigmentsCount();
+		}
+
 		private void DoCreateConsignmentItems(IEnumerable<PendingConsignmentItem> pendingItems)
 		{
 			var groupedByPendingItems = pendingItems.GroupBy(p => p.Supplier.Name, p => p).OrderBy(p => p.Key);

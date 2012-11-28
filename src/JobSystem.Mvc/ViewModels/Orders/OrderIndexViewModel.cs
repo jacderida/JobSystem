@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace JobSystem.Mvc.ViewModels.Orders
 {
@@ -19,5 +17,6 @@ namespace JobSystem.Mvc.ViewModels.Orders
 		public string Currency { get; set; }
 		public IList<OrderItemIndexViewModel> OrderItems { get; set; }
 		public bool IsApproved { get; set; }
+		public int ItemCount { get; set; }
 	}
 }

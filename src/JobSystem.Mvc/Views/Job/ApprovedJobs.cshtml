@@ -8,17 +8,19 @@
 	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedJobs")">Approved</a></span>
 </div>
 <a href="#" id="createJobButton" class="primary-action">Create Job</a>
-@if (Model.Jobs.Any()) {
-	var grid = new WebGrid(Model.Jobs, defaultSort:"JobNumber", canSort: false, rowsPerPage: 15);
-	
+@if (Model.Jobs.Any())
+{
+	var grid = new WebGrid(null, defaultSort:"JobNumber", canSort: false, rowsPerPage: Model.PageSize);
+	grid.Bind(Model.Jobs, rowCount: Model.Total, autoSortAndPage: false);
 	@grid.GetHtml(columns: grid.Columns(
 		grid.Column("JobNumber", "Job Number", format: @<text>@Html.ActionLink((string)item.JobNumber, "Details", new { id = item.Id })</text>),
 		grid.Column("OrderNumber", "Order Number"),
 		grid.Column("CreatedBy", "Booked By"),
 		grid.Column("DateCreated", "Created")
 	))
-} else {
+}
+else
+{
 	<div id="empty-list">@JobSystem.Resources.Jobs.Messages.NoApprovedJobs</div>
 }
-
 @Html.Partial("_Create", Model.CreateViewModel)

@@ -12,6 +12,7 @@ namespace JobSystem.DataModel.Repositories
 		void UpdatePendingItem(PendingConsignmentItem pendingItem);
 		bool JobItemHasPendingConsignmentItem(Guid jobItemId);
 		IEnumerable<ConsignmentItem> GetConsignmentItems(Guid consignmentId);
+		int GetPendingConsignmentItemsCount();
 		IEnumerable<PendingConsignmentItem> GetPendingConsignmentItems();
 		IEnumerable<PendingConsignmentItem> GetPendingConsignmentItems(IList<Guid> pendingItemIds);
 	}

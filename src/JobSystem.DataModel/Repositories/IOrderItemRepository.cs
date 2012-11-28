@@ -8,6 +8,7 @@ namespace JobSystem.DataModel.Repositories
 	{
 		void CreatePending(PendingOrderItem pendingItem);
 		bool JobItemHasPendingOrderItem(Guid jobItemId);
+		int GetOrderItemsCount(Guid orderId);
 		IEnumerable<OrderItem> GetOrderItems(Guid orderId);
 		IEnumerable<OrderItem> GetOrderItemsForJobItem(Guid jobItemId);
 		IEnumerable<PendingOrderItem> GetPendingOrderItems();

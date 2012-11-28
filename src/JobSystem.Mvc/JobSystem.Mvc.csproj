@@ -185,6 +185,7 @@
     <Compile Include="ViewModels\BankDetails\BankDetailsCreateViewModel.cs" />
     <Compile Include="ViewModels\Certificates\CertificateIndexViewModel.cs" />
     <Compile Include="ViewModels\Certificates\CertificateViewModel.cs" />
+    <Compile Include="ViewModels\Consignments\ConsignmentActiveListViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentCreateViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentEditViewModel.cs" />
     <Compile Include="ViewModels\Consignments\ConsignmentIndexViewModel.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="ViewModels\Currencies\CurrencyListViewModel.cs" />
     <Compile Include="ViewModels\Currencies\CurrencyViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerIndexViewModel.cs" />
+    <Compile Include="ViewModels\Customers\CustomerListViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerViewModel.cs" />
     <Compile Include="ViewModels\Deliveries\DeliveryIndexViewModel.cs" />
     <Compile Include="ViewModels\Deliveries\DeliveryItemIndexViewModel.cs" />
@@ -201,6 +203,8 @@
     <Compile Include="ViewModels\Instruments\InstrumentListViewModel.cs" />
     <Compile Include="ViewModels\Invoices\InvoiceIndexViewModel.cs" />
     <Compile Include="ViewModels\Invoices\InvoiceItemIndexViewModel.cs" />
+    <Compile Include="ViewModels\Invoices\InvoiceItemListViewModel.cs" />
+    <Compile Include="ViewModels\Invoices\InvoiceListViewModel.cs" />
     <Compile Include="ViewModels\JobItems\JobItemDetailsViewModel.cs" />
     <Compile Include="ViewModels\JobItems\JobItemSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\JobItems\JobItemViewModel.cs" />
@@ -212,14 +216,18 @@
     <Compile Include="ViewModels\Orders\OrderItemCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderItemEditViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderItemIndexViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrderListViewModel.cs" />
+    <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteCreateViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteEditViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteIndexViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteItemEditViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteItemIndexViewModel.cs" />
+    <Compile Include="ViewModels\Quotes\QuoteListViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuotePendingListViewModel.cs" />
     <Compile Include="ViewModels\Reports\JobItemReportViewModel.cs" />
     <Compile Include="ViewModels\Shared\CheckboxViewModel.cs" />
+    <Compile Include="ViewModels\Suppliers\SupplierListViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierViewModel.cs" />
     <Compile Include="ViewModels\Suppliers\SupplierIndexViewModel.cs" />
     <Compile Include="ViewModels\WorkItems\WorkItemCreateViewModel.cs" />

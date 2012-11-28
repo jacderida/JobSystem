@@ -12,17 +12,18 @@ using JobSystem.Mvc.ViewModels.Suppliers;
 
 namespace JobSystem.Mvc.Controllers
 {
-    public class SupplierController : Controller
-    {
-        private readonly SupplierService _supplierService;
+	public class SupplierController : Controller
+	{
+		private readonly SupplierService _supplierService;
 
 		public SupplierController(SupplierService supplierService)
 		{
 			_supplierService = supplierService;
 		}
-
-        public ActionResult Index()
-        {
+		
+		public ActionResult Index(int page = 1)
+		{
+			var pageSize = 15;
 			var suppliers = _supplierService.GetSuppliers().Select(
 				 i => new SupplierIndexViewModel
 				 {
@@ -40,7 +41,7 @@ namespace JobSystem.Mvc.Controllers
 					 TradingTelephone = i.Telephone,
 					 SalesAddress1 = i.SalesAddress1,
 					 SalesAddress2 = i.SalesAddress2,
-					 SalesAddress3 =  i.SalesAddress3,
+					 SalesAddress3 = i.SalesAddress3,
 					 SalesAddress4 = i.SalesAddress4,
 					 SalesAddress5 = i.SalesAddress5,
 					 SalesContact1 = i.SalesContact1,
@@ -48,9 +49,15 @@ namespace JobSystem.Mvc.Controllers
 					 SalesEmail = i.SalesEmail,
 					 SalesFax = i.SalesFax,
 					 SalesTelephone = i.SalesTelephone
-				 }).ToList();
-			return View(suppliers);
-        }
+				 }).OrderBy(s => s.Name).Skip((page - 1) * pageSize).Take(pageSize);
+			return View(new SupplierListViewModel
+			{
+				Suppliers = suppliers,
+				Page = page,
+				PageSize = pageSize,
+				Total = _supplierService.GetSuppliersCount()
+			});
+		}
 
 		public ActionResult Create()
 		{
@@ -124,8 +131,7 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult SearchSuppliers(string query)
 		{
 			IEnumerable<Supplier> suppliers = _supplierService.SearchByKeyword(query);
-
 			return Json(suppliers);
 		}
-    }
+	}
 }

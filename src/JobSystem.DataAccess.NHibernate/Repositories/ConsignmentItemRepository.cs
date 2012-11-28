@@ -20,6 +20,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			return CurrentSession.Query<PendingConsignmentItem>();
 		}
 
+		public int GetPendingConsignmentItemsCount()
+		{
+			return CurrentSession.Query<PendingConsignmentItem>().Count();
+		}
+
 		public IEnumerable<PendingConsignmentItem> GetPendingConsignmentItems(IList<Guid> pendingItemIds)
 		{
 			var query = Restrictions.Disjunction();

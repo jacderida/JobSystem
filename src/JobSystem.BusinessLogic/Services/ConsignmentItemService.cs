@@ -138,21 +138,36 @@ namespace JobSystem.BusinessLogic.Services
 
 		public void DeletePendingItem(Guid id)
 		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			_consignmentItemRepository.DeletePendingItem(id);
 		}
 
 		public IEnumerable<ConsignmentItem> GetConsignmentItems(Guid consignmentId)
 		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			return _consignmentItemRepository.GetConsignmentItems(consignmentId);
+		}
+
+		public int GetPendingItemsCount()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _consignmentItemRepository.GetPendingConsignmentItemsCount();
 		}
 
 		public IEnumerable<PendingConsignmentItem> GetPendingItems()
 		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			return _consignmentItemRepository.GetPendingConsignmentItems();
 		}
 
 		public IEnumerable<PendingConsignmentItem> GetPendingItems(IList<Guid> pendingItemIds)
 		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			return _consignmentItemRepository.GetPendingConsignmentItems(pendingItemIds);
 		}
 	}

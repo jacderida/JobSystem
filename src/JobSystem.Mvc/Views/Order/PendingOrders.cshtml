@@ -1,4 +1,4 @@
-﻿@model IList<JobSystem.Mvc.ViewModels.Orders.OrderIndexViewModel>
+﻿@model JobSystem.Mvc.ViewModels.Orders.OrderListViewModel
 
 @{
     ViewBag.Title = "Pending Orders";
@@ -12,30 +12,16 @@
 
 @Html.ActionLink("Raise Order", "CreateIndividualOrder", new { }, new { @class = "primary-action" })
 
-@if (Model.Any()) {
-	
-	var grid = new WebGrid(Model, defaultSort: "OrderNo", canSort: false, rowsPerPage: 15);
-	
+@if (Model.Items.Any())
+{
+	var grid = new WebGrid(null, defaultSort: "OrderNo", canSort: false, rowsPerPage: Model.PageSize);
+	grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
 	@grid.GetHtml(columns: grid.Columns(
-		grid.Column("OrderNo", "Order No.", format: @<text>@Html.ActionLink((string)item.OrderNo, "Details", new { id = item.Id })</text>),
+		grid.Column("OrderNo", "Order No."),
 		grid.Column("SupplierName", "Supplier Name"),
 		grid.Column("Instructions", "Instructions"),
-		grid.Column("", "Items", format: @<span class="the-tooltip center top dark-midnight-blue itemCount">
-					@item.OrderItems.Count items
-					<span>
-					@foreach (var oi in item.OrderItems)
-					{
-						<span>
-							Delivery: @oi.DeliveryDays<br />
-							Description: @oi.Description<br />
-							Part No.: @oi.PartNo<br />
-							Price: @oi.Price<br />
-							Quantity: @oi.Quantity
-						</span><br />
-					}	
-					</span>
-				</span>),
-		grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit", "Edit", new { id = @item.Id })</text>),
+		grid.Column("Items", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.ItemCount), "Details", new { id = item.Id })</text>),
+		grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit Order", "Edit", new { id = @item.Id })</text>),
 		grid.Column("Approval", "", format: @<text>@Html.ActionLink("Approve", "ApproveOrder", new { id = @item.Id })</text>)
 	))
 }
@@ -43,7 +29,6 @@ else
 {
 	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
 }
-
 
 <div id="edit-order-container">
 </div>

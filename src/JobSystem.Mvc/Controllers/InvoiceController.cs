@@ -63,24 +63,31 @@ namespace JobSystem.Mvc.Controllers
 
 		public ActionResult PendingInvoices(int page = 1)
 		{
+			var pageSize = 15;
 			var items = _invoiceItemService.GetPendingInvoiceItems().Select(i => new InvoiceItemIndexViewModel
 			{
 				Id = i.Id,
-				JobNo = i.JobItem.Job.JobNo,
+				JobItemRef = i.JobItem.GetJobItemRef(),
 				CalibrationPrice = (double)i.CalibrationPrice,
 				CarriagePrice = (double)i.CarriagePrice,
 				Description = i.Description,
 				InvestigationPrice = (double)i.InvestigationPrice,
-				JobItemNo = i.JobItem.ItemNo.ToString(),
 				OrderNo = i.OrderNo,
 				PartsPrice = (double)i.PartsPrice,
 				RepairPrice = (double)i.RepairPrice
-			}).ToList();
-			return View(items);
+			}).OrderBy(i => i.JobItemRef).Skip((page - 1) * pageSize).Take(pageSize);
+			return View(new InvoiceItemListViewModel
+			{
+				Items = items,
+				Page = page,
+				PageSize = pageSize,
+				Total = _invoiceItemService.GetPendingInvoiceItemsCount()
+			});
 		}
 
 		public ActionResult ApprovedInvoices(int page = 1)
 		{
+			var pageSize = 15;
 			var items = _invoiceService.GetInvoices().Select(i => new InvoiceIndexViewModel
 			{
 				Id = i.Id,
@@ -90,20 +97,15 @@ namespace JobSystem.Mvc.Controllers
 				InvoiceNo = i.InvoiceNumber,
 				PaymentTerm = i.PaymentTerm.Name,
 				TaxCode = i.TaxCode.TaxCodeName,
-				InvoiceItems = i.InvoiceItems.Select(item => new InvoiceItemIndexViewModel
-				{
-					Id = item.Id,
-					JobNo = item.JobItem.Job.JobNo,
-					CalibrationPrice = (double)item.CalibrationPrice,
-					CarriagePrice = (double)item.CarriagePrice,
-					Description = item.Description,
-					InvestigationPrice = (double)item.InvestigationPrice,
-					JobItemNo = item.JobItem.ItemNo.ToString(),
-					PartsPrice = (double)item.PartsPrice,
-					RepairPrice = (double)item.RepairPrice
-				}).ToList()
-			}).OrderBy(i => i.InvoiceNo).ToList();
-			return View(items);
+				ItemCount = _invoiceItemService.GetInvoiceItemsCount(i.Id)
+			}).OrderBy(i => i.InvoiceNo).Skip((page - 1) * pageSize).Take(pageSize);
+			return View(new InvoiceListViewModel
+			{
+				Invoices = items,
+				Page = page,
+				PageSize = pageSize,
+				Total = _invoiceService.GetInvoicesCount()
+			});
 		}
 
 		public ActionResult GenerateInvoiceNote(Guid id)

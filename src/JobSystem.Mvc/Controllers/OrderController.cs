@@ -40,17 +40,17 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult PendingOrderItems(int page = 1)
 		{
 			var items = _orderItemService.GetPendingOrderItems().Select(
-				q => new OrderItemIndexViewModel
+				o => new OrderItemIndexViewModel
 				{
-					Id = q.Id,
-					JobItemId = q.JobItem.Id,
-					DeliveryDays = q.DeliveryDays.ToString(),
-					Description = q.Description,
-					PartNo = q.PartNo,
-					Price = q.Price.ToString(),
-					Quantity = q.Quantity.ToString(),
-					Instructions = q.Instructions,
-					SupplierName = q.Supplier.Name
+					Id = o.Id,
+					JobItemId = o.JobItem.Id,
+					DeliveryDays = o.DeliveryDays.ToString(),
+					Description = o.Description,
+					PartNo = o.PartNo,
+					Price = o.Price.ToString(),
+					Quantity = o.Quantity.ToString(),
+					Instructions = o.Instructions,
+					SupplierName = o.Supplier.Name
 				}).ToList();
 			return View(items);
 		}
@@ -58,55 +58,45 @@ namespace JobSystem.Mvc.Controllers
 		[HttpGet]
 		public ActionResult PendingOrders(int page = 1)
 		{
-			var items = _orderService.GetOrders().Where(i => !i.IsApproved).Select(
-				q => new OrderIndexViewModel
+			var pageSize = 15;
+			var items = _orderService.GetOrders().Where(o => !o.IsApproved).Select(
+				o => new OrderIndexViewModel
 				{
-					Id = q.Id,
-					Instructions = q.Instructions,
-					SupplierName = q.Supplier.Name,
-					OrderNo = q.OrderNo
-				}).OrderBy(o => o.OrderNo).ToList();
-			foreach (var item in items)
+					Id = o.Id,
+					Instructions = o.Instructions,
+					SupplierName = o.Supplier.Name,
+					OrderNo = o.OrderNo,
+					ItemCount = _orderItemService.GetOrderItemsCount(o.Id)
+				}).OrderBy(o => o.OrderNo).Skip((page - 1) * pageSize).Take(pageSize);
+			return View(new OrderListViewModel
 			{
-				var orderItems = _orderItemService.GetOrderItems(item.Id);
-				item.OrderItems = orderItems.Select(oi => new OrderItemIndexViewModel()
-				{
-					DeliveryDays = oi.DeliveryDays.ToString(),
-					Description = oi.Description,
-					Instructions = oi.Instructions,
-					PartNo = oi.PartNo,
-					Price = oi.Price.ToString(),
-					Quantity = oi.Quantity.ToString()
-				}).ToList();
-			}
-			return View(items);
+				Items = items,
+				Page = page,
+				PageSize = pageSize,
+				Total = _orderService.GetPendingOrdersCount()
+			});
 		}
 
 		[HttpGet]
 		public ActionResult ApprovedOrders(int page = 1)
 		{
-			var items = _orderService.GetOrders().Where(i => i.IsApproved).Select(
-				q => new OrderIndexViewModel
+			var pageSize = 15;
+			var items = _orderService.GetOrders().Where(o => o.IsApproved).Select(
+				o => new OrderIndexViewModel
 				{
-					Id = q.Id,
-					Instructions = q.Instructions,
-					SupplierName = q.Supplier.Name,
-					OrderNo = q.OrderNo
-				}).OrderBy(o => o.OrderNo).ToList();
-			foreach (var item in items)
+					Id = o.Id,
+					Instructions = o.Instructions,
+					SupplierName = o.Supplier.Name,
+					OrderNo = o.OrderNo,
+					ItemCount = _orderItemService.GetOrderItemsCount(o.Id)
+				}).OrderBy(o => o.OrderNo).Skip((page - 1) * pageSize).Take(pageSize);
+			return View(new OrderListViewModel
 			{
-				var orderItems = _orderItemService.GetOrderItems(item.Id);
-				item.OrderItems = orderItems.Select(oi => new OrderItemIndexViewModel()
-				{
-					DeliveryDays = oi.DeliveryDays.ToString(),
-					Description = oi.Description,
-					Instructions = oi.Instructions,
-					PartNo = oi.PartNo,
-					Price = oi.Price.ToString(),
-					Quantity = oi.Quantity.ToString()
-				}).ToList();
-			}
-			return View(items);
+				Items = items,
+				Page = page,
+				PageSize = pageSize,
+				Total = _orderService.GetApprovedOrdersCount()
+			});
 		}
 
 		[HttpGet]
@@ -141,25 +131,45 @@ namespace JobSystem.Mvc.Controllers
 		[HttpGet]
 		public ActionResult CreateIndividualOrder()
 		{
-			var viewModel = new OrderCreateViewModel()
+			var viewModel = new OrderCreateViewModel
 			{
 				JobItemId = Guid.Empty,
 				CurrencyId = _companyDetailsService.GetCompany().DefaultCurrency.Id,
-				Currencies = _currencyService.GetCurrencies().ToSelectList()
+				Currencies = _currencyService.GetCurrencies().ToSelectList(),
+				Description = "placeholder",	// This is needed because this value is required by another view that uses the same model.
+				Quantity = 1	// Likewise.
 			};
 			return View(viewModel);
 		}
 
 		[HttpPost]
-		[Transaction]
-		public ActionResult CreateIndividualOrder(OrderCreateViewModel viewmodel)
+		public ActionResult CreateIndividualOrder(OrderCreateViewModel viewModel)
 		{
-			var order = _orderService.Create(
-				Guid.NewGuid(),
-				viewmodel.SupplierId,
-				viewmodel.Instructions,
-				viewmodel.CurrencyId);
-			return RedirectToAction("PendingOrders");
+			if (ModelState.IsValid)
+			{
+				var transaction = NHibernateSession.Current.BeginTransaction();
+				try
+				{
+					var order = _orderService.Create(
+						Guid.NewGuid(),
+						viewModel.SupplierId,
+						viewModel.Instructions,
+						viewModel.CurrencyId);
+					transaction.Commit();
+					return RedirectToAction("PendingOrders");
+				}
+				catch (DomainValidationException dex)
+				{
+					transaction.Rollback();
+					ModelState.UpdateFromDomain(dex.Result);
+				}
+				finally
+				{
+					transaction.Dispose();
+				}
+			}
+			viewModel.Currencies = _currencyService.GetCurrencies().ToSelectList();
+			return View(viewModel);
 		}
 
 		public ActionResult Edit(Guid id)

@@ -37,6 +37,8 @@
 		</div>
 		@Html.HiddenFor(m => m.JobItemId)
 		@Html.HiddenFor(m => m.RaisedFromMainTab)
+		@Html.HiddenFor(m => m.Description)
+		@Html.HiddenFor(m => m.Quantity)
 	</fieldset>
 	<input type="submit" class="primary-action" value="Raise"/>
 	<a href="@Url.Action("Index", "Order")" class="secondary-action">Cancel</a>

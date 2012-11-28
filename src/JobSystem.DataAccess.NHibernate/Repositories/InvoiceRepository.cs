@@ -9,14 +9,19 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 {
 	public class InvoiceRepository : RepositoryBase<Invoice>, IInvoiceRepository
 	{
-		public IEnumerable<Invoice> GetInvoices()
-		{
-			return CurrentSession.Query<Invoice>();
-		}
-
 		public int GetInvoiceItemCount(Guid invoiceId)
 		{
 			return CurrentSession.Query<InvoiceItem>().Where(i => i.Invoice.Id == invoiceId).Count();
+		}
+
+		public int GetInvoicesCount()
+		{
+			return CurrentSession.Query<Invoice>().Count();
+		}
+
+		public IEnumerable<Invoice> GetInvoices()
+		{
+			return CurrentSession.Query<Invoice>();
 		}
 	}
 }

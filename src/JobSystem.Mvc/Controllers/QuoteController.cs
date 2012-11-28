@@ -112,6 +112,7 @@ namespace JobSystem.Mvc.Controllers
 		[HttpGet]
 		public ActionResult PendingQuotes(int page = 1)
 		{
+			var pageSize = 15;
 			var items = _quoteItemService.GetPendingQuoteItems().Select(
 				q => new QuoteItemIndexViewModel
 				{
@@ -129,14 +130,21 @@ namespace JobSystem.Mvc.Controllers
 					Days = q.Days,
 					ItemBER = q.BeyondEconomicRepair,
 					JobItemRef = String.Format("{0}/{1}", q.JobItem.Job.JobNo, q.JobItem.ItemNo),
-				}).OrderBy(qi => qi.JobItemRef).ToList();
-			var viewmodel = new QuotePendingListViewModel { QuoteItems = items };
+				}).OrderBy(qi => qi.JobItemRef).Skip((page - 1) * pageSize).Take(pageSize);
+			var viewmodel = new QuotePendingListViewModel
+			{
+				QuoteItems = items,
+				Page = page,
+				PageSize = pageSize,
+				Total = _quoteItemService.GetPendingQuoteItemsCount()
+			};
 			return View(viewmodel);
 		}
 
 		[HttpGet]
 		public ActionResult ApprovedQuotes(int page = 1)
 		{
+			var pageSize = 15;
 			var quotes = _quoteService.GetQuotes().Select(
 				q => new QuoteIndexViewModel
 				{
@@ -147,30 +155,17 @@ namespace JobSystem.Mvc.Controllers
 					DateCreated = q.DateCreated.ToLongDateString(),
 					OrderNo = q.OrderNumber,
 					AdviceNo = q.AdviceNumber,
-					CurrencyName = q.Currency.Name
-				}).OrderBy(q => q.QuoteNo).ToList();
-			foreach (var quote in quotes)
+					CurrencyName = q.Currency.Name,
+					ItemCount = _quoteItemService.GetQuoteItemsCount(q.Id)
+				}).OrderBy(q => q.QuoteNo).Skip((page - 1) * pageSize).Take(pageSize);
+			var viewModel = new QuoteListViewModel
 			{
-				var quoteItems = _quoteItemService.GetQuoteItems(quote.Id);
-				quote.QuoteItems = quoteItems.Select(qi => new QuoteItemIndexViewModel
-				{
-					Id = qi.Id,
-					JobItemId = qi.JobItem.Id,
-					Report = qi.Report,
-					Repair = (double)qi.Labour,
-					Calibration = (double)qi.Calibration,
-					Parts = (double)qi.Parts,
-					Carriage = (double)qi.Carriage,
-					Investigation = (double)qi.Investigation,
-					Days = qi.Days,
-					ItemBER = qi.BeyondEconomicRepair,
-					ItemNo = qi.ItemNo.ToString(),
-					JobItemRef = String.Format("{0}/{1}", qi.JobItem.Job.JobNo, qi.JobItem.ItemNo),
-					Status = qi.Status.Name,
-					StatusType = qi.Status.Type
-				}).OrderBy(qi => qi.JobItemRef).ToList();
-			}
-			return View(quotes);
+				Items = quotes,
+				Page = page,
+				PageSize = pageSize,
+				Total = _quoteService.GetQuotesCount()
+			};
+			return View(viewModel);
 		}
 
 		[HttpGet]

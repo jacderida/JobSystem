@@ -62,6 +62,13 @@ namespace JobSystem.BusinessLogic.Services
 			return instrument;
 		}
 
+		public int GetInstrumentsCount()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _instrumentRepository.GetInstrumentsCount();
+		}
+
 		public IEnumerable<Instrument> GetInstruments()
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

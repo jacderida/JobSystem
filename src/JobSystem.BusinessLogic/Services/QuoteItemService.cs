@@ -213,6 +213,13 @@ namespace JobSystem.BusinessLogic.Services
 			return _quoteItemRepository.GetQuoteItems(quoteId);
 		}
 
+		public int GetQuoteItemsCount(Guid quoteId)
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			return _quoteItemRepository.GetQuoteItemsCount(quoteId);
+		}
+
 		public IEnumerable<QuoteItem> GetQuoteItemsForJobItem(Guid jobItemId)
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
@@ -230,6 +237,13 @@ namespace JobSystem.BusinessLogic.Services
 		public void DeletePendingQuoteItem(Guid id)
 		{
 			_quoteItemRepository.DeletePendingQuoteItem(id);
+		}
+
+		public int GetPendingQuoteItemsCount()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
+			return _quoteItemRepository.GetPendingQuoteItemsCount();
 		}
 
 		public IEnumerable<PendingQuoteItem> GetPendingQuoteItems()

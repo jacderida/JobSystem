@@ -11,36 +11,34 @@
 
 @using (Html.BeginForm("QuotePending", "Quote", FormMethod.Post))
 {
-
-<input class="primary-action" type="submit" value="Quote"/>
+	<input class="primary-action" type="submit" value="Quote"/>
 	<br /><br />
 
-
-if (Model.QuoteItems.Any()) {
-	var grid = new WebGrid(Model.QuoteItems, defaultSort:"JobNo", canSort: false, rowsPerPage: 15);
-	
-	@grid.GetHtml(columns: grid.Columns(
-		grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
-		grid.Column("JobNo", "Job"),
-		grid.Column("JobItemRef", "Job Item"),
-		grid.Column("OrderNo", "Order No."),
-		grid.Column("AdviceNo", "Advice No."),
-		grid.Column("Repair", "Repair", format: @<text>@item.Repair.ToString("N2")</text>),
-		grid.Column("Calibration", "Calibration", format: @<text>@item.Calibration.ToString("N2")</text>),
-		grid.Column("Parts", "Parts", format: @<text>@item.Parts.ToString("N2")</text>),
-		grid.Column("Carriage", "Carriage", format: @<text>@item.Carriage.ToString("N2")</text>),
-		grid.Column("Investigation", "Investigation", format: @<text>@item.Investigation.ToString("N2")</text>),
-		grid.Column("Days", "Days"),
-		grid.Column("ItemBER", "BER"),
-		grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit", "EditItem", new { id = item.JobItemId, fromJi = false, isQuoted = false })</text>)
-	))
+	if (Model.QuoteItems.Any())
+	{
+		var grid = new WebGrid(null, defaultSort:"JobNo", canSort: false, rowsPerPage: Model.PageSize);
+		grid.Bind(Model.QuoteItems, autoSortAndPage: false, rowCount: Model.Total);
+		@grid.GetHtml(columns: grid.Columns(
+			grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
+			grid.Column("JobNo", "Job"),
+			grid.Column("JobItemRef", "Job Item"),
+			grid.Column("OrderNo", "Order No."),
+			grid.Column("AdviceNo", "Advice No."),
+			grid.Column("Repair", "Repair", format: @<text>@item.Repair.ToString("N2")</text>),
+			grid.Column("Calibration", "Calibration", format: @<text>@item.Calibration.ToString("N2")</text>),
+			grid.Column("Parts", "Parts", format: @<text>@item.Parts.ToString("N2")</text>),
+			grid.Column("Carriage", "Carriage", format: @<text>@item.Carriage.ToString("N2")</text>),
+			grid.Column("Investigation", "Investigation", format: @<text>@item.Investigation.ToString("N2")</text>),
+			grid.Column("Days", "Days"),
+			grid.Column("ItemBER", "BER"),
+			grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit", "EditItem", new { id = item.JobItemId, fromJi = false, isQuoted = false })</text>)
+		))
+	}
+	else
+	{
+		<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
+	}
 }
-else
-{
-	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
-}
-}
-
 
 <div id="edit-quote-container">
 </div>

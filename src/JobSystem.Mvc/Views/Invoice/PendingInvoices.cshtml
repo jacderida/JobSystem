@@ -1,4 +1,4 @@
-﻿@model List<JobSystem.Mvc.ViewModels.Invoices.InvoiceItemIndexViewModel>
+﻿@model JobSystem.Mvc.ViewModels.Invoices.InvoiceItemListViewModel
 @{
     ViewBag.Title = "Pending Invoices";
 }
@@ -10,26 +10,24 @@
 
 @using (Html.BeginForm("ConvertPending", "Invoice", FormMethod.Post))
 {
-
-if (Model.Any()) {
-
-	<input class="primary-action" type="submit" value="Invoice"/>
-
-	var grid = new WebGrid(Model, defaultSort:"OrderNo", canSort: false, rowsPerPage: 15);
-	
-	@grid.GetHtml(columns: grid.Columns(
-		grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
-		grid.Column("JobNo", "Job"),
-		grid.Column("JobItemNo", "Job Item No"),
-		grid.Column("OrderNo", "Order No."),
-		grid.Column("RepairPrice", "Repair", format: @<text>@item.RepairPrice.ToString("N2")</text>),
-		grid.Column("CalibrationPrice", "Calibration", format: @<text>@item.CalibrationPrice.ToString("N2")</text>),
-		grid.Column("PartsPrice", "Parts", format: @<text>@item.PartsPrice.ToString("N2")</text>),
-		grid.Column("CarriagePrice", "Carriage", format: @<text>@item.CarriagePrice.ToString("N2")</text>),
-		grid.Column("InvestigationPrice", "Investigation", format: @<text>@item.InvestigationPrice.ToString("N2")</text>)
-	))
-}else{
-	<div id="empty-list">@JobSystem.Resources.Invoices.Messages.NoPendingInvoices</div>
+	if (Model.Items.Any())
+	{
+		<input class="primary-action" type="submit" value="Invoice"/>
+		var grid = new WebGrid(null, defaultSort:"OrderNo", canSort: false, rowsPerPage: Model.PageSize);
+		grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
+		@grid.GetHtml(columns: grid.Columns(
+			grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
+			grid.Column("JobItemRef", "Job Item"),
+			grid.Column("OrderNo", "Order No."),
+			grid.Column("RepairPrice", "Repair", format: @<text>@item.RepairPrice.ToString("N2")</text>),
+			grid.Column("CalibrationPrice", "Calibration", format: @<text>@item.CalibrationPrice.ToString("N2")</text>),
+			grid.Column("PartsPrice", "Parts", format: @<text>@item.PartsPrice.ToString("N2")</text>),
+			grid.Column("CarriagePrice", "Carriage", format: @<text>@item.CarriagePrice.ToString("N2")</text>),
+			grid.Column("InvestigationPrice", "Investigation", format: @<text>@item.InvestigationPrice.ToString("N2")</text>)
+		))
+	}
+	else
+	{
+		<div id="empty-list">@JobSystem.Resources.Invoices.Messages.NoPendingInvoices</div>
+	}
 }
-}
-

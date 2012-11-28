@@ -70,6 +70,13 @@ namespace JobSystem.BusinessLogic.Services
 			return _supplierRepository.GetById(id);
 		}
 
+		public int GetSuppliersCount()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+			return _supplierRepository.GetSuppliersCount();
+		}
+
 		public IEnumerable<Supplier> GetSuppliers()
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))
