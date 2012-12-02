@@ -1,4 +1,4 @@
-﻿@model List<JobSystem.Mvc.ViewModels.Deliveries.DeliveryIndexViewModel>
+﻿@model  JobSystem.Mvc.ViewModels.Deliveries.DeliveryListViewModel
 @{
 	ViewBag.Title = "Approved Deliveries";
 }
@@ -8,25 +8,17 @@
 	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedDeliveries")">Approved</a></span>
 </div>
 
-@if (Model.Any())
+@if (Model.Items.Any())
 {
-	var grid = new WebGrid(Model, defaultSort:"DeliveryNo", canSort: false, rowsPerPage: 15);
-	
+	var grid = new WebGrid(null, defaultSort:"DeliveryNo", canSort: false, rowsPerPage: Model.PageSize);
+	grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
 	@grid.GetHtml(columns: grid.Columns(
 		grid.Column("DeliveryNo", "Delivery No."),
 		grid.Column("CustomerName", "Customer"),
 		grid.Column("Fao", "FAO"),
 		grid.Column("CreatedBy", "Created By"),
 		grid.Column("DateCreated", "Date Created"),
-		grid.Column("", "", format: @<span class="the-tooltip center top dark-midnight-blue itemCount">
-				@item.DeliveryItems.Count items
-				<span>
-					@foreach (var ci in item.DeliveryItems)
-					{
-						<span>@ci.Notes</span>
-					}
-				</span>
-			</span>),
+		grid.Column("", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.ItemCount), "DeliveryItems", new { deliveryId = item.Id })</text>),
 		grid.Column("", "", format: @<text>@Html.ActionLink("Print Note", "GenerateDeliveryNote", "Delivery", new { id = item.Id }, new { target = "_blank" })</text>)
 	))
 }

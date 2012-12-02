@@ -1,0 +1,25 @@
+﻿@model JobSystem.Mvc.ViewModels.Deliveries.DeliveryItemEditViewModel
+@{
+	ViewBag.Title = "EditItem";
+}
+
+<h2>Edit Delivery Item</h2>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm("EditItem", "Delivery", FormMethod.Post))
+{
+	@Html.ValidationSummary(true)
+	<span class="form-section">Details</span>
+	<fieldset>
+		<div class="editor-label">
+			@Html.LabelFor(model => model.Notes)
+		</div>
+		<div class="editor-field">
+			@Html.TextAreaFor(model => model.Notes)
+			@Html.ValidationMessageFor(model => model.Notes)
+		</div>
+		@Html.HiddenFor(model => model.Id)
+	</fieldset>
+	<input type="submit" class="primary-action" value="Save" />
+}

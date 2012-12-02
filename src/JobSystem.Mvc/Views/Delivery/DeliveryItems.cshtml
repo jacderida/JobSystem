@@ -1,0 +1,15 @@
+﻿@model IEnumerable<JobSystem.Mvc.ViewModels.Deliveries.DeliveryItemIndexViewModel>
+@{
+	ViewBag.Title = "DeliveryItems";
+}
+@if (Model.Any())
+{
+	var grid = new WebGrid(Model, canSort: false, rowsPerPage: 15);
+	@grid.GetHtml(columns: grid.Columns(
+		grid.Column("JobRef", "Job Item"),
+		grid.Column("Instrument", "Instrument"),
+		grid.Column("Notes", "Notes"),
+		grid.Column("", "", format: @<text>@Html.ActionLink("Edit", "EditItem", new { id = item.Id })</text>)
+	))
+	<div class="clear"></div>
+}

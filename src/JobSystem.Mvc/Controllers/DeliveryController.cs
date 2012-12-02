@@ -66,6 +66,37 @@ namespace JobSystem.Mvc.Controllers
 			return View(viewModel);
 		}
 
+		public ActionResult DeliveryItems(Guid deliveryId)
+		{
+			var viewModel = _deliveryItemService.GetDeliveryItems(deliveryId).Select(di =>
+				new DeliveryItemIndexViewModel
+				{
+					Id = di.Id,
+					JobRef = di.JobItem.GetJobItemRef(),
+					Notes = di.Notes,
+					Instrument = di.JobItem.Instrument.ToString()
+				}).OrderBy(di => di.JobRef);
+			return View(viewModel);
+		}
+
+		[HttpGet]
+		public ActionResult EditItem(Guid id)
+		{
+			var deliveryItem = _deliveryItemService.GetById(id);
+			return View(new DeliveryItemEditViewModel
+			{
+				Id = deliveryItem.Id,
+				Notes = deliveryItem.Notes
+			});
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult EditItem(Guid id)
+		{
+			return RedirectToAction("DeliveryItems", new { deliveryId = id });
+		}
+
 		[HttpGet]
 		public ActionResult Create(Guid id)
 		{

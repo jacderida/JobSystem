@@ -8,5 +8,6 @@ namespace JobSystem.Mvc.ViewModels.Deliveries
 		public string JobRef { get; set; }
 		public string Customer { get; set; }
 		public string Notes { get; set; }
+		public string Instrument { get; set; }
 	}
 }
