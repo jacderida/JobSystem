@@ -95,6 +95,8 @@ namespace JobSystem.BusinessLogic.Services
 		public QuoteItem Edit(
 			Guid id, decimal labour, decimal calibration, decimal parts, decimal carriage, decimal investigation, string report, int days, bool beyondEconomicRepair)
 		{
+			if (!CurrentUser.HasRole(UserRole.Admin | UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurity, "CurrentUser");
 			var quoteItem = GetById(id);
 			quoteItem.Labour = GetLabour(labour);
 			quoteItem.Calibration = GetCalibration(calibration);

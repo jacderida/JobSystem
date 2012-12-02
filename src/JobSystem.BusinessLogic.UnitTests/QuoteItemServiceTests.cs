@@ -1553,6 +1553,45 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
+		public void Edit_MemberIsAdmin_ItemEditedSuccessfully()
+		{
+			var labour = 20;
+			var calibration = 30;
+			var carriage = 30;
+			var parts = 24;
+			var investgation = 25;
+			var report = "new report";
+			var days = 20;
+			var ber = true;
+
+			var quoteRepositoryMock = MockRepository.GenerateMock<IQuoteRepository>();
+			quoteRepositoryMock.Stub(x => x.GetById(_quoteForEditId)).Return(_quoteForEdit);
+			quoteRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			var quoteItemRepositoryMock = MockRepository.GenerateMock<IQuoteItemRepository>();
+			quoteItemRepositoryMock.Stub(x => x.GetById(_quoteItemForEditId)).Return(_quoteItemForEdit);
+			quoteItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+
+			_quoteItemService = QuoteItemServiceTestHelper.CreateQuoteItemService(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Admin | UserRole.Member),
+				quoteRepositoryMock,
+				quoteItemRepositoryMock,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Edit(_quoteItemForEditId, labour, calibration, parts, carriage, investgation, report, days, ber);
+			quoteRepositoryMock.VerifyAllExpectations();
+			quoteItemRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(2, _quoteForEdit.Revision);
+			Assert.AreEqual(20, _quoteItemForEdit.Labour);
+			Assert.AreEqual(30, _quoteItemForEdit.Calibration);
+			Assert.AreEqual(24, _quoteItemForEdit.Parts);
+			Assert.AreEqual(25, _quoteItemForEdit.Investigation);
+			Assert.AreEqual("new report", _quoteItemForEdit.Report);
+			Assert.AreEqual(20, _quoteItemForEdit.Days);
+			Assert.AreEqual(true, _quoteItemForEdit.BeyondEconomicRepair);
+		}
+
+		[Test]
 		[ExpectedException(typeof(ArgumentException))]
 		public void Edit_InvalidQuoteItemId_ArgumentExceptionThrown()
 		{
