@@ -54,7 +54,12 @@ namespace JobSystem.TestHelpers
 
 		public static ConsignmentService Create(IConsignmentRepository consignmentRepository, ISupplierRepository supplierRepository)
 		{
-			var userContext = TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member);
+			return Create(
+				consignmentRepository, supplierRepository, TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Manager | UserRole.Member));
+		}
+
+		public static ConsignmentService Create(IConsignmentRepository consignmentRepository, ISupplierRepository supplierRepository, IUserContext userContext)
+		{
 			var dispatcher = MockRepository.GenerateStub<IQueueDispatcher<IMessage>>();
 			return new ConsignmentService(
 				userContext,

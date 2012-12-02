@@ -60,6 +60,8 @@ namespace JobSystem.BusinessLogic.Services
 
 		public Consignment Edit(Guid consignmentId, Guid supplierId)
 		{
+			if (!CurrentUser.HasRole(UserRole.Admin | UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			var consignment = GetById(consignmentId);
 			if (consignment == null)
 				throw new ArgumentException("A valid consignment ID must be supplied");

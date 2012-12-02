@@ -109,6 +109,26 @@ namespace JobSystem.BusinessLogic.UnitTests
 		#region Edit
 
 		[Test]
+		public void Edit_UserIsAdmin_SuccessfulEdit()
+		{
+			var supplierId = Guid.NewGuid();
+			var consignmentRepositoryMock = MockRepository.GenerateMock<IConsignmentRepository>();
+			consignmentRepositoryMock.Stub(x => x.GetById(_consignmentForEditId)).Return(_consignmentForEdit);
+			consignmentRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			var supplierRepositoryStub = MockRepository.GenerateStub<ISupplierRepository>();
+			supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(new Supplier { Id = supplierId, Name = "New Supplier" });
+			_consignmentService = ConsignmentServiceFactory.Create(
+				consignmentRepositoryMock,
+				supplierRepositoryStub,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin | UserRole.Member));
+
+			Edit(_consignmentForEditId, supplierId);
+			consignmentRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(_consignmentForEditId, _consignmentForEdit.Id);
+			Assert.AreEqual(supplierId, _consignmentForEdit.Supplier.Id);
+		}
+
+		[Test]
 		public void Edit_ValidDetails_SuccessfulEdit()
 		{
 			var supplierId = Guid.NewGuid();
@@ -165,6 +185,24 @@ namespace JobSystem.BusinessLogic.UnitTests
 
 			Edit(_consignmentForEditId, supplierId);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.ConsignmentIsOrdered));
+		}
+
+		[Test]
+		public void Edit_UserHasInsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			_consignmentForEdit.IsOrdered = true;
+			var supplierId = Guid.NewGuid();
+			var consignmentRepositoryMock = MockRepository.GenerateMock<IConsignmentRepository>();
+			consignmentRepositoryMock.Stub(x => x.GetById(_consignmentForEditId)).Return(_consignmentForEdit);
+			var supplierRepositoryStub = MockRepository.GenerateStub<ISupplierRepository>();
+			supplierRepositoryStub.Stub(x => x.GetById(supplierId)).Return(new Supplier { Id = supplierId, Name = "New Supplier" });
+			_consignmentService = ConsignmentServiceFactory.Create(
+				consignmentRepositoryMock,
+				supplierRepositoryStub,
+				TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Member));
+
+			Edit(_consignmentForEditId, supplierId);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(Messages.InsufficientSecurityClearance));
 		}
 
 		private void Edit(Guid consignmentId, Guid supplierId)
