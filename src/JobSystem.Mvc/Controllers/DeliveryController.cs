@@ -92,9 +92,9 @@ namespace JobSystem.Mvc.Controllers
 
 		[HttpPost]
 		[Transaction]
-		public ActionResult EditItem(Guid id)
+		public ActionResult EditItem(DeliveryItemEditViewModel model)
 		{
-			return RedirectToAction("DeliveryItems", new { deliveryId = id });
+			return RedirectToAction("DeliveryItems", new { deliveryId = model.Id });
 		}
 
 		[HttpGet]

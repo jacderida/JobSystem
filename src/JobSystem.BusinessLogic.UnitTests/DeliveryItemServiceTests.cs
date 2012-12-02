@@ -529,7 +529,68 @@ namespace JobSystem.BusinessLogic.UnitTests
 		#endregion
 		#region Edit
 
+		[Test]
+		public void Edit_ValidItemDetails_ItemEdited()
+		{
+			var notes = "some notes";
 
+			var deliveryItemRepositoryMock = MockRepository.GenerateMock<IDeliveryItemRepository>();
+			deliveryItemRepositoryMock.Stub(x => x.GetById(_deliveryItemForEditId)).Return(_deliveryItemForEdit);
+			deliveryItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_deliveryItemService = DeliveryItemServiceFactory.Create(
+				_userContext,
+				MockRepository.GenerateStub<IDeliveryRepository>(),
+				deliveryItemRepositoryMock,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IQuoteItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Edit(_deliveryItemForEditId, notes);
+			deliveryItemRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(_deliveryItemForEditId, _deliveryItemForEdit.Id);
+			Assert.AreEqual(notes, _deliveryItemForEdit.Notes);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Edit_InvalidDeliveryItemId_ThrowsArgumentException()
+		{
+			var notes = "some notes";
+
+			var deliveryItemRepositoryStub = MockRepository.GenerateMock<IDeliveryItemRepository>();
+			deliveryItemRepositoryStub.Stub(x => x.GetById(_deliveryItemForEditId)).Return(null);
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_deliveryItemService = DeliveryItemServiceFactory.Create(
+				_userContext,
+				MockRepository.GenerateStub<IDeliveryRepository>(),
+				deliveryItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IQuoteItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Edit(_deliveryItemForEditId, notes);
+		}
+
+		[Test]
+		public void Edit_NotesGreaterThan255Characters_ThrowsDomainValidationException()
+		{
+			var notes = new string('a', 256);
+
+			var deliveryItemRepositoryStub = MockRepository.GenerateMock<IDeliveryItemRepository>();
+			deliveryItemRepositoryStub.Stub(x => x.GetById(_deliveryItemForEditId)).Return(_deliveryItemForEdit);
+			_jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+			_deliveryItemService = DeliveryItemServiceFactory.Create(
+				_userContext,
+				MockRepository.GenerateStub<IDeliveryRepository>(),
+				deliveryItemRepositoryStub,
+				MockRepository.GenerateStub<IJobItemRepository>(),
+				MockRepository.GenerateStub<IQuoteItemRepository>(),
+				MockRepository.GenerateStub<IListItemRepository>(),
+				MockRepository.GenerateStub<ICustomerRepository>());
+			Edit(_deliveryItemForEditId, notes);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(DeliveryItemMessages.InvalidNotes));
+		}
 
 		private void Edit(Guid deliveryItemId, string notes)
 		{
