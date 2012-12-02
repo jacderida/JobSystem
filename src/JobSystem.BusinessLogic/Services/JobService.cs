@@ -59,6 +59,8 @@ namespace JobSystem.BusinessLogic.Services
 
 		public Job Edit(Guid id, string orderNumber, string adviceNumber, string contact, string notes, string instructions)
 		{
+			if (!CurrentUser.HasRole(UserRole.Admin | UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			var job = GetJob(id);
 			job.OrderNo = orderNumber;
 			job.AdviceNo = adviceNumber;

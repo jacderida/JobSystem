@@ -32,7 +32,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		{
 			_domainValidationException = null;
 			AppDateTime.GetUtcNow = () => _dateCreated;
-			_userContext = TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member);
+			_userContext = TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Admin | UserRole.Manager);
 			_jobForAttachment = new Job
 			{
 				Id = _jobForAttachmentId,
@@ -448,6 +448,56 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
+		public void Edit_ManagerUserContext_SuccessfullyEditJob()
+		{
+			var orderNumber = "orderno-edited";
+			var adviceNumber = "adviceno-edited";
+			var contact = "contact-edited";
+			var notes = "notes-edited";
+			var instructions = "instructions-edited";
+
+			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryMock.Stub(x => x.GetById(_jobForEditId)).Return(_jobForEdit);
+			jobRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			_jobService = JobServiceFactory.Create(
+				jobRepositoryMock,
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Manager | UserRole.Member));
+			Edit(_jobForEditId, orderNumber, adviceNumber, contact, notes, instructions);
+
+			jobRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(_jobForEdit.Id, _jobForEditId);
+			Assert.AreEqual(_jobForEdit.OrderNo, orderNumber);
+			Assert.AreEqual(_jobForEdit.AdviceNo, adviceNumber);
+			Assert.AreEqual(_jobForEdit.Notes, notes);
+			Assert.AreEqual(_jobForEdit.Instructions, instructions);
+		}
+
+		[Test]
+		public void Edit_AdminUserContext_SuccessfullyEditJob()
+		{
+			var orderNumber = "orderno-edited";
+			var adviceNumber = "adviceno-edited";
+			var contact = "contact-edited";
+			var notes = "notes-edited";
+			var instructions = "instructions-edited";
+
+			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryMock.Stub(x => x.GetById(_jobForEditId)).Return(_jobForEdit);
+			jobRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			_jobService = JobServiceFactory.Create(
+				jobRepositoryMock,
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Admin | UserRole.Member));
+			Edit(_jobForEditId, orderNumber, adviceNumber, contact, notes, instructions);
+
+			jobRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(_jobForEdit.Id, _jobForEditId);
+			Assert.AreEqual(_jobForEdit.OrderNo, orderNumber);
+			Assert.AreEqual(_jobForEdit.AdviceNo, adviceNumber);
+			Assert.AreEqual(_jobForEdit.Notes, notes);
+			Assert.AreEqual(_jobForEdit.Instructions, instructions);
+		}
+
+		[Test]
 		[ExpectedException(typeof(ArgumentException))]
 		public void Edit_InvalidJobId_ThrowsArgumentException()
 		{
@@ -542,6 +592,24 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_jobService = JobServiceFactory.Create(jobRepositoryMock);
 			Edit(_jobForEditId, orderNumber, adviceNumber, contact, notes, instructions);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.InstructionsTooLarge));
+		}
+
+		[Test]
+		public void Edit_UserHasInsufficientSecurityClearance_ThrowsDomainValidationException()
+		{
+			var orderNumber = "orderno-edited";
+			var adviceNumber = "adviceno-edited";
+			var contact = "contact-edited";
+			var notes = "notes-edited";
+			var instructions = "instructions-edited";
+
+			var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
+			jobRepositoryMock.Stub(x => x.GetById(_jobForEditId)).Return(_jobForEdit);
+			_jobService = JobServiceFactory.Create(
+				jobRepositoryMock,
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member));
+			Edit(_jobForEditId, orderNumber, adviceNumber, contact, notes, instructions);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.InsufficientSecurityClearance));
 		}
 
 		private void Edit(Guid id, string orderNumber, string adviceNumber, string contact, string notes, string instructions)
