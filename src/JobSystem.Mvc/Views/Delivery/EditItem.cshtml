@@ -20,6 +20,7 @@
 			@Html.ValidationMessageFor(model => model.Notes)
 		</div>
 		@Html.HiddenFor(model => model.Id)
+		@Html.HiddenFor(model => model.DeliveryId)
 	</fieldset>
 	<input type="submit" class="primary-action" value="Save" />
 }

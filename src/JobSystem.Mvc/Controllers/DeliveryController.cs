@@ -86,6 +86,7 @@ namespace JobSystem.Mvc.Controllers
 			return View(new DeliveryItemEditViewModel
 			{
 				Id = deliveryItem.Id,
+				DeliveryId = deliveryItem.Delivery.Id,
 				Notes = deliveryItem.Notes
 			});
 		}
@@ -94,7 +95,12 @@ namespace JobSystem.Mvc.Controllers
 		[Transaction]
 		public ActionResult EditItem(DeliveryItemEditViewModel model)
 		{
-			return RedirectToAction("DeliveryItems", new { deliveryId = model.Id });
+			if (ModelState.IsValid)
+			{
+				_deliveryItemService.Edit(model.Id, model.Notes);
+				return RedirectToAction("DeliveryItems", new { deliveryId = model.DeliveryId });
+			}
+			return View(model);
 		}
 
 		[HttpGet]
