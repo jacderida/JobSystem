@@ -72,7 +72,7 @@ namespace JobSystem.BusinessLogic.Services
 
 		public Quote Edit(Guid id, string orderNo, string adviceNo, Guid currencyId)
 		{
-			if (!CurrentUser.HasRole(UserRole.Manager))
+			if (!CurrentUser.HasRole(UserRole.Admin | UserRole.Manager))
 				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			var quote = _quoteRepository.GetById(id);
 			if (quote == null)

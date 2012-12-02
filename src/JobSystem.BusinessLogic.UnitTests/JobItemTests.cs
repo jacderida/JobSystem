@@ -34,7 +34,7 @@ namespace JobSystem.BusinessLogic.UnitTests
 		[TestFixtureSetUp]
 		public void FixtureSetup()
 		{
-			_userContext = TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member);
+			_userContext = TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Admin | UserRole.Manager | UserRole.Member);
 		}
 
 		[SetUp]
@@ -635,6 +635,50 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
+		public void EditInformation_UserIsManager_JobItemEdited()
+		{
+			var instructions = "edited instructions";
+			var accessories = "edited accessories";
+			var comments = "edited comments";
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemForEditInformationId)).Return(_jobItemForEditInformation);
+			jobItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			_jobItemService = JobItemServiceFactory.Create(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Manager | UserRole.Member),
+				jobItemRepositoryMock);
+
+			EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
+			jobItemRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(_jobItemForEditInformationId, _jobItemForEditInformation.Id);
+			Assert.AreEqual(instructions, _jobItemForEditInformation.Instructions);
+			Assert.AreEqual(accessories, _jobItemForEditInformation.Accessories);
+			Assert.AreEqual(comments, _jobItemForEditInformation.Comments);
+		}
+
+		[Test]
+		public void EditInformation_UserIsAdmin_JobItemEdited()
+		{
+			var instructions = "edited instructions";
+			var accessories = "edited accessories";
+			var comments = "edited comments";
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemForEditInformationId)).Return(_jobItemForEditInformation);
+			jobItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			_jobItemService = JobItemServiceFactory.Create(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Admin | UserRole.Member),
+				jobItemRepositoryMock);
+
+			EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
+			jobItemRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(_jobItemForEditInformationId, _jobItemForEditInformation.Id);
+			Assert.AreEqual(instructions, _jobItemForEditInformation.Instructions);
+			Assert.AreEqual(accessories, _jobItemForEditInformation.Accessories);
+			Assert.AreEqual(comments, _jobItemForEditInformation.Comments);
+		}
+
+		[Test]
 		[ExpectedException(typeof(ArgumentException))]
 		public void EditInformation_InvalidJobId_ArgumentExceptionThrown()
 		{
@@ -689,6 +733,22 @@ namespace JobSystem.BusinessLogic.UnitTests
 			_jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
 			EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
 			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.CommentsTooLarge));
+		}
+
+		[Test]
+		public void EditInformation_InsufficientSecurityClearance_DomainValidationExceptionThrown()
+		{
+			var instructions = "some instructions";
+			var accessories = "some accessories";
+			var comments = "some comments";
+
+			var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+			jobItemRepositoryMock.Stub(x => x.GetById(_jobItemForEditInformationId)).Return(_jobItemForEditInformation);
+			_jobItemService = JobItemServiceFactory.Create(
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member),
+				jobItemRepositoryMock);
+			EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
+			Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.InsufficientSecurityClearance));
 		}
 
 		private void EditInformation(Guid jobItemId, string instructions, string accessories, string comments)

@@ -221,6 +221,29 @@ namespace JobSystem.BusinessLogic.UnitTests
 		}
 
 		[Test]
+		public void Edit_MemberIsAdmin_ItemEdited()
+		{
+			var orderNo = "ORDER12345";
+			var adviceNo = "ADV12345";
+			var currencyId = Guid.NewGuid();
+
+			var quoteRepositoryMock = MockRepository.GenerateMock<IQuoteRepository>();
+			quoteRepositoryMock.Stub(x => x.GetById(_quoteForEditId)).Return(_quoteForEdit);
+			quoteRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			_quoteService = QuoteServiceTestHelper.CreateQuoteService(
+				quoteRepositoryMock,
+				MockRepository.GenerateStub<ICustomerRepository>(),
+				CurrencyRepositoryTestHelper.GetCurrencyRepository_StubsGetById_ReturnsGbpCurrency(currencyId),
+				TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Admin | UserRole.Member));
+			Edit(_quoteForEditId, orderNo, adviceNo, currencyId);
+			quoteRepositoryMock.VerifyAllExpectations();
+			Assert.AreEqual(orderNo, _quoteForEdit.OrderNumber);
+			Assert.AreEqual(adviceNo, _quoteForEdit.AdviceNumber);
+			Assert.AreEqual(currencyId, _quoteForEdit.Currency.Id);
+			Assert.AreEqual(2, _quoteForEdit.Revision);
+		}
+
+		[Test]
 		[ExpectedException(typeof(ArgumentException))]
 		public void Edit_InvalidQuoteId_ArgumentExceptionThrown()
 		{

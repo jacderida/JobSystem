@@ -67,6 +67,8 @@ namespace JobSystem.BusinessLogic.Services
 
 		public JobItem EditInformation(Guid jobItemId, string instructions, string accessories, string comments)
 		{
+			if (!CurrentUser.HasRole(UserRole.Admin | UserRole.Manager))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance);
 			var jobItem = GetById(jobItemId);
 			if (jobItem == null)
 				throw new ArgumentException("A valid job item ID must be supplied.");
