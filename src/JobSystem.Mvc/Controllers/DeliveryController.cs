@@ -37,32 +37,33 @@ namespace JobSystem.Mvc.Controllers
 					Id = di.Id,
 					JobRef = String.Format("{0}/{1}", di.JobItem.Job.JobNo, di.JobItem.ItemNo),
 					Customer = di.Customer.Name,
-					Notes = di.Notes
+					Notes = di.Notes,
 				}).OrderBy(di => di.JobRef).ToList();
 			return View(items);
 		}
 
 		public ActionResult ApprovedDeliveries(int page = 1)
 		{
+			var pageSize = 15;
 			var items = _deliveryService.GetDeliveries().Select(
-				i => new DeliveryIndexViewModel
+				d => new DeliveryIndexViewModel
 				{
-					Id = i.Id,
-					DeliveryNo = i.DeliveryNoteNumber,
-					CustomerName = i.Customer.Name,
-					CreatedBy = i.CreatedBy.Name,
-					DateCreated = i.DateCreated.ToLongDateString() + ' ' + i.DateCreated.ToShortTimeString(),
-					Fao = i.Fao
-				}).OrderBy(d => d.DeliveryNo).ToList();
-			foreach (var item in items)
+					Id = d.Id,
+					DeliveryNo = d.DeliveryNoteNumber,
+					CustomerName = d.Customer.Name,
+					CreatedBy = d.CreatedBy.Name,
+					DateCreated = d.DateCreated.ToLongDateString() + ' ' + d.DateCreated.ToShortTimeString(),
+					Fao = d.Fao,
+					ItemCount = _deliveryItemService.GetDeliveryItems(d.Id).Count()
+				}).OrderBy(d => d.DeliveryNo).Skip((page - 1) * pageSize).Take(pageSize);
+			var viewModel = new DeliveryListViewModel
 			{
-				var deliveryItems = _deliveryItemService.GetDeliveryItems(item.Id);
-				item.DeliveryItems = deliveryItems.Select(di => new DeliveryItemIndexViewModel
-				{
-					Notes = di.Notes
-				}).ToList();
-			}
-			return View(items);
+				Items = items,
+				Page = page,
+				PageSize = pageSize,
+				Total = _deliveryService.GetDeliveriesCount()
+			};
+			return View(viewModel);
 		}
 
 		[HttpGet]

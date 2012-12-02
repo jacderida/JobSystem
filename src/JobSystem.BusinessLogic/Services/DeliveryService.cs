@@ -83,6 +83,13 @@ namespace JobSystem.BusinessLogic.Services
 			return delivery;
 		}
 
+		public int GetDeliveriesCount()
+		{
+			if (!CurrentUser.HasRole(UserRole.Member))
+				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+			return _deliveryRepository.GetDeliveriesCount();
+		}
+
 		public IEnumerable<Delivery> GetDeliveries()
 		{
 			if (!CurrentUser.HasRole(UserRole.Member))

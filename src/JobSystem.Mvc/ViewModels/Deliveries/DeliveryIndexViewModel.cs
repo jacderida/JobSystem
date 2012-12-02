@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace JobSystem.Mvc.ViewModels.Deliveries
 {
@@ -14,6 +11,6 @@ namespace JobSystem.Mvc.ViewModels.Deliveries
 		public string DateCreated { get; set; }
 		public string CreatedBy { get; set; }
 		public string CustomerName { get; set; }
-		public IList<DeliveryItemIndexViewModel> DeliveryItems { get; set; }
+		public int ItemCount { get; set; }
 	}
 }

@@ -14,6 +14,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 			return CurrentSession.Query<DeliveryItem>().Where(di => di.Delivery.Id == deliveryId).Count();
 		}
 
+		public int GetDeliveriesCount()
+		{
+			return CurrentSession.Query<Delivery>().Count();
+		}
+
 		public IEnumerable<Delivery> GetDeliveries()
 		{
 			return CurrentSession.Query<Delivery>();
