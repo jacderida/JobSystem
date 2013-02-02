@@ -1,7 +1,7 @@
 ﻿namespace JobSystem.DataModel
 {
-	public interface IEntityIdProvider
-	{
-		string GetIdFor<T>();
-	}
+    public interface IEntityIdProvider
+    {
+        string GetIdFor<T>();
+    }
 }

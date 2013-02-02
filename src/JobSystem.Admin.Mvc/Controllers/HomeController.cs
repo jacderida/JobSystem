@@ -6,18 +6,18 @@ using System.Web.Mvc;
 
 namespace JobSystem.Admin.Mvc.Controllers
 {
-	public class HomeController : Controller
-	{
-		[Authorize]
-		public ActionResult Index()
-		{
-			return RedirectToAction("Index", "Tenant");
-		}
+    public class HomeController : Controller
+    {
+        [Authorize]
+        public ActionResult Index()
+        {
+            return RedirectToAction("Index", "Tenant");
+        }
 
-		[Authorize]
-		public ActionResult About()
-		{
-			return View();
-		}
-	}
+        [Authorize]
+        public ActionResult About()
+        {
+            return View();
+        }
+    }
 }

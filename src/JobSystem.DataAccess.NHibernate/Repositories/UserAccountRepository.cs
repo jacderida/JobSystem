@@ -9,28 +9,28 @@ using NHibernate.Linq;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 {
-	public class UserAccountRepository : RepositoryBase<UserAccount>, IUserAccountRepository
-	{
-		public UserAccountRepository()
-		{
-		}
+    public class UserAccountRepository : RepositoryBase<UserAccount>, IUserAccountRepository
+    {
+        public UserAccountRepository()
+        {
+        }
 
-		public UserAccount GetByEmail(string emailAddress, bool readOnly)
-		{
-			emailAddress = emailAddress.Trim();
-			if (String.IsNullOrWhiteSpace(emailAddress))
-				throw new ArgumentException("invalid email address");
-			var criteria = CurrentSession
-				.CreateCriteria<UserAccount>()
-				.Add(Restrictions.InsensitiveLike("EmailAddress", emailAddress, MatchMode.Exact));
-			if (readOnly)
-				criteria.SetFlushMode(FlushMode.Never);
-			return criteria.UniqueResult<UserAccount>();
-		}
+        public UserAccount GetByEmail(string emailAddress, bool readOnly)
+        {
+            emailAddress = emailAddress.Trim();
+            if (String.IsNullOrWhiteSpace(emailAddress))
+                throw new ArgumentException("invalid email address");
+            var criteria = CurrentSession
+                .CreateCriteria<UserAccount>()
+                .Add(Restrictions.InsensitiveLike("EmailAddress", emailAddress, MatchMode.Exact));
+            if (readOnly)
+                criteria.SetFlushMode(FlushMode.Never);
+            return criteria.UniqueResult<UserAccount>();
+        }
 
-		public IList<UserAccount> GetUsers()
-		{
-			return CurrentSession.Query<UserAccount>().ToList();
-		}
-	}
+        public IList<UserAccount> GetUsers()
+        {
+            return CurrentSession.Query<UserAccount>().ToList();
+        }
+    }
 }

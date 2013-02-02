@@ -2,8 +2,8 @@
 
 namespace JobSystem.Framework
 {
-	public class AppDateTime
-	{
-		public static Func<DateTime> GetUtcNow = () => DateTime.UtcNow;
-	}
+    public class AppDateTime
+    {
+        public static Func<DateTime> GetUtcNow = () => DateTime.UtcNow;
+    }
 }

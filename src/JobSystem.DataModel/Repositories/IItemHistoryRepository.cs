@@ -5,8 +5,8 @@ using System.Text;
 
 namespace JobSystem.DataModel.Repositories
 {
-	public interface IItemHistoryRepository
-	{
-		//void Create(
-	}
+    public interface IItemHistoryRepository
+    {
+        //void Create(
+    }
 }

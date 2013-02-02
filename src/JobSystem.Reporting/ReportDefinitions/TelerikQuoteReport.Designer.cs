@@ -1,14 +1,14 @@
 namespace JobSystem.Reporting.ReportDefinitions
 {
-	partial class TelerikQuoteReport
-	{
-		#region Component Designer generated code
-		/// <summary>
-		/// Required method for telerik Reporting designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+    partial class TelerikQuoteReport
+    {
+        #region Component Designer generated code
+        /// <summary>
+        /// Required method for telerik Reporting designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             Telerik.Reporting.Drawing.StyleRule styleRule1 = new Telerik.Reporting.Drawing.StyleRule();
             Telerik.Reporting.Drawing.StyleRule styleRule2 = new Telerik.Reporting.Drawing.StyleRule();
             Telerik.Reporting.Drawing.StyleRule styleRule3 = new Telerik.Reporting.Drawing.StyleRule();
@@ -810,65 +810,65 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.Width = Telerik.Reporting.Drawing.Unit.Pixel(679.528076171875D);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
-		}
-		#endregion
+        }
+        #endregion
 
         private Telerik.Reporting.ObjectDataSource ReportData;
-		private Telerik.Reporting.PageHeaderSection pageHeader;
-		private Telerik.Reporting.PageFooterSection pageFooter;
-		private Telerik.Reporting.ReportHeaderSection reportHeader;
-		private Telerik.Reporting.ReportFooterSection reportFooter;
-		private Telerik.Reporting.DetailSection detail;
-		public Telerik.Reporting.PictureBox MainLogo;
-		private Telerik.Reporting.TextBox titleTextBox;
-		private Telerik.Reporting.TextBox textBox1;
-		private Telerik.Reporting.TextBox textBox2;
-		private Telerik.Reporting.TextBox textBox14;
-		private Telerik.Reporting.TextBox textBox16;
-		private Telerik.Reporting.TextBox textBox17;
-		private Telerik.Reporting.TextBox textBox8;
-		private Telerik.Reporting.TextBox textBox18;
+        private Telerik.Reporting.PageHeaderSection pageHeader;
+        private Telerik.Reporting.PageFooterSection pageFooter;
+        private Telerik.Reporting.ReportHeaderSection reportHeader;
+        private Telerik.Reporting.ReportFooterSection reportFooter;
+        private Telerik.Reporting.DetailSection detail;
+        public Telerik.Reporting.PictureBox MainLogo;
+        private Telerik.Reporting.TextBox titleTextBox;
+        private Telerik.Reporting.TextBox textBox1;
+        private Telerik.Reporting.TextBox textBox2;
+        private Telerik.Reporting.TextBox textBox14;
+        private Telerik.Reporting.TextBox textBox16;
+        private Telerik.Reporting.TextBox textBox17;
+        private Telerik.Reporting.TextBox textBox8;
+        private Telerik.Reporting.TextBox textBox18;
         private Telerik.Reporting.TextBox textBox19;
-		private Telerik.Reporting.TextBox textBox24;
-		private Telerik.Reporting.TextBox textBox25;
-		private Telerik.Reporting.TextBox textBox26;
-		private Telerik.Reporting.TextBox textBox27;
-		private Telerik.Reporting.TextBox textBox28;
-		private Telerik.Reporting.TextBox textBox29;
-		private Telerik.Reporting.TextBox textBox4;
-		private Telerik.Reporting.TextBox textBox5;
-		private Telerik.Reporting.TextBox textBox6;
-		private Telerik.Reporting.TextBox textBox7;
-		private Telerik.Reporting.TextBox textBox3;
-		private Telerik.Reporting.TextBox textBox43;
-		private Telerik.Reporting.TextBox textBox44;
-		private Telerik.Reporting.TextBox textBox45;
-		private Telerik.Reporting.TextBox textBox46;
-		private Telerik.Reporting.TextBox textBox47;
-		private Telerik.Reporting.TextBox textBox50;
-		private Telerik.Reporting.TextBox textBox51;
-		private Telerik.Reporting.TextBox textBox52;
-		private Telerik.Reporting.TextBox textBox42;
-		public Telerik.Reporting.TextBox CalibrationTextBox;
-		public Telerik.Reporting.TextBox RepairTextBox;
-		public Telerik.Reporting.TextBox CarriageTextBox;
-		public Telerik.Reporting.TextBox PartsTextBox;
-		public Telerik.Reporting.TextBox InvestigationTextBox;
-		public Telerik.Reporting.TextBox SubTotalTextBox;
-		private Telerik.Reporting.TextBox textBox9;
-		private Telerik.Reporting.TextBox textBox11;
-		public Telerik.Reporting.TextBox TotalTextBox;
-		private Telerik.Reporting.TextBox textBox36;
-		public Telerik.Reporting.TextBox CurrencyMessageTextBox;
-		private Telerik.Reporting.TextBox textBox12;
-		private Telerik.Reporting.TextBox CompanyAddressTextBox;
-		private Telerik.Reporting.TextBox textBox10;
-		private Telerik.Reporting.TextBox pageInfoTextBox;
-		private Telerik.Reporting.TextBox textBox13;
-		private Telerik.Reporting.TextBox textBox15;
-		private Telerik.Reporting.TextBox textBox21;
-		private Telerik.Reporting.TextBox textBox22;
+        private Telerik.Reporting.TextBox textBox24;
+        private Telerik.Reporting.TextBox textBox25;
+        private Telerik.Reporting.TextBox textBox26;
+        private Telerik.Reporting.TextBox textBox27;
+        private Telerik.Reporting.TextBox textBox28;
+        private Telerik.Reporting.TextBox textBox29;
+        private Telerik.Reporting.TextBox textBox4;
+        private Telerik.Reporting.TextBox textBox5;
+        private Telerik.Reporting.TextBox textBox6;
+        private Telerik.Reporting.TextBox textBox7;
+        private Telerik.Reporting.TextBox textBox3;
+        private Telerik.Reporting.TextBox textBox43;
+        private Telerik.Reporting.TextBox textBox44;
+        private Telerik.Reporting.TextBox textBox45;
+        private Telerik.Reporting.TextBox textBox46;
+        private Telerik.Reporting.TextBox textBox47;
+        private Telerik.Reporting.TextBox textBox50;
+        private Telerik.Reporting.TextBox textBox51;
+        private Telerik.Reporting.TextBox textBox52;
+        private Telerik.Reporting.TextBox textBox42;
+        public Telerik.Reporting.TextBox CalibrationTextBox;
+        public Telerik.Reporting.TextBox RepairTextBox;
+        public Telerik.Reporting.TextBox CarriageTextBox;
+        public Telerik.Reporting.TextBox PartsTextBox;
+        public Telerik.Reporting.TextBox InvestigationTextBox;
+        public Telerik.Reporting.TextBox SubTotalTextBox;
+        private Telerik.Reporting.TextBox textBox9;
+        private Telerik.Reporting.TextBox textBox11;
+        public Telerik.Reporting.TextBox TotalTextBox;
+        private Telerik.Reporting.TextBox textBox36;
+        public Telerik.Reporting.TextBox CurrencyMessageTextBox;
+        private Telerik.Reporting.TextBox textBox12;
+        private Telerik.Reporting.TextBox CompanyAddressTextBox;
+        private Telerik.Reporting.TextBox textBox10;
+        private Telerik.Reporting.TextBox pageInfoTextBox;
+        private Telerik.Reporting.TextBox textBox13;
+        private Telerik.Reporting.TextBox textBox15;
+        private Telerik.Reporting.TextBox textBox21;
+        private Telerik.Reporting.TextBox textBox22;
         private Telerik.Reporting.TextBox textBox23;
 
-	}
+    }
 }

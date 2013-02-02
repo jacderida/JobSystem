@@ -3,10 +3,10 @@ using global::NHibernate;
 
 namespace JobSystem.DataAccess.NHibernate
 {
-	public interface ISessionStorage
-	{
-		IEnumerable<ISession> GetAllSessions();
-		ISession GetSessionForKey(string factoryKey);
-		void SetSessionForKey(string factoryKey, ISession session);
-	}
+    public interface ISessionStorage
+    {
+        IEnumerable<ISession> GetAllSessions();
+        ISession GetSessionForKey(string factoryKey);
+        void SetSessionForKey(string factoryKey, ISession session);
+    }
 }

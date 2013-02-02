@@ -7,32 +7,32 @@ using JobSystem.DataModel.Entities;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 {
-	public class EntityIdLookupRepository : IEntityIdLookupRepository
-	{
-		private ISession CurrentSession
-		{
-			get
-			{
-				return NHibernateSession.Current;
-			}
-		}
+    public class EntityIdLookupRepository : IEntityIdLookupRepository
+    {
+        private ISession CurrentSession
+        {
+            get
+            {
+                return NHibernateSession.Current;
+            }
+        }
 
-		public string GetNextId(string typeName)
-		{
-			string result;
-			var lookup = CurrentSession.Query<EntityIdLookup>().SingleOrDefault(lu => lu.EntityTypeName == typeName) ??
-				new EntityIdLookup
-				{
-					Id = Guid.NewGuid(),
-					EntityTypeName = typeName,
-					NextId = 1
-				};
-			result = lookup.NextId.ToString();
-			if (!String.IsNullOrEmpty(lookup.Prefix))
-				result = String.Format("{0}{1}", lookup.Prefix, result);
-			lookup.NextId++;
-			CurrentSession.SaveOrUpdate(lookup);
-			return result;
-		}
-	}
+        public string GetNextId(string typeName)
+        {
+            string result;
+            var lookup = CurrentSession.Query<EntityIdLookup>().SingleOrDefault(lu => lu.EntityTypeName == typeName) ??
+                new EntityIdLookup
+                {
+                    Id = Guid.NewGuid(),
+                    EntityTypeName = typeName,
+                    NextId = 1
+                };
+            result = lookup.NextId.ToString();
+            if (!String.IsNullOrEmpty(lookup.Prefix))
+                result = String.Format("{0}{1}", lookup.Prefix, result);
+            lookup.NextId++;
+            CurrentSession.SaveOrUpdate(lookup);
+            return result;
+        }
+    }
 }

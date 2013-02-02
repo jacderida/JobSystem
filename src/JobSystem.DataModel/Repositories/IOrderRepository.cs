@@ -4,10 +4,10 @@ using JobSystem.DataModel.Entities;
 
 namespace JobSystem.DataModel.Repositories
 {
-	public interface IOrderRepository : IReadWriteRepository<Order, Guid>
-	{
-		int GetApprovedOrdersCount();
-		int GetPendingOrdersCount();
-		IEnumerable<Order> GetOrders();
-	}
+    public interface IOrderRepository : IReadWriteRepository<Order, Guid>
+    {
+        int GetApprovedOrdersCount();
+        int GetPendingOrdersCount();
+        IEnumerable<Order> GetOrders();
+    }
 }

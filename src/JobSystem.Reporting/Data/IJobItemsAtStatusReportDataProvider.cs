@@ -5,8 +5,8 @@ using JobSystem.DataModel.Entities;
 
 namespace JobSystem.Reporting.Data
 {
-	public interface IJobItemsAtStatusReportDataProvider
-	{
-		List<JobItemAtStatusReportModel> GetJobItemsAtStatusReportData(Guid statusId);
-	}
+    public interface IJobItemsAtStatusReportDataProvider
+    {
+        List<JobItemAtStatusReportModel> GetJobItemsAtStatusReportData(Guid statusId);
+    }
 }

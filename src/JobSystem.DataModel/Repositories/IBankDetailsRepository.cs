@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace JobSystem.DataModel.Repositories
 {
-	public interface IBankDetailsRepository : IReadWriteRepository<BankDetails, Guid>
-	{
-		IEnumerable<BankDetails> GetBankDetails();
-	}
+    public interface IBankDetailsRepository : IReadWriteRepository<BankDetails, Guid>
+    {
+        IEnumerable<BankDetails> GetBankDetails();
+    }
 }

@@ -11,97 +11,97 @@ using JobSystem.Resources.Certificates;
 
 namespace JobSystem.BusinessLogic.Services
 {
-	public class CertificateService : ServiceBase
-	{
-		private readonly IJobItemRepository _jobItemRepository;
-		private readonly ICertificateRepository _certificateRepository;
-		private readonly IListItemRepository _listItemRepository;
-		private readonly IEntityIdProvider _entityIdProvider;
+    public class CertificateService : ServiceBase
+    {
+        private readonly IJobItemRepository _jobItemRepository;
+        private readonly ICertificateRepository _certificateRepository;
+        private readonly IListItemRepository _listItemRepository;
+        private readonly IEntityIdProvider _entityIdProvider;
 
-		public CertificateService(
-			IUserContext applicationContext,
-			IJobItemRepository jobItemRepository,
-			ICertificateRepository certificateRepository,
-			IListItemRepository listItemRepository,
-			IEntityIdProvider entityIdProvider,
-			IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
-		{
-			_jobItemRepository = jobItemRepository;
-			_certificateRepository = certificateRepository;
-			_listItemRepository = listItemRepository;
-			_entityIdProvider = entityIdProvider;
-		}
+        public CertificateService(
+            IUserContext applicationContext,
+            IJobItemRepository jobItemRepository,
+            ICertificateRepository certificateRepository,
+            IListItemRepository listItemRepository,
+            IEntityIdProvider entityIdProvider,
+            IQueueDispatcher<IMessage> dispatcher) : base(applicationContext, dispatcher)
+        {
+            _jobItemRepository = jobItemRepository;
+            _certificateRepository = certificateRepository;
+            _listItemRepository = listItemRepository;
+            _entityIdProvider = entityIdProvider;
+        }
 
-		public Certificate Create(Guid id, Guid certificateTypeId, Guid jobItemId, string procedureList)
-		{
-			if (!CurrentUser.HasRole(UserRole.Member))
-				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
-			if (id == Guid.Empty)
-				throw new ArgumentException("An ID must be supplied for the certificate");
-			var certificate = new Certificate();
-			certificate.Id = id;
-			certificate.JobItem = GetJobItem(jobItemId);
-			certificate.CertificateNumber = GetCertificateNumber(certificate.JobItem);
-			certificate.DateCreated = AppDateTime.GetUtcNow();
-			certificate.CreatedBy = CurrentUser;
-			certificate.Type = GetCertificateType(certificateTypeId);
-			certificate.ProcedureList = procedureList;
-			ValidateAnnotatedObjectThrowOnFailure(certificate);
-			_certificateRepository.Create(certificate);
-			return certificate;
-		}
+        public Certificate Create(Guid id, Guid certificateTypeId, Guid jobItemId, string procedureList)
+        {
+            if (!CurrentUser.HasRole(UserRole.Member))
+                throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+            if (id == Guid.Empty)
+                throw new ArgumentException("An ID must be supplied for the certificate");
+            var certificate = new Certificate();
+            certificate.Id = id;
+            certificate.JobItem = GetJobItem(jobItemId);
+            certificate.CertificateNumber = GetCertificateNumber(certificate.JobItem);
+            certificate.DateCreated = AppDateTime.GetUtcNow();
+            certificate.CreatedBy = CurrentUser;
+            certificate.Type = GetCertificateType(certificateTypeId);
+            certificate.ProcedureList = procedureList;
+            ValidateAnnotatedObjectThrowOnFailure(certificate);
+            _certificateRepository.Create(certificate);
+            return certificate;
+        }
 
-		public Certificate GetById(Guid id)
-		{
-			if (!CurrentUser.HasRole(UserRole.Member))
-				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
-			return _certificateRepository.GetById(id);
-		}
+        public Certificate GetById(Guid id)
+        {
+            if (!CurrentUser.HasRole(UserRole.Member))
+                throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+            return _certificateRepository.GetById(id);
+        }
 
-		public IEnumerable<Certificate> GetCertificates()
-		{
-			if (!CurrentUser.HasRole(UserRole.Member))
-				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
-			return _certificateRepository.GetCertificates();
-		}
+        public IEnumerable<Certificate> GetCertificates()
+        {
+            if (!CurrentUser.HasRole(UserRole.Member))
+                throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+            return _certificateRepository.GetCertificates();
+        }
 
-		public IEnumerable<Certificate> GetCertificatesForJobItem(Guid jobItemId)
-		{
-			if (!CurrentUser.HasRole(UserRole.Member))
-				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
-			return _certificateRepository.GetCertificatesForJobItem(jobItemId);
-		}
+        public IEnumerable<Certificate> GetCertificatesForJobItem(Guid jobItemId)
+        {
+            if (!CurrentUser.HasRole(UserRole.Member))
+                throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+            return _certificateRepository.GetCertificatesForJobItem(jobItemId);
+        }
 
-		public IEnumerable<Certificate> SearchByKeyword(string keyword)
-		{
-			if (!CurrentUser.HasRole(UserRole.Member))
-				throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
-			return _certificateRepository.SearchByKeyword(keyword);
-		}
+        public IEnumerable<Certificate> SearchByKeyword(string keyword)
+        {
+            if (!CurrentUser.HasRole(UserRole.Member))
+                throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
+            return _certificateRepository.SearchByKeyword(keyword);
+        }
 
-		private JobItem GetJobItem(Guid jobItemId)
-		{
-			var jobItem = _jobItemRepository.GetById(jobItemId);
-			if (jobItem == null)
-				throw new ArgumentException("A valid job item ID must be supplied for the certificate");
-			return jobItem;
-		}
+        private JobItem GetJobItem(Guid jobItemId)
+        {
+            var jobItem = _jobItemRepository.GetById(jobItemId);
+            if (jobItem == null)
+                throw new ArgumentException("A valid job item ID must be supplied for the certificate");
+            return jobItem;
+        }
 
-		private ListItem GetCertificateType(Guid certificateTypeId)
-		{
-			var type = _listItemRepository.GetById(certificateTypeId);
-			if (type == null)
-				throw new ArgumentException("A valid certificate type ID must be supplied");
-			if (type.Category.Type != ListItemCategoryType.Certificate)
-				throw new ArgumentException("A certificate type list item must be supplied");
-			return type;
-		}
+        private ListItem GetCertificateType(Guid certificateTypeId)
+        {
+            var type = _listItemRepository.GetById(certificateTypeId);
+            if (type == null)
+                throw new ArgumentException("A valid certificate type ID must be supplied");
+            if (type.Category.Type != ListItemCategoryType.Certificate)
+                throw new ArgumentException("A certificate type list item must be supplied");
+            return type;
+        }
 
-		private string GetCertificateNumber(JobItem jobItem)
-		{
-			var certificateNumber = _entityIdProvider.GetIdFor<Certificate>();
-			var number = new String(certificateNumber.Where(c => Char.IsDigit(c)).ToArray());
-			return String.Format("{0}{1}", jobItem.Field.Name[0], number);
-		}
-	}
+        private string GetCertificateNumber(JobItem jobItem)
+        {
+            var certificateNumber = _entityIdProvider.GetIdFor<Certificate>();
+            var number = new String(certificateNumber.Where(c => Char.IsDigit(c)).ToArray());
+            return String.Format("{0}{1}", jobItem.Field.Name[0], number);
+        }
+    }
 }

@@ -4,24 +4,24 @@ using FluentMigrator;
 
 namespace JobSystem.Migrations
 {
-	[Migration(20110928202539)]
-	public class M20110928202539_AddUserAccountsTable : Migration
-	{
-		public override void Up()
-		{
-			Create.Table("UserAccounts")
-				.WithIdColumn()
-				.WithColumn("EmailAddress").AsString(255).NotNullable().Unique()
-				.WithColumn("Name").AsString(255).NotNullable()
-				.WithColumn("JobTitle").AsString(255).NotNullable()
-				.WithColumn("PasswordHash").AsString(255).NotNullable()
-				.WithColumn("PasswordSalt").AsString(255).NotNullable()
-				.WithColumn("Roles").AsInt32().NotNullable();
-		}
+    [Migration(20110928202539)]
+    public class M20110928202539_AddUserAccountsTable : Migration
+    {
+        public override void Up()
+        {
+            Create.Table("UserAccounts")
+                .WithIdColumn()
+                .WithColumn("EmailAddress").AsString(255).NotNullable().Unique()
+                .WithColumn("Name").AsString(255).NotNullable()
+                .WithColumn("JobTitle").AsString(255).NotNullable()
+                .WithColumn("PasswordHash").AsString(255).NotNullable()
+                .WithColumn("PasswordSalt").AsString(255).NotNullable()
+                .WithColumn("Roles").AsInt32().NotNullable();
+        }
 
-		public override void Down()
-		{
-			Delete.Table("UserAccounts");
-		}
-	}
+        public override void Down()
+        {
+            Delete.Table("UserAccounts");
+        }
+    }
 }

@@ -5,11 +5,11 @@ using NHibernate.Linq;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 {
-	public class CurrencyRepository : RepositoryBase<Currency>, ICurrencyRepository
-	{
-		public IEnumerable<Currency> GetCurrencies()
-		{
-			return CurrentSession.Query<Currency>();
-		}
-	}
+    public class CurrencyRepository : RepositoryBase<Currency>, ICurrencyRepository
+    {
+        public IEnumerable<Currency> GetCurrencies()
+        {
+            return CurrentSession.Query<Currency>();
+        }
+    }
 }

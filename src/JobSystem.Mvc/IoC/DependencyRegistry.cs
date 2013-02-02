@@ -15,42 +15,42 @@ using JobSystem.Storage.Providers.FileSystem;
 
 namespace JobSystem.Mvc.IoC
 {
-	public static class DependencyRegistry
-	{
-		public static void RegisterAll(ContainerBuilder builder)
-		{
-			builder.Register(c => new HttpContextWrapper(HttpContext.Current))
-				.As<HttpContextBase>();
-			builder.RegisterType<NullQueueDispatcher>().As<IQueueDispatcher<IMessage>>();
-			builder.RegisterType<WebUserContext>().As<IUserContext>();
-			builder.RegisterType<CryptographicService>().As<ICryptographicService>();
-			builder.RegisterModule(new ServiceModule());
-			builder.RegisterAssemblyTypes(typeof(UserAccountRepository).Assembly)
-				.Where(t => t.Name.EndsWith("Repository"))
-				.AsImplementedInterfaces().SingleInstance();
-			builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>();
-			builder.RegisterType<HostRequestConfigDomainProvider>().As<IHostNameProvider>();
-			builder.RegisterType<S3JobAttachmentDataRepository>().As<IJobAttachmentDataRepository>();
-			builder.RegisterType<JobAttachmentService>().AsSelf();
-			builder.RegisterType<SimpleDbConnectionStringProviderRepository>().As<IConnectionStringProviderRepository>();
-			RegisterTenantConfig(builder);
-			RegisterAttachmentRepositories(builder);
-		}
+    public static class DependencyRegistry
+    {
+        public static void RegisterAll(ContainerBuilder builder)
+        {
+            builder.Register(c => new HttpContextWrapper(HttpContext.Current))
+                .As<HttpContextBase>();
+            builder.RegisterType<NullQueueDispatcher>().As<IQueueDispatcher<IMessage>>();
+            builder.RegisterType<WebUserContext>().As<IUserContext>();
+            builder.RegisterType<CryptographicService>().As<ICryptographicService>();
+            builder.RegisterModule(new ServiceModule());
+            builder.RegisterAssemblyTypes(typeof(UserAccountRepository).Assembly)
+                .Where(t => t.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>();
+            builder.RegisterType<HostRequestConfigDomainProvider>().As<IHostNameProvider>();
+            builder.RegisterType<S3JobAttachmentDataRepository>().As<IJobAttachmentDataRepository>();
+            builder.RegisterType<JobAttachmentService>().AsSelf();
+            builder.RegisterType<SimpleDbConnectionStringProviderRepository>().As<IConnectionStringProviderRepository>();
+            RegisterTenantConfig(builder);
+            RegisterAttachmentRepositories(builder);
+        }
 
-		private static void RegisterTenantConfig(ContainerBuilder builder)
-		{
-			if (Config.UseRemoteConfig())
-				builder.RegisterType<RemoteTenantConfig>().As<ITenantConfig>().InstancePerLifetimeScope();
-			else
-				builder.RegisterType<LocalTenantConfig>().As<ITenantConfig>().InstancePerLifetimeScope();
-		}
+        private static void RegisterTenantConfig(ContainerBuilder builder)
+        {
+            if (Config.UseRemoteConfig())
+                builder.RegisterType<RemoteTenantConfig>().As<ITenantConfig>().InstancePerLifetimeScope();
+            else
+                builder.RegisterType<LocalTenantConfig>().As<ITenantConfig>().InstancePerLifetimeScope();
+        }
 
-		private static void RegisterAttachmentRepositories(ContainerBuilder builder)
-		{
-			if (Config.UseRemoteConfig())
-				builder.RegisterType<S3JobAttachmentDataRepository>().As<IJobAttachmentDataRepository>();
-			else
-				builder.RegisterType<FileSystemAttachmentStorage>().As<IJobAttachmentDataRepository>();
-		}
-	}
+        private static void RegisterAttachmentRepositories(ContainerBuilder builder)
+        {
+            if (Config.UseRemoteConfig())
+                builder.RegisterType<S3JobAttachmentDataRepository>().As<IJobAttachmentDataRepository>();
+            else
+                builder.RegisterType<FileSystemAttachmentStorage>().As<IJobAttachmentDataRepository>();
+        }
+    }
 }

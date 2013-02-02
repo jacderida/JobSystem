@@ -2,8 +2,8 @@
 
 namespace JobSystem.Mvc.ViewModels.Deliveries
 {
-	public class DeliveryListViewModel : PageViewModel
-	{
-		public IEnumerable<DeliveryIndexViewModel> Items { get; set; }
-	}
+    public class DeliveryListViewModel : PageViewModel
+    {
+        public IEnumerable<DeliveryIndexViewModel> Items { get; set; }
+    }
 }

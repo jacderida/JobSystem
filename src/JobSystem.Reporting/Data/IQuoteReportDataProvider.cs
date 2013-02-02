@@ -4,8 +4,8 @@ using JobSystem.Reporting.Models;
 
 namespace JobSystem.Reporting.Data
 {
-	public interface IQuoteReportDataProvider
-	{
-		List<QuoteReportModel> GetQuoteReportData(Guid quoteId);
-	}
+    public interface IQuoteReportDataProvider
+    {
+        List<QuoteReportModel> GetQuoteReportData(Guid quoteId);
+    }
 }

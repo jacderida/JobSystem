@@ -6,16 +6,16 @@ using NHibernate.Linq;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 {
-	public class QuoteRepository : RepositoryBase<Quote>, IQuoteRepository
-	{
-		public int GetQuotesCount()
-		{
-			return CurrentSession.Query<Quote>().Count();
-		}
+    public class QuoteRepository : RepositoryBase<Quote>, IQuoteRepository
+    {
+        public int GetQuotesCount()
+        {
+            return CurrentSession.Query<Quote>().Count();
+        }
 
-		public IEnumerable<Quote> GetQuotes()
-		{
-			return CurrentSession.Query<Quote>();
-		}
-	}
+        public IEnumerable<Quote> GetQuotes()
+        {
+            return CurrentSession.Query<Quote>();
+        }
+    }
 }

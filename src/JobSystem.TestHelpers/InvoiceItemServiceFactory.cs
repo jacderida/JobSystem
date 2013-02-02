@@ -6,26 +6,26 @@ using Rhino.Mocks;
 
 namespace JobSystem.TestHelpers
 {
-	public class InvoiceItemServiceFactory
-	{
-		public static InvoiceItemService Create(
-			IUserContext userContext,
-			ICompanyDetailsRepository companyDetailsRepository,
-			IInvoiceRepository invoiceRepository,
-			IInvoiceItemRepository invoiceItemRepository,
-			IJobItemRepository jobItemRepository,
-			IQuoteItemRepository quoteItemRepository,
-			IListItemRepository listItemRepository)
-		{
-			return new InvoiceItemService(
-				userContext,
-				companyDetailsRepository,
-				invoiceRepository,
-				invoiceItemRepository,
-				jobItemRepository,
-				quoteItemRepository,
-				listItemRepository,
-				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
-		}
-	}
+    public class InvoiceItemServiceFactory
+    {
+        public static InvoiceItemService Create(
+            IUserContext userContext,
+            ICompanyDetailsRepository companyDetailsRepository,
+            IInvoiceRepository invoiceRepository,
+            IInvoiceItemRepository invoiceItemRepository,
+            IJobItemRepository jobItemRepository,
+            IQuoteItemRepository quoteItemRepository,
+            IListItemRepository listItemRepository)
+        {
+            return new InvoiceItemService(
+                userContext,
+                companyDetailsRepository,
+                invoiceRepository,
+                invoiceItemRepository,
+                jobItemRepository,
+                quoteItemRepository,
+                listItemRepository,
+                MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+        }
+    }
 }

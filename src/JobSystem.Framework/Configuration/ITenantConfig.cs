@@ -2,8 +2,8 @@
 
 namespace JobSystem.Framework.Configuration
 {
-	public interface ITenantConfig
-	{
-		ConnectionStringSettings GetConnectionString(string connectionName);
-	}
+    public interface ITenantConfig
+    {
+        ConnectionStringSettings GetConnectionString(string connectionName);
+    }
 }

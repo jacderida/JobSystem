@@ -2,8 +2,8 @@
 
 namespace JobSystem.Mvc.ViewModels.Invoices
 {
-	public class InvoiceListViewModel : PageViewModel
-	{
-		public IEnumerable<InvoiceIndexViewModel> Invoices { get; set; }
-	}
+    public class InvoiceListViewModel : PageViewModel
+    {
+        public IEnumerable<InvoiceIndexViewModel> Invoices { get; set; }
+    }
 }

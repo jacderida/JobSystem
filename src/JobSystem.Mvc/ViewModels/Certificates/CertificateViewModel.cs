@@ -8,14 +8,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JobSystem.Mvc.ViewModels.Certificates
 {
-	public class CertificateViewModel
-	{
-		public Guid Id { get; set; }
-		public Guid JobItemId { get; set; }
-		public Guid CertificateTypeId { get; set; }
-		[Display(Name="Type")]
-		public IEnumerable<SelectListItem> CertificateTypes { get; set; }
+    public class CertificateViewModel
+    {
+        public Guid Id { get; set; }
+        public Guid JobItemId { get; set; }
+        public Guid CertificateTypeId { get; set; }
+        [Display(Name="Type")]
+        public IEnumerable<SelectListItem> CertificateTypes { get; set; }
 
-		public AttachmentViewModel[] Attachments { get; set; }
-	}
+        public AttachmentViewModel[] Attachments { get; set; }
+    }
 }

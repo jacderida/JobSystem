@@ -7,13 +7,13 @@ using Rhino.Mocks;
 
 namespace JobSystem.TestHelpers
 {
-	public static class EntityIdProviderFactory
-	{
-		public static IEntityIdProvider GetEntityIdProviderFor<T>(string referenceToReturn)
-		{
-			var entityIdRepositoryStub = MockRepository.GenerateStub<IEntityIdProvider>();
-			entityIdRepositoryStub.Stub(x => x.GetIdFor<T>()).Return(referenceToReturn);
-			return entityIdRepositoryStub;
-		}
-	}
+    public static class EntityIdProviderFactory
+    {
+        public static IEntityIdProvider GetEntityIdProviderFor<T>(string referenceToReturn)
+        {
+            var entityIdRepositoryStub = MockRepository.GenerateStub<IEntityIdProvider>();
+            entityIdRepositoryStub.Stub(x => x.GetIdFor<T>()).Return(referenceToReturn);
+            return entityIdRepositoryStub;
+        }
+    }
 }

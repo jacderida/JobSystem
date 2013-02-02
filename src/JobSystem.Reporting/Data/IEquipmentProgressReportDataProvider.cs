@@ -4,8 +4,8 @@ using System;
 
 namespace JobSystem.Reporting.Data
 {
-	public interface IEquipmentProgressReportDataProvider
-	{
-		List<EquipmentProgressReportModel> GetEquipmentProgressReportData(Guid customerId);
-	}
+    public interface IEquipmentProgressReportDataProvider
+    {
+        List<EquipmentProgressReportModel> GetEquipmentProgressReportData(Guid customerId);
+    }
 }

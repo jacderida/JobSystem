@@ -2,9 +2,9 @@
 
 namespace JobSystem.Mvc.ViewModels.Users
 {
-	public class UserAccountIndexViewModel
-	{
-		public IEnumerable<UserAccountListViewModel> Users { get; set; }
-		public UserAccountViewModel CreateEditModel { get; set; }
-	}
+    public class UserAccountIndexViewModel
+    {
+        public IEnumerable<UserAccountListViewModel> Users { get; set; }
+        public UserAccountViewModel CreateEditModel { get; set; }
+    }
 }

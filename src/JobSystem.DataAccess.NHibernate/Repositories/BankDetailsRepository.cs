@@ -5,11 +5,11 @@ using NHibernate.Linq;
 
 namespace JobSystem.DataAccess.NHibernate.Repositories
 {
-	public class BankDetailsRepository : RepositoryBase<BankDetails>, IBankDetailsRepository
-	{
-		public IEnumerable<BankDetails> GetBankDetails()
-		{
-			return CurrentSession.Query<BankDetails>();
-		}
-	}
+    public class BankDetailsRepository : RepositoryBase<BankDetails>, IBankDetailsRepository
+    {
+        public IEnumerable<BankDetails> GetBankDetails()
+        {
+            return CurrentSession.Query<BankDetails>();
+        }
+    }
 }

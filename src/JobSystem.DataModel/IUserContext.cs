@@ -2,8 +2,8 @@
 
 namespace JobSystem.DataModel
 {
-	public interface IUserContext
-	{
-		UserAccount GetCurrentUser();
-	}
+    public interface IUserContext
+    {
+        UserAccount GetCurrentUser();
+    }
 }

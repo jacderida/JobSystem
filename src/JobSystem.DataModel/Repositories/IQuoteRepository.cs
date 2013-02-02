@@ -4,9 +4,9 @@ using JobSystem.DataModel.Entities;
 
 namespace JobSystem.DataModel.Repositories
 {
-	public interface IQuoteRepository : IReadWriteRepository<Quote, Guid>
-	{
-		int GetQuotesCount();
-		IEnumerable<Quote> GetQuotes();
-	}
+    public interface IQuoteRepository : IReadWriteRepository<Quote, Guid>
+    {
+        int GetQuotesCount();
+        IEnumerable<Quote> GetQuotes();
+    }
 }

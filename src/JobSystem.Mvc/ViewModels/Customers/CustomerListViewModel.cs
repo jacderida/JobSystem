@@ -2,8 +2,8 @@
 
 namespace JobSystem.Mvc.ViewModels.Customers
 {
-	public class CustomerListViewModel : PageViewModel
-	{
-		public IEnumerable<CustomerIndexViewModel> Customers { get; set; }
-	}
+    public class CustomerListViewModel : PageViewModel
+    {
+        public IEnumerable<CustomerIndexViewModel> Customers { get; set; }
+    }
 }

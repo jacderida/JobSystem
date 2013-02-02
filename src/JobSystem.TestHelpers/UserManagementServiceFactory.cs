@@ -9,25 +9,25 @@ using Rhino.Mocks;
 
 namespace JobSystem.TestHelpers
 {
-	public class UserManagementServiceFactory
-	{
-		public static UserManagementService Create()
-		{
-			return Create(MockRepository.GenerateStub<IUserAccountRepository>());
-		}
+    public class UserManagementServiceFactory
+    {
+        public static UserManagementService Create()
+        {
+            return Create(MockRepository.GenerateStub<IUserAccountRepository>());
+        }
 
-		public static UserManagementService Create(IUserAccountRepository userAccountRepository)
-		{
-			return Create(userAccountRepository, TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin));
-		}
+        public static UserManagementService Create(IUserAccountRepository userAccountRepository)
+        {
+            return Create(userAccountRepository, TestUserContext.Create("test@usercontext.com", "Test User", "Operations Manager", UserRole.Admin));
+        }
 
-		public static UserManagementService Create(IUserAccountRepository userAccountRepository, IUserContext userContext)
-		{
-			return new UserManagementService(
-				userContext,
-				userAccountRepository,
-				new CryptographicService(),
-				MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
-		}
-	}
+        public static UserManagementService Create(IUserAccountRepository userAccountRepository, IUserContext userContext)
+        {
+            return new UserManagementService(
+                userContext,
+                userAccountRepository,
+                new CryptographicService(),
+                MockRepository.GenerateStub<IQueueDispatcher<IMessage>>());
+        }
+    }
 }
