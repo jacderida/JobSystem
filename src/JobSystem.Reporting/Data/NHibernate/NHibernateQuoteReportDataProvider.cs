@@ -26,6 +26,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.AdviceNo = quote.AdviceNumber;
 				reportItem.Contact = quote.Customer.Contact1;
 				reportItem.CustomerName = quote.Customer.Name;
+			    reportItem.AssetLine = customer.AssetLine;
 				reportItem.CustomerAddress1 = !String.IsNullOrEmpty(customer.Address1) ? customer.Address1 : String.Empty;
 				reportItem.CustomerAddress2 = !String.IsNullOrEmpty(customer.Address2) ? customer.Address2 : String.Empty;
 				reportItem.CustomerAddress3 = !String.IsNullOrEmpty(customer.Address3) ? customer.Address3 : String.Empty;

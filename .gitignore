@@ -9,3 +9,6 @@ StyleCop.Cache
 *.orig
 *.csproj.user
 *.suo
+*.ncrunchproject
+*.ncrunchsolution
+*_NCrunch_*

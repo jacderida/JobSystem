@@ -3,7 +3,8 @@
 	public class QuoteReportModel : ReportModelBase
 	{
 		public string CustomerName { get; set; }
-		public string CustomerAddress1 { get; set; }
+	    public string AssetLine { get; set; }
+	    public string CustomerAddress1 { get; set; }
 		public string CustomerAddress2 { get; set; }
 		public string CustomerAddress3 { get; set; }
 		public string CustomerAddress4 { get; set; }
