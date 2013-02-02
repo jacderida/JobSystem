@@ -25,7 +25,8 @@
 		public decimal Carriage { get; set; }
 		public decimal Parts { get; set; }
 		public decimal Investigation { get; set; }
-		public string Days { get; set; }
+	    public decimal SubTotal { get; set; }
+	    public string Days { get; set; }
 		public string JobRef { get; set; }
 		public string PreparedBy { get; set; }
 		public string CurrencyMessage { get; set; }

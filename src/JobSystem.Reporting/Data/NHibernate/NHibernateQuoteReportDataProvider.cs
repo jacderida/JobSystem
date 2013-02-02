@@ -41,8 +41,9 @@ namespace JobSystem.Reporting.Data.NHibernate
 				reportItem.Carriage = item.Carriage;
 				reportItem.Parts = item.Parts;
 				reportItem.Investigation = item.Investigation;
+			    ApplySubTotal(reportItem);
 				reportItem.Report = !String.IsNullOrEmpty(item.Report) ? item.Report : String.Empty;
-				reportItem.Days = item.Days.ToString();
+			    reportItem.Days = string.Format("{0} days from go ahead", item.Days);
 				reportItem.JobRef = GetJobItemReference(item.JobItem);
 				reportItem.PreparedBy = quote.CreatedBy.Name;
 				reportItem.Instrument = GetDescription(item.JobItem);
@@ -62,7 +63,12 @@ namespace JobSystem.Reporting.Data.NHibernate
 				item.Total = total;
 		}
 
-		private string GetDescription(JobItem jobItem)
+	    private void ApplySubTotal(QuoteReportModel reportItem)
+	    {
+	        reportItem.SubTotal = reportItem.Calibration + reportItem.Repair + reportItem.Carriage + reportItem.Parts;
+	    }
+
+	    private string GetDescription(JobItem jobItem)
 		{
 			var sb = new StringBuilder();
 			sb.AppendFormat("{0}, Serial No: {1}", GetInstrumentDescription(jobItem.Instrument), jobItem.SerialNo);
