@@ -20,6 +20,7 @@ namespace JobSystem.Mvc.Controllers
 {
     public class JobItemController : Controller
     {
+        private readonly UserManagementService _userManagementService;
         private readonly JobItemService _jobItemService;
         private readonly ListItemService _listItemService;
         private readonly InstrumentService _instrumentService;
@@ -29,7 +30,16 @@ namespace JobSystem.Mvc.Controllers
         private readonly DeliveryItemService _deliveryItemService;
         private readonly CertificateService _certificateService;
 
-        public JobItemController(JobItemService jobItemService, ListItemService listItemService, InstrumentService instrumentService, ConsignmentService consignmentService, QuoteItemService quoteItemService, OrderItemService orderItemService, DeliveryItemService deliveryItemService, CertificateService certificateService)
+        public JobItemController(
+            UserManagementService userManagementService,
+            JobItemService jobItemService,
+            ListItemService listItemService,
+            InstrumentService instrumentService,
+            ConsignmentService consignmentService,
+            QuoteItemService quoteItemService,
+            OrderItemService orderItemService,
+            DeliveryItemService deliveryItemService,
+            CertificateService certificateService)
         {
             _jobItemService = jobItemService;
             _listItemService = listItemService;
@@ -39,6 +49,7 @@ namespace JobSystem.Mvc.Controllers
             _orderItemService = orderItemService;
             _deliveryItemService = deliveryItemService;
             _certificateService =  certificateService;
+            _userManagementService = userManagementService;
         }
 
         [HttpGet]
@@ -142,11 +153,12 @@ namespace JobSystem.Mvc.Controllers
             {
                 Id = jobItem.Id,
                 JobId = jobItem.Job.Id,
+                UserRole = GetLoggedInUserRoles(),
                 Accessories = jobItem.Accessories,
                 AssetNo = jobItem.AssetNo,
                 CalPeriod = jobItem.CalPeriod,
-                Field = jobItem.Field.Name.ToString(),
-                Status = jobItem.Status.Name.ToString(),
+                Field = jobItem.Field.Name,
+                Status = jobItem.Status.Name,
                 SerialNo = jobItem.SerialNo,
                 Comments = jobItem.Comments,
                 Instructions = jobItem.Instructions,
@@ -217,6 +229,13 @@ namespace JobSystem.Mvc.Controllers
                 };
             }
             return PartialView("_Details", viewModel);
+        }
+
+        private UserRole GetLoggedInUserRoles()
+        {
+            var emailAddress = HttpContext.User.Identity.Name;
+            var user = _userManagementService.GetByEmail(emailAddress);
+            return user.Roles;
         }
 
         private QuoteItemIndexViewModel PopulateQuoteItemViewModel(Guid id)

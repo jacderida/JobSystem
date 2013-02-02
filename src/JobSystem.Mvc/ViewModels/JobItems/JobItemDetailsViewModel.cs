@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JobSystem.DataModel.Entities;
 using JobSystem.Mvc.ViewModels.Certificates;
 using JobSystem.Mvc.ViewModels.Consignments;
 using JobSystem.Mvc.ViewModels.Deliveries;
@@ -38,5 +39,6 @@ namespace JobSystem.Mvc.ViewModels.JobItems
         public string Field { get; set; }
         public bool IsInvoiced { get; set; }
         public bool IsMarkedForInvoicing { get; set; }
+        public UserRole UserRole { get; set; }
     }
 }

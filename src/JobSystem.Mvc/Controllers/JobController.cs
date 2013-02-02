@@ -25,23 +25,31 @@ namespace JobSystem.Mvc.Controllers
     {
         private readonly JobService _jobService;
         private readonly ListItemService _listItemService;
-        private readonly CustomerService _customerServive;
         private readonly JobItemService _jobItemService;
         private readonly QuoteItemService _quoteItemService;
         private readonly OrderItemService _orderItemService;
         private readonly DeliveryItemService _deliveryItemService;
         private readonly CertificateService _certificateService;
+        private readonly UserManagementService _userManagementService;
 
-        public JobController(JobService jobService, ListItemService listItemService, CustomerService customerService, JobItemService jobItemService, QuoteItemService quoteItemService, OrderItemService orderItemService, DeliveryItemService deliveryItemService, CertificateService certificateService)
+        public JobController(
+            JobService jobService,
+            ListItemService listItemService,
+            JobItemService jobItemService,
+            QuoteItemService quoteItemService,
+            OrderItemService orderItemService,
+            DeliveryItemService deliveryItemService,
+            CertificateService certificateService,
+            UserManagementService userManagementService)
         {
             _jobService = jobService;
             _listItemService = listItemService;
-            _customerServive = customerService;
             _jobItemService = jobItemService;
             _quoteItemService = quoteItemService;
             _orderItemService = orderItemService;
             _deliveryItemService = deliveryItemService;
             _certificateService = certificateService;
+            _userManagementService = userManagementService;
         }
 
         [HttpGet]
@@ -172,7 +180,7 @@ namespace JobSystem.Mvc.Controllers
         {
             var job = _jobService.GetJob(id);
             var jobItems = _jobItemService.GetJobItems(id);
-            var viewModel = new JobDetailsViewModel()
+            var viewModel = new JobDetailsViewModel
             {
                 Id = job.Id.ToString(),
                 CreatedBy = job.CreatedBy.ToString(),
@@ -198,6 +206,7 @@ namespace JobSystem.Mvc.Controllers
                         Id = ji.Id,
                         JobId = id,
                         JobItemRef = ji.GetJobItemRef(),
+                        UserRole = GetLoggedInUserRoles(),
                         AssetNo = ji.AssetNo,
                         SerialNo = ji.SerialNo,
                         Status = ji.Status.Name.ToString(),
@@ -268,6 +277,13 @@ namespace JobSystem.Mvc.Controllers
                 }
             }
             return RedirectToAction("Details", new { id = id });
+        }
+
+        private UserRole GetLoggedInUserRoles()
+        {
+            var emailAddress = HttpContext.User.Identity.Name;
+            var user = _userManagementService.GetByEmail(emailAddress);
+            return user.Roles;
         }
 
         private void PopulateConsignmentItemViewModel(JobItemDetailsViewModel jiViewmodel)

@@ -78,6 +78,11 @@ namespace JobSystem.BusinessLogic.Services
             return _userAccountRepository.GetById(id);
         }
 
+        public UserAccount GetByEmail(string emailAddress)
+        {
+            return _userAccountRepository.GetByEmail(emailAddress, true);
+        }
+
         public IList<UserAccount> GetUsers()
         {
             return _userAccountRepository.GetUsers().ToList();
