@@ -5,45 +5,45 @@
 <div id="edit-instrument-container">
 @using (Html.BeginForm("Edit", "Instrument", FormMethod.Post))
 {
-	@Html.ValidationSummary(true)
-	<fieldset class="fieldset-no-legend">
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Manufacturer)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(m => m.Manufacturer, new { id = "manufacturer-autocomplete", placeholder = JobSystem.Resources.Common.Labels.TypeaheadPlaceholder })
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.ModelNo)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(m => m.ModelNo, new { id = "model-autocomplete", placeholder = JobSystem.Resources.Common.Labels.TypeaheadPlaceholder })
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Range)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Range)
-			@Html.ValidationMessageFor(model => model.Range)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.CalibrationTime)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.CalibrationTime, new { @class = "short-text" })
-			@Html.ValidationMessageFor(model => model.CalibrationTime)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Description)
-		</div>
-		<div class="editor-field">
-			@Html.TextAreaFor(model => model.Description)
-			@Html.ValidationMessageFor(model => model.Description)
-		</div>
-		</fieldset>
-		<div class="clear"></div>
-	<div class="buttons-row">
-		<input type="submit" class="primary-action" value="Save"/>
-	</div>
+    @Html.ValidationSummary(true)
+    <fieldset class="fieldset-no-legend">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Manufacturer)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(m => m.Manufacturer, new { id = "manufacturer-autocomplete", placeholder = JobSystem.Resources.Common.Labels.TypeaheadPlaceholder })
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ModelNo)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(m => m.ModelNo, new { id = "model-autocomplete", placeholder = JobSystem.Resources.Common.Labels.TypeaheadPlaceholder })
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Range)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Range)
+            @Html.ValidationMessageFor(model => model.Range)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CalibrationTime)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.CalibrationTime, new { @class = "short-text" })
+            @Html.ValidationMessageFor(model => model.CalibrationTime)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+        </fieldset>
+        <div class="clear"></div>
+    <div class="buttons-row">
+        <input type="submit" class="primary-action" value="Save"/>
+    </div>
 }
 </div>

@@ -4,34 +4,34 @@
 }
 
 <div id="toggle-container">
-	<span class="toggle toggle-left"><a href="@Url.Action("PendingConsignments")">Pending</a></span>
-	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ActiveConsignments")">Consigned</a></span>
+    <span class="toggle toggle-left"><a href="@Url.Action("PendingConsignments")">Pending</a></span>
+    <span class="toggle toggle-active toggle-right"><a href="@Url.Action("ActiveConsignments")">Consigned</a></span>
 </div>
 
 @if (Model.Consignments.Any())
 {
 
-	var grid = new WebGrid(null, defaultSort: "ConsignmentNo", canSort: false, rowsPerPage: Model.PageSize);
-	grid.Bind(Model.Consignments, autoSortAndPage: false, rowCount: Model.Total);
-	@grid.GetHtml(columns: grid.Columns(
-		grid.Column("ConsignmentNo", "Consignemnt No."),
-		grid.Column("SupplierName", "Supplier Name"),
-		grid.Column("CreatedBy", "Created By"),
-		grid.Column("DateCreated", "Date Created"),
-		grid.Column("", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.ItemCount), "ConsignmentItems", new { consignmentId = item.Id })</text>),
-		grid.Column("Edit", "", format: @<text>@if (item.IsOrdered) {
-					@: Ordered
-				} else {
-					@Html.ActionLink("Edit", "Edit", new { id = item.Id })@:&nbsp
-					@Html.ActionLink("Order", "ConvertToOrder", new { id = item.Id })
-				}</text>),
-	grid.Column("Print", "", format: @<text>@Html.ActionLink("Print Note", "GenerateConsignmentNote", new { Id = @item.Id }, new { target="_blank"})</text>)
-	))
-	<div class="clear"></div>
+    var grid = new WebGrid(null, defaultSort: "ConsignmentNo", canSort: false, rowsPerPage: Model.PageSize);
+    grid.Bind(Model.Consignments, autoSortAndPage: false, rowCount: Model.Total);
+    @grid.GetHtml(columns: grid.Columns(
+        grid.Column("ConsignmentNo", "Consignemnt No."),
+        grid.Column("SupplierName", "Supplier Name"),
+        grid.Column("CreatedBy", "Created By"),
+        grid.Column("DateCreated", "Date Created"),
+        grid.Column("", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.ItemCount), "ConsignmentItems", new { consignmentId = item.Id })</text>),
+        grid.Column("Edit", "", format: @<text>@if (item.IsOrdered) {
+                    @: Ordered
+                } else {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })@:&nbsp
+                    @Html.ActionLink("Order", "ConvertToOrder", new { id = item.Id })
+                }</text>),
+    grid.Column("Print", "", format: @<text>@Html.ActionLink("Print Note", "GenerateConsignmentNote", new { Id = @item.Id }, new { target="_blank"})</text>)
+    ))
+    <div class="clear"></div>
 }
 else
 {
-	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
+    <div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
 }
 
 

@@ -5,50 +5,50 @@
 
 @using (Ajax.BeginForm("EditInformation", "JobItem", new AjaxOptions() { UpdateTargetId = "st_content_7", OnSuccess = "app.closeModal('edit-job-item-information')" }))
 {
-	@Html.ValidationSummary(true)
-	<fieldset class="fieldset-no-legend fieldset-float-left">
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Accessories)
-		</div>
-		<div class="editor-field">
-			@Html.TextAreaFor(model => model.Accessories, new { @class = "job-item-create-textarea" })
-			@Html.ValidationMessageFor(model => model.Accessories)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Comments)
-		</div>
-		<div class="editor-field">
-			@Html.TextAreaFor(model => model.Comments, new { @class = "job-item-create-textarea" })
-			@Html.ValidationMessageFor(model => model.Comments)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Instructions)
-		</div>
-		<div class="editor-field">
-			@Html.TextAreaFor(model => model.Instructions, new { @class = "job-item-create-textarea" })
-			@Html.ValidationMessageFor(model => model.Instructions)
-		</div>
-@*		<div class="editor-label">
-		@Html.LabelFor(model => model.IsReturned)
-		</div>
-		<div class="editor-field">
-			@Html.CheckBoxFor(model => model.IsReturned)
-			@Html.ValidationMessageFor(model => model.IsReturned)
-		</div>
-		<div id="return-reason-group">
-			<div class="editor-label">
-				@Html.LabelFor(model => model.ReturnReason)
-			</div>
-			<div class="editor-field">
-				@Html.TextAreaFor(model => model.ReturnReason, new { @class = "job-item-create-textarea" })
-				@Html.ValidationMessageFor(model => model.ReturnReason)
-			</div>
-		</div>*@
-	</fieldset>
-	@Html.HiddenFor(model => model.JobId)
-	@Html.HiddenFor(model => model.Id)
-	<div class="clear"></div>
-	<div class="buttons-row">
-		<input type="submit" class="primary-action" value="Save"/>
-	</div>
+    @Html.ValidationSummary(true)
+    <fieldset class="fieldset-no-legend fieldset-float-left">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Accessories)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Accessories, new { @class = "job-item-create-textarea" })
+            @Html.ValidationMessageFor(model => model.Accessories)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Comments)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Comments, new { @class = "job-item-create-textarea" })
+            @Html.ValidationMessageFor(model => model.Comments)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Instructions)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Instructions, new { @class = "job-item-create-textarea" })
+            @Html.ValidationMessageFor(model => model.Instructions)
+        </div>
+@*        <div class="editor-label">
+        @Html.LabelFor(model => model.IsReturned)
+        </div>
+        <div class="editor-field">
+            @Html.CheckBoxFor(model => model.IsReturned)
+            @Html.ValidationMessageFor(model => model.IsReturned)
+        </div>
+        <div id="return-reason-group">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ReturnReason)
+            </div>
+            <div class="editor-field">
+                @Html.TextAreaFor(model => model.ReturnReason, new { @class = "job-item-create-textarea" })
+                @Html.ValidationMessageFor(model => model.ReturnReason)
+            </div>
+        </div>*@
+    </fieldset>
+    @Html.HiddenFor(model => model.JobId)
+    @Html.HiddenFor(model => model.Id)
+    <div class="clear"></div>
+    <div class="buttons-row">
+        <input type="submit" class="primary-action" value="Save"/>
+    </div>
 }

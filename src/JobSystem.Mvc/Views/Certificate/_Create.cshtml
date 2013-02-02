@@ -7,30 +7,30 @@
 <div id="create-certificate-container">
 @using (Ajax.BeginForm("Create", "Certificate", new AjaxOptions() { UpdateTargetId = "st_horizontal", OnSuccess = "app.closeModal('certificate-item')" }))
 {
-	@Html.ValidationSummary(true)
-	<fieldset class="fieldset-no-legend fieldset-float-left">
-		<div class="editor-label">
-			@Html.LabelFor(model => model.CertificateTypes)
-		</div>
-		<div class="editor-field">
-			@Html.DropDownListFor(model => model.CertificateTypeId, Model.CertificateTypes, new { @class = "long-dropdown" })
-			@Html.ValidationMessageFor(model => model.CertificateTypeId)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Attachments)
-		</div>
-		<div id="file-uploader">       
-			<noscript>          
-				<p>Please enable JavaScript to use file uploader.</p>
-				<!-- or put a simple form for upload here -->
-			</noscript>         
-		</div>
-		@Html.HiddenFor(model => model.Attachments)
-		@Html.HiddenFor(model => model.JobItemId)
-	</fieldset>
-		<div class="clear"></div>
-	<div class="buttons-row">
-		<input type="submit" class="primary-action" value="Create"/>
-	</div>
+    @Html.ValidationSummary(true)
+    <fieldset class="fieldset-no-legend fieldset-float-left">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CertificateTypes)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.CertificateTypeId, Model.CertificateTypes, new { @class = "long-dropdown" })
+            @Html.ValidationMessageFor(model => model.CertificateTypeId)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Attachments)
+        </div>
+        <div id="file-uploader">       
+            <noscript>          
+                <p>Please enable JavaScript to use file uploader.</p>
+                <!-- or put a simple form for upload here -->
+            </noscript>         
+        </div>
+        @Html.HiddenFor(model => model.Attachments)
+        @Html.HiddenFor(model => model.JobItemId)
+    </fieldset>
+        <div class="clear"></div>
+    <div class="buttons-row">
+        <input type="submit" class="primary-action" value="Create"/>
+    </div>
 }
 </div>

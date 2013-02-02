@@ -5,29 +5,29 @@
 }
 
 <div id="toggle-container-orders">
-	<span class="toggle toggle-left"><a href="@Url.Action("PendingOrderItems")">Items</a></span>
-	<span class="toggle toggle-active toggle-middle"><a href="@Url.Action("PendingOrders")">Pending</a></span>
-	<span class="toggle toggle-right"><a href="@Url.Action("ApprovedOrders")">Approved</a></span>
+    <span class="toggle toggle-left"><a href="@Url.Action("PendingOrderItems")">Items</a></span>
+    <span class="toggle toggle-active toggle-middle"><a href="@Url.Action("PendingOrders")">Pending</a></span>
+    <span class="toggle toggle-right"><a href="@Url.Action("ApprovedOrders")">Approved</a></span>
 </div>
 
 @Html.ActionLink("Raise Order", "CreateIndividualOrder", new { }, new { @class = "primary-action" })
 
 @if (Model.Items.Any())
 {
-	var grid = new WebGrid(null, defaultSort: "OrderNo", canSort: false, rowsPerPage: Model.PageSize);
-	grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
-	@grid.GetHtml(columns: grid.Columns(
-		grid.Column("OrderNo", "Order No."),
-		grid.Column("SupplierName", "Supplier Name"),
-		grid.Column("Instructions", "Instructions"),
-		grid.Column("Items", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.ItemCount), "Details", new { id = item.Id })</text>),
-		grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit Order", "Edit", new { id = @item.Id })</text>),
-		grid.Column("Approval", "", format: @<text>@Html.ActionLink("Approve", "ApproveOrder", new { id = @item.Id })</text>)
-	))
+    var grid = new WebGrid(null, defaultSort: "OrderNo", canSort: false, rowsPerPage: Model.PageSize);
+    grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
+    @grid.GetHtml(columns: grid.Columns(
+        grid.Column("OrderNo", "Order No."),
+        grid.Column("SupplierName", "Supplier Name"),
+        grid.Column("Instructions", "Instructions"),
+        grid.Column("Items", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.ItemCount), "Details", new { id = item.Id })</text>),
+        grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit Order", "Edit", new { id = @item.Id })</text>),
+        grid.Column("Approval", "", format: @<text>@Html.ActionLink("Approve", "ApproveOrder", new { id = @item.Id })</text>)
+    ))
 }
 else
 {
-	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
+    <div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
 }
 
 <div id="edit-order-container">

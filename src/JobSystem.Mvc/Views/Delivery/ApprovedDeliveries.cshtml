@@ -1,28 +1,28 @@
 ﻿@model  JobSystem.Mvc.ViewModels.Deliveries.DeliveryListViewModel
 @{
-	ViewBag.Title = "Approved Deliveries";
+    ViewBag.Title = "Approved Deliveries";
 }
 
 <div id="toggle-container">
-	<span class="toggle toggle-left"><a href="@Url.Action("PendingDeliveries")">Pending</a></span>
-	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedDeliveries")">Approved</a></span>
+    <span class="toggle toggle-left"><a href="@Url.Action("PendingDeliveries")">Pending</a></span>
+    <span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedDeliveries")">Approved</a></span>
 </div>
 
 @if (Model.Items.Any())
 {
-	var grid = new WebGrid(null, defaultSort:"DeliveryNo", canSort: false, rowsPerPage: Model.PageSize);
-	grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
-	@grid.GetHtml(columns: grid.Columns(
-		grid.Column("DeliveryNo", "Delivery No."),
-		grid.Column("CustomerName", "Customer"),
-		grid.Column("Fao", "FAO"),
-		grid.Column("CreatedBy", "Created By"),
-		grid.Column("DateCreated", "Date Created"),
-		grid.Column("", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.ItemCount), "DeliveryItems", new { deliveryId = item.Id })</text>),
-		grid.Column("", "", format: @<text>@Html.ActionLink("Print Note", "GenerateDeliveryNote", "Delivery", new { id = item.Id }, new { target = "_blank" })</text>)
-	))
+    var grid = new WebGrid(null, defaultSort:"DeliveryNo", canSort: false, rowsPerPage: Model.PageSize);
+    grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
+    @grid.GetHtml(columns: grid.Columns(
+        grid.Column("DeliveryNo", "Delivery No."),
+        grid.Column("CustomerName", "Customer"),
+        grid.Column("Fao", "FAO"),
+        grid.Column("CreatedBy", "Created By"),
+        grid.Column("DateCreated", "Date Created"),
+        grid.Column("", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.ItemCount), "DeliveryItems", new { deliveryId = item.Id })</text>),
+        grid.Column("", "", format: @<text>@Html.ActionLink("Print Note", "GenerateDeliveryNote", "Delivery", new { id = item.Id }, new { target = "_blank" })</text>)
+    ))
 }
 else
 {
-	<div id="empty-list">@JobSystem.Resources.Delivery.Messages.NoDeliveries</div>
+    <div id="empty-list">@JobSystem.Resources.Delivery.Messages.NoDeliveries</div>
 }

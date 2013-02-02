@@ -1,23 +1,23 @@
 ﻿@model JobSystem.Mvc.ViewModels.Orders.OrderDetailsViewModel
 @{
-	ViewBag.Title = "Details";
+    ViewBag.Title = "Details";
 }
 
 <div id="job-top-section">
-	<div id="job-title-container">
-		<h2>Order @Model.OrderNo</h2>
-		<p id="job-created-by">Created on @Model.DateCreated by <a href="mailto:@Model.CreatedBy">@Model.CreatedBy</a></p>
-		<div id="job-details-container">
-			<div id="job-details-notes">
-				<span class="details-header">Supplier</span>
-				<span class="field">@Model.SupplierName</span>
-			</div>
-			<div id="job-details-instruction">
-				<span class="details-header">Instructions</span>
-				<span class="field">@Model.Instructions</span>
-			</div>
-		</div>
-	</div>
+    <div id="job-title-container">
+        <h2>Order @Model.OrderNo</h2>
+        <p id="job-created-by">Created on @Model.DateCreated by <a href="mailto:@Model.CreatedBy">@Model.CreatedBy</a></p>
+        <div id="job-details-container">
+            <div id="job-details-notes">
+                <span class="details-header">Supplier</span>
+                <span class="field">@Model.SupplierName</span>
+            </div>
+            <div id="job-details-instruction">
+                <span class="details-header">Instructions</span>
+                <span class="field">@Model.Instructions</span>
+            </div>
+        </div>
+    </div>
 </div>
 
  <!-- Start HTML - Vertical tabs -->
@@ -28,48 +28,48 @@
             <div class="st_slide_container">
                 <ul class="st_tabs">
                     <li><a href="@Url.Action("CreateItem", "Order", new { orderId = @Model.Id })" id="@Model.Id" class="create-item-button">Add a new Order Item</a></li>
-					
-					@for (int i = 0; i < Model.OrderItems.Count(); i++)
-					{
-						var item = Model.OrderItems[i];
-						var href = String.Format("#stv_content_{0}", i);
-						<li>
-							<a href="@href" rel="v_tab_0" class="st_tab @(i == 0 ? "st_tab_active" : "")" id="@item.Id">
-							<span class="jiStatus">@String.Format("Order Item {0}", i + 1)</span>
-							<span>@item.PartNo</span></a>
-						</li>
-					}   
+                    
+                    @for (int i = 0; i < Model.OrderItems.Count(); i++)
+                    {
+                        var item = Model.OrderItems[i];
+                        var href = String.Format("#stv_content_{0}", i);
+                        <li>
+                            <a href="@href" rel="v_tab_0" class="st_tab @(i == 0 ? "st_tab_active" : "")" id="@item.Id">
+                            <span class="jiStatus">@String.Format("Order Item {0}", i + 1)</span>
+                            <span>@item.PartNo</span></a>
+                        </li>
+                    }   
                 </ul>
             </div> <!-- /.st_slide_container -->
         </div> <!-- /.st_tabs_container -->                               
-        <div class="st_view_container">        	            
+        <div class="st_view_container">                        
             <div class="st_view">
-				@for (int i = 0; i < Model.OrderItems.Count(); i++)
-				{
-				 var item = Model.OrderItems[i];
-				 var divId = String.Format("stv_content_{0}", i);
-				 <div id="@divId" class="st_tab_view st_first_tab_view">
-					<h2>@String.Format("Order Item {0}", i + 1)</h2> <a class="primary-action" href="@Url.Action("EditPendingItem", "Order", new { itemId = @item.Id })" class="create-item-button">Edit Item</a>
-					<div class="details-fields">
-						<span class="field-label">Description</span>
-						<span class="field">@item.Description</span>
-						<span class="field-label">Instructions</span>
-						<span class="field">@item.Instructions</span>
-						<span class="field-label">Currency</span>
-						<span class="field">@item.Currency</span>
-						<span class="field-label">Part No</span>
-						<span class="field">@item.PartNo</span>
-					</div>
-					<div class="details-fields">
-						<span class="field-label">Delivery Days</span>
-						<span class="field">@item.DeliveryDays</span>
-						<span class="field-label">Price</span>
-						<span class="field">@item.Price</span>
-						<span class="field-label">Quantity</span>
-						<span class="field">@item.Quantity</span>
-					</div>                           
+                @for (int i = 0; i < Model.OrderItems.Count(); i++)
+                {
+                 var item = Model.OrderItems[i];
+                 var divId = String.Format("stv_content_{0}", i);
+                 <div id="@divId" class="st_tab_view st_first_tab_view">
+                    <h2>@String.Format("Order Item {0}", i + 1)</h2> <a class="primary-action" href="@Url.Action("EditPendingItem", "Order", new { itemId = @item.Id })" class="create-item-button">Edit Item</a>
+                    <div class="details-fields">
+                        <span class="field-label">Description</span>
+                        <span class="field">@item.Description</span>
+                        <span class="field-label">Instructions</span>
+                        <span class="field">@item.Instructions</span>
+                        <span class="field-label">Currency</span>
+                        <span class="field">@item.Currency</span>
+                        <span class="field-label">Part No</span>
+                        <span class="field">@item.PartNo</span>
+                    </div>
+                    <div class="details-fields">
+                        <span class="field-label">Delivery Days</span>
+                        <span class="field">@item.DeliveryDays</span>
+                        <span class="field-label">Price</span>
+                        <span class="field">@item.Price</span>
+                        <span class="field-label">Quantity</span>
+                        <span class="field">@item.Quantity</span>
+                    </div>                           
                 </div>
-				}
+                }
             </div> <!-- /.st_view -->                        
         </div> <!-- /.st_view_container -->
     </div> <!-- /#st_vertical -->

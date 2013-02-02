@@ -1,28 +1,28 @@
 ﻿@model IEnumerable<JobSystem.Mvc.ViewModels.JobItems.JobItemSearchResultsViewModel>
 @{
-	ViewBag.Title = "Search Results";
+    ViewBag.Title = "Search Results";
 }
 @if (Model.Any())
 {
-	<table>
-		<tr>
-			<th>Item Ref.</th>
-			<th>Job</th>
-			<th>Instrument</th>
-			<th>Serial No.</th>
-		</tr>
-		@foreach (var item in Model)
-		{
-			<tr>
-				<td>@item.JobItemRef</td>
-				<td>@Html.ActionLink(item.JobNumber, "Details", "Job", new { id = item.JobId, TabNo = item.ItemNo }, null)</td>
-				<td>@item.Instrument</td>
-				<td>@item.SerialNo</td>
-			</tr>
-		}
-	</table>
+    <table>
+        <tr>
+            <th>Item Ref.</th>
+            <th>Job</th>
+            <th>Instrument</th>
+            <th>Serial No.</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.JobItemRef</td>
+                <td>@Html.ActionLink(item.JobNumber, "Details", "Job", new { id = item.JobId, TabNo = item.ItemNo }, null)</td>
+                <td>@item.Instrument</td>
+                <td>@item.SerialNo</td>
+            </tr>
+        }
+    </table>
 }
 else
 {
-	<div id="empty-list">No results</div>
+    <div id="empty-list">No results</div>
 }

@@ -1,24 +1,24 @@
 ﻿@model JobSystem.Mvc.ViewModels.Instruments.InstrumentListViewModel
 @{
-	ViewBag.Title = "Instruments";
+    ViewBag.Title = "Instruments";
 }
 <h2>Instruments</h2>
 <a href="#" id="createInstrumentButton" class="primary-action">Create Instrument</a>
 @if (Model.Instruments.Any())
 {
-	var grid = new WebGrid(Model.Instruments, defaultSort: "Manufacturer", canSort: false, rowsPerPage: 15);	
-	@grid.GetHtml(columns: grid.Columns(
-		grid.Column("Manufacturer", "Manufacturer"),
-		grid.Column("ModelNo", "Model Number"),
-		grid.Column("Range", "Range"),
-		grid.Column("CalibrationTime", "Calibration Time"),
-		grid.Column("Description", "Description"),
-		grid.Column("Edit", "", format: @<a href="#" class="editInstrumentButton" id="@item.Id">Edit</a>)
-	))
+    var grid = new WebGrid(Model.Instruments, defaultSort: "Manufacturer", canSort: false, rowsPerPage: 15);    
+    @grid.GetHtml(columns: grid.Columns(
+        grid.Column("Manufacturer", "Manufacturer"),
+        grid.Column("ModelNo", "Model Number"),
+        grid.Column("Range", "Range"),
+        grid.Column("CalibrationTime", "Calibration Time"),
+        grid.Column("Description", "Description"),
+        grid.Column("Edit", "", format: @<a href="#" class="editInstrumentButton" id="@item.Id">Edit</a>)
+    ))
 }
 else
 {
-	<div id="empty-list">@JobSystem.Resources.Instruments.Messages.NoInstruments</div>
+    <div id="empty-list">@JobSystem.Resources.Instruments.Messages.NoInstruments</div>
 }
 
 @Html.Partial("_Create", Model.CreateViewModel)

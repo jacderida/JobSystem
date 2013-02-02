@@ -7,34 +7,34 @@
 <div id="create-consignment-container">
 @using (Ajax.BeginForm("Create", "Consignment", new AjaxOptions() { UpdateTargetId = "st_horizontal", OnSuccess = "app.closeModal('consignment-item')" }))
 {
-	@Html.ValidationSummary(true)
-	<fieldset class="fieldset-no-legend fieldset-float-left">
-		<div class="editor-label">
-			@Html.LabelFor(model => model.SupplierId)
-		</div>
-		<div class="editor-field">
-			@Html.TextBox("SupplierAutocomplete", "", new { id = "supplier-autocomplete", placeholder = "Start typing to search" })
-			@Html.HiddenFor(model => model.SupplierId, new { id = "SupplierId" })
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Instructions)
-		</div>
-		<div class="editor-field">
-			@Html.TextAreaFor(model => model.Instructions)
-			@Html.ValidationMessageFor(model => model.Instructions)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.IsIndividual)
-		</div>
-		<div class="editor-field">
-			@Html.CheckBoxFor(model => model.IsIndividual)
-			@Html.ValidationMessageFor(model => model.IsIndividual)
-		</div>
-		@Html.HiddenFor(model => model.JobItemId)
-	</fieldset>
-		<div class="clear"></div>
-	<div class="buttons-row">
-		<input type="submit" class="primary-action" value="Raise"/>
-	</div>
+    @Html.ValidationSummary(true)
+    <fieldset class="fieldset-no-legend fieldset-float-left">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SupplierId)
+        </div>
+        <div class="editor-field">
+            @Html.TextBox("SupplierAutocomplete", "", new { id = "supplier-autocomplete", placeholder = "Start typing to search" })
+            @Html.HiddenFor(model => model.SupplierId, new { id = "SupplierId" })
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Instructions)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Instructions)
+            @Html.ValidationMessageFor(model => model.Instructions)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsIndividual)
+        </div>
+        <div class="editor-field">
+            @Html.CheckBoxFor(model => model.IsIndividual)
+            @Html.ValidationMessageFor(model => model.IsIndividual)
+        </div>
+        @Html.HiddenFor(model => model.JobItemId)
+    </fieldset>
+        <div class="clear"></div>
+    <div class="buttons-row">
+        <input type="submit" class="primary-action" value="Raise"/>
+    </div>
 }
 </div>

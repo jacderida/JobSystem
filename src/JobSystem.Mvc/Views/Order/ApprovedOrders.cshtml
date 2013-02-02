@@ -1,29 +1,29 @@
 ﻿@model JobSystem.Mvc.ViewModels.Orders.OrderListViewModel
 @{
-	ViewBag.Title = "Approved Orders";
+    ViewBag.Title = "Approved Orders";
 }
 
 <div id="toggle-container-orders">
-	<span class="toggle toggle-left"><a href="@Url.Action("PendingOrderItems")">Items</a></span>
-	<span class="toggle toggle-middle"><a href="@Url.Action("PendingOrders")">Pending</a></span>
-	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedOrders")">Approved</a></span>
+    <span class="toggle toggle-left"><a href="@Url.Action("PendingOrderItems")">Items</a></span>
+    <span class="toggle toggle-middle"><a href="@Url.Action("PendingOrders")">Pending</a></span>
+    <span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedOrders")">Approved</a></span>
 </div>
 
 @if (Model.Items.Any())
 {
-	var grid = new WebGrid(null, defaultSort: "OrderNo", canSort: false, rowsPerPage: Model.PageSize);
-	grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
-	@grid.GetHtml(columns: grid.Columns(
-		grid.Column("OrderNo", "Order No."),
-		grid.Column("SupplierName", "Supplier Name"),
-		grid.Column("Instructions", "Instructions"),
-		grid.Column("", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)(int)item.ItemCount), "ApprovedOrderItems", new { orderId = item.Id })</text>),
-		grid.Column("Print", "", format: @<text>@Html.ActionLink("Print Note", "GenerateOrderReport", new { id = @item.Id }, new { target = "blank" })</text>)
-	))
+    var grid = new WebGrid(null, defaultSort: "OrderNo", canSort: false, rowsPerPage: Model.PageSize);
+    grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
+    @grid.GetHtml(columns: grid.Columns(
+        grid.Column("OrderNo", "Order No."),
+        grid.Column("SupplierName", "Supplier Name"),
+        grid.Column("Instructions", "Instructions"),
+        grid.Column("", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)(int)item.ItemCount), "ApprovedOrderItems", new { orderId = item.Id })</text>),
+        grid.Column("Print", "", format: @<text>@Html.ActionLink("Print Note", "GenerateOrderReport", new { id = @item.Id }, new { target = "blank" })</text>)
+    ))
 }
 else
 {
-	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
+    <div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
 }
 <div id="edit-order-container">
 </div>

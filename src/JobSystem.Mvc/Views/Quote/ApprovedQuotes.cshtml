@@ -1,34 +1,34 @@
 ﻿@model JobSystem.Mvc.ViewModels.Quotes.QuoteListViewModel
 @{
-	ViewBag.Title = "Approved Quotes";
+    ViewBag.Title = "Approved Quotes";
 }
 
 <div id="message-container"></div>
 <div id="toggle-container">
-	<span class="toggle toggle-left"><a href="@Url.Action("PendingQuotes")">Pending</a></span>
-	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedQuotes")">Quoted</a></span>
+    <span class="toggle toggle-left"><a href="@Url.Action("PendingQuotes")">Pending</a></span>
+    <span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedQuotes")">Quoted</a></span>
 </div>
 
 @if (Model.Items.Any())
 {
-	var grid = new WebGrid(null, defaultSort:"QuoteNo", canSort: false, rowsPerPage: Model.PageSize);
-	grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
-	@grid.GetHtml(columns: grid.Columns(
-		grid.Column("QuoteNo", "Quote No."),
-		grid.Column("OrderNo", "Order No."),
-		grid.Column("AdviceNo", "Advice No."),
-		grid.Column("CurrencyName", "Currency"),
-		grid.Column("CustomerName", "Customer"),
-		grid.Column("CreatedBy", "Created By"),
-		grid.Column("DateCreated", "Date Created"),
-		grid.Column("", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.ItemCount), "QuoteItems", new { quoteId = item.Id })</text>),
-		grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit", "Edit", new { Id = @item.Id })</text>),
-		grid.Column("Print", "", format: @<text> @Html.ActionLink("Print", "GenerateQuoteReport", new { Id = @item.Id }, new { target = "_blank" })</text>)
-	))
+    var grid = new WebGrid(null, defaultSort:"QuoteNo", canSort: false, rowsPerPage: Model.PageSize);
+    grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
+    @grid.GetHtml(columns: grid.Columns(
+        grid.Column("QuoteNo", "Quote No."),
+        grid.Column("OrderNo", "Order No."),
+        grid.Column("AdviceNo", "Advice No."),
+        grid.Column("CurrencyName", "Currency"),
+        grid.Column("CustomerName", "Customer"),
+        grid.Column("CreatedBy", "Created By"),
+        grid.Column("DateCreated", "Date Created"),
+        grid.Column("", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.ItemCount), "QuoteItems", new { quoteId = item.Id })</text>),
+        grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit", "Edit", new { Id = @item.Id })</text>),
+        grid.Column("Print", "", format: @<text> @Html.ActionLink("Print", "GenerateQuoteReport", new { Id = @item.Id }, new { target = "_blank" })</text>)
+    ))
 }
 else
 {
-	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
+    <div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
 }
 
 <div id="edit-quote-container">

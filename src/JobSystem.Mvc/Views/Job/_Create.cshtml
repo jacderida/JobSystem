@@ -5,71 +5,71 @@
 <div id="create-job-container">
 @using (Html.BeginForm("Create", "Job", FormMethod.Post, new { id = "createJobForm", autocomplete="off" }))
 {
-	@Html.ValidationSummary(true)
-	<fieldset class="fieldset-no-legend fieldset-float-left">
-		<div class="editor-label">
-			@Html.LabelFor(model => model.JobTypes)
-		</div>
-		<div class="editor-field">
-			@Html.DropDownListFor(model => model.TypeId, Model.JobTypes, new { @class ="long-dropdown" })
-			@Html.ValidationMessageFor(model => model.JobTypes)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.CustomerId)
-		</div>
-		<div class="editor-field">
-			@Html.TextBox("CustomerAutocomplete", "", new { id = "customer-autocomplete", placeholder = "Start typing to search" })
-			@Html.HiddenFor(model => model.CustomerId, new { id = "CustomerId" })
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.OrderNumber)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.OrderNumber, new { autocomplete="off" })
-			@Html.ValidationMessageFor(model => model.OrderNumber)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.AdviceNumber)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.AdviceNumber, new { autocomplete = "off" })
-			@Html.ValidationMessageFor(model => model.AdviceNumber)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Contact)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Contact)
-			@Html.ValidationMessageFor(model => model.Contact)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Instructions)
-		</div>
-		<div class="editor-field">
-			@Html.TextAreaFor(model => model.Instructions)
-			@Html.ValidationMessageFor(model => model.Instructions)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Notes)
-		</div>
-		<div class="editor-field">
-			@Html.TextAreaFor(model => model.Notes)
-			@Html.ValidationMessageFor(model => model.Notes)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Attachments)
-		</div>
-		<div id="file-uploader" data-upload-path="@Url.Action("AddAttachment", "Attachments")">       
-			<noscript>          
-				<p>Please enable JavaScript to use file uploader.</p>
-				<!-- or put a simple form for upload here -->
-			</noscript>         
-		</div>
-		@Html.HiddenFor(model => model.Attachments)
-		</fieldset>
-		<div class="clear"></div>
-	<div class="buttons-row">
-		<input type="submit" class="primary-action" value="Create"/>
-	</div>
+    @Html.ValidationSummary(true)
+    <fieldset class="fieldset-no-legend fieldset-float-left">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.JobTypes)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.TypeId, Model.JobTypes, new { @class ="long-dropdown" })
+            @Html.ValidationMessageFor(model => model.JobTypes)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CustomerId)
+        </div>
+        <div class="editor-field">
+            @Html.TextBox("CustomerAutocomplete", "", new { id = "customer-autocomplete", placeholder = "Start typing to search" })
+            @Html.HiddenFor(model => model.CustomerId, new { id = "CustomerId" })
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OrderNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.OrderNumber, new { autocomplete="off" })
+            @Html.ValidationMessageFor(model => model.OrderNumber)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AdviceNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AdviceNumber, new { autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.AdviceNumber)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Contact)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Contact)
+            @Html.ValidationMessageFor(model => model.Contact)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Instructions)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Instructions)
+            @Html.ValidationMessageFor(model => model.Instructions)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Notes)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Notes)
+            @Html.ValidationMessageFor(model => model.Notes)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Attachments)
+        </div>
+        <div id="file-uploader" data-upload-path="@Url.Action("AddAttachment", "Attachments")">       
+            <noscript>          
+                <p>Please enable JavaScript to use file uploader.</p>
+                <!-- or put a simple form for upload here -->
+            </noscript>         
+        </div>
+        @Html.HiddenFor(model => model.Attachments)
+        </fieldset>
+        <div class="clear"></div>
+    <div class="buttons-row">
+        <input type="submit" class="primary-action" value="Create"/>
+    </div>
 }
 </div>

@@ -11,34 +11,34 @@
 <div id="create-order-container">
 @using (Html.BeginForm("Edit", "Order", FormMethod.Post))
 {
-	@Html.ValidationSummary(true)
-	<span class="form-section">
-		Details
-	</span>
-	<fieldset>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.SupplierId)
-		</div>
-		<div class="editor-field">
-			@Html.TextBox("SupplierAutocomplete", Model.SupplierName, new { id = "supplier-autocomplete" })
-			@Html.HiddenFor(model => model.SupplierId, new { id = "SupplierId" })
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Instructions)
-		</div>
-		<div class="editor-field">
-			@Html.TextAreaFor(model => model.Instructions)
-			@Html.ValidationMessageFor(model => model.Instructions)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Currencies)
-		</div>
-		<div class="editor-field">
-			@Html.DropDownListFor(model => model.CurrencyId, Model.Currencies, new { @class = "long-dropdown" })
-			@Html.ValidationMessageFor(model => model.Currencies)
-		</div>
-	</fieldset>
-	<input type="submit" class="primary-action" value="Save"/>
-	<a href="@Url.Action("Index", "Order")" class="secondary-action">Cancel</a>
+    @Html.ValidationSummary(true)
+    <span class="form-section">
+        Details
+    </span>
+    <fieldset>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SupplierId)
+        </div>
+        <div class="editor-field">
+            @Html.TextBox("SupplierAutocomplete", Model.SupplierName, new { id = "supplier-autocomplete" })
+            @Html.HiddenFor(model => model.SupplierId, new { id = "SupplierId" })
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Instructions)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Instructions)
+            @Html.ValidationMessageFor(model => model.Instructions)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Currencies)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.CurrencyId, Model.Currencies, new { @class = "long-dropdown" })
+            @Html.ValidationMessageFor(model => model.Currencies)
+        </div>
+    </fieldset>
+    <input type="submit" class="primary-action" value="Save"/>
+    <a href="@Url.Action("Index", "Order")" class="secondary-action">Cancel</a>
 }
 </div>

@@ -1,6 +1,6 @@
 ﻿@model JobSystem.Mvc.ViewModels.Deliveries.DeliveryItemEditViewModel
 @{
-	ViewBag.Title = "EditItem";
+    ViewBag.Title = "EditItem";
 }
 
 <h2>Edit Delivery Item</h2>
@@ -9,18 +9,18 @@
 
 @using (Html.BeginForm("EditItem", "Delivery", FormMethod.Post))
 {
-	@Html.ValidationSummary(true)
-	<span class="form-section">Details</span>
-	<fieldset>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Notes)
-		</div>
-		<div class="editor-field">
-			@Html.TextAreaFor(model => model.Notes)
-			@Html.ValidationMessageFor(model => model.Notes)
-		</div>
-		@Html.HiddenFor(model => model.Id)
-		@Html.HiddenFor(model => model.DeliveryId)
-	</fieldset>
-	<input type="submit" class="primary-action" value="Save" />
+    @Html.ValidationSummary(true)
+    <span class="form-section">Details</span>
+    <fieldset>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Notes)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Notes)
+            @Html.ValidationMessageFor(model => model.Notes)
+        </div>
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.DeliveryId)
+    </fieldset>
+    <input type="submit" class="primary-action" value="Save" />
 }

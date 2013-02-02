@@ -5,27 +5,27 @@
 <div id="edit-currency-container">
 @using (Html.BeginForm("Edit", "Currency", FormMethod.Post))
 {
-	@Html.ValidationSummary(true)
-	<fieldset class="fieldset-no-legend">
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Name)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Name)
-			@Html.ValidationMessageFor(model => model.Name)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.DisplayMessage)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.DisplayMessage)
-			@Html.ValidationMessageFor(model => model.DisplayMessage)
-		</div>
-		@Html.HiddenFor(m => m.Id)
-		</fieldset>
-		<div class="clear"></div>
-	<div class="buttons-row">
-		<input type="submit" class="primary-action" value="Save"/>
-	</div>
+    @Html.ValidationSummary(true)
+    <fieldset class="fieldset-no-legend">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DisplayMessage)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DisplayMessage)
+            @Html.ValidationMessageFor(model => model.DisplayMessage)
+        </div>
+        @Html.HiddenFor(m => m.Id)
+        </fieldset>
+        <div class="clear"></div>
+    <div class="buttons-row">
+        <input type="submit" class="primary-action" value="Save"/>
+    </div>
 }
 </div>

@@ -7,74 +7,74 @@
 <div id="message-container"></div>
 
 @if (Model.Any()) {
-	 <table class="approvedQuoteItemTable">
-		<tr>
-			<th>Job Item</th>
-			<th>Repair</th>
-			<th>Calibration</th>
-			<th>Parts</th>
-			<th>Carriage</th>
-			<th>Investigation</th>
-			<th class="shortColumn">Days</th>
-			<th>BER</th>
-			<th class="">Status</th>
-			<th class="shortColumn"></th>
-		</tr>	
-		 @foreach (var qi in Model)
+     <table class="approvedQuoteItemTable">
+        <tr>
+            <th>Job Item</th>
+            <th>Repair</th>
+            <th>Calibration</th>
+            <th>Parts</th>
+            <th>Carriage</th>
+            <th>Investigation</th>
+            <th class="shortColumn">Days</th>
+            <th>BER</th>
+            <th class="">Status</th>
+            <th class="shortColumn"></th>
+        </tr>    
+         @foreach (var qi in Model)
    {
-		
-		<tr id="@qi.Id">
-			<td>
-				@qi.JobItemRef
-			</td>
-			<td>
-				@qi.Repair
-			</td>
-			<td>
-				@qi.Calibration
-			</td>
-			<td>
-				@qi.Parts
-			</td>
-			<td>
-				@qi.Carriage
-			</td>
-			<td>
-				@qi.Investigation
-			</td>
-			<td class="shortColumn">
-				@qi.Days
-			</td>
-			<td>
-				@qi.ItemBER
-			</td>
-			<td class="">
-				<span class="quoteItemStatus">@qi.Status</span>
-				@if (qi.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuotedPrepared)
-	{
-					@Ajax.ActionLink("(Accept)", "AcceptQuoteItem", "Quote", new { quoteItemId = qi.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.showMessage('Quote Accepted'); app.updateQuoteStatusListView('Quote Accepted', '" + @qi.Id + "');" })
-					@Ajax.ActionLink("(Reject)", "RejectQuoteItem", "Quote", new { quoteItemId = qi.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.showMessage('Quote Rejected'); app.updateQuoteStatusListView('Quote Rejected', '" + @qi.Id + "');" })
-	}
-	else if (qi.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuoteAccepted)
-	{
-					@Ajax.ActionLink("(Reject)", "RejectQuoteItem", "Quote", new { quoteItemId = qi.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.showMessage('Quote Rejected'); app.updateQuoteStatusListView('Quote Rejected', '" + @qi.Id + "');" })
-	}
-	else
-	{
-					@Ajax.ActionLink("(Accept)", "AcceptQuoteItem", "Quote", new { quoteItemId = qi.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.showMessage('Quote Accepted'); app.updateQuoteStatusListView('Quote Accepted', '" + @qi.Id + "');" })
-	}
-			</td>
-			<td class="shortColumn">
-				@Html.ActionLink("Edit", "EditItem", new { id = qi.JobItemId, fromJi = false, isQuoted = true })
-			</td>
-		</tr>
-		
+        
+        <tr id="@qi.Id">
+            <td>
+                @qi.JobItemRef
+            </td>
+            <td>
+                @qi.Repair
+            </td>
+            <td>
+                @qi.Calibration
+            </td>
+            <td>
+                @qi.Parts
+            </td>
+            <td>
+                @qi.Carriage
+            </td>
+            <td>
+                @qi.Investigation
+            </td>
+            <td class="shortColumn">
+                @qi.Days
+            </td>
+            <td>
+                @qi.ItemBER
+            </td>
+            <td class="">
+                <span class="quoteItemStatus">@qi.Status</span>
+                @if (qi.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuotedPrepared)
+    {
+                    @Ajax.ActionLink("(Accept)", "AcceptQuoteItem", "Quote", new { quoteItemId = qi.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.showMessage('Quote Accepted'); app.updateQuoteStatusListView('Quote Accepted', '" + @qi.Id + "');" })
+                    @Ajax.ActionLink("(Reject)", "RejectQuoteItem", "Quote", new { quoteItemId = qi.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.showMessage('Quote Rejected'); app.updateQuoteStatusListView('Quote Rejected', '" + @qi.Id + "');" })
+    }
+    else if (qi.StatusType == JobSystem.DataModel.Entities.ListItemType.StatusQuoteAccepted)
+    {
+                    @Ajax.ActionLink("(Reject)", "RejectQuoteItem", "Quote", new { quoteItemId = qi.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.showMessage('Quote Rejected'); app.updateQuoteStatusListView('Quote Rejected', '" + @qi.Id + "');" })
+    }
+    else
+    {
+                    @Ajax.ActionLink("(Accept)", "AcceptQuoteItem", "Quote", new { quoteItemId = qi.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "app.showMessage('Quote Accepted'); app.updateQuoteStatusListView('Quote Accepted', '" + @qi.Id + "');" })
+    }
+            </td>
+            <td class="shortColumn">
+                @Html.ActionLink("Edit", "EditItem", new { id = qi.JobItemId, fromJi = false, isQuoted = true })
+            </td>
+        </tr>
+        
    }
-	 </table>
-	 <div class="clear"></div>
+     </table>
+     <div class="clear"></div>
 }
 else
 {
-	<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
+    <div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoQuotes</div>
 }
 

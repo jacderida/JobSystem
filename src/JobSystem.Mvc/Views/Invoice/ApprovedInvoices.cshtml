@@ -5,25 +5,25 @@
 }
 
 <div id="toggle-container">
-	<span class="toggle toggle-left"><a href="@Url.Action("PendingInvoices")">Pending</a></span>
-	<span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedInvoices")">Invoiced</a></span>
+    <span class="toggle toggle-left"><a href="@Url.Action("PendingInvoices")">Pending</a></span>
+    <span class="toggle toggle-active toggle-right"><a href="@Url.Action("ApprovedInvoices")">Invoiced</a></span>
 </div>
 
 @if (Model.Invoices.Any())
 {
-	var grid = new WebGrid(null, defaultSort:"InvoiceNo", canSort: false, rowsPerPage: Model.PageSize);
-	grid.Bind(Model.Invoices, autoSortAndPage: false, rowCount: Model.Total);
-	@grid.GetHtml(columns: grid.Columns(
-		grid.Column("InvoiceNo", "Invoice No"),
-		grid.Column("CustomerName", "Customer"),
-		grid.Column("PaymentTerm", "Payment Term"),
-		grid.Column("TaxCode", "Tax Code"),
-		grid.Column("DateCreated", "Date Created"),
-		grid.Column("Items", "Items", format: @<text>@String.Format("{0} items", (int)item.ItemCount)</text>),
-		grid.Column("", "", format: @<text>@Html.ActionLink("Print Note", "GenerateInvoiceNote", new { Id = @item.Id }, new { target="_blank"})</text>)
-	))
+    var grid = new WebGrid(null, defaultSort:"InvoiceNo", canSort: false, rowsPerPage: Model.PageSize);
+    grid.Bind(Model.Invoices, autoSortAndPage: false, rowCount: Model.Total);
+    @grid.GetHtml(columns: grid.Columns(
+        grid.Column("InvoiceNo", "Invoice No"),
+        grid.Column("CustomerName", "Customer"),
+        grid.Column("PaymentTerm", "Payment Term"),
+        grid.Column("TaxCode", "Tax Code"),
+        grid.Column("DateCreated", "Date Created"),
+        grid.Column("Items", "Items", format: @<text>@String.Format("{0} items", (int)item.ItemCount)</text>),
+        grid.Column("", "", format: @<text>@Html.ActionLink("Print Note", "GenerateInvoiceNote", new { Id = @item.Id }, new { target="_blank"})</text>)
+    ))
 }
 else
 {
-	<div id="empty-list">@JobSystem.Resources.Invoices.Messages.NoApprovedInvoices</div>
+    <div id="empty-list">@JobSystem.Resources.Invoices.Messages.NoApprovedInvoices</div>
 }

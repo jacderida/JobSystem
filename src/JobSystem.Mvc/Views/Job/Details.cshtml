@@ -1,134 +1,134 @@
 ﻿@model JobSystem.Mvc.ViewModels.Jobs.JobDetailsViewModel
 @{
     
-	ViewBag.Title = @Model.JobNumber;
+    ViewBag.Title = @Model.JobNumber;
 }
 
 <div id="create-work-item-container">
-	@*Content ajaxed in*@
+    @*Content ajaxed in*@
 </div>
 
 <div id="create-consignment-container">
-	@*Content ajaxed in*@
+    @*Content ajaxed in*@
 </div>
 
 <div id="create-delivery-container">
-	@*Content ajaxed in*@
+    @*Content ajaxed in*@
 </div>
 
 <div id="create-certificate-container">
-	@*Content ajaxed in*@
+    @*Content ajaxed in*@
 </div>
 
 @Html.HiddenFor(m => m.Id, new { id = "hiddenJobId" })
 
 <div id="job-top-section">
-	@if (Model.IsPending) {
-		<div id="pending-banner"></div>
-	}
-	<div id="job-title-container">
-		<h2>@Model.JobNumber</h2>
-		@Html.ActionLink("Edit Job Details", "Edit", new { Id = @Model.Id }, new { id = "editJobButton", @class = "primary-action" })
-		<p id="job-created-by">Created on @Model.DateCreated by <a href="mailto:@Model.CreatedBy">@Model.CreatedBy</a></p>
-		<div id="job-details-container">
-			<div class="job-details-fields">
-				<span class="details-header">Details</span>
-				@if (!String.IsNullOrEmpty(Model.OrderNumber))
-				{
-					<span class="field-label">Order No</span>
-					<span class="field">@Model.OrderNumber</span>
-				}
-				@if (!String.IsNullOrEmpty(Model.AdviceNumber))
-				{
-					<span class="field-label">Advice No</span>
-					<span class="field">@Model.AdviceNumber</span>
-				}
-				@if (!String.IsNullOrEmpty(Model.Contact))
-				{
-					<span class="field-label">Contact</span>
-					<span class="field">@Model.Contact</span>
-				}
-			</div>
-			<div id="job-details-instruction">
-				<span class="details-header">Instructions & Notes</span>
-				@if (!String.IsNullOrEmpty(Model.Instruction))
-				{
-					<span class="field-label">Instructions</span>
-					<span class="field">@Model.Instruction</span>
-				}
-				@if (!String.IsNullOrEmpty(Model.Note))
-				{
-					<span class="field-label">Notes</span>
-					<span class="field">@Model.Note</span>
-				}
-			</div>
-			<div id="job-details-notes">
-				<span class="details-header">Attachments</span>
-				<div id="file-uploader" data-upload-path="@Url.Action("AddAttachment", "Attachments")" data-attachment-link="true"}>       
-					<noscript>
-						<p>Please enable JavaScript to use file uploader.</p>
-						<!-- or put a simple form for upload here -->
-					</noscript>
-				</div>
-				<ul id="attachmentList">
-					@foreach (var attachment in Model.Attachments)
-					{
-						<li><span class="field-label">@Html.ActionLink(@attachment.Name, "GetAttachment", new { id = @Model.Id, attachmentId = @attachment.Id }) </span></li>
-					}
-				</ul>
-			</div>
-			<div id="job-details-customer-info">
-				<span id="custname">Customer</span>
-				<ul>
-					<li>@Model.CustomerName</li>
-					<li>@Model.CustomerAssetLine</li>
-					<li>@Model.CustomerAddress1</li>
-					<li>@Model.CustomerAddress2</li>
-					<li>@Model.CustomerAddress3</li>
-					<li>@Model.CustomerAddress4</li>
-					<li>@Model.CustomerAddress5</li>
-					<li>@Model.CustomerTelephone</li>
-				</ul>
-			</div>
-		</div>
-	</div>	
+    @if (Model.IsPending) {
+        <div id="pending-banner"></div>
+    }
+    <div id="job-title-container">
+        <h2>@Model.JobNumber</h2>
+        @Html.ActionLink("Edit Job Details", "Edit", new { Id = @Model.Id }, new { id = "editJobButton", @class = "primary-action" })
+        <p id="job-created-by">Created on @Model.DateCreated by <a href="mailto:@Model.CreatedBy">@Model.CreatedBy</a></p>
+        <div id="job-details-container">
+            <div class="job-details-fields">
+                <span class="details-header">Details</span>
+                @if (!String.IsNullOrEmpty(Model.OrderNumber))
+                {
+                    <span class="field-label">Order No</span>
+                    <span class="field">@Model.OrderNumber</span>
+                }
+                @if (!String.IsNullOrEmpty(Model.AdviceNumber))
+                {
+                    <span class="field-label">Advice No</span>
+                    <span class="field">@Model.AdviceNumber</span>
+                }
+                @if (!String.IsNullOrEmpty(Model.Contact))
+                {
+                    <span class="field-label">Contact</span>
+                    <span class="field">@Model.Contact</span>
+                }
+            </div>
+            <div id="job-details-instruction">
+                <span class="details-header">Instructions & Notes</span>
+                @if (!String.IsNullOrEmpty(Model.Instruction))
+                {
+                    <span class="field-label">Instructions</span>
+                    <span class="field">@Model.Instruction</span>
+                }
+                @if (!String.IsNullOrEmpty(Model.Note))
+                {
+                    <span class="field-label">Notes</span>
+                    <span class="field">@Model.Note</span>
+                }
+            </div>
+            <div id="job-details-notes">
+                <span class="details-header">Attachments</span>
+                <div id="file-uploader" data-upload-path="@Url.Action("AddAttachment", "Attachments")" data-attachment-link="true"}>       
+                    <noscript>
+                        <p>Please enable JavaScript to use file uploader.</p>
+                        <!-- or put a simple form for upload here -->
+                    </noscript>
+                </div>
+                <ul id="attachmentList">
+                    @foreach (var attachment in Model.Attachments)
+                    {
+                        <li><span class="field-label">@Html.ActionLink(@attachment.Name, "GetAttachment", new { id = @Model.Id, attachmentId = @attachment.Id }) </span></li>
+                    }
+                </ul>
+            </div>
+            <div id="job-details-customer-info">
+                <span id="custname">Customer</span>
+                <ul>
+                    <li>@Model.CustomerName</li>
+                    <li>@Model.CustomerAssetLine</li>
+                    <li>@Model.CustomerAddress1</li>
+                    <li>@Model.CustomerAddress2</li>
+                    <li>@Model.CustomerAddress3</li>
+                    <li>@Model.CustomerAddress4</li>
+                    <li>@Model.CustomerAddress5</li>
+                    <li>@Model.CustomerTelephone</li>
+                </ul>
+            </div>
+        </div>
+    </div>    
 </div>
 <!-- Start HTML - Vertical tabs -->
 <div id="st_vertical" class="st_vertical st_vertical_job">
-		<div class="st_tabs_container">
-			<a href="#prev" class="st_prev"></a>
-			<a href="#next" class="st_next"></a>
-			<div class="st_slide_container">
-				<ul class="st_tabs">
-					<li><a href="@Url.Action("Create", "JobItem", new { id = @Model.Id })" id="@Model.Id" class="create-item-button">Add a new Job Item</a></li>
-					@for (int i = 0; i < Model.JobItems.Count(); i++)
-					{
-						var jobItem = Model.JobItems[i];
-						<li>
-							<a href="#stv_content_1" rel="v_tab_0" class="st_tab getJobItem @(i == 0 ? "st_tab_active" : "")" id="@jobItem.Id">
-							<span class="jiStatus">@jobItem.Status</span>
-							<span>@jobItem.JobItemRef</span></a>
-						</li>
-					}
-				</ul>
-			</div> <!-- /.st_slide_container -->
-		</div> <!-- /.st_tabs_container -->
-	</div> <!-- /#st_vertical -->
-	<!-- End HTML - Vertical tabs -->
-	<div id="horz_tabs_container"> 
-	<!-- Start HTML - Horizontal tabs -->
-		<div id="st_horizontal" class="st_horizontal">
-			<!-- This partial is replaced by ajax -->
-			@if (@Model.JobItems.Any())
+        <div class="st_tabs_container">
+            <a href="#prev" class="st_prev"></a>
+            <a href="#next" class="st_next"></a>
+            <div class="st_slide_container">
+                <ul class="st_tabs">
+                    <li><a href="@Url.Action("Create", "JobItem", new { id = @Model.Id })" id="@Model.Id" class="create-item-button">Add a new Job Item</a></li>
+                    @for (int i = 0; i < Model.JobItems.Count(); i++)
+                    {
+                        var jobItem = Model.JobItems[i];
+                        <li>
+                            <a href="#stv_content_1" rel="v_tab_0" class="st_tab getJobItem @(i == 0 ? "st_tab_active" : "")" id="@jobItem.Id">
+                            <span class="jiStatus">@jobItem.Status</span>
+                            <span>@jobItem.JobItemRef</span></a>
+                        </li>
+                    }
+                </ul>
+            </div> <!-- /.st_slide_container -->
+        </div> <!-- /.st_tabs_container -->
+    </div> <!-- /#st_vertical -->
+    <!-- End HTML - Vertical tabs -->
+    <div id="horz_tabs_container"> 
+    <!-- Start HTML - Horizontal tabs -->
+        <div id="st_horizontal" class="st_horizontal">
+            <!-- This partial is replaced by ajax -->
+            @if (@Model.JobItems.Any())
    {
-				@Html.Partial("~/Views/JobItem/_Details.cshtml", Model.JobItems.First())
+                @Html.Partial("~/Views/JobItem/_Details.cshtml", Model.JobItems.First())
    }
    else
    {
-				<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoJobItems</div>
-			}
-		</div>
-	<!-- /#st_horizontal -->
-	<!-- End HTML - Horizontal tabs -->           
+                <div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoJobItems</div>
+            }
+        </div>
+    <!-- /#st_horizontal -->
+    <!-- End HTML - Horizontal tabs -->           
    </div>
 <div class="clear"></div>

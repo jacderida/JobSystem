@@ -5,33 +5,33 @@
 }
 
 <div id="toggle-container-orders">
-	<span class="toggle toggle-active toggle-left"><a href="@Url.Action("PendingOrderItems")">Items</a></span>
-	<span class="toggle toggle-middle"><a href="@Url.Action("PendingOrders")">Pending</a></span>
-	<span class="toggle toggle-right"><a href="@Url.Action("ApprovedOrders")">Approved</a></span>
+    <span class="toggle toggle-active toggle-left"><a href="@Url.Action("PendingOrderItems")">Items</a></span>
+    <span class="toggle toggle-middle"><a href="@Url.Action("PendingOrders")">Pending</a></span>
+    <span class="toggle toggle-right"><a href="@Url.Action("ApprovedOrders")">Approved</a></span>
 </div>
 
 @using (Html.BeginForm("OrderPending", "Order", FormMethod.Post))
 {
-	if (Model.Items.Any())
-	{
-		<input class="primary-action" type="submit" value="Order"/>
-		var grid = new WebGrid(null, defaultSort: "SupplierName", canSort: false, rowsPerPage: Model.PageSize);
-		grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
-		@grid.GetHtml(columns: grid.Columns(
-			grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
-			grid.Column("SupplierName", "Supplier Name"),
-			grid.Column("Instructions", "Instructions"),
-			grid.Column("Description", "Description"),
-			grid.Column("PartNo", "Part No."),
-			grid.Column("DeliveryDays", "Delivery Days"),
-			grid.Column("Price", "Price"),
-			grid.Column("Quantity", "Quantity")
-		))
-	}
-	else
-	{
-		<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
-	}
+    if (Model.Items.Any())
+    {
+        <input class="primary-action" type="submit" value="Order"/>
+        var grid = new WebGrid(null, defaultSort: "SupplierName", canSort: false, rowsPerPage: Model.PageSize);
+        grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
+        @grid.GetHtml(columns: grid.Columns(
+            grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
+            grid.Column("SupplierName", "Supplier Name"),
+            grid.Column("Instructions", "Instructions"),
+            grid.Column("Description", "Description"),
+            grid.Column("PartNo", "Part No."),
+            grid.Column("DeliveryDays", "Delivery Days"),
+            grid.Column("Price", "Price"),
+            grid.Column("Quantity", "Quantity")
+        ))
+    }
+    else
+    {
+        <div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoOrders</div>
+    }
 }
 
 <div id="edit-order-container">

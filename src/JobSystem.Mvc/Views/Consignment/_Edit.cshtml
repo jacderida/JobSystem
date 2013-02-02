@@ -7,21 +7,21 @@
 <div id="edit-consignment-container">
 @using (Html.BeginForm("Edit", "Consignment", FormMethod.Post))
 {
-	@Html.ValidationSummary(true)
-	<fieldset class="fieldset-no-legend fieldset-float-left">
-		<div class="editor-label">
-			@Html.LabelFor(model => model.SupplierId)
-		</div>
-		<div class="editor-field">
-			@Html.TextBox("SupplierAutocomplete", @Model.SupplierName, new { id = "supplier-autocomplete" })
-			@Html.HiddenFor(model => model.SupplierId, new { id = "SupplierId" })
-		</div>
-		@Html.HiddenFor(model => model.Id)
-	</fieldset>
-	<div class="clear"></div>
-	<div class="buttons-row">
-		<input type="submit" class="primary-action" value="Save"/>
-	</div>
-	<div class="clear"></div>
+    @Html.ValidationSummary(true)
+    <fieldset class="fieldset-no-legend fieldset-float-left">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SupplierId)
+        </div>
+        <div class="editor-field">
+            @Html.TextBox("SupplierAutocomplete", @Model.SupplierName, new { id = "supplier-autocomplete" })
+            @Html.HiddenFor(model => model.SupplierId, new { id = "SupplierId" })
+        </div>
+        @Html.HiddenFor(model => model.Id)
+    </fieldset>
+    <div class="clear"></div>
+    <div class="buttons-row">
+        <input type="submit" class="primary-action" value="Save"/>
+    </div>
+    <div class="clear"></div>
 }
 </div>

@@ -1,33 +1,33 @@
 ﻿@model JobSystem.Mvc.ViewModels.Consignments.ConsignmentPendingListViewModel
 
 @{
-	ViewBag.Title = "Consignments";
+    ViewBag.Title = "Consignments";
 }
 
 <div id="toggle-container">
-	<span class="toggle toggle-active toggle-left"><a href="@Url.Action("PendingConsignments")">Pending</a></span>
-	<span class="toggle toggle-right"><a href="@Url.Action("ActiveConsignments")">Consigned</a></span>
+    <span class="toggle toggle-active toggle-left"><a href="@Url.Action("PendingConsignments")">Pending</a></span>
+    <span class="toggle toggle-right"><a href="@Url.Action("ActiveConsignments")">Consigned</a></span>
 </div>
 
 @using (Html.BeginForm("ConsignPending", "Consignment", FormMethod.Post))
 {
-	if (Model.ConsignmentItems.Any())
-	{
-		<input class="primary-action" type="submit" value="Consign"/>
-		var grid = new WebGrid(null, defaultSort: "JobItemRef", canSort: false, rowsPerPage: Model.PageSize);
-		grid.Bind(Model.ConsignmentItems, rowCount: Model.Total, autoSortAndPage: false);
-		@grid.GetHtml(columns: grid.Columns(
-			grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
-			grid.Column("JobItemRef", "Job Item Ref."),
-			grid.Column("SupplierName", "Supplier Name"),
-			grid.Column("Instructions", "Instructions"),
-			grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit", "EditItem", new { id = item.Id })</text>)
-		))
-	}
-	else
-	{
-		<div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
-	}
+    if (Model.ConsignmentItems.Any())
+    {
+        <input class="primary-action" type="submit" value="Consign"/>
+        var grid = new WebGrid(null, defaultSort: "JobItemRef", canSort: false, rowsPerPage: Model.PageSize);
+        grid.Bind(Model.ConsignmentItems, rowCount: Model.Total, autoSortAndPage: false);
+        @grid.GetHtml(columns: grid.Columns(
+            grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
+            grid.Column("JobItemRef", "Job Item Ref."),
+            grid.Column("SupplierName", "Supplier Name"),
+            grid.Column("Instructions", "Instructions"),
+            grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit", "EditItem", new { id = item.Id })</text>)
+        ))
+    }
+    else
+    {
+        <div id="empty-list">@JobSystem.Resources.JobItems.Messages.NoConsignments</div>
+    }
 }
 
 <div id="edit-consignment-container">

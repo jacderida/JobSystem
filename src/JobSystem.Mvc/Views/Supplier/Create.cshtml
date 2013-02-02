@@ -1,174 +1,174 @@
 ﻿@model JobSystem.Mvc.ViewModels.Suppliers.SupplierViewModel
 @{
-	ViewBag.Title = "Create Supplier";
+    ViewBag.Title = "Create Supplier";
 }
 <h2>Create Supplier</h2>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 @using (Html.BeginForm())
 {
-	@Html.ValidationSummary(true)
-	<span class="form-section">
-		Name & Trading Address
-	</span>
-	<fieldset>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Name)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Name)
-			@Html.ValidationMessageFor(model => model.Name)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Address1)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Address1)
-			@Html.ValidationMessageFor(model => model.Address1)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Address2)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Address2)
-			@Html.ValidationMessageFor(model => model.Address2)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Address3)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Address3)
-			@Html.ValidationMessageFor(model => model.Address3)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Address4)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Address4)
-			@Html.ValidationMessageFor(model => model.Address4)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Address5)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.Address5, new { @class = "short-text" })
-			@Html.ValidationMessageFor(model => model.Address5)
-		</div>
-        <div class="editor-label">
-			@Html.LabelFor(model => model.Telephone)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.Telephone, new { @class = "short-text" })
-			@Html.ValidationMessageFor(model => model.Telephone)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Fax)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.Fax, new { @class = "short-text" })
-			@Html.ValidationMessageFor(model => model.Fax)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Email)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Email)
-			@Html.ValidationMessageFor(model => model.Email)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Contact1)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Contact1)
-			@Html.ValidationMessageFor(model => model.Contact1)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Contact2)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Contact2)
-			@Html.ValidationMessageFor(model => model.Contact2)
-		</div>
-	</fieldset>
-	<span class="form-section">
-		Sales Address
-	</span>
+    @Html.ValidationSummary(true)
+    <span class="form-section">
+        Name & Trading Address
+    </span>
     <fieldset>
-		<input type="checkbox" id="salesCheckbox">
-		<label for="salesCheckbox">Same as main address</label>
-		<div id="salesDetails">
-			<div class="editor-label">
-				@Html.LabelFor(model => model.SalesAddress1)
-			</div>
-			<div class="editor-field">
-				@Html.EditorFor(model => model.SalesAddress1)
-				@Html.ValidationMessageFor(model => model.SalesAddress1)
-			</div>
-			<div class="editor-label">
-				@Html.LabelFor(model => model.SalesAddress2)
-			</div>
-			<div class="editor-field">
-				@Html.EditorFor(model => model.SalesAddress2)
-				@Html.ValidationMessageFor(model => model.SalesAddress2)
-			</div>
-			<div class="editor-label">
-				@Html.LabelFor(model => model.SalesAddress3)
-			</div>
-			<div class="editor-field">
-				@Html.EditorFor(model => model.SalesAddress3)
-				@Html.ValidationMessageFor(model => model.SalesAddress3)
-			</div>
-			<div class="editor-label">
-				@Html.LabelFor(model => model.SalesAddress4)
-			</div>
-			<div class="editor-field">
-				@Html.EditorFor(model => model.SalesAddress4)
-				@Html.ValidationMessageFor(model => model.SalesAddress4)
-			</div>
-			<div class="editor-label">
-				@Html.LabelFor(model => model.SalesAddress5)
-			</div>
-			<div class="editor-field">
-				@Html.TextBoxFor(model => model.SalesAddress5, new { @class = "short-text" })
-				@Html.ValidationMessageFor(model => model.SalesAddress5)
-			</div>
-			 <div class="editor-label">
-				@Html.LabelFor(model => model.SalesTelephone)
-			</div>
-			<div class="editor-field">
-				@Html.TextBoxFor(model => model.SalesTelephone, new { @class = "short-text" })
-				@Html.ValidationMessageFor(model => model.SalesTelephone)
-			</div>
-			<div class="editor-label">
-				@Html.LabelFor(model => model.SalesFax)
-			</div>
-			<div class="editor-field">
-				@Html.TextBoxFor(model => model.SalesFax, new { @class = "short-text" })
-				@Html.ValidationMessageFor(model => model.SalesFax)
-			</div>
-			<div class="editor-label">
-				@Html.LabelFor(model => model.SalesEmail)
-			</div>
-			<div class="editor-field">
-				@Html.EditorFor(model => model.SalesEmail)
-				@Html.ValidationMessageFor(model => model.SalesEmail)
-			</div>
-			<div class="editor-label">
-				@Html.LabelFor(model => model.SalesContact1)
-			</div>
-			<div class="editor-field">
-				@Html.EditorFor(model => model.SalesContact1)
-				@Html.ValidationMessageFor(model => model.SalesContact1)
-			</div>
-			<div class="editor-label">
-				@Html.LabelFor(model => model.SalesContact2)
-			</div>
-			<div class="editor-field">
-				@Html.EditorFor(model => model.SalesContact2)
-				@Html.ValidationMessageFor(model => model.SalesContact2)
-			</div>
-		</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address1)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address1)
+            @Html.ValidationMessageFor(model => model.Address1)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address2)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address2)
+            @Html.ValidationMessageFor(model => model.Address2)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address3)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address3)
+            @Html.ValidationMessageFor(model => model.Address3)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address4)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address4)
+            @Html.ValidationMessageFor(model => model.Address4)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address5)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Address5, new { @class = "short-text" })
+            @Html.ValidationMessageFor(model => model.Address5)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Telephone)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Telephone, new { @class = "short-text" })
+            @Html.ValidationMessageFor(model => model.Telephone)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Fax)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Fax, new { @class = "short-text" })
+            @Html.ValidationMessageFor(model => model.Fax)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Contact1)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Contact1)
+            @Html.ValidationMessageFor(model => model.Contact1)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Contact2)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Contact2)
+            @Html.ValidationMessageFor(model => model.Contact2)
+        </div>
     </fieldset>
-	<input type="submit" value="Create" class="primary-action"/>
-	@Html.ActionLink("Cancel", "Index")
+    <span class="form-section">
+        Sales Address
+    </span>
+    <fieldset>
+        <input type="checkbox" id="salesCheckbox">
+        <label for="salesCheckbox">Same as main address</label>
+        <div id="salesDetails">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.SalesAddress1)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.SalesAddress1)
+                @Html.ValidationMessageFor(model => model.SalesAddress1)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.SalesAddress2)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.SalesAddress2)
+                @Html.ValidationMessageFor(model => model.SalesAddress2)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.SalesAddress3)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.SalesAddress3)
+                @Html.ValidationMessageFor(model => model.SalesAddress3)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.SalesAddress4)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.SalesAddress4)
+                @Html.ValidationMessageFor(model => model.SalesAddress4)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.SalesAddress5)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.SalesAddress5, new { @class = "short-text" })
+                @Html.ValidationMessageFor(model => model.SalesAddress5)
+            </div>
+             <div class="editor-label">
+                @Html.LabelFor(model => model.SalesTelephone)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.SalesTelephone, new { @class = "short-text" })
+                @Html.ValidationMessageFor(model => model.SalesTelephone)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.SalesFax)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.SalesFax, new { @class = "short-text" })
+                @Html.ValidationMessageFor(model => model.SalesFax)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.SalesEmail)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.SalesEmail)
+                @Html.ValidationMessageFor(model => model.SalesEmail)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.SalesContact1)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.SalesContact1)
+                @Html.ValidationMessageFor(model => model.SalesContact1)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.SalesContact2)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.SalesContact2)
+                @Html.ValidationMessageFor(model => model.SalesContact2)
+            </div>
+        </div>
+    </fieldset>
+    <input type="submit" value="Create" class="primary-action"/>
+    @Html.ActionLink("Cancel", "Index")
 }

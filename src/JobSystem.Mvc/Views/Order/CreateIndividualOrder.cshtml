@@ -1,6 +1,6 @@
 ﻿@model JobSystem.Mvc.ViewModels.Orders.OrderCreateViewModel
 @{
-	ViewBag.Title = "Raise Order";
+    ViewBag.Title = "Raise Order";
 }
 <h2>Raise Order</h2>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
@@ -9,38 +9,38 @@
 <div id="create-order-container">
 @using (Html.BeginForm("CreateIndividualOrder", "Order", FormMethod.Post))
 {
-	@Html.ValidationSummary(true)
-	<span class="form-section">
-		Details
-	</span>
-	<fieldset>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.SupplierId)
-		</div>
-		<div class="editor-field">
-			@Html.TextBox("SupplierAutocomplete", "", new { id = "supplier-autocomplete-orders" })
-			@Html.HiddenFor(model => model.SupplierId, new { id = "SupplierId" })
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Instructions)
-		</div>
-		<div class="editor-field">
-			@Html.TextAreaFor(model => model.Instructions)
-			@Html.ValidationMessageFor(model => model.Instructions)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Currencies)
-		</div>
-		<div class="editor-field">
-			@Html.DropDownListFor(model => model.CurrencyId, Model.Currencies, new { @class = "long-dropdown" })
-			@Html.ValidationMessageFor(model => model.Currencies)
-		</div>
-		@Html.HiddenFor(m => m.JobItemId)
-		@Html.HiddenFor(m => m.RaisedFromMainTab)
-		@Html.HiddenFor(m => m.Description)
-		@Html.HiddenFor(m => m.Quantity)
-	</fieldset>
-	<input type="submit" class="primary-action" value="Raise"/>
-	<a href="@Url.Action("Index", "Order")" class="secondary-action">Cancel</a>
+    @Html.ValidationSummary(true)
+    <span class="form-section">
+        Details
+    </span>
+    <fieldset>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SupplierId)
+        </div>
+        <div class="editor-field">
+            @Html.TextBox("SupplierAutocomplete", "", new { id = "supplier-autocomplete-orders" })
+            @Html.HiddenFor(model => model.SupplierId, new { id = "SupplierId" })
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Instructions)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Instructions)
+            @Html.ValidationMessageFor(model => model.Instructions)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Currencies)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.CurrencyId, Model.Currencies, new { @class = "long-dropdown" })
+            @Html.ValidationMessageFor(model => model.Currencies)
+        </div>
+        @Html.HiddenFor(m => m.JobItemId)
+        @Html.HiddenFor(m => m.RaisedFromMainTab)
+        @Html.HiddenFor(m => m.Description)
+        @Html.HiddenFor(m => m.Quantity)
+    </fieldset>
+    <input type="submit" class="primary-action" value="Raise"/>
+    <a href="@Url.Action("Index", "Order")" class="secondary-action">Cancel</a>
 }
 </div>

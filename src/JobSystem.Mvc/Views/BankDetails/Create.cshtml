@@ -1,88 +1,88 @@
 ﻿@model JobSystem.Mvc.ViewModels.BankDetails.BankDetailsCreateViewModel
 @{
-	ViewBag.Title = "Create Bank";
+    ViewBag.Title = "Create Bank";
 }
 <h2>Create Bank</h2>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 @using (Html.BeginForm("Create", "BankDetails"))
 {
-	@Html.ValidationSummary(true)
-	<span class="form-section">
-		Name & Address
-	</span>
-	<fieldset>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Name)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Name)
-			@Html.ValidationMessageFor(model => model.Name)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.ShortName)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.ShortName)
-			@Html.ValidationMessageFor(model => model.ShortName)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.AccountNo)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.AccountNo)
-			@Html.ValidationMessageFor(model => model.AccountNo)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.SortCode)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.SortCode)
-			@Html.ValidationMessageFor(model => model.SortCode)
-		</div>
-		 <div class="editor-label">
-			@Html.LabelFor(model => model.Iban)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.Iban)
-			@Html.ValidationMessageFor(model => model.Iban)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Address1)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Address1)
-			@Html.ValidationMessageFor(model => model.Address1)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Address2)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Address2)
-			@Html.ValidationMessageFor(model => model.Address2)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Address3)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Address3)
-			@Html.ValidationMessageFor(model => model.Address3)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Address4)
-		</div>
-		<div class="editor-field">
-			@Html.EditorFor(model => model.Address4)
-			@Html.ValidationMessageFor(model => model.Address4)
-		</div>
-		<div class="editor-label">
-			@Html.LabelFor(model => model.Address5)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(model => model.Address5)
-			@Html.ValidationMessageFor(model => model.Address5)
-		</div>
-	</fieldset>
-	<input type="submit" value="Create" class="primary-action"/>
-	@Html.ActionLink("Cancel", "Index")
+    @Html.ValidationSummary(true)
+    <span class="form-section">
+        Name & Address
+    </span>
+    <fieldset>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ShortName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.ShortName)
+            @Html.ValidationMessageFor(model => model.ShortName)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AccountNo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AccountNo)
+            @Html.ValidationMessageFor(model => model.AccountNo)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SortCode)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SortCode)
+            @Html.ValidationMessageFor(model => model.SortCode)
+        </div>
+         <div class="editor-label">
+            @Html.LabelFor(model => model.Iban)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Iban)
+            @Html.ValidationMessageFor(model => model.Iban)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address1)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address1)
+            @Html.ValidationMessageFor(model => model.Address1)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address2)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address2)
+            @Html.ValidationMessageFor(model => model.Address2)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address3)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address3)
+            @Html.ValidationMessageFor(model => model.Address3)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address4)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address4)
+            @Html.ValidationMessageFor(model => model.Address4)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address5)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Address5)
+            @Html.ValidationMessageFor(model => model.Address5)
+        </div>
+    </fieldset>
+    <input type="submit" value="Create" class="primary-action"/>
+    @Html.ActionLink("Cancel", "Index")
 }
