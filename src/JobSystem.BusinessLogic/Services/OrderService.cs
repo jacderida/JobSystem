@@ -114,6 +114,13 @@ namespace JobSystem.BusinessLogic.Services
             return _orderRepository.GetById(id);
         }
 
+        public int GetPendingItemsCount()
+        {
+            if (!CurrentUser.HasRole(UserRole.Member))
+                throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+            return _orderRepository.GetPendingItemsCount();
+        }
+
         public int GetPendingOrdersCount()
         {
             if (!CurrentUser.HasRole(UserRole.Member))

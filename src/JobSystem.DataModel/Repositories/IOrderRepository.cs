@@ -8,6 +8,7 @@ namespace JobSystem.DataModel.Repositories
     {
         int GetApprovedOrdersCount();
         int GetPendingOrdersCount();
+        int GetPendingItemsCount();
         IEnumerable<Order> GetOrders();
     }
 }

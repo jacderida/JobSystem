@@ -218,6 +218,7 @@
     <Compile Include="ViewModels\Orders\OrderItemCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderItemEditViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderItemIndexViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrderItemListViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrderListViewModel.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\Quotes\QuoteCreateViewModel.cs" />

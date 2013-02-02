@@ -39,20 +39,27 @@ namespace JobSystem.Mvc.Controllers
         [HttpGet]
         public ActionResult PendingOrderItems(int page = 1)
         {
+            var pageSize = 15;
             var items = _orderItemService.GetPendingOrderItems().Select(
                 o => new OrderItemIndexViewModel
+                    {
+                        Id = o.Id,
+                        JobItemId = o.JobItem.Id,
+                        DeliveryDays = o.DeliveryDays.ToString(),
+                        Description = o.Description,
+                        PartNo = o.PartNo,
+                        Price = o.Price.ToString(),
+                        Quantity = o.Quantity.ToString(),
+                        Instructions = o.Instructions,
+                        SupplierName = o.Supplier.Name
+                    }).OrderBy(o => o.JobItemRef).Skip((page - 1)*pageSize).Take(pageSize);
+            return View(new OrderItemListViewModel
                 {
-                    Id = o.Id,
-                    JobItemId = o.JobItem.Id,
-                    DeliveryDays = o.DeliveryDays.ToString(),
-                    Description = o.Description,
-                    PartNo = o.PartNo,
-                    Price = o.Price.ToString(),
-                    Quantity = o.Quantity.ToString(),
-                    Instructions = o.Instructions,
-                    SupplierName = o.Supplier.Name
-                }).ToList();
-            return View(items);
+                    Items = items,
+                    Page = page,
+                    PageSize = pageSize,
+                    Total = _orderService.GetPendingOrdersCount()
+                });
         }
 
         [HttpGet]

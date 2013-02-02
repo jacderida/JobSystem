@@ -18,6 +18,11 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
             return CurrentSession.Query<Order>().Where(o => !o.IsApproved).Count();
         }
 
+        public int GetPendingItemsCount()
+        {
+            return CurrentSession.Query<PendingOrderItem>().Count();
+        }
+
         public IEnumerable<Order> GetOrders()
         {
             return CurrentSession.Query<Order>();
