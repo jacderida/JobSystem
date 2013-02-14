@@ -11,4 +11,5 @@ StyleCop.Cache
 *.suo
 *.ncrunchproject
 *.ncrunchsolution
+*.ncrunchsolution.user
 *_NCrunch_*
