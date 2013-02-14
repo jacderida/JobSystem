@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using JobSystem.DataModel.Entities;
 using JobSystem.Reporting.Models;
 
@@ -25,11 +26,21 @@ namespace JobSystem.Reporting.Data.NHibernate
                 reportItem.DateCreated = consignment.DateCreated.ToShortDateString();
                 reportItem.RaisedBy = consignment.CreatedBy.Name;
                 reportItem.JobRef = String.Format("{0}/{1}", item.JobItem.Job.JobNo, item.JobItem.ItemNo);
-                reportItem.Description = GetInstrumentDescription(item.JobItem.Instrument);
+                reportItem.Description = GetInstrumentDescription(item.JobItem);
                 reportItem.Instructions = !String.IsNullOrEmpty(item.Instructions) ? item.Instructions : String.Empty;
                 result.Add(reportItem);
             }
             return result.OrderBy(i => i.JobRef).ToList();
+        }
+
+        private string GetInstrumentDescription(JobItem jobItem)
+        {
+            var sb = new StringBuilder();
+            sb.Append(jobItem.Instrument);
+            sb.AppendFormat(", Serial No: {0}", jobItem.SerialNo);
+            if (!string.IsNullOrEmpty(jobItem.AssetNo))
+                sb.AppendFormat(", Asset No: {0}", jobItem.AssetNo);
+            return sb.ToString();
         }
 
         private void PopulateSupplierInfo(Supplier supplier, ConsignmentReportModel reportModel)
