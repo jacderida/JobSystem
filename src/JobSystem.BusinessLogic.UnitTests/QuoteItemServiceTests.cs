@@ -652,7 +652,7 @@ namespace JobSystem.BusinessLogic.UnitTests
         }
 
         [Test]
-        public void Create_ReportGreaterThan2000Characters_DomainValidationExceptionThrown()
+        public void Create_ReportGreaterThan10000Characters_DomainValidationExceptionThrown()
         {
             var id = Guid.NewGuid();
             var quoteId = Guid.NewGuid();
@@ -661,7 +661,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var parts = 20m;
             var carriage = 20m;
             var investigation = 30m;
-            var report = new string('a', 2001);
+            var report = new string('a', 10001);
             var days = 30;
             var ber = false;
             var jobItemId = Guid.NewGuid();
@@ -1792,14 +1792,14 @@ namespace JobSystem.BusinessLogic.UnitTests
         }
 
         [Test]
-        public void Edit_ReportGreaterThan2000Characters_DomainValidationExceptionThrown()
+        public void Edit_ReportGreaterThan10000Characters_DomainValidationExceptionThrown()
         {
             var labour = 20;
             var calibration = 30;
             var carriage = 30;
             var parts = 24;
             var investgation = 25;
-            var report = new string('a', 2001);
+            var report = new string('a', 10001);
             var days = 20;
             var ber = true;
 

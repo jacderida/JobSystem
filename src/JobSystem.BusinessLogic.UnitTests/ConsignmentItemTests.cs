@@ -217,11 +217,11 @@ namespace JobSystem.BusinessLogic.UnitTests
         }
 
         [Test]
-        public void Create_InstructionsGreaterThan255Characters_DomainValidationExceptionThrown()
+        public void Create_InstructionsGreaterThan10000Characters_DomainValidationExceptionThrown()
         {
             var id = Guid.NewGuid();
             var consignmentId = Guid.NewGuid();
-            var instructions = new string('a', 256);
+            var instructions = new string('a', 10001);
 
             var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
             jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdate.Id)).Return(_jobItemToUpdate);
@@ -339,12 +339,12 @@ namespace JobSystem.BusinessLogic.UnitTests
         }
 
         [Test]
-        public void CreatePending_InstructionsGreaterThan255Characters_DomainValidationExceptionThrown()
+        public void CreatePending_InstructionsGreaterThan10000Characters_DomainValidationExceptionThrown()
         {
             var id = Guid.NewGuid();
             var jobItemId = Guid.NewGuid();
             var supplierId = Guid.NewGuid();
-            var instructions = new string('a', 256);
+            var instructions = new string('a', 10001);
 
             _consignmentItemService = ConsignmentItemServiceFactory.CreateForPendingItems(jobItemId, supplierId, _userContext);
             CreatePendingConsignmentItem(id, jobItemId, supplierId, instructions);
@@ -455,7 +455,7 @@ namespace JobSystem.BusinessLogic.UnitTests
         public void EditPending_InvalidInstructions_DomainValidationException()
         {
             var supplierId = Guid.NewGuid();
-            var instructions = new string('a', 256);
+            var instructions = new string('a', 10001);
 
             var consignmentItemRepositoryStub = MockRepository.GenerateMock<IConsignmentItemRepository>();
             consignmentItemRepositoryStub.Stub(x => x.GetPendingItem(_pendingItemId)).Return(_pendingItemForEdit);
@@ -523,7 +523,7 @@ namespace JobSystem.BusinessLogic.UnitTests
         [Test]
         public void Edit_InvalidInstructions_DomainValidationExceptionThrown()
         {
-            var instructions = new String('a', 256);
+            var instructions = new String('a', 10001);
             var consignmentItemRepository = MockRepository.GenerateMock<IConsignmentItemRepository>();
             consignmentItemRepository.Stub(x => x.GetById(_consignmentItemForEditId)).Return(_consignmentItemForEdit);
             _consignmentItemService = ConsignmentItemServiceFactory.Create(consignmentItemRepository, _userContext);
