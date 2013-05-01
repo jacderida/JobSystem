@@ -40,6 +40,8 @@ namespace JobSystem.Reporting.Data.NHibernate
             sb.AppendFormat(", Serial No: {0}", jobItem.SerialNo);
             if (!string.IsNullOrEmpty(jobItem.AssetNo))
                 sb.AppendFormat(", Asset No: {0}", jobItem.AssetNo);
+            if (!string.IsNullOrEmpty(jobItem.Accessories))
+                sb.AppendFormat(", Accessories: {0}", jobItem.Accessories);
             return sb.ToString();
         }
 

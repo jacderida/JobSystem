@@ -10,9 +10,6 @@
 @using (Html.BeginForm("Create", "JobItem", FormMethod.Post))
 {
     @Html.ValidationSummary(true)
-    <span class="form-section">
-        Name & Address
-    </span>
     <fieldset>
         <div class="editor-label">
             @Html.LabelFor(model => model.Instruments)

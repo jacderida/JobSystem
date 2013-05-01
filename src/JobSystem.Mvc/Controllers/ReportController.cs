@@ -21,9 +21,12 @@ namespace JobSystem.Mvc.Controllers
 
         public ActionResult Index()
         {
+            var statusList = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemStatus).ToList();
+            statusList.AddRange(_listItemService.GetAllByCategory(ListItemCategoryType.JobItemWorkStatus));
+            statusList.AddRange(_listItemService.GetAllByCategory(ListItemCategoryType.JobItemInitialStatus));
             var viewmodel = new JobItemReportViewModel
             {
-                Status = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemStatus).ToSelectList(),
+                Status = statusList.OrderBy(e => e.Name).ToSelectList(),
                 Customer = _customerService.GetCustomers().Select(
                     c =>
                     {

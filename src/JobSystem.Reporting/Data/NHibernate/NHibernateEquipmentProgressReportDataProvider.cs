@@ -38,7 +38,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 {
                     var quote = quoteItem.Quote;
                     if (!String.IsNullOrEmpty(quote.OrderNumber))
-                        reportItem.OrderNo =  quote.QuoteNumber;
+                        reportItem.OrderNo =  quote.OrderNumber;
                     if (!String.IsNullOrEmpty(quote.AdviceNumber))
                         reportItem.AdviceNo =  quote.AdviceNumber;
                     reportItem.Cost += quoteItem.Labour;

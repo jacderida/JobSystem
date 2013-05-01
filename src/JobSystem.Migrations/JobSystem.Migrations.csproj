@@ -68,6 +68,7 @@
     <Compile Include="M20111228143737_AddIsPendingColumnToJobsTable.cs" />
     <Compile Include="M20111229064937_AddCreatedByIdColumnToJobsTable.cs" />
     <Compile Include="M20111230053929_AddEntityIdLookupsTable.cs" />
+    <Compile Include="M20130501010235_AlterConsignmentNoteReportColumn.cs" />
     <Compile Include="M20120204172935_AddSupplierTable.cs" />
     <Compile Include="M20120205154517_AddConsignmentsTable.cs" />
     <Compile Include="M20120205193700_AddConsignmentItemsTable.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="M20120909045359_RemoveTestStandards.cs" />
     <Compile Include="M20120910033611_DebugMigration.cs" />
     <Compile Include="M20120910042017_RemoveDebugMigration.cs" />
+    <Compile Include="M20130501011035_AlterQuoteItemReportColumn.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
