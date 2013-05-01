@@ -7,12 +7,12 @@ namespace JobSystem.Migrations
     {
         public override void Up()
         {
-            Alter.Column("Instructions").OnTable("ConsignmentItems").AsString(int.MaxValue);
+            Alter.Column("Instructions").OnTable("ConsignmentItems").AsString(int.MaxValue).Nullable();
         }
 
         public override void Down()
         {
-            Alter.Column("Instructions").OnTable("ConsignmentItems").AsString(255);
+            Alter.Column("Instructions").OnTable("ConsignmentItems").AsString(255).Nullable();
         }
     }
 }
