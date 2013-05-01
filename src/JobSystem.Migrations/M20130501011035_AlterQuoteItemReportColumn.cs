@@ -12,7 +12,7 @@ namespace JobSystem.Migrations
 
         public override void Down()
         {
-            Alter.Column("Report").OnTable("QuoteItems").AsString(255);
+            Alter.Column("Report").OnTable("QuoteItems").AsString(2000);
         }
     }
 }

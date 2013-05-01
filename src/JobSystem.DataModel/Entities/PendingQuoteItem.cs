@@ -20,7 +20,7 @@ namespace JobSystem.DataModel.Entities
         public virtual decimal Carriage { get; set; }
         public virtual decimal Investigation { get; set; }
         public virtual int Days { get; set; }
-        [StringLength(2000, ErrorMessageResourceName = "InvalidReport", ErrorMessageResourceType = typeof(Messages))]
+        [StringLength(10000, ErrorMessageResourceName = "InvalidReport", ErrorMessageResourceType = typeof(Messages))]
         public virtual string Report { get; set; }
         public virtual bool BeyondEconomicRepair { get; set; }
     }

@@ -104,6 +104,8 @@
     <Compile Include="M20120910033611_DebugMigration.cs" />
     <Compile Include="M20120910042017_RemoveDebugMigration.cs" />
     <Compile Include="M20130501011035_AlterQuoteItemReportColumn.cs" />
+    <Compile Include="M20130501014535_AlterPendingQuoteItemReportColumn.cs" />
+    <Compile Include="M20130501015035_AlterPendingConsignmentItemsInstructionsColumn.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1035,7 +1035,7 @@ namespace JobSystem.BusinessLogic.UnitTests
         }
 
         [Test]
-        public void CreatePending_ReportGreaterThan2000Characters_DomainValidationExceptionThrown()
+        public void CreatePending_ReportGreaterThan10000Characters_DomainValidationExceptionThrown()
         {
             var id = Guid.NewGuid();
             var labour = 50m;
@@ -1043,7 +1043,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var parts = 20m;
             var carriage = 20m;
             var investigation = 30m;
-            var report = new string('a', 2001);
+            var report = new string('a', 10001);
             var days = 30;
             var ber = false;
             var jobItemId = Guid.NewGuid();
@@ -1387,14 +1387,14 @@ namespace JobSystem.BusinessLogic.UnitTests
         }
 
         [Test]
-        public void EditPending_ReportGreaterThan2000Characters_DomainValidationExceptionThrown()
+        public void EditPending_ReportGreaterThan10000Characters_DomainValidationExceptionThrown()
         {
             var labour = 150m;
             var calibration = 50m;
             var parts = 20m;
             var carriage = 20m;
             var investigation = 30m;
-            var report = new string('a', 2001);
+            var report = new string('a', 10001);
             var days = 20;
             var ber = true;
             var orderNo = "PO1000";

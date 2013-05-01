@@ -10,7 +10,7 @@ namespace JobSystem.DataModel.Entities
         public virtual Guid Id { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual JobItem JobItem { get; set; }
-        [StringLength(255, ErrorMessageResourceName = "InstructionsTooLarge", ErrorMessageResourceType = typeof(Messages))]
+        [StringLength(10000, ErrorMessageResourceName = "InstructionsTooLarge", ErrorMessageResourceType = typeof(Messages))]
         public virtual string Instructions { get; set; }
     }
 }
