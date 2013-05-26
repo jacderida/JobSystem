@@ -26,7 +26,8 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
 
         public byte[] GetLogoBytes()
         {
-            return CurrentSession.Query<CompanyDetails>().Single().MainLogo;
+            var company = CurrentSession.Query<CompanyDetails>().Single();
+            return company.MainLogo;
         }
 
         public bool ApplyAllPrices()
