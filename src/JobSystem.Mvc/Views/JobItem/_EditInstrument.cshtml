@@ -1,0 +1,52 @@
+﻿@model JobSystem.Mvc.ViewModels.JobItems.JobItemViewModel
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $("#instrument-autocomplete").autocomplete({
+        source: function (request, response) {
+            // define a function to call your Action (assuming UserController)
+            $.ajax({
+                url: '../../Instrument/SearchInstruments', type: "POST", dataType: "json",
+
+                // query will be the param used by your action method
+                data: { query: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            value: item.Manufacturer + " - " + item.ModelNo + " - " + item.Range,
+                            key: item.Id
+                        }
+                    }))
+                }
+            })
+        },
+        select: function (e, ui) {
+            $("#InstrumentId").val(ui.item.key);
+        },
+        minLength: 1, // require at least one character from the user
+        dataType: 'json'
+    });
+</script>
+
+@using (Ajax.BeginForm("EditInstrument", "JobItem", new AjaxOptions() { UpdateTargetId = "job-item-instrument", OnSuccess = "app.closeModal('edit-job-item-instrument')" }))
+{
+    @Html.ValidationSummary(true)
+    <fieldset class="fieldset-no-legend fieldset-float-left">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Instruments)
+        </div>
+        <div class="editor-field">
+            @Html.TextBox("InstrumentAutocomplete", "", new { id = "instrument-autocomplete" })
+            @Html.HiddenFor(model => model.InstrumentId, new { id = "InstrumentId" })
+        </div>
+    </fieldset>
+    @Html.HiddenFor(model => model.JobId)
+    @Html.HiddenFor(model => model.Id)
+    <div class="clear"></div>
+    <div class="buttons-row">
+        <input type="submit" class="primary-action" value="Save"/>
+    </div>
+}
+
+

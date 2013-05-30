@@ -145,6 +145,28 @@ namespace JobSystem.Mvc.Controllers
             return PartialView("_InformationTab", viewmodel);
         }
 
+		[HttpGet]
+		public ActionResult EditInstrumentPartial(Guid id)
+		{
+			var jobItem = _jobItemService.GetById(id);
+			var viewmodel = new JobItemViewModel()
+			{
+				Id = id,
+				Instruments = _instrumentService.GetInstruments().ToSelectList(),
+				JobId = jobItem.Job.Id
+			};
+			return PartialView("_EditInstrument", viewmodel);
+		}
+
+		[HttpPost]
+		[Transaction]
+		public ActionResult EditInstrument(JobItemViewModel viewmodel)
+		{
+			_jobItemService.EditInstrument(viewmodel.Id, viewmodel.InstrumentId);
+			var instrumentDetails = _jobItemService.GetById(viewmodel.Id).Instrument.ToString();
+			return Json(instrumentDetails);
+		}
+
         [HttpGet]
         public ActionResult Details(Guid Id)
         {

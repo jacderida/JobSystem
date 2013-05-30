@@ -20,6 +20,9 @@
 				$("#edit-job-item-information").dialog('close');
 				$("#st_content_7").find(".primary-action").button();
 				break;
+		    case 'edit-job-item-instrument':
+		        $("#edit-job-item-instrument").dialog('close');
+		        break;
 				
 		}
 	},

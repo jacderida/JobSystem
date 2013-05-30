@@ -65,6 +65,14 @@ namespace JobSystem.BusinessLogic.Services
             return jobItem;
         }
 
+		public JobItem EditInstrument(Guid jobItemId, Guid instrumentId)
+		{
+			var jobItem = GetById(jobItemId);
+			jobItem.Instrument = _instrumentService.GetById(instrumentId);
+			_jobItemRepository.Update(jobItem);
+			return jobItem;
+		}
+
         public JobItem EditInformation(Guid jobItemId, string instructions, string accessories, string comments)
         {
             if (!CurrentUser.HasRole(UserRole.Admin | UserRole.Manager))

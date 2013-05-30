@@ -33,6 +33,10 @@
     @*Content ajaxed in*@
 </div>
 
+<div id="edit-job-item-instrument">
+    @*Content ajaxed in*@
+</div>
+
 <input type="hidden" id="editJobItemInformationUrl" value="@Url.Action("EditInformation", "JobItem", new { id = Model.Id })"/>
 <input type="hidden" id="createWorkItemUrl" value="@Url.Action("Create", "WorkItem")"/>
 <input type="hidden" id="createConsignmentUrl" value="@Url.Action("Create", "Consignment")"/>
@@ -47,7 +51,8 @@
 
 <div id="item-details-container">
     <div class="item-details-fields">
-        <h3 id="job-item-number">@Model.InstrumentDetails</h3>
+        <h3 id="job-item-instrument">@Model.InstrumentDetails</h3>
+        @Html.ActionLink("Edit Instrument", "EditInstrumentPartial", "JobItem", new { id = Model.Id }, new { id = "edit-instrument-button", @class = "primary-action"})
         <div class="details-fields">
             <!--<span class="field-label">Location</span>-->
             <span class="field-label">Status</span>
