@@ -86,4 +86,24 @@
 			}
 		});
 	});
+
+
+    //Edit Job item INSTRUMENT  form
+	$('#edit-instrument-button').live('click', function (e) {
+	    e.preventDefault();
+
+	    var editUrl = $(this).attr('href');
+	    //Edit user modal form
+	    $("#edit-job-item-instrument").dialog({
+	        modal: true,
+	        width: 335,
+	        title: 'Edit Instrument',
+	        position: ['center', 100],
+	        open: function (event, ui) {
+	            //Load the Edit action which will return 
+	            // the partial view _Edit
+	            $(this).load(editUrl);
+	        }
+	    });
+	});
 });

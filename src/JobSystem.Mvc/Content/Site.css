@@ -735,6 +735,18 @@ div#title {
 
 #job-item-number {
     margin-bottom: 15px;
+	width: 90%;
+}
+
+#job-item-instrument {
+	display: inline-block;
+	margin-bottom: 25px;
+	float: left;
+	width: 83%;
+}
+
+#edit-instrument-button {
+	float: left;
 }
 
 .details-header {
