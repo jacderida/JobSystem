@@ -149,10 +149,9 @@ namespace JobSystem.Mvc.Controllers
 		public ActionResult EditInstrumentPartial(Guid id)
 		{
 			var jobItem = _jobItemService.GetById(id);
-			var viewmodel = new JobItemViewModel()
+			var viewmodel = new EditInstrumentViewModel()
 			{
-				Id = id,
-				Instruments = _instrumentService.GetInstruments().ToSelectList(),
+				JobItemId = id,
 				JobId = jobItem.Job.Id
 			};
 			return PartialView("_EditInstrument", viewmodel);
@@ -160,10 +159,10 @@ namespace JobSystem.Mvc.Controllers
 
 		[HttpPost]
 		[Transaction]
-		public ActionResult EditInstrument(JobItemViewModel viewmodel)
+		public ActionResult EditInstrument(EditInstrumentViewModel viewmodel)
 		{
-			_jobItemService.EditInstrument(viewmodel.Id, viewmodel.InstrumentId);
-			var instrumentDetails = _jobItemService.GetById(viewmodel.Id).Instrument.ToString();
+			_jobItemService.EditInstrument(viewmodel.JobItemId, viewmodel.InstrumentId);
+			var instrumentDetails = _jobItemService.GetById(viewmodel.JobItemId).Instrument.ToString();
 			return Json(instrumentDetails);
 		}
 
