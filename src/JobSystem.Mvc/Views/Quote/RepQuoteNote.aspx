@@ -28,11 +28,11 @@
 		{
 			base.OnLoad(e);
 			var dataSource = new Telerik.Reporting.ObjectDataSource();
-			dataSource.DataSource = typeof(NHibernateQuoteReportDataProvider);
-			dataSource.DataMember = "GetQuoteReportData";
-			dataSource.Parameters.Add(new Telerik.Reporting.ObjectDataSourceParameter("quoteId", typeof(Guid), Model));
+			dataSource.DataSource = typeof(NHibernateQuoteReportDataProvider2);
+            dataSource.DataMember = "GetReportData";
+			dataSource.Parameters.Add(new Telerik.Reporting.ObjectDataSourceParameter("itemId", typeof(Guid), Model));
 			var companyDetailsService = DependencyResolver.Current.GetService<CompanyDetailsService>();
-			var report = new JobSystem.Reporting.ReportDefinitions.TelerikQuoteReport();
+			var report = new JobSystem.Reporting.ReportDefinitions.TelerikQuoteReport2();
 			var logo = companyDetailsService.GetCompanyLogo();
 			report.MainLogo.Value = logo;
 			report.DataSource = dataSource;
@@ -40,53 +40,53 @@
 			System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(company.DefaultCultureCode);
 			var quoteService = DependencyResolver.Current.GetService<QuoteService>();
 			var quote = quoteService.GetById(Model);
-			switch (quote.Currency.Name)
-			{
-				case "GBP":
-					{
-						report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
-						report.RepairTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
-						report.PartsTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
-						report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
-						report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
-						report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
-						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
-						break;
-					}
-				case "USD":
-					{
-						report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("en-US");
-						report.RepairTextBox.Culture = new System.Globalization.CultureInfo("en-US");
-						report.PartsTextBox.Culture = new System.Globalization.CultureInfo("en-US");
-						report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("en-US");
-						report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("en-US");
-						report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("en-US");
-						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-US");
-						break;
-					}
-				case "EUR":
-					{
-						report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
-						report.RepairTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
-						report.PartsTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
-						report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
-						report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
-						report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
-						report.TotalTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
-						break;
-					}
-				default:
-					{
-						report.CalibrationTextBox.Format = "{0:N2}";
-						report.RepairTextBox.Format = "{0:N2}";
-						report.PartsTextBox.Format = "{0:N2}";
-						report.CarriageTextBox.Format = "{0:N2}";
-						report.SubTotalTextBox.Format = "{0:N2}";
-						report.InvestigationTextBox.Format = "{0:N2}";
-						report.TotalTextBox.Format = "{0:N2}";
-						break;
-					}
-			}
+            //switch (quote.Currency.Name)
+            //{
+            //    case "GBP":
+            //        {
+            //            report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+            //            report.RepairTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+            //            report.PartsTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+            //            report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+            //            report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+            //            report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+            //            report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-GB");
+            //            break;
+            //        }
+            //    case "USD":
+            //        {
+            //            report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+            //            report.RepairTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+            //            report.PartsTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+            //            report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+            //            report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+            //            report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+            //            report.TotalTextBox.Culture = new System.Globalization.CultureInfo("en-US");
+            //            break;
+            //        }
+            //    case "EUR":
+            //        {
+            //            report.CalibrationTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+            //            report.RepairTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+            //            report.PartsTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+            //            report.CarriageTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+            //            report.SubTotalTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+            //            report.InvestigationTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+            //            report.TotalTextBox.Culture = new System.Globalization.CultureInfo("de-DE");
+            //            break;
+            //        }
+            //    default:
+            //        {
+            //            report.CalibrationTextBox.Format = "{0:N2}";
+            //            report.RepairTextBox.Format = "{0:N2}";
+            //            report.PartsTextBox.Format = "{0:N2}";
+            //            report.CarriageTextBox.Format = "{0:N2}";
+            //            report.SubTotalTextBox.Format = "{0:N2}";
+            //            report.InvestigationTextBox.Format = "{0:N2}";
+            //            report.TotalTextBox.Format = "{0:N2}";
+            //            break;
+            //        }
+            //}
 
 			report.DocumentName = quote.QuoteNumber;
 			var instanceReportSource = new Telerik.Reporting.InstanceReportSource();
