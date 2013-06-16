@@ -201,6 +201,7 @@
     <Compile Include="ViewModels\Deliveries\DeliveryItemIndexViewModel.cs" />
     <Compile Include="ViewModels\Deliveries\DeliveryCreateViewModel.cs" />
     <Compile Include="ViewModels\Deliveries\DeliveryListViewModel.cs" />
+    <Compile Include="ViewModels\JobItems\EditInstrumentViewModel.cs" />
     <Compile Include="ViewModels\Instruments\InstrumentViewModel.cs" />
     <Compile Include="ViewModels\Instruments\InstrumentListViewModel.cs" />
     <Compile Include="ViewModels\Invoices\InvoiceIndexViewModel.cs" />
