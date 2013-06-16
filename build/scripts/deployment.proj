@@ -12,5 +12,15 @@
 			ConfigFilePath="$(ProjectSourceDirectory)\JobSystem.Mvc\Web.config"
 			UseRemoteConnection="true"
 			JobSystemConnectionString="Data Source=jobsys.ca0li8yz4xun.eu-west-1.rds.amazonaws.com;Initial Catalog=jobsystem.development;User ID=jobsysmaster;Password=jobsystem" />
+		<XmlUpdate
+			Namespace="http://schemas.microsoft.com/.NetConfiguration/v2.0"
+			XmlFileName="$(ProjectSourceDirectory)\JobSystem.Mvc\Web.config"
+			Xpath="//configuration/appSettings/add[@key='AwsKey']/@value"
+			Value="$(AwsKey)" />
+		<XmlUpdate
+			Namespace="http://schemas.microsoft.com/.NetConfiguration/v2.0"
+			XmlFileName="$(ProjectSourceDirectory)\JobSystem.Mvc\Web.config"
+			Xpath="//configuration/appSettings/add[@key='AwsSecretKey']/@value"
+			Value="$(AwsSecretKey)" />
 	</Target>
 </Project>
