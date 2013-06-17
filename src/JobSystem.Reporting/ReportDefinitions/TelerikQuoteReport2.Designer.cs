@@ -19,7 +19,7 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.detail = new Telerik.Reporting.DetailSection();
             this.textBox1 = new Telerik.Reporting.TextBox();
             this.textBox2 = new Telerik.Reporting.TextBox();
-            this.textBox3 = new Telerik.Reporting.TextBox();
+            this.SubTotalTextBox = new Telerik.Reporting.TextBox();
             this.objectDataSource1 = new Telerik.Reporting.ObjectDataSource();
             this.pageFooterSection1 = new Telerik.Reporting.PageFooterSection();
             this.pageInfoTextBox = new Telerik.Reporting.TextBox();
@@ -36,7 +36,6 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.textBox17 = new Telerik.Reporting.TextBox();
             this.textBox14 = new Telerik.Reporting.TextBox();
             this.textBox23 = new Telerik.Reporting.TextBox();
-            this.textBox43 = new Telerik.Reporting.TextBox();
             this.textBox7 = new Telerik.Reporting.TextBox();
             this.textBox16 = new Telerik.Reporting.TextBox();
             this.textBox18 = new Telerik.Reporting.TextBox();
@@ -47,6 +46,7 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.textBox4 = new Telerik.Reporting.TextBox();
             this.textBox5 = new Telerik.Reporting.TextBox();
             this.textBox6 = new Telerik.Reporting.TextBox();
+            this.textBox43 = new Telerik.Reporting.TextBox();
             this.reportFooterSection1 = new Telerik.Reporting.ReportFooterSection();
             this.TotalTextBox = new Telerik.Reporting.TextBox();
             this.textBox11 = new Telerik.Reporting.TextBox();
@@ -108,7 +108,7 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.detail.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
             this.textBox1,
             this.textBox2,
-            this.textBox3});
+            this.SubTotalTextBox});
             this.detail.Name = "detail";
             // 
             // textBox1
@@ -144,26 +144,26 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.textBox2.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
             this.textBox2.Value = "= Fields.LineDescription";
             // 
-            // textBox3
+            // SubTotalTextBox
             // 
             formattingRule2.Filters.AddRange(new Telerik.Reporting.Filter[] {
             new Telerik.Reporting.Filter("=Fields.SubTotal", Telerik.Reporting.FilterOperator.Equal, "0")});
             formattingRule2.Style.Visible = false;
-            this.textBox3.ConditionalFormatting.AddRange(new Telerik.Reporting.Drawing.FormattingRule[] {
+            this.SubTotalTextBox.ConditionalFormatting.AddRange(new Telerik.Reporting.Drawing.FormattingRule[] {
             formattingRule2});
-            this.textBox3.Format = "{0:C2}";
-            this.textBox3.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(15.079479217529297D), Telerik.Reporting.Drawing.Unit.Cm(0D));
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(2.8405210971832275D), Telerik.Reporting.Drawing.Unit.Cm(0.599999725818634D));
-            this.textBox3.Style.BorderStyle.Bottom = Telerik.Reporting.Drawing.BorderType.None;
-            this.textBox3.Style.BorderStyle.Left = Telerik.Reporting.Drawing.BorderType.None;
-            this.textBox3.Style.BorderStyle.Right = Telerik.Reporting.Drawing.BorderType.None;
-            this.textBox3.Style.BorderStyle.Top = Telerik.Reporting.Drawing.BorderType.None;
-            this.textBox3.Style.Font.Bold = false;
-            this.textBox3.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(9D);
-            this.textBox3.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Right;
-            this.textBox3.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
-            this.textBox3.Value = "= Fields.SubTotal";
+            this.SubTotalTextBox.Format = "{0:C2}";
+            this.SubTotalTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(15.079479217529297D), Telerik.Reporting.Drawing.Unit.Cm(0D));
+            this.SubTotalTextBox.Name = "SubTotalTextBox";
+            this.SubTotalTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(2.8405210971832275D), Telerik.Reporting.Drawing.Unit.Cm(0.599999725818634D));
+            this.SubTotalTextBox.Style.BorderStyle.Bottom = Telerik.Reporting.Drawing.BorderType.None;
+            this.SubTotalTextBox.Style.BorderStyle.Left = Telerik.Reporting.Drawing.BorderType.None;
+            this.SubTotalTextBox.Style.BorderStyle.Right = Telerik.Reporting.Drawing.BorderType.None;
+            this.SubTotalTextBox.Style.BorderStyle.Top = Telerik.Reporting.Drawing.BorderType.None;
+            this.SubTotalTextBox.Style.Font.Bold = false;
+            this.SubTotalTextBox.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(9D);
+            this.SubTotalTextBox.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Right;
+            this.SubTotalTextBox.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
+            this.SubTotalTextBox.Value = "= Fields.SubTotal";
             // 
             // objectDataSource1
             // 
@@ -354,14 +354,6 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.textBox23.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(12D), Telerik.Reporting.Drawing.Unit.Cm(0.39919841289520264D));
             this.textBox23.Value = "=Fields.AssetLine";
             // 
-            // textBox43
-            // 
-            this.textBox43.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0D), Telerik.Reporting.Drawing.Unit.Cm(0.29747697710990906D));
-            this.textBox43.Name = "textBox43";
-            this.textBox43.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(12D), Telerik.Reporting.Drawing.Unit.Cm(0.39919820427894592D));
-            this.textBox43.Style.Font.Bold = true;
-            this.textBox43.Value = "=Fields.CustomerName";
-            // 
             // textBox7
             // 
             this.textBox7.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.00010002215276472271D), Telerik.Reporting.Drawing.Unit.Cm(1.0912265777587891D));
@@ -452,6 +444,14 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.textBox6.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Right;
             this.textBox6.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Bottom;
             this.textBox6.Value = "Price";
+            // 
+            // textBox43
+            // 
+            this.textBox43.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0D), Telerik.Reporting.Drawing.Unit.Cm(0.29747697710990906D));
+            this.textBox43.Name = "textBox43";
+            this.textBox43.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(12D), Telerik.Reporting.Drawing.Unit.Cm(0.39919820427894592D));
+            this.textBox43.Style.Font.Bold = true;
+            this.textBox43.Value = "=Fields.CustomerName";
             // 
             // reportFooterSection1
             // 
@@ -623,9 +623,9 @@ namespace JobSystem.Reporting.ReportDefinitions
         private Telerik.Reporting.TextBox textBox25;
         private Telerik.Reporting.TextBox textBox1;
         private Telerik.Reporting.TextBox textBox2;
-        private Telerik.Reporting.TextBox textBox3;
         private Telerik.Reporting.TextBox textBox4;
         private Telerik.Reporting.TextBox textBox5;
         private Telerik.Reporting.TextBox textBox6;
+        public Telerik.Reporting.TextBox SubTotalTextBox;
     }
 }

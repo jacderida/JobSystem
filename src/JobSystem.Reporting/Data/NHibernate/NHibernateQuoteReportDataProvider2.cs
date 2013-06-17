@@ -44,7 +44,7 @@ namespace JobSystem.Reporting.Data.NHibernate
             {
                 var reportItem = new QuoteReportModel2();
                 GetInvariantDetails(reportItem, quote, quoteItem, _itemNo++);
-                reportItem.LineDescription = string.Format("Repair for {0}", GetInstrumentDescription(quoteItem.JobItem.Instrument));
+                reportItem.LineDescription = string.Format("Repair for {0}: {1}", quoteItem.JobItem.GetJobItemRef(), GetInstrumentDescription(quoteItem.JobItem.Instrument));
                 reportItem.SubTotal = quoteItem.Labour;
                 result.Add(reportItem);
             }
@@ -56,7 +56,7 @@ namespace JobSystem.Reporting.Data.NHibernate
             {
                 var reportItem = new QuoteReportModel2();
                 GetInvariantDetails(reportItem, quote, quoteItem, _itemNo++);
-                reportItem.LineDescription = string.Format("Calibration for {0}", GetInstrumentDescription(quoteItem.JobItem.Instrument));
+                reportItem.LineDescription = string.Format("Calibration for {0}: {1}", quoteItem.JobItem.GetJobItemRef(), GetInstrumentDescription(quoteItem.JobItem.Instrument));
                 reportItem.SubTotal = quoteItem.Calibration;
                 result.Add(reportItem);
             }
@@ -68,7 +68,7 @@ namespace JobSystem.Reporting.Data.NHibernate
             {
                 var reportItem = new QuoteReportModel2();
                 GetInvariantDetails(reportItem, quote, quoteItem, _itemNo++);
-                reportItem.LineDescription = string.Format("Parts for {0}", GetInstrumentDescription(quoteItem.JobItem.Instrument));
+                reportItem.LineDescription = string.Format("Parts for {0}: {1}", quoteItem.JobItem.GetJobItemRef(), GetInstrumentDescription(quoteItem.JobItem.Instrument));
                 reportItem.SubTotal = quoteItem.Parts;
                 result.Add(reportItem);
             }
@@ -80,7 +80,7 @@ namespace JobSystem.Reporting.Data.NHibernate
             {
                 var reportItem = new QuoteReportModel2();
                 GetInvariantDetails(reportItem, quote, quoteItem, _itemNo++);
-                reportItem.LineDescription = string.Format("Carriage for {0}", GetInstrumentDescription(quoteItem.JobItem.Instrument));
+                reportItem.LineDescription = string.Format("Carriage for {0}: {1}", quoteItem.JobItem.GetJobItemRef(), GetInstrumentDescription(quoteItem.JobItem.Instrument));
                 reportItem.SubTotal = quoteItem.Carriage;
                 result.Add(reportItem);
             }
@@ -92,7 +92,7 @@ namespace JobSystem.Reporting.Data.NHibernate
             {
                 var reportItem = new QuoteReportModel2();
                 GetInvariantDetails(reportItem, quote, quoteItem, _itemNo++);
-                reportItem.LineDescription = string.Format("Investigation for {0}", GetInstrumentDescription(quoteItem.JobItem.Instrument));
+                reportItem.LineDescription = string.Format("Investigation for {0}: {1}", quoteItem.JobItem.GetJobItemRef(), GetInstrumentDescription(quoteItem.JobItem.Instrument));
                 reportItem.SubTotal = quoteItem.Investigation;
                 result.Add(reportItem);
             }
