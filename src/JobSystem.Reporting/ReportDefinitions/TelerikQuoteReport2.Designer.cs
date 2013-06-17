@@ -109,6 +109,7 @@ namespace JobSystem.Reporting.ReportDefinitions
             this.textBox1,
             this.textBox2,
             this.SubTotalTextBox});
+            this.detail.KeepTogether = false;
             this.detail.Name = "detail";
             // 
             // textBox1
