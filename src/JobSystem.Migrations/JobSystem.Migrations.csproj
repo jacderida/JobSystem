@@ -106,6 +106,7 @@
     <Compile Include="M20130501011035_AlterQuoteItemReportColumn.cs" />
     <Compile Include="M20130501014535_AlterPendingQuoteItemReportColumn.cs" />
     <Compile Include="M20130501015035_AlterPendingConsignmentItemsInstructionsColumn.cs" />
+    <Compile Include="M20130622015035_AddCategoryIdColumn.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
