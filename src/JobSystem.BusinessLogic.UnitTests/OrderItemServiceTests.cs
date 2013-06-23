@@ -1061,6 +1061,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 20.99m;
             var description = "edited description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryMock = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryMock.Stub(x => x.GetById(_orderItemForEditId)).Return(_orderItemForEdit);
@@ -1072,7 +1073,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<ISupplierRepository>(),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price);
+            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             orderItemRepositoryMock.VerifyAllExpectations();
             Assert.AreEqual(2, _orderItemForEdit.Quantity);
             Assert.AreEqual("edited part no", _orderItemForEdit.PartNo);
@@ -1080,6 +1081,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             Assert.AreEqual(30, _orderItemForEdit.DeliveryDays);
             Assert.AreEqual(20.99m, _orderItemForEdit.Price);
             Assert.AreEqual("edited description", _orderItemForEdit.Description);
+            Assert.AreEqual(carriage, _orderItemForEdit.Carriage);
         }
 
         [Test]
@@ -1092,6 +1094,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 20.99m;
             var description = "edited description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetById(_orderItemForEditId)).Return(null);
@@ -1102,7 +1105,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<ISupplierRepository>(),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price);
+            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
         }
 
         [Test]
@@ -1114,6 +1117,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 20.99m;
             var description = "edited description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetById(_orderItemForEditId)).Return(_orderItemForEdit);
@@ -1124,7 +1128,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<ISupplierRepository>(),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price);
+            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidQuantity));
         }
 
@@ -1137,6 +1141,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = -30;
             var price = 20.99m;
             var description = "edited description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetById(_orderItemForEditId)).Return(_orderItemForEdit);
@@ -1147,7 +1152,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<ISupplierRepository>(),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price);
+            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidDeliveryDays));
         }
 
@@ -1160,6 +1165,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = -20.99m;
             var description = "edited description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetById(_orderItemForEditId)).Return(_orderItemForEdit);
@@ -1170,7 +1176,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<ISupplierRepository>(),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price);
+            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidPrice));
         }
 
@@ -1183,6 +1189,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 20.99m;
             var description = "edited description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetById(_orderItemForEditId)).Return(_orderItemForEdit);
@@ -1193,7 +1200,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<ISupplierRepository>(),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price);
+            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidPartNo));
         }
 
@@ -1206,6 +1213,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 20.99m;
             var description = "edited description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetById(_orderItemForEditId)).Return(_orderItemForEdit);
@@ -1216,7 +1224,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<ISupplierRepository>(),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price);
+            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidInstructions));
         }
 
@@ -1229,6 +1237,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 20.99m;
             var description = String.Empty;
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetById(_orderItemForEditId)).Return(_orderItemForEdit);
@@ -1239,7 +1248,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<ISupplierRepository>(),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price);
+            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.EmptyDescription));
         }
 
@@ -1252,6 +1261,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 20.99m;
             var description = new string('a', 256);
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetById(_orderItemForEditId)).Return(_orderItemForEdit);
@@ -1262,7 +1272,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<ISupplierRepository>(),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price);
+            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidDescription));
         }
 
@@ -1275,6 +1285,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 20.99m;
             var description = "edited description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetById(_orderItemForEditId)).Return(_orderItemForEdit);
@@ -1285,15 +1296,15 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<ISupplierRepository>(),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price);
+            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
         }
 
-        public void Edit(Guid id, string description, int quantity, string partNo, string instructions, int deliveryDays, decimal price)
+        public void Edit(Guid id, string description, int quantity, string partNo, string instructions, int deliveryDays, decimal price, decimal? carriage)
         {
             try
             {
-                _orderItemForEdit = _orderItemService.Edit(id, description, quantity, partNo, instructions, deliveryDays, price);
+                _orderItemForEdit = _orderItemService.Edit(id, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             }
             catch (DomainValidationException dex)
             {

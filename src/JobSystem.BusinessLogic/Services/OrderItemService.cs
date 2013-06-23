@@ -46,7 +46,7 @@ namespace JobSystem.BusinessLogic.Services
             return DoCreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, ListItemType.StatusItemWithSubContractor, 0);
         }
 
-        public OrderItem Edit(Guid id, string description, int quantity, string partNo, string instructions, int deliveryDays, decimal price)
+        public OrderItem Edit(Guid id, string description, int quantity, string partNo, string instructions, int deliveryDays, decimal price, decimal? carriage)
         {
             var orderItem = GetById(id);
             orderItem.Quantity = GetQuantity(quantity);
@@ -55,6 +55,7 @@ namespace JobSystem.BusinessLogic.Services
             orderItem.Instructions = instructions;
             orderItem.DeliveryDays = GetDeliveryDays(deliveryDays);
             orderItem.Price = GetPrice(price);
+            orderItem.Carriage = GetCarriage(carriage);
             ValidateAnnotatedObjectThrowOnFailure(orderItem);
             _orderItemRepository.Update(orderItem);
             return orderItem;
