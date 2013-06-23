@@ -239,7 +239,7 @@ namespace JobSystem.Mvc.Controllers
                         _orderItemService.CreatePending(
                             Guid.NewGuid(), viewmodel.SupplierId, viewmodel.Description,
                             viewmodel.Quantity, viewmodel.PartNo, viewmodel.Instructions,
-                            viewmodel.DeliveryDays, viewmodel.JobItemId, viewmodel.Price);
+                            viewmodel.DeliveryDays, viewmodel.JobItemId, viewmodel.Price, 0);
                     }
                     transaction.Commit();
                     return RedirectToAction("Details", "Job", new { id = viewmodel.JobId, tabNo = "0" });

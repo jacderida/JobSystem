@@ -70,15 +70,15 @@ namespace JobSystem.BusinessLogic.IntegrationTests
             var orderItemService = new OrderItemService(
                 userContext, orderRepository, orderItemRepository, supplierRepository, jobItemRepository, listItemRepository, dispatcher);
             
-            orderItemService.CreatePending(Guid.NewGuid(), supplier1Id, "some description", 1, "partno", "instructions", 30, jobItem1Id, 29.99m);
-            orderItemService.CreatePending(Guid.NewGuid(), supplier2Id, "some description", 1, "partno", "instructions", 30, jobItem2Id, 29.99m);
-            orderItemService.CreatePending(Guid.NewGuid(), supplier1Id, "some description", 1, "partno", "instructions", 30, jobItem3Id, 29.99m);
+            orderItemService.CreatePending(Guid.NewGuid(), supplier1Id, "some description", 1, "partno", "instructions", 30, jobItem1Id, 29.99m, 0m);
+            orderItemService.CreatePending(Guid.NewGuid(), supplier2Id, "some description", 1, "partno", "instructions", 30, jobItem2Id, 29.99m, 0m);
+            orderItemService.CreatePending(Guid.NewGuid(), supplier1Id, "some description", 1, "partno", "instructions", 30, jobItem3Id, 29.99m, 0m);
 
-            orderItemService.CreatePending(Guid.NewGuid(), supplier1Id, "some description", 1, "partno", "instructions", 30, jobItem4Id, 29.99m);
-            orderItemService.CreatePending(Guid.NewGuid(), supplier2Id, "some description", 1, "partno", "instructions", 30, jobItem5Id, 29.99m);
-            orderItemService.CreatePending(Guid.NewGuid(), supplier3Id, "some description", 1, "partno", "instructions", 30, jobItem6Id, 29.99m);
+            orderItemService.CreatePending(Guid.NewGuid(), supplier1Id, "some description", 1, "partno", "instructions", 30, jobItem4Id, 29.99m, 0m);
+            orderItemService.CreatePending(Guid.NewGuid(), supplier2Id, "some description", 1, "partno", "instructions", 30, jobItem5Id, 29.99m, 0m);
+            orderItemService.CreatePending(Guid.NewGuid(), supplier3Id, "some description", 1, "partno", "instructions", 30, jobItem6Id, 29.99m, 0m);
 
-            orderItemService.CreatePending(Guid.NewGuid(), supplier3Id, "some description", 1, "partno", "instructions", 30, jobItem7Id, 29.99m);
+            orderItemService.CreatePending(Guid.NewGuid(), supplier3Id, "some description", 1, "partno", "instructions", 30, jobItem7Id, 29.99m, 0m);
 
             var orderService = new OrderService(
                 userContext, orderRepository, consignmentRepository, supplierRepository, currencyRepository, entityIdProvider, orderItemService, companyDetailsRepository, dispatcher);

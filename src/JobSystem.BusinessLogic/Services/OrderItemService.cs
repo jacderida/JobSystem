@@ -60,7 +60,8 @@ namespace JobSystem.BusinessLogic.Services
             return orderItem;
         }
 
-        public PendingOrderItem CreatePending(Guid id, Guid supplierId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
+        public PendingOrderItem CreatePending(
+            Guid id, Guid supplierId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price, decimal? carriage)
         {
             if (!CurrentUser.HasRole(UserRole.Member))
                 throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
@@ -78,6 +79,7 @@ namespace JobSystem.BusinessLogic.Services
             pendingItem.DeliveryDays = GetDeliveryDays(deliveryDays);
             pendingItem.JobItem = GetJobItem(jobItemId);
             pendingItem.Price = GetPrice(price);
+            pendingItem.Carriage = GetCarriage(carriage);
             ValidateAnnotatedObjectThrowOnFailure(pendingItem);
             _orderItemRepository.CreatePending(pendingItem);
             return pendingItem;
@@ -240,6 +242,16 @@ namespace JobSystem.BusinessLogic.Services
             if (price < 0)
                 throw new DomainValidationException(OrderItemMessages.InvalidPrice, "Price");
             return price;
+        }
+
+        private decimal? GetCarriage(decimal? carriage)
+        {
+            if (carriage.HasValue)
+            {
+                if (carriage.Value < 0)
+                    throw new DomainValidationException(OrderItemMessages.InvalidCarraige, "Carriage");
+            }            
+            return carriage;
         }
 
         private JobItem GetJobItem(Guid jobItemId)

@@ -123,6 +123,9 @@
   <data name="InsufficientSecurity" xml:space="preserve">
     <value>A member role is required to perform this operation</value>
   </data>
+  <data name="InvalidCarraige" xml:space="preserve">
+    <value>The carriage cannot be less than 0</value>
+  </data>
   <data name="InvalidDeliveryDays" xml:space="preserve">
     <value>The delivery days cannot be less than 0</value>
   </data>

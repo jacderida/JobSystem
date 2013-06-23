@@ -616,6 +616,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryMock = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryMock.Expect(x => x.CreatePending(null)).IgnoreArguments();
@@ -626,10 +627,18 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
             orderItemRepositoryMock.VerifyAllExpectations();
             Assert.AreNotEqual(Guid.Empty, _savedPendingItem.Id);
             Assert.IsNotNull(_savedPendingItem.JobItem);
+            Assert.IsNotNull(_savedPendingItem.Supplier);
+            Assert.AreEqual(_savedPendingItem.Quantity, quantity);
+            Assert.AreEqual(_savedPendingItem.PartNo, partNo);
+            Assert.AreEqual(_savedPendingItem.Instructions, instructions);
+            Assert.AreEqual(_savedPendingItem.DeliveryDays, deliveryDays);
+            Assert.AreEqual(_savedPendingItem.Price, price);
+            Assert.AreEqual(_savedPendingItem.Description, description);
+            Assert.AreEqual(_savedPendingItem.Carriage, carriage);
         }
 
         [Test]
@@ -645,6 +654,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -653,7 +663,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
         }
 
         [Test]
@@ -669,6 +679,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -677,7 +688,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsNull(supplierId),
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
         }
 
         [Test]
@@ -693,6 +704,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -701,7 +713,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsNull(jobItemId),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
         }
 
         [Test]
@@ -716,6 +728,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -724,7 +737,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItemOnPendingJob(jobItemId),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.JobPending));
         }
 
@@ -740,6 +753,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateStub<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.JobItemHasPendingOrderItem(jobItemId)).Return(true);
@@ -750,7 +764,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.PendingItemExists));
         }
 
@@ -766,6 +780,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -774,7 +789,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidQuantity));
         }
 
@@ -790,6 +805,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -798,7 +814,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidPartNo));
         }
 
@@ -814,6 +830,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = String.Empty;
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -822,7 +839,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.EmptyDescription));
         }
 
@@ -838,6 +855,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = new string('a', 256);
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -846,7 +864,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidDescription));
         }
 
@@ -862,6 +880,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -870,7 +889,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidInstructions));
         }
 
@@ -886,6 +905,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = -29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -894,7 +914,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidPrice));
         }
 
@@ -910,6 +930,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = -30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -918,7 +939,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidDeliveryDays));
         }
 
@@ -934,6 +955,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
@@ -942,15 +964,15 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
         }
 
-        public void CreatePending(Guid id, Guid supplierId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
+        public void CreatePending(Guid id, Guid supplierId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price, decimal? carriage)
         {
             try
             {
-                _savedPendingItem = _orderItemService.CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+                _savedPendingItem = _orderItemService.CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
             }
             catch (DomainValidationException dex)
             {
