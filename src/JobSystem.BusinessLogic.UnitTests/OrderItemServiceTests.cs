@@ -482,6 +482,31 @@ namespace JobSystem.BusinessLogic.UnitTests
         }
 
         [Test]
+        public void Create_CarriageLessThan0_DomainValidationExceptionThrown()
+        {
+            var id = Guid.NewGuid();
+            var orderId = Guid.NewGuid();
+            var quantity = 1;
+            var partNo = "PART0001";
+            var instructions = "some instructions";
+            var deliveryDays = 30;
+            var price = 29.99m;
+            var description = "some description";
+            var carriage = -99.99m;
+
+            _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+                _userContext,
+                OrderRepositoryTestHelper.GetOrderRepository_StubsGetById_ReturnsOrderWith0Items(orderId),
+                MockRepository.GenerateStub<IOrderItemRepository>(),
+                MockRepository.GenerateStub<ISupplierRepository>(),
+                JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
+                MockRepository.GenerateStub<IListItemRepository>());
+            _jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
+            Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidCarraige));
+        }
+
+        [Test]
         public void Create_DeliveryDaysLessThan0_DomainValidationExceptionThrown()
         {
             var id = Guid.NewGuid();
@@ -1178,6 +1203,30 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<IListItemRepository>());
             Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidPrice));
+        }
+
+        [Test]
+        public void Edit_CarriageLessThan0_DomainValidationExceptionThrown()
+        {
+            var quantity = 1;
+            var partNo = "edited part no";
+            var instructions = "some edited instructions";
+            var deliveryDays = 30;
+            var price = 20.99m;
+            var description = "edited description";
+            var carriage = -99.99m;
+
+            var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
+            orderItemRepositoryStub.Stub(x => x.GetById(_orderItemForEditId)).Return(_orderItemForEdit);
+            _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+                _userContext,
+                MockRepository.GenerateStub<IOrderRepository>(),
+                orderItemRepositoryStub,
+                MockRepository.GenerateStub<ISupplierRepository>(),
+                MockRepository.GenerateStub<IJobItemRepository>(),
+                MockRepository.GenerateStub<IListItemRepository>());
+            Edit(_orderItemForEditId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
+            Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidCarraige));
         }
 
         [Test]
