@@ -86,7 +86,7 @@ namespace JobSystem.BusinessLogic.Services
         }
 
         public PendingOrderItem EditPending(
-            Guid id, Guid supplierId, string description, int quantity, string partNo, string instructions, int deliveryDays, decimal price)
+            Guid id, Guid supplierId, string description, int quantity, string partNo, string instructions, int deliveryDays, decimal price, decimal? carriage)
         {
             if (!CurrentUser.HasRole(UserRole.Member))
                 throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
@@ -100,6 +100,7 @@ namespace JobSystem.BusinessLogic.Services
             pendingItem.Instructions = instructions;
             pendingItem.DeliveryDays = GetDeliveryDays(deliveryDays);
             pendingItem.Price = GetPrice(price);
+            pendingItem.Carriage = GetCarriage(carriage);
             ValidateAnnotatedObjectThrowOnFailure(pendingItem);
             _orderItemRepository.UpdatePendingItem(pendingItem);
             return pendingItem;

@@ -1270,6 +1270,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 25;
             var price = 20.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryMock = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryMock.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -1281,7 +1282,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price);
+            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             orderItemRepositoryMock.VerifyAllExpectations();
             Assert.AreEqual(supplierId, _pendingItemForEdit.Supplier.Id);
             Assert.AreEqual(quantity, _pendingItemForEdit.Quantity);
@@ -1290,6 +1291,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             Assert.AreEqual(deliveryDays, _pendingItemForEdit.DeliveryDays);
             Assert.AreEqual(price, _pendingItemForEdit.Price);
             Assert.AreEqual(description, _pendingItemForEdit.Description);
+            Assert.AreEqual(carriage, _pendingItemForEdit.Carriage);
         }
 
         [Test]
@@ -1303,6 +1305,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 25;
             var price = 20.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(null);
@@ -1313,7 +1316,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price);
+            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
         }
 
         [Test]
@@ -1327,6 +1330,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 25;
             var price = 20.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -1337,7 +1341,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsNull(supplierId),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price);
+            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
         }
 
         [Test]
@@ -1350,6 +1354,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 25;
             var price = 20.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -1360,7 +1365,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price);
+            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidQuantity));
         }
 
@@ -1374,6 +1379,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 25;
             var price = 20.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -1384,7 +1390,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price);
+            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidPartNo));
         }
 
@@ -1398,6 +1404,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 25;
             var price = 20.99m;
             var description = String.Empty;
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -1408,7 +1415,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price);
+            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.EmptyDescription));
         }
 
@@ -1422,6 +1429,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 25;
             var price = 20.99m;
             var description = new string('a', 256);
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -1432,7 +1440,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price);
+            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidDescription));
         }
 
@@ -1446,6 +1454,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 25;
             var price = 20.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -1456,7 +1465,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price);
+            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidInstructions));
         }
 
@@ -1470,6 +1479,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = -25;
             var price = 20.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -1480,7 +1490,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price);
+            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidDeliveryDays));
         }
 
@@ -1494,6 +1504,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 25;
             var price = -20.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -1504,8 +1515,33 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price);
+            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidPrice));
+        }
+
+        [Test]
+        public void EditPending_InvalidCarriage_DomainValidationExceptionThrown()
+        {
+            var supplierId = Guid.NewGuid();
+            var quantity = 1;
+            var partNo = "part no";
+            var instructions = "some instructions";
+            var deliveryDays = 25;
+            var price = 20.99m;
+            var description = "some description";
+            var carriage = -99.99m;
+
+            var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
+            orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
+            _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+                _userContext,
+                MockRepository.GenerateStub<IOrderRepository>(),
+                orderItemRepositoryStub,
+                SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+                MockRepository.GenerateStub<IJobItemRepository>(),
+                MockRepository.GenerateStub<IListItemRepository>());
+            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
+            Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidCarraige));
         }
 
         [Test]
@@ -1518,6 +1554,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 25;
             var price = 20.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryStub = MockRepository.GenerateMock<IOrderItemRepository>();
             orderItemRepositoryStub.Stub(x => x.GetPendingOrderItem(_pendingItemForEditId)).Return(_pendingItemForEdit);
@@ -1528,16 +1565,16 @@ namespace JobSystem.BusinessLogic.UnitTests
                 SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price);
+            EditPending(_pendingItemForEditId, supplierId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
         }
 
         private void EditPending(
-            Guid id, Guid supplierId, string description, int quantity, string partNo, string instructions, int deliveryDays, decimal price)
+            Guid id, Guid supplierId, string description, int quantity, string partNo, string instructions, int deliveryDays, decimal price, decimal? carriage)
         {
             try
             {
-                _pendingItemForEdit = _orderItemService.EditPending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, price);
+                _pendingItemForEdit = _orderItemService.EditPending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, price, carriage);
             }
             catch (DomainValidationException dex)
             {

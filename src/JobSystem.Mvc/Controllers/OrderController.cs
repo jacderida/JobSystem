@@ -372,7 +372,8 @@ namespace JobSystem.Mvc.Controllers
                 viewModel.PartNo,
                 viewModel.Instructions,
                 viewModel.DeliveryDays,
-                viewModel.Price);
+                viewModel.Price,
+                0);
             return RedirectToAction("Details", "Job", new { Id = viewModel.JobId, tabNo = "0" });
         }
 
