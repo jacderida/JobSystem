@@ -239,7 +239,7 @@ namespace JobSystem.Mvc.Controllers
                         _orderItemService.CreatePending(
                             Guid.NewGuid(), viewmodel.SupplierId, viewmodel.Description,
                             viewmodel.Quantity, viewmodel.PartNo, viewmodel.Instructions,
-                            viewmodel.DeliveryDays, viewmodel.JobItemId, viewmodel.Price, 0);
+                            viewmodel.DeliveryDays, viewmodel.JobItemId, viewmodel.Price, viewmodel.Carriage);
                     }
                     transaction.Commit();
                     return RedirectToAction("Details", "Job", new { id = viewmodel.JobId, tabNo = "0" });
@@ -319,7 +319,7 @@ namespace JobSystem.Mvc.Controllers
         public ActionResult EditItem(Guid jobItemId)
         {
             var item = _orderItemService.GetPendingOrderItemForJobItem(jobItemId);
-            var viewModel = new OrderItemEditViewModel()
+            var viewModel = new OrderItemEditViewModel
             {
                 Id = item.Id,
                 DeliveryDays = item.DeliveryDays,
@@ -331,7 +331,8 @@ namespace JobSystem.Mvc.Controllers
                 SupplierId = item.Supplier.Id,
                 SupplierName = item.Supplier.Name,
                 JobItemId = item.JobItem.Id,
-                JobId = item.JobItem.Job.Id
+                JobId = item.JobItem.Job.Id,
+                Carriage = item.Carriage
             };
             return View("EditItem", viewModel);
         }
@@ -351,7 +352,8 @@ namespace JobSystem.Mvc.Controllers
                 PartNo = item.PartNo,
                 Price = item.Price,
                 OrderId = item.Order.Id,
-                Quantity = item.Quantity
+                Quantity = item.Quantity,
+                Carriage = item.Carriage
             };
             if (item.JobItem != null)
             {
@@ -373,7 +375,7 @@ namespace JobSystem.Mvc.Controllers
                 viewModel.Instructions,
                 viewModel.DeliveryDays,
                 viewModel.Price,
-                0);
+                viewModel.Carriage);
             return RedirectToAction("Details", "Job", new { Id = viewModel.JobId, tabNo = "0" });
         }
 

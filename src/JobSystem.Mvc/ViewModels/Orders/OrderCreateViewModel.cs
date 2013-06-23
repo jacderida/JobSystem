@@ -25,6 +25,8 @@ namespace JobSystem.Mvc.ViewModels.Orders
         [Min(0, ErrorMessage = "Please enter a value of at least 0.")]
         [Required]
         public decimal Price { get; set; }
+        [Min(0, ErrorMessage = "Please enter a value of at least 0.")]
+        public decimal? Carriage { get; set; }
         [Integer]
         [Min(1, ErrorMessage = "Please enter a value of at least 1.")]
         [Required]
