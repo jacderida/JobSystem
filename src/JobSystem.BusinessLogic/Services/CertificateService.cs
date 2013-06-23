@@ -41,12 +41,12 @@ namespace JobSystem.BusinessLogic.Services
             var certificate = new Certificate();
             certificate.Id = id;
             certificate.JobItem = GetJobItem(jobItemId);
-            certificate.CertificateNumber = GetCertificateNumber(certificate.JobItem);
             certificate.DateCreated = AppDateTime.GetUtcNow();
             certificate.CreatedBy = CurrentUser;
             certificate.Type = GetCertificateType(certificateTypeId);
             certificate.Category = GetCategory(categoryId);
             certificate.ProcedureList = procedureList;
+            certificate.CertificateNumber = GetCertificateNumber(categoryId);
             ValidateAnnotatedObjectThrowOnFailure(certificate);
             _certificateRepository.Create(certificate);
             return certificate;
@@ -108,11 +108,12 @@ namespace JobSystem.BusinessLogic.Services
             return type;
         }
 
-        private string GetCertificateNumber(JobItem jobItem)
+        private string GetCertificateNumber(Guid categoryId)
         {
             var certificateNumber = _entityIdProvider.GetIdFor<Certificate>();
-            var number = new String(certificateNumber.Where(c => Char.IsDigit(c)).ToArray());
-            return String.Format("{0}{1}", jobItem.Field.Name[0], number);
+            var number = new string(certificateNumber.Where(Char.IsDigit).ToArray());
+            var category = _listItemRepository.GetById(categoryId);
+            return string.Format("{0}{1}", category.Name[0], number);
         }
     }
 }

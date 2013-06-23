@@ -41,9 +41,10 @@ namespace JobSystem.Mvc.Controllers
         [HttpGet]
         public ActionResult Create(Guid id)
         {
-            var viewmodel = new CertificateViewModel()
+            var viewmodel = new CertificateViewModel
             {
                 CertificateTypes = _listItemService.GetAllByCategory(ListItemCategoryType.Certificate).ToSelectList(),
+                CertificateCategories = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemCategory).ToSelectList(),
                 JobItemId = id
             };
             return PartialView("_Create", viewmodel);
@@ -57,7 +58,7 @@ namespace JobSystem.Mvc.Controllers
                 try
                 {
                     NHibernateSession.Current.BeginTransaction();
-                    _certificateService.Create(Guid.NewGuid(), viewmodel.CertificateTypeId, Guid.Empty, viewmodel.JobItemId, null);
+                    _certificateService.Create(Guid.NewGuid(), viewmodel.CertificateTypeId, viewmodel.CategoryId, viewmodel.JobItemId, null);
                     NHibernateSession.Current.Transaction.Commit();
                     return RedirectToAction("Details", "JobItem", new { id = viewmodel.JobItemId });
                 }

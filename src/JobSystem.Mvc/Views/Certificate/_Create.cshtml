@@ -16,6 +16,10 @@
             @Html.DropDownListFor(model => model.CertificateTypeId, Model.CertificateTypes, new { @class = "long-dropdown" })
             @Html.ValidationMessageFor(model => model.CertificateTypeId)
         </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.CategoryId, Model.CertificateCategories, new { @class = "long-dropdown" })
+            @Html.ValidationMessageFor(model => model.CategoryId)
+        </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Attachments)
         </div>

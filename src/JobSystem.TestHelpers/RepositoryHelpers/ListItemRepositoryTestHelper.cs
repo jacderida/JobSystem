@@ -115,7 +115,7 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
             return new ListItem
             {
                 Id = categoryId,
-                Name = "D - Density",
+                Name = "E - Electrical",
                 Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Certificate Category", Type = ListItemCategoryType.JobItemCategory },
                 Type = ListItemType.CategoryDensity
             };
