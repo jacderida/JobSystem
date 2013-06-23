@@ -12,7 +12,7 @@ namespace JobSystem.DataModel.Entities
         public virtual string JobNo { get; set; }
         public virtual DateTime DateCreated { get; set; }
         public virtual UserAccount CreatedBy { get; set; }
-        [StringLength(2000, ErrorMessageResourceName = "NotesTooLarge", ErrorMessageResourceType = typeof(Messages))]
+        [StringLength(10000, ErrorMessageResourceName = "NotesTooLarge", ErrorMessageResourceType = typeof(Messages))]
         public virtual string Notes { get; set; }
         [StringLength(50, ErrorMessageResourceName = "ContactTooLarge", ErrorMessageResourceType = typeof(Messages))]
         public virtual string Contact { get; set; }
