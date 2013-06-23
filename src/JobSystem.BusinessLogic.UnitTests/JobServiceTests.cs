@@ -154,14 +154,14 @@ namespace JobSystem.BusinessLogic.UnitTests
         }
 
         [Test]
-        public void Create_NotesGreaterThan2000Characters_DomainValidationExceptionThrown()
+        public void Create_NotesGreaterThan10000Characters_DomainValidationExceptionThrown()
         {
             var id = Guid.NewGuid();
             var customerId = Guid.NewGuid();
             var typeId = Guid.NewGuid();
 
             _jobService = JobServiceFactory.Create(typeId, customerId);
-            CreateJob(id, "job instructions", "PO1000", "AD1000", typeId, customerId, new string('a', 2001), "job contact");
+            CreateJob(id, "job instructions", "PO1000", "AD1000", typeId, customerId, new string('a', 10001), "job contact");
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.Jobs.Messages.NotesTooLarge));
         }
 
@@ -563,12 +563,12 @@ namespace JobSystem.BusinessLogic.UnitTests
         }
 
         [Test]
-        public void Edit_NotesGreaterThan2000Characters_ThrowsDomainValidationException()
+        public void Edit_NotesGreaterThan10000Characters_ThrowsDomainValidationException()
         {
             var orderNumber = "orderno-edited";
             var adviceNumber = "adviceno-edited";
             var contact = "contact-edited";
-            var notes = new String('a', 2001);
+            var notes = new String('a', 10001);
             var instructions = "instructions-edited";
 
             var jobRepositoryMock = MockRepository.GenerateMock<IJobRepository>();
