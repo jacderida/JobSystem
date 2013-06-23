@@ -412,6 +412,7 @@ namespace JobSystem.Mvc.Controllers
                         Instructions = item.Instructions,
                         PartNo = item.PartNo,
                         Price = item.Price.ToString(),
+                        Carriage = item.Carriage.ToString(),
                         Quantity = item.Quantity.ToString(),
                         JobItemId = item.JobItem.Id
                     };
@@ -427,6 +428,7 @@ namespace JobSystem.Mvc.Controllers
                     Instructions = pendingItem.Instructions,
                     PartNo = pendingItem.PartNo,
                     Price = pendingItem.Price.ToString(),
+                    Carriage = pendingItem.Carriage.ToString(),
                     Quantity = pendingItem.Quantity.ToString(),
                     JobItemId = pendingItem.JobItem.Id,
                     SupplierName = pendingItem.Supplier.Name,

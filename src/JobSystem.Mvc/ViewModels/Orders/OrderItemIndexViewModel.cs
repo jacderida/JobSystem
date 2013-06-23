@@ -17,6 +17,7 @@ namespace JobSystem.Mvc.ViewModels.Orders
         public string PartNo { get; set; }
         public string DeliveryDays { get; set; }
         public string Price { get; set; }
+        public string Carriage { get; set; }
         public string Quantity { get; set; }
         public Guid JobItemId { get; set; }
         public bool IsIndividual { get; set; }

@@ -49,6 +49,7 @@ namespace JobSystem.Mvc.Controllers
                         Description = o.Description,
                         PartNo = o.PartNo,
                         Price = o.Price.ToString(),
+                        Carriage = o.Carriage.ToString(),
                         Quantity = o.Quantity.ToString(),
                         Instructions = o.Instructions,
                         SupplierName = o.Supplier.Name
@@ -303,6 +304,7 @@ namespace JobSystem.Mvc.Controllers
                     Instructions = o.Instructions,
                     PartNo = o.PartNo,
                     Price = o.Price.ToString(),
+                    Carriage = o.Carriage.ToString(),
                     Quantity = o.Quantity.ToString()
                 }).OrderBy(o => o.ItemNo).ToList()
             };
