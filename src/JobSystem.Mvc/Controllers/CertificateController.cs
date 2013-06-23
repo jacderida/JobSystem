@@ -57,7 +57,7 @@ namespace JobSystem.Mvc.Controllers
                 try
                 {
                     NHibernateSession.Current.BeginTransaction();
-                    _certificateService.Create(Guid.NewGuid(), viewmodel.CertificateTypeId, viewmodel.JobItemId, null);
+                    _certificateService.Create(Guid.NewGuid(), viewmodel.CertificateTypeId, Guid.Empty, viewmodel.JobItemId, null);
                     NHibernateSession.Current.Transaction.Commit();
                     return RedirectToAction("Details", "JobItem", new { id = viewmodel.JobItemId });
                 }

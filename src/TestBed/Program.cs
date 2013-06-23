@@ -78,7 +78,11 @@ namespace TestBed
             NHibernateSession.Current.Transaction.Commit();
             NHibernateSession.Current.BeginTransaction();
             certificateService.Create(
-                Guid.NewGuid(), listItemService.GetByType(ListItemType.CertificateTypeHouse).Id, jobItemId, "001");
+                Guid.NewGuid(),
+                listItemService.GetByType(ListItemType.CertificateTypeHouse).Id,
+                listItemService.GetByType(ListItemType.CategoryDensity).Id,
+                jobItemId,
+                "001");
             NHibernateSession.Current.Transaction.Commit();
         }
 

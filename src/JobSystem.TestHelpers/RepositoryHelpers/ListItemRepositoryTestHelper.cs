@@ -39,10 +39,27 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
             return listItemRepositoryStub;
         }
 
-        public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsCertificateType(Guid certificateTypeId)
+        public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsCertificateAndCategory(Guid certificateTypeId, Guid categoryId)
         {
             var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
             listItemRepository.Stub(x => x.GetById(certificateTypeId)).Return(GetHouseCalibrationCertificateType(certificateTypeId));
+            listItemRepository.Stub(x => x.GetById(categoryId)).Return(GetCertificateCategory(categoryId));
+            return listItemRepository;
+        }
+
+        public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsNullForCertificate(Guid certificateTypeId, Guid categoryId)
+        {
+            var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
+            listItemRepository.Stub(x => x.GetById(certificateTypeId)).Return(null);
+            listItemRepository.Stub(x => x.GetById(categoryId)).Return(GetCertificateCategory(categoryId));
+            return listItemRepository;
+        }
+
+        public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsNullForCategory(Guid certificateTypeId, Guid categoryId)
+        {
+            var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
+            listItemRepository.Stub(x => x.GetById(certificateTypeId)).Return(GetHouseCalibrationCertificateType(certificateTypeId));
+            listItemRepository.Stub(x => x.GetById(categoryId)).Return(null);
             return listItemRepository;
         }
 
@@ -50,6 +67,14 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
         {
             var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
             listItemRepository.Stub(x => x.GetById(certificateTypeId)).Return(GetPaymentTerm(certificateTypeId));
+            return listItemRepository;
+        }
+
+        public static IListItemRepository GetListItemRepository_StubsGetById_ReturnsNonCategoryType(Guid certificateTypeId, Guid categoryId)
+        {
+            var listItemRepository = MockRepository.GenerateStub<IListItemRepository>();
+            listItemRepository.Stub(x => x.GetById(certificateTypeId)).Return(GetHouseCalibrationCertificateType(certificateTypeId));
+            listItemRepository.Stub(x => x.GetById(categoryId)).Return(GetPaymentTerm(categoryId));
             return listItemRepository;
         }
 
@@ -69,7 +94,7 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
             {
                 Id = certificateTypeId,
                 Name = "House",
-                Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Certificate Category", Type = ListItemCategoryType.Certificate },
+                Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Certificate Type", Type = ListItemCategoryType.Certificate },
                 Type = ListItemType.CertificateTypeHouse
             };
         }
@@ -82,6 +107,17 @@ namespace JobSystem.TestHelpers.RepositoryHelpers
                 Name = "30 days",
                 Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Certificate Category", Type = ListItemCategoryType.PaymentTerm },
                 Type = ListItemType.PaymentTerm30Days
+            };
+        }
+
+        private static ListItem GetCertificateCategory(Guid categoryId)
+        {
+            return new ListItem
+            {
+                Id = categoryId,
+                Name = "D - Density",
+                Category = new ListItemCategory { Id = Guid.NewGuid(), Name = "Certificate Category", Type = ListItemCategoryType.JobItemCategory },
+                Type = ListItemType.CategoryDensity
             };
         }
     }

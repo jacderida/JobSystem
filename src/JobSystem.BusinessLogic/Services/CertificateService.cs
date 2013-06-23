@@ -32,7 +32,7 @@ namespace JobSystem.BusinessLogic.Services
             _entityIdProvider = entityIdProvider;
         }
 
-        public Certificate Create(Guid id, Guid certificateTypeId, Guid jobItemId, string procedureList)
+        public Certificate Create(Guid id, Guid certificateTypeId, Guid categoryId, Guid jobItemId, string procedureList)
         {
             if (!CurrentUser.HasRole(UserRole.Member))
                 throw new DomainValidationException(Messages.InsufficientSecurityClearance, "CurrentUser");
@@ -45,6 +45,7 @@ namespace JobSystem.BusinessLogic.Services
             certificate.DateCreated = AppDateTime.GetUtcNow();
             certificate.CreatedBy = CurrentUser;
             certificate.Type = GetCertificateType(certificateTypeId);
+            certificate.Category = GetCategory(categoryId);
             certificate.ProcedureList = procedureList;
             ValidateAnnotatedObjectThrowOnFailure(certificate);
             _certificateRepository.Create(certificate);
@@ -85,6 +86,16 @@ namespace JobSystem.BusinessLogic.Services
             if (jobItem == null)
                 throw new ArgumentException("A valid job item ID must be supplied for the certificate");
             return jobItem;
+        }
+
+        private ListItem GetCategory(Guid categoryId)
+        {
+            var type = _listItemRepository.GetById(categoryId);
+            if (type == null)
+                throw new ArgumentException("A valid category ID must be supplied");
+            if (type.Category.Type != ListItemCategoryType.JobItemCategory)
+                throw new ArgumentException("A category list item must be supplied");
+            return type;
         }
 
         private ListItem GetCertificateType(Guid certificateTypeId)
