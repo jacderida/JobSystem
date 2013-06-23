@@ -22,6 +22,7 @@ namespace JobSystem.Mvc.ViewModels.Orders
         public int DeliveryDays { get; set; }
         [Required]
         public decimal Price { get; set; }
+        public decimal? Carriage { get; set; }
         [Integer]
         [Min(1, ErrorMessage = "Please enter a quantity of at least 1.")]
         [Required]

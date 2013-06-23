@@ -232,7 +232,7 @@ namespace JobSystem.Mvc.Controllers
                         _orderItemService.Create(
                             Guid.NewGuid(), order.Id, viewmodel.Description,
                             viewmodel.Quantity, viewmodel.PartNo, viewmodel.Instructions,
-                            viewmodel.DeliveryDays, viewmodel.JobItemId, viewmodel.Price);
+                            viewmodel.DeliveryDays, viewmodel.JobItemId, viewmodel.Price, viewmodel.Carriage);
                     }
                     else
                     {
@@ -277,7 +277,8 @@ namespace JobSystem.Mvc.Controllers
                 viewModel.Instructions,
                 viewModel.DeliveryDays,
                 Guid.Empty,
-                viewModel.Price);
+                viewModel.Price,
+                viewModel.Carriage);
             return RedirectToAction("Details", new { id = viewModel.OrderId });
         }
 

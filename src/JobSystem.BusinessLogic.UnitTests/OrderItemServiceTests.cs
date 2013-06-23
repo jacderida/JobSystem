@@ -181,6 +181,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var jobItemId = Guid.Empty;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryMock = MockRepository.GenerateStub<IOrderItemRepository>();
             orderItemRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
@@ -191,10 +192,17 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<ISupplierRepository>(),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
             orderItemRepositoryMock.VerifyAllExpectations();
             Assert.AreNotEqual(Guid.Empty, _savedOrderItem.Id);
             Assert.AreEqual(1, _savedOrderItem.ItemNo);
+            Assert.AreEqual(quantity, _savedOrderItem.Quantity);
+            Assert.AreEqual(partNo, _savedOrderItem.PartNo);
+            Assert.AreEqual(instructions, _savedOrderItem.Instructions);
+            Assert.AreEqual(deliveryDays, _savedOrderItem.DeliveryDays);
+            Assert.AreEqual(price, _savedOrderItem.Price);
+            Assert.AreEqual(description, _savedOrderItem.Description);
+            Assert.AreEqual(carriage, _savedOrderItem.Carriage);
         }
 
         [Test]
@@ -209,6 +217,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var jobItemId = Guid.Empty;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryMock = MockRepository.GenerateStub<IOrderItemRepository>();
             orderItemRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
@@ -219,10 +228,17 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<ISupplierRepository>(),
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
             orderItemRepositoryMock.VerifyAllExpectations();
             Assert.AreNotEqual(Guid.Empty, _savedOrderItem.Id);
             Assert.AreEqual(2, _savedOrderItem.ItemNo);
+            Assert.AreEqual(quantity, _savedOrderItem.Quantity);
+            Assert.AreEqual(partNo, _savedOrderItem.PartNo);
+            Assert.AreEqual(instructions, _savedOrderItem.Instructions);
+            Assert.AreEqual(deliveryDays, _savedOrderItem.DeliveryDays);
+            Assert.AreEqual(price, _savedOrderItem.Price);
+            Assert.AreEqual(description, _savedOrderItem.Description);
+            Assert.AreEqual(carriage, _savedOrderItem.Carriage);
         }
 
         [Test]
@@ -236,6 +252,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryMock = MockRepository.GenerateStub<IOrderItemRepository>();
             orderItemRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
@@ -253,13 +270,20 @@ namespace JobSystem.BusinessLogic.UnitTests
                 jobItemRepositoryMock,
                 OrderItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusAwaitingParts());
             _jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
             orderItemRepositoryMock.VerifyAllExpectations();
             jobItemRepositoryMock.VerifyAllExpectations();
             Assert.AreNotEqual(Guid.Empty, _savedOrderItem.Id);
             Assert.AreEqual(1, _savedOrderItem.ItemNo);
             Assert.IsNotNull(_savedOrderItem.JobItem);
             Assert.AreEqual(ListItemType.StatusAwaitingParts, _jobItemToUpdate.Status.Type);
+            Assert.AreEqual(quantity, _savedOrderItem.Quantity);
+            Assert.AreEqual(partNo, _savedOrderItem.PartNo);
+            Assert.AreEqual(instructions, _savedOrderItem.Instructions);
+            Assert.AreEqual(deliveryDays, _savedOrderItem.DeliveryDays);
+            Assert.AreEqual(price, _savedOrderItem.Price);
+            Assert.AreEqual(description, _savedOrderItem.Description);
+            Assert.AreEqual(carriage, _savedOrderItem.Carriage);
         }
 
         [Test]
@@ -273,6 +297,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             var orderItemRepositoryMock = MockRepository.GenerateStub<IOrderItemRepository>();
             orderItemRepositoryMock.Expect(x => x.Create(null)).IgnoreArguments();
@@ -290,13 +315,20 @@ namespace JobSystem.BusinessLogic.UnitTests
                 jobItemRepositoryMock,
                 OrderItemServiceTestHelper.GetListItemRepository_StubsGetByTypeCalls_ReturnsStatusAwaitingParts());
             _jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
             orderItemRepositoryMock.VerifyAllExpectations();
             jobItemRepositoryMock.VerifyAllExpectations();
             Assert.AreNotEqual(Guid.Empty, _savedOrderItem.Id);
             Assert.AreEqual(2, _savedOrderItem.ItemNo);
             Assert.IsNotNull(_savedOrderItem.JobItem);
             Assert.AreEqual(ListItemType.StatusAwaitingParts, _jobItemToUpdate.Status.Type);
+            Assert.AreEqual(quantity, _savedOrderItem.Quantity);
+            Assert.AreEqual(partNo, _savedOrderItem.PartNo);
+            Assert.AreEqual(instructions, _savedOrderItem.Instructions);
+            Assert.AreEqual(deliveryDays, _savedOrderItem.DeliveryDays);
+            Assert.AreEqual(price, _savedOrderItem.Price);
+            Assert.AreEqual(description, _savedOrderItem.Description);
+            Assert.AreEqual(carriage, _savedOrderItem.Carriage);
         }
 
         [Test]
@@ -311,6 +343,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -320,7 +353,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
             _jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
         }
 
         [Test]
@@ -335,6 +368,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -344,7 +378,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 MockRepository.GenerateStub<IJobItemRepository>(),
                 MockRepository.GenerateStub<IListItemRepository>());
             _jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
         }
 
         [Test]
@@ -359,6 +393,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -368,7 +403,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsNull(_jobItemToUpdateId),
                 MockRepository.GenerateStub<IListItemRepository>());
             _jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
         }
 
         [Test]
@@ -382,6 +417,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -391,7 +427,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItemOnPendingJob(_jobItemToUpdateId),
                 MockRepository.GenerateStub<IListItemRepository>());
             _jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.JobPending));
         }
 
@@ -406,6 +442,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -415,7 +452,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
                 MockRepository.GenerateStub<IListItemRepository>());
             _jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidQuantity));
         }
 
@@ -430,6 +467,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = -29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -439,7 +477,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
                 MockRepository.GenerateStub<IListItemRepository>());
             _jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidPrice));
         }
 
@@ -454,6 +492,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = -30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -463,7 +502,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
                 MockRepository.GenerateStub<IListItemRepository>());
             _jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidDeliveryDays));
         }
 
@@ -478,6 +517,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -487,7 +527,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
                 MockRepository.GenerateStub<IListItemRepository>());
             _jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidPartNo));
         }
 
@@ -502,6 +542,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -511,7 +552,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
                 MockRepository.GenerateStub<IListItemRepository>());
             _jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidInstructions));
         }
 
@@ -526,6 +567,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = String.Empty;
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -535,7 +577,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
                 MockRepository.GenerateStub<IListItemRepository>());
             _jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.EmptyDescription));
         }
 
@@ -550,6 +592,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = new string('a', 256);
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 _userContext,
@@ -559,7 +602,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
                 MockRepository.GenerateStub<IListItemRepository>());
             _jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidDescription));
         }
 
@@ -574,6 +617,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var deliveryDays = 30;
             var price = 29.99m;
             var description = "some order description";
+            var carriage = 99.99m;
 
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
                 TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Public),
@@ -583,15 +627,15 @@ namespace JobSystem.BusinessLogic.UnitTests
                 JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(_jobItemToUpdateId),
                 MockRepository.GenerateStub<IListItemRepository>());
             _jobItemService = JobItemServiceFactory.Create(_userContext, MockRepository.GenerateStub<IJobItemRepository>());
-            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price);
+            CreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, _jobItemToUpdateId, price, carriage);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InsufficientSecurity));
         }
 
-        private void CreateOrderItem(Guid id, Guid orderId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
+        private void CreateOrderItem(Guid id, Guid orderId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price, decimal? carriage)
         {
             try
             {
-                _savedOrderItem = _orderItemService.Create(id, orderId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price);
+                _savedOrderItem = _orderItemService.Create(id, orderId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
                 if (jobItemId != Guid.Empty)
                     _jobItemToUpdate = _jobItemService.GetById(jobItemId);
             }

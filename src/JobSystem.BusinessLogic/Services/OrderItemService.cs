@@ -35,15 +35,15 @@ namespace JobSystem.BusinessLogic.Services
         }
 
         public OrderItem Create(
-            Guid id, Guid orderId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
+            Guid id, Guid orderId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price, decimal? carriage)
         {
-            return DoCreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, ListItemType.StatusAwaitingParts);
+            return DoCreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, ListItemType.StatusAwaitingParts, carriage);
         }
 
         public OrderItem CreateFromConsignment(
             Guid id, Guid orderId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price)
         {
-            return DoCreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, ListItemType.StatusItemWithSubContractor);
+            return DoCreateOrderItem(id, orderId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, ListItemType.StatusItemWithSubContractor, 0);
         }
 
         public OrderItem Edit(Guid id, string description, int quantity, string partNo, string instructions, int deliveryDays, decimal price)
@@ -177,7 +177,7 @@ namespace JobSystem.BusinessLogic.Services
         }
 
         private OrderItem DoCreateOrderItem(
-            Guid id, Guid orderId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price, ListItemType jobItemStatusType)
+            Guid id, Guid orderId, string description, int quantity, string partNo, string instructions, int deliveryDays, Guid jobItemId, decimal price, ListItemType jobItemStatusType, decimal? carriage)
         {
             if (!CurrentUser.HasRole(UserRole.Member))
                 throw new DomainValidationException(OrderItemMessages.InsufficientSecurity, "CurrentUser");
@@ -194,6 +194,7 @@ namespace JobSystem.BusinessLogic.Services
             orderItem.Instructions = instructions;
             orderItem.DeliveryDays = GetDeliveryDays(deliveryDays);
             orderItem.Price = GetPrice(price);
+            orderItem.Carriage = GetCarriage(carriage);
             ValidateAnnotatedObjectThrowOnFailure(orderItem);
             if (jobItemId != Guid.Empty)
             {
