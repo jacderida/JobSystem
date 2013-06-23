@@ -20,5 +20,6 @@ namespace JobSystem.DataModel.Entities
         public virtual string Instructions { get; set; }
         public virtual int DeliveryDays { get; set; }
         public virtual decimal Price { get; set; }
+        public virtual decimal? Carriage { get; set; }
     }
 }
