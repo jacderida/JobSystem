@@ -919,6 +919,31 @@ namespace JobSystem.BusinessLogic.UnitTests
         }
 
         [Test]
+        public void CreatePending_CarriageLessThan0_DomainValidationExceptionThrown()
+        {
+            var id = Guid.NewGuid();
+            var supplierId = Guid.NewGuid();
+            var jobItemId = Guid.NewGuid();
+            var quantity = 1;
+            var partNo = "PART1000";
+            var instructions = "some instructions";
+            var deliveryDays = 30;
+            var price = 29.99m;
+            var description = "some description";
+            var carriage = -99.99m;
+
+            _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
+                _userContext,
+                MockRepository.GenerateStub<IOrderRepository>(),
+                MockRepository.GenerateStub<IOrderItemRepository>(),
+                SupplierRepositoryTestHelper.GetSupplierRepository_GetById_ReturnsSupplier(supplierId),
+                JobItemRepositoryTestHelper.GetJobItemRepository_StubsGetById_ReturnsJobItem(jobItemId),
+                MockRepository.GenerateStub<IListItemRepository>());
+            CreatePending(id, supplierId, description, quantity, partNo, instructions, deliveryDays, jobItemId, price, carriage);
+            Assert.IsTrue(_domainValidationException.ResultContainsMessage(OrderItemMessages.InvalidCarraige));
+        }
+
+        [Test]
         public void CreatePending_DeliveryDaysLessThan0_DomainValidationExceptionThrown()
         {
             var id = Guid.NewGuid();
