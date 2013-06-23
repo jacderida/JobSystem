@@ -14,6 +14,7 @@ namespace JobSystem.Reporting.Models
         public int ItemNo { get; set; }
         public string EquipmentDescription { get; set; }
         public decimal Price { get; set; }
+        public decimal Carriage { get; set; }
         public int Quantity { get; set; }
         public decimal TotalPrice { get; set; }
         public int Days { get; set; }
