@@ -25,5 +25,10 @@
         public string CurrencyMessage { get; set; }
         public decimal Total { get; set; }
         public string OrderEmailLabel { get; set; }
+        public decimal RepairTotal { get; set; }
+        public decimal CalibrationTotal { get; set; }
+        public decimal CarriageTotal { get; set; }
+        public decimal PartsTotal { get; set; }
+        public decimal InvestigationTotal { get; set; }
     }
 }

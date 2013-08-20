@@ -11,6 +11,11 @@ namespace JobSystem.Reporting.Data.NHibernate
     public class NHibernateQuoteReportDataProvider2 : NHibernateCustomerDataProviderBase, IReportDataProvider<QuoteReportModel2>
     {
         private int _itemNo = 1;
+        private decimal _repairTotal;
+        private decimal _calibrationTotal;
+        private decimal _partsTotal;
+        private decimal _carriageTotal;
+        private decimal _investigationTotal;
 
         [DataObjectMethod(DataObjectMethodType.Select)]
         public IList<QuoteReportModel2> GetReportData(Guid itemId)
@@ -28,8 +33,21 @@ namespace JobSystem.Reporting.Data.NHibernate
                 AddDeliveryLineItem(result, quote, item);
                 _itemNo = 1;
             }
+            ApplySummary(result);
             ApplyTotal(result);
             return result;
+        }
+
+        private void ApplySummary(IEnumerable<QuoteReportModel2> items)
+        {
+            foreach (var item in items)
+            {
+                item.RepairTotal = _repairTotal;
+                item.CalibrationTotal = _calibrationTotal;
+                item.PartsTotal = _partsTotal;
+                item.CarriageTotal = _carriageTotal;
+                item.InvestigationTotal = _investigationTotal;
+            }
         }
 
         private void ApplyTotal(IEnumerable<QuoteReportModel2> items)
@@ -48,6 +66,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 reportItem.LineDescription = string.Format("Repair for {0}, Serial No: {1}.", GetInstrumentDescription(quoteItem.JobItem.Instrument), quoteItem.JobItem.SerialNo);
                 reportItem.SubTotal = quoteItem.Labour;
                 result.Add(reportItem);
+                _repairTotal += quoteItem.Labour;
             }
         }
 
@@ -60,6 +79,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 reportItem.LineDescription = string.Format("Calibration for {0}, Serial No: {1}", GetInstrumentDescription(quoteItem.JobItem.Instrument), quoteItem.JobItem.SerialNo);
                 reportItem.SubTotal = quoteItem.Calibration;
                 result.Add(reportItem);
+                _calibrationTotal += quoteItem.Calibration;
             }
         }
 
@@ -72,6 +92,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 reportItem.LineDescription = string.Format("Parts for {0}, Serial No: {1}", GetInstrumentDescription(quoteItem.JobItem.Instrument), quoteItem.JobItem.SerialNo);
                 reportItem.SubTotal = quoteItem.Parts;
                 result.Add(reportItem);
+                _partsTotal += quoteItem.Parts;
             }
         }
 
@@ -84,6 +105,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 reportItem.LineDescription = string.Format("Carriage for {0}, Serial No: {1}", GetInstrumentDescription(quoteItem.JobItem.Instrument), quoteItem.JobItem.SerialNo);
                 reportItem.SubTotal = quoteItem.Carriage;
                 result.Add(reportItem);
+                _carriageTotal += quoteItem.Carriage;
             }
         }
 
@@ -96,6 +118,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 reportItem.LineDescription = string.Format("Investigation for {0}, Serial No: {1}", GetInstrumentDescription(quoteItem.JobItem.Instrument), quoteItem.JobItem.SerialNo);
                 reportItem.SubTotal = quoteItem.Investigation;
                 result.Add(reportItem);
+                _investigationTotal += quoteItem.Investigation;
             }
         }
 
