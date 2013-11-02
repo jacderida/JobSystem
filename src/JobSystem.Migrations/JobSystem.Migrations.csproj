@@ -109,6 +109,7 @@
     <Compile Include="M20130622015035_AddCategoryIdColumn.cs" />
     <Compile Include="M20130623015035_AddCarriageColumn.cs" />
     <Compile Include="M20130623175035_AddCarriageColumnToPendingItems.cs" />
+    <Compile Include="M20131102180040_AddQuoteSummaryTextToCompanyDetails.cs" />
     <Compile Include="MigrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
