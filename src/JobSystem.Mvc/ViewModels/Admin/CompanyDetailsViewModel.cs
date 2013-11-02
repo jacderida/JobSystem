@@ -53,6 +53,8 @@ namespace JobSystem.Mvc.ViewModels.Admin
         [StringLength(2000, ErrorMessageResourceName = "TermsAndConditionsTooLarge", ErrorMessageResourceType = typeof(Messages))]
         [Display(Name = "Terms & Conditions")]
         public string TermsAndConditions { get; set; }
+		[Display(Name = "Quote Summary Text")]
+		public string QuoteSummaryText { get; set; }
 
         public string CultureId { get; set; }
         public Guid CurrencyId { get; set; }
