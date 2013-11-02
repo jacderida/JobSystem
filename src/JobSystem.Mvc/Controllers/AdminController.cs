@@ -80,7 +80,7 @@ namespace JobSystem.Mvc.Controllers
                         viewModel.Telephone, viewModel.Fax, viewModel.Email,
                         viewModel.Www, viewModel.RegNo, viewModel.VatRegNo,
                         viewModel.TermsAndConditions, viewModel.CurrencyId, viewModel.TaxCodeId,
-                        viewModel.PaymentTermId, viewModel.BankDetailsId, viewModel.CultureId);
+                        viewModel.PaymentTermId, viewModel.BankDetailsId, viewModel.CultureId, string.Empty);
                     //Repopulate lists because MVC doesn't preserve them after post
                     viewModel.Currencies = _currencyService.GetCurrencies().ToSelectList();
                     viewModel.PaymentTerms = _listItemService.GetAllByCategory(ListItemCategoryType.PaymentTerm).ToSelectList();

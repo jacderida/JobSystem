@@ -1130,7 +1130,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             try
             {
                 _savedCompanyDetails = _companyDetailsService.Edit(
-                    name, addressDetails, telephone, fax, email, www, regNo, vatRegNo, termsAndConditions, defaultCurrencyId, defaultTaxCodeId, defaultPaymentTermsId, defaultBankDetailsId, cultureCode);
+                    name, addressDetails, telephone, fax, email, www, regNo, vatRegNo, termsAndConditions, defaultCurrencyId, defaultTaxCodeId, defaultPaymentTermsId, defaultBankDetailsId, cultureCode, "Quote summary text");
             }
             catch (DomainValidationException dex)
             {
