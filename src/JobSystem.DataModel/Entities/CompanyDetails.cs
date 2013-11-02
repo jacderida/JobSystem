@@ -40,6 +40,7 @@ namespace JobSystem.DataModel.Entities
         [Required(ErrorMessageResourceName = "TermsAndConditionsRequired", ErrorMessageResourceType = typeof(Messages))]
         [StringLength(2000, ErrorMessageResourceName = "TermsAndConditionsTooLarge", ErrorMessageResourceType = typeof(Messages))]
         public virtual string TermsAndConditions { get; set; }
+		public virtual string QuoteSummaryText { get; set; }
         public virtual Currency DefaultCurrency { get; set; }
         public virtual TaxCode DefaultTaxCode { get; set; }
         public virtual ListItem DefaultPaymentTerm { get; set; }
