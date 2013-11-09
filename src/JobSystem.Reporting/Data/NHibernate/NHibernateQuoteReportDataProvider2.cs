@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using JobSystem.DataAccess.NHibernate;
 using JobSystem.DataModel.Entities;
 using JobSystem.Reporting.Models;
+using NHibernate.Linq;
 
 namespace JobSystem.Reporting.Data.NHibernate
 {
@@ -40,6 +42,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 
         private void ApplySummary(IEnumerable<QuoteReportModel2> items)
         {
+			var company = CurrentSession.Query<CompanyDetails>().Single();
             foreach (var item in items)
             {
                 item.RepairTotal = _repairTotal;
@@ -47,6 +50,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 item.PartsTotal = _partsTotal;
                 item.CarriageTotal = _carriageTotal;
                 item.InvestigationTotal = _investigationTotal;
+				item.SummaryText = company.QuoteSummaryText;
             }
         }
 

@@ -30,5 +30,6 @@
         public decimal CarriageTotal { get; set; }
         public decimal PartsTotal { get; set; }
         public decimal InvestigationTotal { get; set; }
+		public string SummaryText { get; set; }
     }
 }
