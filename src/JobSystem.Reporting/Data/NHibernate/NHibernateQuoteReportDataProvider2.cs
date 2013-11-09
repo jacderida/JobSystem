@@ -56,7 +56,10 @@ namespace JobSystem.Reporting.Data.NHibernate
 
         private void ApplyTotal(IEnumerable<QuoteReportModel2> items)
         {
-            var total = items.Sum(i => i.Price);
+            var total = _repairTotal;
+			total += _calibrationTotal;
+			total += _partsTotal;
+			total += _carriageTotal;
             foreach (var item in items)
                 item.Total = total;
         }

@@ -163,7 +163,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// SubTotalTextBox
 			// 
 			formattingRule2.Filters.AddRange(new Telerik.Reporting.Filter[] {
-            new Telerik.Reporting.Filter("=Fields.SubTotal", Telerik.Reporting.FilterOperator.Equal, "0")});
+            new Telerik.Reporting.Filter("=Fields.Price", Telerik.Reporting.FilterOperator.Equal, "0")});
 			formattingRule2.Style.Visible = false;
 			this.SubTotalTextBox.ConditionalFormatting.AddRange(new Telerik.Reporting.Drawing.FormattingRule[] {
             formattingRule2});
@@ -179,7 +179,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.SubTotalTextBox.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(9D);
 			this.SubTotalTextBox.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Right;
 			this.SubTotalTextBox.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
-			this.SubTotalTextBox.Value = "= Fields.Price";
+			this.SubTotalTextBox.Value = "=Fields.Price";
 			// 
 			// objectDataSource1
 			// 
@@ -566,7 +566,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// textBox26
 			// 
 			formattingRule3.Filters.AddRange(new Telerik.Reporting.Filter[] {
-            new Telerik.Reporting.Filter("=Fields.SubTotal", Telerik.Reporting.FilterOperator.Equal, "0")});
+            new Telerik.Reporting.Filter("=Fields.Price", Telerik.Reporting.FilterOperator.Equal, "0")});
 			formattingRule3.Style.Visible = false;
 			this.textBox26.ConditionalFormatting.AddRange(new Telerik.Reporting.Drawing.FormattingRule[] {
             formattingRule3});
@@ -587,7 +587,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// textBox27
 			// 
 			formattingRule4.Filters.AddRange(new Telerik.Reporting.Filter[] {
-            new Telerik.Reporting.Filter("=Fields.SubTotal", Telerik.Reporting.FilterOperator.Equal, "0")});
+            new Telerik.Reporting.Filter("=Fields.Price", Telerik.Reporting.FilterOperator.Equal, "0")});
 			formattingRule4.Style.Visible = false;
 			this.textBox27.ConditionalFormatting.AddRange(new Telerik.Reporting.Drawing.FormattingRule[] {
             formattingRule4});
@@ -608,7 +608,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// textBox28
 			// 
 			formattingRule5.Filters.AddRange(new Telerik.Reporting.Filter[] {
-            new Telerik.Reporting.Filter("=Fields.SubTotal", Telerik.Reporting.FilterOperator.Equal, "0")});
+            new Telerik.Reporting.Filter("=Fields.Price", Telerik.Reporting.FilterOperator.Equal, "0")});
 			formattingRule5.Style.Visible = false;
 			this.textBox28.ConditionalFormatting.AddRange(new Telerik.Reporting.Drawing.FormattingRule[] {
             formattingRule5});
@@ -629,7 +629,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// textBox29
 			// 
 			formattingRule6.Filters.AddRange(new Telerik.Reporting.Filter[] {
-            new Telerik.Reporting.Filter("=Fields.SubTotal", Telerik.Reporting.FilterOperator.Equal, "0")});
+            new Telerik.Reporting.Filter("=Fields.Price", Telerik.Reporting.FilterOperator.Equal, "0")});
 			formattingRule6.Style.Visible = false;
 			this.textBox29.ConditionalFormatting.AddRange(new Telerik.Reporting.Drawing.FormattingRule[] {
             formattingRule6});
@@ -650,7 +650,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// textBox30
 			// 
 			formattingRule7.Filters.AddRange(new Telerik.Reporting.Filter[] {
-            new Telerik.Reporting.Filter("=Fields.SubTotal", Telerik.Reporting.FilterOperator.Equal, "0")});
+            new Telerik.Reporting.Filter("=Fields.Price", Telerik.Reporting.FilterOperator.Equal, "0")});
 			formattingRule7.Style.Visible = false;
 			this.textBox30.ConditionalFormatting.AddRange(new Telerik.Reporting.Drawing.FormattingRule[] {
             formattingRule7});
