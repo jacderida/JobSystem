@@ -55,6 +55,8 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
             companyDetailsToUpdate.Www = companyDetails.Www;
             companyDetailsToUpdate.RegNo = companyDetails.RegNo;
             companyDetailsToUpdate.VatRegNo = companyDetails.VatRegNo;
+			companyDetailsToUpdate.QuoteSummaryText = companyDetails.QuoteSummaryText;
+			companyDetailsToUpdate.OrderAcknowledgeText = companyDetails.OrderAcknowledgeText;
             CurrentSession.Update(companyDetailsToUpdate);
         }
     }

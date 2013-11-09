@@ -149,7 +149,12 @@ namespace JobSystem.DbWireup.ConsoleRunner
                 DefaultPaymentTerm = databaseService.GetPaymentTerm(defaultPaymentTermId),
                 DefaultTaxCode = databaseService.GetTaxCode(defaultTaxCodeId),
                 DefaultCultureCode = "en-GB",
-                MainLogo = ms.ToArray()
+                MainLogo = ms.ToArray(),
+				OrderAcknowledgeText = "Can you acknowledge this order and advise of a delivery date as soon as possible? The delivery address is as stated below, unless you are advised otherwise.",
+				QuoteSummaryText = 
+					"Should there be any queries in relation to this quotation please contact us as soon as possible." + Environment.NewLine +
+					"The investigation charge will be applied should the client refuse to go ahead with the specified repairs." + Environment.NewLine +
+					"If orders are being sent by email, please use the following address: info.cms@intertek.com"
             };
         }
     }
