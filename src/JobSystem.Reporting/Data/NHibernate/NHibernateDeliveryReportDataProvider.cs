@@ -55,7 +55,8 @@ namespace JobSystem.Reporting.Data.NHibernate
         {
             var sb = new StringBuilder();
             sb.Append(GetInstrumentDescription(jobItem.Instrument));
-            if (!String.IsNullOrEmpty(jobItem.Accessories))
+			sb.AppendFormat(", Serial No: {0}", jobItem.SerialNo);
+            if (!string.IsNullOrEmpty(jobItem.Accessories))
             {
                 sb.Append(Environment.NewLine);
                 sb.AppendLine("Accessories:");

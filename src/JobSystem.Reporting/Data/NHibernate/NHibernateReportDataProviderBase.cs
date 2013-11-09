@@ -63,8 +63,8 @@ namespace JobSystem.Reporting.Data.NHibernate
         protected string GetJobItemReference(JobItem jobItem)
         {
             if (jobItem == null)
-                return String.Empty;
-            return String.Format("{0}/{1}", jobItem.Job.JobNo, jobItem.ItemNo);
+                return string.Empty;
+            return string.Format("{0}/{1}", jobItem.Job.JobNo, jobItem.ItemNo);
         }
     }
 }
