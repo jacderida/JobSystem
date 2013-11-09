@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using JobSystem.DataModel.Entities;
 using JobSystem.Reporting.Models;
+using NHibernate.Linq;
 
 namespace JobSystem.Reporting.Data.NHibernate
 {
@@ -17,6 +18,7 @@ namespace JobSystem.Reporting.Data.NHibernate
             var order = CurrentSession.Get<Order>(itemId);
             var supplier = order.Supplier;
             var itemNo = 1;
+			var company = CurrentSession.Query<CompanyDetails>().Single();
             foreach (var orderItem in order.OrderItems)
             {
                 var carriage = orderItem.Carriage.HasValue ? orderItem.Carriage.Value : 0;
@@ -38,6 +40,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 reportItem.JobRef = GetJobItemReference(orderItem.JobItem);
                 reportItem.PreparedBy = order.CreatedBy.Name;
                 reportItem.PartNo = orderItem.PartNo;
+				reportItem.AcknowledgeText = company.OrderAcknowledgeText;
                 result.Add(reportItem);
             }
             return result.OrderBy(o => o.ItemNo).ToList();

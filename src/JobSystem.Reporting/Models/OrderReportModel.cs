@@ -22,5 +22,6 @@ namespace JobSystem.Reporting.Models
         public string ItemInstructions { get; set; }
         public string PartNo { get; set; }
         public string PreparedBy { get; set; }
+		public string AcknowledgeText { get; set; }
     }
 }
