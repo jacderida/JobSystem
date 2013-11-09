@@ -51,6 +51,7 @@ namespace JobSystem.Mvc.Controllers
                 Www = company.Www,
                 TermsAndConditions = company.TermsAndConditions,
 				QuoteSummaryText = company.QuoteSummaryText,
+				OrderAcknowledgeText = company.OrderAcknowledgeText,
                 RegNo = !String.IsNullOrEmpty(company.RegNo) ? company.RegNo : String.Empty,
                 VatRegNo = !String.IsNullOrEmpty(company.VatRegNo) ? company.VatRegNo : String.Empty,
                 CurrencyId = company.DefaultCurrency.Id,
