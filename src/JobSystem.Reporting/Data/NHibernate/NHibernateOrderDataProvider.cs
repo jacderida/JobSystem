@@ -29,7 +29,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 reportItem.OrderNo = order.OrderNo;
                 reportItem.OrderDate = order.DateCreated;
                 reportItem.Contact = supplier.Contact1;
-                reportItem.EquipmentDescription = orderItem.Description;
+				reportItem.EquipmentDescription = GetDescription(orderItem);
                 reportItem.OrderInstructions = order.Instructions;
                 reportItem.ItemInstructions = orderItem.Instructions;
                 reportItem.Price = orderItem.Price;
@@ -45,5 +45,13 @@ namespace JobSystem.Reporting.Data.NHibernate
             }
             return result.OrderBy(o => o.ItemNo).ToList();
         }
+
+		private string GetDescription(OrderItem orderItem)
+		{
+			var jobItem = orderItem.JobItem;
+			if (jobItem == null)
+				return orderItem.Description;
+			return string.Format("{0}, Serial No: {1}", orderItem.Description, orderItem.JobItem.SerialNo);
+		}
     }
 }
