@@ -73,7 +73,7 @@ namespace JobSystem.BusinessLogic.Services
             string telephone, string fax, string email,
             string www, string regNo, string vatRegNo,
             string termsAndConditions, Guid defaultCurrencyId, Guid defaultTaxCodeId,
-            Guid defaultPaymentTermId, Guid defaultBankDetailsId, string cultureCode, string quoteSummaryText)
+            Guid defaultPaymentTermId, Guid defaultBankDetailsId, string cultureCode, string quoteSummaryText, string orderAcknowledgeText)
         {
             var companyDetails = GetCompany();
             if (!CurrentUser.HasRole(UserRole.Admin))
@@ -86,6 +86,7 @@ namespace JobSystem.BusinessLogic.Services
             companyDetails.DefaultBankDetails = GetDefaultBankDetails(defaultBankDetailsId);
             companyDetails.DefaultCultureCode = cultureCode;
 			companyDetails.QuoteSummaryText = quoteSummaryText;
+			companyDetails.OrderAcknowledgeText = orderAcknowledgeText;
             AssignAddressDetails(companyDetails, addressDetails);
             AssignContactInfo(companyDetails, telephone, fax, email, www);
             AssignRegNoInfo(companyDetails, regNo, vatRegNo);
