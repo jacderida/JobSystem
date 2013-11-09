@@ -179,7 +179,7 @@ namespace JobSystem.Reporting.ReportDefinitions
 			this.SubTotalTextBox.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(9D);
 			this.SubTotalTextBox.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Right;
 			this.SubTotalTextBox.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
-			this.SubTotalTextBox.Value = "= Fields.SubTotal";
+			this.SubTotalTextBox.Value = "= Fields.Price";
 			// 
 			// objectDataSource1
 			// 

@@ -56,7 +56,7 @@ namespace JobSystem.Reporting.Data.NHibernate
 
         private void ApplyTotal(IEnumerable<QuoteReportModel2> items)
         {
-            var total = items.Sum(i => i.SubTotal);
+            var total = items.Sum(i => i.Price);
             foreach (var item in items)
                 item.Total = total;
         }
@@ -68,7 +68,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 var reportItem = new QuoteReportModel2();
                 GetInvariantDetails(reportItem, quote, quoteItem, _itemNo++);
                 reportItem.LineDescription = string.Format("Repair for {0}, Serial No: {1}.", GetInstrumentDescription(quoteItem.JobItem.Instrument), quoteItem.JobItem.SerialNo);
-                reportItem.SubTotal = quoteItem.Labour;
+                reportItem.Price = quoteItem.Labour;
                 result.Add(reportItem);
                 _repairTotal += quoteItem.Labour;
             }
@@ -81,7 +81,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 var reportItem = new QuoteReportModel2();
                 GetInvariantDetails(reportItem, quote, quoteItem, _itemNo++);
                 reportItem.LineDescription = string.Format("Calibration for {0}, Serial No: {1}", GetInstrumentDescription(quoteItem.JobItem.Instrument), quoteItem.JobItem.SerialNo);
-                reportItem.SubTotal = quoteItem.Calibration;
+                reportItem.Price = quoteItem.Calibration;
                 result.Add(reportItem);
                 _calibrationTotal += quoteItem.Calibration;
             }
@@ -94,7 +94,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 var reportItem = new QuoteReportModel2();
                 GetInvariantDetails(reportItem, quote, quoteItem, _itemNo++);
                 reportItem.LineDescription = string.Format("Parts for {0}, Serial No: {1}", GetInstrumentDescription(quoteItem.JobItem.Instrument), quoteItem.JobItem.SerialNo);
-                reportItem.SubTotal = quoteItem.Parts;
+                reportItem.Price = quoteItem.Parts;
                 result.Add(reportItem);
                 _partsTotal += quoteItem.Parts;
             }
@@ -107,7 +107,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 var reportItem = new QuoteReportModel2();
                 GetInvariantDetails(reportItem, quote, quoteItem, _itemNo++);
                 reportItem.LineDescription = string.Format("Carriage for {0}, Serial No: {1}", GetInstrumentDescription(quoteItem.JobItem.Instrument), quoteItem.JobItem.SerialNo);
-                reportItem.SubTotal = quoteItem.Carriage;
+                reportItem.Price = quoteItem.Carriage;
                 result.Add(reportItem);
                 _carriageTotal += quoteItem.Carriage;
             }
@@ -120,7 +120,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 var reportItem = new QuoteReportModel2();
                 GetInvariantDetails(reportItem, quote, quoteItem, _itemNo++);
                 reportItem.LineDescription = string.Format("Investigation for {0}, Serial No: {1}", GetInstrumentDescription(quoteItem.JobItem.Instrument), quoteItem.JobItem.SerialNo);
-                reportItem.SubTotal = quoteItem.Investigation;
+                reportItem.Price = quoteItem.Investigation;
                 result.Add(reportItem);
                 _investigationTotal += quoteItem.Investigation;
             }
@@ -133,7 +133,7 @@ namespace JobSystem.Reporting.Data.NHibernate
                 var reportItem = new QuoteReportModel2();
                 GetInvariantDetails(reportItem, quote, quoteItem, 0);
                 reportItem.LineDescription = string.Format("Report: {0}", quoteItem.Report);
-                reportItem.SubTotal = 0;
+                reportItem.Price = 0;
                 result.Add(reportItem);
             }
         }
@@ -143,7 +143,7 @@ namespace JobSystem.Reporting.Data.NHibernate
             var reportItem = new QuoteReportModel2();
             GetInvariantDetails(reportItem, quote, quoteItem, 0);
             reportItem.LineDescription = string.Format("Delivery: {0} days from go ahead", quoteItem.Days);
-            reportItem.SubTotal = 0;
+            reportItem.Price = 0;
             result.Add(reportItem);
         }
 

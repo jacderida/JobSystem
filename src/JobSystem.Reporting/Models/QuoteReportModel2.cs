@@ -19,7 +19,7 @@
         public string JobItemRef { get; set; }
         public string LineDescription { get; set; }
         public string Report { get; set; }
-        public decimal SubTotal { get; set; }
+        public decimal Price { get; set; }
         public string Days { get; set; }
         public string PreparedBy { get; set; }
         public string CurrencyMessage { get; set; }
