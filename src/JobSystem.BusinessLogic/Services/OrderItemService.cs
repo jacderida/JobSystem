@@ -112,8 +112,10 @@ namespace JobSystem.BusinessLogic.Services
             var orderItem = GetById(orderItemId);
             orderItem.DateReceived = AppDateTime.GetUtcNow();
             var jobItem = orderItem.JobItem;
-            jobItem.Status = _listItemRepository.GetByType(ListItemType.StatusPartsReceived);
+			jobItem.Status = _listItemRepository.GetByType(ListItemType.StatusPartsReceived);
             _orderItemRepository.Update(orderItem);
+			_jobItemRepository.EmitItemHistory(
+				CurrentUser, jobItem.Id, 0, 0, string.Format("Parts received from order {0}", orderItem.Order.OrderNo), ListItemType.StatusPartsReceived, ListItemType.WorkTypeAdministration);
             _jobItemRepository.Update(jobItem);
             return orderItem;
         }

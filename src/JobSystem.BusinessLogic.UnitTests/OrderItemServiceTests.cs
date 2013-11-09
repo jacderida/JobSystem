@@ -43,6 +43,7 @@ namespace JobSystem.BusinessLogic.UnitTests
         {
             _domainValidationException = null;
             _jobItemToUpdateId = Guid.NewGuid();
+			_jobItemForMarkReceivedId = Guid.NewGuid();
             _orderItemService = null;
             _savedOrderItem = null;
             _savedPendingItem = null;
@@ -84,7 +85,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 Quantity = 1,
                 Price = 10.99m,
                 Description = "some description",
-                Order = new Order { Id = Guid.NewGuid() }
+                Order = new Order { Id = Guid.NewGuid(), OrderNo = "OR2000" }
             };
             _pendingItemForEditId = Guid.NewGuid();
             _pendingItemForEdit = new PendingOrderItem
@@ -141,18 +142,23 @@ namespace JobSystem.BusinessLogic.UnitTests
 
             AppDateTime.GetUtcNow = () => _dateReceived;
             _orderItemForMarkReceivedId = Guid.NewGuid();
-            _orderItemForMarkReceived = new OrderItem
-            {
-                Id = _orderItemForMarkReceivedId,
-                ItemNo = 1,
-                Description = "ordered item",
-                Quantity = 2,
-                Price = 35.00m,
-                DeliveryDays = 30,
-                PartNo = "PART28979",
-                Instructions = "some instructions",
-                JobItem = _jobItemForMarkReceived
-            };
+			_orderItemForMarkReceived = new OrderItem
+			{
+				Id = _orderItemForMarkReceivedId,
+				ItemNo = 1,
+				Description = "ordered item",
+				Quantity = 2,
+				Price = 35.00m,
+				DeliveryDays = 30,
+				PartNo = "PART28979",
+				Instructions = "some instructions",
+				JobItem = _jobItemForMarkReceived,
+				Order = new Order
+				{
+					Id = Guid.NewGuid(),
+					OrderNo = "OR2000"
+				}
+			};
             _partsReceivedListItem = new ListItem
             {
                 Id = Guid.NewGuid(),
@@ -1904,6 +1910,8 @@ namespace JobSystem.BusinessLogic.UnitTests
             var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
             jobItemRepositoryMock.Stub(x => x.GetById(_jobItemForMarkReceivedId)).Return(_jobItemForMarkReceived);
             jobItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
+			jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
+				_userContext.GetCurrentUser(), _jobItemForMarkReceivedId, 0, 0, "Parts received from order OR2000", ListItemType.StatusPartsReceived, ListItemType.WorkTypeAdministration));
             var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
             listItemRepositoryStub.Stub(x => x.GetByType(ListItemType.StatusPartsReceived)).Return(_partsReceivedListItem);
             _orderItemService = OrderItemServiceTestHelper.GetOrderItemService(
