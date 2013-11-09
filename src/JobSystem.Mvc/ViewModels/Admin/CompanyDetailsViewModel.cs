@@ -55,6 +55,8 @@ namespace JobSystem.Mvc.ViewModels.Admin
         public string TermsAndConditions { get; set; }
 		[Display(Name = "Quote Summary Text")]
 		public string QuoteSummaryText { get; set; }
+		[Display(Name = "Order Acknowledge Text")]
+		public string OrderAcknowledgeText { get; set; }
 
         public string CultureId { get; set; }
         public Guid CurrencyId { get; set; }
