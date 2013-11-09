@@ -153,6 +153,10 @@
             @Html.TextAreaFor(model => model.QuoteSummaryText)
             @Html.ValidationMessageFor(model => model.QuoteSummaryText)
         </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.OrderAcknowledgeText)
+            @Html.ValidationMessageFor(model => model.OrderAcknowledgeText)
+        </div>
     </fieldset>
     <input type="submit" value="Save" class="primary-action"/>
 }
