@@ -85,18 +85,18 @@ namespace JobSystem.Reporting.ReportDefinitions
 			// 
 			this.titleTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0D), Telerik.Reporting.Drawing.Unit.Cm(0D));
 			this.titleTextBox.Name = "titleTextBox";
-			this.titleTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(2.9787592887878418D), Telerik.Reporting.Drawing.Unit.Cm(0.88562500476837158D));
+			this.titleTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(7.099799633026123D), Telerik.Reporting.Drawing.Unit.Cm(0.88562500476837158D));
 			this.titleTextBox.Style.Color = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(34)))), ((int)(((byte)(60)))));
 			this.titleTextBox.Style.Font.Bold = true;
 			this.titleTextBox.Style.Font.Name = "Arial";
 			this.titleTextBox.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(18D);
 			this.titleTextBox.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
 			this.titleTextBox.StyleName = "Title";
-			this.titleTextBox.Value = "Order No:";
+			this.titleTextBox.Value = "Purchase Requisition:";
 			// 
 			// textBox42
 			// 
-			this.textBox42.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(3.3999998569488525D), Telerik.Reporting.Drawing.Unit.Cm(0D));
+			this.textBox42.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(7.0999999046325684D), Telerik.Reporting.Drawing.Unit.Cm(0D));
 			this.textBox42.Name = "textBox42";
 			this.textBox42.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(6.2302093505859375D), Telerik.Reporting.Drawing.Unit.Cm(0.88562500476837158D));
 			this.textBox42.Style.BorderStyle.Right = Telerik.Reporting.Drawing.BorderType.None;
