@@ -26,7 +26,7 @@ namespace JobSystem.Reporting.Data.NHibernate
             var quote = CurrentSession.Get<Quote>(itemId);
             foreach (var item in quote.QuoteItems.OrderBy(q => q.JobItem.ItemNo))
             {
-                AddRepairLineItem(result, quote, item);
+				AddRepairLineItem(result, quote, item);
                 AddCalibrationLineItem(result, quote, item);
                 AddPartsLineItem(result, quote, item);
                 AddCarriageLineItem(result, quote, item);
@@ -37,8 +37,15 @@ namespace JobSystem.Reporting.Data.NHibernate
             }
             ApplySummary(result);
             ApplyTotal(result);
+			ApplyDate(result, quote);
             return result;
         }
+
+		private void ApplyDate(IEnumerable<QuoteReportModel2> items, Quote quote)
+		{
+			foreach (var item in items)
+				item.DateCreated = quote.DateCreated.ToShortDateString();
+		}
 
         private void ApplySummary(IEnumerable<QuoteReportModel2> items)
         {
