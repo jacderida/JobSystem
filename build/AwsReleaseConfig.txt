@@ -78,7 +78,7 @@ Container.ApplicationHealhcheckPath = /ping/check2
 ### Additional Elastic Beanstalk Container options
 ###
 
-Container.InstanceType = t1.micro
+Container.InstanceType = m1.small
 
 # Container.AmiID = 
 # Container.NotificationEmail = 
