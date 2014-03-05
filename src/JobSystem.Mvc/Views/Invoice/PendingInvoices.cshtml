@@ -13,8 +13,8 @@
     if (Model.Items.Any())
     {
         <input class="primary-action" type="submit" value="Invoice"/>
-        var grid = new WebGrid(null, defaultSort:"OrderNo", canSort: false, rowsPerPage: Model.PageSize);
-        grid.Bind(Model.Items, autoSortAndPage: false, rowCount: Model.Total);
+        var grid = new WebGrid(null, defaultSort:"OrderNo", canSort: false, canPage: false);
+        grid.Bind(Model.Items, autoSortAndPage: false);
         @grid.GetHtml(columns: grid.Columns(
             grid.Column("ToBeConverted", "", format: @<input type="checkbox" name="ToBeConvertedIds" value="@item.Id"/>),
             grid.Column("JobItemRef", "Job Item"),

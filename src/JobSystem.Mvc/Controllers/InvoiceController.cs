@@ -61,9 +61,8 @@ namespace JobSystem.Mvc.Controllers
             }
         }
 
-        public ActionResult PendingInvoices(int page = 1)
+        public ActionResult PendingInvoices()
         {
-            var pageSize = 15;
             var items = _invoiceItemService.GetPendingInvoiceItems().Select(i => new InvoiceItemIndexViewModel
             {
                 Id = i.Id,
@@ -75,12 +74,10 @@ namespace JobSystem.Mvc.Controllers
                 OrderNo = i.OrderNo,
                 PartsPrice = (double)i.PartsPrice,
                 RepairPrice = (double)i.RepairPrice
-            }).OrderBy(i => i.JobItemRef).Skip((page - 1) * pageSize).Take(pageSize);
+            }).OrderBy(i => i.JobItemRef);
             return View(new InvoiceItemListViewModel
             {
                 Items = items,
-                Page = page,
-                PageSize = pageSize,
                 Total = _invoiceItemService.GetPendingInvoiceItemsCount()
             });
         }
