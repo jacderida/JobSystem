@@ -29,7 +29,7 @@ namespace JobSystem.Mvc.Controllers
             return RedirectToAction("ApprovedDeliveries");
         }
 
-        public ActionResult PendingDeliveries(int page = 1)
+        public ActionResult PendingDeliveries()
         {
             var items = _deliveryItemService.GetPendingDeliveryItems().Select(
                 di => new DeliveryItemIndexViewModel

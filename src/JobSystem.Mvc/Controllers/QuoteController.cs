@@ -110,9 +110,8 @@ namespace JobSystem.Mvc.Controllers
         }
 
         [HttpGet]
-        public ActionResult PendingQuotes(int page = 1)
+        public ActionResult PendingQuotes()
         {
-            var pageSize = 15;
             var items = _quoteItemService.GetPendingQuoteItems().Select(
                 q => new QuoteItemIndexViewModel
                 {
@@ -130,12 +129,10 @@ namespace JobSystem.Mvc.Controllers
                     Days = q.Days,
                     ItemBER = q.BeyondEconomicRepair,
                     JobItemRef = String.Format("{0}/{1}", q.JobItem.Job.JobNo, q.JobItem.ItemNo),
-                }).OrderBy(qi => qi.JobItemRef).Skip((page - 1) * pageSize).Take(pageSize);
+                }).OrderBy(qi => qi.JobItemRef);
             var viewmodel = new QuotePendingListViewModel
             {
                 QuoteItems = items,
-                Page = page,
-                PageSize = pageSize,
                 Total = _quoteItemService.GetPendingQuoteItemsCount()
             };
             return View(viewmodel);

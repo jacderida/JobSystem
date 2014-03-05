@@ -37,9 +37,8 @@ namespace JobSystem.Mvc.Controllers
         }
 
         [HttpGet]
-        public ActionResult PendingOrderItems(int page = 1)
+        public ActionResult PendingOrderItems()
         {
-            var pageSize = 15;
             var items = _orderItemService.GetPendingOrderItems().Select(
                 o => new OrderItemIndexViewModel
                     {
@@ -53,20 +52,17 @@ namespace JobSystem.Mvc.Controllers
                         Quantity = o.Quantity.ToString(),
                         Instructions = o.Instructions,
                         SupplierName = o.Supplier.Name
-                    }).OrderBy(o => o.JobItemRef).Skip((page - 1)*pageSize).Take(pageSize);
+                    }).OrderBy(o => o.JobItemRef);
             return View(new OrderItemListViewModel
                 {
                     Items = items,
-                    Page = page,
-                    PageSize = pageSize,
                     Total = _orderService.GetPendingOrdersCount()
                 });
         }
 
         [HttpGet]
-        public ActionResult PendingOrders(int page = 1)
+        public ActionResult PendingOrders()
         {
-            var pageSize = 15;
             var items = _orderService.GetOrders().Where(o => !o.IsApproved).Select(
                 o => new OrderIndexViewModel
                 {
@@ -75,12 +71,10 @@ namespace JobSystem.Mvc.Controllers
                     SupplierName = o.Supplier.Name,
                     OrderNo = o.OrderNo,
                     ItemCount = _orderItemService.GetOrderItemsCount(o.Id)
-                }).OrderBy(o => o.OrderNo).Skip((page - 1) * pageSize).Take(pageSize);
+                }).OrderBy(o => o.OrderNo);
             return View(new OrderListViewModel
             {
                 Items = items,
-                Page = page,
-                PageSize = pageSize,
                 Total = _orderService.GetPendingOrdersCount()
             });
         }
