@@ -170,7 +170,7 @@ namespace JobSystem.Mvc.Controllers
             {
                 try
                 {
-                    _userManagementService.Edit(viewModel.Id, viewModel.Name, viewModel.EmailAddress, viewModel.JobTitle);
+                    _userManagementService.Edit(viewModel.Id, viewModel.Name, viewModel.EmailAddress, viewModel.JobTitle, GetUpdatedRoles(viewModel.Roles));
                     return RedirectToAction("Index");
                 }
                 catch (DomainValidationException dex)
@@ -180,5 +180,14 @@ namespace JobSystem.Mvc.Controllers
             }
             return PartialView("_Edit", viewModel);
         }
+
+		private UserRole GetUpdatedRoles(List<CheckboxViewModel> checkBoxViewModels)
+		{
+			var roles = UserRole.None;
+			foreach (var checkBoxViewModel in checkBoxViewModels)
+				if (checkBoxViewModel.IsChecked)
+					roles |= (UserRole)checkBoxViewModel.Id;
+			return roles;
+		}
     }
 }

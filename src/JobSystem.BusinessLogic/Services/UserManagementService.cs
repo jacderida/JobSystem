@@ -55,7 +55,7 @@ namespace JobSystem.BusinessLogic.Services
             return userAccount;
         }
 
-        public UserAccount Edit(Guid id, string name, string emailAddress, string jobTitle)
+        public UserAccount Edit(Guid id, string name, string emailAddress, string jobTitle, UserRole role)
         {
             if (id == Guid.Empty)
                 throw new ArgumentException("An invalid ID was supplied for the user", "id");
@@ -67,6 +67,7 @@ namespace JobSystem.BusinessLogic.Services
             userAccount.Name = name;
             userAccount.EmailAddress = emailAddress;
             userAccount.JobTitle = jobTitle;
+			userAccount.Roles = role;
             ValidateAnnotatedObjectThrowOnFailure(userAccount);
             _userAccountValidator.ValidateThrowOnFailure(userAccount);
             _userAccountRepository.Update(userAccount);

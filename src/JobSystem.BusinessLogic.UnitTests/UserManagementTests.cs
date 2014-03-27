@@ -128,7 +128,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var userAccountRepositoryStub = MockRepository.GenerateStub<IUserAccountRepository>();
             userAccountRepositoryStub.Stub(x => x.GetById(id)).Return(user);
             _userManagementService = UserManagementServiceFactory.Create(userAccountRepositoryStub);
-            _userManagementService.Edit(Guid.Empty, "Chris - edited", "chris@testuser.com", "Job Title");
+            _userManagementService.Edit(Guid.Empty, "Chris - edited", "chris@testuser.com", "Job Title", UserRole.Member | UserRole.JobApprover);
         }
 
         [Test]
@@ -140,7 +140,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var userAccountRepositoryStub = MockRepository.GenerateStub<IUserAccountRepository>();
             userAccountRepositoryStub.Stub(x => x.GetById(id)).Return(user);
             _userManagementService = UserManagementServiceFactory.Create(userAccountRepositoryStub);
-            _userManagementService.Edit(Guid.NewGuid(), "Chris - edited", "chris@testuser.com", "Job Title");
+			_userManagementService.Edit(Guid.NewGuid(), "Chris - edited", "chris@testuser.com", "Job Title", UserRole.Member | UserRole.JobApprover);
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var userAccountRepositoryStub = MockRepository.GenerateStub<IUserAccountRepository>();
             userAccountRepositoryStub.Stub(x => x.GetById(id)).Return(user);
             _userManagementService = UserManagementServiceFactory.Create(userAccountRepositoryStub);
-            _userManagementService.Edit(id, GreaterThan256Characters, "chris@testuser.com", "Job Title");
+			_userManagementService.Edit(id, GreaterThan256Characters, "chris@testuser.com", "Job Title", UserRole.Member | UserRole.JobApprover);
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var userAccountRepositoryStub = MockRepository.GenerateStub<IUserAccountRepository>();
             userAccountRepositoryStub.Stub(x => x.GetById(id)).Return(user);
             _userManagementService = UserManagementServiceFactory.Create(userAccountRepositoryStub);
-            _userManagementService.Edit(id, String.Empty, "chris@testuser.com", "Job Title");
+			_userManagementService.Edit(id, String.Empty, "chris@testuser.com", "Job Title", UserRole.Member | UserRole.JobApprover);
         }
 
         [Test]
@@ -176,7 +176,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var userAccountRepositoryStub = MockRepository.GenerateStub<IUserAccountRepository>();
             userAccountRepositoryStub.Stub(x => x.GetById(id)).Return(user);
             _userManagementService = UserManagementServiceFactory.Create(userAccountRepositoryStub);
-            _userManagementService.Edit(id, "Chris", String.Empty, "Job Title");
+			_userManagementService.Edit(id, "Chris", String.Empty, "Job Title", UserRole.Member | UserRole.JobApprover);
         }
 
         [Test]
@@ -188,7 +188,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var userAccountRepositoryStub = MockRepository.GenerateStub<IUserAccountRepository>();
             userAccountRepositoryStub.Stub(x => x.GetById(id)).Return(user);
             _userManagementService = UserManagementServiceFactory.Create(userAccountRepositoryStub);
-            _userManagementService.Edit(id, "Chris", "chris@", "Job Title");
+			_userManagementService.Edit(id, "Chris", "chris@", "Job Title", UserRole.Member | UserRole.JobApprover);
         }
 
         [Test]
@@ -200,7 +200,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var userAccountRepositoryStub = MockRepository.GenerateStub<IUserAccountRepository>();
             userAccountRepositoryStub.Stub(x => x.GetById(id)).Return(user);
             _userManagementService = UserManagementServiceFactory.Create(userAccountRepositoryStub);
-            _userManagementService.Edit(id, "Chris", String.Format("chris@{0}", GreaterThan256Characters), "Job Title");
+			_userManagementService.Edit(id, "Chris", String.Format("chris@{0}", GreaterThan256Characters), "Job Title", UserRole.Member | UserRole.JobApprover);
         }
 
         [Test]
@@ -214,7 +214,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             userAccountRepositoryStub.Stub(x => x.GetById(id)).Return(user);
             userAccountRepositoryStub.Stub(x => x.GetByEmail("chris2@testuser.com", true)).Return(user2);
             _userManagementService = UserManagementServiceFactory.Create(userAccountRepositoryStub);
-            _userManagementService.Edit(id, "Chris", "chris2@testuser.com", "Job Title");
+			_userManagementService.Edit(id, "Chris", "chris2@testuser.com", "Job Title", UserRole.Member | UserRole.JobApprover);
         }
 
         [Test]
@@ -226,7 +226,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var userAccountRepositoryStub = MockRepository.GenerateStub<IUserAccountRepository>();
             userAccountRepositoryStub.Stub(x => x.GetById(id)).Return(user);
             _userManagementService = UserManagementServiceFactory.Create(userAccountRepositoryStub);
-            _userManagementService.Edit(id, "Chris", "chris@testuser.com", String.Empty);
+			_userManagementService.Edit(id, "Chris", "chris@testuser.com", String.Empty, UserRole.Member | UserRole.JobApprover);
         }
 
         [Test]
@@ -238,7 +238,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             var userAccountRepositoryStub = MockRepository.GenerateStub<IUserAccountRepository>();
             userAccountRepositoryStub.Stub(x => x.GetById(id)).Return(user);
             _userManagementService = UserManagementServiceFactory.Create(userAccountRepositoryStub);
-            _userManagementService.Edit(id, "Chris", "chris@testuser.com", GreaterThan256Characters);
+			_userManagementService.Edit(id, "Chris", "chris@testuser.com", GreaterThan256Characters, UserRole.Member | UserRole.JobApprover);
         }
 
         [Test]
@@ -250,7 +250,7 @@ namespace JobSystem.BusinessLogic.UnitTests
             userAccountRepositoryMock.Stub(x => x.GetById(id)).Return(user);
             userAccountRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
             _userManagementService = UserManagementServiceFactory.Create(userAccountRepositoryMock);
-            _userManagementService.Edit(id, "Chris - edited", "chris2@testuser.com", "Job Title - edited");
+			_userManagementService.Edit(id, "Chris - edited", "chris2@testuser.com", "Job Title - edited", UserRole.Member | UserRole.JobApprover);
             userAccountRepositoryMock.VerifyAllExpectations();
         }
 
@@ -271,7 +271,7 @@ namespace JobSystem.BusinessLogic.UnitTests
         {
             try
             {
-                _userManagementService.Edit(id, name, email, jobTitle);
+                _userManagementService.Edit(id, name, email, jobTitle, roles);
             }
             catch (DomainValidationException dex)
             {
