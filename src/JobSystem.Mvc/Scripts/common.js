@@ -532,7 +532,7 @@ $(document).ready(function () {
 		var container = $('#item-tooltip');
 
 		container.html(elemToShow.clone());
-		container.css('top', (elem.offset().top - 157));
+		container.css('top', (elem.offset().top - 575));
 		container.children('.work-item-details').css('top', '20px');
 		container.stop(true, true).fadeIn(200);
 
@@ -547,7 +547,7 @@ $(document).ready(function () {
 		var container = $('#item-tooltip');
 
 		container.html(elemToShow.clone());
-		container.css('top', (elem.offset().top - 157));
+		container.css('top', (elem.offset().top - 575));
 		container.children('.cert-item-details').css('top', '20px');
 		container.stop(true, true).fadeIn(200);
 
