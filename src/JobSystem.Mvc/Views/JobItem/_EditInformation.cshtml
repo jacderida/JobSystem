@@ -8,6 +8,13 @@
     @Html.ValidationSummary(true)
     <fieldset class="fieldset-no-legend fieldset-float-left">
         <div class="editor-label">
+            @Html.LabelFor(model => model.SerialNo)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.SerialNo, new { @class = "job-item-create-textarea" })
+            @Html.ValidationMessageFor(model => model.SerialNo)
+        </div>
+        <div class="editor-label">
             @Html.LabelFor(model => model.Accessories)
         </div>
         <div class="editor-field">

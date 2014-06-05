@@ -127,6 +127,7 @@ namespace JobSystem.Mvc.Controllers
             var viewmodel = new JobItemViewModel()
             {
                 Id = id,
+                SerialNo = jobItem.SerialNo,
                 Accessories = jobItem.Accessories,
                 Comments = jobItem.Comments,
                 Instructions = jobItem.Instructions,
