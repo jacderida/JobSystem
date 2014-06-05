@@ -152,8 +152,7 @@ namespace JobSystem.Mvc.Controllers
                     DateCreated = q.DateCreated.ToLongDateString(),
                     OrderNo = q.OrderNumber,
                     AdviceNo = q.AdviceNumber,
-                    CurrencyName = q.Currency.Name,
-                    ItemCount = _quoteItemService.GetQuoteItemsCount(q.Id)
+                    CurrencyName = q.Currency.Name
                 }).OrderBy(q => q.QuoteNo).Skip((page - 1) * pageSize).Take(pageSize);
             var viewModel = new QuoteListViewModel
             {

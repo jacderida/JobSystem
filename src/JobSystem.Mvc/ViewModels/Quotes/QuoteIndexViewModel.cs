@@ -14,6 +14,5 @@ namespace JobSystem.Mvc.ViewModels.Quotes
         public string AdviceNo { get; set; }
         public List<QuoteItemIndexViewModel> QuoteItems { get; set; }
         public string CurrencyName { get; set; }
-        public int ItemCount { get; set; }
     }
 }

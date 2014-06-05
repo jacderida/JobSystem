@@ -21,7 +21,7 @@
         grid.Column("CustomerName", "Customer"),
         grid.Column("CreatedBy", "Created By"),
         grid.Column("DateCreated", "Date Created"),
-        grid.Column("", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.ItemCount), "QuoteItems", new { quoteId = item.Id })</text>),
+        grid.Column("", "Items", format: @<text>@Html.ActionLink("Items", "QuoteItems", new { quoteId = item.Id })</text>),
         grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit", "Edit", new { Id = @item.Id })</text>),
         grid.Column("Print", "", format: @<text> @Html.ActionLink("Print", "GenerateQuoteReport", new { Id = @item.Id }, new { target = "_blank" })</text>)
     ))
@@ -34,4 +34,4 @@ else
 <div id="edit-quote-container">
 </div>
 
-<input type="hidden" id="editUrl" value="@Url.Action("Edit", "Quote")"/>
+<input type="hidden" id="editUrl" value="@Url.Action("Edit", "Quote")"/>s
