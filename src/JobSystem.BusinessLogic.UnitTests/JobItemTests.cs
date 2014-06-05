@@ -617,6 +617,7 @@ namespace JobSystem.BusinessLogic.UnitTests
         [Test]
         public void EditInformation_ValidInformation_JobItemEdited()
         {
+            var serialNo = "123456";
             var instructions = "edited instructions";
             var accessories = "edited accessories";
             var comments = "edited comments";
@@ -626,9 +627,10 @@ namespace JobSystem.BusinessLogic.UnitTests
             jobItemRepositoryMock.Expect(x => x.Update(null)).IgnoreArguments();
             _jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
 
-            EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
+            EditInformation(_jobItemForEditInformationId, serialNo, instructions, accessories, comments);
             jobItemRepositoryMock.VerifyAllExpectations();
             Assert.AreEqual(_jobItemForEditInformationId, _jobItemForEditInformation.Id);
+            Assert.AreEqual(serialNo, _jobItemForEditInformation.SerialNo);
             Assert.AreEqual(instructions, _jobItemForEditInformation.Instructions);
             Assert.AreEqual(accessories, _jobItemForEditInformation.Accessories);
             Assert.AreEqual(comments, _jobItemForEditInformation.Comments);
@@ -637,6 +639,7 @@ namespace JobSystem.BusinessLogic.UnitTests
         [Test]
         public void EditInformation_UserIsManager_JobItemEdited()
         {
+            var serialNo = "123456";
             var instructions = "edited instructions";
             var accessories = "edited accessories";
             var comments = "edited comments";
@@ -648,7 +651,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Manager | UserRole.Member),
                 jobItemRepositoryMock);
 
-            EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
+            EditInformation(_jobItemForEditInformationId, serialNo, instructions, accessories, comments);
             jobItemRepositoryMock.VerifyAllExpectations();
             Assert.AreEqual(_jobItemForEditInformationId, _jobItemForEditInformation.Id);
             Assert.AreEqual(instructions, _jobItemForEditInformation.Instructions);
@@ -659,6 +662,7 @@ namespace JobSystem.BusinessLogic.UnitTests
         [Test]
         public void EditInformation_UserIsAdmin_JobItemEdited()
         {
+            var serialNo = "123456";
             var instructions = "edited instructions";
             var accessories = "edited accessories";
             var comments = "edited comments";
@@ -670,7 +674,7 @@ namespace JobSystem.BusinessLogic.UnitTests
                 TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Admin | UserRole.Member),
                 jobItemRepositoryMock);
 
-            EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
+            EditInformation(_jobItemForEditInformationId, serialNo, instructions, accessories, comments);
             jobItemRepositoryMock.VerifyAllExpectations();
             Assert.AreEqual(_jobItemForEditInformationId, _jobItemForEditInformation.Id);
             Assert.AreEqual(instructions, _jobItemForEditInformation.Instructions);
@@ -683,6 +687,7 @@ namespace JobSystem.BusinessLogic.UnitTests
         public void EditInformation_InvalidJobId_ArgumentExceptionThrown()
         {
             var id = Guid.NewGuid();
+            var serialNo = "123456";
             var instructions = "edited instructions";
             var accessories = "edited accessories";
             var comments = "edited comments";
@@ -690,12 +695,13 @@ namespace JobSystem.BusinessLogic.UnitTests
             var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
             jobItemRepositoryMock.Stub(x => x.GetById(id)).Return(null);
             _jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
-            EditInformation(id, instructions, accessories, comments);
+            EditInformation(id, serialNo, instructions, accessories, comments);
         }
 
         [Test]
         public void EditInformation_InvalidInstructions_DomainValidationExceptionThrown()
         {
+            var serialNo = "123456";
             var instructions = new String('a', 257);
             var accessories = "edited accessories";
             var comments = "edited comments";
@@ -703,13 +709,14 @@ namespace JobSystem.BusinessLogic.UnitTests
             var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
             jobItemRepositoryMock.Stub(x => x.GetById(_jobItemForEditInformationId)).Return(_jobItemForEditInformation);
             _jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
-            EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
+            EditInformation(_jobItemForEditInformationId, serialNo, instructions, accessories, comments);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.InstructionsTooLarge));
         }
 
         [Test]
         public void EditInformation_InvalidAccessories_DomainValidationExceptionThrown()
         {
+            var serialNo = "123456";
             var instructions = "some instructions";
             var accessories = new String('a', 256);
             var comments = "edited comments";
@@ -717,13 +724,14 @@ namespace JobSystem.BusinessLogic.UnitTests
             var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
             jobItemRepositoryMock.Stub(x => x.GetById(_jobItemForEditInformationId)).Return(_jobItemForEditInformation);
             _jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
-            EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
+            EditInformation(_jobItemForEditInformationId, serialNo, instructions, accessories, comments);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.AccessoriesTooLarge));
         }
 
         [Test]
         public void EditInformation_InvalidComments_DomainValidationExceptionThrown()
         {
+            var serialNo = "123456";
             var instructions = "some instructions";
             var accessories = "some accessories";
             var comments = new String('a', 256);
@@ -731,13 +739,44 @@ namespace JobSystem.BusinessLogic.UnitTests
             var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
             jobItemRepositoryMock.Stub(x => x.GetById(_jobItemForEditInformationId)).Return(_jobItemForEditInformation);
             _jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
-            EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
+            EditInformation(_jobItemForEditInformationId, serialNo, instructions, accessories, comments);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.CommentsTooLarge));
+        }
+
+        [Test]
+        public void EditInformation_EmptySerialNo_DomainValidationExceptionThrown()
+        {
+            var serialNo = string.Empty;
+            var instructions = "some instructions";
+            var accessories = "some accessories";
+            var comments = "some comments";
+
+            var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+            jobItemRepositoryMock.Stub(x => x.GetById(_jobItemForEditInformationId)).Return(_jobItemForEditInformation);
+            _jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
+            EditInformation(_jobItemForEditInformationId, serialNo, instructions, accessories, comments);
+            Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.SerialNoRequired));
+        }
+
+        [Test]
+        public void EditInformation_SerialNoTooLarge_DomainValidationExceptionThrown()
+        {
+            var serialNo = new string('a', 51);
+            var instructions = "some instructions";
+            var accessories = "some accessories";
+            var comments = "some comments";
+
+            var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+            jobItemRepositoryMock.Stub(x => x.GetById(_jobItemForEditInformationId)).Return(_jobItemForEditInformation);
+            _jobItemService = JobItemServiceFactory.Create(_userContext, jobItemRepositoryMock);
+            EditInformation(_jobItemForEditInformationId, serialNo, instructions, accessories, comments);
+            Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.SerialNoTooLarge));
         }
 
         [Test]
         public void EditInformation_InsufficientSecurityClearance_DomainValidationExceptionThrown()
         {
+            var serialNo = "123456";
             var instructions = "some instructions";
             var accessories = "some accessories";
             var comments = "some comments";
@@ -747,15 +786,15 @@ namespace JobSystem.BusinessLogic.UnitTests
             _jobItemService = JobItemServiceFactory.Create(
                 TestUserContext.Create("graham.robertson@intertek.com", "Graham Robertson", "Operations Manager", UserRole.Member),
                 jobItemRepositoryMock);
-            EditInformation(_jobItemForEditInformationId, instructions, accessories, comments);
+            EditInformation(_jobItemForEditInformationId, serialNo, instructions, accessories, comments);
             Assert.IsTrue(_domainValidationException.ResultContainsMessage(JobSystem.Resources.JobItems.Messages.InsufficientSecurityClearance));
         }
 
-        private void EditInformation(Guid jobItemId, string instructions, string accessories, string comments)
+        private void EditInformation(Guid jobItemId, string serialNo, string instructions, string accessories, string comments)
         {
             try
             {
-                _jobItemForEditInformation = _jobItemService.EditInformation(jobItemId, instructions, accessories, comments);
+                _jobItemForEditInformation = _jobItemService.EditInformation(jobItemId, serialNo, instructions, accessories, comments);
             }
             catch (DomainValidationException dex)
             {

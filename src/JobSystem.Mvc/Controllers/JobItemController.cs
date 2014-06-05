@@ -142,7 +142,7 @@ namespace JobSystem.Mvc.Controllers
         [Transaction]
         public ActionResult EditInformation(JobItemDetailsViewModel viewmodel)
         {
-            _jobItemService.EditInformation(viewmodel.Id, viewmodel.Instructions, viewmodel.Accessories, viewmodel.Comments);
+            _jobItemService.EditInformation(viewmodel.Id, viewmodel.SerialNo, viewmodel.Instructions, viewmodel.Accessories, viewmodel.Comments);
             return PartialView("_InformationTab", viewmodel);
         }
 

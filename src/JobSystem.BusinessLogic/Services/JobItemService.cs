@@ -73,13 +73,14 @@ namespace JobSystem.BusinessLogic.Services
 			return jobItem;
 		}
 
-        public JobItem EditInformation(Guid jobItemId, string instructions, string accessories, string comments)
+        public JobItem EditInformation(Guid jobItemId, string serialNo, string instructions, string accessories, string comments)
         {
             if (!CurrentUser.HasRole(UserRole.Admin | UserRole.Manager))
                 throw new DomainValidationException(Messages.InsufficientSecurityClearance);
             var jobItem = GetById(jobItemId);
             if (jobItem == null)
                 throw new ArgumentException("A valid job item ID must be supplied.");
+            jobItem.SerialNo = serialNo;
             jobItem.Instructions = instructions;
             jobItem.Accessories = accessories;
             jobItem.Comments = comments;
