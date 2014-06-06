@@ -12,7 +12,6 @@ namespace JobSystem.Mvc.ViewModels.Consignments
         public string CreatedBy { get; set; }
         public string DateCreated { get; set; }
         public string SupplierName { get; set; }
-        public int ItemCount { get; set; }
         public bool IsOrdered { get; set; }
     }
 }

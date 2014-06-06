@@ -194,7 +194,6 @@ namespace JobSystem.Mvc.Controllers
                     DateCreated = c.DateCreated.ToLongDateString() + ' ' + c.DateCreated.ToShortTimeString(),
                     SupplierName = c.Supplier.Name,
                     IsOrdered = c.IsOrdered,
-                    ItemCount = _consignmentItemService.GetConsignmentItems(c.Id).Count()
                 }).OrderBy(c => c.ConsignmentNo).Skip((page - 1) * pageSize).Take(pageSize);
             var viewModel = new ConsignmentActiveListViewModel
             {
