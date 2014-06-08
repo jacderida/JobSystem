@@ -15,6 +15,5 @@ namespace JobSystem.Mvc.ViewModels.Invoices
         public string TaxCode { get; set; }
         public string Currency { get; set; }
         public string CustomerName { get; set; }
-        public int ItemCount { get; set; }
     }
 }

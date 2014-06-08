@@ -19,7 +19,7 @@
         grid.Column("PaymentTerm", "Payment Term"),
         grid.Column("TaxCode", "Tax Code"),
         grid.Column("DateCreated", "Date Created"),
-        grid.Column("Items", "Items", format: @<text>@String.Format("{0} items", (int)item.ItemCount)</text>),
+        grid.Column("Items", "Items", format: @<text>"Items"</text>),
         grid.Column("", "", format: @<text>@Html.ActionLink("Print Note", "GenerateInvoiceNote", new { Id = @item.Id }, new { target="_blank"})</text>)
     ))
 }

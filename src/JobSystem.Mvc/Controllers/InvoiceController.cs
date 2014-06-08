@@ -93,8 +93,7 @@ namespace JobSystem.Mvc.Controllers
                 CustomerName = i.Customer.Name,
                 InvoiceNo = i.InvoiceNumber,
                 PaymentTerm = i.PaymentTerm.Name,
-                TaxCode = i.TaxCode.TaxCodeName,
-                ItemCount = _invoiceItemService.GetInvoiceItemsCount(i.Id)
+                TaxCode = i.TaxCode.TaxCodeName
             }).OrderBy(i => i.InvoiceNo).Skip((page - 1) * pageSize).Take(pageSize);
             return View(new InvoiceListViewModel
             {
