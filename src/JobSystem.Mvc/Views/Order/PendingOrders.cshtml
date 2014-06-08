@@ -20,7 +20,7 @@
         grid.Column("OrderNo", "Order No."),
         grid.Column("SupplierName", "Supplier Name"),
         grid.Column("Instructions", "Instructions"),
-        grid.Column("Items", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.ItemCount), "Details", new { id = item.Id })</text>),
+        grid.Column("Items", "Items", format: @<text>@Html.ActionLink("Items", "Details", new { id = item.Id })</text>),
         grid.Column("Edit", "", format: @<text>@Html.ActionLink("Edit Order", "Edit", new { id = @item.Id })</text>),
         grid.Column("Approval", "", format: @<text>@Html.ActionLink("Approve", "ApproveOrder", new { id = @item.Id })</text>)
     ))

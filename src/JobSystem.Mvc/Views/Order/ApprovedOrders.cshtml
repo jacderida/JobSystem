@@ -17,7 +17,7 @@
         grid.Column("OrderNo", "Order No."),
         grid.Column("SupplierName", "Supplier Name"),
         grid.Column("Instructions", "Instructions"),
-        grid.Column("", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)(int)item.ItemCount), "ApprovedOrderItems", new { orderId = item.Id })</text>),
+        grid.Column("", "Items", format: @<text>@Html.ActionLink("Items", "ApprovedOrderItems", new { orderId = item.Id })</text>),
         grid.Column("Print", "", format: @<text>@Html.ActionLink("Print Note", "GenerateOrderReport", new { id = @item.Id }, new { target = "blank" })</text>)
     ))
 }

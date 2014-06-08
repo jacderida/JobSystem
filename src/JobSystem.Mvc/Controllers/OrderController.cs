@@ -69,8 +69,7 @@ namespace JobSystem.Mvc.Controllers
                     Id = o.Id,
                     Instructions = o.Instructions,
                     SupplierName = o.Supplier.Name,
-                    OrderNo = o.OrderNo,
-                    ItemCount = _orderItemService.GetOrderItemsCount(o.Id)
+                    OrderNo = o.OrderNo
                 }).OrderBy(o => o.OrderNo);
             return View(new OrderListViewModel
             {
@@ -89,8 +88,7 @@ namespace JobSystem.Mvc.Controllers
                     Id = o.Id,
                     Instructions = o.Instructions,
                     SupplierName = o.Supplier.Name,
-                    OrderNo = o.OrderNo,
-                    ItemCount = _orderItemService.GetOrderItemsCount(o.Id)
+                    OrderNo = o.OrderNo
                 }).OrderBy(o => o.OrderNo).Skip((page - 1) * pageSize).Take(pageSize);
             return View(new OrderListViewModel
             {
