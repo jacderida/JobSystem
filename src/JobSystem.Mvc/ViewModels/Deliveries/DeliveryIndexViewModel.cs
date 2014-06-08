@@ -11,6 +11,5 @@ namespace JobSystem.Mvc.ViewModels.Deliveries
         public string DateCreated { get; set; }
         public string CreatedBy { get; set; }
         public string CustomerName { get; set; }
-        public int ItemCount { get; set; }
     }
 }

@@ -53,8 +53,7 @@ namespace JobSystem.Mvc.Controllers
                     CustomerName = d.Customer.Name,
                     CreatedBy = d.CreatedBy.Name,
                     DateCreated = d.DateCreated.ToLongDateString() + ' ' + d.DateCreated.ToShortTimeString(),
-                    Fao = d.Fao,
-                    ItemCount = _deliveryItemService.GetDeliveryItems(d.Id).Count()
+                    Fao = d.Fao
                 }).OrderBy(d => d.DeliveryNo).Skip((page - 1) * pageSize).Take(pageSize);
             var viewModel = new DeliveryListViewModel
             {

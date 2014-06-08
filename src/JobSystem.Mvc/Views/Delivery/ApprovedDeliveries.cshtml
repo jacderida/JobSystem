@@ -18,7 +18,7 @@
         grid.Column("Fao", "FAO"),
         grid.Column("CreatedBy", "Created By"),
         grid.Column("DateCreated", "Date Created"),
-        grid.Column("", "Items", format: @<text>@Html.ActionLink(String.Format("{0} items", (int)item.ItemCount), "DeliveryItems", new { deliveryId = item.Id })</text>),
+        grid.Column("", "Items", format: @<text>@Html.ActionLink("Items", "DeliveryItems", new { deliveryId = item.Id })</text>),
         grid.Column("", "", format: @<text>@Html.ActionLink("Print Note", "GenerateDeliveryNote", "Delivery", new { id = item.Id }, new { target = "_blank" })</text>)
     ))
 }
