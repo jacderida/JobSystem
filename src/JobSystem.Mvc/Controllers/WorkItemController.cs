@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using JobSystem.BusinessLogic.Services;
 using JobSystem.BusinessLogic.Validation.Core;
@@ -23,10 +24,12 @@ namespace JobSystem.Mvc.Controllers
 
         public ActionResult Create(Guid id)
         {
+            var statusItems = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemWorkStatus).ToList();
+            statusItems.Add(_listItemService.GetByType(ListItemType.StatusInvoiced));
             var viewmodel = new WorkItemCreateViewModel()
             {
                 WorkType = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemWorkType).ToSelectList(),
-                Status = _listItemService.GetAllByCategory(ListItemCategoryType.JobItemWorkStatus).ToSelectList(),
+                Status = statusItems.ToSelectList(),
                 JobItemId = id
             };
             return PartialView("_Create", viewmodel);
