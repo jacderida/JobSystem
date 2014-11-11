@@ -527,6 +527,26 @@ namespace JobSystem.BusinessLogic.UnitTests
         }
 
         [Test]
+        public void AddWorkItem_ItemHasInvoicedStatus_ItemPersistsWithoutError()
+        {
+            var workStatusId = Guid.NewGuid();
+            var workTypeId = Guid.NewGuid();
+            var workTime = 25;
+            var overTime = 10;
+            var report = "Item invoiced";
+
+            var jobItemRepositoryMock = MockRepository.GenerateMock<IJobItemRepository>();
+            jobItemRepositoryMock.Stub(x => x.GetById(_jobItemToUpdateId)).Return(_jobItemToUpdate);
+            jobItemRepositoryMock.Expect(x => x.EmitItemHistory(
+                _userContext.GetCurrentUser(), _jobItemToUpdateId, workTime, overTime, report, ListItemType.StatusInvoiced, ListItemType.WorkTypeAdministration));
+            jobItemRepositoryMock.Expect(x => x.Update(_jobItemToUpdate));
+            _jobItemService = JobItemServiceFactory.CreateForAddWorkItem(jobItemRepositoryMock, GetListItemRepositoryForInvoicedListItem(workStatusId, workTypeId), _userContext);
+            AddWorkItem(_jobItemToUpdateId, workTime, overTime, report, workStatusId, workTypeId);
+            jobItemRepositoryMock.VerifyAllExpectations();
+            Assert.AreEqual(ListItemType.StatusInvoiced, _savedJobItem.Status.Type);
+        }
+
+        [Test]
         public void AddWorkItem_CurrentUserHasInsufficientSecurity_DomainValidationExceptionThrown()
         {
             var workStatusId = Guid.NewGuid();
@@ -608,6 +628,39 @@ namespace JobSystem.BusinessLogic.UnitTests
                         Type = ListItemCategoryType.JobItemWorkStatus
                     }
                 });
+            return listItemRepositoryStub;
+        }
+
+        private static IListItemRepository GetListItemRepositoryForInvoicedListItem(Guid workStatusId, Guid workTypeId)
+        {
+            var listItemRepositoryStub = MockRepository.GenerateStub<IListItemRepository>();
+            listItemRepositoryStub.Stub(x => x.GetById(workStatusId)).Return(
+                new ListItem
+                {
+                    Id = workTypeId,
+                    Type = ListItemType.StatusInvoiced,
+                    Name = "Invoiced",
+                    Category = new ListItemCategory
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Status",
+                        Type = ListItemCategoryType.JobItemStatus
+                    }
+                });
+            listItemRepositoryStub.Stub(x => x.GetById(workTypeId)).Return(
+                new ListItem
+                {
+                    Id = workTypeId,
+                    Type = ListItemType.WorkTypeAdministration,
+                    Name = "Administration",
+                    Category = new ListItemCategory
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Work Type",
+                        Type = ListItemCategoryType.JobItemWorkType
+                    }
+                });
+            listItemRepositoryStub.Stub(x => x.GetById(workTypeId)).Return(JobItemServiceFactory.GetAddWorkItemWorkType(workTypeId));            
             return listItemRepositoryStub;
         }
 

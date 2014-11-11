@@ -98,6 +98,7 @@ namespace JobSystem.BusinessLogic.Services
                 throw new DomainValidationException(Messages.JobNotApproved, "Job");
             var status = ValidateWorkStatus(workStatusId);
             var workType = ValidateWorkType(workTypeId);
+            Console.WriteLine("after work type");
             workTime = ValidateWorkTime(workTime);
             overTime = ValidateOverTime(overTime);
             report = ValidateReport(report);
@@ -155,6 +156,11 @@ namespace JobSystem.BusinessLogic.Services
         private ListItem ValidateWorkStatus(Guid workStatusId)
         {
             var status = _listItemService.GetById(workStatusId);
+            if (status.Name == "Invoiced")
+            {
+                Console.WriteLine("returning");
+                return status;
+            }
             if (status.Category.Type != ListItemCategoryType.JobItemWorkStatus)
                 throw new DomainValidationException(Messages.InvalidStatusCategory, "WorkStatusId");
             return status;
