@@ -38,5 +38,12 @@ namespace JobSystem.DataAccess.NHibernate.Repositories
         {
             return CurrentSession.Query<Job>().Where(j => j.IsPending);
         }
+
+        public IEnumerable<Job> SearchByKeyword(string keyword)
+        {
+            var lowerKeyword = keyword.ToLower();
+            return CurrentSession.Query<Job>().Where(
+                j => j.JobNo.ToLower().Contains(lowerKeyword) || j.OrderNo.Contains(lowerKeyword));
+        }
     }
 }

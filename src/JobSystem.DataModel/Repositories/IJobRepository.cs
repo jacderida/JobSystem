@@ -10,5 +10,6 @@ namespace JobSystem.DataModel.Repositories
         IEnumerable<Job> GetApprovedJobs();
         IEnumerable<Job> GetPendingJobs();
         int GetApprovedJobsCount();
+        IEnumerable<Job> SearchByKeyword(string keyword);
     }
 }

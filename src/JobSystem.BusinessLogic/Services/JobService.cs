@@ -139,6 +139,13 @@ namespace JobSystem.BusinessLogic.Services
             return _jobRepository.GetPendingJobs().OrderBy(j => j.JobNo);
         }
 
+        public IEnumerable<Job> SearchByKeyword(string keyword)
+        {
+            if (!CurrentUser.HasRole(UserRole.Member))
+                throw new DomainValidationException(Messages.InsufficientSecurityClearance);
+            return _jobRepository.SearchByKeyword(keyword);
+        }
+
         private Customer GetCustomer(Guid customerId)
         {
             var customer = _customerRepository.GetById(customerId);
