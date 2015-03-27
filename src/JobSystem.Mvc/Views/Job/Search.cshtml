@@ -1,0 +1,12 @@
+﻿<div id="search">
+    @using (Ajax.BeginForm("SearchByKeyword", "Job", new {}, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "searchResults", LoadingElementId = "loading-div" }))
+    {
+        <input type="text" id="cert-search" name="keyword" placeholder="Search by job or purchase order number..."/>
+        <input type="image" id="search-button" class="primary-action" src="../Content/images/search-icon.png" />
+    }
+</div>
+
+<div id="searchResults">
+</div>
+
+<div id="loading-div"></div>

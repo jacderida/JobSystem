@@ -279,6 +279,35 @@ namespace JobSystem.Mvc.Controllers
             return RedirectToAction("Details", new { id = id });
         }
 
+        [HttpGet]
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SearchByKeyword(string keyword)
+        {
+            var results = _jobService.SearchByKeyword(keyword).Select(
+                j => new JobIndexViewModel
+                {
+                    CreatedBy = j.CreatedBy.ToString(),
+                    DateCreated = j.DateCreated.ToString(),
+                    JobNumber = j.JobNo,
+                    OrderNumber = j.OrderNo,
+                    Id = j.Id.ToString()
+                }).OrderBy(ji => ji.DateCreated);
+            var jobList = new JobListViewModel
+            {
+                CreateViewModel = new JobCreateViewModel(),
+                Jobs = results,
+                Page = 1,
+                PageSize = 15,
+                Total = results.Count()
+            };
+            return PartialView("_SearchResults", jobList);
+        }
+
         private UserRole GetLoggedInUserRoles()
         {
             var emailAddress = HttpContext.User.Identity.Name;
