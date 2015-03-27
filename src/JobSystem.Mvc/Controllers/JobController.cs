@@ -155,7 +155,7 @@ namespace JobSystem.Mvc.Controllers
         public ActionResult ApprovedJobs(int page = 1)
         {
             var pageSize = 15;
-            var jobs = _jobService.GetApprovedJobs().Select(
+            var latestJobs = _jobService.GetApprovedJobs().Select(
                 j => new JobIndexViewModel
                 {
                     CreatedBy = j.CreatedBy.ToString(),
@@ -163,11 +163,11 @@ namespace JobSystem.Mvc.Controllers
                     JobNumber = j.JobNo,
                     OrderNumber = j.OrderNo,
                     Id = j.Id.ToString()
-                }).OrderBy(j => j.JobNumber).Skip((page - 1) * pageSize).Take(pageSize);
+                }).OrderByDescending(j => j.DateCreated).Take(pageSize);
             var jobList = new JobListViewModel
             {
                 CreateViewModel = new JobCreateViewModel(),
-                Jobs = jobs,
+                Jobs = latestJobs,
                 Page = page,
                 PageSize = pageSize,
                 Total = _jobService.GetApprovedJobsCount()
