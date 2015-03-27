@@ -51,8 +51,8 @@ UploadBucket = elasticbeanstalk-eu-west-1-akiai3b4zfgcxbelbwnq
 KeyPair = IntertekJobSystem
 
 ### AWS Access Key and Secret Key used to create and deploy the application instance
-AWSAccessKey = AKIAI3B4ZFGCXBELBWNQ
-AWSSecretKey = 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
+AWSAccessKey =
+AWSSecretKey =
 
 ############################
 ### Environment Settings ###
