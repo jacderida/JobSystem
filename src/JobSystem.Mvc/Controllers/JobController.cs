@@ -289,15 +289,19 @@ namespace JobSystem.Mvc.Controllers
                 j => new JobIndexViewModel
                 {
                     CreatedBy = j.CreatedBy.ToString(),
+                    DateCreated = j.DateCreated,
                     DateCreatedString = j.DateCreated.ToString(),
                     JobNumber = j.JobNo,
                     OrderNumber = j.OrderNo,
                     Id = j.Id.ToString()
-                }).OrderBy(ji => ji.DateCreatedString);
+                }).OrderBy(ji => ji.DateCreated);
             var jobList = new JobListViewModel
             {
                 CreateViewModel = new JobCreateViewModel(),
-                Jobs = results
+                Page = 1,
+                PageSize = 15,
+                Jobs = results,
+                Total = results.Count()
             };
             return PartialView("_SearchResults", jobList);
         }
