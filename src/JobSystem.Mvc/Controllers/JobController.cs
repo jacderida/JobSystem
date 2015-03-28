@@ -152,7 +152,7 @@ namespace JobSystem.Mvc.Controllers
             return View(jobList);
         }
 
-        public ActionResult ApprovedJobs(int page = 1)
+        public ActionResult ApprovedJobs()
         {
             var pageSize = 15;
             var latestJobs = _jobService.GetApprovedJobs().Select(
@@ -168,7 +168,6 @@ namespace JobSystem.Mvc.Controllers
             {
                 CreateViewModel = new JobCreateViewModel(),
                 Jobs = latestJobs,
-                Page = page,
                 PageSize = pageSize,
                 Total = _jobService.GetApprovedJobsCount()
             };
