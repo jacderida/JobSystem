@@ -16,7 +16,7 @@
         grid.Column("JobNumber", "Job Number", format: @<text>@Html.ActionLink((string)item.JobNumber, "Details", new { id = item.Id })</text>),
         grid.Column("OrderNumber", "Order Number"),
         grid.Column("CreatedBy", "Booked By"),
-        grid.Column("DateCreated", "Created"),
+        grid.Column("DateCreatedString", "Created"),
         grid.Column("Approve", "", format:  @<text>@Html.ActionLink("Approve", "ApproveJob", new { id = item.Id })</text>)
     ))
 }

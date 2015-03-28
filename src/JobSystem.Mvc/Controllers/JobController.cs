@@ -135,7 +135,7 @@ namespace JobSystem.Mvc.Controllers
                 j => new JobIndexViewModel
                 {
                     CreatedBy = j.CreatedBy.ToString(),
-                    DateCreated = j.DateCreated.ToString(),
+                    DateCreatedString = j.DateCreated.ToString(),
                     JobNumber = j.JobNo,
                     OrderNumber = j.OrderNo,
                     Id = j.Id.ToString()
@@ -154,22 +154,20 @@ namespace JobSystem.Mvc.Controllers
 
         public ActionResult ApprovedJobs()
         {
-            var pageSize = 15;
             var latestJobs = _jobService.GetApprovedJobs().Select(
                 j => new JobIndexViewModel
                 {
                     CreatedBy = j.CreatedBy.ToString(),
-                    DateCreated = j.DateCreated.ToString(),
+                    DateCreated = j.DateCreated,
+                    DateCreatedString = j.DateCreated.ToString(),
                     JobNumber = j.JobNo,
                     OrderNumber = j.OrderNo,
                     Id = j.Id.ToString()
-                }).OrderByDescending(j => j.DateCreated).Take(pageSize);
+                }).OrderByDescending(j => j.DateCreated).Take(15);
             var jobList = new JobListViewModel
             {
                 CreateViewModel = new JobCreateViewModel(),
-                Jobs = latestJobs,
-                PageSize = pageSize,
-                Total = _jobService.GetApprovedJobsCount()
+                Jobs = latestJobs
             };
             jobList.CreateViewModel.JobTypes = _listItemService.GetAllByCategory(ListItemCategoryType.JobType).ToSelectList();
             return View(jobList);
@@ -291,18 +289,15 @@ namespace JobSystem.Mvc.Controllers
                 j => new JobIndexViewModel
                 {
                     CreatedBy = j.CreatedBy.ToString(),
-                    DateCreated = j.DateCreated.ToString(),
+                    DateCreatedString = j.DateCreated.ToString(),
                     JobNumber = j.JobNo,
                     OrderNumber = j.OrderNo,
                     Id = j.Id.ToString()
-                }).OrderBy(ji => ji.DateCreated);
+                }).OrderBy(ji => ji.DateCreatedString);
             var jobList = new JobListViewModel
             {
                 CreateViewModel = new JobCreateViewModel(),
-                Jobs = results,
-                Page = 1,
-                PageSize = 15,
-                Total = results.Count()
+                Jobs = results
             };
             return PartialView("_SearchResults", jobList);
         }
