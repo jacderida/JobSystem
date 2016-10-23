@@ -66,7 +66,12 @@ namespace JobSystem.Mvc
 
         private void InitialiseNHibernateSessions()
         {
-            var dbConfigurer = MsSqlConfiguration.MsSql2008.ConnectionString(NHibernateSession.GetInitialConnectionString()).Provider<RequestContextConnectionProvider>();
+            var connectionString = NHibernateSession.GetInitialConnectionString();
+            using (var writer = System.IO.File.AppendText(@"c:\temp\log"))
+            {
+                writer.WriteLine("Retrieved connection string: " + connectionString);
+            }
+            var dbConfigurer = MsSqlConfiguration.MsSql2008.ConnectionString(connectionString).Provider<RequestContextConnectionProvider>();
             NHibernateSession.Init(
                 _webSessionStorage, new[] { Server.MapPath("~/bin/JobSystem.DataAccess.NHibernate.dll") }, new AutoPersistenceModelGenerator().Generate(), null, null, null, dbConfigurer);
         }
